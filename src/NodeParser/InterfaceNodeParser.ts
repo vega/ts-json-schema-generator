@@ -1,0 +1,82 @@
+import * as ts from "typescript";
+import { NodeParser, Context } from "../NodeParser";
+import { SubNodeParser } from "../SubNodeParser";
+import { NameParser } from "../NameParser";
+import { BaseType } from "../Type/BaseType";
+import { ObjectType, ObjectProperty } from "../Type/ObjectType";
+import { DefinitionType } from "../Type/DefinitionType";
+
+export class InterfaceNodeParser implements SubNodeParser {
+    public constructor(
+        private typeChecker: ts.TypeChecker,
+        private childNodeParser: NodeParser,
+        private nameParser: NameParser,
+    ) {
+    }
+
+    public supportsNode(node: ts.InterfaceDeclaration): boolean {
+        return node.kind === ts.SyntaxKind.InterfaceDeclaration;
+    }
+    public createType(node: ts.InterfaceDeclaration, context: Context): BaseType {
+        if (node.typeParameters && node.typeParameters.length) {
+            node.typeParameters.forEach((typeParam: ts.TypeParameterDeclaration) => {
+                const nameSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(typeParam.name);
+                context.pushParameter(nameSymbol.name);
+            });
+        }
+
+        const objectType: ObjectType = new ObjectType(
+            this.nameParser.getTypeId(node, context),
+            this.getBaseTypes(node, context),
+            this.getProperties(node, context),
+            this.getAdditionalProperties(node, context),
+        );
+        if (!this.nameParser.isExportNode(node)) {
+            return objectType;
+        }
+
+        return new DefinitionType(
+            this.nameParser.getDefinitionName(node, context),
+            objectType,
+        );
+    }
+
+    private getBaseTypes(node: ts.InterfaceDeclaration, context: Context): BaseType[] {
+        if (!node.heritageClauses) {
+            return [];
+        }
+
+        return node.heritageClauses.reduce((result: BaseType[], baseType: ts.HeritageClause) => {
+            return result.concat(baseType.types.map((expression: ts.ExpressionWithTypeArguments) => {
+                return this.childNodeParser.createType(expression, context);
+            }));
+        }, []);
+    }
+
+    private getProperties(node: ts.InterfaceDeclaration, context: Context): ObjectProperty[] {
+        return node.members
+            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
+            .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
+                const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
+                const objectProperty: ObjectProperty = new ObjectProperty(
+                    propertySymbol.getName(),
+                    this.childNodeParser.createType(propertyNode.type, context),
+                    !propertyNode.questionToken,
+                );
+
+                result.push(objectProperty);
+                return result;
+            }, []);
+    }
+
+    private getAdditionalProperties(node: ts.InterfaceDeclaration, context: Context): BaseType|boolean {
+        const properties: ts.TypeElement[] = node.members
+            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
+        if (!properties.length) {
+            return false;
+        }
+
+        const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
+        return this.childNodeParser.createType(signature.type, context);
+    }
+}

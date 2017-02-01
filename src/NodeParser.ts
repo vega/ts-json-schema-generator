@@ -1,0 +1,30 @@
+import * as ts from "typescript";
+import { BaseType } from "./Type/BaseType";
+
+export class Context {
+    private arguments: BaseType[] = [];
+    private parameters: string[] = [];
+
+    public pushArgument(argumentType: BaseType): void {
+        this.arguments.push(argumentType);
+    }
+    public pushParameter(parameterName: string): void {
+        this.parameters.push(parameterName);
+    }
+
+    public getArgument(parameterName: string): BaseType {
+        const index: number = this.parameters.indexOf(parameterName);
+        if (index < 0 || !this.arguments[index]) {
+            throw new Error(`Could not found type parameter "${parameterName}"`);
+        }
+
+        return this.arguments[index];
+    }
+    public getArguments(): BaseType[] {
+        return this.arguments;
+    }
+}
+
+export interface NodeParser {
+    createType(node: ts.Node, context: Context): BaseType;
+}
