@@ -2,6 +2,9 @@
   "name": "typescript-to-json-schema",
   "version": "0.0.0",
   "description": "Generate JSON schema from your Typescript sources",
+  "bin": {
+    "typescript-to-json-schema": "./bin/typescript-to-json-schema"
+  },
   "author": {
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
@@ -22,13 +25,15 @@
   ],
   "dependencies": {
     "glob": "~7.1.1",
-    "typescript": "~2.1.5"
+    "typescript": "~2.1.5",
+    "commander": "~2.9.0"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/glob": "^5.0.30",
     "@types/mocha": "^2.2.37",
     "@types/node": "^7.0.0",
+    "@types/commander": "^2.3.31",
     "tslint": "~4.3.1"
   },
   "scripts": {

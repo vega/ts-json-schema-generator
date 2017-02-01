@@ -25,6 +25,8 @@
         "outDir": "dist"
     },
     "include": [
+        "typescript-to-json-schema.ts",
+        "factory/**/*.ts",
         "src/**/*.ts"
     ],
     "exclude": [
