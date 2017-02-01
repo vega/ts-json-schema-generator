@@ -1,0 +1,26 @@
+{
+    "type": "object",
+    "properties": {
+        "foo": {
+            "$ref": "#/definitions/result"
+        },
+        "bar": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "foo",
+        "bar"
+    ],
+    "definitions": {
+        "result": {
+            "type": "string",
+            "enum": [
+                "abort",
+                "fail",
+                "ok"
+            ]
+        }
+    },
+    "$schema": "http://json-schema.org/draft-04/schema#"
+}

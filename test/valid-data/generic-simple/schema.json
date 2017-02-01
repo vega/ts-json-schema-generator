@@ -1,0 +1,30 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "value": {
+                    "$ref": "#/definitions/MyGeneric<number>"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "additionalProperties": false
+        },
+        "MyGeneric<number>": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

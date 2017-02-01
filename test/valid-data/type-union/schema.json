@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "TypeUnion": {
+            "type": "object",
+            "properties": {
+                "var1": {
+                    "type": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "var2": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "number"
+                            }
+                        }
+                    ]
+                },
+                "var3": {
+                    "type": "array",
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ]
+                    }
+                },
+
+                "var4": {
+                    "type": [
+                        "string",
+                        "number"
+                    ],
+                    "enum": [
+                        "s",
+                        1
+                    ]
+                },
+                "var5": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "enum": [
+                                "s"
+                            ]
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "enum": [
+                                    1
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "var6": {
+                    "type": "array",
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ],
+                        "enum": [
+                            "s",
+                            1
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "var1",
+                "var2",
+                "var3",
+
+                "var4",
+                "var5",
+                "var6"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/TypeUnion"
+}

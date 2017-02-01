@@ -27,10 +27,13 @@
     "include": [
         "typescript-to-json-schema.ts",
         "factory/**/*.ts",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "test/*.ts"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "test/valid-data",
+        "test/invalid-data"
     ],
     "compileOnSave": true,
     "buildOnSave": false

@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "Enum": {
+            "type": "number",
+            "enum": [
+                10,
+                11,
+                12,
+                1
+            ]
+        }
+    },
+    "$ref": "#/definitions/Enum"
+}

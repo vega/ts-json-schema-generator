@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "subA": {
+                    "$ref": "#/definitions/MySubObject"
+                },
+                "subB": {
+                    "$ref": "#/definitions/MySubObject"
+                }
+            },
+            "required": [
+                "subA",
+                "subB"
+            ],
+            "additionalProperties": false
+        },
+        "MySubObject": {
+            "type": "object",
+            "properties": {
+                "propA": {
+                    "type": "number"
+                },
+                "propB": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "propA",
+                "propB"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

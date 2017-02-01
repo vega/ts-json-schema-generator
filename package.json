@@ -29,16 +29,22 @@
     "commander": "~2.9.0"
   },
   "devDependencies": {
+    "@types/assertion-error": "^1.0.30",
     "@types/chai": "^3.4.34",
     "@types/glob": "^5.0.30",
     "@types/mocha": "^2.2.37",
     "@types/node": "^7.0.0",
     "@types/commander": "^2.3.31",
+    "ajv": "~4.10.4",
+    "chai": "~3.5.0",
+    "mocha": "~3.2.0",
+    "source-map-support": "~0.4.8",
     "tslint": "~4.3.1"
   },
   "scripts": {
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
-    "lint": "tslint -c tslint.json 'typescript-json-schema.ts' 'helper/**/*.ts' 'src/**/*.ts'"
+    "lint": "tslint -c tslint.json 'typescript-json-schema.ts' 'helper/**/*.ts' 'src/**/*.ts' 'test/*.ts'",
+    "test": "tsc -p . && mocha -t 5000 --require source-map-support/register dist/test"
   }
 }

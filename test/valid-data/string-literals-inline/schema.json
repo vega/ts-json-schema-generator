@@ -1,0 +1,21 @@
+{
+    "type": "object",
+    "properties": {
+        "foo": {
+            "type": "string",
+            "enum": [
+                "abort",
+                "fail",
+                "ok"
+            ]
+        },
+        "bar": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "foo",
+        "bar"
+    ],
+    "$schema": "http://json-schema.org/draft-04/schema#"
+}

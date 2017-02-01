@@ -1,0 +1,80 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "Shape": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/Square"
+                },
+                {
+                    "$ref": "#/definitions/Rectangle"
+                },
+                {
+                    "$ref": "#/definitions/Circle"
+                }
+            ]
+        },
+        "Square": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "enum": [
+                        "square"
+                    ]
+                },
+                "size": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "kind",
+                "size"
+            ],
+            "additionalProperties": false
+        },
+        "Rectangle": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "enum": [
+                        "rectangle"
+                    ]
+                },
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "kind",
+                "width",
+                "height"
+            ],
+            "additionalProperties": false
+        },
+        "Circle": {
+            "type": "object",
+            "properties": {
+                "kind": {
+                    "type": "string",
+                    "enum": [
+                        "circle"
+                    ]
+                },
+                "radius": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "kind",
+                "radius"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/Shape"
+}

@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "SimpleObject": {
+            "type": "object",
+            "properties": {
+                "required": {
+                    "type": "string"
+                },
+                "optional": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "required"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/SimpleObject"
+}

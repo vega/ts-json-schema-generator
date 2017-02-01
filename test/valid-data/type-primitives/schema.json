@@ -1,0 +1,44 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "boolean": {
+                    "type": "boolean"
+                },
+                "number": {
+                    "type": "number"
+                },
+                "string": {
+                    "type": "string"
+                },
+                "integer": {
+                    "type": "number"
+                },
+                "double": {
+                    "type": "number"
+                },
+                "decimal": {
+                    "type": "string"
+                },
+                "datetime": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "boolean",
+                "number",
+                "string",
+
+                "integer",
+                "double",
+
+                "decimal",
+                "datetime"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

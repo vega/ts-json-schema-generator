@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "field": {
+                    "type": "object",
+                    "properties": {
+                        "subfieldA": {
+                            "type": "number"
+                        },
+                        "subfieldB": {
+                            "type": [
+                                "string",
+                                "number"
+                            ]
+                        },
+                        "subfieldC": {
+                            "type": "object",
+                            "properties": {
+                                "subsubfieldA": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "subsubfieldA"
+                            ],
+                            "additionalProperties": false
+                        }
+                    },
+                    "required": [
+                        "subfieldA",
+                        "subfieldB",
+                        "subfieldC"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}
