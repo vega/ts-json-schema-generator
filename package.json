@@ -50,6 +50,8 @@
     "tslint": "~4.3.1"
   },
   "scripts": {
+    "prepublish": "npm run lint && npm run test && npm run build",
+    "preversion": "npm run lint && npm run test",
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "lint": "tslint -c tslint.json 'typescript-json-schema.ts' 'helper/**/*.ts' 'src/**/*.ts' 'test/*.ts'",

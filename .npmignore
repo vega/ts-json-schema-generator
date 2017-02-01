@@ -1,0 +1,11 @@
+node_modules/
+src/
+test/
+dist/test/
+
+tsconfig.json
+tslint.json
+
+.idea
+.editorconfig
+.travis.yml
