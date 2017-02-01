@@ -1,11 +1,16 @@
 node_modules/
 src/
+factory/
 test/
 dist/test/
+
+index.ts
+typescript-to-json-schema.ts
 
 tsconfig.json
 tslint.json
 
-.idea
+.idea/
+.vscode/
 .editorconfig
 .travis.yml
