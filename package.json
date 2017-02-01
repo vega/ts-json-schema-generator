@@ -25,6 +25,9 @@
     "ts", "typescript",
     "json", "schema", "jsonschema"
   ],
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "dependencies": {
     "glob": "~7.1.1",
     "typescript": "~2.1.5",
