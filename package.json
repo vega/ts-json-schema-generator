@@ -1,0 +1,39 @@
+{
+  "name": "typescript-to-json-schema",
+  "version": "0.0.0",
+  "description": "Generate JSON schema from your Typescript sources",
+  "author": {
+    "name": "Alexander Evtushenko",
+    "email": "aevtushenko@xiag.ch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiag-ag/typescript-to-json-schema.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "keywords": [
+    "ts", "typescript",
+    "json", "schema", "jsonschema"
+  ],
+  "dependencies": {
+    "glob": "~7.1.1",
+    "typescript": "~2.1.5"
+  },
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/glob": "^5.0.30",
+    "@types/mocha": "^2.2.37",
+    "@types/node": "^7.0.0",
+    "tslint": "~4.3.1"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "watch": "tsc -p . -w",
+    "lint": "tslint -c tslint.json 'typescript-json-schema.ts' 'helper/**/*.ts' 'src/**/*.ts'"
+  }
+}
