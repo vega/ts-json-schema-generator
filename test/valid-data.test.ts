@@ -9,6 +9,7 @@ import { createProgram } from "../factory/program";
 import { createParser } from "../factory/parser";
 import { createFormatter } from "../factory/formatter";
 
+import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator: Ajv.Ajv = new Ajv();
@@ -16,11 +17,16 @@ const basePath: string = "test/valid-data";
 
 function assertSchema(name: string, type: string): void {
     it(name, () => {
-        const program: ts.Program = createProgram(resolve(`${basePath}/${name}/*.ts`));
+        const config: Config = {
+            path: resolve(`${basePath}/${name}/*.ts`),
+            type: type,
+        };
+
+        const program: ts.Program = createProgram(config);
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
-            createParser(program),
-            createFormatter(),
+            createParser(program, config),
+            createFormatter(config),
         );
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));

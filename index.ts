@@ -5,6 +5,8 @@ export * from "./src/Error/NoRootTypeError";
 export * from "./src/Error/UnknownNodeError";
 export * from "./src/Error/UnknownTypeError";
 
+export * from "./src/Config";
+
 export * from "./src/Utils/Map";
 export * from "./src/Utils/uniqueArray";
 

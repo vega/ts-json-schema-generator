@@ -1,3 +1,5 @@
+import { Config } from "../src/Config";
+
 import { TypeFormatter } from "../src/TypeFormatter";
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
@@ -24,7 +26,7 @@ import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 
-export function createFormatter(): TypeFormatter {
+export function createFormatter(config: Config): TypeFormatter {
     const chainTypeFormatter: ChainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter: CircularReferenceTypeFormatter =
         new CircularReferenceTypeFormatter(chainTypeFormatter);

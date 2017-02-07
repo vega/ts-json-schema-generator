@@ -1,8 +1,12 @@
 import * as ts from "typescript";
 import * as glob from "glob";
+import * as path from "path";
+
+import { Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
 
-export function createProgram(pathGlob: string): ts.Program {
+export function createProgram(config: Config): ts.Program {
+    const pathGlob: string = path.resolve(config.path);
     const program: ts.Program = ts.createProgram(glob.sync(pathGlob), {
         noEmit: true,
         emitDecoratorMetadata: true,

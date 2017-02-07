@@ -1,5 +1,7 @@
 import * as ts from "typescript";
 
+import { Config } from "../src/Config";
+
 import { DefaultNameParser } from "../src/NameParser/DefaultNameParser";
 
 import { NodeParser } from "../src/NodeParser";
@@ -33,7 +35,7 @@ import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
 
-export function createParser(program: ts.Program): NodeParser {
+export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker: ts.TypeChecker = program.getTypeChecker();
     const chainNodeParser: ChainNodeParser = new ChainNodeParser(typeChecker, []);
 
