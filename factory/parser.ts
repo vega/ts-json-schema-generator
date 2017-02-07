@@ -60,12 +60,14 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
             new ExposeNodeParser(
                 typeChecker,
                 new TypeAliasNodeParser(typeChecker, chainNodeParser),
+                config.expose,
             ),
         )
         .addNodeParser(
             new ExposeNodeParser(
                 typeChecker,
                 new EnumNodeParser(typeChecker),
+                config.expose,
             ),
         )
         .addNodeParser(
@@ -73,6 +75,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
                 new ExposeNodeParser(
                     typeChecker,
                     new InterfaceNodeParser(typeChecker, chainNodeParser),
+                    config.expose,
                 ),
             ),
         )

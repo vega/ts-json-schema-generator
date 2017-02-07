@@ -11,10 +11,18 @@ import { DiagnosticError } from "./src/Error/DiagnosticError";
 const args: any = commander
     .option("-p, --path <path>", "Typescript path")
     .option("-t, --type <name>", "Type name")
+    .option(
+        "-e, --expose <expose>",
+        "Type exposing",
+        /^(all|none|export)$/,
+        "export",
+    )
     .parse(process.argv);
 const config: Config = {
     path: undefined,
     type: undefined,
+
+    expose: "export",
 
     ...args,
 };

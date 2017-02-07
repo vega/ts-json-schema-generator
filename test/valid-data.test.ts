@@ -20,6 +20,8 @@ function assertSchema(name: string, type: string): void {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
             type: type,
+
+            expose: "export",
         };
 
         const program: ts.Program = createProgram(config);

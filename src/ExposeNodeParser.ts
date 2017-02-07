@@ -8,6 +8,7 @@ export class ExposeNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
         private subNodeParser: SubNodeParser,
+        private expose: "all" | "none" | "export",
     ) {
     }
 
@@ -27,6 +28,12 @@ export class ExposeNodeParser implements SubNodeParser {
     }
 
     private isExportNode(node: ts.Node): boolean {
+        if (this.expose === "all") {
+            return true;
+        } else if (this.expose === "none") {
+            return false;
+        }
+
         const localSymbol: ts.Symbol = (node as any).localSymbol;
         return localSymbol ? (localSymbol.flags & ts.SymbolFlags.ExportType) !== 0 : false;
     }
