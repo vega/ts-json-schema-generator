@@ -35,6 +35,7 @@ import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
+import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
 
@@ -81,6 +82,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new TypeLiteralNodeParser(chainNodeParser))
         .addNodeParser(new UnionNodeParser(chainNodeParser))
+        .addNodeParser(new IntersectionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayNodeParser(chainNodeParser))
         .addNodeParser(new TupleNodeParser(chainNodeParser));
 

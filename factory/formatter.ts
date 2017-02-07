@@ -28,6 +28,7 @@ import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionType
 import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
+import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
 
 export function createFormatter(config: Config): TypeFormatter {
     const chainTypeFormatter: ChainTypeFormatter = new ChainTypeFormatter([]);
@@ -58,7 +59,8 @@ export function createFormatter(config: Config): TypeFormatter {
 
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter));
+        .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
 
     return circularReferenceTypeFormatter;
 }

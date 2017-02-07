@@ -89,6 +89,7 @@ describe("valid-data", () => {
     assertSchema("type-primitives", "MyObject");
     assertSchema("type-union", "TypeUnion");
     assertSchema("type-union-tagged", "Shape");
+    assertSchema("type-intersection", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-multiple", "MyObject");

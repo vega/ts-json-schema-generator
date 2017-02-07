@@ -38,7 +38,5 @@ describe("invalid-data", () => {
     // TODO: template recursive
 
     assertSchema("type-typeof", "MyType");
-    assertSchema("type-intersection", "MyType");
-
     assertSchema("script-empty", "MyType");
 });
