@@ -6,7 +6,6 @@ import { UnionType } from "../Type/UnionType";
 
 export class UnionNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }

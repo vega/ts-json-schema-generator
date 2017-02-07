@@ -6,7 +6,6 @@ import { TupleType } from "../Type/TupleType";
 
 export class TupleNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }

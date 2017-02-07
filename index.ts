@@ -30,9 +30,6 @@ export * from "./src/Type/EnumType";
 export * from "./src/Type/ReferenceType";
 export * from "./src/Type/DefinitionType";
 
-export * from "./src/NameParser";
-export * from "./src/NameParser/DefaultNameParser";
-
 export * from "./src/TypeFormatter";
 export * from "./src/SubTypeFormatter";
 export * from "./src/ChainTypeFormatter";
@@ -57,6 +54,7 @@ export * from "./src/TypeFormatter/LiteralUnionTypeFormatter";
 export * from "./src/NodeParser";
 export * from "./src/SubNodeParser";
 export * from "./src/ChainNodeParser";
+export * from "./src/ExposeNodeParser";
 export * from "./src/CircularReferenceNodeParser";
 export * from "./src/NodeParser/AnyTypeNodeParser";
 export * from "./src/NodeParser/VoidTypeNodeParser";

@@ -1,15 +1,12 @@
 import * as ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { NameParser } from "../NameParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
-import { DefinitionType } from "../Type/DefinitionType";
 
 export class EnumNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
-        private nameParser: NameParser,
     ) {
     }
 
@@ -17,18 +14,9 @@ export class EnumNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.EnumDeclaration;
     }
     public createType(node: ts.EnumDeclaration, context: Context): BaseType {
-        const enumType: EnumType = new EnumType(
-            this.nameParser.getTypeId(node, context),
+        return new EnumType(
+            `enum-${node.getFullStart()}`,
             node.members.map((member: ts.EnumMember, index: number) => this.getMemberValue(member, index)),
-        );
-
-        if (!this.nameParser.isExportNode(node)) {
-            return enumType;
-        }
-
-        return new DefinitionType(
-            this.nameParser.getDefinitionName(node, context),
-            enumType,
         );
     }
 

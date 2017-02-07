@@ -6,7 +6,6 @@ import { ArrayType } from "../Type/ArrayType";
 
 export class ArrayNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }

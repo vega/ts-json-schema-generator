@@ -1,16 +1,13 @@
 import * as ts from "typescript";
 import { NodeParser, Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { NameParser } from "../NameParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectType, ObjectProperty } from "../Type/ObjectType";
-import { DefinitionType } from "../Type/DefinitionType";
 
 export class InterfaceNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
-        private nameParser: NameParser,
     ) {
     }
 
@@ -25,19 +22,11 @@ export class InterfaceNodeParser implements SubNodeParser {
             });
         }
 
-        const objectType: ObjectType = new ObjectType(
-            this.nameParser.getTypeId(node, context),
+        return new ObjectType(
+            this.getTypeId(node, context),
             this.getBaseTypes(node, context),
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),
-        );
-        if (!this.nameParser.isExportNode(node)) {
-            return objectType;
-        }
-
-        return new DefinitionType(
-            this.nameParser.getDefinitionName(node, context),
-            objectType,
         );
     }
 
@@ -78,5 +67,12 @@ export class InterfaceNodeParser implements SubNodeParser {
 
         const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
         return this.childNodeParser.createType(signature.type, context);
+    }
+
+    private getTypeId(node: ts.Node, context: Context): string {
+        const fullName: string = `interface-${node.getFullStart()}`;
+        const argumentIds: string[] = context.getArguments().map((arg: BaseType) => arg.getId());
+
+        return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }
 }

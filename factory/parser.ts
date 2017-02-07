@@ -2,11 +2,10 @@ import * as ts from "typescript";
 
 import { Config } from "../src/Config";
 
-import { DefaultNameParser } from "../src/NameParser/DefaultNameParser";
-
 import { NodeParser } from "../src/NodeParser";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
+import { ExposeNodeParser } from "../src/ExposeNodeParser";
 
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
@@ -57,28 +56,31 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
 
-        .addNodeParser(new TypeAliasNodeParser(
-            typeChecker,
-            chainNodeParser,
-            new DefaultNameParser("alias-", typeChecker),
-        ))
-        .addNodeParser(new CircularReferenceNodeParser(new InterfaceNodeParser(
-            typeChecker,
-            chainNodeParser,
-            new DefaultNameParser("interface-", typeChecker),
-        )))
-        .addNodeParser(new TypeLiteralNodeParser(
-            chainNodeParser,
-            new DefaultNameParser("structure-", typeChecker),
-        ))
-        .addNodeParser(new EnumNodeParser(
-            typeChecker,
-            new DefaultNameParser("enum-", typeChecker),
-        ))
+        .addNodeParser(
+            new ExposeNodeParser(
+                typeChecker,
+                new TypeAliasNodeParser(typeChecker, chainNodeParser),
+            ),
+        )
+        .addNodeParser(
+            new ExposeNodeParser(
+                typeChecker,
+                new EnumNodeParser(typeChecker),
+            ),
+        )
+        .addNodeParser(
+            new CircularReferenceNodeParser(
+                new ExposeNodeParser(
+                    typeChecker,
+                    new InterfaceNodeParser(typeChecker, chainNodeParser),
+                ),
+            ),
+        )
 
-        .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(new ArrayNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser));
+        .addNodeParser(new TypeLiteralNodeParser(chainNodeParser))
+        .addNodeParser(new UnionNodeParser(chainNodeParser))
+        .addNodeParser(new ArrayNodeParser(chainNodeParser))
+        .addNodeParser(new TupleNodeParser(chainNodeParser));
 
     return chainNodeParser;
 }

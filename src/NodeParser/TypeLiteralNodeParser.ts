@@ -1,14 +1,12 @@
 import * as ts from "typescript";
 import { NodeParser, Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { NameParser } from "../NameParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
         private childNodeParser: NodeParser,
-        private nameParser: NameParser,
     ) {
     }
 
@@ -17,7 +15,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     }
     public createType(node: ts.TypeLiteralNode, context: Context): BaseType {
         return new ObjectType(
-            this.nameParser.getTypeId(node, context),
+            `structure-${node.getFullStart()}`,
             [],
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),
