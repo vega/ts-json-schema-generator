@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { NodeParser, Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { ArrayType } from "../Type/ArrayType";
 
 export class TypeReferenceNodeParser implements SubNodeParser {
     public constructor(
@@ -23,6 +24,8 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);
+        } else if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
+            return new ArrayType(this.createSubContext(node, context).getArguments()[0]);
         } else {
             return this.childNodeParser.createType(
                 typeSymbol.declarations[0],

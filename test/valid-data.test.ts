@@ -92,6 +92,7 @@ describe("valid-data", () => {
     assertSchema("type-intersection", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
+    assertSchema("generic-arrays", "MyObject");
     assertSchema("generic-multiple", "MyObject");
     assertSchema("generic-multiargs", "MyObject");
     assertSchema("generic-anonymous", "MyObject");
