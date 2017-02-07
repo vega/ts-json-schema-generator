@@ -1,0 +1,92 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "exportInterface": {
+                    "$ref": "#/definitions/ExportInterface"
+                },
+                "exportAlias": {
+                    "$ref": "#/definitions/ExportAlias"
+                },
+                "privateInterface": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "privateAlias": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "mixedInterface": {
+                    "type": "object",
+                    "properties": {
+                        "mixedValue": {
+                            "$ref": "#/definitions/ExportAlias"
+                        }
+                    },
+                    "required": [
+                        "mixedValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "mixedAlias": {
+                    "$ref": "#/definitions/MixedAlias"
+                }
+            },
+            "required": [
+                "exportInterface",
+                "exportAlias",
+                "privateInterface",
+                "privateAlias",
+                "mixedInterface",
+                "mixedAlias"
+            ],
+            "additionalProperties": false
+        },
+        "ExportInterface": {
+            "type": "object",
+            "properties": {
+                "exportValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "exportValue"
+            ],
+            "additionalProperties": false
+        },
+        "ExportAlias": {
+            "$ref": "#/definitions/ExportInterface"
+        },
+        "MixedAlias": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

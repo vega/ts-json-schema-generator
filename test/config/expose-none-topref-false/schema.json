@@ -1,0 +1,97 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "type": "object",
+    "properties": {
+        "exportInterface": {
+            "type": "object",
+            "properties": {
+                "exportValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "exportValue"
+            ],
+            "additionalProperties": false
+        },
+        "exportAlias": {
+            "type": "object",
+            "properties": {
+                "exportValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "exportValue"
+            ],
+            "additionalProperties": false
+        },
+        "privateInterface": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
+        },
+        "privateAlias": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
+        },
+        "mixedInterface": {
+            "type": "object",
+            "properties": {
+                "mixedValue": {
+                    "type": "object",
+                    "properties": {
+                        "exportValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "exportValue"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "mixedValue"
+            ],
+            "additionalProperties": false
+        },
+        "mixedAlias": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "required": [
+        "exportInterface",
+        "exportAlias",
+        "privateInterface",
+        "privateAlias",
+        "mixedInterface",
+        "mixedAlias"
+    ],
+    "additionalProperties": false
+}
