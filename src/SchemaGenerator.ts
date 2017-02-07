@@ -18,10 +18,7 @@ export class SchemaGenerator {
 
     public createSchema(fullName: string): Schema {
         const rootNode: ts.Node = this.findRootNode(fullName);
-        const rootType: DefinitionType = new DefinitionType(
-            fullName,
-            this.nodeParser.createType(rootNode, new Context()),
-        );
+        const rootType: BaseType = this.nodeParser.createType(rootNode, new Context());
 
         return {
             $schema: "http://json-schema.org/draft-04/schema#",
@@ -81,10 +78,10 @@ export class SchemaGenerator {
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
 
-    private getRootTypeDefinition(rootType: DefinitionType): Definition {
-        return this.typeFormatter.getDefinition(rootType.getType());
+    private getRootTypeDefinition(rootType: BaseType): Definition {
+        return this.typeFormatter.getDefinition(rootType);
     }
-    private getRootChildDefinitions(rootType: DefinitionType): Map<Definition> {
+    private getRootChildDefinitions(rootType: BaseType): Map<Definition> {
         return this.typeFormatter.getChildren(rootType)
             .filter((child: BaseType) => child instanceof DefinitionType)
             .reduce((result: Map<Definition>, child: DefinitionType) => ({
