@@ -72,7 +72,6 @@ export * from "./src/NodeParser/InterfaceNodeParser";
 export * from "./src/NodeParser/ParenthesizedNodeParser";
 export * from "./src/NodeParser/TypeAliasNodeParser";
 export * from "./src/NodeParser/TypeLiteralNodeParser";
-export * from "./src/NodeParser/TypeQueryNodeParser";
 export * from "./src/NodeParser/TypeReferenceNodeParser";
 export * from "./src/NodeParser/ArrayNodeParser";
 export * from "./src/NodeParser/UnionNodeParser";
