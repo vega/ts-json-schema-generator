@@ -27,6 +27,7 @@ export * from "./src/Type/UnionType";
 export * from "./src/Type/TupleType";
 export * from "./src/Type/ObjectType";
 export * from "./src/Type/EnumType";
+export * from "./src/Type/AliasType";
 export * from "./src/Type/ReferenceType";
 export * from "./src/Type/DefinitionType";
 
@@ -46,6 +47,7 @@ export * from "./src/TypeFormatter/TupleTypeFormatter";
 export * from "./src/TypeFormatter/UnionTypeFormatter";
 export * from "./src/TypeFormatter/ObjectTypeFormatter";
 export * from "./src/TypeFormatter/EnumTypeFormatter";
+export * from "./src/TypeFormatter/AliasTypeFormatter";
 export * from "./src/TypeFormatter/ReferenceTypeFormatter";
 export * from "./src/TypeFormatter/DefinitionTypeFormatter";
 export * from "./src/TypeFormatter/PrimitiveUnionTypeFormatter";

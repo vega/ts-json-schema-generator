@@ -18,6 +18,7 @@ import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
 import { ReferenceTypeFormatter } from "../src/TypeFormatter/ReferenceTypeFormatter";
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
 import { ObjectTypeFormatter } from "../src/TypeFormatter/ObjectTypeFormatter";
+import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter";
 
 import { PrimitiveUnionTypeFormatter } from "../src/TypeFormatter/PrimitiveUnionTypeFormatter";
 import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter";
@@ -46,6 +47,7 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new ReferenceTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new DefinitionTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new ObjectTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new AliasTypeFormatter(circularReferenceTypeFormatter))
 
         .addTypeFormatter(new PrimitiveUnionTypeFormatter())
         .addTypeFormatter(new LiteralUnionTypeFormatter())
