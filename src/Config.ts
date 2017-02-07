@@ -3,4 +3,5 @@ export interface Config {
     type: string;
 
     expose: "all" | "none" | "export";
+    topRef: boolean;
 }

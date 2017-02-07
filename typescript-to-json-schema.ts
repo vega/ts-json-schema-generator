@@ -17,12 +17,19 @@ const args: any = commander
         /^(all|none|export)$/,
         "export",
     )
+    .option(
+        "-r, --topRef <topRef>",
+        "Create a top-level $ref definition",
+        (v: any) => v === "true" || v === "yes" || v === "1",
+        true,
+    )
     .parse(process.argv);
 const config: Config = {
     path: undefined,
     type: undefined,
 
     expose: "export",
+    topRef: true,
 
     ...args,
 };

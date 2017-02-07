@@ -6,6 +6,7 @@ import { NodeParser } from "../src/NodeParser";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
+import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
@@ -85,5 +86,9 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new ArrayNodeParser(chainNodeParser))
         .addNodeParser(new TupleNodeParser(chainNodeParser));
 
-    return chainNodeParser;
+    return new TopRefNodeParser(
+        chainNodeParser,
+        config.type,
+        config.topRef,
+    );
 }

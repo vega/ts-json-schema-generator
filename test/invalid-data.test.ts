@@ -19,6 +19,7 @@ function assertSchema(name: string, type: string): void {
             type: type,
 
             expose: "export",
+            topRef: true,
         };
 
         const program: ts.Program = createProgram(config);
