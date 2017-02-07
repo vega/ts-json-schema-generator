@@ -1,0 +1,61 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "stringValue": {
+                    "type": "string",
+                    "title": "String field title",
+                    "minLength": 10,
+                    "format": "date-time",
+                    "pattern": "/^\\d+$/"
+                },
+                "numberValue": {
+                    "type": "number",
+                    "title": "Number field title",
+                    "maximum": 10,
+                    "exclusiveMaximum": true,
+                    "multipleOf": 3
+                },
+                "privateString": {
+                    "type": "string",
+                    "title": "My private string",
+                    "description": "Export field description",
+                    "default": "private"
+                },
+                "exportString": {
+                    "$ref": "#/definitions/MyExportString",
+                    "description": "Export field description",
+                    "default": {"length": 10}
+                },
+                "numberArray": {
+                    "$ref": "#/definitions/MyNonEmptyArray<number>",
+                    "title": "Non empty array"
+                }
+            },
+            "required": [
+                "stringValue",
+                "numberValue",
+                "exportString",
+                "privateString",
+                "numberArray"
+            ],
+            "additionalProperties": false,
+            "description": "Some description here",
+            "title": "Some title here"
+        },
+        "MyExportString": {
+            "type": "string",
+            "title": "My export string"
+        },
+        "MyNonEmptyArray<number>": {
+            "type": "array",
+            "items": {
+                "type": "number"
+            },
+            "minItems": 1
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

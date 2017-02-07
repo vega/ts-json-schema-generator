@@ -3,10 +3,13 @@ import * as ts from "typescript";
 import { Config } from "../src/Config";
 
 import { NodeParser } from "../src/NodeParser";
+import { SubNodeParser } from "../src/SubNodeParser";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+
+import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
 
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
@@ -39,6 +42,19 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker: ts.TypeChecker = program.getTypeChecker();
     const chainNodeParser: ChainNodeParser = new ChainNodeParser(typeChecker, []);
 
+    function withExpose(nodeParser: SubNodeParser): SubNodeParser {
+        return new ExposeNodeParser(typeChecker, nodeParser, config.expose);
+    }
+    function withTopRef(nodeParser: NodeParser): NodeParser {
+        return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
+    }
+    function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
+        return config.jsDoc ? new AnnotatedNodeParser(nodeParser) : nodeParser;
+    }
+    function withCircular(nodeParser: SubNodeParser): SubNodeParser {
+        return new CircularReferenceNodeParser(nodeParser);
+    }
+
     chainNodeParser
         .addNodeParser(new StringTypeNodeParser())
         .addNodeParser(new NumberTypeNodeParser())
@@ -57,38 +73,16 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
 
-        .addNodeParser(
-            new ExposeNodeParser(
-                typeChecker,
-                new TypeAliasNodeParser(typeChecker, chainNodeParser),
-                config.expose,
-            ),
-        )
-        .addNodeParser(
-            new ExposeNodeParser(
-                typeChecker,
-                new EnumNodeParser(typeChecker),
-                config.expose,
-            ),
-        )
-        .addNodeParser(
-            new CircularReferenceNodeParser(
-                new ExposeNodeParser(
-                    typeChecker,
-                    new InterfaceNodeParser(typeChecker, chainNodeParser),
-                    config.expose,
-                ),
-            ),
-        )
+        .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser))))
+        .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(
+            new InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser)),
+        ))))
 
         .addNodeParser(new TypeLiteralNodeParser(chainNodeParser))
         .addNodeParser(new UnionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayNodeParser(chainNodeParser))
         .addNodeParser(new TupleNodeParser(chainNodeParser));
 
-    return new TopRefNodeParser(
-        chainNodeParser,
-        config.type,
-        config.topRef,
-    );
+    return withTopRef(chainNodeParser);
 }

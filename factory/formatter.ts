@@ -4,6 +4,8 @@ import { TypeFormatter } from "../src/TypeFormatter";
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
 
+import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter";
+
 import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
 import { NumberTypeFormatter } from "../src/TypeFormatter/NumberTypeFormatter";
 import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
@@ -33,6 +35,8 @@ export function createFormatter(config: Config): TypeFormatter {
         new CircularReferenceTypeFormatter(chainTypeFormatter);
 
     chainTypeFormatter
+        .addTypeFormatter(new AnnotatedTypeFormatter(circularReferenceTypeFormatter))
+
         .addTypeFormatter(new StringTypeFormatter())
         .addTypeFormatter(new NumberTypeFormatter())
         .addTypeFormatter(new BooleanTypeFormatter())

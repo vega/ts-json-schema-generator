@@ -30,6 +30,7 @@ export * from "./src/Type/EnumType";
 export * from "./src/Type/AliasType";
 export * from "./src/Type/ReferenceType";
 export * from "./src/Type/DefinitionType";
+export * from "./src/Type/AnnotatedType";
 
 export * from "./src/TypeFormatter";
 export * from "./src/SubTypeFormatter";
@@ -52,6 +53,7 @@ export * from "./src/TypeFormatter/ReferenceTypeFormatter";
 export * from "./src/TypeFormatter/DefinitionTypeFormatter";
 export * from "./src/TypeFormatter/PrimitiveUnionTypeFormatter";
 export * from "./src/TypeFormatter/LiteralUnionTypeFormatter";
+export * from "./src/TypeFormatter/AnnotatedTypeFormatter";
 
 export * from "./src/NodeParser";
 export * from "./src/SubNodeParser";
@@ -79,5 +81,6 @@ export * from "./src/NodeParser/TypeReferenceNodeParser";
 export * from "./src/NodeParser/ArrayNodeParser";
 export * from "./src/NodeParser/UnionNodeParser";
 export * from "./src/NodeParser/TupleNodeParser";
+export * from "./src/NodeParser/AnnotatedNodeParser";
 
 export * from "./src/SchemaGenerator";

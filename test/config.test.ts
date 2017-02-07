@@ -15,7 +15,13 @@ import { SchemaGenerator } from "../src/SchemaGenerator";
 const validator: Ajv.Ajv = new Ajv();
 const basePath: string = "test/config";
 
-function assertSchema(name: string, type: string, expose: "all" | "none" | "export", topRef: boolean): void {
+function assertSchema(
+    name: string,
+    type: string,
+    expose: "all" | "none" | "export",
+    topRef: boolean,
+    jsDoc: boolean,
+): void {
     it(name, () => {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
@@ -23,6 +29,7 @@ function assertSchema(name: string, type: string, expose: "all" | "none" | "expo
 
             expose: expose,
             topRef: topRef,
+            jsDoc: jsDoc,
         };
 
         const program: ts.Program = createProgram(config);
@@ -44,12 +51,14 @@ function assertSchema(name: string, type: string, expose: "all" | "none" | "expo
 }
 
 describe("config", () => {
-    assertSchema("expose-all-topref-true", "MyObject", "all", true);
-    assertSchema("expose-all-topref-false", "MyObject", "all", false);
+    assertSchema("expose-all-topref-true", "MyObject", "all", true, false);
+    assertSchema("expose-all-topref-false", "MyObject", "all", false, false);
 
-    assertSchema("expose-none-topref-true", "MyObject", "none", true);
-    assertSchema("expose-none-topref-false", "MyObject", "none", false);
+    assertSchema("expose-none-topref-true", "MyObject", "none", true, false);
+    assertSchema("expose-none-topref-false", "MyObject", "none", false, false);
 
-    assertSchema("expose-export-topref-true", "MyObject", "export", true);
-    assertSchema("expose-export-topref-false", "MyObject", "export", false);
+    assertSchema("expose-export-topref-true", "MyObject", "export", true, false);
+    assertSchema("expose-export-topref-false", "MyObject", "export", false, false);
+
+    assertSchema("jsdoc-complex", "MyObject", "export", true, true);
 });
