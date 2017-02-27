@@ -8,10 +8,6 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 * this implementation does not use `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
 * the following features are not supported yet:
-  * JSDoc annotations (planned)
-  * command line options (planned)
-  * `Array<Type>` notation (planned)
-  * `T & U` type intersection (planned)
   * `class` types (not planned)
   * `typeof` types (not planned)
 * processing AST and formatting JSON schema have been split into two independent steps
@@ -23,7 +19,10 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 npm install typescript-to-json-schema
 ./node_modules/.bin/typescript-to-json-schema \
     --path 'my/project/**.*.ts' \
-    --type 'My.Type.Full.Name'
+    --type 'My.Type.Full.Name' \
+    --expose 'export' \
+    --topRef 'yes' \
+    --jsDoc 'yes'
 ```
 
 ## Current state
