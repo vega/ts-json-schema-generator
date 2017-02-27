@@ -15,21 +15,19 @@ import { SchemaGenerator } from "../src/SchemaGenerator";
 const validator: Ajv.Ajv = new Ajv();
 const basePath: string = "test/config";
 
-function assertSchema(
-    name: string,
-    type: string,
-    expose: "all" | "none" | "export",
-    topRef: boolean,
-    jsDoc: boolean,
-): void {
+type PartialConfig = {
+    [Key in keyof Config]?: Config[Key];
+};
+
+function assertSchema(name: string, partialConfig: PartialConfig): void {
     it(name, () => {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
-            type: type,
+            type: partialConfig.type,
 
-            expose: expose,
-            topRef: topRef,
-            jsDoc: jsDoc,
+            expose: partialConfig.expose,
+            topRef: partialConfig.topRef,
+            jsDoc: partialConfig.jsDoc,
         };
 
         const program: ts.Program = createProgram(config);
@@ -40,7 +38,7 @@ function assertSchema(
         );
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(type)));
+        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
 
         assert.isObject(actual);
         assert.deepEqual(actual, expected);
@@ -51,14 +49,14 @@ function assertSchema(
 }
 
 describe("config", () => {
-    assertSchema("expose-all-topref-true", "MyObject", "all", true, false);
-    assertSchema("expose-all-topref-false", "MyObject", "all", false, false);
+    assertSchema("expose-all-topref-true", {type: "MyObject", expose: "all", topRef: true, jsDoc: false});
+    assertSchema("expose-all-topref-false", {type: "MyObject", expose: "all", topRef: false, jsDoc: false});
 
-    assertSchema("expose-none-topref-true", "MyObject", "none", true, false);
-    assertSchema("expose-none-topref-false", "MyObject", "none", false, false);
+    assertSchema("expose-none-topref-true", {type: "MyObject", expose: "none", topRef: true, jsDoc: false});
+    assertSchema("expose-none-topref-false", {type: "MyObject", expose: "none", topRef: false, jsDoc: false});
 
-    assertSchema("expose-export-topref-true", "MyObject", "export", true, false);
-    assertSchema("expose-export-topref-false", "MyObject", "export", false, false);
+    assertSchema("expose-export-topref-true", {type: "MyObject", expose:  "export", topRef: true, jsDoc: false});
+    assertSchema("expose-export-topref-false", {type: "MyObject", expose: "export", topRef: false, jsDoc: false});
 
-    assertSchema("jsdoc-complex", "MyObject", "export", true, true);
+    assertSchema("jsdoc-complex", {type: "MyObject", expose: "export", topRef: true, jsDoc: true});
 });
