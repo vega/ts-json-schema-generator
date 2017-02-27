@@ -10,7 +10,7 @@ export class UnknownNodeError extends BaseError {
         return "UnknownNodeError";
     }
     public get message(): string {
-        return `Unknown node: {kind: ${this.node.kind}}`;
+        return `Unknown node "${this.node.getFullText()}`;
     }
 
     public getNode(): ts.Node {

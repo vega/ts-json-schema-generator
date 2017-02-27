@@ -10,7 +10,7 @@ export class UnknownTypeError extends BaseError {
         return "UnknownTypeError";
     }
     public get message(): string {
-        return `Unknown type: {id: ${this.type.getId()}}`;
+        return `Unknown type "${this.type.getId()}"`;
     }
 
     public getType(): BaseType {
