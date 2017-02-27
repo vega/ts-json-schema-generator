@@ -9,6 +9,7 @@ export * from "./src/Config";
 
 export * from "./src/Utils/Map";
 export * from "./src/Utils/uniqueArray";
+export * from "./src/Utils/formatError";
 
 export * from "./src/Schema/Definition";
 export * from "./src/Schema/Schema";

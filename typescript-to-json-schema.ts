@@ -1,12 +1,11 @@
-import * as ts from "typescript";
-import * as path from "path";
 import * as commander from "commander";
 
 import { createGenerator } from "./factory/generator";
+import { formatError } from "./src/Utils/formatError";
 
 import { Config } from "./src/Config";
 import { Schema } from "./src/Schema/Schema";
-import { DiagnosticError } from "./src/Error/DiagnosticError";
+import { BaseError } from "./src/Error/BaseError";
 
 const args: any = commander
     .option("-p, --path <path>", "Typescript path")
@@ -45,15 +44,10 @@ try {
     const schema: Schema = createGenerator(config).createSchema(args.type);
     process.stdout.write(JSON.stringify(schema, null, 2));
 } catch (error) {
-    if (error instanceof DiagnosticError) {
-        const errorMessage: string = ts.formatDiagnostics(error.getDiagnostics(), {
-            getCanonicalFileName: (fileName: string) => fileName,
-            getCurrentDirectory: () => path.resolve(path.dirname(args.path)),
-            getNewLine: () => "\n",
-        });
-        process.stderr.write(errorMessage);
+    if (error instanceof BaseError) {
+        process.stderr.write(formatError(error));
         process.exit(1);
+    } else {
+        throw error;
     }
-
-    throw error;
 }
