@@ -4,10 +4,39 @@ import * as path from "path";
 
 import { Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
+import { LogicError } from "../src/Error/LogicError";
 
-export function createProgram(config: Config): ts.Program {
-    const pathGlob: string = path.resolve(config.path);
-    const program: ts.Program = ts.createProgram(glob.sync(pathGlob), {
+function createProgramFromConfig(configFile: string): ts.Program {
+    const config: {config?: any; error?: ts.Diagnostic} = ts.parseConfigFileTextToJson(
+        configFile,
+        ts.sys.readFile(configFile),
+    );
+    if (config.error) {
+        throw new DiagnosticError([config.error]);
+    } else if (!config.config) {
+        throw new LogicError(`Invalid parsed config file "${configFile}"`);
+    }
+
+    const parseResult: ts.ParsedCommandLine = ts.parseJsonConfigFileContent(
+        config.config,
+        ts.sys,
+        path.dirname(configFile),
+        {},
+        configFile,
+    );
+    parseResult.options.noEmit = true;
+    delete parseResult.options.out;
+    delete parseResult.options.outDir;
+    delete parseResult.options.outFile;
+    delete parseResult.options.declaration;
+
+    return ts.createProgram(
+        parseResult.fileNames,
+        parseResult.options,
+    );
+}
+function createProgramFromGlob(fileGlob: string): ts.Program {
+    return ts.createProgram(glob.sync(path.resolve(fileGlob)), {
         noEmit: true,
         emitDecoratorMetadata: true,
         experimentalDecorators: true,
@@ -15,6 +44,12 @@ export function createProgram(config: Config): ts.Program {
         module: ts.ModuleKind.CommonJS,
         strictNullChecks: false,
     });
+}
+
+export function createProgram(config: Config): ts.Program {
+    const program: ts.Program = path.extname(config.path) === ".json" ?
+        createProgramFromConfig(config.path) :
+        createProgramFromGlob(config.path);
 
     const diagnostics: ts.Diagnostic[] = ts.getPreEmitDiagnostics(program);
     if (diagnostics.length) {

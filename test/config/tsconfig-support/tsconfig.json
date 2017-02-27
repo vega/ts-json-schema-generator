@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "isolatedModules": false,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "declaration": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "suppressExcessPropertyErrors": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "strictNullChecks": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "noLib": false,
+        "lib": ["es2015"],
+        "typeRoots": ["../../../node_modules/@types"]
+    },
+    "include": [
+        "index.ts",
+        "src/**/*.ts"
+    ]
+}

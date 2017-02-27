@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "subObject": {
+                    "$ref": "#/definitions/MySubObject"
+                },
+                "fromTypes": {
+                    "$ref": "#/definitions/ts.LineAndCharacter"
+                }
+            },
+            "required": [
+                "subObject",
+                "fromTypes"
+            ],
+            "additionalProperties": false
+        },
+        "MySubObject": {
+            "type": "object",
+            "properties": {
+                "subValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "subValue"
+            ],
+            "additionalProperties": false
+        },
+        "ts.LineAndCharacter": {
+            "type": "object",
+            "properties": {
+                "line": {
+                    "type": "number"
+                },
+                "character": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "line",
+                "character"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}
