@@ -35,7 +35,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     }
 
     private createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {
-        const subContext: Context = new Context();
+        const subContext: Context = new Context(node);
         if (node.typeArguments && node.typeArguments.length) {
             node.typeArguments.forEach((typeArg: ts.TypeNode) => {
                 subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));

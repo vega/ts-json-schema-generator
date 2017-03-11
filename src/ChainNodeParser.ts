@@ -20,16 +20,16 @@ export class ChainNodeParser implements SubNodeParser {
         return this.nodeParsers.some((nodeParser: SubNodeParser) => nodeParser.supportsNode(node));
     }
     public createType(node: ts.Node, context: Context): BaseType {
-        return this.getNodeParser(node).createType(node, context);
+        return this.getNodeParser(node, context).createType(node, context);
     }
 
-    private getNodeParser(node: ts.Node): SubNodeParser {
+    private getNodeParser(node: ts.Node, context: Context): SubNodeParser {
         for (const nodeParser of this.nodeParsers) {
             if (nodeParser.supportsNode(node)) {
                 return nodeParser;
             }
         }
 
-        throw new UnknownNodeError(node);
+        throw new UnknownNodeError(node, context.getReference());
     }
 }

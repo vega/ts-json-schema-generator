@@ -4,6 +4,11 @@ import { BaseType } from "./Type/BaseType";
 export class Context {
     private arguments: BaseType[] = [];
     private parameters: string[] = [];
+    private reference: ts.Node;
+
+    public constructor(reference?: ts.Node) {
+        this.reference = reference;
+    }
 
     public pushArgument(argumentType: BaseType): void {
         this.arguments.push(argumentType);
@@ -22,6 +27,10 @@ export class Context {
     }
     public getArguments(): BaseType[] {
         return this.arguments;
+    }
+
+    public getReference(): ts.Node {
+        return this.reference;
     }
 }
 
