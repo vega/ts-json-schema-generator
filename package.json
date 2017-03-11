@@ -38,16 +38,16 @@
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^3.4.34",
+    "@types/chai": "^3.4.35",
     "@types/glob": "^5.0.30",
-    "@types/mocha": "^2.2.37",
-    "@types/node": "^7.0.0",
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.8",
     "@types/commander": "^2.3.31",
-    "ajv": "~4.10.4",
+    "ajv": "~4.11.4",
     "chai": "~3.5.0",
     "mocha": "~3.2.0",
     "source-map-support": "~0.4.8",
-    "tslint": "~4.3.1"
+    "tslint": "~4.5.1"
   },
   "scripts": {
     "prepublish": "npm run build",
