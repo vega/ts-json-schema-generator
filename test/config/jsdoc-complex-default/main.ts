@@ -11,14 +11,20 @@ export interface MyObject {
      */
     stringValue: string;
     /**
+     * This field is of integer type.
+     * Integer!
+     *
      * @title Number field title
      * @maximum 10
      * @exclusiveMaximum true
      * @multipleOf 3
+     * @asType integer
      */
     numberValue: number;
 
     /**
+     * Some ignored comment description
+     *
      * @description Export field description
      * @default {"length": 10}
      */

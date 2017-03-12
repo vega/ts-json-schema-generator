@@ -49,14 +49,16 @@ function assertSchema(name: string, partialConfig: PartialConfig): void {
 }
 
 describe("config", () => {
-    assertSchema("expose-all-topref-true", {type: "MyObject", expose: "all", topRef: true, jsDoc: false});
-    assertSchema("expose-all-topref-false", {type: "MyObject", expose: "all", topRef: false, jsDoc: false});
+    assertSchema("expose-all-topref-true", {type: "MyObject", expose: "all", topRef: true, jsDoc: "none"});
+    assertSchema("expose-all-topref-false", {type: "MyObject", expose: "all", topRef: false, jsDoc: "none"});
 
-    assertSchema("expose-none-topref-true", {type: "MyObject", expose: "none", topRef: true, jsDoc: false});
-    assertSchema("expose-none-topref-false", {type: "MyObject", expose: "none", topRef: false, jsDoc: false});
+    assertSchema("expose-none-topref-true", {type: "MyObject", expose: "none", topRef: true, jsDoc: "none"});
+    assertSchema("expose-none-topref-false", {type: "MyObject", expose: "none", topRef: false, jsDoc: "none"});
 
-    assertSchema("expose-export-topref-true", {type: "MyObject", expose:  "export", topRef: true, jsDoc: false});
-    assertSchema("expose-export-topref-false", {type: "MyObject", expose: "export", topRef: false, jsDoc: false});
+    assertSchema("expose-export-topref-true", {type: "MyObject", expose:  "export", topRef: true, jsDoc: "none"});
+    assertSchema("expose-export-topref-false", {type: "MyObject", expose: "export", topRef: false, jsDoc: "none"});
 
-    assertSchema("jsdoc-complex", {type: "MyObject", expose: "export", topRef: true, jsDoc: true});
+    assertSchema("jsdoc-complex-none", {type: "MyObject", expose: "export", topRef: true, jsDoc: "none"});
+    assertSchema("jsdoc-complex-default", {type: "MyObject", expose: "export", topRef: true, jsDoc: "default"});
+    assertSchema("jsdoc-complex-extended", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 });

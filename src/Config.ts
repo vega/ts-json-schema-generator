@@ -4,5 +4,5 @@ export interface Config {
 
     expose: "all" | "none" | "export";
     topRef: boolean;
-    jsDoc: boolean;
+    jsDoc: "none" | "extended" | "default";
 }

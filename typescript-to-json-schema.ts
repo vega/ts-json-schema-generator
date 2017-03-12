@@ -25,8 +25,8 @@ const args: any = commander
     .option(
         "-j, --jsDoc <topRef>",
         "Read JsDoc annotations",
-        (v: any) => v === "true" || v === "yes" || v === "1",
-        false,
+        /^(extended|none|default)$/,
+        "none",
     )
     .parse(process.argv);
 const config: Config = {
@@ -35,7 +35,7 @@ const config: Config = {
 
     expose: "export",
     topRef: true,
-    jsDoc: false,
+    jsDoc: "none",
 
     ...args,
 };
