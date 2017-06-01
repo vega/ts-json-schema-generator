@@ -34,3 +34,9 @@ npm install typescript-to-json-schema
 * `"value"`, `123`, `true`, `false`, `null` literals
 * type aliases
 * generics
+
+## Debug
+
+`npm run debug -- test/programs/type-alias-single/main.ts --aliasRefs true MyString`
+
+And connect via the debugger protocol.
