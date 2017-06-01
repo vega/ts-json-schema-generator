@@ -39,7 +39,7 @@ export function formatError(error: BaseError): string {
         const unknownNode: ts.Node = error.getReference() || error.getNode();
         const nodeFullText: string = unknownNode.getFullText().trim().split("\n")[0].trim();
         const [sourceFile, lineNumber, charPos]: [string, number, number] = getNodeLocation(unknownNode);
-        return `${error.name}: Unknown node "${nodeFullText}" at ${sourceFile}(${lineNumber},${charPos})\n`;
+        return `${error.name}: Unknown node "${nodeFullText}" (${unknownNode.kind}) at ${sourceFile}(${lineNumber},${charPos})\n`;
     }
 
     return `${error.name}: ${error.message}\n`;
