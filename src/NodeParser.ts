@@ -20,7 +20,7 @@ export class Context {
     public getArgument(parameterName: string): BaseType {
         const index: number = this.parameters.indexOf(parameterName);
         if (index < 0 || !this.arguments[index]) {
-            throw new Error(`Could not found type parameter "${parameterName}"`);
+            throw new Error(`Could not find type parameter "${parameterName}"`);
         }
 
         return this.arguments[index];
