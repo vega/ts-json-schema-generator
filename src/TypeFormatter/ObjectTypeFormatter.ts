@@ -36,7 +36,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(type: ObjectType): BaseType[] {
         const properties: ObjectProperty[] = type.getProperties();
-        const additionalProperties: BaseType|boolean = type.getAdditionalProperties();
+        const additionalProperties: BaseType|false = type.getAdditionalProperties();
 
         return [
             ...type.getBaseTypes().reduce((result: BaseType[], baseType: BaseType) => [
@@ -57,7 +57,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
 
     private getObjectDefinition(type: ObjectType): Definition {
         const properties: ObjectProperty[] = type.getProperties();
-        const additionalProperties: BaseType|boolean = type.getAdditionalProperties();
+        const additionalProperties: BaseType|false = type.getAdditionalProperties();
 
         return {
             type: "object",
