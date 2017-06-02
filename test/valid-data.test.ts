@@ -90,6 +90,7 @@ describe("valid-data", () => {
     assertSchema("type-union", "TypeUnion");
     assertSchema("type-union-tagged", "Shape");
     assertSchema("type-intersection", "MyObject");
+    assertSchema("type-intersection-additional-props", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
