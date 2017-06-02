@@ -5,13 +5,19 @@
             "type": "object",
             "properties": {
                 "value": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/Type1"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "value1": {
+                            "type": "string"
                         },
-                        {
-                            "$ref": "#/definitions/Type2"
+                        "value2": {
+                            "type": "number"
                         }
+                    },
+                    "required": [
+                        "value1",
+                        "value2"
                     ]
                 }
             },

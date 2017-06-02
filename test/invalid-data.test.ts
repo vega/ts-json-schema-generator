@@ -37,6 +37,5 @@ function assertSchema(name: string, type: string): void {
 describe("invalid-data", () => {
     // TODO: template recursive
 
-    assertSchema("type-typeof", "MyType");
     assertSchema("script-empty", "MyType");
 });

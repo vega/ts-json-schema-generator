@@ -13,6 +13,9 @@ import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator: Ajv.Ajv = new Ajv();
+const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
+validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
+
 const basePath: string = "test/valid-data";
 
 function assertSchema(name: string, type: string): void {
@@ -91,6 +94,8 @@ describe("valid-data", () => {
     assertSchema("type-union-tagged", "Shape");
     assertSchema("type-intersection", "MyObject");
     assertSchema("type-intersection-additional-props", "MyObject");
+
+    assertSchema("type-typeof", "MyType");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");

@@ -37,7 +37,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 return result;
             }, []);
     }
-    private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType|boolean {
+    private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType|false {
         const properties: ts.TypeElement[] = node.members
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
         if (!properties.length) {

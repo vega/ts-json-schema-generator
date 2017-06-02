@@ -19,7 +19,7 @@
       true,
       "spaces"
     ],
-    "interface-name": false,
+    "interface-name": [false],
     "jsdoc-format": true,
     "label-position": true,
     "max-line-length": [
@@ -35,7 +35,7 @@
     "no-arg": true,
     "no-bitwise": false,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": false,
+    "no-consecutive-blank-lines": [false],
     "no-console": [
       true,
       "debug",
@@ -49,10 +49,9 @@
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
-    "no-inferrable-types": false,
+    "no-inferrable-types": [false],
     "no-internal-module": true,
     "no-null-keyword": false,
-    "no-require-imports": true,
     "no-shadowed-variable": true,
     "no-string-literal": true,
     "no-switch-case-fall-through": true,
@@ -60,7 +59,6 @@
     "no-unused-expression": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
-    "no-var-requires": true,
     "object-literal-sort-keys": false,
     "one-line": [
       true,
@@ -94,7 +92,6 @@
     ],
     "typedef": [
       true,
-      "call-signature",
       "parameter",
       "arrow-parameter",
       "property-declaration",

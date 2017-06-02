@@ -1,4 +1,4 @@
-export type PrimitiveType = number | boolean | string | null;
+export type RawType = number | boolean | string | null;
 
 export interface Definition {
     $ref?: string;
@@ -15,8 +15,8 @@ export interface Definition {
     additionalItems?: {
         anyOf: Definition,
     };
-    enum?: PrimitiveType[] | Definition[];
-    default?: PrimitiveType | Object;
+    enum?: RawType[] | Definition[];
+    default?: RawType | Object;
     additionalProperties?: false | Definition;
     required?: string[];
     propertyOrder?: string[];
@@ -24,4 +24,4 @@ export interface Definition {
     defaultProperties?: string[];
 
     typeof?: "function";
-};
+}

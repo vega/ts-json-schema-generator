@@ -13,6 +13,9 @@ import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator: Ajv.Ajv = new Ajv();
+const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
+validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
+
 const basePath: string = "test/config";
 
 type PartialConfig = {

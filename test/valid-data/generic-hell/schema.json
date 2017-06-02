@@ -1,95 +1,35 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "definitions": {
-        "B": {
+        "MyObject": {
             "type": "object",
             "properties": {
+                "someGeneric": {
+                    "$ref": "#/definitions/SomeGeneric<1,2>"
+                },
+                "someAlias": {
+                    "$ref": "#/definitions/SomeAlias<\"alias\">"
+                },
+                "c": {
+                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
+                },
                 "b": {
                     "type": "number"
                 }
             },
             "required": [
-                "b"
+                "b",
+                "c",
+                "someAlias",
+                "someGeneric"
             ],
             "additionalProperties": false
         },
-        "GenericA<\"alias\">": {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "type": "string",
-                    "enum": [
-                        "alias"
-                    ]
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "additionalProperties": false
-        },
-        "GenericA<1>": {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "type": "number",
-                    "enum": [
-                        1
-                    ]
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "additionalProperties": false
-        },
-        "GenericA<string>": {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "additionalProperties": false
-        },
-        "GenericC<\"alias\">": {
+        "GenericC<GenericC<GenericC<GenericA<string>>>>": {
             "type": "object",
             "properties": {
                 "c": {
-                    "type": "string",
-                    "enum": [
-                        "alias"
-                    ]
-                }
-            },
-            "required": [
-                "c"
-            ],
-            "additionalProperties": false
-        },
-        "GenericC<2>": {
-            "type": "object",
-            "properties": {
-                "c": {
-                    "type": "number",
-                    "enum": [
-                        2
-                    ]
-                }
-            },
-            "required": [
-                "c"
-            ],
-            "additionalProperties": false
-        },
-        "GenericC<GenericA<string>>": {
-            "type": "object",
-            "properties": {
-                "c": {
-                    "$ref": "#/definitions/GenericA<string>"
+                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
                 }
             },
             "required": [
@@ -109,11 +49,11 @@
             ],
             "additionalProperties": false
         },
-        "GenericC<GenericC<GenericC<GenericA<string>>>>": {
+        "GenericC<GenericA<string>>": {
             "type": "object",
             "properties": {
                 "c": {
-                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
+                    "$ref": "#/definitions/GenericA<string>"
                 }
             },
             "required": [
@@ -121,31 +61,89 @@
             ],
             "additionalProperties": false
         },
-        "MyObject": {
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "someAlias": {
-                            "$ref": "#/definitions/SomeAlias<\"alias\">"
-                        },
-                        "someGeneric": {
-                            "$ref": "#/definitions/SomeGeneric<1,2>"
-                        }
-                    },
-                    "required": [
-                        "someGeneric",
-                        "someAlias"
-                    ],
-                    "additionalProperties": false
-                },
-                {
-                    "$ref": "#/definitions/GenericC<GenericC<GenericC<GenericA<string>>>>"
-                },
-                {
-                    "$ref": "#/definitions/B"
+        "GenericA<string>": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "string"
                 }
-            ]
+            },
+            "required": [
+                "a"
+            ],
+            "additionalProperties": false
+        },
+        "B": {
+            "type": "object",
+            "properties": {
+                "b": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "b"
+            ],
+            "additionalProperties": false
+        },
+        "SomeGeneric<1,2>": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "number",
+                    "enum": [
+                        1
+                    ]
+                },
+                "b": {
+                    "type": "number",
+                    "enum": [
+                        2
+                    ]
+                },
+                "c": {
+                    "$ref": "#/definitions/GenericA<1>"
+                },
+                "d": {
+                    "$ref": "#/definitions/GenericC<2>"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d"
+            ],
+            "additionalProperties": false
+        },
+        "GenericA<1>": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "number",
+                    "enum": [
+                        1
+                    ]
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "additionalProperties": false
+        },
+        "GenericC<2>": {
+            "type": "object",
+            "properties": {
+                "c": {
+                    "type": "number",
+                    "enum": [
+                        2
+                    ]
+                }
+            },
+            "required": [
+                "c"
+            ],
+            "additionalProperties": false
         },
         "SomeAlias<\"alias\">": {
             "$ref": "#/definitions/SomeGeneric<\"alias\",\"alias\">"
@@ -180,33 +178,33 @@
             ],
             "additionalProperties": false
         },
-        "SomeGeneric<1,2>": {
+        "GenericA<\"alias\">": {
             "type": "object",
             "properties": {
                 "a": {
-                    "type": "number",
+                    "type": "string",
                     "enum": [
-                        1
+                        "alias"
                     ]
-                },
-                "b": {
-                    "type": "number",
-                    "enum": [
-                        2
-                    ]
-                },
-                "c": {
-                    "$ref": "#/definitions/GenericA<1>"
-                },
-                "d": {
-                    "$ref": "#/definitions/GenericC<2>"
                 }
             },
             "required": [
-                "a",
-                "b",
-                "c",
-                "d"
+                "a"
+            ],
+            "additionalProperties": false
+        },
+        "GenericC<\"alias\">": {
+            "type": "object",
+            "properties": {
+                "c": {
+                    "type": "string",
+                    "enum": [
+                        "alias"
+                    ]
+                }
+            },
+            "required": [
+                "c"
             ],
             "additionalProperties": false
         }
