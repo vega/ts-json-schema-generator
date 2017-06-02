@@ -59,17 +59,16 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const properties: ObjectProperty[] = type.getProperties();
         const additionalProperties: BaseType|false = type.getAdditionalProperties();
 
+        const required: string[] = properties
+            .filter((property: ObjectProperty) => property.isRequired())
+            .map((property: ObjectProperty) => property.getName());
         return {
             type: "object",
             properties: properties.reduce((result: Map<Definition>, property: ObjectProperty) => {
                 result[property.getName()] = this.childTypeFormatter.getDefinition(property.getType());
                 return result;
             }, {}),
-            required: properties.length ?
-                properties
-                    .filter((property: ObjectProperty) => property.isRequired())
-                    .map((property: ObjectProperty) => property.getName()) :
-                undefined,
+            ...(required.length > 0 ? {required} : {}),
             additionalProperties: additionalProperties instanceof BaseType ?
                 this.childTypeFormatter.getDefinition(additionalProperties) :
                 additionalProperties,
