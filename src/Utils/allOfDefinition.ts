@@ -5,10 +5,13 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { Definition } from "../Schema/Definition";
 import { uniqueArray } from "./uniqueArray";
+import { AliasType } from "../Type/AliasType";
+import { AnnotatedType } from "../Type/AnnotatedType";
 
 
 function getNonRefType(type: BaseType): BaseType {
-    if (type instanceof ReferenceType || type instanceof DefinitionType) {
+    if (type instanceof ReferenceType || type instanceof DefinitionType ||
+        type instanceof AliasType || type instanceof AnnotatedType) {
         return getNonRefType(type.getType());
     }
     return type;
