@@ -4,6 +4,7 @@ import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
 import { Map } from "../Utils/Map";
+import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(
@@ -27,12 +28,8 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return this.childTypeFormatter.getDefinition(type.getBaseTypes()[0]);
         }
 
-        return {
-            allOf: [
-                this.getObjectDefinition(type),
-                ...type.getBaseTypes().map((baseType: BaseType) => this.childTypeFormatter.getDefinition(baseType)),
-            ],
-        };
+        return type.getBaseTypes().reduce(
+            getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
     }
     public getChildren(type: ObjectType): BaseType[] {
         const properties: ObjectProperty[] = type.getProperties();
