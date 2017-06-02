@@ -32,22 +32,23 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "glob": "~7.1.1",
-    "typescript": "~2.1.5",
-    "commander": "~2.9.0"
+    "commander": "~2.9.0",
+    "glob": "~7.1.2",
+    "ts-node": "^3.0.4",
+    "typescript": "~2.3.4"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^3.4.35",
+    "@types/chai": "^4.0.0",
+    "@types/commander": "^2.9.0",
     "@types/glob": "^5.0.30",
-    "@types/mocha": "^2.2.40",
-    "@types/node": "^7.0.8",
-    "@types/commander": "^2.3.31",
-    "ajv": "~4.11.4",
-    "chai": "~3.5.0",
-    "mocha": "~3.2.0",
-    "source-map-support": "~0.4.8",
-    "tslint": "~4.5.1"
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^7.0.23",
+    "ajv": "~5.1.5",
+    "chai": "~4.0.1",
+    "mocha": "~3.4.2",
+    "source-map-support": "~0.4.15",
+    "tslint": "~5.4.2"
   },
   "scripts": {
     "prepublish": "npm run build",
