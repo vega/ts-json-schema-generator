@@ -47,7 +47,6 @@ function assertSchema(name: string, type: string): void {
 describe("valid-data", () => {
     // TODO: generics recursive
     // TODO: literals unions
-    // TODO: typeof support
 
     assertSchema("simple-object", "SimpleObject");
 
