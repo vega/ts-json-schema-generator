@@ -1,12 +1,12 @@
 import { isArray } from "util";
-import { TypeFormatter } from "../TypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { DefinitionType } from "../Type/DefinitionType";
 import { Definition } from "../Schema/Definition";
-import { uniqueArray } from "./uniqueArray";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
+import { BaseType } from "../Type/BaseType";
+import { DefinitionType } from "../Type/DefinitionType";
+import { ReferenceType } from "../Type/ReferenceType";
+import { TypeFormatter } from "../TypeFormatter";
+import { uniqueArray } from "./uniqueArray";
 
 
 function getNonRefType(type: BaseType): BaseType {

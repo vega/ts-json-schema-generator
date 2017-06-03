@@ -1,7 +1,7 @@
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { VoidType } from "../Type/VoidType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { VoidType } from "../Type/VoidType";
 
 export class VoidTypeFormatter implements SubTypeFormatter {
     public supportsType(type: VoidType): boolean {

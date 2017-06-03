@@ -1,6 +1,6 @@
 import * as ts from "typescript";
-import { Annotations } from "../Type/AnnotatedType";
 import { AnnotationsReader } from "../AnnotationsReader";
+import { Annotations } from "../Type/AnnotatedType";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
     private static textTags: string[] = [

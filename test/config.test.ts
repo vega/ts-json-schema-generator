@@ -1,15 +1,12 @@
 import * as Ajv from "ajv";
-import * as ts from "typescript";
-
 import { assert } from "chai";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-
-import { createProgram } from "../factory/program";
-import { createParser } from "../factory/parser";
+import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";
-
-import { Config, PartialConfig, DEFAULT_CONFIG } from "../src/Config";
+import { createParser } from "../factory/parser";
+import { createProgram } from "../factory/program";
+import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator: Ajv.Ajv = new Ajv();

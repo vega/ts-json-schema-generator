@@ -1,10 +1,10 @@
-import { TypeFormatter } from "../TypeFormatter";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ObjectType, ObjectProperty } from "../Type/ObjectType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
-import { Map } from "../Utils/Map";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
+import { Map } from "../Utils/Map";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(

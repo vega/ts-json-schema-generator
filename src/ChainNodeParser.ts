@@ -1,8 +1,8 @@
 import * as ts from "typescript";
+import { UnknownNodeError } from "./Error/UnknownNodeError";
 import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
-import { UnknownNodeError } from "./Error/UnknownNodeError";
 
 export class ChainNodeParser implements SubNodeParser {
     public constructor(

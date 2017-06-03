@@ -1,7 +1,7 @@
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { StringType } from "../Type/StringType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { StringType } from "../Type/StringType";
 
 export class StringTypeFormatter implements SubTypeFormatter {
     public supportsType(type: StringType): boolean {

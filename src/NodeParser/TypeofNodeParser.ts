@@ -1,8 +1,8 @@
 import * as ts from "typescript";
+import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
-import { NodeParser, Context } from "../NodeParser";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(

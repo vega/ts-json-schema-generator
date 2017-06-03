@@ -1,8 +1,8 @@
-import { TypeFormatter } from "../TypeFormatter";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { IntersectionType } from "../Type/IntersectionType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { IntersectionType } from "../Type/IntersectionType";
+import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 
 export class IntersectionTypeFormatter implements SubTypeFormatter {

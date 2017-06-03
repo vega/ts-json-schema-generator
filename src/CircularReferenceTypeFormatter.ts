@@ -1,6 +1,6 @@
+import { Definition } from "./Schema/Definition";
 import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
-import { Definition } from "./Schema/Definition";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
     private definition: Map<BaseType, Definition> = new Map<BaseType, Definition>();

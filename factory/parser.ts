@@ -2,28 +2,28 @@ import * as ts from "typescript";
 
 import { Config } from "../src/Config";
 
-import { NodeParser } from "../src/NodeParser";
-import { SubNodeParser } from "../src/SubNodeParser";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
+import { NodeParser } from "../src/NodeParser";
+import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
-import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
+import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
 
-import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
-import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
-import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser";
+import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
+import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
+import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 
-import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
-import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
+import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
+import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
 
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser";
@@ -31,17 +31,17 @@ import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodePars
 import { InterfaceNodeParser } from "../src/NodeParser/InterfaceNodeParser";
 import { TypeAliasNodeParser } from "../src/NodeParser/TypeAliasNodeParser";
 
-import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
+import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
 
-import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
+import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
 
-import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
-import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
+import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
 import { TypeofNodeParser } from "../src/NodeParser/TypeofNodeParser";
+import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker: ts.TypeChecker = program.getTypeChecker();

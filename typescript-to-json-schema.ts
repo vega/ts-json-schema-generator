@@ -1,11 +1,9 @@
 import * as commander from "commander";
-
 import { createGenerator } from "./factory/generator";
-import { formatError } from "./src/Utils/formatError";
-
-import { Config, PartialConfig, DEFAULT_CONFIG } from "./src/Config";
-import { Schema } from "./src/Schema/Schema";
+import { Config, DEFAULT_CONFIG, PartialConfig } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
+import { Schema } from "./src/Schema/Schema";
+import { formatError } from "./src/Utils/formatError";
 
 const args: any = commander
     .option("-p, --path <path>", "Typescript path")

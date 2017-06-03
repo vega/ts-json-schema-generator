@@ -1,10 +1,10 @@
 import * as ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { AnnotatedType, Annotations } from "../Type/AnnotatedType";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader";
+import { Context } from "../NodeParser";
+import { SubNodeParser } from "../SubNodeParser";
+import { AnnotatedType, Annotations } from "../Type/AnnotatedType";
+import { BaseType } from "../Type/BaseType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(

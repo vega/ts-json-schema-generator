@@ -1,7 +1,7 @@
+import { UnknownTypeError } from "./Error/UnknownTypeError";
+import { Definition } from "./Schema/Definition";
 import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
-import { Definition } from "./Schema/Definition";
-import { UnknownTypeError } from "./Error/UnknownTypeError";
 
 export class ChainTypeFormatter implements SubTypeFormatter {
     public constructor(

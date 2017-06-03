@@ -1,7 +1,7 @@
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { EnumType, EnumValue } from "../Type/EnumType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { EnumType, EnumValue } from "../Type/EnumType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class EnumTypeFormatter implements SubTypeFormatter {

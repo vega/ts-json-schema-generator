@@ -1,5 +1,5 @@
-import * as ts from "typescript";
 import * as path from "path";
+import * as ts from "typescript";
 
 import { BaseError } from "../Error/BaseError";
 import { DiagnosticError } from "../Error/DiagnosticError";

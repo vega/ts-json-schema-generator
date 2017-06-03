@@ -1,12 +1,12 @@
 import * as ts from "typescript";
-import { NodeParser, Context } from "./NodeParser";
-import { TypeFormatter } from "./TypeFormatter";
+import { NoRootTypeError } from "./Error/NoRootTypeError";
+import { Context, NodeParser } from "./NodeParser";
+import { Definition } from "./Schema/Definition";
+import { Schema } from "./Schema/Schema";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
-import { Schema } from "./Schema/Schema";
-import { Definition } from "./Schema/Definition";
+import { TypeFormatter } from "./TypeFormatter";
 import { Map } from "./Utils/Map";
-import { NoRootTypeError } from "./Error/NoRootTypeError";
 
 export class SchemaGenerator {
     public constructor(

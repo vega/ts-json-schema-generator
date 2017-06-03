@@ -1,8 +1,8 @@
-import { TypeFormatter } from "../TypeFormatter";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { TupleType } from "../Type/TupleType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { TupleType } from "../Type/TupleType";
+import { TypeFormatter } from "../TypeFormatter";
 
 export class TupleTypeFormatter implements SubTypeFormatter {
     public constructor(

@@ -1,8 +1,8 @@
+import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
-import { UnionType } from "../Type/UnionType";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
-import { Definition } from "../Schema/Definition";
+import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {

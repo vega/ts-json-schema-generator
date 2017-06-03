@@ -1,8 +1,8 @@
-import { TypeFormatter } from "../TypeFormatter";
+import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
-import { Definition } from "../Schema/Definition";
+import { TypeFormatter } from "../TypeFormatter";
 
 export class AliasTypeFormatter implements SubTypeFormatter {
     public constructor(

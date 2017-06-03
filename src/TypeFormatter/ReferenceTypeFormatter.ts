@@ -1,9 +1,9 @@
-import { TypeFormatter } from "../TypeFormatter";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ReferenceType } from "../Type/ReferenceType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { DefinitionType } from "../Type/DefinitionType";
+import { ReferenceType } from "../Type/ReferenceType";
+import { TypeFormatter } from "../TypeFormatter";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
     public constructor(

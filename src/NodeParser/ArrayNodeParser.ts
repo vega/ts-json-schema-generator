@@ -1,8 +1,8 @@
 import * as ts from "typescript";
-import { NodeParser, Context } from "../NodeParser";
+import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
 import { ArrayType } from "../Type/ArrayType";
+import { BaseType } from "../Type/BaseType";
 
 export class ArrayNodeParser implements SubNodeParser {
     public constructor(

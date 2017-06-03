@@ -1,15 +1,15 @@
+import { LogicError } from "../Error/LogicError";
+import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
-import { UnionType } from "../Type/UnionType";
 import { BaseType } from "../Type/BaseType";
 import { PrimitiveType } from "../Type/PrimitiveType";
-import { Definition } from "../Schema/Definition";
+import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
-import { LogicError } from "../Error/LogicError";
 
-import { StringType } from "../Type/StringType";
-import { NumberType } from "../Type/NumberType";
 import { BooleanType } from "../Type/BooleanType";
 import { NullType } from "../Type/NullType";
+import { NumberType } from "../Type/NumberType";
+import { StringType } from "../Type/StringType";
 
 export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: UnionType): boolean {

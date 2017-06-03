@@ -1,8 +1,8 @@
 import * as ts from "typescript";
-import { NodeParser, Context } from "../NodeParser";
+import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
 import { ArrayType } from "../Type/ArrayType";
+import { BaseType } from "../Type/BaseType";
 
 const invlidTypes: {[index: number]: boolean} = {
     [ts.SyntaxKind.ModuleDeclaration]: true,

@@ -1,8 +1,8 @@
-import { TypeFormatter } from "../TypeFormatter";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { AnnotatedType } from "../Type/AnnotatedType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { AnnotatedType } from "../Type/AnnotatedType";
+import { BaseType } from "../Type/BaseType";
+import { TypeFormatter } from "../TypeFormatter";
 
 function makeNullable(def: Definition) {
     const union: Definition[] | undefined = def.oneOf || def.anyOf;

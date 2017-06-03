@@ -2,12 +2,12 @@ import * as ts from "typescript";
 
 import { Config } from "../src/Config";
 import { NodeParser } from "../src/NodeParser";
-import { TypeFormatter } from "../src/TypeFormatter";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { TypeFormatter } from "../src/TypeFormatter";
 
-import { createProgram } from "./program";
-import { createParser } from "./parser";
 import { createFormatter } from "./formatter";
+import { createParser } from "./parser";
+import { createProgram } from "./program";
 
 export function createGenerator(config: Config): SchemaGenerator {
     const program: ts.Program = createProgram(config);

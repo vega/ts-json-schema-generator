@@ -68,6 +68,9 @@
       "check-finally",
       "check-whitespace"
     ],
+    "ordered-imports": [
+        true
+    ],
     "quotemark": [
       true,
       "double",

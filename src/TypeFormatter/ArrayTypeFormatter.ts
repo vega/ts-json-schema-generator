@@ -1,8 +1,8 @@
+import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
-import { TypeFormatter } from "../TypeFormatter";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
-import { Definition } from "../Schema/Definition";
+import { TypeFormatter } from "../TypeFormatter";
 
 export class ArrayTypeFormatter implements SubTypeFormatter {
     public constructor(
