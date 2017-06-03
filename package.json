@@ -1,6 +1,6 @@
 {
   "name": "typescript-to-json-schema",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,6 +11,10 @@
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
   },
+  "contributors": [{
+    "name": "Dominik Moritz",
+    "email": "domoritz@gmail.com"
+  }],
   "repository": {
     "type": "git",
     "url": "https://github.com/xiag-ag/typescript-to-json-schema.git"
