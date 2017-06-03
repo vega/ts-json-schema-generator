@@ -7,7 +7,7 @@ export interface PartialConfig {
 
     expose: "all" | "none" | "export";
     topRef: boolean;
-    jsDoc: "none" | "extended" | "default";
+    jsDoc: "none" | "extended" | "basic";
 }
 
 export const DEFAULT_CONFIG: PartialConfig = {

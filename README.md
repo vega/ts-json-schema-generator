@@ -21,7 +21,7 @@ npm install typescript-to-json-schema
     --type 'My.Type.Full.Name' \
     --expose 'export' \
     --topRef 'yes' \
-    --jsDoc 'default'
+    --jsDoc 'extended'
 ```
 
 ## Current state

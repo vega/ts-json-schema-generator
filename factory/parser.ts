@@ -10,7 +10,7 @@ import { ExposeNodeParser } from "../src/ExposeNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
-import { DefaultAnnotationsReader } from "../src/AnnotationsReader/DefaultAnnotationsReader";
+import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
 
@@ -56,8 +56,8 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         if (config.jsDoc === "extended") {
             return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader());
-        } else if (config.jsDoc === "default") {
-            return new AnnotatedNodeParser(nodeParser, new DefaultAnnotationsReader());
+        } else if (config.jsDoc === "basic") {
+            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader());
         } else {
             return nodeParser;
         }

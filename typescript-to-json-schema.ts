@@ -25,7 +25,7 @@ const args: any = commander
     .option(
         "-j, --jsDoc <topRef>",
         "Read JsDoc annotations",
-        /^(extended|none|default)$/,
+        /^(extended|none|basic)$/,
         "extended",
     )
     .parse(process.argv);

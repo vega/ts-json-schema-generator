@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
 import { AnnotationsReader } from "../AnnotationsReader";
 
-export class DefaultAnnotationsReader implements AnnotationsReader {
+export class BasicAnnotationsReader implements AnnotationsReader {
     private static textTags: string[] = [
         "title",
         "description",
@@ -56,9 +56,9 @@ export class DefaultAnnotationsReader implements AnnotationsReader {
             return undefined;
         }
 
-        if (DefaultAnnotationsReader.textTags.indexOf(jsDocTag.name) >= 0) {
+        if (BasicAnnotationsReader.textTags.indexOf(jsDocTag.name) >= 0) {
             return jsDocTag.text;
-        } else if (DefaultAnnotationsReader.jsonTags.indexOf(jsDocTag.name) >= 0) {
+        } else if (BasicAnnotationsReader.jsonTags.indexOf(jsDocTag.name) >= 0) {
             return this.parseJson(jsDocTag.text);
         } else {
             return undefined;

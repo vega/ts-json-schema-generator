@@ -1,8 +1,8 @@
 import * as ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
-import { DefaultAnnotationsReader } from "./DefaultAnnotationsReader";
+import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
 
-export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
+export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const annotations: Annotations = {
             ...this.getDescriptionAnnotation(node),
