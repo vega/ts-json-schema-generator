@@ -39,6 +39,11 @@ export interface MyObject {
      * @title Non empty array
      */
     numberArray: MyNonEmptyArray<number>;
+
+    /**
+     * @nullable
+     */
+    nullable: number;
 }
 
 /**

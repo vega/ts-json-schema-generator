@@ -33,6 +33,16 @@
                 "numberArray": {
                     "$ref": "#/definitions/MyNonEmptyArray<number>",
                     "title": "Non empty array"
+                },
+                "nullable": {
+                    "oneOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -40,7 +50,8 @@
                 "numberValue",
                 "exportString",
                 "privateString",
-                "numberArray"
+                "numberArray",
+                "nullable"
             ],
             "additionalProperties": false,
             "description": "Some description here",

@@ -36,11 +36,28 @@ export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
             return undefined;
         }
 
-        const jsDocTag: ts.JSDocTagInfo = jsDocTags.find((tag: ts.JSDocTagInfo) => tag.name === "asType");
+        const jsDocTag: ts.JSDocTagInfo = jsDocTags.find(
+            (tag: ts.JSDocTagInfo) => tag.name === "asType" || tag.name === "TJS-type");
         if (!jsDocTag || !jsDocTag.text) {
             return undefined;
         }
 
         return {type: jsDocTag.text};
+    }
+
+    public isNullable(node: ts.Node): boolean {
+        const symbol: ts.Symbol = (node as any).symbol;
+        if (!symbol) {
+            return undefined;
+        }
+
+        const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
+        if (!jsDocTags || !jsDocTags.length) {
+            return undefined;
+        }
+
+        const jsDocTag: ts.JSDocTagInfo = jsDocTags.find(
+            (tag: ts.JSDocTagInfo) => tag.name === "nullable");
+        return !!jsDocTag;
     }
 }

@@ -18,6 +18,9 @@
                 },
                 "numberArray": {
                     "$ref": "#/definitions/MyNonEmptyArray<number>"
+                },
+                "nullable": {
+                    "type": "number"
                 }
             },
             "required": [
@@ -25,7 +28,8 @@
                 "numberValue",
                 "exportString",
                 "privateString",
-                "numberArray"
+                "numberArray",
+                "nullable"
             ],
             "additionalProperties": false
         },

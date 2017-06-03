@@ -8,6 +8,7 @@ export class AnnotatedType extends BaseType {
     public constructor(
         private type: BaseType,
         private annotations: Annotations,
+        private nullable: boolean,
     ) {
         super();
     }
@@ -21,5 +22,8 @@ export class AnnotatedType extends BaseType {
     }
     public getAnnotations(): Annotations {
         return this.annotations;
+    }
+    public isNullable(): boolean {
+        return this.nullable;
     }
 }
