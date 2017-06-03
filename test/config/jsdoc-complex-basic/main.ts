@@ -27,6 +27,7 @@ export interface MyObject {
      *
      * @description Export field description
      * @default {"length": 10}
+     * @nullable
      */
     exportString: MyExportString;
     /**
@@ -43,7 +44,7 @@ export interface MyObject {
     /**
      * @nullable
      */
-    nullable: number;
+    number: number;
 }
 
 /**

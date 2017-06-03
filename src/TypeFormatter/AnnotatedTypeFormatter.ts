@@ -1,17 +1,33 @@
+import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
 import { TypeFormatter } from "../TypeFormatter";
+import { uniqueArray } from "../Utils/uniqueArray";
 
 function makeNullable(def: Definition) {
     const union: Definition[] | undefined = def.oneOf || def.anyOf;
-    if (union && union.indexOf("null") ) {
+    if (union && union.indexOf("null") === -1) {
         union.push({ type: "null" });
+    } else if (def.type && def.type !== "object") {
+        if (isArray(def.type)) {
+            if (def.type.indexOf("null") === -1) {
+                def.type.push("null");
+            }
+        } else if (def.type !== "null") {
+            def.type = [def.type, "null"];
+        }
     } else {
-        const type: string | string[] | undefined = def.type;
-        delete def.type;
-        def.anyOf = [{type}, { type: "null" }];
+        const subdef: Definition = {};
+        for (const k in def) {
+            if (def.hasOwnProperty(k) && k !== "description" && k !== "title" && k !== "default") {
+                const key: keyof Definition = k as keyof Definition;
+                subdef[key] = def[key];
+                delete def[key];
+            }
+        }
+        def.anyOf = [ subdef, { type: "null" } ];
     }
     return def;
 }

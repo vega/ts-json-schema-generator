@@ -26,22 +26,25 @@
                     "default": "private"
                 },
                 "exportString": {
-                    "$ref": "#/definitions/MyExportString",
                     "description": "Export field description",
-                    "default": {"length": 10}
+                    "default": {"length": 10},
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/MyExportString"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
                 },
                 "numberArray": {
                     "$ref": "#/definitions/MyNonEmptyArray<number>",
                     "title": "Non empty array"
                 },
-                "nullable": {
-                    "anyOf": [
-                        {
-                            "type": "number"
-                        },
-                        {
-                            "type": "null"
-                        }
+                "number": {
+                    "type": [
+                        "number",
+                        "null"
                     ]
                 }
             },
@@ -51,7 +54,7 @@
                 "exportString",
                 "privateString",
                 "numberArray",
-                "nullable"
+                "number"
             ],
             "additionalProperties": false,
             "description": "Some description here",

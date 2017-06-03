@@ -19,7 +19,7 @@
                 "numberArray": {
                     "$ref": "#/definitions/MyNonEmptyArray<number>"
                 },
-                "nullable": {
+                "number": {
                     "type": "number"
                 }
             },
@@ -29,7 +29,7 @@
                 "exportString",
                 "privateString",
                 "numberArray",
-                "nullable"
+                "number"
             ],
             "additionalProperties": false
         },
