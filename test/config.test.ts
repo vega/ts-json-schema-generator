@@ -9,7 +9,7 @@ import { createProgram } from "../factory/program";
 import { createParser } from "../factory/parser";
 import { createFormatter } from "../factory/formatter";
 
-import { Config } from "../src/Config";
+import { Config, PartialConfig, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator: Ajv.Ajv = new Ajv();
@@ -18,19 +18,12 @@ validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
 const basePath: string = "test/config";
 
-type PartialConfig = {
-    [Key in keyof Config]?: Config[Key];
-};
-
-function assertSchema(name: string, partialConfig: PartialConfig): void {
+function assertSchema(name: string, partialConfig: PartialConfig & {type: string}): void {
     it(name, () => {
         const config: Config = {
+            ... DEFAULT_CONFIG,
+            ...partialConfig,
             path: resolve(`${basePath}/${name}/*.ts`),
-            type: partialConfig.type,
-
-            expose: partialConfig.expose,
-            topRef: partialConfig.topRef,
-            jsDoc: partialConfig.jsDoc,
         };
 
         const program: ts.Program = createProgram(config);

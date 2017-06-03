@@ -29,7 +29,7 @@ export class DefaultAnnotationsReader implements AnnotationsReader {
         "default",
     ];
 
-    public getAnnotations(node: ts.Node): Annotations {
+    public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol: ts.Symbol = (node as any).symbol;
         if (!symbol) {
             return undefined;

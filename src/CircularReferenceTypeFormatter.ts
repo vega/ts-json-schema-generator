@@ -16,7 +16,7 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: BaseType): Definition {
         if (this.definition.has(type)) {
-            return this.definition.get(type);
+            return this.definition.get(type)!;
         }
 
         const definition: Definition = {};
@@ -26,7 +26,7 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(type: BaseType): BaseType[] {
         if (this.children.has(type)) {
-            return this.children.get(type);
+            return this.children.get(type)!;
         }
 
         const children: BaseType[] = [];

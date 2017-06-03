@@ -33,7 +33,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
         // collect additional properties and merge into a single definition
         const additionalProps: Definition[] = [];
         let additionalTypes: string[] = [];
-        function addAdditionalProps(addProps: false | Definition) {
+        function addAdditionalProps(addProps?: false | Definition) {
             if (addProps) {
                 if (addProps.anyOf) {
                     for (const prop of addProps.anyOf) {

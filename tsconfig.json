@@ -12,7 +12,7 @@
         "noImplicitReturns": true,
         "suppressExcessPropertyErrors": false,
         "suppressImplicitAnyIndexErrors": false,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "preserveConstEnums": true,
         "removeComments": true,
         "noLib": false,

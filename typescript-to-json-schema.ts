@@ -3,7 +3,7 @@ import * as commander from "commander";
 import { createGenerator } from "./factory/generator";
 import { formatError } from "./src/Utils/formatError";
 
-import { Config } from "./src/Config";
+import { Config, PartialConfig, DEFAULT_CONFIG } from "./src/Config";
 import { Schema } from "./src/Schema/Schema";
 import { BaseError } from "./src/Error/BaseError";
 
@@ -26,17 +26,12 @@ const args: any = commander
         "-j, --jsDoc <topRef>",
         "Read JsDoc annotations",
         /^(extended|none|default)$/,
-        "none",
+        "extended",
     )
     .parse(process.argv);
+
 const config: Config = {
-    path: undefined,
-    type: undefined,
-
-    expose: "export",
-    topRef: true,
-    jsDoc: "none",
-
+    ...DEFAULT_CONFIG,
     ...args,
 };
 

@@ -29,7 +29,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 const objectProperty: ObjectProperty = new ObjectProperty(
                     propertySymbol.getName(),
-                    this.childNodeParser.createType(propertyNode.type, context),
+                    this.childNodeParser.createType(propertyNode.type!, context),
                     !propertyNode.questionToken,
                 );
 
@@ -45,6 +45,6 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         }
 
         const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
-        return this.childNodeParser.createType(signature.type, context);
+        return this.childNodeParser.createType(signature.type!, context);
     }
 }

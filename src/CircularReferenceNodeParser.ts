@@ -30,7 +30,7 @@ export class CircularReferenceNodeParser implements SubNodeParser {
         return reference.getType();
     }
 
-    private createCacheKey(node: ts.Node, context: Context): string {
+    private createCacheKey(node: ts.Node | undefined, context: Context): string {
         const ids: number[] = [];
         while (node) {
             ids.push(node.pos, node.end);

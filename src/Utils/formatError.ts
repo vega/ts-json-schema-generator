@@ -5,8 +5,8 @@ import { BaseError } from "../Error/BaseError";
 import { DiagnosticError } from "../Error/DiagnosticError";
 import { UnknownNodeError } from "../Error/UnknownNodeError";
 
-function getSourceFile(node: ts.Node): ts.SourceFile {
-    let sourceFile: ts.Node = node.parent;
+function getSourceFile(node: ts.Node): ts.SourceFile | undefined {
+    let sourceFile: ts.Node | undefined = node.parent;
     while (sourceFile) {
         if (sourceFile.kind === ts.SyntaxKind.SourceFile) {
             return sourceFile as ts.SourceFile;
@@ -18,7 +18,7 @@ function getSourceFile(node: ts.Node): ts.SourceFile {
 }
 
 function getNodeLocation(node: ts.Node): [string, number, number] {
-    const sourceFile: ts.SourceFile = getSourceFile(node);
+    const sourceFile: ts.SourceFile | undefined = getSourceFile(node);
     if (!sourceFile) {
         return ["<unknown file>", 0, 0];
     }

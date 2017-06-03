@@ -5,11 +5,11 @@ import { AnnotatedType } from "../Type/AnnotatedType";
 import { Definition } from "../Schema/Definition";
 
 function makeNullable(def: Definition) {
-    const union: Definition[] = def.oneOf || def.anyOf;
+    const union: Definition[] | undefined = def.oneOf || def.anyOf;
     if (union && union.indexOf("null") ) {
         union.push({ type: "null" });
     } else {
-        const type: string | string[] = def.type;
+        const type: string | string[] | undefined = def.type;
         delete def.type;
         def.anyOf = [{type}, { type: "null" }];
     }

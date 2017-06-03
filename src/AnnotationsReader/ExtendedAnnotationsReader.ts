@@ -3,7 +3,7 @@ import { Annotations } from "../Type/AnnotatedType";
 import { DefaultAnnotationsReader } from "./DefaultAnnotationsReader";
 
 export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
-    public getAnnotations(node: ts.Node): Annotations {
+    public getAnnotations(node: ts.Node): Annotations | undefined {
         const annotations: Annotations = {
             ...this.getDescriptionAnnotation(node),
             ...this.getTypeAnnotation(node),
@@ -12,7 +12,7 @@ export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
         return Object.keys(annotations).length ? annotations : undefined;
     }
 
-    private getDescriptionAnnotation(node: ts.Node): Annotations {
+    private getDescriptionAnnotation(node: ts.Node): Annotations | undefined {
         const symbol: ts.Symbol = (node as any).symbol;
         if (!symbol) {
             return undefined;
@@ -25,7 +25,7 @@ export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
 
         return {description: comments.map((comment: ts.SymbolDisplayPart) => comment.text).join(" ")};
     }
-    private getTypeAnnotation(node: ts.Node): Annotations {
+    private getTypeAnnotation(node: ts.Node): Annotations | undefined {
         const symbol: ts.Symbol = (node as any).symbol;
         if (!symbol) {
             return undefined;
@@ -36,7 +36,7 @@ export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
             return undefined;
         }
 
-        const jsDocTag: ts.JSDocTagInfo = jsDocTags.find(
+        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find(
             (tag: ts.JSDocTagInfo) => tag.name === "asType" || tag.name === "TJS-type");
         if (!jsDocTag || !jsDocTag.text) {
             return undefined;
@@ -48,15 +48,15 @@ export class ExtendedAnnotationsReader extends DefaultAnnotationsReader {
     public isNullable(node: ts.Node): boolean {
         const symbol: ts.Symbol = (node as any).symbol;
         if (!symbol) {
-            return undefined;
+            return false;
         }
 
         const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
         if (!jsDocTags || !jsDocTags.length) {
-            return undefined;
+            return false;
         }
 
-        const jsDocTag: ts.JSDocTagInfo = jsDocTags.find(
+        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find(
             (tag: ts.JSDocTagInfo) => tag.name === "nullable");
         return !!jsDocTag;
     }

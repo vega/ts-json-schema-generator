@@ -18,14 +18,14 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol: ts.Symbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(
-                aliasedSymbol.declarations[0],
+                aliasedSymbol.declarations![0],
                 this.createSubContext(node, context),
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);
         } else {
             return this.childNodeParser.createType(
-                typeSymbol.declarations[0],
+                typeSymbol.declarations![0],
                 this.createSubContext(node, context),
             );
         }

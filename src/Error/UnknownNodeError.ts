@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import { BaseError } from "./BaseError";
 
 export class UnknownNodeError extends BaseError {
-    public constructor(private node: ts.Node, private reference: ts.Node) {
+    public constructor(private node: ts.Node, private reference?: ts.Node) {
         super();
     }
 
@@ -16,7 +16,7 @@ export class UnknownNodeError extends BaseError {
     public getNode(): ts.Node {
         return this.node;
     }
-    public getReference(): ts.Node {
+    public getReference(): ts.Node | undefined {
         return this.reference;
     }
 }

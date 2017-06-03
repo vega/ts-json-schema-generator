@@ -26,7 +26,7 @@ export class EnumNodeParser implements SubNodeParser {
             return constantValue;
         }
 
-        const initializer: ts.Expression = member.initializer;
+        const initializer: ts.Expression | undefined = member.initializer;
         if (!initializer) {
             return index;
         } else if (initializer.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {

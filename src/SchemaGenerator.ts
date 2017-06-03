@@ -68,7 +68,7 @@ export class SchemaGenerator {
         return localSymbol ? (localSymbol.flags & ts.SymbolFlags.Export) !== 0 : false;
     }
     private isGenericType(node: ts.TypeAliasDeclaration): boolean {
-        return (
+        return !!(
             node.typeParameters &&
             node.typeParameters.length > 0
         );
