@@ -49,6 +49,7 @@
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
+    "no-for-in-array": true,
     "no-inferrable-types": [false],
     "no-internal-module": true,
     "no-null-keyword": false,
@@ -59,6 +60,10 @@
     "no-unused-expression": true,
     "no-use-before-declare": true,
     "no-var-keyword": true,
+    "object-literal-key-quotes": [
+        true,
+        "as-needed"
+    ],
     "object-literal-sort-keys": false,
     "one-line": [
       true,
@@ -71,6 +76,7 @@
     "ordered-imports": [
         true
     ],
+    "prefer-for-of": true,
     "quotemark": [
       true,
       "double",
