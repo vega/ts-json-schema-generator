@@ -1,4 +1,5 @@
 import * as commander from "commander";
+import * as stringify from "json-stable-stringify";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG, PartialConfig } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
@@ -15,16 +16,22 @@ const args: any = commander
         "export",
     )
     .option(
-        "-r, --topRef <topRef>",
+        "-r, --topRef",
         "Create a top-level $ref definition",
         (v: any) => v === "true" || v === "yes" || v === "1",
         true,
     )
     .option(
-        "-j, --jsDoc <topRef>",
+        "-j, --jsDoc <extended>",
         "Read JsDoc annotations",
         /^(extended|none|basic)$/,
         "extended",
+    )
+    .option(
+        "-s, --sortProps",
+        "Sort properties for stable output",
+        (v: any) => v === "true" || v === "yes" || v === "1",
+        true,
     )
     .parse(process.argv);
 
@@ -35,7 +42,9 @@ const config: Config = {
 
 try {
     const schema: Schema = createGenerator(config).createSchema(args.type);
-    process.stdout.write(JSON.stringify(schema, null, 2));
+    process.stdout.write(config.sortProps ?
+        stringify(schema, {space: 2}) :
+        JSON.stringify(schema, null, 2));
 } catch (error) {
     if (error instanceof BaseError) {
         process.stderr.write(formatError(error));

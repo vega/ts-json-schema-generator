@@ -11,10 +11,12 @@
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
   },
-  "contributors": [{
-    "name": "Dominik Moritz",
-    "email": "domoritz@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Dominik Moritz",
+      "email": "domoritz@gmail.com"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/xiag-ag/typescript-to-json-schema.git"
@@ -38,16 +40,18 @@
   "dependencies": {
     "commander": "~2.9.0",
     "glob": "~7.1.2",
+    "json-stable-stringify": "^1.0.1",
     "ts-node": "^3.0.4",
     "typescript": "~2.3.4"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
     "@types/chai": "^4.0.0",
-    "@types/commander": "^2.9.0",
+    "@types/commander": "^2.9.1",
     "@types/glob": "^5.0.30",
+    "@types/json-stable-stringify": "^1.0.31",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.23",
+    "@types/node": "^7.0.27",
     "ajv": "~5.1.5",
     "chai": "~4.0.1",
     "mocha": "~3.4.2",
@@ -60,7 +64,7 @@
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "lint": "tslint --project tsconfig.json -c tslint.json --type-check",
-    "test": "tsc -p . && mocha -t 5000 --require source-map-support/register dist/test",
+    "test": "tsc -p . && mocha -t 10000 --require source-map-support/register dist/test",
     "debug": "ts-node --inspect=19248 --debug-brk typescript-to-json-schema.ts",
     "run": "ts-node typescript-to-json-schema.ts"
   }
