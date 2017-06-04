@@ -1,0 +1,1 @@
+{"version":3,"file":"BaseError.js","sourceRoot":"/Users/domoritz/Developer/UW/typescript-to-json-schema/src/","sources":["src/Error/BaseError.ts"],"names":[],"mappings":";;AAAA;IAGI;QACI,IAAI,CAAC,SAAS,GAAG,IAAI,KAAK,EAAE,CAAC,KAAK,CAAC;IACvC,CAAC;IAED,sBAAW,4BAAK;aAAhB;YACI,MAAM,CAAC,IAAI,CAAC,SAAS,CAAC;QAC1B,CAAC;;;OAAA;IAIL,gBAAC;AAAD,CAAC,AAbD,IAaC;AAbqB,8BAAS"}
