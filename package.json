@@ -60,7 +60,7 @@
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "lint": "tslint --project tsconfig.json -c tslint.json --type-check",
-    "test": "tsc -p . && mocha -t 5000 --require source-map-support/register dist/test",
+    "test": "tsc -p . && mocha -t 10000 --require source-map-support/register dist/test",
     "debug": "ts-node --inspect=19248 --debug-brk typescript-to-json-schema.ts",
     "run": "ts-node typescript-to-json-schema.ts"
   }
