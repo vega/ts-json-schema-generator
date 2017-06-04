@@ -4,5 +4,6 @@ exports.DEFAULT_CONFIG = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",
+    sortProps: true,
 };
 //# sourceMappingURL=Config.js.map

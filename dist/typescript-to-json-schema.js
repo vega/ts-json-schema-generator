@@ -9,6 +9,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var commander = require("commander");
+var stringify = require("json-stable-stringify");
 var generator_1 = require("./factory/generator");
 var Config_1 = require("./src/Config");
 var BaseError_1 = require("./src/Error/BaseError");
@@ -17,13 +18,16 @@ var args = commander
     .option("-p, --path <path>", "Typescript path")
     .option("-t, --type <name>", "Type name")
     .option("-e, --expose <expose>", "Type exposing", /^(all|none|export)$/, "export")
-    .option("-r, --topRef <topRef>", "Create a top-level $ref definition", function (v) { return v === "true" || v === "yes" || v === "1"; }, true)
-    .option("-j, --jsDoc <topRef>", "Read JsDoc annotations", /^(extended|none|basic)$/, "extended")
+    .option("-r, --topRef", "Create a top-level $ref definition", function (v) { return v === "true" || v === "yes" || v === "1"; }, true)
+    .option("-j, --jsDoc <extended>", "Read JsDoc annotations", /^(extended|none|basic)$/, "extended")
+    .option("-s, --sortProps", "Sort properties for stable output", function (v) { return v === "true" || v === "yes" || v === "1"; }, true)
     .parse(process.argv);
 var config = __assign({}, Config_1.DEFAULT_CONFIG, args);
 try {
     var schema = generator_1.createGenerator(config).createSchema(args.type);
-    process.stdout.write(JSON.stringify(schema, null, 2));
+    process.stdout.write(config.sortProps ?
+        stringify(schema, { space: 2 }) :
+        JSON.stringify(schema, null, 2));
 }
 catch (error) {
     if (error instanceof BaseError_1.BaseError) {
