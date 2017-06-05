@@ -10,13 +10,17 @@ export class EnumNodeParser implements SubNodeParser {
     ) {
     }
 
-    public supportsNode(node: ts.EnumDeclaration): boolean {
-        return node.kind === ts.SyntaxKind.EnumDeclaration;
+    public supportsNode(node: ts.EnumDeclaration | ts.EnumMember): boolean {
+        return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
     }
-    public createType(node: ts.EnumDeclaration, context: Context): BaseType {
+    public createType(node: ts.EnumDeclaration | ts.EnumMember, context: Context): BaseType {
+        const members: ts.EnumMember[] = node.kind === ts.SyntaxKind.EnumDeclaration ?
+            (node as ts.EnumDeclaration).members :
+            [node as ts.EnumMember];
+
         return new EnumType(
             `enum-${node.getFullStart()}`,
-            node.members.map((member: ts.EnumMember, index: number) => this.getMemberValue(member, index)),
+            members.map((member: ts.EnumMember, index: number) => this.getMemberValue(member, index)),
         );
     }
 
