@@ -68,7 +68,12 @@ function getAllOfDefinitionReducer(childTypeFormatter) {
             };
         }
         else if (additionalProps.length === 1) {
-            definition.additionalProperties = additionalProps[0];
+            if (Object.keys(additionalProps[0]).length === 0) {
+                delete definition.additionalProperties;
+            }
+            else {
+                definition.additionalProperties = additionalProps[0];
+            }
         }
         else {
             definition.additionalProperties = false;

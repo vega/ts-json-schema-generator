@@ -46,6 +46,7 @@ describe("valid-data", function () {
     assertSchema("enums-initialized", "Enum");
     assertSchema("enums-compute", "Enum");
     assertSchema("enums-mixed", "Enum");
+    assertSchema("enums-member", "MyObject");
     assertSchema("namespace-deep-1", "RootNamespace.Def");
     assertSchema("namespace-deep-2", "RootNamespace.SubNamespace.HelperA");
     assertSchema("namespace-deep-3", "RootNamespace.SubNamespace.HelperB");

@@ -10,6 +10,7 @@ var AnnotatedNodeParser_1 = require("../src/NodeParser/AnnotatedNodeParser");
 var AnyTypeNodeParser_1 = require("../src/NodeParser/AnyTypeNodeParser");
 var BooleanTypeNodeParser_1 = require("../src/NodeParser/BooleanTypeNodeParser");
 var NumberTypeNodeParser_1 = require("../src/NodeParser/NumberTypeNodeParser");
+var ObjectTypeNodeParser_1 = require("../src/NodeParser/ObjectTypeNodeParser");
 var StringTypeNodeParser_1 = require("../src/NodeParser/StringTypeNodeParser");
 var VoidTypeNodeParser_1 = require("../src/NodeParser/VoidTypeNodeParser");
 var BooleanLiteralNodeParser_1 = require("../src/NodeParser/BooleanLiteralNodeParser");
@@ -58,6 +59,7 @@ function createParser(program, config) {
         .addNodeParser(new BooleanTypeNodeParser_1.BooleanTypeNodeParser())
         .addNodeParser(new AnyTypeNodeParser_1.AnyTypeNodeParser())
         .addNodeParser(new VoidTypeNodeParser_1.VoidTypeNodeParser())
+        .addNodeParser(new ObjectTypeNodeParser_1.ObjectTypeNodeParser())
         .addNodeParser(new StringLiteralNodeParser_1.StringLiteralNodeParser())
         .addNodeParser(new NumberLiteralNodeParser_1.NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser_1.BooleanLiteralNodeParser())

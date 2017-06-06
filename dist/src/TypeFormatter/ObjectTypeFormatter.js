@@ -8,6 +8,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var AnyType_1 = require("../Type/AnyType");
 var BaseType_1 = require("../Type/BaseType");
 var ObjectType_1 = require("../Type/ObjectType");
 var allOfDefinition_1 = require("../Utils/allOfDefinition");
@@ -39,17 +40,19 @@ var ObjectTypeFormatter = (function () {
     };
     ObjectTypeFormatter.prototype.getObjectDefinition = function (type) {
         var _this = this;
-        var properties = type.getProperties();
+        var objectProperties = type.getProperties();
         var additionalProperties = type.getAdditionalProperties();
-        var required = properties
+        var required = objectProperties
             .filter(function (property) { return property.isRequired(); })
             .map(function (property) { return property.getName(); });
-        return __assign({ type: "object", properties: properties.reduce(function (result, property) {
-                result[property.getName()] = _this.childTypeFormatter.getDefinition(property.getType());
-                return result;
-            }, {}) }, (required.length > 0 ? { required: required } : {}), { additionalProperties: additionalProperties instanceof BaseType_1.BaseType ?
-                this.childTypeFormatter.getDefinition(additionalProperties) :
-                additionalProperties });
+        var properties = objectProperties.reduce(function (result, property) {
+            result[property.getName()] = _this.childTypeFormatter.getDefinition(property.getType());
+            return result;
+        }, {});
+        return __assign({ type: "object" }, (Object.keys(properties).length > 0 ? { properties: properties } : {}), (required.length > 0 ? { required: required } : {}), (additionalProperties === true || additionalProperties instanceof AnyType_1.AnyType ? {} :
+            { additionalProperties: additionalProperties instanceof BaseType_1.BaseType ?
+                    this.childTypeFormatter.getDefinition(additionalProperties) :
+                    additionalProperties }));
     };
     return ObjectTypeFormatter;
 }());

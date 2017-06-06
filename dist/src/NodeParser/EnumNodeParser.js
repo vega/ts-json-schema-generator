@@ -7,11 +7,14 @@ var EnumNodeParser = (function () {
         this.typeChecker = typeChecker;
     }
     EnumNodeParser.prototype.supportsNode = function (node) {
-        return node.kind === ts.SyntaxKind.EnumDeclaration;
+        return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
     };
     EnumNodeParser.prototype.createType = function (node, context) {
         var _this = this;
-        return new EnumType_1.EnumType("enum-" + node.getFullStart(), node.members.map(function (member, index) { return _this.getMemberValue(member, index); }));
+        var members = node.kind === ts.SyntaxKind.EnumDeclaration ?
+            node.members :
+            [node];
+        return new EnumType_1.EnumType("enum-" + node.getFullStart(), members.map(function (member, index) { return _this.getMemberValue(member, index); }));
     };
     EnumNodeParser.prototype.getMemberValue = function (member, index) {
         var constantValue = this.typeChecker.getConstantValue(member);
