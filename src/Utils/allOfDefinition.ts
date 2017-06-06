@@ -2,6 +2,7 @@ import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
+import { AnyType } from '../Type/AnyType';
 import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
@@ -31,11 +32,13 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
 
         // additional properties is false only if all children also set additional properties to false
         // collect additional properties and merge into a single definition
-        const additionalProps: Definition[] = [];
+        let additionalProps: Definition[] = [];
         let additionalTypes: string[] = [];
         function addAdditionalProps(addProps?: false | Definition) {
-            if (addProps) {
-                if (addProps.anyOf) {
+            if (addProps !== false) {
+                if (addProps === undefined || addProps === true) {
+                    additionalProps.push(AnyType);
+                } else if (addProps.anyOf) {
                     for (const prop of addProps.anyOf) {
                         if (prop.type) {
                             additionalTypes = additionalTypes.concat(isArray(prop.type) ?
@@ -56,6 +59,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
         addAdditionalProps(other.additionalProperties);
 
         additionalTypes = uniqueArray(additionalTypes);
+        additionalProps = uniqueArray(additionalProps);
 
         if (additionalTypes.length > 1) {
             additionalProps.push({
