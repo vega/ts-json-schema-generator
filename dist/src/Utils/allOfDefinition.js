@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("util");
 var AliasType_1 = require("../Type/AliasType");
 var AnnotatedType_1 = require("../Type/AnnotatedType");
+var AnyType_1 = require("../Type/AnyType");
 var DefinitionType_1 = require("../Type/DefinitionType");
 var ReferenceType_1 = require("../Type/ReferenceType");
 var uniqueArray_1 = require("./uniqueArray");
@@ -28,8 +29,11 @@ function getAllOfDefinitionReducer(childTypeFormatter) {
         var additionalProps = [];
         var additionalTypes = [];
         function addAdditionalProps(addProps) {
-            if (addProps) {
-                if (addProps.anyOf) {
+            if (addProps !== false) {
+                if (addProps === undefined || addProps === true) {
+                    additionalProps.push(AnyType_1.AnyType);
+                }
+                else if (addProps.anyOf) {
                     for (var _i = 0, _a = addProps.anyOf; _i < _a.length; _i++) {
                         var prop = _a[_i];
                         if (prop.type) {
@@ -52,6 +56,7 @@ function getAllOfDefinitionReducer(childTypeFormatter) {
         addAdditionalProps(definition.additionalProperties);
         addAdditionalProps(other.additionalProperties);
         additionalTypes = uniqueArray_1.uniqueArray(additionalTypes);
+        additionalProps = uniqueArray_1.uniqueArray(additionalProps);
         if (additionalTypes.length > 1) {
             additionalProps.push({
                 type: additionalTypes,
