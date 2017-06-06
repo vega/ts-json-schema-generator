@@ -9,29 +9,30 @@
                 },
                 "map2": {
                     "$ref": "#/definitions/MyMap2"
+                },
+                "map3": {
+                    "type": "object"
                 }
             },
             "required": [
                 "map1",
-                "map2"
+                "map2",
+                "map3"
             ],
             "additionalProperties": false
         },
         "MyMap1": {
             "type": "object",
-            "properties": {},
             "additionalProperties": {
                 "$ref": "#/definitions/MyType"
             }
         },
         "MyType": {
             "type": "object",
-            "properties": {},
             "additionalProperties": false
         },
         "MyMap2": {
             "type": "object",
-            "properties": {},
             "additionalProperties": {
                 "type": [
                     "string",

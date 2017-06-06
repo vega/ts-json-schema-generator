@@ -3,7 +3,6 @@
     "definitions": {
         "MyObject": {
             "type": "object",
-            "properties": {},
             "additionalProperties": false,
             "description": "Some description here"
         }

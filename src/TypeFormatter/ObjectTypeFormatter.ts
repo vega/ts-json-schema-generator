@@ -1,5 +1,6 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
+import { AnyType } from "../Type/AnyType";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { TypeFormatter } from "../TypeFormatter";
@@ -33,7 +34,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(type: ObjectType): BaseType[] {
         const properties: ObjectProperty[] = type.getProperties();
-        const additionalProperties: BaseType|false = type.getAdditionalProperties();
+        const additionalProperties: BaseType|boolean = type.getAdditionalProperties();
 
         return [
             ...type.getBaseTypes().reduce((result: BaseType[], baseType: BaseType) => [
@@ -53,22 +54,27 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
 
     private getObjectDefinition(type: ObjectType): Definition {
-        const properties: ObjectProperty[] = type.getProperties();
-        const additionalProperties: BaseType|false = type.getAdditionalProperties();
+        const objectProperties: ObjectProperty[] = type.getProperties();
+        const additionalProperties: BaseType|boolean = type.getAdditionalProperties();
 
-        const required: string[] = properties
+        const required: string[] = objectProperties
             .filter((property: ObjectProperty) => property.isRequired())
             .map((property: ObjectProperty) => property.getName());
-        return {
-            type: "object",
-            properties: properties.reduce((result: Map<Definition>, property: ObjectProperty) => {
+
+        const properties: Map<Definition> = objectProperties.reduce(
+            (result: Map<Definition>, property: ObjectProperty) => {
                 result[property.getName()] = this.childTypeFormatter.getDefinition(property.getType());
                 return result;
-            }, {}),
+            }, {});
+
+        return {
+            type: "object",
+            ...(Object.keys(properties).length > 0 ? {properties} : {}),
             ...(required.length > 0 ? {required} : {}),
-            additionalProperties: additionalProperties instanceof BaseType ?
-                this.childTypeFormatter.getDefinition(additionalProperties) :
-                additionalProperties,
+            ...(additionalProperties === true || additionalProperties instanceof AnyType ? {} :
+                {additionalProperties: additionalProperties instanceof BaseType ?
+                    this.childTypeFormatter.getDefinition(additionalProperties) :
+                    additionalProperties}),
         };
     }
 }
