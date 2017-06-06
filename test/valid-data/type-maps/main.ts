@@ -11,4 +11,5 @@ export interface MyMap2 {
 export interface MyObject {
     map1: MyMap1;
     map2: MyMap2;
+    map3: object;
 }

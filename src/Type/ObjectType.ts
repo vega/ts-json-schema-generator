@@ -24,7 +24,7 @@ export class ObjectType extends BaseType {
         private id: string,
         private baseTypes: BaseType[],
         private properties: ObjectProperty[],
-        private additionalProperties: BaseType|false,
+        private additionalProperties: BaseType|boolean,
     ) {
         super();
     }
@@ -39,7 +39,7 @@ export class ObjectType extends BaseType {
     public getProperties(): ObjectProperty[] {
         return this.properties;
     }
-    public getAdditionalProperties(): BaseType|false {
+    public getAdditionalProperties(): BaseType|boolean {
         return this.additionalProperties;
     }
 }
