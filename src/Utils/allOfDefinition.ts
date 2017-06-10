@@ -2,7 +2,7 @@ import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
-import { AnyType } from '../Type/AnyType';
+import { AnyType } from "../Type/AnyType";
 import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
