@@ -1,8 +1,8 @@
 {
-  "$ref": "#/definitions/MyAlias",
+  "$ref": "#/definitions/MyType",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
-    "MyAlias": {
+    "MyType": {
       "enum": [
         {
           "value": "foo"
