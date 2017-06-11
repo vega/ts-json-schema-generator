@@ -6,7 +6,7 @@ import { Schema } from "./Schema/Schema";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
 import { TypeFormatter } from "./TypeFormatter";
-import { Map } from "./Utils/Map";
+import {StringMap} from "./Utils/StringMap";
 
 export class SchemaGenerator {
     public constructor(
@@ -29,20 +29,19 @@ export class SchemaGenerator {
 
     private findRootNode(fullName: string): ts.Node {
         const typeChecker: ts.TypeChecker = this.program.getTypeChecker();
-        const allTypes: Map<ts.Node> = {};
+        const allTypes: Map<string, ts.Node> = new Map<string, ts.Node>();
 
         this.program.getSourceFiles().forEach((sourceFile: ts.SourceFile) => {
             this.inspectNode(sourceFile, typeChecker, allTypes);
         });
 
-        const rootNode: ts.Node = allTypes[fullName];
-        if (!rootNode) {
+        if (!allTypes.has(fullName)) {
             throw new NoRootTypeError(fullName);
         }
 
-        return rootNode;
+        return allTypes.get(fullName)!;
     }
-    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<ts.Node>): void {
+    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
             node.kind === ts.SyntaxKind.InterfaceDeclaration ||
             node.kind === ts.SyntaxKind.EnumDeclaration ||
@@ -54,7 +53,7 @@ export class SchemaGenerator {
                 return;
             }
 
-            allTypes[this.getFullName(node, typeChecker)] = node;
+            allTypes.set(this.getFullName(node, typeChecker), node);
         } else {
             ts.forEachChild(
                 node,
@@ -81,10 +80,10 @@ export class SchemaGenerator {
     private getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    private getRootChildDefinitions(rootType: BaseType): Map<Definition> {
+    private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
         return this.typeFormatter.getChildren(rootType)
             .filter((child: BaseType) => child instanceof DefinitionType)
-            .reduce((result: Map<Definition>, child: DefinitionType) => ({
+            .reduce((result: StringMap<Definition>, child: DefinitionType) => ({
                 ...result,
                 [child.getId()]: this.typeFormatter.getDefinition(child.getType()),
             }), {});

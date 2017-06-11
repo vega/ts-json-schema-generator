@@ -7,7 +7,7 @@ export * from "./src/Error/UnknownTypeError";
 
 export * from "./src/Config";
 
-export * from "./src/Utils/Map";
+export * from "./src/Utils/StringMap";
 export * from "./src/Utils/uniqueArray";
 export * from "./src/Utils/formatError";
 

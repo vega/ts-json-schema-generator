@@ -5,7 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
-import { Map } from "../Utils/Map";
+import { StringMap } from "../Utils/StringMap";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(
@@ -61,8 +61,8 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             .filter((property: ObjectProperty) => property.isRequired())
             .map((property: ObjectProperty) => property.getName());
 
-        const properties: Map<Definition> = objectProperties.reduce(
-            (result: Map<Definition>, property: ObjectProperty) => {
+        const properties: StringMap<Definition> = objectProperties.reduce(
+            (result: StringMap<Definition>, property: ObjectProperty) => {
                 result[property.getName()] = this.childTypeFormatter.getDefinition(property.getType());
                 return result;
             }, {});

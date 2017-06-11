@@ -3,10 +3,9 @@ import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
-import { Map } from "./Utils/Map";
 
 export class CircularReferenceNodeParser implements SubNodeParser {
-    private circular: Map<BaseType> = {};
+    private circular: Map<string, BaseType> = new Map<string, BaseType>();
 
     public constructor(
         private childNodeParser: SubNodeParser,
@@ -18,14 +17,14 @@ export class CircularReferenceNodeParser implements SubNodeParser {
     }
     public createType(node: ts.Node, context: Context): BaseType {
         const key: string = this.createCacheKey(node, context);
-        if (this.circular[key]) {
-            return this.circular[key];
+        if (this.circular.has(key)) {
+            return this.circular.get(key)!;
         }
 
         const reference: ReferenceType = new ReferenceType();
-        this.circular[key] = reference;
+        this.circular.set(key, reference);
         reference.setType(this.childNodeParser.createType(node, context));
-        delete this.circular[key];
+        this.circular.delete(key);
 
         return reference.getType();
     }
