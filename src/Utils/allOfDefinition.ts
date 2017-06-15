@@ -30,59 +30,68 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             ...other.properties,
         };
 
-        // additional properties is false only if all children also set additional properties to false
-        // collect additional properties and merge into a single definition
-        let additionalProps: Definition[] = [];
-        let additionalTypes: string[] = [];
-        function addAdditionalProps(addProps?: false | Definition) {
-            if (addProps !== false) {
-                if (addProps === undefined || addProps === true) {
-                    additionalProps.push(AnyType);
-                } else if (addProps.anyOf) {
-                    for (const prop of addProps.anyOf) {
-                        if (prop.type) {
-                            additionalTypes = additionalTypes.concat(isArray(prop.type) ?
-                                prop.type : [prop.type] );
-                        } else {
-                            additionalProps.push(prop);
+        function additionalPropsDefinition(props?: true | Definition): props is Definition {
+            return props !== undefined && props !== true;
+        }
+
+        if (additionalPropsDefinition(definition.additionalProperties) &&
+                additionalPropsDefinition(other.additionalProperties)) {
+
+            // additional properties is false only if all children also set additional properties to false
+            // collect additional properties and merge into a single definition
+            let additionalProps: Definition[] = [];
+            let additionalTypes: string[] = [];
+            const addAdditionalProps: (addProps: Definition) => void = (addProps: Definition) => {
+                if (addProps !== false) {
+                    if (addProps.anyOf) {
+                        for (const prop of addProps.anyOf) {
+                            if (prop.type) {
+                                additionalTypes = additionalTypes.concat(isArray(prop.type) ?
+                                    prop.type : [prop.type] );
+                            } else {
+                                additionalProps.push(prop);
+                            }
                         }
+                    } else if (addProps.type) {
+                        additionalTypes = additionalTypes.concat(isArray(addProps.type) ?
+                            addProps.type : [addProps.type] );
+                    } else {
+                        additionalProps.push(addProps);
                     }
-                } else if (addProps.type) {
-                    additionalTypes = additionalTypes.concat(isArray(addProps.type) ? addProps.type : [addProps.type] );
-                } else {
-                    additionalProps.push(addProps);
                 }
-            }
-        }
-
-        addAdditionalProps(definition.additionalProperties);
-        addAdditionalProps(other.additionalProperties);
-
-        additionalTypes = uniqueArray(additionalTypes);
-        additionalProps = uniqueArray(additionalProps);
-
-        if (additionalTypes.length > 1) {
-            additionalProps.push({
-                type: additionalTypes,
-            });
-        } else if (additionalTypes.length === 1) {
-            additionalProps.push({
-                type: additionalTypes[0],
-            });
-        }
-
-        if (additionalProps.length > 1) {
-            definition.additionalProperties = {
-                anyOf: additionalProps,
             };
-        } else if (additionalProps.length === 1) {
-            if (Object.keys(additionalProps[0]).length === 0) {
-                delete definition.additionalProperties;
+
+            addAdditionalProps(definition.additionalProperties);
+            addAdditionalProps(other.additionalProperties);
+
+            additionalTypes = uniqueArray(additionalTypes);
+            additionalProps = uniqueArray(additionalProps);
+
+            if (additionalTypes.length > 1) {
+                additionalProps.push({
+                    type: additionalTypes,
+                });
+            } else if (additionalTypes.length === 1) {
+                additionalProps.push({
+                    type: additionalTypes[0],
+                });
+            }
+
+            if (additionalProps.length > 1) {
+                definition.additionalProperties = {
+                    anyOf: additionalProps,
+                };
+            } else if (additionalProps.length === 1) {
+                if (Object.keys(additionalProps[0]).length === 0) {
+                    delete definition.additionalProperties;
+                } else {
+                    definition.additionalProperties = additionalProps[0];
+                }
             } else {
-                definition.additionalProperties = additionalProps[0];
+                definition.additionalProperties = false;
             }
         } else {
-            definition.additionalProperties = false;
+            definition.additionalProperties = true;
         }
 
         if (other.required) {
