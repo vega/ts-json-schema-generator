@@ -10,10 +10,21 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType && this.isLiteralUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
-        return {
-            type: uniqueArray(type.getTypes().map((item: LiteralType) => this.getLiteralType(item))),
-            enum: uniqueArray(type.getTypes().map((item: LiteralType) => item.getValue())),
-        };
+        const values: (string | number | boolean)[] = uniqueArray(
+            type.getTypes().map((item: LiteralType) => item.getValue()));
+        const types: string[] = uniqueArray(type.getTypes().map((item: LiteralType) => this.getLiteralType(item)));
+
+        if (types.length === 1) {
+            return {
+                type: types[0],
+                enum: values,
+            };
+        } else {
+            return {
+                type: types,
+                enum: values,
+            };
+        }
     }
     public getChildren(type: UnionType): BaseType[] {
         return [];
