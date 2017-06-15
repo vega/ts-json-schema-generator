@@ -26,15 +26,14 @@ var SchemaGenerator = (function () {
     SchemaGenerator.prototype.findRootNode = function (fullName) {
         var _this = this;
         var typeChecker = this.program.getTypeChecker();
-        var allTypes = {};
+        var allTypes = new Map();
         this.program.getSourceFiles().forEach(function (sourceFile) {
             _this.inspectNode(sourceFile, typeChecker, allTypes);
         });
-        var rootNode = allTypes[fullName];
-        if (!rootNode) {
+        if (!allTypes.has(fullName)) {
             throw new NoRootTypeError_1.NoRootTypeError(fullName);
         }
-        return rootNode;
+        return allTypes.get(fullName);
     };
     SchemaGenerator.prototype.inspectNode = function (node, typeChecker, allTypes) {
         var _this = this;
@@ -47,7 +46,7 @@ var SchemaGenerator = (function () {
             else if (this.isGenericType(node)) {
                 return;
             }
-            allTypes[this.getFullName(node, typeChecker)] = node;
+            allTypes.set(this.getFullName(node, typeChecker), node);
         }
         else {
             ts.forEachChild(node, function (subnode) { return _this.inspectNode(subnode, typeChecker, allTypes); });

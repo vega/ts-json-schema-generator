@@ -11,10 +11,20 @@ var LiteralUnionTypeFormatter = (function () {
     };
     LiteralUnionTypeFormatter.prototype.getDefinition = function (type) {
         var _this = this;
-        return {
-            type: uniqueArray_1.uniqueArray(type.getTypes().map(function (item) { return _this.getLiteralType(item); })),
-            enum: uniqueArray_1.uniqueArray(type.getTypes().map(function (item) { return item.getValue(); })),
-        };
+        var values = uniqueArray_1.uniqueArray(type.getTypes().map(function (item) { return item.getValue(); }));
+        var types = uniqueArray_1.uniqueArray(type.getTypes().map(function (item) { return _this.getLiteralType(item); }));
+        if (types.length === 1) {
+            return {
+                type: types[0],
+                enum: values,
+            };
+        }
+        else {
+            return {
+                type: types,
+                enum: values,
+            };
+        }
     };
     LiteralUnionTypeFormatter.prototype.getChildren = function (type) {
         return [];

@@ -4,20 +4,20 @@ var ReferenceType_1 = require("./Type/ReferenceType");
 var CircularReferenceNodeParser = (function () {
     function CircularReferenceNodeParser(childNodeParser) {
         this.childNodeParser = childNodeParser;
-        this.circular = {};
+        this.circular = new Map();
     }
     CircularReferenceNodeParser.prototype.supportsNode = function (node) {
         return this.childNodeParser.supportsNode(node);
     };
     CircularReferenceNodeParser.prototype.createType = function (node, context) {
         var key = this.createCacheKey(node, context);
-        if (this.circular[key]) {
-            return this.circular[key];
+        if (this.circular.has(key)) {
+            return this.circular.get(key);
         }
         var reference = new ReferenceType_1.ReferenceType();
-        this.circular[key] = reference;
+        this.circular.set(key, reference);
         reference.setType(this.childNodeParser.createType(node, context));
-        delete this.circular[key];
+        this.circular.delete(key);
         return reference.getType();
     };
     CircularReferenceNodeParser.prototype.createCacheKey = function (node, context) {

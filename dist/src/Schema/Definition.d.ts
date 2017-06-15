@@ -7,9 +7,6 @@ export interface Definition {
     anyOf?: Definition[];
     title?: string;
     type?: string | string[];
-    definitions?: {
-        [key: string]: any;
-    };
     format?: string;
     items?: Definition;
     minItems?: number;

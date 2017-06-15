@@ -69,6 +69,7 @@ describe("valid-data", function () {
     assertSchema("type-intersection", "MyObject");
     assertSchema("type-intersection-additional-props", "MyObject");
     assertSchema("type-typeof", "MyType");
+    assertSchema("type-indexed-access", "MyType");
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
     assertSchema("generic-multiple", "MyObject");
