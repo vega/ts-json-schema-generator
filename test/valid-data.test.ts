@@ -15,8 +15,14 @@ validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
 const basePath: string = "test/valid-data";
 
-function assertSchema(name: string, type: string): void {
-    it(name, () => {
+type Run = (
+        expectation: string,
+        callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
+    ) => Mocha.ITest;
+
+function assertSchema(name: string, type: string, only: boolean = false): void {
+    const run: Run = only ? it.only : it;
+    run(name, () => {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
             type: type,
@@ -94,6 +100,8 @@ describe("valid-data", () => {
 
     assertSchema("type-typeof", "MyType");
     assertSchema("type-indexed-access", "MyType");
+    assertSchema("type-keyof", "MyType");
+    assertSchema("type-mapped", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");

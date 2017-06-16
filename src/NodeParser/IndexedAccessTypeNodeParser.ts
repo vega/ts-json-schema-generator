@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { EnumType, EnumValue } from "../Type/EnumType";
+import { EnumType } from "../Type/EnumType";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
