@@ -12,8 +12,10 @@ var validator = new Ajv();
 var metaSchema = require("ajv/lib/refs/json-schema-draft-04.json");
 validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 var basePath = "test/valid-data";
-function assertSchema(name, type) {
-    it(name, function () {
+function assertSchema(name, type, only) {
+    if (only === void 0) { only = false; }
+    var run = only ? it.only : it;
+    run(name, function () {
         var config = {
             path: path_1.resolve(basePath + "/" + name + "/*.ts"),
             type: type,
@@ -70,6 +72,8 @@ describe("valid-data", function () {
     assertSchema("type-intersection-additional-props", "MyObject");
     assertSchema("type-typeof", "MyType");
     assertSchema("type-indexed-access", "MyType");
+    assertSchema("type-keyof", "MyType");
+    assertSchema("type-mapped", "MyObject");
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
     assertSchema("generic-multiple", "MyObject");

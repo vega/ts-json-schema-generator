@@ -16,6 +16,7 @@ var IndexedAccessTypeNodeParser_1 = require("../src/NodeParser/IndexedAccessType
 var InterfaceNodeParser_1 = require("../src/NodeParser/InterfaceNodeParser");
 var IntersectionNodeParser_1 = require("../src/NodeParser/IntersectionNodeParser");
 var LiteralNodeParser_1 = require("../src/NodeParser/LiteralNodeParser");
+var MappedTypeNodeParser_1 = require("../src/NodeParser/MappedTypeNodeParser");
 var NullLiteralNodeParser_1 = require("../src/NodeParser/NullLiteralNodeParser");
 var NumberLiteralNodeParser_1 = require("../src/NodeParser/NumberLiteralNodeParser");
 var NumberTypeNodeParser_1 = require("../src/NodeParser/NumberTypeNodeParser");
@@ -27,6 +28,7 @@ var TupleNodeParser_1 = require("../src/NodeParser/TupleNodeParser");
 var TypeAliasNodeParser_1 = require("../src/NodeParser/TypeAliasNodeParser");
 var TypeLiteralNodeParser_1 = require("../src/NodeParser/TypeLiteralNodeParser");
 var TypeofNodeParser_1 = require("../src/NodeParser/TypeofNodeParser");
+var TypeOperatorNodeParser_1 = require("../src/NodeParser/TypeOperatorNodeParser");
 var TypeReferenceNodeParser_1 = require("../src/NodeParser/TypeReferenceNodeParser");
 var UnionNodeParser_1 = require("../src/NodeParser/UnionNodeParser");
 var VoidTypeNodeParser_1 = require("../src/NodeParser/VoidTypeNodeParser");
@@ -71,6 +73,8 @@ function createParser(program, config) {
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser_1.ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IndexedAccessTypeNodeParser_1.IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser_1.TypeofNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new MappedTypeNodeParser_1.MappedTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new TypeOperatorNodeParser_1.TypeOperatorNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser_1.TypeAliasNodeParser(typeChecker, chainNodeParser))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser_1.EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(new InterfaceNodeParser_1.InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser))))))
