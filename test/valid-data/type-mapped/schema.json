@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "boolean"
+        },
+        "foo": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

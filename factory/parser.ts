@@ -17,6 +17,7 @@ import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessType
 import { InterfaceNodeParser } from "../src/NodeParser/InterfaceNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
+import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
@@ -79,6 +80,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new MappedTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(typeChecker, chainNodeParser))
 
         .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser))))
