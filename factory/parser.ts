@@ -28,6 +28,7 @@ import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
 import { TypeAliasNodeParser } from "../src/NodeParser/TypeAliasNodeParser";
 import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
 import { TypeofNodeParser } from "../src/NodeParser/TypeofNodeParser";
+import { TypeOperatorNodeParser } from "../src/NodeParser/TypeOperatorNodeParser";
 import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
@@ -78,6 +79,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new TypeOperatorNodeParser(typeChecker, chainNodeParser))
 
         .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
