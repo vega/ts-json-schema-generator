@@ -17,7 +17,7 @@ export class InterfaceNodeParser implements SubNodeParser {
     public createType(node: ts.InterfaceDeclaration, context: Context): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
             node.typeParameters.forEach((typeParam: ts.TypeParameterDeclaration) => {
-                const nameSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(typeParam.name);
+                const nameSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
             });
         }

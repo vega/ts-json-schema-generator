@@ -25,7 +25,7 @@ export class EnumNodeParser implements SubNodeParser {
     }
 
     private getMemberValue(member: ts.EnumMember, index: number): EnumValue {
-        const constantValue: number = this.typeChecker.getConstantValue(member);
+        const constantValue: string | number | undefined = this.typeChecker.getConstantValue(member);
         if (constantValue !== undefined) {
             return constantValue;
         }

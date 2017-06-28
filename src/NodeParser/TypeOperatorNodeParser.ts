@@ -19,7 +19,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         const type: ts.Type = this.typeChecker.getTypeFromTypeNode(node);
         return new EnumType(
             `keyof-type-${node.getFullStart()}`,
-            (<any>type).types.map((t: any) => t.text),
+            (<any>type).types.map((t: any) => t.value),
         );
     }
 }

@@ -38,25 +38,25 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "commander": "~2.9.0",
+    "commander": "~2.10.0",
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
-    "ts-node": "^3.0.4",
-    "typescript": "~2.3.4"
+    "ts-node": "^3.1.0",
+    "typescript": "~2.4.1"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^4.0.0",
+    "@types/chai": "^4.0.1",
     "@types/commander": "^2.9.1",
     "@types/glob": "^5.0.30",
     "@types/json-stable-stringify": "^1.0.31",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.27",
-    "ajv": "~5.1.5",
-    "chai": "~4.0.1",
+    "@types/node": "^8.0.4",
+    "ajv": "~5.2.0",
+    "chai": "~4.0.2",
     "mocha": "~3.4.2",
     "source-map-support": "~0.4.15",
-    "tslint": "~5.4.2"
+    "tslint": "~5.4.3"
   },
   "scripts": {
     "prepublish": "npm run build",

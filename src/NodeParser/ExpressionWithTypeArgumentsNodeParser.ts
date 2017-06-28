@@ -14,7 +14,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ExpressionWithTypeArguments;
     }
     public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
-        const typeSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.expression);
+        const typeSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.expression)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol: ts.Symbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(

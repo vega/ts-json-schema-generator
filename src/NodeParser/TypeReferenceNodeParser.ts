@@ -20,7 +20,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeReference;
     }
     public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
-        const typeSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.typeName);
+        const typeSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol: ts.Symbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(
