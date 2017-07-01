@@ -3,11 +3,13 @@ import { assert } from "chai";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import * as ts from "typescript";
+
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { Run } from "./valid-data.test";
 
 const validator: Ajv.Ajv = new Ajv();
 const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
@@ -15,8 +17,9 @@ validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
 const basePath: string = "test/config";
 
-function assertSchema(name: string, partialConfig: PartialConfig & {type: string}): void {
-    it(name, () => {
+function assertSchema(name: string, partialConfig: PartialConfig & {type: string}, only: Boolean = false): void {
+    const run: Run = only ? it.only : it;
+    run(name, () => {
         const config: Config = {
             ... DEFAULT_CONFIG,
             ...partialConfig,
@@ -55,4 +58,6 @@ describe("config", () => {
     assertSchema("jsdoc-complex-basic", {type: "MyObject", expose: "export", topRef: true, jsDoc: "basic"});
     assertSchema("jsdoc-complex-extended", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
     assertSchema("jsdoc-description-only", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+
+    assertSchema("jsdoc-hide", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 });

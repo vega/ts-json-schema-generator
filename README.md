@@ -35,6 +35,7 @@ npm install typescript-to-json-schema
 * generics
 * `typeof`
 * `@nullable` annotations
+* `@hide` annotations for enum values and object properties
 
 ## Debug
 

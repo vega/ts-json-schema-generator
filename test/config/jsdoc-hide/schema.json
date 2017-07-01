@@ -1,0 +1,29 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "Enum": {
+      "enum": [
+        "y"
+      ],
+      "type": "string"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "$ref": "#/definitions/Enum"
+        },
+        "foo": {
+          "description": "This property should appear.",
+          "type": "number"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "type": "object"
+    }
+  }
+}
