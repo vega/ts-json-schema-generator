@@ -15,7 +15,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
-        const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation((<ts.TypeQueryNode>node.objectType).exprName);
+        const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation((<ts.TypeQueryNode>node.objectType).exprName)!;
 
         return new EnumType(
             `indexed-type-${node.getFullStart()}`,

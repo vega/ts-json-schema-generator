@@ -9,10 +9,10 @@ export interface Definition {
     title?: string;
     type?: string | string[];
     format?: string;
-    items?: Definition;
+    items?: Definition | Definition[];
     minItems?: number;
     additionalItems?: {
-        anyOf: Definition,
+        anyOf: Definition[],
     };
     enum?: RawType[] | Definition[];
     default?: RawType | Object;

@@ -8,7 +8,7 @@ import { uniqueArray } from "../Utils/uniqueArray";
 
 function makeNullable(def: Definition) {
     const union: Definition[] | undefined = def.oneOf || def.anyOf;
-    if (union && union.indexOf("null") === -1) {
+    if (union && union.filter((d: Definition) => d.type === null).length > 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
         if (isArray(def.type)) {

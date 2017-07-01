@@ -15,7 +15,7 @@ validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
 const basePath: string = "test/valid-data";
 
-type Run = (
+export type Run = (
         expectation: string,
         callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
     ) => Mocha.ITest;

@@ -30,7 +30,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             ...other.properties,
         };
 
-        function additionalPropsDefinition(props?: true | Definition): props is Definition {
+        function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
             return props !== undefined && props !== true;
         }
 
@@ -90,8 +90,6 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             } else {
                 definition.additionalProperties = false;
             }
-        } else {
-            definition.additionalProperties = true;
         }
 
         if (other.required) {

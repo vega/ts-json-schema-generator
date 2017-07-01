@@ -30,7 +30,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return type.types
             .reduce((result: ObjectProperty[], t: any) => {
                 const objectProperty: ObjectProperty = new ObjectProperty(
-                    t.text,
+                    t.value,
                     this.childNodeParser.createType(node.type!, context),
                     !node.questionToken,
                 );
