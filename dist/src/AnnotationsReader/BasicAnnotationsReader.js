@@ -44,26 +44,26 @@ var BasicAnnotationsReader = (function () {
             return undefined;
         }
     };
+    BasicAnnotationsReader.textTags = [
+        "title",
+        "description",
+        "format",
+        "pattern",
+    ];
+    BasicAnnotationsReader.jsonTags = [
+        "minimum",
+        "exclusiveMinimum",
+        "maximum",
+        "exclusiveMaximum",
+        "multipleOf",
+        "minLength",
+        "maxLength",
+        "minItems",
+        "maxItems",
+        "uniqueItems",
+        "default",
+    ];
     return BasicAnnotationsReader;
 }());
-BasicAnnotationsReader.textTags = [
-    "title",
-    "description",
-    "format",
-    "pattern",
-];
-BasicAnnotationsReader.jsonTags = [
-    "minimum",
-    "exclusiveMinimum",
-    "maximum",
-    "exclusiveMaximum",
-    "multipleOf",
-    "minLength",
-    "maxLength",
-    "minItems",
-    "maxItems",
-    "uniqueItems",
-    "default",
-];
 exports.BasicAnnotationsReader = BasicAnnotationsReader;
 //# sourceMappingURL=BasicAnnotationsReader.js.map

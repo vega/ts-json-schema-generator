@@ -86,9 +86,6 @@ function getAllOfDefinitionReducer(childTypeFormatter) {
                 definition.additionalProperties = false;
             }
         }
-        else {
-            definition.additionalProperties = true;
-        }
         if (other.required) {
             definition.required = uniqueArray_1.uniqueArray((definition.required || []).concat(other.required)).sort();
         }

@@ -2,6 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ts = require("typescript");
 var EnumType_1 = require("../Type/EnumType");
+var isHidden_1 = require("../Utils/isHidden");
+function isMemberHidden(member) {
+    if (!("symbol" in member)) {
+        return false;
+    }
+    var symbol = member.symbol;
+    return isHidden_1.isHidden(symbol);
+}
 var EnumNodeParser = (function () {
     function EnumNodeParser(typeChecker) {
         this.typeChecker = typeChecker;
@@ -14,7 +22,9 @@ var EnumNodeParser = (function () {
         var members = node.kind === ts.SyntaxKind.EnumDeclaration ?
             node.members :
             [node];
-        return new EnumType_1.EnumType("enum-" + node.getFullStart(), members.map(function (member, index) { return _this.getMemberValue(member, index); }));
+        return new EnumType_1.EnumType("enum-" + node.getFullStart(), members
+            .filter(function (member) { return !isMemberHidden(member); })
+            .map(function (member, index) { return _this.getMemberValue(member, index); }));
     };
     EnumNodeParser.prototype.getMemberValue = function (member, index) {
         var constantValue = this.typeChecker.getConstantValue(member);

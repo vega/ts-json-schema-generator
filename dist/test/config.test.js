@@ -21,8 +21,10 @@ var validator = new Ajv();
 var metaSchema = require("ajv/lib/refs/json-schema-draft-04.json");
 validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 var basePath = "test/config";
-function assertSchema(name, partialConfig) {
-    it(name, function () {
+function assertSchema(name, partialConfig, only) {
+    if (only === void 0) { only = false; }
+    var run = only ? it.only : it;
+    run(name, function () {
         var config = __assign({}, Config_1.DEFAULT_CONFIG, partialConfig, { path: path_1.resolve(basePath + "/" + name + "/*.ts") });
         var program = program_1.createProgram(config);
         var generator = new SchemaGenerator_1.SchemaGenerator(program, parser_1.createParser(program, config), formatter_1.createFormatter(config));
@@ -45,5 +47,6 @@ describe("config", function () {
     assertSchema("jsdoc-complex-basic", { type: "MyObject", expose: "export", topRef: true, jsDoc: "basic" });
     assertSchema("jsdoc-complex-extended", { type: "MyObject", expose: "export", topRef: true, jsDoc: "extended" });
     assertSchema("jsdoc-description-only", { type: "MyObject", expose: "export", topRef: true, jsDoc: "extended" });
+    assertSchema("jsdoc-hide", { type: "MyObject", expose: "export", topRef: true, jsDoc: "extended" });
 });
 //# sourceMappingURL=config.test.js.map

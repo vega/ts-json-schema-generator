@@ -18,7 +18,7 @@ var MappedTypeNodeParser = (function () {
         var type = this.typeChecker.getTypeFromTypeNode(node.typeParameter.constraint);
         return type.types
             .reduce(function (result, t) {
-            var objectProperty = new ObjectType_1.ObjectProperty(t.text, _this.childNodeParser.createType(node.type, context), !node.questionToken);
+            var objectProperty = new ObjectType_1.ObjectProperty(t.value, _this.childNodeParser.createType(node.type, context), !node.questionToken);
             result.push(objectProperty);
             return result;
         }, []);

@@ -12,7 +12,7 @@ var util_1 = require("util");
 var AnnotatedType_1 = require("../Type/AnnotatedType");
 function makeNullable(def) {
     var union = def.oneOf || def.anyOf;
-    if (union && union.indexOf("null") === -1) {
+    if (union && union.filter(function (d) { return d.type === null; }).length > 0) {
         union.push({ type: "null" });
     }
     else if (def.type && def.type !== "object") {

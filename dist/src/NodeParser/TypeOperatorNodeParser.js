@@ -12,7 +12,7 @@ var TypeOperatorNodeParser = (function () {
     };
     TypeOperatorNodeParser.prototype.createType = function (node, context) {
         var type = this.typeChecker.getTypeFromTypeNode(node);
-        return new EnumType_1.EnumType("keyof-type-" + node.getFullStart(), type.types.map(function (t) { return t.text; }));
+        return new EnumType_1.EnumType("keyof-type-" + node.getFullStart(), type.types.map(function (t) { return t.value; }));
     };
     return TypeOperatorNodeParser;
 }());
