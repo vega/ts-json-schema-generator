@@ -16,7 +16,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     }
     public createType(node: ts.TypeLiteralNode, context: Context): BaseType {
         return new ObjectType(
-            `structure-${node.getFullStart()}`,
+            this.getTypeId(node, context),
             [],
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),
@@ -50,5 +50,12 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
         const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
         return this.childNodeParser.createType(signature.type!, context);
+    }
+
+    private getTypeId(node: ts.Node, context: Context): string {
+        const fullName: string = `structure-${node.getFullStart()}`;
+        const argumentIds: string[] = context.getArguments().map((arg: BaseType) => arg.getId());
+
+        return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }
 }
