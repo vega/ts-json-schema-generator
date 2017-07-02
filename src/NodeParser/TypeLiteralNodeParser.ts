@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { isHidden } from "../Utils/isHidden";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
@@ -27,6 +28,9 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
+                if (isHidden(propertySymbol)) {
+                    return result;
+                }
                 const objectProperty: ObjectProperty = new ObjectProperty(
                     propertySymbol.getName(),
                     this.childNodeParser.createType(propertyNode.type!, context),
