@@ -17,7 +17,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return type instanceof ObjectType;
     }
     public getDefinition(type: ObjectType): Definition {
-        if (!type.getBaseTypes().length) {
+        if (type.getBaseTypes().length === 0) {
             return this.getObjectDefinition(type);
         }
 
