@@ -1,6 +1,6 @@
 {
   "name": "typescript-to-json-schema",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
