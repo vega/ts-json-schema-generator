@@ -88,8 +88,10 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser)),
         ))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(
+            new TypeLiteralNodeParser(withJsDoc(chainNodeParser)),
+        ))))
 
-        .addNodeParser(new TypeLiteralNodeParser(chainNodeParser))
         .addNodeParser(new UnionNodeParser(chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayNodeParser(chainNodeParser))

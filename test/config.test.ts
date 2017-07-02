@@ -60,4 +60,5 @@ describe("config", () => {
     assertSchema("jsdoc-description-only", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 
     assertSchema("jsdoc-hide", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+    assertSchema("jsdoc-inheritance", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 });

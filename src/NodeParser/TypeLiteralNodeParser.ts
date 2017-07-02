@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { isHidden } from "../Utils/isHidden";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
@@ -15,7 +16,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     }
     public createType(node: ts.TypeLiteralNode, context: Context): BaseType {
         return new ObjectType(
-            `structure-${node.getFullStart()}`,
+            this.getTypeId(node, context),
             [],
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),
@@ -27,6 +28,9 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
+                if (isHidden(propertySymbol)) {
+                    return result;
+                }
                 const objectProperty: ObjectProperty = new ObjectProperty(
                     propertySymbol.getName(),
                     this.childNodeParser.createType(propertyNode.type!, context),
@@ -46,5 +50,12 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
         const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
         return this.childNodeParser.createType(signature.type!, context);
+    }
+
+    private getTypeId(node: ts.Node, context: Context): string {
+        const fullName: string = `structure-${node.getFullStart()}`;
+        const argumentIds: string[] = context.getArguments().map((arg: BaseType) => arg.getId());
+
+        return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }
 }
