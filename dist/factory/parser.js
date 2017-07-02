@@ -78,7 +78,7 @@ function createParser(program, config) {
         .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser_1.TypeAliasNodeParser(typeChecker, chainNodeParser))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser_1.EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(new InterfaceNodeParser_1.InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser))))))
-        .addNodeParser(new TypeLiteralNodeParser_1.TypeLiteralNodeParser(chainNodeParser))
+        .addNodeParser(withCircular(withExpose(withJsDoc(new TypeLiteralNodeParser_1.TypeLiteralNodeParser(withJsDoc(chainNodeParser))))))
         .addNodeParser(new UnionNodeParser_1.UnionNodeParser(chainNodeParser))
         .addNodeParser(new IntersectionNodeParser_1.IntersectionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayNodeParser_1.ArrayNodeParser(chainNodeParser))

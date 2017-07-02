@@ -24,7 +24,7 @@ function getNonRefType(type) {
 function getAllOfDefinitionReducer(childTypeFormatter) {
     return function (definition, baseType) {
         var other = childTypeFormatter.getDefinition(getNonRefType(baseType));
-        definition.properties = __assign({}, definition.properties, other.properties);
+        definition.properties = __assign({}, other.properties, definition.properties);
         function additionalPropsDefinition(props) {
             return props !== undefined && props !== true;
         }

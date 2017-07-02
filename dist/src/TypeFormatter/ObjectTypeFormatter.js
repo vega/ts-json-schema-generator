@@ -20,7 +20,7 @@ var ObjectTypeFormatter = (function () {
         return type instanceof ObjectType_1.ObjectType;
     };
     ObjectTypeFormatter.prototype.getDefinition = function (type) {
-        if (!type.getBaseTypes().length) {
+        if (type.getBaseTypes().length === 0) {
             return this.getObjectDefinition(type);
         }
         if (Object.keys(type.getProperties()).length === 0 &&

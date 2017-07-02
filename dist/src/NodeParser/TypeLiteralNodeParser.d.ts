@@ -9,4 +9,5 @@ export declare class TypeLiteralNodeParser implements SubNodeParser {
     createType(node: ts.TypeLiteralNode, context: Context): BaseType;
     private getProperties(node, context);
     private getAdditionalProperties(node, context);
+    private getTypeId(node, context);
 }
