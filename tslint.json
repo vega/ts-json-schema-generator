@@ -50,7 +50,7 @@
     "no-empty": true,
     "no-eval": true,
     "no-for-in-array": true,
-    "no-inferrable-types": [false],
+    "no-inferrable-types": [true, "ignore-params"],
     "no-internal-module": true,
     "no-null-keyword": false,
     "no-shadowed-variable": true,
@@ -104,9 +104,7 @@
       true,
       "parameter",
       "arrow-parameter",
-      "property-declaration",
-      "variable-declaration",
-      "member-variable-declaration"
+      "property-declaration"
     ],
     "typedef-whitespace": [
       true,

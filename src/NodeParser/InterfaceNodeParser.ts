@@ -18,7 +18,7 @@ export class InterfaceNodeParser implements SubNodeParser {
     public createType(node: ts.InterfaceDeclaration, context: Context): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
             node.typeParameters.forEach((typeParam: ts.TypeParameterDeclaration) => {
-                const nameSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
+                const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
             });
         }
@@ -47,7 +47,7 @@ export class InterfaceNodeParser implements SubNodeParser {
         return node.members
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
-                const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
+                const propertySymbol = (propertyNode as any).symbol;
                 if (isHidden(propertySymbol)) {
                     return result;
                 }
@@ -74,8 +74,8 @@ export class InterfaceNodeParser implements SubNodeParser {
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
-        const fullName: string = `interface-${node.getFullStart()}`;
-        const argumentIds: string[] = context.getArguments().map((arg: BaseType) => arg.getId());
+        const fullName = `interface-${node.getFullStart()}`;
+        const argumentIds = context.getArguments().map((arg: BaseType) => arg.getId());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

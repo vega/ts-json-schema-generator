@@ -17,10 +17,10 @@ export class AnnotatedNodeParser implements SubNodeParser {
         return this.childNodeParser.supportsNode(node);
     }
     public createType(node: ts.Node, context: Context): BaseType {
-        const baseType: BaseType = this.childNodeParser.createType(node, context);
-        const annotatedNode: ts.Node = this.getAnnotatedNode(node);
-        const annotations: Annotations | undefined = this.annotationsReader.getAnnotations(annotatedNode);
-        const nullable: boolean = this.annotationsReader instanceof ExtendedAnnotationsReader ?
+        const baseType = this.childNodeParser.createType(node, context);
+        const annotatedNode = this.getAnnotatedNode(node);
+        const annotations = this.annotationsReader.getAnnotations(annotatedNode);
+        const nullable = this.annotationsReader instanceof ExtendedAnnotationsReader ?
             this.annotationsReader.isNullable(annotatedNode) : false;
         return !annotations && !nullable ? baseType : new AnnotatedType(baseType, annotations || {}, nullable);
     }

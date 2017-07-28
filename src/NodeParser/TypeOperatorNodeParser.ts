@@ -16,7 +16,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeOperatorNode, context: Context): BaseType {
-        const type: ts.Type = this.typeChecker.getTypeFromTypeNode(node);
+        const type = this.typeChecker.getTypeFromTypeNode(node);
         return new EnumType(
             `keyof-type-${node.getFullStart()}`,
             (<any>type).types.map((t: any) => t.value),

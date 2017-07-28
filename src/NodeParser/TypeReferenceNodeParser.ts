@@ -20,9 +20,9 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeReference;
     }
     public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
-        const typeSymbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
+        const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
-            const aliasedSymbol: ts.Symbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+            const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(
                 aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
                 this.createSubContext(node, context),
@@ -40,7 +40,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     }
 
     private createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {
-        const subContext: Context = new Context(node);
+        const subContext = new Context(node);
         if (node.typeArguments && node.typeArguments.length) {
             node.typeArguments.forEach((typeArg: ts.TypeNode) => {
                 subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));

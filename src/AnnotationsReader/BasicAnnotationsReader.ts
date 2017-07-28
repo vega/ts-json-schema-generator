@@ -41,7 +41,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         }
 
         const annotations: Annotations = jsDocTags.reduce((result: Annotations, jsDocTag: ts.JSDocTagInfo) => {
-            const value: any = this.parseJsDocTag(jsDocTag);
+            const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
                 result[jsDocTag.name] = value;
             }

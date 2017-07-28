@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
@@ -37,8 +38,8 @@ import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
-    const typeChecker: ts.TypeChecker = program.getTypeChecker();
-    const chainNodeParser: ChainNodeParser = new ChainNodeParser(typeChecker, []);
+    const typeChecker = program.getTypeChecker();
+    const chainNodeParser = new ChainNodeParser(typeChecker, []);
 
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
         return new ExposeNodeParser(typeChecker, nodeParser, config.expose);
