@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
-var NodeParser_1 = require("../NodeParser");
-var ArrayType_1 = require("../Type/ArrayType");
-var invlidTypes = (_a = {},
-    _a[ts.SyntaxKind.ModuleDeclaration] = true,
-    _a[ts.SyntaxKind.VariableDeclaration] = true,
-    _a);
-var TypeReferenceNodeParser = (function () {
-    function TypeReferenceNodeParser(typeChecker, childNodeParser) {
+const ts = require("typescript");
+const NodeParser_1 = require("../NodeParser");
+const ArrayType_1 = require("../Type/ArrayType");
+const invlidTypes = {
+    [ts.SyntaxKind.ModuleDeclaration]: true,
+    [ts.SyntaxKind.VariableDeclaration]: true,
+};
+class TypeReferenceNodeParser {
+    constructor(typeChecker, childNodeParser) {
         this.typeChecker = typeChecker;
         this.childNodeParser = childNodeParser;
     }
-    TypeReferenceNodeParser.prototype.supportsNode = function (node) {
+    supportsNode(node) {
         return node.kind === ts.SyntaxKind.TypeReference;
-    };
-    TypeReferenceNodeParser.prototype.createType = function (node, context) {
-        var typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName);
+    }
+    createType(node, context) {
+        const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName);
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
-            var aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
-            return this.childNodeParser.createType(aliasedSymbol.declarations.filter(function (n) { return !invlidTypes[n.kind]; })[0], this.createSubContext(node, context));
+            const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+            return this.childNodeParser.createType(aliasedSymbol.declarations.filter((n) => !invlidTypes[n.kind])[0], this.createSubContext(node, context));
         }
         else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);
@@ -28,21 +28,18 @@ var TypeReferenceNodeParser = (function () {
             return new ArrayType_1.ArrayType(this.createSubContext(node, context).getArguments()[0]);
         }
         else {
-            return this.childNodeParser.createType(typeSymbol.declarations.filter(function (n) { return !invlidTypes[n.kind]; })[0], this.createSubContext(node, context));
+            return this.childNodeParser.createType(typeSymbol.declarations.filter((n) => !invlidTypes[n.kind])[0], this.createSubContext(node, context));
         }
-    };
-    TypeReferenceNodeParser.prototype.createSubContext = function (node, parentContext) {
-        var _this = this;
-        var subContext = new NodeParser_1.Context(node);
+    }
+    createSubContext(node, parentContext) {
+        const subContext = new NodeParser_1.Context(node);
         if (node.typeArguments && node.typeArguments.length) {
-            node.typeArguments.forEach(function (typeArg) {
-                subContext.pushArgument(_this.childNodeParser.createType(typeArg, parentContext));
+            node.typeArguments.forEach((typeArg) => {
+                subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
             });
         }
         return subContext;
-    };
-    return TypeReferenceNodeParser;
-}());
+    }
+}
 exports.TypeReferenceNodeParser = TypeReferenceNodeParser;
-var _a;
 //# sourceMappingURL=TypeReferenceNodeParser.js.map

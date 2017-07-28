@@ -1,31 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Context = (function () {
-    function Context(reference) {
+class Context {
+    constructor(reference) {
         this.arguments = [];
         this.parameters = [];
         this.reference = reference;
     }
-    Context.prototype.pushArgument = function (argumentType) {
+    pushArgument(argumentType) {
         this.arguments.push(argumentType);
-    };
-    Context.prototype.pushParameter = function (parameterName) {
+    }
+    pushParameter(parameterName) {
         this.parameters.push(parameterName);
-    };
-    Context.prototype.getArgument = function (parameterName) {
-        var index = this.parameters.indexOf(parameterName);
+    }
+    getArgument(parameterName) {
+        const index = this.parameters.indexOf(parameterName);
         if (index < 0 || !this.arguments[index]) {
-            throw new Error("Could not find type parameter \"" + parameterName + "\"");
+            throw new Error(`Could not find type parameter "${parameterName}"`);
         }
         return this.arguments[index];
-    };
-    Context.prototype.getArguments = function () {
+    }
+    getArguments() {
         return this.arguments;
-    };
-    Context.prototype.getReference = function () {
+    }
+    getReference() {
         return this.reference;
-    };
-    return Context;
-}());
+    }
+}
 exports.Context = Context;
 //# sourceMappingURL=NodeParser.js.map

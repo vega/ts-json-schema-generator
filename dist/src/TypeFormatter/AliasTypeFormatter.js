@@ -1,20 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var AliasType_1 = require("../Type/AliasType");
-var AliasTypeFormatter = (function () {
-    function AliasTypeFormatter(childTypeFormatter) {
+const AliasType_1 = require("../Type/AliasType");
+class AliasTypeFormatter {
+    constructor(childTypeFormatter) {
         this.childTypeFormatter = childTypeFormatter;
     }
-    AliasTypeFormatter.prototype.supportsType = function (type) {
+    supportsType(type) {
         return type instanceof AliasType_1.AliasType;
-    };
-    AliasTypeFormatter.prototype.getDefinition = function (type) {
+    }
+    getDefinition(type) {
         return this.childTypeFormatter.getDefinition(type.getType());
-    };
-    AliasTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return this.childTypeFormatter.getChildren(type.getType());
-    };
-    return AliasTypeFormatter;
-}());
+    }
+}
 exports.AliasTypeFormatter = AliasTypeFormatter;
 //# sourceMappingURL=AliasTypeFormatter.js.map

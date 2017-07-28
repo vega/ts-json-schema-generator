@@ -1,32 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var LogicError_1 = require("../Error/LogicError");
-var PrimitiveType_1 = require("../Type/PrimitiveType");
-var UnionType_1 = require("../Type/UnionType");
-var uniqueArray_1 = require("../Utils/uniqueArray");
-var BooleanType_1 = require("../Type/BooleanType");
-var NullType_1 = require("../Type/NullType");
-var NumberType_1 = require("../Type/NumberType");
-var StringType_1 = require("../Type/StringType");
-var PrimitiveUnionTypeFormatter = (function () {
-    function PrimitiveUnionTypeFormatter() {
-    }
-    PrimitiveUnionTypeFormatter.prototype.supportsType = function (type) {
+const LogicError_1 = require("../Error/LogicError");
+const PrimitiveType_1 = require("../Type/PrimitiveType");
+const UnionType_1 = require("../Type/UnionType");
+const uniqueArray_1 = require("../Utils/uniqueArray");
+const BooleanType_1 = require("../Type/BooleanType");
+const NullType_1 = require("../Type/NullType");
+const NumberType_1 = require("../Type/NumberType");
+const StringType_1 = require("../Type/StringType");
+class PrimitiveUnionTypeFormatter {
+    supportsType(type) {
         return type instanceof UnionType_1.UnionType && this.isPrimitiveUnion(type);
-    };
-    PrimitiveUnionTypeFormatter.prototype.getDefinition = function (type) {
-        var _this = this;
+    }
+    getDefinition(type) {
         return {
-            type: uniqueArray_1.uniqueArray(type.getTypes().map(function (item) { return _this.getPrimitiveType(item); })),
+            type: uniqueArray_1.uniqueArray(type.getTypes().map((item) => this.getPrimitiveType(item))),
         };
-    };
-    PrimitiveUnionTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return [];
-    };
-    PrimitiveUnionTypeFormatter.prototype.isPrimitiveUnion = function (type) {
-        return type.getTypes().every(function (item) { return item instanceof PrimitiveType_1.PrimitiveType; });
-    };
-    PrimitiveUnionTypeFormatter.prototype.getPrimitiveType = function (item) {
+    }
+    isPrimitiveUnion(type) {
+        return type.getTypes().every((item) => item instanceof PrimitiveType_1.PrimitiveType);
+    }
+    getPrimitiveType(item) {
         if (item instanceof StringType_1.StringType) {
             return "string";
         }
@@ -40,8 +37,7 @@ var PrimitiveUnionTypeFormatter = (function () {
             return "null";
         }
         throw new LogicError_1.LogicError("Unexpected code branch");
-    };
-    return PrimitiveUnionTypeFormatter;
-}());
+    }
+}
 exports.PrimitiveUnionTypeFormatter = PrimitiveUnionTypeFormatter;
 //# sourceMappingURL=PrimitiveUnionTypeFormatter.js.map

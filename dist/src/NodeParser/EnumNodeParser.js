@@ -1,37 +1,36 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
-var EnumType_1 = require("../Type/EnumType");
-var isHidden_1 = require("../Utils/isHidden");
+const ts = require("typescript");
+const EnumType_1 = require("../Type/EnumType");
+const isHidden_1 = require("../Utils/isHidden");
 function isMemberHidden(member) {
     if (!("symbol" in member)) {
         return false;
     }
-    var symbol = member.symbol;
+    const symbol = member.symbol;
     return isHidden_1.isHidden(symbol);
 }
-var EnumNodeParser = (function () {
-    function EnumNodeParser(typeChecker) {
+class EnumNodeParser {
+    constructor(typeChecker) {
         this.typeChecker = typeChecker;
     }
-    EnumNodeParser.prototype.supportsNode = function (node) {
+    supportsNode(node) {
         return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
-    };
-    EnumNodeParser.prototype.createType = function (node, context) {
-        var _this = this;
-        var members = node.kind === ts.SyntaxKind.EnumDeclaration ?
+    }
+    createType(node, context) {
+        const members = node.kind === ts.SyntaxKind.EnumDeclaration ?
             node.members :
             [node];
-        return new EnumType_1.EnumType("enum-" + node.getFullStart(), members
-            .filter(function (member) { return !isMemberHidden(member); })
-            .map(function (member, index) { return _this.getMemberValue(member, index); }));
-    };
-    EnumNodeParser.prototype.getMemberValue = function (member, index) {
-        var constantValue = this.typeChecker.getConstantValue(member);
+        return new EnumType_1.EnumType(`enum-${node.getFullStart()}`, members
+            .filter((member) => !isMemberHidden(member))
+            .map((member, index) => this.getMemberValue(member, index)));
+    }
+    getMemberValue(member, index) {
+        const constantValue = this.typeChecker.getConstantValue(member);
         if (constantValue !== undefined) {
             return constantValue;
         }
-        var initializer = member.initializer;
+        const initializer = member.initializer;
         if (!initializer) {
             return index;
         }
@@ -41,8 +40,8 @@ var EnumNodeParser = (function () {
         else {
             return this.parseInitializer(initializer);
         }
-    };
-    EnumNodeParser.prototype.parseInitializer = function (initializer) {
+    }
+    parseInitializer(initializer) {
         if (initializer.kind === ts.SyntaxKind.TrueKeyword) {
             return true;
         }
@@ -67,8 +66,7 @@ var EnumNodeParser = (function () {
         else {
             return initializer.getText();
         }
-    };
-    return EnumNodeParser;
-}());
+    }
+}
 exports.EnumNodeParser = EnumNodeParser;
 //# sourceMappingURL=EnumNodeParser.js.map

@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ChainTypeFormatter_1 = require("../src/ChainTypeFormatter");
-var CircularReferenceTypeFormatter_1 = require("../src/CircularReferenceTypeFormatter");
-var AnnotatedTypeFormatter_1 = require("../src/TypeFormatter/AnnotatedTypeFormatter");
-var BooleanTypeFormatter_1 = require("../src/TypeFormatter/BooleanTypeFormatter");
-var NullTypeFormatter_1 = require("../src/TypeFormatter/NullTypeFormatter");
-var NumberTypeFormatter_1 = require("../src/TypeFormatter/NumberTypeFormatter");
-var StringTypeFormatter_1 = require("../src/TypeFormatter/StringTypeFormatter");
-var AnyTypeFormatter_1 = require("../src/TypeFormatter/AnyTypeFormatter");
-var VoidTypeFormatter_1 = require("../src/TypeFormatter/VoidTypeFormatter");
-var EnumTypeFormatter_1 = require("../src/TypeFormatter/EnumTypeFormatter");
-var LiteralTypeFormatter_1 = require("../src/TypeFormatter/LiteralTypeFormatter");
-var AliasTypeFormatter_1 = require("../src/TypeFormatter/AliasTypeFormatter");
-var DefinitionTypeFormatter_1 = require("../src/TypeFormatter/DefinitionTypeFormatter");
-var ObjectTypeFormatter_1 = require("../src/TypeFormatter/ObjectTypeFormatter");
-var ReferenceTypeFormatter_1 = require("../src/TypeFormatter/ReferenceTypeFormatter");
-var LiteralUnionTypeFormatter_1 = require("../src/TypeFormatter/LiteralUnionTypeFormatter");
-var PrimitiveUnionTypeFormatter_1 = require("../src/TypeFormatter/PrimitiveUnionTypeFormatter");
-var ArrayTypeFormatter_1 = require("../src/TypeFormatter/ArrayTypeFormatter");
-var IntersectionTypeFormatter_1 = require("../src/TypeFormatter/IntersectionTypeFormatter");
-var TupleTypeFormatter_1 = require("../src/TypeFormatter/TupleTypeFormatter");
-var UnionTypeFormatter_1 = require("../src/TypeFormatter/UnionTypeFormatter");
+const ChainTypeFormatter_1 = require("../src/ChainTypeFormatter");
+const CircularReferenceTypeFormatter_1 = require("../src/CircularReferenceTypeFormatter");
+const AnnotatedTypeFormatter_1 = require("../src/TypeFormatter/AnnotatedTypeFormatter");
+const BooleanTypeFormatter_1 = require("../src/TypeFormatter/BooleanTypeFormatter");
+const NullTypeFormatter_1 = require("../src/TypeFormatter/NullTypeFormatter");
+const NumberTypeFormatter_1 = require("../src/TypeFormatter/NumberTypeFormatter");
+const StringTypeFormatter_1 = require("../src/TypeFormatter/StringTypeFormatter");
+const AnyTypeFormatter_1 = require("../src/TypeFormatter/AnyTypeFormatter");
+const VoidTypeFormatter_1 = require("../src/TypeFormatter/VoidTypeFormatter");
+const EnumTypeFormatter_1 = require("../src/TypeFormatter/EnumTypeFormatter");
+const LiteralTypeFormatter_1 = require("../src/TypeFormatter/LiteralTypeFormatter");
+const AliasTypeFormatter_1 = require("../src/TypeFormatter/AliasTypeFormatter");
+const DefinitionTypeFormatter_1 = require("../src/TypeFormatter/DefinitionTypeFormatter");
+const ObjectTypeFormatter_1 = require("../src/TypeFormatter/ObjectTypeFormatter");
+const ReferenceTypeFormatter_1 = require("../src/TypeFormatter/ReferenceTypeFormatter");
+const LiteralUnionTypeFormatter_1 = require("../src/TypeFormatter/LiteralUnionTypeFormatter");
+const PrimitiveUnionTypeFormatter_1 = require("../src/TypeFormatter/PrimitiveUnionTypeFormatter");
+const ArrayTypeFormatter_1 = require("../src/TypeFormatter/ArrayTypeFormatter");
+const IntersectionTypeFormatter_1 = require("../src/TypeFormatter/IntersectionTypeFormatter");
+const TupleTypeFormatter_1 = require("../src/TypeFormatter/TupleTypeFormatter");
+const UnionTypeFormatter_1 = require("../src/TypeFormatter/UnionTypeFormatter");
 function createFormatter(config) {
-    var chainTypeFormatter = new ChainTypeFormatter_1.ChainTypeFormatter([]);
-    var circularReferenceTypeFormatter = new CircularReferenceTypeFormatter_1.CircularReferenceTypeFormatter(chainTypeFormatter);
+    const chainTypeFormatter = new ChainTypeFormatter_1.ChainTypeFormatter([]);
+    const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter_1.CircularReferenceTypeFormatter(chainTypeFormatter);
     chainTypeFormatter
         .addTypeFormatter(new AnnotatedTypeFormatter_1.AnnotatedTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new StringTypeFormatter_1.StringTypeFormatter())

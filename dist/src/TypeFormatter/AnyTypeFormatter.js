@@ -1,19 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var AnyType_1 = require("../Type/AnyType");
-var AnyTypeFormatter = (function () {
-    function AnyTypeFormatter() {
-    }
-    AnyTypeFormatter.prototype.supportsType = function (type) {
+const AnyType_1 = require("../Type/AnyType");
+class AnyTypeFormatter {
+    supportsType(type) {
         return type instanceof AnyType_1.AnyType;
-    };
-    AnyTypeFormatter.prototype.getDefinition = function (type) {
+    }
+    getDefinition(type) {
         return {};
-    };
-    AnyTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return [];
-    };
-    return AnyTypeFormatter;
-}());
+    }
+}
 exports.AnyTypeFormatter = AnyTypeFormatter;
 //# sourceMappingURL=AnyTypeFormatter.js.map

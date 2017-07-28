@@ -1,19 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var NullType_1 = require("../Type/NullType");
-var NullTypeFormatter = (function () {
-    function NullTypeFormatter() {
-    }
-    NullTypeFormatter.prototype.supportsType = function (type) {
+const NullType_1 = require("../Type/NullType");
+class NullTypeFormatter {
+    supportsType(type) {
         return type instanceof NullType_1.NullType;
-    };
-    NullTypeFormatter.prototype.getDefinition = function (type) {
+    }
+    getDefinition(type) {
         return { type: "null" };
-    };
-    NullTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return [];
-    };
-    return NullTypeFormatter;
-}());
+    }
+}
 exports.NullTypeFormatter = NullTypeFormatter;
 //# sourceMappingURL=NullTypeFormatter.js.map

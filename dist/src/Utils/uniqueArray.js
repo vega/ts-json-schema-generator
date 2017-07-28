@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function uniqueArray(array) {
-    return array.reduce(function (result, item) {
+    return array.reduce((result, item) => {
         if (result.indexOf(item) < 0) {
             result.push(item);
         }

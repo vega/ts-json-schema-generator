@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function isHidden(symbol) {
-    var jsDocTags = symbol.getJsDocTags();
+    const jsDocTags = symbol.getJsDocTags();
     if (!jsDocTags || !jsDocTags.length) {
         return false;
     }
-    var jsDocTag = jsDocTags.find(function (tag) { return tag.name === "hide"; });
+    const jsDocTag = jsDocTags.find((tag) => tag.name === "hide");
     return !!jsDocTag;
 }
 exports.isHidden = isHidden;

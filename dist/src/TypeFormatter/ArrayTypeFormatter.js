@@ -1,23 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ArrayType_1 = require("../Type/ArrayType");
-var ArrayTypeFormatter = (function () {
-    function ArrayTypeFormatter(childTypeFormatter) {
+const ArrayType_1 = require("../Type/ArrayType");
+class ArrayTypeFormatter {
+    constructor(childTypeFormatter) {
         this.childTypeFormatter = childTypeFormatter;
     }
-    ArrayTypeFormatter.prototype.supportsType = function (type) {
+    supportsType(type) {
         return type instanceof ArrayType_1.ArrayType;
-    };
-    ArrayTypeFormatter.prototype.getDefinition = function (type) {
+    }
+    getDefinition(type) {
         return {
             type: "array",
             items: this.childTypeFormatter.getDefinition(type.getItem()),
         };
-    };
-    ArrayTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return this.childTypeFormatter.getChildren(type.getItem());
-    };
-    return ArrayTypeFormatter;
-}());
+    }
+}
 exports.ArrayTypeFormatter = ArrayTypeFormatter;
 //# sourceMappingURL=ArrayTypeFormatter.js.map

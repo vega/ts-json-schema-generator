@@ -1,19 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var VoidType_1 = require("../Type/VoidType");
-var VoidTypeFormatter = (function () {
-    function VoidTypeFormatter() {
-    }
-    VoidTypeFormatter.prototype.supportsType = function (type) {
+const VoidType_1 = require("../Type/VoidType");
+class VoidTypeFormatter {
+    supportsType(type) {
         return type instanceof VoidType_1.VoidType;
-    };
-    VoidTypeFormatter.prototype.getDefinition = function (type) {
+    }
+    getDefinition(type) {
         return { type: "null" };
-    };
-    VoidTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return [];
-    };
-    return VoidTypeFormatter;
-}());
+    }
+}
 exports.VoidTypeFormatter = VoidTypeFormatter;
 //# sourceMappingURL=VoidTypeFormatter.js.map

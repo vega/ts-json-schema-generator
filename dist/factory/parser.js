@@ -1,41 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BasicAnnotationsReader_1 = require("../src/AnnotationsReader/BasicAnnotationsReader");
-var ExtendedAnnotationsReader_1 = require("../src/AnnotationsReader/ExtendedAnnotationsReader");
-var ChainNodeParser_1 = require("../src/ChainNodeParser");
-var CircularReferenceNodeParser_1 = require("../src/CircularReferenceNodeParser");
-var ExposeNodeParser_1 = require("../src/ExposeNodeParser");
-var AnnotatedNodeParser_1 = require("../src/NodeParser/AnnotatedNodeParser");
-var AnyTypeNodeParser_1 = require("../src/NodeParser/AnyTypeNodeParser");
-var ArrayNodeParser_1 = require("../src/NodeParser/ArrayNodeParser");
-var BooleanLiteralNodeParser_1 = require("../src/NodeParser/BooleanLiteralNodeParser");
-var BooleanTypeNodeParser_1 = require("../src/NodeParser/BooleanTypeNodeParser");
-var EnumNodeParser_1 = require("../src/NodeParser/EnumNodeParser");
-var ExpressionWithTypeArgumentsNodeParser_1 = require("../src/NodeParser/ExpressionWithTypeArgumentsNodeParser");
-var IndexedAccessTypeNodeParser_1 = require("../src/NodeParser/IndexedAccessTypeNodeParser");
-var InterfaceNodeParser_1 = require("../src/NodeParser/InterfaceNodeParser");
-var IntersectionNodeParser_1 = require("../src/NodeParser/IntersectionNodeParser");
-var LiteralNodeParser_1 = require("../src/NodeParser/LiteralNodeParser");
-var MappedTypeNodeParser_1 = require("../src/NodeParser/MappedTypeNodeParser");
-var NullLiteralNodeParser_1 = require("../src/NodeParser/NullLiteralNodeParser");
-var NumberLiteralNodeParser_1 = require("../src/NodeParser/NumberLiteralNodeParser");
-var NumberTypeNodeParser_1 = require("../src/NodeParser/NumberTypeNodeParser");
-var ObjectTypeNodeParser_1 = require("../src/NodeParser/ObjectTypeNodeParser");
-var ParenthesizedNodeParser_1 = require("../src/NodeParser/ParenthesizedNodeParser");
-var StringLiteralNodeParser_1 = require("../src/NodeParser/StringLiteralNodeParser");
-var StringTypeNodeParser_1 = require("../src/NodeParser/StringTypeNodeParser");
-var TupleNodeParser_1 = require("../src/NodeParser/TupleNodeParser");
-var TypeAliasNodeParser_1 = require("../src/NodeParser/TypeAliasNodeParser");
-var TypeLiteralNodeParser_1 = require("../src/NodeParser/TypeLiteralNodeParser");
-var TypeofNodeParser_1 = require("../src/NodeParser/TypeofNodeParser");
-var TypeOperatorNodeParser_1 = require("../src/NodeParser/TypeOperatorNodeParser");
-var TypeReferenceNodeParser_1 = require("../src/NodeParser/TypeReferenceNodeParser");
-var UnionNodeParser_1 = require("../src/NodeParser/UnionNodeParser");
-var VoidTypeNodeParser_1 = require("../src/NodeParser/VoidTypeNodeParser");
-var TopRefNodeParser_1 = require("../src/TopRefNodeParser");
+const BasicAnnotationsReader_1 = require("../src/AnnotationsReader/BasicAnnotationsReader");
+const ExtendedAnnotationsReader_1 = require("../src/AnnotationsReader/ExtendedAnnotationsReader");
+const ChainNodeParser_1 = require("../src/ChainNodeParser");
+const CircularReferenceNodeParser_1 = require("../src/CircularReferenceNodeParser");
+const ExposeNodeParser_1 = require("../src/ExposeNodeParser");
+const AnnotatedNodeParser_1 = require("../src/NodeParser/AnnotatedNodeParser");
+const AnyTypeNodeParser_1 = require("../src/NodeParser/AnyTypeNodeParser");
+const ArrayNodeParser_1 = require("../src/NodeParser/ArrayNodeParser");
+const BooleanLiteralNodeParser_1 = require("../src/NodeParser/BooleanLiteralNodeParser");
+const BooleanTypeNodeParser_1 = require("../src/NodeParser/BooleanTypeNodeParser");
+const EnumNodeParser_1 = require("../src/NodeParser/EnumNodeParser");
+const ExpressionWithTypeArgumentsNodeParser_1 = require("../src/NodeParser/ExpressionWithTypeArgumentsNodeParser");
+const IndexedAccessTypeNodeParser_1 = require("../src/NodeParser/IndexedAccessTypeNodeParser");
+const InterfaceNodeParser_1 = require("../src/NodeParser/InterfaceNodeParser");
+const IntersectionNodeParser_1 = require("../src/NodeParser/IntersectionNodeParser");
+const LiteralNodeParser_1 = require("../src/NodeParser/LiteralNodeParser");
+const MappedTypeNodeParser_1 = require("../src/NodeParser/MappedTypeNodeParser");
+const NullLiteralNodeParser_1 = require("../src/NodeParser/NullLiteralNodeParser");
+const NumberLiteralNodeParser_1 = require("../src/NodeParser/NumberLiteralNodeParser");
+const NumberTypeNodeParser_1 = require("../src/NodeParser/NumberTypeNodeParser");
+const ObjectTypeNodeParser_1 = require("../src/NodeParser/ObjectTypeNodeParser");
+const ParenthesizedNodeParser_1 = require("../src/NodeParser/ParenthesizedNodeParser");
+const StringLiteralNodeParser_1 = require("../src/NodeParser/StringLiteralNodeParser");
+const StringTypeNodeParser_1 = require("../src/NodeParser/StringTypeNodeParser");
+const TupleNodeParser_1 = require("../src/NodeParser/TupleNodeParser");
+const TypeAliasNodeParser_1 = require("../src/NodeParser/TypeAliasNodeParser");
+const TypeLiteralNodeParser_1 = require("../src/NodeParser/TypeLiteralNodeParser");
+const TypeofNodeParser_1 = require("../src/NodeParser/TypeofNodeParser");
+const TypeOperatorNodeParser_1 = require("../src/NodeParser/TypeOperatorNodeParser");
+const TypeReferenceNodeParser_1 = require("../src/NodeParser/TypeReferenceNodeParser");
+const UnionNodeParser_1 = require("../src/NodeParser/UnionNodeParser");
+const VoidTypeNodeParser_1 = require("../src/NodeParser/VoidTypeNodeParser");
+const TopRefNodeParser_1 = require("../src/TopRefNodeParser");
 function createParser(program, config) {
-    var typeChecker = program.getTypeChecker();
-    var chainNodeParser = new ChainNodeParser_1.ChainNodeParser(typeChecker, []);
+    const typeChecker = program.getTypeChecker();
+    const chainNodeParser = new ChainNodeParser_1.ChainNodeParser(typeChecker, []);
     function withExpose(nodeParser) {
         return new ExposeNodeParser_1.ExposeNodeParser(typeChecker, nodeParser, config.expose);
     }
@@ -75,7 +75,7 @@ function createParser(program, config) {
         .addNodeParser(new TypeofNodeParser_1.TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser_1.MappedTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser_1.TypeOperatorNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser_1.TypeAliasNodeParser(typeChecker, chainNodeParser))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(new TypeAliasNodeParser_1.TypeAliasNodeParser(typeChecker, chainNodeParser)))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser_1.EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(new InterfaceNodeParser_1.InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser))))))
         .addNodeParser(withCircular(withExpose(withJsDoc(new TypeLiteralNodeParser_1.TypeLiteralNodeParser(withJsDoc(chainNodeParser))))))

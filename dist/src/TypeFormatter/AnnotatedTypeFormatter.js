@@ -1,18 +1,10 @@
 "use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var util_1 = require("util");
-var AnnotatedType_1 = require("../Type/AnnotatedType");
+const util_1 = require("util");
+const AnnotatedType_1 = require("../Type/AnnotatedType");
 function makeNullable(def) {
-    var union = def.oneOf || def.anyOf;
-    if (union && union.filter(function (d) { return d.type === null; }).length > 0) {
+    const union = def.oneOf || def.anyOf;
+    if (union && union.filter((d) => d.type === null).length > 0) {
         union.push({ type: "null" });
     }
     else if (def.type && def.type !== "object") {
@@ -26,10 +18,10 @@ function makeNullable(def) {
         }
     }
     else {
-        var subdef = {};
-        for (var k in def) {
+        const subdef = {};
+        for (const k in def) {
             if (def.hasOwnProperty(k) && k !== "description" && k !== "title" && k !== "default") {
-                var key = k;
+                const key = k;
                 subdef[key] = def[key];
                 delete def[key];
             }
@@ -38,24 +30,23 @@ function makeNullable(def) {
     }
     return def;
 }
-var AnnotatedTypeFormatter = (function () {
-    function AnnotatedTypeFormatter(childTypeFormatter) {
+class AnnotatedTypeFormatter {
+    constructor(childTypeFormatter) {
         this.childTypeFormatter = childTypeFormatter;
     }
-    AnnotatedTypeFormatter.prototype.supportsType = function (type) {
+    supportsType(type) {
         return type instanceof AnnotatedType_1.AnnotatedType;
-    };
-    AnnotatedTypeFormatter.prototype.getDefinition = function (type) {
-        var def = __assign({}, this.childTypeFormatter.getDefinition(type.getType()), type.getAnnotations());
+    }
+    getDefinition(type) {
+        const def = Object.assign({}, this.childTypeFormatter.getDefinition(type.getType()), type.getAnnotations());
         if (type.isNullable()) {
             return makeNullable(def);
         }
         return def;
-    };
-    AnnotatedTypeFormatter.prototype.getChildren = function (type) {
+    }
+    getChildren(type) {
         return this.childTypeFormatter.getChildren(type.getType());
-    };
-    return AnnotatedTypeFormatter;
-}());
+    }
+}
 exports.AnnotatedTypeFormatter = AnnotatedTypeFormatter;
 //# sourceMappingURL=AnnotatedTypeFormatter.js.map

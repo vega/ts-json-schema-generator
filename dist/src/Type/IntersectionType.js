@@ -1,30 +1,17 @@
 "use strict";
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 Object.defineProperty(exports, "__esModule", { value: true });
-var BaseType_1 = require("./BaseType");
-var IntersectionType = (function (_super) {
-    __extends(IntersectionType, _super);
-    function IntersectionType(types) {
-        var _this = _super.call(this) || this;
-        _this.types = types;
-        return _this;
+const BaseType_1 = require("./BaseType");
+class IntersectionType extends BaseType_1.BaseType {
+    constructor(types) {
+        super();
+        this.types = types;
     }
-    IntersectionType.prototype.getId = function () {
-        return "(" + this.types.map(function (type) { return type.getId(); }).join("&") + ")";
-    };
-    IntersectionType.prototype.getTypes = function () {
+    getId() {
+        return "(" + this.types.map((type) => type.getId()).join("&") + ")";
+    }
+    getTypes() {
         return this.types;
-    };
-    return IntersectionType;
-}(BaseType_1.BaseType));
+    }
+}
 exports.IntersectionType = IntersectionType;
 //# sourceMappingURL=IntersectionType.js.map

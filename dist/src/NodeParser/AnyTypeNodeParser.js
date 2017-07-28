@@ -1,17 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
-var AnyType_1 = require("../Type/AnyType");
-var AnyTypeNodeParser = (function () {
-    function AnyTypeNodeParser() {
-    }
-    AnyTypeNodeParser.prototype.supportsNode = function (node) {
+const ts = require("typescript");
+const AnyType_1 = require("../Type/AnyType");
+class AnyTypeNodeParser {
+    supportsNode(node) {
         return node.kind === ts.SyntaxKind.AnyKeyword;
-    };
-    AnyTypeNodeParser.prototype.createType = function (node, context) {
+    }
+    createType(node, context) {
         return new AnyType_1.AnyType();
-    };
-    return AnyTypeNodeParser;
-}());
+    }
+}
 exports.AnyTypeNodeParser = AnyTypeNodeParser;
 //# sourceMappingURL=AnyTypeNodeParser.js.map

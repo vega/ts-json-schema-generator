@@ -1,20 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
-var EnumType_1 = require("../Type/EnumType");
-var TypeOperatorNodeParser = (function () {
-    function TypeOperatorNodeParser(typeChecker, childNodeParser) {
+const ts = require("typescript");
+const EnumType_1 = require("../Type/EnumType");
+class TypeOperatorNodeParser {
+    constructor(typeChecker, childNodeParser) {
         this.typeChecker = typeChecker;
         this.childNodeParser = childNodeParser;
     }
-    TypeOperatorNodeParser.prototype.supportsNode = function (node) {
+    supportsNode(node) {
         return node.kind === ts.SyntaxKind.TypeOperator;
-    };
-    TypeOperatorNodeParser.prototype.createType = function (node, context) {
-        var type = this.typeChecker.getTypeFromTypeNode(node);
-        return new EnumType_1.EnumType("keyof-type-" + node.getFullStart(), type.types.map(function (t) { return t.value; }));
-    };
-    return TypeOperatorNodeParser;
-}());
+    }
+    createType(node, context) {
+        const type = this.typeChecker.getTypeFromTypeNode(node);
+        return new EnumType_1.EnumType(`keyof-type-${node.getFullStart()}`, type.types.map((t) => t.value));
+    }
+}
 exports.TypeOperatorNodeParser = TypeOperatorNodeParser;
 //# sourceMappingURL=TypeOperatorNodeParser.js.map

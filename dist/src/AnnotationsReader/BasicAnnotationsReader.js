@@ -1,28 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var BasicAnnotationsReader = (function () {
-    function BasicAnnotationsReader() {
-    }
-    BasicAnnotationsReader.prototype.getAnnotations = function (node) {
-        var _this = this;
-        var symbol = node.symbol;
+class BasicAnnotationsReader {
+    getAnnotations(node) {
+        const symbol = node.symbol;
         if (!symbol) {
             return undefined;
         }
-        var jsDocTags = symbol.getJsDocTags();
+        const jsDocTags = symbol.getJsDocTags();
         if (!jsDocTags || !jsDocTags.length) {
             return undefined;
         }
-        var annotations = jsDocTags.reduce(function (result, jsDocTag) {
-            var value = _this.parseJsDocTag(jsDocTag);
+        const annotations = jsDocTags.reduce((result, jsDocTag) => {
+            const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
                 result[jsDocTag.name] = value;
             }
             return result;
         }, {});
         return Object.keys(annotations).length ? annotations : undefined;
-    };
-    BasicAnnotationsReader.prototype.parseJsDocTag = function (jsDocTag) {
+    }
+    parseJsDocTag(jsDocTag) {
         if (!jsDocTag.text) {
             return undefined;
         }
@@ -35,35 +32,34 @@ var BasicAnnotationsReader = (function () {
         else {
             return undefined;
         }
-    };
-    BasicAnnotationsReader.prototype.parseJson = function (value) {
+    }
+    parseJson(value) {
         try {
             return JSON.parse(value);
         }
         catch (e) {
             return undefined;
         }
-    };
-    BasicAnnotationsReader.textTags = [
-        "title",
-        "description",
-        "format",
-        "pattern",
-    ];
-    BasicAnnotationsReader.jsonTags = [
-        "minimum",
-        "exclusiveMinimum",
-        "maximum",
-        "exclusiveMaximum",
-        "multipleOf",
-        "minLength",
-        "maxLength",
-        "minItems",
-        "maxItems",
-        "uniqueItems",
-        "default",
-    ];
-    return BasicAnnotationsReader;
-}());
+    }
+}
+BasicAnnotationsReader.textTags = [
+    "title",
+    "description",
+    "format",
+    "pattern",
+];
+BasicAnnotationsReader.jsonTags = [
+    "minimum",
+    "exclusiveMinimum",
+    "maximum",
+    "exclusiveMaximum",
+    "multipleOf",
+    "minLength",
+    "maxLength",
+    "minItems",
+    "maxItems",
+    "uniqueItems",
+    "default",
+];
 exports.BasicAnnotationsReader = BasicAnnotationsReader;
 //# sourceMappingURL=BasicAnnotationsReader.js.map

@@ -1,25 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var ts = require("typescript");
-var ExtendedAnnotationsReader_1 = require("../AnnotationsReader/ExtendedAnnotationsReader");
-var AnnotatedType_1 = require("../Type/AnnotatedType");
-var AnnotatedNodeParser = (function () {
-    function AnnotatedNodeParser(childNodeParser, annotationsReader) {
+const ts = require("typescript");
+const ExtendedAnnotationsReader_1 = require("../AnnotationsReader/ExtendedAnnotationsReader");
+const AnnotatedType_1 = require("../Type/AnnotatedType");
+class AnnotatedNodeParser {
+    constructor(childNodeParser, annotationsReader) {
         this.childNodeParser = childNodeParser;
         this.annotationsReader = annotationsReader;
     }
-    AnnotatedNodeParser.prototype.supportsNode = function (node) {
+    supportsNode(node) {
         return this.childNodeParser.supportsNode(node);
-    };
-    AnnotatedNodeParser.prototype.createType = function (node, context) {
-        var baseType = this.childNodeParser.createType(node, context);
-        var annotatedNode = this.getAnnotatedNode(node);
-        var annotations = this.annotationsReader.getAnnotations(annotatedNode);
-        var nullable = this.annotationsReader instanceof ExtendedAnnotationsReader_1.ExtendedAnnotationsReader ?
+    }
+    createType(node, context) {
+        const baseType = this.childNodeParser.createType(node, context);
+        const annotatedNode = this.getAnnotatedNode(node);
+        const annotations = this.annotationsReader.getAnnotations(annotatedNode);
+        const nullable = this.annotationsReader instanceof ExtendedAnnotationsReader_1.ExtendedAnnotationsReader ?
             this.annotationsReader.isNullable(annotatedNode) : false;
         return !annotations && !nullable ? baseType : new AnnotatedType_1.AnnotatedType(baseType, annotations || {}, nullable);
-    };
-    AnnotatedNodeParser.prototype.getAnnotatedNode = function (node) {
+    }
+    getAnnotatedNode(node) {
         if (!node.parent) {
             return node;
         }
@@ -32,8 +32,7 @@ var AnnotatedNodeParser = (function () {
         else {
             return node;
         }
-    };
-    return AnnotatedNodeParser;
-}());
+    }
+}
 exports.AnnotatedNodeParser = AnnotatedNodeParser;
 //# sourceMappingURL=AnnotatedNodeParser.js.map
