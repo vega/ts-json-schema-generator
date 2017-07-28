@@ -83,7 +83,8 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new MappedTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(typeChecker, chainNodeParser))
 
-        .addNodeParser(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(
+            new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser)),
