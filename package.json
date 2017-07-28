@@ -1,6 +1,6 @@
 {
   "name": "typescript-to-json-schema",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -38,11 +38,11 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "commander": "~2.10.0",
+    "commander": "~2.11.0",
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
-    "ts-node": "^3.1.0",
-    "typescript": "~2.4.1"
+    "ts-node": "^3.3.0",
+    "typescript": "~2.4.2"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
@@ -51,12 +51,12 @@
     "@types/glob": "^5.0.30",
     "@types/json-stable-stringify": "^1.0.31",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^8.0.4",
-    "ajv": "~5.2.0",
-    "chai": "~4.0.2",
+    "@types/node": "^8.0.17",
+    "ajv": "~5.2.2",
+    "chai": "~4.1.0",
     "mocha": "~3.4.2",
     "source-map-support": "~0.4.15",
-    "tslint": "~5.4.3"
+    "tslint": "~5.5.0"
   },
   "scripts": {
     "prepublish": "npm run build",

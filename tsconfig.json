@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es2015",
         "module": "commonjs",
         "moduleResolution": "node",
         "isolatedModules": false,
@@ -16,7 +16,6 @@
         "preserveConstEnums": true,
         "removeComments": true,
         "noLib": false,
-        "lib": ["es2015"],
         "sourceMap": true,
         "pretty": true,
         "watch": false,
