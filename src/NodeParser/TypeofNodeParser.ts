@@ -15,7 +15,7 @@ export class TypeofNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeQueryNode, context: Context): BaseType {
-        const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
+        const symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
 
         return this.childNodeParser.createType((<any>symbol.valueDeclaration).type, context);
     }

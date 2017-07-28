@@ -23,7 +23,7 @@ function getNonRefType(type: BaseType): BaseType {
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType) => {
-        const other: Definition = childTypeFormatter.getDefinition(getNonRefType(baseType));
+        const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
 
         definition.properties = {
             ...other.properties,

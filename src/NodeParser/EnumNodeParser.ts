@@ -24,7 +24,7 @@ export class EnumNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
     }
     public createType(node: ts.EnumDeclaration | ts.EnumMember, context: Context): BaseType {
-        const members: ts.EnumMember[] = node.kind === ts.SyntaxKind.EnumDeclaration ?
+        const members = node.kind === ts.SyntaxKind.EnumDeclaration ?
             (node as ts.EnumDeclaration).members :
             [node as ts.EnumMember];
 
@@ -38,7 +38,7 @@ export class EnumNodeParser implements SubNodeParser {
     }
 
     private getMemberValue(member: ts.EnumMember, index: number): EnumValue {
-        const constantValue: string | number | undefined = this.typeChecker.getConstantValue(member);
+        const constantValue = this.typeChecker.getConstantValue(member);
         if (constantValue !== undefined) {
             return constantValue;
         }

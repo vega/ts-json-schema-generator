@@ -17,8 +17,8 @@ export class SchemaGenerator {
     }
 
     public createSchema(fullName: string): Schema {
-        const rootNode: ts.Node = this.findRootNode(fullName);
-        const rootType: BaseType = this.nodeParser.createType(rootNode, new Context());
+        const rootNode = this.findRootNode(fullName);
+        const rootType = this.nodeParser.createType(rootNode, new Context());
 
         return {
             $schema: "http://json-schema.org/draft-04/schema#",
@@ -28,8 +28,8 @@ export class SchemaGenerator {
     }
 
     private findRootNode(fullName: string): ts.Node {
-        const typeChecker: ts.TypeChecker = this.program.getTypeChecker();
-        const allTypes: Map<string, ts.Node> = new Map<string, ts.Node>();
+        const typeChecker = this.program.getTypeChecker();
+        const allTypes = new Map<string, ts.Node>();
 
         this.program.getSourceFiles().forEach((sourceFile: ts.SourceFile) => {
             this.inspectNode(sourceFile, typeChecker, allTypes);

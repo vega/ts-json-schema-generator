@@ -31,7 +31,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 if (isHidden(propertySymbol)) {
                     return result;
                 }
-                const objectProperty: ObjectProperty = new ObjectProperty(
+                const objectProperty = new ObjectProperty(
                     propertySymbol.getName(),
                     this.childNodeParser.createType(propertyNode.type!, context),
                     !propertyNode.questionToken,
@@ -42,7 +42,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             }, []);
     }
     private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType|false {
-        const properties: ts.TypeElement[] = node.members
+        const properties = node.members
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
         if (!properties.length) {
             return false;
@@ -53,8 +53,8 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
-        const fullName: string = `structure-${node.getFullStart()}`;
-        const argumentIds: string[] = context.getArguments().map((arg: BaseType) => arg.getId());
+        const fullName = `structure-${node.getFullStart()}`;
+        const argumentIds = context.getArguments().map((arg: BaseType) => arg.getId());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

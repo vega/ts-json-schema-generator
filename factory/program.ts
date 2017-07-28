@@ -7,7 +7,7 @@ import { DiagnosticError } from "../src/Error/DiagnosticError";
 import { LogicError } from "../src/Error/LogicError";
 
 function createProgramFromConfig(configFile: string): ts.Program {
-    const config: {config?: any; error?: ts.Diagnostic} = ts.parseConfigFileTextToJson(
+    const config = ts.parseConfigFileTextToJson(
         configFile,
         ts.sys.readFile(configFile),
     );
@@ -17,7 +17,7 @@ function createProgramFromConfig(configFile: string): ts.Program {
         throw new LogicError(`Invalid parsed config file "${configFile}"`);
     }
 
-    const parseResult: ts.ParsedCommandLine = ts.parseJsonConfigFileContent(
+    const parseResult = ts.parseJsonConfigFileContent(
         config.config,
         ts.sys,
         path.dirname(configFile),
@@ -51,7 +51,7 @@ export function createProgram(config: Config): ts.Program {
         createProgramFromConfig(config.path) :
         createProgramFromGlob(config.path);
 
-    const diagnostics: ts.Diagnostic[] = ts.getPreEmitDiagnostics(program);
+    const diagnostics = ts.getPreEmitDiagnostics(program);
     if (diagnostics.length) {
         throw new DiagnosticError(diagnostics);
     }

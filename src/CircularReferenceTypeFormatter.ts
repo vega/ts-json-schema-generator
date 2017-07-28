@@ -3,8 +3,8 @@ import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
-    private definition: Map<BaseType, Definition> = new Map<BaseType, Definition>();
-    private children: Map<BaseType, BaseType[]> = new Map<BaseType, BaseType[]>();
+    private definition = new Map<BaseType, Definition>();
+    private children = new Map<BaseType, BaseType[]>();
 
     public constructor(
         private childTypeFormatter: SubTypeFormatter,
