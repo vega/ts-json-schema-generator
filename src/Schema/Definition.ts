@@ -19,8 +19,12 @@ export interface Definition {
     additionalProperties?: false | Definition;
     required?: string[];
     propertyOrder?: string[];
-    properties?: {};
+    properties?: DefinitionMap;
     defaultProperties?: string[];
 
     typeof?: "function";
+}
+
+export interface DefinitionMap {
+    [name: string]: Definition;
 }

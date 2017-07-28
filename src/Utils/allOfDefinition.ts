@@ -26,8 +26,8 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
         const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
 
         definition.properties = {
-            ...other.properties,
-            ...definition.properties,
+            ...other.properties || {},
+            ...definition.properties || {},
         };
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
