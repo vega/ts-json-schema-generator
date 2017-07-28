@@ -15,7 +15,7 @@ const validator: Ajv.Ajv = new Ajv();
 const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
 validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
-const basePath: string = "test/config";
+const basePath = "test/config";
 
 function assertSchema(name: string, partialConfig: PartialConfig & {type: string}, only: Boolean = false): void {
     const run: Run = only ? it.only : it;
