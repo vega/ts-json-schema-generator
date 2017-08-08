@@ -13,7 +13,7 @@ const validator: Ajv.Ajv = new Ajv();
 const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
 validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
-const basePath: string = "test/valid-data";
+const basePath = "test/valid-data";
 
 export type Run = (
         expectation: string,
