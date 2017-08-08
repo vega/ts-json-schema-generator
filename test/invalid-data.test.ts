@@ -7,7 +7,7 @@ import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const basePath: string = "test/invalid-data";
+const basePath = "test/invalid-data";
 
 function assertSchema(name: string, type: string): void {
     it(name, () => {
