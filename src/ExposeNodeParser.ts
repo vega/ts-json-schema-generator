@@ -35,7 +35,7 @@ export class ExposeNodeParser implements SubNodeParser {
         }
 
         const localSymbol: ts.Symbol = (node as any).localSymbol;
-        return localSymbol ? (localSymbol.flags & ts.SymbolFlags.ExportType) !== 0 : false;
+        return localSymbol ? "exportSymbol" in localSymbol : false;
     }
     private getDefinitionName(node: ts.Node, context: Context): string {
         const fullName = this.typeChecker.getFullyQualifiedName((node as any).symbol).replace(/^".*"\./, "");

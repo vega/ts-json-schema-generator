@@ -12,6 +12,22 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         return Object.keys(annotations).length ? annotations : undefined;
     }
 
+    public isNullable(node: ts.Node): boolean {
+        const symbol: ts.Symbol = (node as any).symbol;
+        if (!symbol) {
+            return false;
+        }
+
+        const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
+        if (!jsDocTags || !jsDocTags.length) {
+            return false;
+        }
+
+        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find(
+            (tag: ts.JSDocTagInfo) => tag.name === "nullable");
+        return !!jsDocTag;
+    }
+
     private getDescriptionAnnotation(node: ts.Node): Annotations | undefined {
         const symbol: ts.Symbol = (node as any).symbol;
         if (!symbol) {
@@ -43,21 +59,5 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         }
 
         return {type: jsDocTag.text};
-    }
-
-    public isNullable(node: ts.Node): boolean {
-        const symbol: ts.Symbol = (node as any).symbol;
-        if (!symbol) {
-            return false;
-        }
-
-        const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
-        if (!jsDocTags || !jsDocTags.length) {
-            return false;
-        }
-
-        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find(
-            (tag: ts.JSDocTagInfo) => tag.name === "nullable");
-        return !!jsDocTag;
     }
 }

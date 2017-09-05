@@ -24,8 +24,8 @@ export class EnumNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
     }
     public createType(node: ts.EnumDeclaration | ts.EnumMember, context: Context): BaseType {
-        const members = node.kind === ts.SyntaxKind.EnumDeclaration ?
-            (node as ts.EnumDeclaration).members :
+        const members: ts.EnumMember[] = node.kind === ts.SyntaxKind.EnumDeclaration ?
+            (node as ts.EnumDeclaration).members as any :
             [node as ts.EnumMember];
 
 

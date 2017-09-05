@@ -64,7 +64,7 @@ export class SchemaGenerator {
 
     private isExportType(node: ts.Node): boolean {
         const localSymbol: ts.Symbol = (node as any).localSymbol;
-        return localSymbol ? (localSymbol.flags & ts.SymbolFlags.Export) !== 0 : false;
+        return localSymbol ? "exportSymbol" in localSymbol : false;
     }
     private isGenericType(node: ts.TypeAliasDeclaration): boolean {
         return !!(

@@ -9,7 +9,7 @@ import { LogicError } from "../src/Error/LogicError";
 function createProgramFromConfig(configFile: string): ts.Program {
     const config = ts.parseConfigFileTextToJson(
         configFile,
-        ts.sys.readFile(configFile),
+        ts.sys.readFile(configFile)!,
     );
     if (config.error) {
         throw new DiagnosticError([config.error]);
