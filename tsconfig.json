@@ -25,7 +25,7 @@
     },
     "include": [
         "index.ts",
-        "typescript-to-json-schema.ts",
+        "ts-json-schema-generator.ts",
         "factory/**/*.ts",
         "src/**/*.ts",
         "test/*.ts"
