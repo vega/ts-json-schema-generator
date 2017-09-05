@@ -1,6 +1,8 @@
-# ts-json-schema-generator [![Build Status](https://travis-ci.org/vega/ts-json-schema-generator.svg?branch=master)](https://travis-ci.org/vega/ts-json-schema-generator)
+# ts-json-schema-generator
 
-Install this library with `npm install --save ts-json-schema-generator`.
+[![Build Status](https://travis-ci.org/vega/ts-json-schema-generator.svg?branch=master)](https://travis-ci.org/vega/ts-json-schema-generator)
+[![npm dependencies](https://david-dm.org/vega/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
+[![npm version](https://img.shields.io/npm/v/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
 
 Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https://github.com/xiag-ag/typescript-to-json-schema).
 
@@ -15,7 +17,7 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 ## Usage
 
 ```bash
-npm install ts-json-schema-generator
+npm install --save ts-json-schema-generator
 ./node_modules/.bin/ts-json-schema-generator \
     --path 'my/project/**.*.ts' \
     --type 'My.Type.Full.Name' \
