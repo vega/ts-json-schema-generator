@@ -1,4 +1,4 @@
-# ts-json-schema-generator
+# ts-json-schema-generator [![Build Status](https://travis-ci.org/vega/ts-json-schema-generator.svg?branch=master)](https://travis-ci.org/vega/ts-json-schema-generator)
 
 Install this library with `npm install --save ts-json-schema-generator`.
 
