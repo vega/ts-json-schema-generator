@@ -47,7 +47,7 @@ export class InterfaceNodeParser implements SubNodeParser {
         return node.members
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
-                const propertySymbol = (propertyNode as any).symbol;
+                const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 if (isHidden(propertySymbol)) {
                     return result;
                 }

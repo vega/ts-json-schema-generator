@@ -10,6 +10,13 @@ export enum Enum {
     Y = "y",
 }
 
+/**
+ * @hide
+ */
+export type Hidden = "hidden";
+
+export type Options = Hidden | "up" | "down";
+
 export interface MyObject {
     /**
      * This property should appear.
@@ -24,4 +31,6 @@ export interface MyObject {
     hidden: number;
 
     bar: Enum;
+
+    options: Options;
 }

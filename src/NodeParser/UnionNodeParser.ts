@@ -3,9 +3,11 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { UnionType } from "../Type/UnionType";
+import { referenceHidden } from "../Utils/isHidden";
 
 export class UnionNodeParser implements SubNodeParser {
     public constructor(
+        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }
@@ -14,10 +16,13 @@ export class UnionNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.UnionType;
     }
     public createType(node: ts.UnionTypeNode, context: Context): BaseType {
+        const hidden = referenceHidden(this.typeChecker);
         return new UnionType(
-            node.types.map((subnode: ts.Node) => {
-                return this.childNodeParser.createType(subnode, context);
-            }),
+            node.types
+            .filter((subnode: ts.Node) => !hidden(subnode))
+                .map((subnode: ts.Node) => {
+                    return this.childNodeParser.createType(subnode, context);
+                }),
         );
     }
 }

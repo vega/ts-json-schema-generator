@@ -17,13 +17,24 @@
         "foo": {
           "description": "This property should appear.",
           "type": "number"
+        },
+        "options": {
+          "$ref": "#/definitions/Options"
         }
       },
       "required": [
         "foo",
-        "bar"
+        "bar",
+        "options"
       ],
       "type": "object"
+    },
+    "Options": {
+      "enum": [
+        "up",
+        "down"
+      ],
+      "type": "string"
     }
   }
 }

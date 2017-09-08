@@ -10,3 +10,23 @@ export function isHidden(symbol: ts.Symbol): boolean {
         (tag: ts.JSDocTagInfo) => tag.name === "hide");
     return !!jsDocTag;
 }
+
+export function isNodeHidden(node: ts.Node): boolean | null {
+    const symbol: ts.Symbol = (node as any).symbol;
+    if (!symbol) {
+        return null;
+    }
+
+    return isHidden(symbol);
+}
+
+export function referenceHidden(typeChecker: ts.TypeChecker) {
+    return function(node: ts.Node) {
+        if (node.kind === ts.SyntaxKind.TypeReference) {
+            return isHidden(typeChecker.getSymbolAtLocation(
+                (<ts.TypeReferenceNode> node).typeName)!);
+        }
+
+        return isNodeHidden(node);
+    };
+}

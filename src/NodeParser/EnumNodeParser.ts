@@ -28,7 +28,6 @@ export class EnumNodeParser implements SubNodeParser {
             (node as ts.EnumDeclaration).members as any :
             [node as ts.EnumMember];
 
-
         return new EnumType(
             `enum-${node.getFullStart()}`,
             members
