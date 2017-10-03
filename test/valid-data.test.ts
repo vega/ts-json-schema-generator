@@ -99,6 +99,7 @@ describe("valid-data", () => {
     assertSchema("type-intersection-additional-props", "MyObject");
 
     assertSchema("type-typeof", "MyType");
+    assertSchema("type-typeof-value", "MyType");
     assertSchema("type-indexed-access", "MyType");
     assertSchema("type-keyof", "MyType");
     assertSchema("type-mapped", "MyObject");
