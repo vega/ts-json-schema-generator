@@ -1,3 +1,3 @@
-const FOO = 'foo';
+const FOO = "foo";
 
 export type MyType = typeof FOO;

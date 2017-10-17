@@ -44,3 +44,5 @@ npm install --save ts-json-schema-generator
 `npm run debug -- test/programs/type-alias-single/main.ts --aliasRefs true MyString`
 
 And connect via the debugger protocol.
+
+[AST Explorer](https://astexplorer.net/) is amazing for developers of this tool!
