@@ -3,6 +3,7 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
+import { NullType } from "../Type/NullType";
 import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
@@ -20,6 +21,15 @@ function makeNullable(def: Definition) {
         }
     } else {
         const subdef: Definition = {};
+
+        if ("anyOf" in def) {
+            for (const d of def.anyOf!) {
+                if (d.type === "null") {
+                    return def;
+                }
+            }
+        }
+
         for (const k in def) {
             if (def.hasOwnProperty(k) && k !== "description" && k !== "title" && k !== "default") {
                 const key: keyof Definition = k as keyof Definition;
