@@ -113,4 +113,8 @@ describe("valid-data", () => {
     assertSchema("generic-hell", "MyObject");
 
     assertSchema("nullable-null", "MyObject");
+
+    assertSchema("exclude-functions", "MyObject");
+    assertSchema("exclude-functions-arrow", "MyObject");
+    assertSchema("exclude-functions-union", "MyObject");
 });
