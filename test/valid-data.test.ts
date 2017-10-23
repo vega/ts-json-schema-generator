@@ -114,7 +114,7 @@ describe("valid-data", () => {
 
     assertSchema("nullable-null", "MyObject");
 
-    assertSchema("exclude-functions", "MyObject");
-    assertSchema("exclude-functions-arrow", "MyObject");
-    assertSchema("exclude-functions-union", "MyObject");
+    assertSchema("exclude-functions", "MyObject", true);
+    assertSchema("exclude-functions-arrow", "MyObject", true);
+    assertSchema("exclude-functions-union", "MyObject", true);
 });
