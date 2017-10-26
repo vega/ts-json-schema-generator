@@ -63,7 +63,7 @@
     "preversion": "npm run lint && npm run test",
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
-    "lint": "tslint --project tsconfig.json -c tslint.json --type-check",
+    "lint": "tslint -p .",
     "test": "tsc -p . && mocha -t 10000 --require source-map-support/register dist/test",
     "debug": "ts-node --inspect=19248 --debug-brk ts-json-schema-generator.ts",
     "run": "ts-node ts-json-schema-generator.ts"
