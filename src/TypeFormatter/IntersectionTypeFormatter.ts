@@ -22,7 +22,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public getChildren(type: IntersectionType): BaseType[] {
         return type.getTypes().reduce((result: BaseType[], item: BaseType) => [
             ...result,
-            ...this.childTypeFormatter.getChildren(item),
+            ...this.childTypeFormatter.getChildren(item).slice(1),
         ], []);
     }
 }

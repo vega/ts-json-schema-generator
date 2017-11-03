@@ -25,18 +25,6 @@
             ],
             "additionalProperties": false
         },
-        "GenericC<GenericC<GenericC<GenericA<string>>>>": {
-            "type": "object",
-            "properties": {
-                "c": {
-                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
-                }
-            },
-            "required": [
-                "c"
-            ],
-            "additionalProperties": false
-        },
         "GenericC<GenericC<GenericA<string>>>": {
             "type": "object",
             "properties": {
@@ -70,18 +58,6 @@
             },
             "required": [
                 "a"
-            ],
-            "additionalProperties": false
-        },
-        "B": {
-            "type": "object",
-            "properties": {
-                "b": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "b"
             ],
             "additionalProperties": false
         },
