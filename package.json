@@ -42,7 +42,7 @@
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
     "ts-node": "^3.3.0",
-    "typescript": "~2.5.3"
+    "typescript": "~2.6.1"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
