@@ -6,7 +6,8 @@ namespace B {
 }
 namespace C {
     import A = B.B;
-    export interface C { c: A; }
+    export interface CC { c: A; }
+    export interface C extends CC {}
 }
 namespace D {
     import A = C.C;
