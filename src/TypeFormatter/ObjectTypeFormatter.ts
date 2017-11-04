@@ -7,15 +7,6 @@ import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { StringMap } from "../Utils/StringMap";
 
-/**
- * Inherited type can be an alias if it only has a base type and nothing else.
- */
-function canBeAliased(type: ObjectType) {
-    return Object.keys(type.getProperties()).length === 0 &&
-    type.getAdditionalProperties() === false &&
-    type.getBaseTypes().length === 1;
-}
-
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(
         private childTypeFormatter: TypeFormatter,
@@ -30,10 +21,6 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return this.getObjectDefinition(type);
         }
 
-        if (canBeAliased(type)) {
-            return this.childTypeFormatter.getDefinition(type.getBaseTypes()[0]);
-        }
-
         return type.getBaseTypes().reduce(
             getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
     }
@@ -44,7 +31,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return [
             ...type.getBaseTypes().reduce((result: BaseType[], baseType: BaseType) => [
                 ...result,
-                ...this.childTypeFormatter.getChildren(baseType).slice(canBeAliased(type) ? 0 : 1),
+                ...this.childTypeFormatter.getChildren(baseType).slice(1),
             ], []),
 
             ...additionalProperties instanceof BaseType ?
