@@ -21,7 +21,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             type: "array",
             items: tupleDefinitions,
             minItems: tupleDefinitions.length,
-            additionalItems: {anyOf: tupleDefinitions},
+            ...(tupleDefinitions.length > 1 ? {additionalItems: {anyOf: tupleDefinitions}} : {}),
         };
     }
     public getChildren(type: TupleType): BaseType[] {
