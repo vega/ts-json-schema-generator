@@ -12,17 +12,10 @@ export class EnumTypeFormatter implements SubTypeFormatter {
         const values: EnumValue[] = uniqueArray(type.getValues());
         const types: string[] = uniqueArray(values.map((value: EnumValue) => this.getValueType(value)));
 
-        if (types.length === 1) {
-            return {
-                type: types[0],
-                enum: values,
-            };
-        } else {
-            return {
-                type: types,
-                enum: values,
-            };
-        }
+        return {
+            type: types.length === 1 ? types[0] : types,
+            enum: values,
+        };
     }
     public getChildren(type: EnumType): BaseType[] {
         return [];

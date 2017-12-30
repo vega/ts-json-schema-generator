@@ -7,9 +7,9 @@ import { NullType } from "../Type/NullType";
 import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
-function makeNullable(def: Definition) {
+export function makeNullable(def: Definition) {
     const union: Definition[] | undefined = def.oneOf || def.anyOf;
-    if (union && union.filter((d: Definition) => d.type === null).length > 0) {
+    if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
         if (isArray(def.type)) {
@@ -18,6 +18,11 @@ function makeNullable(def: Definition) {
             }
         } else if (def.type !== "null") {
             def.type = [def.type, "null"];
+        }
+
+        // enums need null as an option
+        if (def.enum && def.enum.indexOf(null) === -1) {
+            def.enum.push(null);
         }
     } else {
         const subdef: Definition = {};

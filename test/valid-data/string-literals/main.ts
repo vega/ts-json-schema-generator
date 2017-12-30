@@ -1,6 +1,6 @@
 type result = "ok" | "fail" | "abort";
 
-class MyObject {
+export interface MyObject {
     foo: result;
     bar: result | string;
 }

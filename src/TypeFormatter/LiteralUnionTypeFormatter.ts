@@ -2,6 +2,7 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
+import { NullType } from "../Type/NullType";
 import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
@@ -10,9 +11,10 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType && this.isLiteralUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
-        const values: (string | number | boolean)[] = uniqueArray(
-            type.getTypes().map((item: LiteralType) => item.getValue()));
-        const types: string[] = uniqueArray(type.getTypes().map((item: LiteralType) => this.getLiteralType(item)));
+        const values: (string | number | boolean | null)[] = uniqueArray(
+            type.getTypes().map((item: LiteralType | NullType) => this.getLiteralValue(item)));
+        const types: string[] = uniqueArray(
+            type.getTypes().map((item: LiteralType | NullType) => this.getLiteralType(item)));
 
         if (types.length === 1) {
             return {
@@ -31,9 +33,12 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     }
 
     private isLiteralUnion(type: UnionType): boolean {
-        return type.getTypes().every((item: BaseType) => item instanceof LiteralType);
+        return type.getTypes().every((item: BaseType) => item instanceof LiteralType || item instanceof NullType);
     }
-    private getLiteralType(value: LiteralType): string {
-        return value.getValue() === null ? "null" : typeof value.getValue();
+    private getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
+        return value.getId() === "null" ? null : (value as LiteralType).getValue();
+    }
+    private getLiteralType(value: LiteralType | NullType): string {
+        return value.getId() === "null" ? "null" : typeof (value as LiteralType).getValue();
     }
 }

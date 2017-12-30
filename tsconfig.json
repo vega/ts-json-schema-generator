@@ -28,7 +28,8 @@
         "ts-json-schema-generator.ts",
         "factory/**/*.ts",
         "src/**/*.ts",
-        "test/*.ts"
+        "test/*.ts",
+        "test/unit/**/*.ts"
     ],
     "exclude": [
         "node_modules",
