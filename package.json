@@ -38,23 +38,22 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "commander": "~2.11.0",
+    "commander": "~2.12.2",
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
-    "ts-node": "^3.3.0",
-    "typescript": "~2.6.1"
+    "ts-node": "^4.1.0",
+    "typescript": "~2.6.2"
   },
   "devDependencies": {
     "@types/assertion-error": "^1.0.30",
-    "@types/chai": "^4.0.4",
-    "@types/commander": "^2.11.0",
-    "@types/glob": "^5.0.33",
+    "@types/chai": "^4.0.10",
+    "@types/glob": "^5.0.34",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/mocha": "^2.2.44",
-    "@types/node": "^8.0.47",
-    "ajv": "~5.3.0",
+    "@types/mocha": "^2.2.45",
+    "@types/node": "^8.5.2",
+    "ajv": "~5.5.2",
     "chai": "~4.1.2",
-    "mocha": "~4.0.1",
+    "mocha": "~4.1.0",
     "source-map-support": "~0.5.0",
     "tslint": "~5.8.0"
   },
