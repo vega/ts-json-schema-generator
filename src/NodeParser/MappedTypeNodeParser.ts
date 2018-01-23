@@ -1,8 +1,12 @@
 import * as ts from "typescript";
+import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { LiteralType } from "../Type/LiteralType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { UnionType } from "../Type/UnionType";
+import { derefType } from "../Utils/derefType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -24,23 +28,37 @@ export class MappedTypeNodeParser implements SubNodeParser {
         );
     }
 
-    private getObjectProperty(type: any, node: ts.MappedTypeNode, context: Context) {
-        return new ObjectProperty(
-            type.value,
-            this.childNodeParser.createType(node.type!, context),
-            !node.questionToken,
-        );
+    private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
+        const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
+
+        const keyListType = derefType(constraintType);
+        if (!(keyListType instanceof UnionType)) {
+            throw new LogicError(`Unexpected type "${constraintType.getId()}" (expected "UnionType")`);
+        }
+
+        return keyListType.getTypes().reduce((result: ObjectProperty[], key: LiteralType) => {
+            const objectProperty = new ObjectProperty(
+                key.getValue() as string,
+                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
+                !node.questionToken,
+            );
+
+            result.push(objectProperty);
+            return result;
+        }, []);
     }
 
-    private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
-        const type: any = this.typeChecker.getTypeFromTypeNode(node.typeParameter.constraint!);
+    private createSubContext(node: ts.MappedTypeNode, key: LiteralType, parentContext: Context): Context {
+        const subContext = new Context(node);
 
-        if (type.types) {
-            return type.types.map((t: any) => this.getObjectProperty(t, node, context));
-        } else if (type.intrinsicName !== "never") {
-            return [this.getObjectProperty(type, node, context)];
-        } else {
-            return [];
-        }
+        parentContext.getParameters().forEach((parentParameter: string) => {
+            subContext.pushParameter(parentParameter);
+            subContext.pushArgument(parentContext.getArgument(parentParameter));
+        });
+
+        subContext.pushParameter(node.typeParameter.name.text);
+        subContext.pushArgument(key);
+
+        return subContext;
     }
 }

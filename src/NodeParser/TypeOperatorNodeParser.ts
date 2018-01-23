@@ -1,8 +1,9 @@
 import * as ts from "typescript";
+import { UnionType } from "../..";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { EnumType, EnumValue } from "../Type/EnumType";
+import { getTypeKeys } from "../Utils/typeKeys";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
     public constructor(
@@ -16,10 +17,9 @@ export class TypeOperatorNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeOperatorNode, context: Context): BaseType {
-        const type = this.typeChecker.getTypeFromTypeNode(node);
-        return new EnumType(
-            `keyof-type-${node.getFullStart()}`,
-            (<any>type).types.map((t: any) => t.value),
-        );
+        const type = this.childNodeParser.createType(node.type, context);
+        const keys = getTypeKeys(type);
+
+        return new UnionType(keys);
     }
 }

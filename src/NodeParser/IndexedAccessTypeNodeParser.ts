@@ -1,8 +1,10 @@
 import * as ts from "typescript";
+import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { EnumType } from "../Type/EnumType";
+import { LiteralType } from "../Type/LiteralType";
+import { getTypeByKey } from "../Utils/typeKeys";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -15,12 +17,17 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
-        const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation((<ts.TypeQueryNode>node.objectType).exprName)!;
+        const indexType = this.childNodeParser.createType(node.indexType, context);
+        if (!(indexType instanceof LiteralType)) {
+            throw new LogicError(`Unexpected type "${indexType.getId()}" (expected "LiteralType")`);
+        }
 
-        return new EnumType(
-            `indexed-type-${node.getFullStart()}`,
-            (<any>symbol.valueDeclaration).type.elementTypes.map((memberType: ts.Node) =>
-                this.childNodeParser.createType(memberType, context)),
-        );
+        const objectType = this.childNodeParser.createType(node.objectType, context);
+        const propertyType = getTypeByKey(objectType, indexType);
+        if (!propertyType) {
+            throw new LogicError(`Invalid index "${indexType.getValue()}" in type "${objectType.getId()}"`);
+        }
+
+        return propertyType;
     }
 }

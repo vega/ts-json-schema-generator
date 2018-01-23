@@ -4,5 +4,5 @@ interface SomeInterface {
 }
 
 export type MyObject = {
-  [k in keyof SomeInterface]?: boolean;
+    [K in keyof SomeInterface]?: boolean;
 };

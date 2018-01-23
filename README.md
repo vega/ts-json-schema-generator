@@ -35,8 +35,7 @@ npm install --save ts-json-schema-generator
 * type aliases
 * generics
 * `typeof`
-* `@nullable` annotations
-* `@hide` annotations for enum values and object properties
+* `keyof`
 
 ## Debug
 

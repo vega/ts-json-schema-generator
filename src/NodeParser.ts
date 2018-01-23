@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import { BaseType } from "./Type/BaseType";
+import { LogicError } from "./Error/LogicError";
 
 export class Context {
     private arguments: BaseType[] = [];
@@ -20,12 +21,16 @@ export class Context {
     public getArgument(parameterName: string): BaseType {
         const index: number = this.parameters.indexOf(parameterName);
         if (index < 0 || !this.arguments[index]) {
-            throw new Error(`Could not find type parameter "${parameterName}"`);
+            throw new LogicError(`Could not find type parameter "${parameterName}"`);
         }
 
         return this.arguments[index];
     }
-    public getArguments(): BaseType[] {
+
+    public getParameters(): ReadonlyArray<string> {
+        return this.parameters;
+    }
+    public getArguments(): ReadonlyArray<BaseType> {
         return this.arguments;
     }
 
