@@ -17,7 +17,7 @@ export class InterfaceNodeParser implements SubNodeParser {
     }
     public createType(node: ts.InterfaceDeclaration, context: Context): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
-            node.typeParameters.forEach((typeParam: ts.TypeParameterDeclaration) => {
+            node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
             });
@@ -36,16 +36,15 @@ export class InterfaceNodeParser implements SubNodeParser {
             return [];
         }
 
-        return node.heritageClauses.reduce((result: BaseType[], baseType: ts.HeritageClause) => {
-            return result.concat(baseType.types.map((expression: ts.ExpressionWithTypeArguments) => {
-                return this.childNodeParser.createType(expression, context);
-            }));
-        }, []);
+        return node.heritageClauses.reduce((result: BaseType[], baseType) => [
+            ...result,
+            ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
+        ], []);
     }
 
     private getProperties(node: ts.InterfaceDeclaration, context: Context): ObjectProperty[] {
         return node.members
-            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
+            .filter((property) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 if (isHidden(propertySymbol)) {
@@ -61,21 +60,19 @@ export class InterfaceNodeParser implements SubNodeParser {
                 return result;
             }, []);
     }
-
-    private getAdditionalProperties(node: ts.InterfaceDeclaration, context: Context): BaseType|false {
-        const properties: ts.TypeElement[] = node.members
-            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
-        if (!properties.length) {
+    private getAdditionalProperties(node: ts.InterfaceDeclaration, context: Context): BaseType | false {
+        const property = node.members.find((it) => it.kind === ts.SyntaxKind.IndexSignature);
+        if (!property) {
             return false;
         }
 
-        const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
+        const signature = property as ts.IndexSignatureDeclaration;
         return this.childNodeParser.createType(signature.type!, context);
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
         const fullName = `interface-${node.getFullStart()}`;
-        const argumentIds = context.getArguments().map((arg: BaseType) => arg.getId());
+        const argumentIds = context.getArguments().map((arg) => arg.getId());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

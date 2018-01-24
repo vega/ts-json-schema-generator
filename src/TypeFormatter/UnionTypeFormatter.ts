@@ -15,7 +15,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
-        const definitions = type.getTypes().map((item: BaseType) => this.childTypeFormatter.getDefinition(item));
+        const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
 
         // special case for string literals | string -> string
         let stringType = true;
@@ -40,7 +40,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         } : definitions[0];
     }
     public getChildren(type: UnionType): BaseType[] {
-        return type.getTypes().reduce((result: BaseType[], item: BaseType) => [
+        return type.getTypes().reduce((result: BaseType[], item) => [
             ...result,
             ...this.childTypeFormatter.getChildren(item),
         ], []);

@@ -18,7 +18,7 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: UnionType): Definition {
         return {
             type: uniqueArray(
-                type.getTypes().map((item: BaseType) => this.getPrimitiveType(item)),
+                type.getTypes().map((item) => this.getPrimitiveType(item)),
             ),
         };
     }
@@ -27,7 +27,7 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     }
 
     private isPrimitiveUnion(type: UnionType): boolean {
-        return type.getTypes().every((item: BaseType) => item instanceof PrimitiveType);
+        return type.getTypes().every((item) => item instanceof PrimitiveType);
     }
     private getPrimitiveType(item: BaseType): string {
         if (item instanceof StringType) {

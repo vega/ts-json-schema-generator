@@ -8,7 +8,7 @@ export class UnionType extends BaseType {
     }
 
     public getId(): string {
-        return "(" + this.types.map((type: BaseType) => type.getId()).join("|") + ")";
+        return "(" + this.types.map((type) => type.getId()).join("|") + ")";
     }
 
     public getTypes(): BaseType[] {

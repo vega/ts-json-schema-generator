@@ -32,9 +32,7 @@ export class SchemaGenerator {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
 
-        this.program.getSourceFiles().forEach((sourceFile: ts.SourceFile) => {
-            this.inspectNode(sourceFile, typeChecker, allTypes);
-        });
+        this.program.getSourceFiles().forEach((sourceFile) => this.inspectNode(sourceFile, typeChecker, allTypes));
 
         if (!allTypes.has(fullName)) {
             throw new NoRootTypeError(fullName);
@@ -56,10 +54,7 @@ export class SchemaGenerator {
 
             allTypes.set(this.getFullName(node, typeChecker), node);
         } else {
-            ts.forEachChild(
-                node,
-                (subnode: ts.Node) => this.inspectNode(subnode, typeChecker, allTypes),
-            );
+            ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
         }
     }
 
@@ -83,7 +78,7 @@ export class SchemaGenerator {
     }
     private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
         return this.typeFormatter.getChildren(rootType)
-            .filter((child: BaseType) => child instanceof DefinitionType)
+            .filter((child) => child instanceof DefinitionType)
             .reduce((result: StringMap<Definition>, child: DefinitionType) => ({
                 ...result,
                 [child.getId()]: this.typeFormatter.getDefinition(child.getType()),

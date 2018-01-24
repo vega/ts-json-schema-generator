@@ -21,7 +21,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
             {type: "object", additionalProperties: false} as Definition);
     }
     public getChildren(type: IntersectionType): BaseType[] {
-        return type.getTypes().reduce((result: BaseType[], item: BaseType) => {
+        return type.getTypes().reduce((result: BaseType[], item) => {
             // Remove the first child, which is the definition of the child itself because we are merging objects.
             // However, if the child is just a reference, we cannot remove it.
             const slice = item instanceof ObjectType ? 0 : 1;

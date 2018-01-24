@@ -9,8 +9,8 @@ import { derefType } from "./derefType";
 import { uniqueArray } from "./uniqueArray";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
-    const values = types.map((type: LiteralType) => type.getValue());
-    return uniqueArray(values).map((value: LiteralValue) => new LiteralType(value));
+    const values = types.map((type) => type.getValue());
+    return uniqueArray(values).map((value) => new LiteralType(value));
 }
 
 export function getTypeKeys(type: BaseType): LiteralType[] {
@@ -20,18 +20,18 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
         type instanceof IntersectionType ||
         type instanceof UnionType
     ) {
-        return uniqueLiterals(type.getTypes().reduce((result: LiteralType[], subType: BaseType) => [
+        return uniqueLiterals(type.getTypes().reduce((result: LiteralType[], subType) => [
             ...result,
             ...getTypeKeys(subType),
         ], []));
     }
 
     if (type instanceof TupleType) {
-        return type.getTypes().map((it: BaseType, idx: number) => new LiteralType(idx));
+        return type.getTypes().map((it, idx) => new LiteralType(idx));
     }
     if (type instanceof ObjectType) {
-        const objectProperties = type.getProperties().map((it: ObjectProperty) => new LiteralType(it.getName()));
-        return uniqueLiterals(type.getBaseTypes().reduce((result: LiteralType[], parentType: BaseType) => [
+        const objectProperties = type.getProperties().map((it) => new LiteralType(it.getName()));
+        return uniqueLiterals(type.getBaseTypes().reduce((result: LiteralType[], parentType) => [
             ...result,
             ...getTypeKeys(parentType),
         ], objectProperties));
@@ -58,10 +58,10 @@ export function getTypeByKey(type: BaseType, index: LiteralType): BaseType | und
     }
 
     if (type instanceof TupleType) {
-        return type.getTypes().find((it: BaseType, idx: number) => idx === index.getValue());
+        return type.getTypes().find((it, idx) => idx === index.getValue());
     }
     if (type instanceof ObjectType) {
-        const property = type.getProperties().find((it: ObjectProperty) => it.getName() === index.getValue());
+        const property = type.getProperties().find((it) => it.getName() === index.getValue());
         if (property) {
             return property.getType();
         }

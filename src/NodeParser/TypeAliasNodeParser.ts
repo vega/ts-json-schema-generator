@@ -16,7 +16,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
     }
     public createType(node: ts.TypeAliasDeclaration, context: Context): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
-            node.typeParameters.forEach((typeParam: ts.TypeParameterDeclaration) => {
+            node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
             });
@@ -30,7 +30,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
 
     private getTypeId(node: ts.Node, context: Context): string {
         const fullName = `alias-${node.getFullStart()}`;
-        const argumentIds = context.getArguments().map((arg: BaseType) => arg.getId());
+        const argumentIds = context.getArguments().map((arg) => arg.getId());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

@@ -15,7 +15,7 @@ export class ChainTypeFormatter implements SubTypeFormatter {
     }
 
     public supportsType(type: BaseType): boolean {
-        return this.typeFormatters.some((typeFormatter: SubTypeFormatter) => typeFormatter.supportsType(type));
+        return this.typeFormatters.some((typeFormatter) => typeFormatter.supportsType(type));
     }
     public getDefinition(type: BaseType): Definition {
         return this.getTypeFormatter(type).getDefinition(type);

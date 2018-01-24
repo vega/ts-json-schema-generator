@@ -51,7 +51,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     private createSubContext(node: ts.MappedTypeNode, key: LiteralType, parentContext: Context): Context {
         const subContext = new Context(node);
 
-        parentContext.getParameters().forEach((parentParameter: string) => {
+        parentContext.getParameters().forEach((parentParameter) => {
             subContext.pushParameter(parentParameter);
             subContext.pushArgument(parentContext.getArgument(parentParameter));
         });

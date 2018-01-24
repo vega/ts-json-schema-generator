@@ -35,6 +35,6 @@ export class CircularReferenceNodeParser implements SubNodeParser {
             ids.push(node.pos, node.end);
             node = node.parent;
         }
-        return ids.join("-") + "<" + context.getArguments().map((arg: BaseType) => arg.getId()).join(",") + ">";
+        return ids.join("-") + "<" + context.getArguments().map((arg) => arg.getId()).join(",") + ">";
     }
 }

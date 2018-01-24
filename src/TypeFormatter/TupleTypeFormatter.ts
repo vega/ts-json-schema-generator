@@ -14,8 +14,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         return type instanceof TupleType;
     }
     public getDefinition(type: TupleType): Definition {
-        const tupleDefinitions: Definition[] = type.getTypes()
-            .map((item: BaseType) => this.childTypeFormatter.getDefinition(item));
+        const tupleDefinitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
 
         return {
             type: "array",
@@ -25,7 +24,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         };
     }
     public getChildren(type: TupleType): BaseType[] {
-        return type.getTypes().reduce((result: BaseType[], item: BaseType) => [
+        return type.getTypes().reduce((result: BaseType[], item) => [
             ...result,
             ...this.childTypeFormatter.getChildren(item),
         ], []);

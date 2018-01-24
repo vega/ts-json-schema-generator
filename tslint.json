@@ -106,7 +106,6 @@
         "typedef": [
             true,
             "parameter",
-            "arrow-parameter",
             "property-declaration"
         ],
         "typedef-whitespace": [

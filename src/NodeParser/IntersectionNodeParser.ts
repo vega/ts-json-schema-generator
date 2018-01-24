@@ -19,10 +19,8 @@ export class IntersectionNodeParser implements SubNodeParser {
         const hidden = referenceHidden(this.typeChecker);
         return new IntersectionType(
             node.types
-                .filter((subnode: ts.Node) => !hidden(subnode))
-                .map((subnode: ts.Node) => {
-                    return this.childNodeParser.createType(subnode, context);
-                }),
+                .filter((subnode) => !hidden(subnode))
+                .map((subnode) => this.childNodeParser.createType(subnode, context)),
         );
     }
 }

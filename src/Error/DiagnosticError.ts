@@ -11,7 +11,7 @@ export class DiagnosticError extends BaseError {
     }
     public get message(): string {
         return this.diagnostics
-            .map((diagnostic: ts.Diagnostic) => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"))
+            .map((diagnostic) => ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"))
             .join("\n\n");
     }
 

@@ -25,7 +25,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
     private getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] {
         return node.members
-            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.PropertySignature)
+            .filter((property) => property.kind === ts.SyntaxKind.PropertySignature)
             .reduce((result: ObjectProperty[], propertyNode: ts.PropertySignature) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 if (isHidden(propertySymbol)) {
@@ -41,20 +41,19 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 return result;
             }, []);
     }
-    private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType|false {
-        const properties = node.members
-            .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
-        if (!properties.length) {
+    private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | false {
+        const property = node.members.find((it) => it.kind === ts.SyntaxKind.IndexSignature);
+        if (!property) {
             return false;
         }
 
-        const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
+        const signature = property as ts.IndexSignatureDeclaration;
         return this.childNodeParser.createType(signature.type!, context);
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
         const fullName = `structure-${node.getFullStart()}`;
-        const argumentIds = context.getArguments().map((arg: BaseType) => arg.getId());
+        const argumentIds = context.getArguments().map((arg) => arg.getId());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }
