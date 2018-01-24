@@ -128,4 +128,8 @@ describe("valid-data", () => {
     assertSchema("generic-hell", "MyObject");
 
     assertSchema("nullable-null", "MyObject");
+
+    assertSchema("undefined-alias", "MyType");
+    assertSchema("undefined-union", "MyType");
+    assertSchema("undefined-property", "MyType");
 });

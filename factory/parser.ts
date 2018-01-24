@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
@@ -32,10 +31,11 @@ import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
 import { TypeofNodeParser } from "../src/NodeParser/TypeofNodeParser";
 import { TypeOperatorNodeParser } from "../src/NodeParser/TypeOperatorNodeParser";
 import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
+import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodeParser";
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
-import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -65,7 +65,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberTypeNodeParser())
         .addNodeParser(new BooleanTypeNodeParser())
         .addNodeParser(new AnyTypeNodeParser())
-        .addNodeParser(new VoidTypeNodeParser())
+        .addNodeParser(new UndefinedTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
 
         .addNodeParser(new StringLiteralNodeParser())

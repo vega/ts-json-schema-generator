@@ -31,7 +31,7 @@ npm install --save ts-json-schema-generator
 * `enum` types
 * `union`, `tuple`, `type[]` types
 * `string`, `boolean`, `number` types
-* `"value"`, `123`, `true`, `false`, `null` literals
+* `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
 * type aliases
 * generics
 * `typeof`

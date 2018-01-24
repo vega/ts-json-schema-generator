@@ -19,8 +19,6 @@ export class UnionNodeParser implements SubNodeParser {
         const hidden = referenceHidden(this.typeChecker);
         return new UnionType(
             node.types
-                // TODO: in objects and interfaces, mark field as not required
-                .filter((subnode: ts.Node) => subnode.kind !== ts.SyntaxKind.UndefinedKeyword)
                 .filter((subnode: ts.Node) => !hidden(subnode))
                 .map((subnode: ts.Node) => {
                     return this.childNodeParser.createType(subnode, context);

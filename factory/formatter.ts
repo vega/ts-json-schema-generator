@@ -19,8 +19,10 @@ import { PrimitiveUnionTypeFormatter } from "../src/TypeFormatter/PrimitiveUnion
 import { ReferenceTypeFormatter } from "../src/TypeFormatter/ReferenceTypeFormatter";
 import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
+import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
-import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
+
+
 
 export function createFormatter(config: Config): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
@@ -35,7 +37,7 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new NullTypeFormatter())
 
         .addTypeFormatter(new AnyTypeFormatter())
-        .addTypeFormatter(new VoidTypeFormatter())
+        .addTypeFormatter(new UndefinedTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())

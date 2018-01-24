@@ -1,7 +1,7 @@
 import { BaseType } from "./BaseType";
 
-export class VoidType extends BaseType {
+export class UndefinedType extends BaseType {
     public getId(): string {
-        return "void";
+        return "undefined";
     }
 }

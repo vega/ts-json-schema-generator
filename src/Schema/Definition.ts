@@ -3,6 +3,7 @@ export type RawType = number | boolean | string | null;
 export interface Definition {
     $ref?: string;
     description?: string;
+    not?: Definition;
     allOf?: Definition[];
     oneOf?: Definition[];
     anyOf?: Definition[];
