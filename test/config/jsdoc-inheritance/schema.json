@@ -6,6 +6,7 @@
       "additionalProperties": false,
       "properties": {
         "bar": {
+          "description": "Base comment.",
           "type": "number"
         },
         "foo": {

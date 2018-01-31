@@ -3,6 +3,10 @@ import { Annotations } from "../Type/AnnotatedType";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
+    constructor(private typeChecker: ts.TypeChecker) {
+        super();
+    }
+
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const annotations: Annotations = {
             ...this.getDescriptionAnnotation(node),
@@ -34,7 +38,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        const comments: ts.SymbolDisplayPart[] = symbol.getDocumentationComment();
+        const comments: ts.SymbolDisplayPart[] = symbol.getDocumentationComment(this.typeChecker);
         if (!comments || !comments.length) {
             return undefined;
         }

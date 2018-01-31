@@ -11,7 +11,7 @@ import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { Run } from "./valid-data.test";
 
-const validator: Ajv.Ajv = new Ajv();
+const validator = new Ajv({schemaId: "id"});
 const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
 validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
 
