@@ -15,8 +15,7 @@ export interface MyObject {
      * Integer!
      *
      * @title Number field title
-     * @maximum 10
-     * @exclusiveMaximum true
+     * @exclusiveMaximum 10
      * @multipleOf 3
      * @asType integer
      */

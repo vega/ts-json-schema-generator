@@ -26,6 +26,11 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "maxItems",
         "uniqueItems",
 
+        "propertyNames",
+        "contains",
+        "const",
+        "examples",
+
         "default",
     ];
 

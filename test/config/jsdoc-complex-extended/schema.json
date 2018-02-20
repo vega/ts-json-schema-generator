@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "MyObject": {
             "type": "object",
@@ -15,8 +15,7 @@
                     "type": "integer",
                     "title": "Number field title",
                     "description": "This field is of integer type.\nInteger!",
-                    "maximum": 10,
-                    "exclusiveMaximum": true,
+                    "exclusiveMaximum": 10,
                     "multipleOf": 3
                 },
                 "privateString": {

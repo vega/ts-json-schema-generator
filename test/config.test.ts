@@ -11,9 +11,9 @@ import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { Run } from "./valid-data.test";
 
-const validator = new Ajv({schemaId: "id"});
-const metaSchema: object = require("ajv/lib/refs/json-schema-draft-04.json");
-validator.addMetaSchema(metaSchema, "http://json-schema.org/draft-04/schema#");
+const validator = new Ajv();
+const metaSchema: object = require("ajv/lib/refs/json-schema-draft-06.json");
+validator.addMetaSchema(metaSchema);
 
 const basePath = "test/config";
 
@@ -40,7 +40,7 @@ function assertSchema(name: string, partialConfig: PartialConfig & {type: string
         assert.deepEqual(actual, expected);
 
         validator.validateSchema(actual);
-        assert.equal(validator.errors, null);
+        assert.isNull(validator.errors);
     });
 }
 
