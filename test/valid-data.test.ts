@@ -106,6 +106,7 @@ describe("valid-data", () => {
     assertSchema("type-indexed-access", "MyType");
     assertSchema("type-keyof", "MyType");
     assertSchema("type-mapped", "MyObject");
+    assertSchema("type-mapped-single", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");

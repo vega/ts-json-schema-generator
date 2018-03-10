@@ -25,18 +25,28 @@ export class MappedTypeNodeParser implements SubNodeParser {
     }
 
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
-        const type: any = this.typeChecker.getTypeFromTypeNode((<any>node.typeParameter.constraint));
+        const type: any = this.typeChecker.getTypeFromTypeNode(node.typeParameter.constraint!);
 
-        return type.types
-            .reduce((result: ObjectProperty[], t: any) => {
-                const objectProperty = new ObjectProperty(
-                    t.value,
-                    this.childNodeParser.createType(node.type!, context),
-                    !node.questionToken,
-                );
+        if (type.types) {
+            return type.types
+                .reduce((result: ObjectProperty[], t: any) => {
+                    const objectProperty = new ObjectProperty(
+                        t.value,
+                        this.childNodeParser.createType(node.type!, context),
+                        !node.questionToken,
+                    );
 
-                result.push(objectProperty);
-                return result;
-            }, []);
+                    result.push(objectProperty);
+                    return result;
+                }, []);
+        } else if (type.intrinsicName !== "never") {
+            return [new ObjectProperty(
+                type.value,
+                this.childNodeParser.createType(node.type!, context),
+                !node.questionToken,
+            )];
+        } else {
+            return [];
+        }
     }
 }
