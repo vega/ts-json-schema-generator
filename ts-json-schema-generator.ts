@@ -6,7 +6,7 @@ import { BaseError } from "./src/Error/BaseError";
 import { Schema } from "./src/Schema/Schema";
 import { formatError } from "./src/Utils/formatError";
 
-const args: any = commander
+const args = commander
     .option("-p, --path <path>", "Typescript path")
     .option("-t, --type <name>", "Type name")
     .option(
@@ -28,16 +28,19 @@ const args: any = commander
         "extended",
     )
     .option(
-        "-s, --sortProps",
-        "Sort properties for stable output",
-        (v: any) => v === "true" || v === "yes" || v === "1",
-        true,
+        "-u, --unstable",
+        "Do not sort properties",
     )
     .parse(process.argv);
 
 const config: Config = {
     ...DEFAULT_CONFIG,
-    ...args,
+    path: args.path,
+    type: args.type,
+    expose: args.expose,
+    topRef: args.topRef,
+    jsDoc: args.jsDoc,
+    sortProps: !args.unstable,
 };
 
 try {
