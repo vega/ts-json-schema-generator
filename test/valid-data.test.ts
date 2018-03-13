@@ -51,7 +51,7 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 }
 
 describe("valid-data", () => {
-    // TODO: generics recursive
+     // TODO: generics recursive
 
         assertSchema("simple-object", "SimpleObject");
 
@@ -107,6 +107,7 @@ describe("valid-data", () => {
         assertSchema("type-keyof", "MyType");
         assertSchema("type-mapped", "MyObject");
         assertSchema("type-partial", "MyObject");
+        assertSchema("type-pick", "MyObject");
         assertSchema("generic-simple", "MyObject");
         assertSchema("generic-arrays", "MyObject");
         assertSchema("generic-multiple", "MyObject");
@@ -116,4 +117,5 @@ describe("valid-data", () => {
         assertSchema("generic-hell", "MyObject");
 
         assertSchema("nullable-null", "MyObject");
+        
 });
