@@ -88,6 +88,7 @@ describe("valid-data", () => {
         assertSchema("type-aliases-object", "MyAlias");
         assertSchema("type-aliases-mixed", "MyObject");
         assertSchema("type-aliases-union", "MyUnion");
+        assertSchema("type-aliases-union-array", "MyUnion");
         assertSchema("type-aliases-tuple", "MyTuple");
         assertSchema("type-aliases-anonymous", "MyObject");
         assertSchema("type-aliases-local-namespace", "MyObject");
@@ -117,5 +118,5 @@ describe("valid-data", () => {
         assertSchema("generic-hell", "MyObject");
 
         assertSchema("nullable-null", "MyObject");
-        
+
 });

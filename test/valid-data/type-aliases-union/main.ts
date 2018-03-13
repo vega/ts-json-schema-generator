@@ -1,8 +1,9 @@
-
-type BasicArray = (string | number)[];
-
 export interface MyObject {
-    array: BasicArray;
+    a: number
 }
 
-export type MyUnion = (string | MyObject)[];
+export interface MyOtherObject {
+    b: string
+}
+
+export type MyUnion = MyObject | MyOtherObject
