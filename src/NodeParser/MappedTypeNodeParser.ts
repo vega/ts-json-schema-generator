@@ -3,7 +3,6 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { DefinitionType } from "../..";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -25,9 +24,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         );
     }
 
-    /**
-
-    {
+    /*
 eg
         [P in K]: T[P];
 
@@ -39,59 +36,59 @@ context.arguments:
         [DefinitionType, UnionType]
 context.parameters:
         ["T", "K"]
-
-
-    }
-
-     * @param nod
-     * @param context
      */
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
 
-        let getParameterProperties = function (typeId :string, namesOnly :boolean = false) {
+        const getParameterProperties = function (typeId: string, namesOnly: boolean = false) {
 
-            //@ts-ignore
-            let t = context.arguments.find((v, i) => {
-                //@ts-ignore
-                return context.parameters[i] === typeId
-            })
-            //@ts-ignore
-            if(t.type && t.type.properties) { // pick orig
-                //@ts-ignore
-                return t.type.properties
-                //@ts-ignore
+            // @ts-ignore
+            const t = context.arguments.find((v: any, i: any) => {
+                // @ts-ignore
+                return context.parameters[i] === typeId;
+            });
+            // @ts-ignore
+            if (t.type && t.type.properties) { // pick orig
+                // @ts-ignore
+                return t.type.properties;
+                // @ts-ignore
             } else if (t.types) {  // pick, to pick
-                //@ts-ignore
-                return t.types.map(a => a.value)
-                //@ts-ignore
+                // @ts-ignore
+                return t.types.map((a: any) => a.value);
+                // @ts-ignore
             } else if (t.properties)  { // partial orig // partial to pick
-                //@ts-ignore
-                return (namesOnly)? t.properties.map(p => p.name) : t.properties
+                // @ts-ignore
+                return (namesOnly) ? t.properties.map((p: any) => p.name) : t.properties;
             }
 
-        }
+        };
 
-        //@ts-ignore
-        if(context.parameters.length > 0) {
-                //@ts-ignore
-            let originalProps = (node.type && node.type.objectType)? getParameterProperties(node.type.objectType.typeName.text) : []
+        // @ts-ignore
+        if (context.parameters.length > 0) {
+            // @ts-ignore
+            const originalProps = (node.type && node.type.objectType) ?
+                // @ts-ignore
+                getParameterProperties(node.type.objectType.typeName.text) : [];
 
-            //@ts-ignore
-            let toPick = (node.typeParameter && node.typeParameter.constraint && node.typeParameter.constraint.typeName)?
-                //@ts-ignore
+            // @ts-ignore
+            const toPick = (node.typeParameter && node.typeParameter.constraint &&
+                    // @ts-ignore
+                    node.typeParameter.constraint.typeName) ?
+                // @ts-ignore
                 getParameterProperties(node.typeParameter.constraint.typeName.text, true) :
-                //@ts-ignore
-                (node.typeParameter && node.typeParameter.constraint && node.typeParameter.constraint.type && node.typeParameter.constraint.type.typeName)?
-                //@ts-ignore
+                // @ts-ignore
+                (node.typeParameter && node.typeParameter.constraint &&
+                // @ts-ignore
+                 node.typeParameter.constraint.type && node.typeParameter.constraint.type.typeName) ?
+                // @ts-ignore
                 getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
-                []
+                [];
 
-            return originalProps.filter((p :any) => {
-                return toPick.includes(p.name)
-            }).map((p :any) => {
+            return originalProps.filter((p: any) => {
+                return toPick.includes(p.name);
+            }).map((p: any) => {
                 p.required = !node.questionToken; // this is for partial
                 return p;
-            })
+            });
 
         } else {
             const type: any = this.typeChecker.getTypeFromTypeNode((<any>node.typeParameter.constraint));
@@ -111,7 +108,7 @@ context.parameters:
             }
         }
 
-        return []
+        return [];
 
     }
 }
