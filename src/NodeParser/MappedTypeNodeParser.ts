@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { UnionType, LiteralType, DefinitionType } from "../..";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -24,40 +25,25 @@ export class MappedTypeNodeParser implements SubNodeParser {
         );
     }
 
-    /*
-eg
-        [P in K]: T[P];
-
-typeParameter:
-        P in K
-type :
-        T[P]
-context.arguments:
-        [DefinitionType, UnionType]
-context.parameters:
-        ["T", "K"]
-     */
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
 
         const getParameterProperties = function (typeId: string, namesOnly: boolean = false) {
 
-            // @ts-ignore
-            const t = context.arguments.find((v: any, i: any) => {
-                // @ts-ignore
+            const t =
+                <DefinitionType | ObjectType | UnionType | LiteralType >context.getArguments().find((v: any, i: any) => {
+                // @ts-ignore  this is required because parameters is private
                 return context.parameters[i] === typeId;
             });
-            // @ts-ignore
-            if (t.type && t.type.properties) { // pick orig
-                // @ts-ignore
-                return t.type.properties;
-                // @ts-ignore
-            } else if (t.types) {  // pick, to pick
-                // @ts-ignore
-                return t.types.map((a: any) => a.value);
-                // @ts-ignore
-            } else if (t.properties)  { // partial orig // partial to pick
-                // @ts-ignore
-                return (namesOnly) ? t.properties.map((p: any) => p.name) : t.properties;
+
+            if(t.constructor.name === "DefinitionType") { // pick orig
+                return (<ObjectType>(<DefinitionType>t).getType()).getProperties()
+            } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
+                return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
+            } else if(t.constructor.name === "UnionType") { // pick, values to pic
+                // @ts-ignore this is required because types is private
+                return (<UnionType>t).types.map((a: any) => a.value);
+            } else if (t.constructor.name === "LiteralType") {
+                return (<LiteralType>t).getValue()
             }
 
         };
@@ -107,8 +93,6 @@ context.parameters:
                 }, []);
             }
         }
-
         return [];
-
     }
 }

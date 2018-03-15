@@ -108,7 +108,8 @@ describe("valid-data", () => {
     assertSchema("type-keyof", "MyType");
     assertSchema("type-mapped", "MyObject");
     assertSchema("type-partial", "MyObject");
-    assertSchema("type-pick", "MyObject");
+    assertSchema("type-pick1", "MyObject");
+    assertSchema("type-pick2", "MyObject");
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
     assertSchema("generic-multiple", "MyObject");
