@@ -107,7 +107,8 @@ describe("valid-data", () => {
     assertSchema("type-indexed-access", "MyType");
     assertSchema("type-keyof", "MyType");
     assertSchema("type-mapped", "MyObject");
-    assertSchema("type-partial", "MyObject");
+    assertSchema("type-partial1", "MyObject");
+    assertSchema("type-partial2", "MyObject");
     assertSchema("type-pick1", "MyObject");
     assertSchema("type-pick2", "MyObject");
     assertSchema("generic-simple", "MyObject");
