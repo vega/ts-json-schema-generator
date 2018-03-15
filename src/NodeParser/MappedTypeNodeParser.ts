@@ -1,9 +1,9 @@
 import * as ts from "typescript";
+import { DefinitionType, LiteralType, UnionType } from "../..";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { UnionType, LiteralType, DefinitionType } from "../..";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -30,20 +30,22 @@ export class MappedTypeNodeParser implements SubNodeParser {
         const getParameterProperties = function (typeId: string, namesOnly: boolean = false) {
 
             const t =
-                <DefinitionType | ObjectType | UnionType | LiteralType >context.getArguments().find((v: any, i: any) => {
+                <DefinitionType | ObjectType | UnionType | LiteralType >
+                context.getArguments().find((v: any, i: any) => {
                 // @ts-ignore  this is required because parameters is private
                 return context.parameters[i] === typeId;
             });
 
-            if(t.constructor.name === "DefinitionType") { // pick orig
-                return (<ObjectType>(<DefinitionType>t).getType()).getProperties()
-            } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
-                return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
-            } else if(t.constructor.name === "UnionType") { // pick, values to pic
+            if (t.constructor.name === "DefinitionType") { // pick orig
+                return (<ObjectType>(<DefinitionType>t).getType()).getProperties();
+            } else if (t.constructor.name === "ObjectType") {
+                return (namesOnly) ? (<ObjectType>t).getProperties().map((p: any) => p.name) :
+                (<ObjectType>t).getProperties();
+            } else if (t.constructor.name === "UnionType") { // pick, values to pic
                 // @ts-ignore this is required because types is private
                 return (<UnionType>t).types.map((a: any) => a.value);
             } else if (t.constructor.name === "LiteralType") {
-                return (<LiteralType>t).getValue()
+                return (<LiteralType>t).getValue();
             }
 
         };
