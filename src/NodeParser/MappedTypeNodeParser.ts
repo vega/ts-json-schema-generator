@@ -27,49 +27,29 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
 
-        const getParameterProperties = function (typeId: string, namesOnly: boolean = false) {
-
-            const t =
-                <DefinitionType | ObjectType | UnionType | LiteralType >context.getArguments().find((v: any, i: any) => {
-                // @ts-ignore  this is required because parameters is private
-                return context.parameters[i] === typeId;
-            });
-
-            if(t.constructor.name === "DefinitionType") { // pick orig
-                return (<ObjectType>(<DefinitionType>t).getType()).getProperties()
-            } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
-                return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
-            } else if(t.constructor.name === "UnionType") { // pick, values to pic
-                // @ts-ignore this is required because types is private
-                return (<UnionType>t).types.map((a: any) => a.value);
-            } else if (t.constructor.name === "LiteralType") {
-                return (<LiteralType>t).getValue()
-            }
-
-        };
-
         // @ts-ignore
         if (context.parameters.length > 0) {
             // @ts-ignore
             const originalProps = (node.type && node.type.objectType) ?
                 // @ts-ignore
-                getParameterProperties(node.type.objectType.typeName.text) : [];
+                context.getParameterProperties(node.type.objectType.typeName.text) : [];
 
             // @ts-ignore
             const toPick = (node.typeParameter && node.typeParameter.constraint &&
                     // @ts-ignore
                     node.typeParameter.constraint.typeName) ?
                 // @ts-ignore
-                getParameterProperties(node.typeParameter.constraint.typeName.text, true) :
+                context.getParameterProperties(node.typeParameter.constraint.typeName.text, true) :
                 // @ts-ignore
                 (node.typeParameter && node.typeParameter.constraint &&
                 // @ts-ignore
                  node.typeParameter.constraint.type && node.typeParameter.constraint.type.typeName) ?
                 // @ts-ignore
-                getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
+                context.getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
                 [];
 
             return originalProps.filter((p: any) => {
+                // @ts-ignore // includes only included in ES2017 target, not ES2015
                 return toPick.includes(p.name);
             }).map((p: any) => {
                 p.required = !node.questionToken; // this is for partial
