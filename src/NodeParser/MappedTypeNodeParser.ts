@@ -46,19 +46,20 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 return (<UnionType>t).types.map((a: any) => a.value);
             } else if (t.constructor.name === "LiteralType") {
                 return (<LiteralType>t).getValue();
+            } else {
+                return []
             }
-
         };
 
         // @ts-ignore
         if (context.parameters.length > 0) {
             // @ts-ignore
-            const originalProps = (node.type && node.type.objectType) ?
+            const originalProps : [any] = (node.type && node.type.objectType) ?
                 // @ts-ignore
                 getParameterProperties(node.type.objectType.typeName.text) : [];
 
             // @ts-ignore
-            const toPick = (node.typeParameter && node.typeParameter.constraint &&
+            const toPick : Array = (node.typeParameter && node.typeParameter.constraint &&
                     // @ts-ignore
                     node.typeParameter.constraint.typeName) ?
                 // @ts-ignore
