@@ -58,7 +58,7 @@
     "tslint": "~5.9.1"
   },
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublish": "rm -rf dist/* && npm run build",
     "preversion": "npm run lint && npm run test",
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
