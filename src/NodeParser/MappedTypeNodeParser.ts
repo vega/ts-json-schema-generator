@@ -27,9 +27,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
 
-        // @ts-ignore
-        if (context.parameters.length > 0) {
-            // @ts-ignore
+
+        if (context.hasParameters()) {
+            // @ts-ignore // have to ignore, as NodeObject is not exported from typescript at this point
             const originalProps = (node.type && node.type.objectType) ?
                 // @ts-ignore
                 context.getParameterProperties(node.type.objectType.typeName.text) : [];
