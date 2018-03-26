@@ -16,9 +16,9 @@ validator.addMetaSchema(metaSchema);
 const basePath = "test/valid-data";
 
 export type Run = (
-        expectation: string,
-        callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
-    ) => Mocha.ITest;
+    expectation: string,
+    callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
+) => Mocha.ITest;
 
 function assertSchema(name: string, type: string, only: boolean = false): void {
     const run: Run = only ? it.only : it;
@@ -88,6 +88,7 @@ describe("valid-data", () => {
     assertSchema("type-aliases-object", "MyAlias");
     assertSchema("type-aliases-mixed", "MyObject");
     assertSchema("type-aliases-union", "MyUnion");
+    assertSchema("type-aliases-union-array", "MyUnion");
     assertSchema("type-aliases-tuple", "MyTuple");
     assertSchema("type-aliases-anonymous", "MyObject");
     assertSchema("type-aliases-local-namespace", "MyObject");
@@ -106,8 +107,10 @@ describe("valid-data", () => {
     assertSchema("type-indexed-access", "MyType");
     assertSchema("type-keyof", "MyType");
     assertSchema("type-mapped", "MyObject");
-    assertSchema("type-mapped-single", "MyObject");
-
+    assertSchema("type-partial1", "MyObject");
+    assertSchema("type-partial2", "MyObject");
+    assertSchema("type-pick1", "MyObject");
+    assertSchema("type-pick2", "MyObject");
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
     assertSchema("generic-multiple", "MyObject");
@@ -117,4 +120,5 @@ describe("valid-data", () => {
     assertSchema("generic-hell", "MyObject");
 
     assertSchema("nullable-null", "MyObject");
+
 });

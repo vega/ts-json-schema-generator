@@ -5,6 +5,24 @@
     "version": "0.2.0",
     "configurations": [
         {
+			"name": "valid-data test",
+			"type": "node",
+            "request": "launch",
+			"program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"stopOnEntry": false,
+			"runtimeArgs": [
+			],
+			"args": [
+                "-t",
+                "10000",
+                "--require",
+                "ts-node/register",
+				"test/valid-data.test.ts"
+			], //you can specify paths to specific tests here
+			"cwd": "${workspaceRoot}",
+			"env": {}
+		},
+        {
             "type": "node",
             "request": "attach",
             "name": "Attach to Process",
