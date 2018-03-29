@@ -22,7 +22,6 @@ npm install --save ts-json-schema-generator
     --path 'my/project/**.*.ts' \
     --type 'My.Type.Full.Name' \
     --expose 'export' \
-    --topRef 'yes' \
     --jsDoc 'extended'
 ```
 

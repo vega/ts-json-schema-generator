@@ -16,10 +16,8 @@ const args = commander
         "export",
     )
     .option(
-        "-r, --topRef",
-        "Create a top-level $ref definition",
-        (v: any) => v === "true" || v === "yes" || v === "1",
-        true,
+        "-r, --no-top-ref",
+        "Do not create a top-level $ref definition",
     )
     .option(
         "-j, --jsDoc <extended>",
@@ -44,6 +42,7 @@ const config: Config = {
 };
 
 try {
+    console.log(config);
     const schema = createGenerator(config).createSchema(args.type);
     process.stdout.write(config.sortProps ?
         stringify(schema, {space: 2}) :
