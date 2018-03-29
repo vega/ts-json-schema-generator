@@ -42,7 +42,6 @@ const config: Config = {
 };
 
 try {
-    console.log(config);
     const schema = createGenerator(config).createSchema(args.type);
     process.stdout.write(config.sortProps ?
         stringify(schema, {space: 2}) :
