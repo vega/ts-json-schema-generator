@@ -5,6 +5,7 @@ node_js:
 script:
   - npm run lint
   - npm run test
+before_deploy: 'yarn'
 deploy:
   provider: npm
   email: domoritz@gmail.com
