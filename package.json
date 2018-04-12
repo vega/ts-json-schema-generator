@@ -59,7 +59,7 @@
   },
   "scripts": {
     "preversion": "npm run lint",
-    "predeploy": "npm run build",
+    "prepublish": "npm run build",
     "build": "tsc -p .",
     "watch": "tsc -p . -w",
     "lint": "tslint -p .",
