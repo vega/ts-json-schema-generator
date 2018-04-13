@@ -5,7 +5,7 @@ test/
 dist/test/
 
 index.ts
-typescript-to-json-schema.ts
+ts-json-schema-generator.ts
 
 tsconfig.json
 tslint.json
