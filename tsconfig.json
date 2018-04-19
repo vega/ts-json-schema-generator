@@ -20,7 +20,7 @@
         "pretty": true,
         "watch": false,
         "typeRoots": ["node_modules/@types"],
-        "sourceRoot": "src",
+        "sourceRoot": "/src",
         "outDir": "dist"
     },
     "include": [
