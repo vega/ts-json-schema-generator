@@ -30,6 +30,10 @@ export class Context {
         return this.arguments;
     }
 
+    public hasParameters() : boolean {
+        return this.parameters.length > 0
+    }
+
     public getReference(): ts.Node | undefined {
         return this.reference;
     }
