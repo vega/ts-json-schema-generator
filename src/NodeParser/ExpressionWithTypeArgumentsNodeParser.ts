@@ -31,6 +31,10 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         }
     }
 
+    /*
+        Create a new context with reference to the current node.
+        The current context will be referenced as a context of each argument.
+    */
     private createSubContext(node: ts.ExpressionWithTypeArguments, parentContext: Context): Context {
         const subContext = new Context(node);
         if (node.typeArguments && node.typeArguments.length) {

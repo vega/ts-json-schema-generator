@@ -46,7 +46,7 @@ export class Context {
         });
 
         if(t.constructor.name === "DefinitionType") { // pick orig
-            return (<ObjectType>(<DefinitionType>t).getType()).getProperties()
+            return (namesOnly)? (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: any) => p.name):(<ObjectType>(<DefinitionType>t).getType()).getProperties()
         } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
             return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
         } else if(t.constructor.name === "UnionType") { // pick, values to pic
