@@ -14,36 +14,15 @@ class MappedTypeNodeParser {
         return new ObjectType_1.ObjectType(`indexed-type-${node.getFullStart()}`, [], this.getProperties(node, context), false);
     }
     getProperties(node, context) {
-        const getParameterProperties = function (typeId, namesOnly = false) {
-            const t = context.getArguments().find((v, i) => {
-                return context.parameters[i] === typeId;
-            });
-            if (t.constructor.name === "DefinitionType") {
-                return t.getType().getProperties();
-            }
-            else if (t.constructor.name === "ObjectType") {
-                return (namesOnly) ? t.getProperties().map((p) => p.name) :
-                    t.getProperties();
-            }
-            else if (t.constructor.name === "UnionType") {
-                return t.types.map((a) => a.value);
-            }
-            else if (t.constructor.name === "LiteralType") {
-                return t.getValue();
-            }
-            else {
-                return [];
-            }
-        };
-        if (context.parameters.length > 0) {
+        if (context.hasParameters()) {
             const originalProps = (node.type && node.type.objectType) ?
-                getParameterProperties(node.type.objectType.typeName.text) : [];
+                context.getParameterProperties(node.type.objectType.typeName.text) : [];
             const toPick = (node.typeParameter && node.typeParameter.constraint &&
                 node.typeParameter.constraint.typeName) ?
-                getParameterProperties(node.typeParameter.constraint.typeName.text, true) :
+                context.getParameterProperties(node.typeParameter.constraint.typeName.text, true) :
                 (node.typeParameter && node.typeParameter.constraint &&
                     node.typeParameter.constraint.type && node.typeParameter.constraint.type.typeName) ?
-                    getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
+                    context.getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
                     [];
             return originalProps.filter((p) => {
                 return toPick.includes(p.name);

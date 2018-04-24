@@ -33,6 +33,9 @@ function assertSchema(name, type, only = false) {
     });
 }
 describe("valid-data", () => {
+    assertSchema("type-pick1", "MyObject");
+    assertSchema("type-pick2", "MyObject");
+    assertSchema("interface-keyvalueify", "MyObject");
     assertSchema("simple-object", "SimpleObject");
     assertSchema("interface-single", "MyObject");
     assertSchema("interface-multi", "MyObject");
@@ -73,6 +76,9 @@ describe("valid-data", () => {
     assertSchema("type-union-tagged", "Shape");
     assertSchema("type-intersection", "MyObject");
     assertSchema("type-intersection-additional-props", "MyObject");
+    assertSchema("type-partial1", "MyObject");
+    assertSchema("type-partial2", "MyObject");
+    assertSchema("type-partial3", "MyObject");
     assertSchema("type-typeof", "MyType");
     assertSchema("type-typeof-value", "MyType");
     assertSchema("type-indexed-access", "MyType");

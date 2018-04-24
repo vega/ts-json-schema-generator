@@ -9,7 +9,9 @@ export declare class Context {
     pushParameter(parameterName: string): void;
     getArgument(parameterName: string): BaseType;
     getArguments(): BaseType[];
+    hasParameters(): boolean;
     getReference(): ts.Node | undefined;
+    getParameterProperties(typeId: string, namesOnly?: boolean): Array<any>;
 }
 export interface NodeParser {
     createType(node: ts.Node, context: Context): BaseType;

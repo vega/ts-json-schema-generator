@@ -11,7 +11,7 @@ class UnknownNodeError extends BaseError_1.BaseError {
         return "UnknownNodeError";
     }
     get message() {
-        return `Unknown node "${this.node.getFullText()}`;
+        return `Unknown node`;
     }
     getNode() {
         return this.node;

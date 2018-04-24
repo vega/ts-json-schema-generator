@@ -12,7 +12,15 @@ class IndexedAccessTypeNodeParser {
     }
     createType(node, context) {
         const symbol = this.typeChecker.getSymbolAtLocation(node.objectType.exprName);
-        return new EnumType_1.EnumType(`indexed-type-${node.getFullStart()}`, symbol.valueDeclaration.type.elementTypes.map((memberType) => this.childNodeParser.createType(memberType, context)));
+        if (node.indexType && node.indexType.type && node.indexType.type.typeName &&
+            node.indexType.type.typeName.text &&
+            node.objectType && node.objectType.typeName &&
+            node.objectType.typeName.text === node.indexType.type.typeName.text) {
+            return this.childNodeParser.createType(context.getArguments()[0], context);
+        }
+        else {
+            return new EnumType_1.EnumType(`indexed-type-${node.getFullStart()}`, symbol.valueDeclaration.type.elementTypes.map((memberType) => this.childNodeParser.createType(memberType, context)));
+        }
     }
 }
 exports.IndexedAccessTypeNodeParser = IndexedAccessTypeNodeParser;
