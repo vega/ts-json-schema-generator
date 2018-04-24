@@ -21,7 +21,10 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         const type = this.typeChecker.getTypeFromTypeNode(node);
         // @ts-ignore
 
-        if(node.type && node.type) {
+        /*
+            
+        */
+        if(node.type && node.type && context.getArguments.length) {
             // @ts-ignore
             let p = context.getParameterProperties(node.type.typeName.text)
             return new UnionType(
