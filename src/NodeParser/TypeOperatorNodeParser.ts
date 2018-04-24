@@ -22,9 +22,9 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         // @ts-ignore
 
         /*
-            
+
         */
-        if(node.type && node.type && context.getArguments.length) {
+        if(node.type && context.getArguments.length) {
             // @ts-ignore
             let p = context.getParameterProperties(node.type.typeName.text)
             return new UnionType(
