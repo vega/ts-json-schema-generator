@@ -1,5 +1,6 @@
 import * as ts from "typescript";
 import { BaseType } from "./Type/BaseType";
+import { DefinitionType, ObjectType, UnionType, LiteralType } from "..";
 
 export class Context {
     private arguments: BaseType[] = [];
@@ -29,9 +30,33 @@ export class Context {
         return this.arguments;
     }
 
+    public hasParameters() : boolean {
+        return this.parameters.length > 0
+    }
+
     public getReference(): ts.Node | undefined {
         return this.reference;
     }
+
+    public getParameterProperties(typeId: string, namesOnly: boolean = false) : Array<any> {
+
+        const t =
+            <DefinitionType | ObjectType | UnionType | LiteralType >this.arguments.find((v: any, i: any) => {
+            return this.parameters[i] === typeId;
+        });
+
+        if(t.constructor.name === "DefinitionType") { // pick orig
+            return (namesOnly)? (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: any) => p.name):(<ObjectType>(<DefinitionType>t).getType()).getProperties()
+        } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
+            return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
+        } else if(t.constructor.name === "UnionType") { // pick, values to pic
+            return (<UnionType>t).getTypes().map((a: any) => a.value);
+        } else if (t.constructor.name === "LiteralType") {
+            return [(<LiteralType>t).getValue()]
+        } else {
+            throw new Error(`type ${t.constructor.name} not handled`)
+        }
+    };
 }
 
 export interface NodeParser {

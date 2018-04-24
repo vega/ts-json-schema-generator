@@ -27,7 +27,7 @@ export class InterfaceNodeParser implements SubNodeParser {
             this.getTypeId(node, context),
             this.getBaseTypes(node, context),
             this.getProperties(node, context),
-            this.getAdditionalProperties(node, context),
+            this.getAdditionalProperties(node, context)
         );
     }
 
