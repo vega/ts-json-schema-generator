@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyInterface": {
+            "additionalProperties": false,
+            "properties": {
+                "numberVariable": {
+                    "$ref": "#/definitions/TestType"
+                }
+            },
+            "type": "object"
+        },
+        "TestType": {
+            "enum": [
+                "TEST"
+            ],
+            "type": "string"
+        }
+    },
+    "$ref": "#/definitions/MyInterface"
+}

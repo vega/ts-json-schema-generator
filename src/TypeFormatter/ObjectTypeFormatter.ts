@@ -6,7 +6,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { StringMap } from "../Utils/StringMap";
-
+import { DefinitionType } from "../..";
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(
         private childTypeFormatter: TypeFormatter,
@@ -31,7 +31,10 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return [
             ...type.getBaseTypes().reduce((result: BaseType[], baseType: BaseType) => [
                 ...result,
-                ...this.childTypeFormatter.getChildren(baseType).slice(1),
+                ...(() => {
+                    let children = this.childTypeFormatter.getChildren(baseType);
+                    return (baseType.getId().indexOf('alias') > -1)? children.slice(0): children.slice(1);
+                })()
             ], []),
 
             ...additionalProperties instanceof BaseType ?

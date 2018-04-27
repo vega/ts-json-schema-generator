@@ -41,7 +41,6 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
         const actual: any = JSON.parse(JSON.stringify(generator.createSchema(type)));
-
         assert.isObject(actual);
         assert.deepEqual(actual, expected);
 
@@ -99,17 +98,13 @@ describe("valid-data", () => {
     assertSchema("type-aliases-local-namespace", "MyObject");
     assertSchema("type-aliases-recursive-anonymous", "MyAlias");
     assertSchema("type-aliases-recursive-export", "MyObject");
-
+    assertSchema("type-alias-baseType", "MyInterface");
     assertSchema("type-maps", "MyObject");
     assertSchema("type-primitives", "MyObject");
     assertSchema("type-union", "TypeUnion");
     assertSchema("type-union-tagged", "Shape");
     assertSchema("type-intersection", "MyObject");
     assertSchema("type-intersection-additional-props", "MyObject");
-
-    assertSchema("type-partial1", "MyObject");
-    assertSchema("type-partial2", "MyObject");
-    assertSchema("type-partial3", "MyObject");
 
     assertSchema("type-typeof", "MyType");
     assertSchema("type-typeof-value", "MyType");
@@ -118,6 +113,7 @@ describe("valid-data", () => {
     assertSchema("type-mapped", "MyObject");
     assertSchema("type-partial1", "MyObject");
     assertSchema("type-partial2", "MyObject");
+    assertSchema("type-partial3", "MyObject");
     assertSchema("type-pick1", "MyObject");
     assertSchema("type-pick2", "MyObject");
     assertSchema("generic-simple", "MyObject");
