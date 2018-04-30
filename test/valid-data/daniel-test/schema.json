@@ -1,0 +1,47 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+
+        "ISysListSort": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "b": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "c": {
+                    "$ref": "#/definitions/SortDirection"
+                }
+            },
+            "required": [
+                "a","b","c"
+            ],
+            "type": "object"
+        },
+
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "sort_by": {
+                    "$ref": "#/definitions/ISysListSort"
+                }
+            },
+            "required": [
+                "sort_by"
+            ],
+            "type": "object"
+        },
+
+        "SortDirection": {
+            "enum": [
+                "ASC",
+                "DESC"
+            ],
+            "type": "string"
+        }
+
+    }
+  }

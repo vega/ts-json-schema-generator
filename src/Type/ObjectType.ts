@@ -20,6 +20,8 @@ export class ObjectProperty {
 }
 
 export class ObjectType extends BaseType {
+    private maxProperties?: number;
+
     public constructor(
         private id: string,
         private baseTypes: BaseType[],
@@ -41,5 +43,9 @@ export class ObjectType extends BaseType {
     }
     public getAdditionalProperties(): BaseType|boolean {
         return this.additionalProperties;
+    }
+
+    public setMaxProperties(maxProperties: number): void {
+        this.maxProperties = maxProperties;
     }
 }

@@ -28,11 +28,79 @@ export class MappedTypeNodeParser implements SubNodeParser {
     private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
 
 
-        if (context.hasParameters()) {
+        if (context.hasParameters()) { //At least 1 parameter.
             // @ts-ignore // have to ignore, as NodeObject is not exported from typescript at this point
-            const originalProps = (node.type && node.type.objectType) ?
-                // @ts-ignore
-                context.getParameterProperties(node.type.objectType.typeName.text) : [];
+
+            /*
+                In ts.MappedTypeNode, type property describes the value type of the map.
+
+                So far we've identified that node.type.objectType is only defined if node.type is of IndexedAccessType
+                Example of such node is:
+                {
+                    [P in keyof K]?: K[P];
+                }
+                K[P] is of type IndexedAccessType.
+
+                ts.IndexedAccessType has property "objectType" which describes the object being accessed via index.
+                In most case it will be a typeReference to an interface.
+
+                If node.type is an IndexedAccessType we can safely assume that there will only be a single parameter.
+                Also we can assume that properties will be the properties of the objectType.
+            */
+
+            // const originalProps = (context.getParameters().length == 1 && )
+
+            let originalPropsTemp;
+            if (node.type && node.type.objectType) {
+                originalPropsTemp = context.getParameterProperties(node.type.objectType.typeName.text);
+            } else if (node.type.kind == ts.SyntaxKind.TypeReference) {
+                //If value type of the map is not a reference then it is likely to be a premitive type such as string.
+
+            } else if (node.type.kind == ts.SyntaxKind.TypeReference) {
+
+                /*
+                    In ts.MappedTypeNode
+                    E.g.
+                    {
+                        [P in K]: T;
+                    }
+
+                    node.typeParameter.name is P
+                    and node.typeParameter.constraint.typeName is K.
+                */
+
+                originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text);
+            } else { originalPropsTemp = []; }
+
+            const originalProps =  originalPropsTemp;
+
+            /*
+                Different cases:
+                const type CASE1<T> = {
+                    [P in keyof IntaFace]: T
+                }
+                In this case node.type will be TypeReference
+
+                const type CASE2<T> = {
+                    [P in keyof T]: string
+                }
+                In this case node.type will be stringtype.
+
+                const type Record<K extends string, T> = {
+                    [P in K]: T
+                }
+                In this case node.type will be TypeReference
+
+                const type CASE4<T> = {
+                    [P in keyof T]: AnInterface['interfaceProp']
+                }
+
+                const type CASE5<K, T, Y> = {
+                    [P in K]: T | Y;
+                }
+            */
+
+
 
             // @ts-ignore
             const toPick : Array = (node.typeParameter && node.typeParameter.constraint &&

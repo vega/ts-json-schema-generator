@@ -7,6 +7,9 @@
       "properties": {
         "numberField": {
           "type": "number"
+        },
+        "stringField": {
+          "type": "string"
         }
       },
       "type": "object"

@@ -1,6 +1,6 @@
 import * as ts from "typescript";
 import { BaseType } from "./Type/BaseType";
-import { DefinitionType, ObjectType, UnionType, LiteralType } from "..";
+import { DefinitionType, ObjectType, UnionType, LiteralType, EnumType, ObjectProperty } from "..";
 
 export class Context {
     private arguments: BaseType[] = [];
@@ -30,6 +30,10 @@ export class Context {
         return this.arguments;
     }
 
+    public getParameters(): string[] {
+        return this.parameters;
+    }
+
     public hasParameters() : boolean {
         return this.parameters.length > 0
     }
@@ -38,12 +42,13 @@ export class Context {
         return this.reference;
     }
 
+    //Name is a little bit confusing.
     public getParameterProperties(typeId: string, namesOnly: boolean = false) : Array<any> {
 
         const t =
-            <DefinitionType | ObjectType | UnionType | LiteralType >this.arguments.find((v: any, i: any) => {
-            return this.parameters[i] === typeId;
-        });
+            <DefinitionType | ObjectType | UnionType | LiteralType| EnumType >this.arguments.find((v: any, i: any) => {
+                return this.parameters[i] === typeId;
+            });
 
         if(t.constructor.name === "DefinitionType") { // pick orig
             return (namesOnly)? (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: any) => p.name):(<ObjectType>(<DefinitionType>t).getType()).getProperties()
@@ -53,6 +58,15 @@ export class Context {
             return (<UnionType>t).getTypes().map((a: any) => a.value);
         } else if (t.constructor.name === "LiteralType") {
             return [(<LiteralType>t).getValue()]
+        } else if (t.constructor.name === "EnumType") {
+            return (namesOnly)?
+                     (<EnumType>t).getValues()
+                    : (<EnumType>t).getValues()
+                        .map(
+                            val => new ObjectProperty(<string>val, <BaseType>this.arguments.find((v:any, i:any) => {
+                                return this.parameters[i] !== typeId;
+                            }), false)
+                        );
         } else {
             throw new Error(`type ${t.constructor.name} not handled`)
         }

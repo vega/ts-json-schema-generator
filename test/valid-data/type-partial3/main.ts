@@ -1,5 +1,6 @@
 export interface Test {
-    numberField: number
+    numberField: number,
+    stringField: string
 }
 
 export interface MyObject extends Partial<Test> {}

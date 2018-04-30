@@ -1,0 +1,24 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "blah": {
+                    "$ref": "#/definitions/OneOf"
+                }
+            },
+            "type": "object"
+        },
+
+        "OneOf": {
+            "additionalProperties": false,
+            "properties": {
+
+            },
+            "type": "object"
+        }
+    }
+}
