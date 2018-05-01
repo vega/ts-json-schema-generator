@@ -54,8 +54,11 @@ export class MappedTypeNodeParser implements SubNodeParser {
             // const originalProps = (context.getParameters().length == 1 && )
 
             let originalPropsTemp;
+            // @ts-ignore
             if (node.type && node.type.objectType) { //IndexAccessType
+                // @ts-ignore
                 originalPropsTemp = context.getParameterProperties(node.type.objectType.typeName.text);
+                // @ts-ignore
             } else if (node.type && node.type.typeArguments && node.type.typeName) { //Reference with type arguments
 
                 /*
@@ -63,21 +66,25 @@ export class MappedTypeNodeParser implements SubNodeParser {
                         [K in keyof T]: Array<K>
                     }
                 */
-
+                    // @ts-ignore
                 if (node.type.typeArguments.length == 2) {
                     /*
                         {
                             [K in keyof T]: Pick<T, K>
                         }
                     */
+                   // @ts-ignore
                     if (node.typeParameter.constraint && node.typeParameter.constraint.type) {
                         let OriginalArg = _.cloneDeep(context.getArguments()[0]) //clone it
+                        // @ts-ignore
                         originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.type.typeName.text);
                         originalPropsTemp.forEach((props: ObjectProperty) => {
                             let subContext = new Context();
                             subContext.pushArgument(OriginalArg);
                             subContext.pushArgument(new LiteralType(props.getName()))
+                            // @ts-ignore
                             node.type.typeArguments.forEach((typeArg: ts.Node) => {
+                                // @ts-ignore
                                 subContext.pushParameter(typeArg.typeName.text);
                             })
                             console.log()
@@ -86,14 +93,12 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
                         console.log();
                     } else {
+                        // @ts-ignore
                         originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text, false, this.childNodeParser.createType(node.type, context));
                     }
 
                 }
-
-
-
-
+                // @ts-ignore
             } else if (node.type && node.type.typeName) { //Reference without type arguments
 
                 /*
@@ -110,7 +115,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     node.typeParameter.name is P
                     and node.typeParameter.constraint.typeName is K.
                 */
-
+                    // @ts-ignore
                 originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text);
             } else { originalPropsTemp = []; }
 
@@ -158,6 +163,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
             //If node.type (The value of the map) is computed: Pick<T, K>, Array<K>
             //This will not work
+            // @ts-ignore
             return originalProps.filter((p: any) => {
                 // @ts-ignore // includes only included in ES2017 target, not ES2015
                 return toPick.includes(p.name);
