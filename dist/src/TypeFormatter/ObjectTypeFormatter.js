@@ -23,7 +23,10 @@ class ObjectTypeFormatter {
         return [
             ...type.getBaseTypes().reduce((result, baseType) => [
                 ...result,
-                ...this.childTypeFormatter.getChildren(baseType).slice(1),
+                ...(() => {
+                    let children = this.childTypeFormatter.getChildren(baseType);
+                    return (baseType.getId().indexOf('alias') > -1) ? children.slice(0) : children.slice(1);
+                })()
             ], []),
             ...additionalProperties instanceof BaseType_1.BaseType ?
                 this.childTypeFormatter.getChildren(additionalProperties) :

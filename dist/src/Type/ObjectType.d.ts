@@ -14,9 +14,11 @@ export declare class ObjectType extends BaseType {
     private baseTypes;
     private properties;
     private additionalProperties;
+    private maxProperties?;
     constructor(id: string, baseTypes: BaseType[], properties: ObjectProperty[], additionalProperties: BaseType | boolean);
     getId(): string;
     getBaseTypes(): BaseType[];
     getProperties(): ObjectProperty[];
     getAdditionalProperties(): BaseType | boolean;
+    setMaxProperties(maxProperties: number): void;
 }

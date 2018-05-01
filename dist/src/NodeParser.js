@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const __1 = require("..");
 class Context {
     constructor(reference) {
         this.arguments = [];
@@ -22,18 +23,29 @@ class Context {
     getArguments() {
         return this.arguments;
     }
+    getParameters() {
+        return this.parameters;
+    }
     hasParameters() {
         return this.parameters.length > 0;
     }
     getReference() {
         return this.reference;
     }
-    getParameterProperties(typeId, namesOnly = false) {
+    getParameterProperties(typeId, namesOnly = false, propertyType) {
         const t = this.arguments.find((v, i) => {
             return this.parameters[i] === typeId;
         });
         if (t.constructor.name === "DefinitionType") {
-            return (namesOnly) ? t.getType().getProperties().map((p) => p.name) : t.getType().getProperties();
+            if (namesOnly) {
+                return t.getType().getProperties().map((p) => p.name);
+            }
+            else if (propertyType) {
+                return t.getType().getProperties().map((p) => { p.setType(propertyType); return p; });
+            }
+            else {
+                return t.getType().getProperties();
+            }
         }
         else if (t.constructor.name === "ObjectType") {
             return (namesOnly) ? t.getProperties().map((p) => p.name) : t.getProperties();
@@ -43,6 +55,14 @@ class Context {
         }
         else if (t.constructor.name === "LiteralType") {
             return [t.getValue()];
+        }
+        else if (t.constructor.name === "EnumType") {
+            return (namesOnly) ?
+                t.getValues()
+                : t.getValues()
+                    .map(val => new __1.ObjectProperty(val, this.arguments.find((v, i) => {
+                    return this.parameters[i] !== typeId;
+                }), false));
         }
         else {
             throw new Error(`type ${t.constructor.name} not handled`);

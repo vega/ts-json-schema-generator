@@ -33,6 +33,10 @@ function assertSchema(name, type, only = false) {
     });
 }
 describe("valid-data", () => {
+    assertSchema("daniel-test", "MyObject");
+    assertSchema("daniel-test2", "MyObject");
+    assertSchema("daniel-test3", "MyObject");
+    assertSchema("type-mapped-pick", 'MyObject');
     assertSchema("type-pick1", "MyObject");
     assertSchema("type-pick2", "MyObject");
     assertSchema("interface-keyvalueify", "MyObject");
@@ -70,15 +74,13 @@ describe("valid-data", () => {
     assertSchema("type-aliases-local-namespace", "MyObject");
     assertSchema("type-aliases-recursive-anonymous", "MyAlias");
     assertSchema("type-aliases-recursive-export", "MyObject");
+    assertSchema("type-alias-baseType", "MyInterface");
     assertSchema("type-maps", "MyObject");
     assertSchema("type-primitives", "MyObject");
     assertSchema("type-union", "TypeUnion");
     assertSchema("type-union-tagged", "Shape");
     assertSchema("type-intersection", "MyObject");
     assertSchema("type-intersection-additional-props", "MyObject");
-    assertSchema("type-partial1", "MyObject");
-    assertSchema("type-partial2", "MyObject");
-    assertSchema("type-partial3", "MyObject");
     assertSchema("type-typeof", "MyType");
     assertSchema("type-typeof-value", "MyType");
     assertSchema("type-indexed-access", "MyType");
@@ -86,6 +88,7 @@ describe("valid-data", () => {
     assertSchema("type-mapped", "MyObject");
     assertSchema("type-partial1", "MyObject");
     assertSchema("type-partial2", "MyObject");
+    assertSchema("type-partial3", "MyObject");
     assertSchema("type-pick1", "MyObject");
     assertSchema("type-pick2", "MyObject");
     assertSchema("generic-simple", "MyObject");

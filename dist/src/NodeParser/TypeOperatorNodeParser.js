@@ -14,7 +14,7 @@ class TypeOperatorNodeParser {
     }
     createType(node, context) {
         const type = this.typeChecker.getTypeFromTypeNode(node);
-        if (node.type && context.getArguments.length) {
+        if (node.type && context.getArguments().length) {
             let p = context.getParameterProperties(node.type.typeName.text);
             return new __1.UnionType(p.map((op) => {
                 return new __2.LiteralType(op.name);

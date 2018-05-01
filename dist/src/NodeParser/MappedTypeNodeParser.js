@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const ts = require("typescript");
+const __1 = require("../..");
+const NodeParser_1 = require("../NodeParser");
 const ObjectType_1 = require("../Type/ObjectType");
+const _ = require("lodash");
 class MappedTypeNodeParser {
     constructor(typeChecker, childNodeParser) {
         this.typeChecker = typeChecker;
@@ -15,8 +18,39 @@ class MappedTypeNodeParser {
     }
     getProperties(node, context) {
         if (context.hasParameters()) {
-            const originalProps = (node.type && node.type.objectType) ?
-                context.getParameterProperties(node.type.objectType.typeName.text) : [];
+            let originalPropsTemp;
+            if (node.type && node.type.objectType) {
+                originalPropsTemp = context.getParameterProperties(node.type.objectType.typeName.text);
+            }
+            else if (node.type && node.type.typeArguments && node.type.typeName) {
+                if (node.type.typeArguments.length == 2) {
+                    if (node.typeParameter.constraint && node.typeParameter.constraint.type) {
+                        let OriginalArg = _.cloneDeep(context.getArguments()[0]);
+                        originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.type.typeName.text);
+                        originalPropsTemp.forEach((props) => {
+                            let subContext = new NodeParser_1.Context();
+                            subContext.pushArgument(OriginalArg);
+                            subContext.pushArgument(new __1.LiteralType(props.getName()));
+                            node.type.typeArguments.forEach((typeArg) => {
+                                subContext.pushParameter(typeArg.typeName.text);
+                            });
+                            console.log();
+                            props.setType(this.childNodeParser.createType(node.type, subContext));
+                        });
+                        console.log();
+                    }
+                    else {
+                        originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.typeName.text, false, this.childNodeParser.createType(node.type, context));
+                    }
+                }
+            }
+            else if (node.type && node.type.typeName) {
+                originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.typeName.text);
+            }
+            else {
+                originalPropsTemp = [];
+            }
+            const originalProps = originalPropsTemp;
             const toPick = (node.typeParameter && node.typeParameter.constraint &&
                 node.typeParameter.constraint.typeName) ?
                 context.getParameterProperties(node.typeParameter.constraint.typeName.text, true) :

@@ -14,7 +14,7 @@ class ObjectProperty {
         return this.type;
     }
     setType(type) {
-        return this.type = type;
+        this.type = type;
     }
     isRequired() {
         return this.required;
@@ -40,6 +40,9 @@ class ObjectType extends BaseType_1.BaseType {
     }
     getAdditionalProperties() {
         return this.additionalProperties;
+    }
+    setMaxProperties(maxProperties) {
+        this.maxProperties = maxProperties;
     }
 }
 exports.ObjectType = ObjectType;
