@@ -14,6 +14,9 @@ export class ObjectProperty {
     public getType(): BaseType {
         return this.type;
     }
+    public setType(type: BaseType): void {
+        this.type = type;
+    }
     public isRequired(): boolean {
         return this.required;
     }

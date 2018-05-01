@@ -11,3 +11,4 @@ export declare type OneOf<T> = {
 export interface MyObject {
     blah: OneOf<Test>;
 }
+

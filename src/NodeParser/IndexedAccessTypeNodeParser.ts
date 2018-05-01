@@ -3,6 +3,8 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType } from "../Type/EnumType";
+import { LiteralType } from "../Type/LiteralType";
+import { ObjectProperty } from "../..";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -15,7 +17,28 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
-        const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation((<ts.TypeQueryNode>node.objectType).exprName)!;
+
+        if (node.indexType && node.indexType.type) { //if there's a type operator in the index access: [keyof T]
+
+            let keys = this.childNodeParser.createType(node.indexType, context);
+
+            let mappedType = this.childNodeParser.createType(node.objectType, context);
+
+            let enumType =  new EnumType(
+                `indexed-type-${node.getFullStart()}`,
+                keys.getTypes().map((litType: LiteralType) => {
+                    let objProp = mappedType.properties.find((objProp: ObjectProperty) => {
+                        if (objProp.name == litType.getValue()){
+                            return true;
+                        }
+                        return false;
+                    });
+                    return objProp.type.type;
+                })
+            )
+
+            console.log("blah");
+        }
 
         if(
             // @ts-ignore
@@ -27,9 +50,9 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             // @ts-ignore
             node.objectType.typeName.text === node.indexType.type.typeName.text
         ) {
-            
+
             // @ts-ignore
-            return this.childNodeParser.createType(context.getArguments()[0], context)
+            return this.childNodeParser.createType(context.getArguments()[0], context) //When is this ever executed? T[T] ??
            // return context.getArguments()[0]
             // let ot = context.getParameterProperties(node.objectType.typeName.text)
 
@@ -45,7 +68,31 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
 
             //     })
             // )
-        } else {
+        }  else if (
+            node.objectType && node.objectType.type
+            && node.indexType && node.indexType.type
+            && node.indexType.type.typeName
+            && node.indexType.type.typeName.text
+        ) {
+            //If The object being indexed is a mapped type (SyntaxKind 173) (and not a type reference).
+            //IndexType is something like [keyof T] since indexType has .type which is T.
+            /*
+                {
+                    [K in keyof T]: Pick<T, K>
+                } [keyof T]
+            */
+           let argument = context.getArguments()[0];
+            return new EnumType(
+                `indexed-type-${node.getFullStart()}`,
+                argument.type.properties.map((property: ObjectProperty) => {
+                    let context = new Context();
+                    context.pushArgument(property.getType());
+                    return this.childNodeParser.createType(node.objectType, context);
+                })
+            )
+
+        } else if (node.objectType.exprName) {//Only works if syntaxkind of  node.objectType is typequery and has expression name
+            const symbol: ts.Symbol = this.typeChecker.getSymbolAtLocation((<ts.TypeQueryNode>node.objectType).exprName)!;
             return new EnumType(
                 `indexed-type-${node.getFullStart()}`,
                 (<any>symbol.valueDeclaration).type.elementTypes.map((memberType: ts.Node) =>

@@ -38,9 +38,11 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
+    "@types/lodash": "^4.14.108",
     "commander": "~2.15.0",
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
+    "lodash": "^4.17.10",
     "ts-node": "^5.0.1",
     "typescript": "~2.7.2"
   },

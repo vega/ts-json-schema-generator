@@ -4,6 +4,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import * as _ from 'lodash';
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -31,6 +32,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
         if (context.hasParameters()) { //At least 1 parameter.
             // @ts-ignore // have to ignore, as NodeObject is not exported from typescript at this point
 
+
+
             /*
                 In ts.MappedTypeNode, type property describes the value type of the map.
 
@@ -41,7 +44,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
                 K[P] is of type IndexedAccessType.
 
-                ts.IndexedAccessType has property "objectType" which describes the object being accessed via index.
+                ts.IndexedAccessType has property "objectType" which describes the object being accessed via index (i.e. K).
                 In most case it will be a typeReference to an interface.
 
                 If node.type is an IndexedAccessType we can safely assume that there will only be a single parameter.
@@ -51,12 +54,51 @@ export class MappedTypeNodeParser implements SubNodeParser {
             // const originalProps = (context.getParameters().length == 1 && )
 
             let originalPropsTemp;
-            if (node.type && node.type.objectType) {
+            if (node.type && node.type.objectType) { //IndexAccessType
                 originalPropsTemp = context.getParameterProperties(node.type.objectType.typeName.text);
-            } else if (node.type.kind == ts.SyntaxKind.TypeReference) {
-                //If value type of the map is not a reference then it is likely to be a premitive type such as string.
+            } else if (node.type && node.type.typeArguments && node.type.typeName) { //Reference with type arguments
 
-            } else if (node.type.kind == ts.SyntaxKind.TypeReference) {
+                /*
+                    {
+                        [K in keyof T]: Array<K>
+                    }
+                */
+
+                if (node.type.typeArguments.length == 2) {
+                    /*
+                        {
+                            [K in keyof T]: Pick<T, K>
+                        }
+                    */
+                    if (node.typeParameter.constraint && node.typeParameter.constraint.type) {
+                        let OriginalArg = _.cloneDeep(context.getArguments()[0]) //clone it
+                        originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.type.typeName.text);
+                        originalPropsTemp.forEach((props: ObjectProperty) => {
+                            let subContext = new Context();
+                            subContext.pushArgument(OriginalArg);
+                            subContext.pushArgument(new LiteralType(props.getName()))
+                            node.type.typeArguments.forEach((typeArg: ts.Node) => {
+                                subContext.pushParameter(typeArg.typeName.text);
+                            })
+                            console.log()
+                            props.setType(this.childNodeParser.createType(node.type!, subContext));
+                        })
+
+                        console.log();
+                    } else {
+                        originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text, false, this.childNodeParser.createType(node.type, context));
+                    }
+
+                }
+
+
+
+
+            } else if (node.type && node.type.typeName) { //Reference without type arguments
+
+                /*
+                    Add another else if statement checking for premitive types such as string, number, or literal
+                */
 
                 /*
                     In ts.MappedTypeNode
@@ -100,8 +142,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
             */
 
-
-
             // @ts-ignore
             const toPick : Array = (node.typeParameter && node.typeParameter.constraint &&
                     // @ts-ignore
@@ -116,6 +156,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 context.getParameterProperties(node.typeParameter.constraint.type.typeName.text, true) :
                 [];
 
+            //If node.type (The value of the map) is computed: Pick<T, K>, Array<K>
+            //This will not work
             return originalProps.filter((p: any) => {
                 // @ts-ignore // includes only included in ES2017 target, not ES2015
                 return toPick.includes(p.name);
@@ -123,6 +165,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 p.required = !node.questionToken; // this is for partial
                 return p;
             });
+
 
         } else {
             const type: any = this.typeChecker.getTypeFromTypeNode((<any>node.typeParameter.constraint));

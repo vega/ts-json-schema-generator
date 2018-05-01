@@ -52,9 +52,11 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 
 describe("valid-data", () => {
     // TODO: generics recursive
-    // assertSchema("daniel-test", "MyObject");
+    //assertSchema("daniel-test", "MyObject");
     // assertSchema("daniel-test2", "MyObject");
-    assertSchema("type-mapped-pick", 'MyObject');
+     assertSchema("type-mapped-pick", 'MyObject');
+
+
     // assertSchema("type-pick1", "MyObject");
     // assertSchema("type-pick2", "MyObject");
 

@@ -13,10 +13,6 @@ export interface Blah {
     d: string;
 }
 
-export type ASDF<T> = {
-    [P in keyof T]: string;
-}
-
 export type ISysListSort = Record<keyof ISysListDb, SortDirection>; //ISysListSort is typealiasdeclaration with parameters [K, T]
                                                                     //Record<keyof ISysListDb, SortDirection> is of kind typeAliasDeclaration and has type of TypeReference
                                                                     //In TypeReferenceParser node has 2 arguments

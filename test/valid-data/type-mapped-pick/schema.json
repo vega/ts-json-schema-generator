@@ -14,11 +14,7 @@
         },
 
         "OneOf": {
-            "additionalProperties": false,
-            "properties": {
-
-            },
-            "type": "object"
+            
         }
     }
 }

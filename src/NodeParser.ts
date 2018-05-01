@@ -43,7 +43,7 @@ export class Context {
     }
 
     //Name is a little bit confusing.
-    public getParameterProperties(typeId: string, namesOnly: boolean = false) : Array<any> {
+    public getParameterProperties(typeId: string, namesOnly: boolean = false, propertyType?: BaseType) : Array<any> {
 
         const t =
             <DefinitionType | ObjectType | UnionType | LiteralType| EnumType >this.arguments.find((v: any, i: any) => {
@@ -51,7 +51,13 @@ export class Context {
             });
 
         if(t.constructor.name === "DefinitionType") { // pick orig
-            return (namesOnly)? (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: any) => p.name):(<ObjectType>(<DefinitionType>t).getType()).getProperties()
+            if (namesOnly) {
+                return (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: any) => p.name);
+            } else if (propertyType) {
+                return (<ObjectType>(<DefinitionType>t).getType()).getProperties().map((p: ObjectProperty) => {p.setType(propertyType); return p;});
+            } else {
+                return (<ObjectType>(<DefinitionType>t).getType()).getProperties();
+            }
         } else if(t.constructor.name === "ObjectType") { // partial orig // partial to pick
             return (namesOnly)? (<ObjectType>t).getProperties().map((p: any) => p.name) : (<ObjectType>t).getProperties()
         } else if(t.constructor.name === "UnionType") { // pick, values to pic

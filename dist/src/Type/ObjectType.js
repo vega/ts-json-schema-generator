@@ -13,6 +13,9 @@ class ObjectProperty {
     getType() {
         return this.type;
     }
+    setType(type) {
+        return this.type = type;
+    }
     isRequired() {
         return this.required;
     }

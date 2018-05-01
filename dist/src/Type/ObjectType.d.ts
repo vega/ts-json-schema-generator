@@ -6,6 +6,7 @@ export declare class ObjectProperty {
     constructor(name: string, type: BaseType, required: boolean);
     getName(): string;
     getType(): BaseType;
+    setType(type: BaseType): void;
     isRequired(): boolean;
 }
 export declare class ObjectType extends BaseType {
