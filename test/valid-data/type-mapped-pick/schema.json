@@ -7,14 +7,56 @@
             "additionalProperties": false,
             "properties": {
                 "blah": {
-                    "$ref": "#/definitions/OneOf"
+                    "$ref": "#/definitions/OneOf<Test>"
                 }
             },
+            "required": [
+                "blah"
+            ],
             "type": "object"
         },
 
-        "OneOf": {
-            
+        "OneOf<Test>": {
+            "anyOf": [
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a"
+                    ],
+                    "type": "object"
+                },
+
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "b": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "b"
+                    ],
+                    "type": "object"
+                },
+
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "c": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "c"
+                    ],
+                    "type": "object"
+                }
+            ]
         }
     }
 }

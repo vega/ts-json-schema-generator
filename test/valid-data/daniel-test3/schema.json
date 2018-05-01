@@ -1,0 +1,51 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "responseType": {
+                    "$ref": "#/definitions/IRes"
+                }
+            },
+            "type": "object"
+        },
+
+        "IRes": {
+            "additionalProperties": false,
+            "properties": {
+                "lists":{
+                    "items": {
+                        "$ref": "#/definitions/ISysListDb"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "lists"
+            ],
+            "type": "object"
+        },
+
+        "ISysListDb": {
+            "additionalProperties": false,
+            "properties": {
+                "a":{
+                    "type": "string"
+                },
+                "b": {
+                    "type": "number"
+                },
+                "c": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a", "b", "c"
+            ],
+            "type": "object"
+        }
+    }
+}

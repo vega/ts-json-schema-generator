@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType } from "../Type/EnumType";
+import { UnionType } from "../Type/UnionType";
 import { LiteralType } from "../Type/LiteralType";
 import { ObjectProperty } from "../..";
 
@@ -18,17 +19,17 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
 
-        if (node.indexType && node.indexType.type) { //if there's a type operator in the index access: [keyof T]
+        if (node.indexType && node.indexType.type && node.objectType && node.objectType.type) {
+            //if there's a type operator in the key access: [keyof T]
+            //And if the object being indexed is a mapped type
 
             let keys = this.childNodeParser.createType(node.indexType, context);
 
             let mappedType = this.childNodeParser.createType(node.objectType, context);
-
-            let enumType =  new EnumType(
-                `indexed-type-${node.getFullStart()}`,
+            return new UnionType(
                 keys.getTypes().map((litType: LiteralType) => {
                     let objProp = mappedType.properties.find((objProp: ObjectProperty) => {
-                        if (objProp.name == litType.getValue()){
+                        if (objProp.getName() == litType.getValue()){
                             return true;
                         }
                         return false;
@@ -36,8 +37,6 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                     return objProp.type.type;
                 })
             )
-
-            console.log("blah");
         }
 
         if(

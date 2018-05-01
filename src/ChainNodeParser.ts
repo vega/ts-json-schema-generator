@@ -26,7 +26,6 @@ export class ChainNodeParser implements SubNodeParser {
     private getNodeParser(node: ts.Node, context: Context): SubNodeParser {
         for (const nodeParser of this.nodeParsers) {
             if (nodeParser.supportsNode(node)) {
-                console.log(node.kind);
                 return nodeParser;
             }
         }

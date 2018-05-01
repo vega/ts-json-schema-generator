@@ -7,18 +7,53 @@
             "additionalProperties": false,
             "properties": {
                 "filters": {
-                    "$ref": "#/definitions/OneOf"
+                    "$ref": "#/definitions/OneOf<ISysListDb>"
                 }
             },
             "type": "object"
         },
 
-        "OneOf": {
-            "additionalProperties": false,
-            "properties": {
-                
-            },
-            "type": "object"
+        "OneOf<ISysListDb>": {
+            "anyOf": [
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "a"
+                    ],
+                    "type": "object"
+                },
+
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "b": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "b"
+                    ],
+                    "type": "object"
+                },
+
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "c": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "c"
+                    ],
+                    "type": "object"
+                }
+            ]
         }
     }
 }
