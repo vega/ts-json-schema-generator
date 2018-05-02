@@ -87,11 +87,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
                                 // @ts-ignore
                                 subContext.pushParameter(typeArg.typeName.text);
                             })
-                            console.log()
+                            // @ts-ignore
                             props.setType(this.childNodeParser.createType(node.type!, subContext));
                         })
 
-                        console.log();
                     } else {
                         // @ts-ignore
                         originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text, false, this.childNodeParser.createType(node.type, context));
@@ -115,7 +114,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     node.typeParameter.name is P
                     and node.typeParameter.constraint.typeName is K.
                 */
-                    // @ts-ignore
+                // @ts-ignore
                 originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text);
             } else { originalPropsTemp = []; }
 
