@@ -38,6 +38,8 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
+    "@nightlife/nl-shared-types": "^4.0.16",
+    "@nightlife/nl-skeletor-rpc": "^6.0.7",
     "@types/lodash": "^4.14.108",
     "commander": "~2.15.0",
     "glob": "~7.1.2",

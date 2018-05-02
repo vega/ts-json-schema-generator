@@ -51,6 +51,7 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 
 describe("valid-data", () => {
     // TODO: generics recursive
+    assertSchema("daniel-test4", "list.get_lists.IReq")
     assertSchema("daniel-test", "MyObject");
     assertSchema("daniel-test2", "MyObject");
     assertSchema("daniel-test3", "MyObject");

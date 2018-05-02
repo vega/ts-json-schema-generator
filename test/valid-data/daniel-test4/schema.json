@@ -1,0 +1,278 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "list.get_lists.IReq": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "sort_by": {
+                    "$ref": "#/definitions/list.get_lists.ISysListSort"
+                },
+                "system_id": {
+                    "$ref": "#/definitions/SystemId"
+                },
+                "offset": {
+                    "type": "number"
+                },
+                "limit": {
+                    "type": "number"
+                },
+                "filters": {
+                    "$ref": "#/definitions/IFilters<list.get_lists.ISysListDb>"
+                },
+                "responseType": {
+                    "$ref": "#/definitions/list.get_lists.IRes"
+                }
+            },
+            "required": [
+                "system_id"
+            ]
+        },
+        "list.get_lists.IRes": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/list.get_lists.ISysListDb"
+                    }
+                }
+            },
+            "required": [
+                "lists"
+            ]
+        },
+        "list.get_lists.ISysListDb": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "friendly_name": {
+                    "type": "string"
+                },
+                "is_suggestion": {
+                    "type": "boolean"
+                },
+                "is_in_selset": {
+                    "type": "boolean"
+                },
+                "is_programmed": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "is_loadable": {
+                    "type": "boolean"
+                },
+                "is_schedulable": {
+                    "type": "boolean"
+                },
+                "num_songs": {
+                    "type": "number"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "group": {
+                    "type": "string"
+                },
+                "is_special": {
+                    "type": "boolean"
+                },
+                "slot": {
+                    "type": "number"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "list_id": {
+                    "type": "string"
+                },
+                "system_id": {
+                    "$ref": "#/definitions/SystemId"
+                },
+                "syslist_id": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "created_at",
+                "description",
+                "friendly_name",
+                "group",
+                "is_active",
+                "is_in_selset",
+                "is_loadable",
+                "is_programmed",
+                "is_schedulable",
+                "is_special",
+                "is_suggestion",
+                "list_id",
+                "num_songs",
+                "slot",
+                "syslist_id",
+                "system_id",
+                "type",
+                "updated_at"
+            ]
+        },
+        "SystemId": {
+            "type": "string"
+        },
+        "IFilters<list.get_lists.ISysListDb>": {
+            "type": "object",
+            "properties": {
+                "syslist_id": {
+                    "type": "string"
+                },
+                "system_id": {
+                    "$ref": "#/definitions/SystemId"
+                },
+                "list_id": {
+                    "type": "string"
+                },
+                "is_active": {
+                    "type": "boolean"
+                },
+                "slot": {
+                    "type": "number"
+                },
+                "is_special": {
+                    "type": "boolean"
+                },
+                "group": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "num_songs": {
+                    "type": "number"
+                },
+                "is_schedulable": {
+                    "type": "boolean"
+                },
+                "is_loadable": {
+                    "type": "boolean"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "is_programmed": {
+                    "type": "boolean"
+                },
+                "is_in_selset": {
+                    "type": "boolean"
+                },
+                "is_suggestion": {
+                    "type": "boolean"
+                },
+                "friendly_name": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "syslist_id",
+                "system_id",
+                "list_id",
+                "is_active",
+                "slot",
+                "is_special",
+                "group",
+                "description",
+                "num_songs",
+                "is_schedulable",
+                "is_loadable",
+                "type",
+                "is_programmed",
+                "is_in_selset",
+                "is_suggestion",
+                "friendly_name",
+                "created_at",
+                "updated_at"
+            ],
+            "additionalProperties": false
+        },
+        "list.get_lists.ISysListSort": {
+            "type": "object",
+            "properties": {
+                "syslist_id": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "system_id": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "list_id": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_active": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "slot": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_special": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "group": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "description": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "num_songs": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_schedulable": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_loadable": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "type": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_programmed": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_in_selset": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "is_suggestion": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "friendly_name": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "created_at": {
+                    "$ref": "#/definitions/SortDirection"
+                },
+                "updated_at": {
+                    "$ref": "#/definitions/SortDirection"
+                }
+            },
+            "additionalProperties": false
+        },
+        "SortDirection": {
+            "type": "string",
+            "enum": [
+                "ASC",
+                "DESC"
+            ]
+        }
+    },
+    "$ref": "#/definitions/list.get_lists.IReq"
+}
