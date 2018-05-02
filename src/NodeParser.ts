@@ -118,5 +118,5 @@ export class Context {
 }
 
 export interface NodeParser {
-    createType(node: ts.Node, context: Context_cpy): BaseType;
+    createType(node: ts.Node, context: Context): BaseType;
 }
