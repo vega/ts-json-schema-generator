@@ -1,1 +1,1 @@
-{"version":3,"file":"BooleanType.js","sourceRoot":"/src/","sources":["src/Type/BooleanType.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,iBAAyB,SAAQ,6BAAa;IACnC,KAAK;QACR,OAAO,SAAS,CAAC;IACrB,CAAC;CACJ;AAJD,kCAIC"}
+{"version":3,"file":"BooleanType.js","sourceRoot":"/src/","sources":["src/Type/BooleanType.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,iBAAyB,SAAQ,6BAAa;IACnC,KAAK;QACR,MAAM,CAAC,SAAS,CAAC;IACrB,CAAC;CACJ;AAJD,kCAIC"}

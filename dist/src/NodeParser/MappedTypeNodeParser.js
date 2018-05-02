@@ -34,10 +34,8 @@ class MappedTypeNodeParser {
                             node.type.typeArguments.forEach((typeArg) => {
                                 subContext.pushParameter(typeArg.typeName.text);
                             });
-                            console.log();
                             props.setType(this.childNodeParser.createType(node.type, subContext));
                         });
-                        console.log();
                     }
                     else {
                         originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.typeName.text, false, this.childNodeParser.createType(node.type, context));

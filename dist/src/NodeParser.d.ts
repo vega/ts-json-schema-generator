@@ -12,7 +12,7 @@ export declare class Context {
     getParameters(): string[];
     hasParameters(): boolean;
     getReference(): ts.Node | undefined;
-    getParameterProperties(typeId: string, namesOnly?: boolean, propertyType?: BaseType): Array<any>;
+    getParameterProperties(typeId: string, namesOnly?: boolean): Array<any>;
 }
 export interface NodeParser {
     createType(node: ts.Node, context: Context): BaseType;

@@ -1,1 +1,1 @@
-{"version":3,"file":"NumberType.js","sourceRoot":"/src/","sources":["src/Type/NumberType.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,gBAAwB,SAAQ,6BAAa;IAClC,KAAK;QACR,OAAO,QAAQ,CAAC;IACpB,CAAC;CACJ;AAJD,gCAIC"}
+{"version":3,"file":"NumberType.js","sourceRoot":"/src/","sources":["src/Type/NumberType.ts"],"names":[],"mappings":";;AAAA,mDAAgD;AAEhD,gBAAwB,SAAQ,6BAAa;IAClC,KAAK;QACR,MAAM,CAAC,QAAQ,CAAC;IACpB,CAAC;CACJ;AAJD,gCAIC"}

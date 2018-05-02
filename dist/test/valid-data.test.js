@@ -33,6 +33,7 @@ function assertSchema(name, type, only = false) {
     });
 }
 describe("valid-data", () => {
+    assertSchema("daniel-test4", "list.get_lists.IReq");
     assertSchema("daniel-test", "MyObject");
     assertSchema("daniel-test2", "MyObject");
     assertSchema("daniel-test3", "MyObject");
