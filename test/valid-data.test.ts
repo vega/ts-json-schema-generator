@@ -7,6 +7,7 @@ import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
+
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator = new Ajv();
@@ -29,10 +30,12 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 
             expose: "export",
             topRef: true,
-            jsDoc: "none",
+            jsDoc: "extended",
+            sortProps: true
         };
 
         const program: ts.Program = createProgram(config);
+
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
@@ -51,7 +54,7 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 
 describe("valid-data", () => {
     // TODO: generics recursive
-    assertSchema("daniel-test4", "list.get_lists.IReq")
+    assertSchema("daniel-test4", "nl_sysconf.list.get_lists.IReq")
     assertSchema("daniel-test", "MyObject");
     assertSchema("daniel-test2", "MyObject");
     assertSchema("daniel-test3", "MyObject");

@@ -5,6 +5,7 @@
 
         "ISysListSort": {
             "additionalProperties": false,
+            "description": "Construct a type with a set of properties K of type T",
             "properties": {
                 "a": {
                     "$ref": "#/definitions/SortDirection"

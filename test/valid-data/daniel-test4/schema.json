@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-        "list.get_lists.IReq": {
+        "nl_sysconf.list.get_lists.IReq": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "sort_by": {
-                    "$ref": "#/definitions/list.get_lists.ISysListSort"
+                    "$ref": "#/definitions/nl_sysconf.list.get_lists.ISysListSort"
                 },
                 "system_id": {
                     "$ref": "#/definitions/SystemId"
@@ -18,24 +18,24 @@
                     "type": "number"
                 },
                 "filters": {
-                    "$ref": "#/definitions/IFilters<list.get_lists.ISysListDb>"
+                    "$ref": "#/definitions/IFilters<nl_sysconf.list.get_lists.ISysListDb>"
                 },
                 "responseType": {
-                    "$ref": "#/definitions/list.get_lists.IRes"
+                    "$ref": "#/definitions/nl_sysconf.list.get_lists.IRes"
                 }
             },
             "required": [
                 "system_id"
             ]
         },
-        "list.get_lists.IRes": {
+        "nl_sysconf.list.get_lists.IRes": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "lists": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/list.get_lists.ISysListDb"
+                        "$ref": "#/definitions/nl_sysconf.list.get_lists.ISysListDb"
                     }
                 }
             },
@@ -43,7 +43,7 @@
                 "lists"
             ]
         },
-        "list.get_lists.ISysListDb": {
+        "nl_sysconf.list.get_lists.ISysListDb": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -54,51 +54,66 @@
                     "type": "string"
                 },
                 "friendly_name": {
+                    "description": "Friendly Name",
                     "type": "string"
                 },
                 "is_suggestion": {
+                    "description": "Is Suggestionable",
                     "type": "boolean"
                 },
                 "is_in_selset": {
+                    "description": "Is list loadable",
                     "type": "boolean"
                 },
                 "is_programmed": {
+                    "description": "Is list loadable",
                     "type": "boolean"
                 },
                 "type": {
+                    "description": "List Type",
                     "type": "string"
                 },
                 "is_loadable": {
+                    "description": "Is list loadable",
                     "type": "boolean"
                 },
                 "is_schedulable": {
+                    "description": "Is list schedulable",
                     "type": "boolean"
                 },
                 "num_songs": {
+                    "description": "Number of songs in the list",
                     "type": "number"
                 },
                 "description": {
+                    "description": "Is list loadable",
                     "type": "string"
                 },
                 "group": {
+                    "description": "Is list loadable",
                     "type": "string"
                 },
                 "is_special": {
+                    "description": "Is Special",
                     "type": "boolean"
                 },
                 "slot": {
+                    "description": "...",
                     "type": "number"
                 },
                 "is_active": {
+                    "description": "Is Active",
                     "type": "boolean"
                 },
                 "list_id": {
+                    "description": "List ID",
                     "type": "string"
                 },
                 "system_id": {
                     "$ref": "#/definitions/SystemId"
                 },
                 "syslist_id": {
+                    "description": "Syslist ID",
                     "type": "string"
                 }
             },
@@ -124,63 +139,79 @@
             ]
         },
         "SystemId": {
+            "pattern": "^[\\w ]{4,10}$",
             "type": "string"
         },
-        "IFilters<list.get_lists.ISysListDb>": {
+        "IFilters<nl_sysconf.list.get_lists.ISysListDb>": {
             "type": "object",
             "properties": {
-                "syslist_id": {
+                "created_at": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "friendly_name": {
+                    "description": "Friendly Name",
+                    "type": "string"
+                },
+                "is_suggestion": {
+                    "description": "Is Suggestionable",
+                    "type": "boolean"
+                },
+                "is_in_selset": {
+                    "description": "Is list loadable",
+                    "type": "boolean"
+                },
+                "is_programmed": {
+                    "description": "Is list loadable",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "List Type",
+                    "type": "string"
+                },
+                "is_loadable": {
+                    "description": "Is list loadable",
+                    "type": "boolean"
+                },
+                "is_schedulable": {
+                    "description": "Is list schedulable",
+                    "type": "boolean"
+                },
+                "num_songs": {
+                    "description": "Number of songs in the list",
+                    "type": "number"
+                },
+                "description": {
+                    "description": "Is list loadable",
+                    "type": "string"
+                },
+                "group": {
+                    "description": "Is list loadable",
+                    "type": "string"
+                },
+                "is_special": {
+                    "description": "Is Special",
+                    "type": "boolean"
+                },
+                "slot": {
+                    "description": "...",
+                    "type": "number"
+                },
+                "is_active": {
+                    "description": "Is Active",
+                    "type": "boolean"
+                },
+                "list_id": {
+                    "description": "List ID",
                     "type": "string"
                 },
                 "system_id": {
                     "$ref": "#/definitions/SystemId"
                 },
-                "list_id": {
-                    "type": "string"
-                },
-                "is_active": {
-                    "type": "boolean"
-                },
-                "slot": {
-                    "type": "number"
-                },
-                "is_special": {
-                    "type": "boolean"
-                },
-                "group": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "num_songs": {
-                    "type": "number"
-                },
-                "is_schedulable": {
-                    "type": "boolean"
-                },
-                "is_loadable": {
-                    "type": "boolean"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "is_programmed": {
-                    "type": "boolean"
-                },
-                "is_in_selset": {
-                    "type": "boolean"
-                },
-                "is_suggestion": {
-                    "type": "boolean"
-                },
-                "friendly_name": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "updated_at": {
+                "syslist_id": {
+                    "description": "Syslist ID",
                     "type": "string"
                 }
             },
@@ -206,8 +237,9 @@
             ],
             "additionalProperties": false
         },
-        "list.get_lists.ISysListSort": {
+        "nl_sysconf.list.get_lists.ISysListSort": {
             "type": "object",
+            "description": "Make all properties in T optional",
             "properties": {
                 "syslist_id": {
                     "$ref": "#/definitions/SortDirection"
@@ -274,5 +306,5 @@
             ]
         }
     },
-    "$ref": "#/definitions/list.get_lists.IReq"
+    "$ref": "#/definitions/nl_sysconf.list.get_lists.IReq"
 }

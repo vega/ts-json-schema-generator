@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType, ObjectType, UnionType, LiteralType, EnumType, ObjectProperty } from "..";
 import { AliasType } from "./Type/AliasType";
+import { AnnotatedType } from "./Type/AnnotatedType";
 
 export class Context {
     private arguments: BaseType[] = [];
@@ -60,7 +61,7 @@ export class Context {
             // @ts-ignore
             t_cpy.getType != undefined &&
             // @ts-ignore
-            (t_cpy.getType() instanceof AliasType)
+            (t_cpy.getType() instanceof AliasType || t_cpy.getType() instanceof AnnotatedType)
 
         ) {
             // @ts-ignore
@@ -106,6 +107,12 @@ export class Context {
                             }), false)
                         );
         } else if (t_cpy.constructor.name === "AliasType") {
+            if (namesOnly) {
+                return (<ObjectType>(<DefinitionType>t_cpy).getType()).getProperties().map((p: any) => p.name);
+            } else {
+                return (<ObjectType>(<DefinitionType>t_cpy).getType()).getProperties();
+            }
+        } else if (t_cpy.constructor.name === "AnnotatedType") {
             if (namesOnly) {
                 return (<ObjectType>(<DefinitionType>t_cpy).getType()).getProperties().map((p: any) => p.name);
             } else {
