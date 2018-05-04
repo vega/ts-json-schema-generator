@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const __1 = require("..");
 const AliasType_1 = require("./Type/AliasType");
+const AnnotatedType_1 = require("./Type/AnnotatedType");
 class Context {
     constructor(reference) {
         this.arguments = [];
@@ -39,7 +40,7 @@ class Context {
         });
         let t_cpy = t;
         while (t_cpy.getType != undefined &&
-            (t_cpy.getType() instanceof AliasType_1.AliasType)) {
+            (t_cpy.getType() instanceof AliasType_1.AliasType || t_cpy.getType() instanceof AnnotatedType_1.AnnotatedType)) {
             t_cpy = t_cpy.getType();
         }
         if (t_cpy.constructor.name === "DefinitionType") {
@@ -82,6 +83,14 @@ class Context {
                 }), false));
         }
         else if (t_cpy.constructor.name === "AliasType") {
+            if (namesOnly) {
+                return t_cpy.getType().getProperties().map((p) => p.name);
+            }
+            else {
+                return t_cpy.getType().getProperties();
+            }
+        }
+        else if (t_cpy.constructor.name === "AnnotatedType") {
             if (namesOnly) {
                 return t_cpy.getType().getProperties().map((p) => p.name);
             }

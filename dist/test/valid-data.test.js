@@ -20,7 +20,8 @@ function assertSchema(name, type, only = false) {
             type: type,
             expose: "export",
             topRef: true,
-            jsDoc: "none",
+            jsDoc: "extended",
+            sortProps: true
         };
         const program = program_1.createProgram(config);
         const generator = new SchemaGenerator_1.SchemaGenerator(program, parser_1.createParser(program, config), formatter_1.createFormatter(config));
@@ -33,7 +34,7 @@ function assertSchema(name, type, only = false) {
     });
 }
 describe("valid-data", () => {
-    assertSchema("daniel-test4", "list.get_lists.IReq");
+    assertSchema("daniel-test4", "nl_sysconf.list.get_lists.IReq");
     assertSchema("daniel-test", "MyObject");
     assertSchema("daniel-test2", "MyObject");
     assertSchema("daniel-test3", "MyObject");
