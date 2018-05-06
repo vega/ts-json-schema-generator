@@ -23,19 +23,8 @@
         "sourceRoot": "src",
         "outDir": "dist"
     },
-    "include": [
-        "index.ts",
+    "files": [
         "ts-json-schema-generator.ts",
-        "factory/**/*.ts",
-        "src/**/*.ts",
-        "test/*.ts",
-        "test/unit/**/*.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        "test/valid-data",
-        "test/invalid-data"
-    ],
-    "compileOnSave": true,
-    "buildOnSave": false
+        "index.ts"
+    ]
 }

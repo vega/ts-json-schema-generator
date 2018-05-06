@@ -3,8 +3,9 @@ node_js:
   - '6'
   - '8'
 script:
-  - npm run lint
-  - npm run test
+  - yarn lint
+  - yarn test
+cache: yarn
 deploy:
   provider: npm
   skip_cleanup: true

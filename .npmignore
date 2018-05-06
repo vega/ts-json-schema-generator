@@ -2,7 +2,6 @@ node_modules/
 src/
 factory/
 test/
-dist/test/
 
 index.ts
 ts-json-schema-generator.ts
