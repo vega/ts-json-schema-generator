@@ -1,24 +1,24 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "b": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "c": {
-          "type": [
-            "string",
-            "null"
-          ]
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "b": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "c": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "type": "object"
-    }
-  }
+    },
+    "$ref": "#/definitions/MyObject"
 }

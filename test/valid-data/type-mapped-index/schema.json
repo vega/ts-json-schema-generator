@@ -1,24 +1,24 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "bar": {
-          "enum": [
-            "baz"
-          ],
-          "type": "string"
-        },
-        "foo": {
-          "enum": [
-            123
-          ],
-          "type": "number"
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "foo": {
+                    "type": "number",
+                    "enum": [
+                        123
+                    ]
+                },
+                "bar": {
+                    "type": "string",
+                    "enum": [
+                        "baz"
+                    ]
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "type": "object"
-    }
-  }
+    },
+    "$ref": "#/definitions/MyObject"
 }

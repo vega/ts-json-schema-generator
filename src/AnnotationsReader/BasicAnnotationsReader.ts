@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { Annotations } from "../Type/AnnotatedType";
+import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
     private static textTags: string[] = [
@@ -35,7 +36,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     ];
 
     public getAnnotations(node: ts.Node): Annotations | undefined {
-        const symbol: ts.Symbol = (node as any).symbol;
+        const symbol = symbolAtNode(node);
         if (!symbol) {
             return undefined;
         }

@@ -1,24 +1,30 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "a": {
-          "enum": ["a"],
-          "type": "string"
-        },
-        "b": {
-          "enum": ["b"],
-          "type": "string"
-        },
-        "c": {
-          "enum": ["c"],
-          "type": "string"
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "string",
+                    "enum": [
+                        "a"
+                    ]
+                },
+                "b": {
+                    "type": "string",
+                    "enum": [
+                        "b"
+                    ]
+                },
+                "c": {
+                    "type": "string",
+                    "enum": [
+                        "c"
+                    ]
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "type": "object"
-    }
-  }
+    },
+    "$ref": "#/definitions/MyObject"
 }

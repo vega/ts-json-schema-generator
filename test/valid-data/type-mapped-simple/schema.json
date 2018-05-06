@@ -1,18 +1,18 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-06/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "bar": {
-          "type": "boolean"
-        },
-        "foo": {
-          "type": "boolean"
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "foo": {
+                    "type": "boolean"
+                },
+                "bar": {
+                    "type": "boolean"
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "type": "object"
-    }
-  }
+    },
+    "$ref": "#/definitions/MyObject"
 }

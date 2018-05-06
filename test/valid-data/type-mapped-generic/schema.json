@@ -1,37 +1,41 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "definitions": {
-    "MyObject": {
-      "$ref": "#/definitions/NullableAndPartial<SomeInterface>"
-    },
-    "NullableAndPartial<SomeInterface>": {
-      "additionalProperties": false,
-      "properties": {
-        "bar": {
-          "anyOf": [
-            {
-              "enum": ["bar"],
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "$ref": "#/definitions/NullableAndPartial<SomeInterface>"
         },
-        "foo": {
-          "anyOf": [
-            {
-              "enum": [123],
-              "type": "number"
+        "NullableAndPartial<SomeInterface>": {
+            "type": "object",
+            "properties": {
+                "foo": {
+                    "anyOf": [
+                        {
+                            "type": "number",
+                            "enum": [
+                                123
+                            ]
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "bar": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "enum": [
+                                "bar"
+                            ]
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
             },
-            {
-              "type": "null"
-            }
-          ]
+            "additionalProperties": false
         }
-      },
-      "type": "object"
-    }
-  }
+    },
+    "$ref": "#/definitions/MyObject"
 }

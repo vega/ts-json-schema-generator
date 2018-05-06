@@ -28,9 +28,11 @@
         "index.ts"
     ],
     "include": [
-        "*.ts",
-        "src/**/*.ts",
-        "factory/**/*.ts",
-        "test/**.ts"
+        "./src/**/*.ts",
+        "./factory/**/*.ts",
+        "./test/**.ts"
+    ],
+    "exclude": [
+        "dist"
     ]
 }

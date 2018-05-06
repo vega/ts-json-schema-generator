@@ -1,15 +1,12 @@
-import { uniqueArray } from "./uniqueArray";
-import { derefType } from "./derefType";
-
-import { BaseType } from "../Type/BaseType";
-import { LiteralType, LiteralValue } from "../Type/LiteralType";
-
-import { IntersectionType } from "../Type/IntersectionType";
-import { UnionType } from "../Type/UnionType";
-
-import { TupleType } from "../Type/TupleType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { AnyType } from "../Type/AnyType";
+import { BaseType } from "../Type/BaseType";
+import { IntersectionType } from "../Type/IntersectionType";
+import { LiteralType, LiteralValue } from "../Type/LiteralType";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { TupleType } from "../Type/TupleType";
+import { UnionType } from "../Type/UnionType";
+import { derefType } from "./derefType";
+import { uniqueArray } from "./uniqueArray";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
     const values = types.map((type: LiteralType) => type.getValue());

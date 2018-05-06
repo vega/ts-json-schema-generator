@@ -6,7 +6,8 @@ import { Schema } from "./Schema/Schema";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
 import { TypeFormatter } from "./TypeFormatter";
-import {StringMap} from "./Utils/StringMap";
+import { StringMap } from "./Utils/StringMap";
+import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
     public constructor(
@@ -63,7 +64,7 @@ export class SchemaGenerator {
     }
 
     private isExportType(node: ts.Node): boolean {
-        const localSymbol: ts.Symbol = (node as any).localSymbol;
+        const localSymbol = localSymbolAtNode(node);
         return localSymbol ? "exportSymbol" in localSymbol : false;
     }
     private isGenericType(node: ts.TypeAliasDeclaration): boolean {
@@ -73,7 +74,7 @@ export class SchemaGenerator {
         );
     }
     private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
-        const symbol: ts.Symbol = (node as any).symbol;
+        const symbol = symbolAtNode(node)!;
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
 

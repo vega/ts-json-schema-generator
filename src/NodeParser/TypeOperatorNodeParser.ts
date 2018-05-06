@@ -1,8 +1,8 @@
 import * as ts from "typescript";
-import { UnionType } from "../..";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { UnionType } from "../Type/UnionType";
 import { getTypeKeys } from "../Utils/typeKeys";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
