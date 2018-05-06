@@ -1,7 +1,7 @@
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { UndefinedType } from "../Type/UndefinedType";
-import { BaseType } from "../Type/BaseType";
 import { Definition } from "../Schema/Definition";
+import { SubTypeFormatter } from "../SubTypeFormatter";
+import { BaseType } from "../Type/BaseType";
+import { UndefinedType } from "../Type/UndefinedType";
 
 export class UndefinedTypeFormatter implements SubTypeFormatter {
     public supportsType(type: UndefinedType): boolean {

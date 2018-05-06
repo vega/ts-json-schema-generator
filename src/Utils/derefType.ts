@@ -1,8 +1,8 @@
-import { BaseType } from "../Type/BaseType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { DefinitionType } from "../Type/DefinitionType";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
+import { BaseType } from "../Type/BaseType";
+import { DefinitionType } from "../Type/DefinitionType";
+import { ReferenceType } from "../Type/ReferenceType";
 
 export function derefType(type: BaseType): BaseType {
     if (

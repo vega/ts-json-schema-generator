@@ -39,11 +39,12 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
             createFormatter(config),
         );
 
+        const schema = generator.createSchema(type);
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(type)));
+        const actual: any = JSON.parse(JSON.stringify(schema));
 
-        // uncomment to write tests
-        // writeFileSync(resolve(`${basePath}/${name}/schema.json`), JSON.stringify(actual, null, 4), "utf8");
+        // uncomment to write test files
+        // writeFileSync(resolve(`${basePath}/${name}/schema.json`), JSON.stringify(schema, null, 4), "utf8");
 
         assert.isObject(actual);
         assert.deepEqual(actual, expected);

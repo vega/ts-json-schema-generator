@@ -1,6 +1,6 @@
 import * as ts from "typescript";
-import { BaseType } from "./Type/BaseType";
 import { LogicError } from "./Error/LogicError";
+import { BaseType } from "./Type/BaseType";
 
 export class Context {
     private arguments: BaseType[] = [];
