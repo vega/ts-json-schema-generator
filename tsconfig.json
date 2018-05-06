@@ -26,5 +26,11 @@
     "files": [
         "ts-json-schema-generator.ts",
         "index.ts"
+    ],
+    "include": [
+        "*.ts",
+        "src/**/*.ts",
+        "factory/**/*.ts",
+        "test/**.ts"
     ]
 }
