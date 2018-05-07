@@ -1,8 +1,8 @@
 import { AnyType } from "../Type/AnyType";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
-import { LiteralType, LiteralValue } from "../Type/LiteralType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { LiteralType } from "../Type/LiteralType";
+import { ObjectType } from "../Type/ObjectType";
 import { TupleType } from "../Type/TupleType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "./derefType";

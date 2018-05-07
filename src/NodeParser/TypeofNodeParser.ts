@@ -1,4 +1,5 @@
 import * as ts from "typescript";
+import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
@@ -19,6 +20,12 @@ export class TypeofNodeParser implements SubNodeParser {
 
         const valueDec = (<any>symbol.valueDeclaration);
 
-        return this.childNodeParser.createType(valueDec.type ? valueDec.type : valueDec.initializer, context);
+        if (valueDec.type) {
+            return this.childNodeParser.createType(valueDec.type, context);
+        } else if (valueDec.initializer) {
+            return this.childNodeParser.createType(valueDec.initializer, context);
+        } else {
+            throw new LogicError(`Invalid type query "${valueDec.getFullText()}"`);
+        }
     }
 }

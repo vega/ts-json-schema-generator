@@ -7,11 +7,9 @@
         {
             "type": "node",
             "request": "attach",
-            "name": "Attach to Process",
-            "port": 19248,
-            "outFiles": [],
-            "protocol": "inspector",
-            "sourceMaps": true
+            "name": "Attach",
+            "port": 9229,
+            "protocol": "inspector"
         }
     ]
 }

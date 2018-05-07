@@ -92,5 +92,6 @@ export * from "./src/NodeParser/IntersectionNodeParser";
 export * from "./src/NodeParser/UnionNodeParser";
 export * from "./src/NodeParser/TupleNodeParser";
 export * from "./src/NodeParser/AnnotatedNodeParser";
+export * from "./src/NodeParser/CallExpressionParser";
 
 export * from "./src/SchemaGenerator";

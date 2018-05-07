@@ -65,7 +65,7 @@
     "watch": "tsc -w",
     "lint": "tslint -p .",
     "test": "jest test/ --verbose",
-    "debug": "ts-node --inspect=19248 --debug-brk ts-json-schema-generator.ts",
+    "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
     "run": "ts-node ts-json-schema-generator.ts"
   },
   "jest": {
