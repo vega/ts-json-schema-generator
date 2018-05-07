@@ -67,6 +67,7 @@ describe("valid-data", () => {
     assertSchema("structure-private", "MyObject");
     assertSchema("structure-anonymous", "MyObject");
     assertSchema("structure-recursion", "MyObject");
+    assertSchema("structure-recursion-optional-children", "MyObject");
     assertSchema("structure-extra-props", "MyObject");
 
     assertSchema("enums-string", "Enum");
