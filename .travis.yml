@@ -16,3 +16,4 @@ deploy:
   on:
     tags: true
     repo: vega/ts-json-schema-generator
+    node: '8'
