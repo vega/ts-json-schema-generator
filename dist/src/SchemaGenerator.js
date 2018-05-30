@@ -55,7 +55,7 @@ class SchemaGenerator {
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
     getRootTypeDefinition(rootType) {
-        return this.typeFormatter.getDefinition(rootType);
+        return rootType instanceof DefinitionType_1.DefinitionType ? { allOf: [this.typeFormatter.getDefinition(rootType)] } : this.typeFormatter.getDefinition(rootType);
     }
     getRootChildDefinitions(rootType) {
         return this.typeFormatter.getChildren(rootType)

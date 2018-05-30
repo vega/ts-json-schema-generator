@@ -34,10 +34,10 @@ function assertSchema(name, type, only = false) {
     });
 }
 describe("valid-data", () => {
-    assertSchema("daniel-test4", "nl_sysconf.list.get_lists.IReq");
-    assertSchema("daniel-test", "MyObject");
-    assertSchema("daniel-test2", "MyObject");
-    assertSchema("daniel-test3", "MyObject");
+    assertSchema("custom-tests/root-definition-type", "IStuff");
+    assertSchema("custom-tests/oneof", "MyObject");
+    assertSchema("custom-tests/record-union", "MyObject");
+    assertSchema("custom-tests/extended-interface-typearg", "MyObject");
     assertSchema("type-mapped-pick", 'MyObject');
     assertSchema("type-pick1", "MyObject");
     assertSchema("type-pick2", "MyObject");
