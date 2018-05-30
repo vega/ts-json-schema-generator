@@ -1,5 +1,7 @@
 {
-    "$ref": "#/definitions/MyObject",
+    "allOf": [
+        {"$ref": "#/definitions/MyObject"}
+    ],
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 

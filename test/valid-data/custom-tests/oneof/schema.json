@@ -1,19 +1,21 @@
 {
-    "$ref": "#/definitions/MyObject",
+    "allOf": [
+        {"$ref": "#/definitions/MyObject"}
+    ],
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 
         "MyObject": {
             "additionalProperties": false,
             "properties": {
-                "filters": {
-                    "$ref": "#/definitions/OneOf<ISysListDb>"
+                "OneOfStuff": {
+                    "$ref": "#/definitions/OneOf<IStuff>"
                 }
             },
             "type": "object"
         },
 
-        "OneOf<ISysListDb>": {
+        "OneOf<IStuff>": {
             "anyOf": [
                 {
                     "additionalProperties": false,

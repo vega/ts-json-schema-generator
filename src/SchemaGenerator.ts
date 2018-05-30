@@ -78,7 +78,8 @@ export class SchemaGenerator {
     }
 
     private getRootTypeDefinition(rootType: BaseType): Definition {
-        return this.typeFormatter.getDefinition(rootType);
+        //  Wrap a top level $ref with allOf
+        return rootType instanceof DefinitionType ? {allOf: [this.typeFormatter.getDefinition(rootType)]} : this.typeFormatter.getDefinition(rootType);
     }
     private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
         return this.typeFormatter.getChildren(rootType)

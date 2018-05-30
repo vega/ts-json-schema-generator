@@ -1,4 +1,7 @@
 {
+    "allOf": [
+        {"$ref": "#/definitions/nl_sysconf.list.get_lists.IReq"}
+    ],
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "nl_sysconf.list.get_lists.IReq": {
@@ -305,6 +308,5 @@
                 "DESC"
             ]
         }
-    },
-    "$ref": "#/definitions/nl_sysconf.list.get_lists.IReq"
+    }
 }

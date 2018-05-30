@@ -1,0 +1,32 @@
+{
+    "$schema":"http://json-schema.org/draft-06/schema#",
+    "definitions":{
+       "IStuff":{
+          "type":"object",
+          "additionalProperties":false,
+          "properties":{
+             "b":{
+                "$ref":"#/definitions/IInnerStuff"
+             }
+          },
+          "required":[
+             "b"
+          ]
+       },
+       "IInnerStuff":{
+          "type":"object",
+          "properties":{
+             "a":{
+                "type":"string"
+             }
+          },
+          "required":[
+             "a"
+          ],
+          "additionalProperties":false
+       }
+    },
+    "allOf" : [
+        {"$ref": "#/definitions/IStuff"}
+    ]
+ }
