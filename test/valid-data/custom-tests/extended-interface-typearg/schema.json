@@ -20,7 +20,7 @@
             "properties": {
                 "lists":{
                     "items": {
-                        "$ref": "#/definitions/ISysListDb"
+                        "$ref": "#/definitions/IStuff"
                     },
                     "type": "array"
                 }
@@ -31,7 +31,7 @@
             "type": "object"
         },
 
-        "ISysListDb": {
+        "IStuff": {
             "additionalProperties": false,
             "properties": {
                 "a":{

@@ -1,5 +1,5 @@
 
-export interface ISysListDb {
+export interface IStuff {
     a: string;
     b: number;
     c: string;
@@ -7,7 +7,7 @@ export interface ISysListDb {
 
 
 export interface IListsable {
-    lists: Array<ISysListDb>;
+    lists: Array<IStuff>;
 }
 
 export interface IRequestParams<T> {
