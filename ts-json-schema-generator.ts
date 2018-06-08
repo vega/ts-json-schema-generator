@@ -43,7 +43,6 @@ const config: Config = {
     topRef: args.topRef,
     jsDoc: args.jsDoc,
     sortProps: !args.unstable,
-    typeFile: args.typeFile,
     strictTuples: args.strictTuples,
 };
 
