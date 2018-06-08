@@ -45,6 +45,30 @@
         },
         "MixedAlias": {
             "$ref": "#/definitions/PrivateInterface"
+        },
+        "PublicAnonymousTypeLiteral": {
+            "type": "object",
+            "properties": {
+                "publicValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "publicValue"
+            ],
+            "additionalProperties": false
+        },
+        "PrivateAnonymousTypeLiteral": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
         }
     },
     "type": "object",
