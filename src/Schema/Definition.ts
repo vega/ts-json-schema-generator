@@ -12,6 +12,7 @@ export interface Definition {
     format?: string;
     items?: Definition | Definition[];
     minItems?: number;
+    maxItems?: number;
     additionalItems?: {
         anyOf: Definition[],
     };

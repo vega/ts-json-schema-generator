@@ -51,7 +51,7 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new LiteralUnionTypeFormatter())
 
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter, config))
         .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
 

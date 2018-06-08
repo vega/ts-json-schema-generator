@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "tuple": {
+          "additionalItems": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "items": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "minItems": 2,
+          "type": "array"
+        }
+      },
+      "required": [
+        "tuple"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { Config } from "../Config";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
@@ -7,6 +8,7 @@ import { TypeFormatter } from "../TypeFormatter";
 export class TupleTypeFormatter implements SubTypeFormatter {
     public constructor(
         private childTypeFormatter: TypeFormatter,
+        private config: Config,
     ) {
     }
 
@@ -15,12 +17,13 @@ export class TupleTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: TupleType): Definition {
         const tupleDefinitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
-
+        const addAdditionalItems = tupleDefinitions.length > 1 && !this.config.strictTuples;
+        const additionalItems = {additionalItems: {anyOf: tupleDefinitions}};
         return {
             type: "array",
             items: tupleDefinitions,
             minItems: tupleDefinitions.length,
-            ...(tupleDefinitions.length > 1 ? {additionalItems: {anyOf: tupleDefinitions}} : {}),
+            ...(addAdditionalItems ? additionalItems : {maxItems: tupleDefinitions.length}),
         };
     }
     public getChildren(type: TupleType): BaseType[] {
