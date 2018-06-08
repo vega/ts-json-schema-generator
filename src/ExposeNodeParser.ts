@@ -30,7 +30,7 @@ export class ExposeNodeParser implements SubNodeParser {
 
     private isExportNode(node: ts.Node): boolean {
         if (this.expose === "all") {
-            return true;
+            return node.kind !== ts.SyntaxKind.TypeLiteral;
         } else if (this.expose === "none") {
             return false;
         }
