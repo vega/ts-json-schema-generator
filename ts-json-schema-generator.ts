@@ -29,6 +29,10 @@ const args = commander
         "-u, --unstable",
         "Do not sort properties",
     )
+    .option(
+        "-s, --strictTuples",
+        "Do not allow additional items on tuples",
+    )
     .parse(process.argv);
 
 const config: Config = {
@@ -39,6 +43,8 @@ const config: Config = {
     topRef: args.topRef,
     jsDoc: args.jsDoc,
     sortProps: !args.unstable,
+    typeFile: args.typeFile,
+    strictTuples: args.strictTuples,
 };
 
 try {
