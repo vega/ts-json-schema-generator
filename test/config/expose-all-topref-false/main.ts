@@ -31,6 +31,7 @@ export interface MyObject {
 
     mixedInterface: MixedInterface;
     mixedAlias: MixedAlias;
+
     publicAnonymousTypeLiteral: PublicAnonymousTypeLiteral;
     privateAnonymousTypeLiteral: PrivateAnonymousTypeLiteral;
 }
