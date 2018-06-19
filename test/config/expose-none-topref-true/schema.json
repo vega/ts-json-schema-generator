@@ -84,6 +84,30 @@
                         "privateValue"
                     ],
                     "additionalProperties": false
+                },
+                "publicAnonymousTypeLiteral": {
+                    "type": "object",
+                    "properties": {
+                        "publicValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "publicValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "privateAnonymousTypeLiteral": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
                 }
             },
             "required": [
@@ -92,7 +116,9 @@
                 "privateInterface",
                 "privateAlias",
                 "mixedInterface",
-                "mixedAlias"
+                "mixedAlias",
+                "publicAnonymousTypeLiteral",
+                "privateAnonymousTypeLiteral"
             ],
             "additionalProperties": false
         }
