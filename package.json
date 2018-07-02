@@ -38,10 +38,10 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "commander": "~2.15.1",
+    "commander": "~2.16.0",
     "glob": "~7.1.2",
     "json-stable-stringify": "^1.0.1",
-    "ts-node": "^6.1.1",
+    "ts-node": "^7.0.0",
     "typescript": "~2.9.2"
   },
   "devDependencies": {
@@ -49,13 +49,13 @@
     "@types/chai": "^4.1.4",
     "@types/glob": "^5.0.35",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/mocha": "^5.2.2",
-    "@types/node": "^10.3.4",
-    "ajv": "~6.5.1",
+    "@types/mocha": "^5.2.4",
+    "@types/node": "^10.5.1",
+    "ajv": "~6.5.2",
     "chai": "~4.1.2",
-    "jest": "^23.1.0",
+    "jest": "^23.2.0",
     "source-map-support": "~0.5.6",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^23.0.0",
     "tslint": "~5.10.0"
   },
   "scripts": {
