@@ -10,6 +10,8 @@ import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
+    private allTypes: Map<string, ts.Node>;
+
     public constructor(
         private program: ts.Program,
         private nodeParser: NodeParser,
@@ -30,15 +32,20 @@ export class SchemaGenerator {
 
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
-        const allTypes = new Map<string, ts.Node>();
 
-        this.program.getSourceFiles().forEach((sourceFile) => this.inspectNode(sourceFile, typeChecker, allTypes));
+        if (!this.allTypes) {
+            this.allTypes = new Map<string, ts.Node>();
 
-        if (!allTypes.has(fullName)) {
+            this.program.getSourceFiles().forEach(
+                (sourceFile) => this.inspectNode(sourceFile, typeChecker, this.allTypes),
+            );
+        }
+
+        if (!this.allTypes.has(fullName)) {
             throw new NoRootTypeError(fullName);
         }
 
-        return allTypes.get(fullName)!;
+        return this.allTypes.get(fullName)!;
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
