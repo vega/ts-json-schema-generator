@@ -7,6 +7,7 @@ import { LiteralType } from "../Type/LiteralType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
+import { StringType } from "../Type/StringType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -20,22 +21,25 @@ export class MappedTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.MappedTypeNode, context: Context): BaseType {
-        return new ObjectType(
-            `indexed-type-${node.getFullStart()}`,
-            [],
-            this.getProperties(node, context),
-            false,
-        );
+        const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
+        const keyListType = derefType(constraintType);
+        const id = `indexed-type-${node.getFullStart()}`;
+
+        if (keyListType instanceof UnionType) {
+            // Key type resolves to a set of known properties
+            return new ObjectType(id, [], this.getProperties(node, keyListType, context), false);
+        } else if (keyListType instanceof StringType) {
+            // Key type widens to `string`
+            return new ObjectType(id, [], [], this.childNodeParser.createType(node.type!, context));
+        } else {
+            throw new LogicError(
+                // tslint:disable-next-line:max-line-length
+                `Unexpected key type "${constraintType.getId()}" for type "${node.getText()}" (expected "UnionType" or "StringType")`,
+            );
+        }
     }
 
-    private getProperties(node: ts.MappedTypeNode, context: Context): ObjectProperty[] {
-        const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
-
-        const keyListType = derefType(constraintType);
-        if (!(keyListType instanceof UnionType)) {
-            throw new LogicError(`Unexpected type "${constraintType.getId()}" (expected "UnionType")`);
-        }
-
+    private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType.getTypes().reduce((result: ObjectProperty[], key: LiteralType) => {
             const objectProperty = new ObjectProperty(
                 key.getValue() as string,
