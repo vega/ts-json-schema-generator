@@ -5,9 +5,9 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
-import { StringType } from "../Type/StringType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
