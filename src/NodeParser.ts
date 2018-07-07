@@ -6,6 +6,7 @@ export class Context {
     private arguments: BaseType[] = [];
     private parameters: string[] = [];
     private reference?: ts.Node;
+    private defaultArgument = new Map<string, BaseType>();
 
     public constructor(reference?: ts.Node) {
         this.reference = reference;
@@ -18,9 +19,16 @@ export class Context {
         this.parameters.push(parameterName);
     }
 
+    public setDefault(parameterName: string, argumentType: BaseType) {
+        this.defaultArgument.set(parameterName, argumentType);
+    }
+
     public getArgument(parameterName: string): BaseType {
         const index: number = this.parameters.indexOf(parameterName);
         if (index < 0 || !this.arguments[index]) {
+            if (this.defaultArgument.has(parameterName)) {
+                return this.defaultArgument.get(parameterName)!;
+            }
             throw new LogicError(`Could not find type parameter "${parameterName}"`);
         }
 

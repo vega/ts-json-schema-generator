@@ -127,6 +127,7 @@ describe("valid-data", () => {
     assertSchema("generic-anonymous", "MyObject");
     assertSchema("generic-recursive", "MyObject");
     assertSchema("generic-hell", "MyObject");
+    assertSchema("generic-default", "MyObject");
 
     assertSchema("nullable-null", "MyObject");
 
