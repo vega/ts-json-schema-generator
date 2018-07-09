@@ -16,9 +16,9 @@ validator.addMetaSchema(metaSchema);
 const basePath = "test/valid-data";
 
 export type Run = (
-        expectation: string,
-        callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
-    ) => Mocha.ITest;
+    expectation: string,
+    callback?: ((this: Mocha.ITestCallbackContext, done: MochaDone) => any) | undefined,
+) => Mocha.ITest;
 
 function assertSchema(name: string, type: string, only: boolean = false): void {
     const run: Run = only ? it.only : it;
@@ -119,6 +119,7 @@ describe("valid-data", () => {
     assertSchema("type-mapped-literal", "MyObject");
     assertSchema("type-mapped-generic", "MyObject");
     assertSchema("type-mapped-native", "MyObject");
+    assertSchema("type-mapped-widened", "MyObject");
 
     assertSchema("generic-simple", "MyObject");
     assertSchema("generic-arrays", "MyObject");
