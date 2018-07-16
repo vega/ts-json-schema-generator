@@ -1,18 +1,18 @@
 language: node_js
 node_js:
-  - '6'
-  - '10'
+- '6'
+- '10'
 script:
-  - yarn lint
-  - yarn test
-  - yarn build
+- yarn lint
+- yarn test
+- yarn build
 cache: yarn
 deploy:
   provider: npm
   skip_cleanup: true
   email: domoritz@gmail.com
   api_key:
-    secure: fpLeBc7FwonXJMaACLTFIKwqqkxCBUkaGk4ApSR5eJpLaZi8l+MdW46boja+5F+FdI2cbw1Zz6Q9lZ8nEcCdKrH5lehMuZCKOaxeLF72ngoyR33Rh9qYRIoKKEn5CKEwDMWentKKAOtGG+9Zs1hF0nODeYjNSKvAErD8cKxkYPXmGhP6bS/knYA+/nk22NK08mM1jlMCCB/vtW+RNS2RwAJoTcV3QNN6D38fRqci9wzI0O2FhQGCf0aHbKWjK4aVH4jHR2F3epT622MAvDK5X2KY/LyHTbNXV1E18GrXHmC5A+NEx9nCO5j5zLmBaa/2CQS5mHyBzBuq8q/vVMZyt2wLyRfLO6SvMjigObSjg7xcD23UJA9V+Og+7mfM3plcXqHE+9PsUliePcnCbMT2gPNMr51npugrkP6aDNLLSzNS6cwPKbI3I+iosMqxvCcGcM8teWDc8kewBHM7fp+fJfkXs9LZLrQ/sfpwAEICEeE5QrmAnVp87isGS1M6I+fkhIoEkAmrb8w9Qq41IOCES4pIAtm2A1g82MjFK4F/CkjiJJY3v1TlkL2+nxD1kxMSBY8yI/V72W29Z9fArl5MLXUJhsXaed7z6V7HfQeROI9mMmKxjQ3XVlxNyNHpa3VConhCbUXyth54AdwYb/S1/2zfNZImu28eR0e/NW2ec2k=
+    secure: ONaZNIbNJSXk9QJ/Nardk85lSGAwCe/WIdgagGFlW1utygCgByQ6awgD3JPw58mF1AUfGEWnwczqKe84D6vbiVxcrlf7vqs3S3OPLX2lhkWmik2H6SRrnrhN7Z/84ng7vveFz1TVpyxKAIuCNikek0elrPoRoYBXDqtZRX0ozfOIMUsSiqXUmt3IDNaNyJRhS4NW8344VVfonUMTz81tpQGaHt7nC6MJ8GyMYrnRVNNdgpJu3wBDPPKgkuw9GIYLiluUQZ8CEU3TSQwZqDeAegF4qPVfbwAFBZcUzdDjCKLHa/f4cEgs2xJiaQ+HMF6ESgzb8PnGQ5sbT19XER4NOCGDTssdPIwOlq5GZ2npsR1AhG72kIWgfuk60cv2dtJup0AQ3qBsj3RY4SCUtydraQjlKUc06EueW8E280LZcLm5AWZZtpQJY6KDVdlYfX2meFJjMz0sMOq+kjLvzF/67KTShjNtl14SSexnUjriF/uLKTO9ulpZM/r93X+4NGQtx/w8V1mwlUcRGZXwTQoub6H/Gb5d2X/RGTVw0L6MyAhhN3WXLwiSnCFvDV5D0gwN/Yy8Q3QTYlTa/JaekKfqLrJJEMbONo1AO2PCapjjwznzJjCcHix3nWVNMzfBUOqB8SfHuzb58+SBCxeQkWJfIzxKbNCKlU9eVzFMWxeqqGE=
   on:
     tags: true
     repo: vega/ts-json-schema-generator
