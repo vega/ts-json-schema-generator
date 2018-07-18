@@ -4,9 +4,6 @@
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "ts-json-schema-generator": "./bin/ts-json-schema-generator"
-  },
   "author": {
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
