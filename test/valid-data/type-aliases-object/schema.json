@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "MyAlias": {
-            "allOf": [{"$ref": "#/definitions/MyObject"}]
+            "$ref": "#/definitions/MyObject"
         },
         "MyObject": {
             "properties": {
