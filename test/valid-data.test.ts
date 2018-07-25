@@ -108,6 +108,8 @@ describe("valid-data", () => {
     assertSchema("type-typeof", "MyType");
     assertSchema("type-typeof-value", "MyType");
 
+    assertSchema("type-conditional-simple", "Usage");
+
     assertSchema("type-indexed-access-tuple-1", "MyType");
     assertSchema("type-indexed-access-tuple-2", "MyType");
     assertSchema("type-indexed-access-object-1", "MyType");

@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
+import { ConditionalTypeNodeParser } from '../src/NodeParser/ConditionalTypeNodeParser';
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
 import { Config } from "../src/Config";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
@@ -83,6 +84,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(typeChecker, chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))

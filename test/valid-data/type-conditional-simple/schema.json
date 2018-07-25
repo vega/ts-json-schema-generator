@@ -1,0 +1,49 @@
+{
+    "$ref": "#/definitions/Usage",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+      "Usage": {
+        "additionalProperties": false,
+        "properties": {
+          "t0": {
+            "enum": [
+              "string"
+            ],
+            "type": "string"
+          },
+          "t1": {
+            "enum": [
+              "string"
+            ],
+            "type": "string"
+          },
+          "t2": {
+            "enum": [
+              "boolean"
+            ],
+            "type": "string"
+          },
+          "t3": {
+            "enum": [
+              "function"
+            ],
+            "type": "string"
+          },
+          "t4": {
+            "enum": [
+              "object"
+            ],
+            "type": "string"
+          }
+        },
+        "required": [
+          "t0",
+          "t1",
+          "t2",
+          "t3",
+          "t4"
+        ],
+        "type": "object"
+      }
+    }
+  }
