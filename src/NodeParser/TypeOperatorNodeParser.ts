@@ -18,7 +18,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeOperatorNode, context: Context): BaseType {
-        const type = this.typeChecker.getTypeFromTypeNode(node);
+        const type :any = this.typeChecker.getTypeFromTypeNode(node);
         // @ts-ignore
 
         /*
@@ -35,7 +35,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         }  else {
             return new EnumType(
                 `keyof-type-${node.getFullStart()}`,
-                (<any>type).types.map((t: any) => t.value),
+                (type.types)? type.types.map((t: any) => t.value) : [type.value]
             );
         }
 
