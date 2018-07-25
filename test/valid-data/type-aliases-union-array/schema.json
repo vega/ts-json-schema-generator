@@ -9,7 +9,7 @@
                         "type": "string"
                     },
                     {
-                        "$ref": "#/definitions/MyObject"
+                        "allOf": [{"$ref": "#/definitions/MyObject"}]
                     }
                 ]
             }
@@ -33,5 +33,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/MyUnion"
+    "allOf": [{"$ref": "#/definitions/MyUnion"}]
 }

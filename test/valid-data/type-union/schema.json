@@ -88,5 +88,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/TypeUnion"
+    "allOf": [{"$ref": "#/definitions/TypeUnion"}]
 }

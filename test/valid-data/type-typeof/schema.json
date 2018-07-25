@@ -8,5 +8,5 @@
             ]
         }
     },
-    "$ref": "#/definitions/MyType"
+    "allOf": [{"$ref": "#/definitions/MyType"}]
 }

@@ -2,7 +2,7 @@
     "type": "object",
     "properties": {
         "direction": {
-            "$ref": "#/definitions/Cardinal"
+            "allOf": [{"$ref": "#/definitions/Cardinal"}]
         }
     },
     "required": [

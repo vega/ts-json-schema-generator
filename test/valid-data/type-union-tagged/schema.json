@@ -4,13 +4,13 @@
         "Shape": {
             "anyOf": [
                 {
-                    "$ref": "#/definitions/Square"
+                    "allOf": [{"$ref": "#/definitions/Square"}]
                 },
                 {
-                    "$ref": "#/definitions/Rectangle"
+                    "allOf": [{"$ref": "#/definitions/Rectangle"}]
                 },
                 {
-                    "$ref": "#/definitions/Circle"
+                    "allOf": [{"$ref": "#/definitions/Circle"}]
                 }
             ]
         },
@@ -76,5 +76,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/Shape"
+    "allOf": [{"$ref": "#/definitions/Shape"}]
 }

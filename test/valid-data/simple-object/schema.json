@@ -17,5 +17,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/SimpleObject"
+    "allOf": [{"$ref": "#/definitions/SimpleObject"}]
 }

@@ -17,5 +17,5 @@
             ]
         }
     },
-    "$ref": "#/definitions/Enum"
+    "allOf": [{"$ref": "#/definitions/Enum"}]
 }

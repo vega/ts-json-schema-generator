@@ -5,7 +5,7 @@
             "type": "object",
             "properties": {
                 "field": {
-                    "$ref": "#/definitions/MySubObject"
+                    "allOf": [{"$ref": "#/definitions/MySubObject"}]
                 }
             },
             "required": [
@@ -17,7 +17,7 @@
             "type": "object",
             "properties": {
                 "value": {
-                    "$ref": "#/definitions/ExposedSubType"
+                    "allOf": [{"$ref": "#/definitions/ExposedSubType"}]
                 }
             },
             "required": [
@@ -38,5 +38,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/MyObject"
+    "allOf": [{"$ref": "#/definitions/MyObject"}]
 }

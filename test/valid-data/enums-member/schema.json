@@ -17,5 +17,5 @@
       "type": "object"
     }
   },
-  "$ref": "#/definitions/MyObject"
+  "allOf": [{"$ref": "#/definitions/MyObject"}]
 }

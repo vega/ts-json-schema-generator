@@ -1,5 +1,5 @@
 {
-    "$ref": "#/definitions/MyType",
+    "allOf": [{"$ref": "#/definitions/MyType"}],
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
       "MyType": {

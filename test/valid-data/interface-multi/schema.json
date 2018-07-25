@@ -5,10 +5,10 @@
             "type": "object",
             "properties": {
                 "subA": {
-                    "$ref": "#/definitions/MySubObject"
+                    "allOf": [{"$ref": "#/definitions/MySubObject"}]
                 },
                 "subB": {
-                    "$ref": "#/definitions/MySubObject"
+                    "allOf": [{"$ref": "#/definitions/MySubObject"}]
                 }
             },
             "required": [
@@ -34,5 +34,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/MyObject"
+    "allOf": [{"$ref": "#/definitions/MyObject"}]
 }

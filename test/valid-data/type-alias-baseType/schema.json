@@ -5,7 +5,7 @@
             "additionalProperties": false,
             "properties": {
                 "numberVariable": {
-                    "$ref": "#/definitions/TestType"
+                    "allOf": [{"$ref": "#/definitions/TestType"}]
                 }
             },
             "type": "object"
@@ -17,5 +17,5 @@
             "type": "string"
         }
     },
-    "$ref": "#/definitions/MyInterface"
+    "allOf": [{"$ref": "#/definitions/MyInterface"}]
 }

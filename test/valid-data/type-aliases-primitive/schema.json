@@ -5,5 +5,5 @@
             "type": "string"
         }
     },
-    "$ref": "#/definitions/MyString"
+    "allOf": [{"$ref": "#/definitions/MyString"}]
 }

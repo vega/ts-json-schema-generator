@@ -26,5 +26,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/MyObject"
+    "allOf": [{"$ref": "#/definitions/MyObject"}]
 }
