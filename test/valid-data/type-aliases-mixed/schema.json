@@ -4,10 +4,10 @@
         "MyObject": {
             "properties": {
                 "object": {
-                    "allOf": [{"$ref": "#/definitions/MySubObject"}]
+                    "$ref": "#/definitions/MySubObject"
                 },
                 "primitive": {
-                    "allOf": [{"$ref": "#/definitions/MyString"}]
+                    "$ref": "#/definitions/MyString"
                 }
             },
             "required": [

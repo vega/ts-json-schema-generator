@@ -28,10 +28,10 @@
         "MyUnion": {
             "anyOf": [
                 {
-                    "allOf": [{"$ref": "#/definitions/MyObject"}]
+                    "$ref": "#/definitions/MyObject"
                 },
                 {
-                    "allOf": [{"$ref": "#/definitions/MyOtherObject"}]
+                    "$ref": "#/definitions/MyOtherObject"
                 }
             ]
         }

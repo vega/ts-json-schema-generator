@@ -2,16 +2,16 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "MyAlias": {
-            "allOf": [{"$ref": "#/definitions/MyObject"}]
+            "$ref": "#/definitions/MyObject"
         },
         "MyObject": {
             "type": "object",
             "properties": {
                 "alias": {
-                    "allOf": [{"$ref": "#/definitions/MyAlias"}]
+                    "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "allOf": [{"$ref": "#/definitions/MyObject"}]
+                    "$ref": "#/definitions/MyObject"
                 }
             },
             "required": [

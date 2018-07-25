@@ -8,7 +8,7 @@
                     "type": "number"
                 },
                 "propB": {
-                    "allOf": [{"$ref": "#/definitions/MyObject"}]
+                    "$ref": "#/definitions/MyObject"
                 }
             },
             "required": [

@@ -5,7 +5,7 @@
             "type": "object",
             "properties": {
                 "field": {
-                    "allOf": [{"$ref": "#/definitions/MySubObject"}]
+                    "$ref": "#/definitions/MySubObject"
                 }
             },
             "required": [

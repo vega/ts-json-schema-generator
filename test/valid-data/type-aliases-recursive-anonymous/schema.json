@@ -6,7 +6,7 @@
       "additionalProperties": false,
       "properties": {
         "alias": {
-          "allOf": [{"$ref": "#/definitions/MyAlias"}]
+          "$ref": "#/definitions/MyAlias"
         },
         "self": {
           "$ref": "#/definitions/interface-0"
@@ -22,7 +22,7 @@
       "additionalProperties": false,
       "properties": {
         "alias": {
-          "allOf": [{"$ref": "#/definitions/MyAlias"}]
+          "$ref": "#/definitions/MyAlias"
         },
         "self": {
           "$ref": "#/definitions/interface-0"

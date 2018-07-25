@@ -5,7 +5,7 @@
             "type": "object",
             "properties": {
                 "export": {
-                    "allOf": [{"$ref": "#/definitions/MyExportString"}]
+                    "$ref": "#/definitions/MyExportString"
                 },
                 "private": {
                     "type": "string"

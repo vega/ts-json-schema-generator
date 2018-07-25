@@ -5,7 +5,7 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 
-        "abc": {
+        "abc_sort": {
             "additionalProperties": false,
             "description": "Construct a type with a set of properties K of type T",
             "properties": {
@@ -29,7 +29,7 @@
             "additionalProperties": false,
             "properties": {
                 "sort_by": {
-                    "$ref": "#/definitions/abc"
+                    "$ref": "#/definitions/abc_sort"
                 }
             },
             "required": [

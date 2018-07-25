@@ -9,7 +9,7 @@
                     "additionalProperties": {
                         "anyOf": [
                             {
-                                "allOf": [{"$ref": "#/definitions/A"}]
+                                "$ref": "#/definitions/A"
                             },
                             {
                                 "type": [

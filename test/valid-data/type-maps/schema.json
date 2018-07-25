@@ -5,10 +5,10 @@
             "type": "object",
             "properties": {
                 "map1": {
-                    "allOf": [{"$ref": "#/definitions/MyMap1"}]
+                    "$ref": "#/definitions/MyMap1"
                 },
                 "map2": {
-                    "allOf": [{"$ref": "#/definitions/MyMap2"}]
+                    "$ref": "#/definitions/MyMap2"
                 },
                 "map3": {
                     "type": "object"
@@ -24,7 +24,7 @@
         "MyMap1": {
             "type": "object",
             "additionalProperties": {
-                "allOf": [{"$ref": "#/definitions/MyType"}]
+                "$ref": "#/definitions/MyType"
             }
         },
         "MyType": {

@@ -9,7 +9,7 @@
                         "type": "string"
                     },
                     {
-                        "allOf": [{"$ref": "#/definitions/MyObject"}]
+                        "$ref": "#/definitions/MyObject"
                     }
                 ]
             }

@@ -58,5 +58,5 @@
             "additionalProperties": false
         }
     },
-    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
+    "allOf": [{"$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"}]
 }

@@ -8,7 +8,7 @@
                 "optional": {
                     "anyOf": [
                         {
-                            "allOf": [{"$ref": "#/definitions/MyObject"}]
+                            "$ref": "#/definitions/MyObject"
                         },
                         {
                             "type": "null"
