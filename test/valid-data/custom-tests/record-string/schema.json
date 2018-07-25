@@ -5,18 +5,18 @@
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
 
-        "abc": {
+        "abc_string": {
             "additionalProperties": false,
             "description": "Construct a type with a set of properties K of type T",
             "properties": {
                 "a": {
-                    "$ref": "#/definitions/SortDirection"
+                    "type" : "string"
                 },
                 "b": {
-                    "$ref": "#/definitions/SortDirection"
+                    "type" : "string"
                 },
                 "c": {
-                    "$ref": "#/definitions/SortDirection"
+                    "type" : "string"
                 }
             },
             "required": [
@@ -28,23 +28,14 @@
         "MyObject": {
             "additionalProperties": false,
             "properties": {
-                "sort_by": {
-                    "$ref": "#/definitions/abc"
+                "abc_string": {
+                    "$ref": "#/definitions/abc_string"
                 }
             },
             "required": [
-                "sort_by"
+                "abc_string"
             ],
             "type": "object"
-        },
-
-        "SortDirection": {
-            "enum": [
-                "ASC",
-                "DESC"
-            ],
-            "type": "string"
         }
-
     }
   }
