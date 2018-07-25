@@ -1,4 +1,4 @@
-export interface ISysListDb {
+export interface abc {
     a: number;
     b: string;
     c: number;
@@ -13,10 +13,10 @@ export interface Blah {
     d: string;
 }
 
-export type ISysListSort = Record<keyof ISysListDb, SortDirection>;
+export type abc_sort = Record<keyof abc, SortDirection>;
 
 export interface sort_by {
-    sort_by: ISysListSort;
+    sort_by: abc_sort;
 }
 
 export interface MyObject extends sort_by {}
