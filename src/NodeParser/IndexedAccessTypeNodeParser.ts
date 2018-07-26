@@ -40,9 +40,9 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                     return objProp.type.type;
                 })
             )
-        }
 
-        if(
+
+        } else if(
             // @ts-ignore
             node.indexType && node.indexType.type && node.indexType.type.typeName &&
             // @ts-ignore
@@ -52,24 +52,18 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             // @ts-ignore
             node.objectType.typeName.text === node.indexType.type.typeName.text
         ) {
+            // For eg T[keyof T]
+
+            //@ts-ignore
+            let ot = context.getParameterProperties(node.objectType.typeName.text)
+
+            //@ts-ignore
+            return ot[0].type
 
             // @ts-ignore
-            return this.childNodeParser.createType(context.getArguments()[0], context) //When is this ever executed? T[T] ??
-           // return context.getArguments()[0]
-            // let ot = context.getParameterProperties(node.objectType.typeName.text)
+            //return this.childNodeParser.createType(context.getArguments()[0], context) // previous//When is this ever executed? T[T] ??
 
-            // return new EnumType(
-            //     `indexed-type-${node.getFullStart()}`,
-            //     (<any>symbol.valueDeclaration).type.elementTypes.map((memberType: ts.Node) =>
-            //         this.childNodeParser.createType(memberType, context)),
-            // );
-            // return new EnumType(
-            //     `indexed-type-${node.getFullStart()}`,
-            //     // @ts-ignore
-            //     context.getParameterProperties(node.objectType.typeName).map((ot) => {
 
-            //     })
-            // )
         }  else if (
             // @ts-ignore
             node.objectType && node.objectType.type
