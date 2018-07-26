@@ -6,7 +6,8 @@
       "additionalProperties": false,
       "properties": {
         "key": {
-          "enum" :["numberField"]
+          "enum" :["numberField"],
+          "type" : "string"
         },
         "value" : {
           "type" : "number"
