@@ -1,1 +1,0 @@
-{"version":3,"file":"BooleanTypeNodeParser.js","sourceRoot":"/src/","sources":["src/NodeParser/BooleanTypeNodeParser.ts"],"names":[],"mappings":";;AAAA,iCAAiC;AAIjC,qDAAkD;AAElD;IACW,YAAY,CAAC,IAAwB;QACxC,MAAM,CAAC,IAAI,CAAC,IAAI,KAAK,EAAE,CAAC,UAAU,CAAC,cAAc,CAAC;IACtD,CAAC;IACM,UAAU,CAAC,IAAwB,EAAE,OAAgB;QACxD,MAAM,CAAC,IAAI,yBAAW,EAAE,CAAC;IAC7B,CAAC;CACJ;AAPD,sDAOC"}
