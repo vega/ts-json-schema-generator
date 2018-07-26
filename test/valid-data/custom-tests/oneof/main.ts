@@ -7,7 +7,7 @@ export interface IStuff {
 
 
 export interface IOneOfStuff<T> {
-    OneOfStuff: OneOf<T>; //oneof has not been tested yet.
+    OneOfStuff: OneOf<T>;
 }
 
 export declare type OneOf<T> = {
