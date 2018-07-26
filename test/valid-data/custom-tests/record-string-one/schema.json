@@ -1,0 +1,35 @@
+{
+    "allOf": [
+        {"$ref": "#/definitions/MyObject"}
+    ],
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+
+        "abc_string": {
+            "additionalProperties": false,
+            "description": "Construct a type with a set of properties K of type T",
+            "properties": {
+                "a": {
+                    "type" : "string"
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "type": "object"
+        },
+
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "abc_string": {
+                    "$ref": "#/definitions/abc_string"
+                }
+            },
+            "required": [
+                "abc_string"
+            ],
+            "type": "object"
+        }
+    }
+  }
