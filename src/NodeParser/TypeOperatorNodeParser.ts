@@ -27,11 +27,15 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         if(node.type && context.getArguments().length) {
             // @ts-ignore
             let p = context.getParameterProperties(node.type.typeName.text)
-            return new UnionType(
-                p.map((op) => {
-                    return new LiteralType(op.name)
-                })
-            )
+          //  if(context.getArguments().length > 1) {
+                return new UnionType(
+                    p.map((op) => {
+                        return new LiteralType(op.name)
+                    })
+                )
+            // } else {
+            //     return new LiteralType(p[0].name)
+            // }
         }  else {
             return new EnumType(
                 `keyof-type-${node.getFullStart()}`,
