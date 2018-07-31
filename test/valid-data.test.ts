@@ -92,11 +92,16 @@ describe("valid-data", () => {
     assertSchema("type-aliases-object", "MyAlias");
     assertSchema("type-aliases-mixed", "MyObject");
     assertSchema("type-aliases-union", "MyUnion");
-    assertSchema("type-aliases-tuple", "MyTuple");
     assertSchema("type-aliases-anonymous", "MyObject");
     assertSchema("type-aliases-local-namespace", "MyObject");
     assertSchema("type-aliases-recursive-anonymous", "MyAlias");
     assertSchema("type-aliases-recursive-export", "MyObject");
+
+    assertSchema("type-aliases-tuple", "MyTuple");
+    assertSchema("type-aliases-tuple-empty", "MyTuple");
+    assertSchema("type-aliases-tuple-optional-items", "MyTuple");
+    assertSchema("type-aliases-tuple-rest", "MyTuple");
+    assertSchema("type-aliases-tuple-only-rest", "MyTuple");
 
     assertSchema("type-maps", "MyObject");
     assertSchema("type-primitives", "MyObject");
