@@ -89,6 +89,7 @@
       "src"
     ],
     "coverageDirectory": "./coverage/",
-    "collectCoverage": false
+    "collectCoverage": false,
+    "testEnvironment": "node"
   }
 }
