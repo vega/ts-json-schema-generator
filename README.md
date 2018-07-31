@@ -38,6 +38,9 @@ npm install --save ts-json-schema-generator
 * `typeof`
 * `@nullable` annotations
 * `@hide` annotations for enum values and object properties
+* `Partial`
+* `Record`
+* `KeyValueify` / `Unionize` / `Unionify` as per https://github.com/pelotom/type-zoo/issues/11
 
 ## Debug
 
