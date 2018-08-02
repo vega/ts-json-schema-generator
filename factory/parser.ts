@@ -23,7 +23,9 @@ import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
 import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser";
+import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser";
 import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser";
+import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
@@ -88,6 +90,8 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new OptionalTypeNodeParser(chainNodeParser))
+        .addNodeParser(new RestTypeNodeParser(chainNodeParser))
 
         .addNodeParser(new CallExpressionParser(typeChecker, chainNodeParser))
 

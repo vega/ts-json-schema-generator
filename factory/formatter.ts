@@ -15,8 +15,10 @@ import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionType
 import { NullTypeFormatter } from "../src/TypeFormatter/NullTypeFormatter";
 import { NumberTypeFormatter } from "../src/TypeFormatter/NumberTypeFormatter";
 import { ObjectTypeFormatter } from "../src/TypeFormatter/ObjectTypeFormatter";
+import { OptionalTypeFormatter } from "../src/TypeFormatter/OptionalTypeFormatter";
 import { PrimitiveUnionTypeFormatter } from "../src/TypeFormatter/PrimitiveUnionTypeFormatter";
 import { ReferenceTypeFormatter } from "../src/TypeFormatter/ReferenceTypeFormatter";
+import { RestTypeFormatter } from "../src/TypeFormatter/RestTypeFormatter";
 import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
@@ -49,6 +51,9 @@ export function createFormatter(config: Config): TypeFormatter {
 
         .addTypeFormatter(new PrimitiveUnionTypeFormatter())
         .addTypeFormatter(new LiteralUnionTypeFormatter())
+
+        .addTypeFormatter(new OptionalTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new RestTypeFormatter(circularReferenceTypeFormatter))
 
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter, config))
