@@ -11,17 +11,8 @@
                     "type": "number"
                 }
             ],
-            "additionalItems": {
-                "anyOf": [
-                    {
-                        "type": "string"
-                    },
-                    {
-                        "type": "number"
-                    }
-                ]
-            },
-            "minItems": 2
+            "minItems": 2,
+            "maxItems": 2
         }
     },
     "$ref": "#/definitions/MyTuple"
