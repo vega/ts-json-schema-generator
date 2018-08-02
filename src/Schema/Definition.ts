@@ -13,9 +13,7 @@ export interface Definition {
     items?: Definition | Definition[];
     minItems?: number;
     maxItems?: number;
-    additionalItems?: {
-        anyOf: Definition[],
-    };
+    additionalItems?: Definition;
     enum?: (RawType | Definition)[];
     default?: RawType | Object;
     additionalProperties?: false | Definition;
