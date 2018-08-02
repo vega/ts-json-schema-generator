@@ -22,8 +22,7 @@ npm install --save ts-json-schema-generator
     --path 'my/project/**.*.ts' \
     --type 'My.Type.Full.Name' \
     --expose 'export' \
-    --jsDoc 'extended' \
-    --strictTuples
+    --jsDoc 'extended'
 ```
 
 ## Options
@@ -44,9 +43,6 @@ npm install --save ts-json-schema-generator
 
 -u, --unstable
     Do not sort properties.
-
--s, --strictTuples
-    Do not allow additional items on tuples.
 ```
 
 
