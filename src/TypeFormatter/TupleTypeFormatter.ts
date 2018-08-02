@@ -1,4 +1,3 @@
-import { Config } from "../Config";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
@@ -10,7 +9,6 @@ import { TypeFormatter } from "../TypeFormatter";
 export class TupleTypeFormatter implements SubTypeFormatter {
     public constructor(
         private childTypeFormatter: TypeFormatter,
-        private config: Config,
     ) {
     }
 
