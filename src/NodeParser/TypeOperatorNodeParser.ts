@@ -3,8 +3,8 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
-import { UnionType } from "../..";
-import { LiteralType } from "../..";
+import { UnionType } from "../Type/UnionType";
+import { LiteralType } from "../Type/LiteralType"
 
 export class TypeOperatorNodeParser implements SubNodeParser {
     public constructor(
