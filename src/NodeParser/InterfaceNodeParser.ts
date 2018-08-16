@@ -62,16 +62,36 @@ export class InterfaceNodeParser implements SubNodeParser {
             }, []);
     }
 
-    private getAdditionalProperties(node: ts.InterfaceDeclaration, context: Context): BaseType|false {
+    private getAdditionalProperties(node: ts.InterfaceDeclaration, context: Context): BaseType | false {
         const properties: ts.TypeElement[] = node.members
             .filter((property: ts.TypeElement) => property.kind === ts.SyntaxKind.IndexSignature);
-        if (!properties.length) {
-            return false;
-        }
-
-        const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
-        return this.childNodeParser.createType(signature.type!, context);
+            if (!properties.length) {
+                // If the interface extends another interface - check the generic if it exists ...
+                // @ts-ignore
+                if (node.heritageClauses) {
+                    // @ts-ignore
+                    if (node.heritageClauses[0].types[0].typeArguments) {
+                        // @ts-ignore
+                        let extendedTypeArgument = node.heritageClauses[0].types[0].typeArguments[0];
+                        let extendedNode = this.childNodeParser.createType(extendedTypeArgument, context);
+                        // @ts-ignore
+                        if (extendedNode.name === "any" || extendedNode.name === "object" || extendedNode.constructor.name === "AnyType") {
+                            return extendedNode;
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                const signature: ts.IndexSignatureDeclaration = properties[0] as ts.IndexSignatureDeclaration;
+                return this.childNodeParser.createType(signature.type!, context);
+            }
     }
+
 
     private getTypeId(node: ts.Node, context: Context): string {
         const fullName = `interface-${node.getFullStart()}`;
