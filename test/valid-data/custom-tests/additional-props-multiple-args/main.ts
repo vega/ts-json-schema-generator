@@ -3,5 +3,5 @@ export interface paramAny extends StringMap<{}, string> {
 }
 
 export interface StringMap<T, R> {
-    [key : string] : T & R
+    [key : string] : T | R
 }
