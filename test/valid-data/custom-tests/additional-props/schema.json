@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "allOf": [
+        {
+            "$ref": "#/definitions/paramAny"
+        }
+    ],
+    "definitions": {
+        "paramAny": {
+            "properties": {
+                "param": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "param"
+            ],
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "allOf": [
+        {
+            "$ref": "#/definitions/MyObject"
+        }
+    ],
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": {
+                "additionalProperties": false,
+                "type": "object"
+            },
+            "type": "object"
+        }
+    }
+}
