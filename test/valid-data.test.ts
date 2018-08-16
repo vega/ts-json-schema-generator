@@ -53,9 +53,8 @@ function assertSchema(name: string, type: string, only: boolean = false): void {
 }
 
 describe("valid-data", () => {
-    // TODO: generics recursive
-
     assertSchema("custom-tests/additional-props-type", "paramAny");
+    assertSchema("custom-tests/additional-props-multiple-args", "paramAny");
     assertSchema("custom-tests/any-param", "MyObject");
     assertSchema("custom-tests/object", "MyObject");
     assertSchema("custom-tests/any", "MyObject");
