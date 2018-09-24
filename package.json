@@ -49,7 +49,7 @@
     "@types/glob": "^7.1.0",
     "@types/json-stable-stringify": "^1.0.32",
     "@types/mocha": "^5.2.5",
-    "@types/node": "^10.11.0",
+    "@types/node": "10.9.4",
     "ajv": "~6.5.4",
     "chai": "~4.1.2",
     "jest": "^23.6.0",
