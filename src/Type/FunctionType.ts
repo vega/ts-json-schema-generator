@@ -2,17 +2,25 @@ import { BaseType } from "./BaseType";
 
 export class FunctionType extends BaseType {
   public constructor(
-    private argumentTypes: BaseType[],
+    private argumentOrder: string[],
+    private argumentTypes: { [key: string]: BaseType },
     private returnType: BaseType,
   ) {
     super();
   }
 
   public getId(): string {
-    return "(" + this.argumentTypes.map((item) => item.getId()).join(",") + ") => " + this.returnType.getId();
+    return "("
+      + Object.values(this.argumentTypes).map((item) => item.getId()).join(",")
+      + ") => "
+      + this.returnType.getId();
   }
 
-  public getArgumentTypes(): BaseType[] {
+  public getArgumentOrder(): string[] {
+    return this.argumentOrder;
+  }
+
+  public getArgumentTypes(): { [key: string]: BaseType } {
     return this.argumentTypes;
   }
 

@@ -18,17 +18,25 @@ export class FunctionTypeNodeParser implements SubNodeParser {
 
     public createType(node: ts.FunctionTypeNode, context: Context): BaseType {
       const hidden = referenceHidden(this.typeChecker);
-      return new FunctionType(
-            node.parameters
-                .filter((item) => !hidden(item))
-                .map((item) => {
-                  if (item.type) {
-                    return this.childNodeParser.createType(item.type, context);
-                  }
 
-                  throw new Error("FunctionTypeNodeParser: parameter does not have a type");
-                }),
-            this.childNodeParser.createType(node.type, context),
+      const visibleParams = node.parameters.filter((item) => !hidden(item));
+
+      const argumentOrder = visibleParams.map(item => (item as any).symbol.escapedName);
+      const argumentTypes: { [key: string]: BaseType } = node.parameters
+        .filter((item) => !hidden(item))
+        .reduce((map: { [key: string]: BaseType }, item: ts.ParameterDeclaration) => {
+          if (item.type) {
+            map[(item as any).symbol.escapedName] = this.childNodeParser.createType(item.type, context);
+            return map;
+          }
+
+          throw new Error("FunctionTypeNodeParser: parameter does not have a type");
+        }, {});
+
+      return new FunctionType(
+          argumentOrder,
+          argumentTypes,
+          this.childNodeParser.createType(node.type, context),
       );
     }
 }

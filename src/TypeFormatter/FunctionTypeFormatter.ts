@@ -1,4 +1,4 @@
-import { Definition } from "../Schema/Definition";
+import { Definition, DefinitionMap } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { FunctionType } from "../Type/FunctionType";
@@ -15,18 +15,26 @@ export class FunctionTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: FunctionType): Definition {
         const argTypes = type.getArgumentTypes();
+        const propertyOrder = type.getArgumentOrder();
         const returnType = type.getReturnType();
 
-        const argDefinitions = argTypes.map((item) => this.childTypeFormatter.getDefinition(item));
+        const properties: DefinitionMap = {};
+        Object.entries(argTypes).forEach(([key, value]) => {
+          properties[key] = this.childTypeFormatter.getDefinition(value);
+        });
 
         return {
           type: "function",
-          items: argDefinitions,
+          properties,
+          propertyOrder,
           additionalItems: this.childTypeFormatter.getDefinition(returnType),
         };
     }
     public getChildren(type: FunctionType): BaseType[] {
-        return [];
+        return Object.values(type.getArgumentTypes()).reduce((result: BaseType[], item) => [
+            ...result,
+            ...this.childTypeFormatter.getChildren(item),
+        ], []);
     }
 }
 
