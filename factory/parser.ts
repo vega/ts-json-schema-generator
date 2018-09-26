@@ -14,6 +14,7 @@ import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
+import { FunctionTypeNodeParser } from "../src/NodeParser/FunctionTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
 import { InterfaceNodeParser } from "../src/NodeParser/InterfaceNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
@@ -90,6 +91,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new FunctionTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new OptionalTypeNodeParser(chainNodeParser))
         .addNodeParser(new RestTypeNodeParser(chainNodeParser))
 
