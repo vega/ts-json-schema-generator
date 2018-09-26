@@ -18,7 +18,9 @@ export class FunctionTypeFormatter implements SubTypeFormatter {
         const propertyOrder = type.getArgumentOrder();
         const returnType = type.getReturnType();
 
-        const properties: DefinitionMap = {};
+        const properties: DefinitionMap = {
+          __returnValue__: this.childTypeFormatter.getDefinition(returnType),
+        };
         Object.entries(argTypes).forEach(([key, value]) => {
           properties[key] = this.childTypeFormatter.getDefinition(value);
         });
@@ -27,7 +29,6 @@ export class FunctionTypeFormatter implements SubTypeFormatter {
           type: "function",
           properties,
           propertyOrder,
-          additionalItems: this.childTypeFormatter.getDefinition(returnType),
         };
     }
     public getChildren(type: FunctionType): BaseType[] {
