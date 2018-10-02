@@ -39,15 +39,15 @@ steps:
 
 - task: publishTestResults@2
   inputs:
-    testResultsFiles: "./test_results.xml"
-    testRunTitle: "Node $(node_version) tests"
+    testResultsFiles: './test_results.xml'
+    testRunTitle: 'Node $(node_version) tests'
   condition: always()
   displayName: 'Publish Test Results'
 
 - task: PublishCodeCoverageResults@1
   inputs:
-    summaryFileLocation: "./coverage/cobertura-coverage.xml"
-    codeCoverageTool: "cobertura"
+    summaryFileLocation: './coverage/cobertura-coverage.xml'
+    codeCoverageTool: 'cobertura'
   displayName: 'Publish Test Coverage'
 
 - task: Npm@1
