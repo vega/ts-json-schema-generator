@@ -8,10 +8,12 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 strategy:
-  maxParallel: 2  # hack
+  maxParallel: 3  # hack
   matrix:
     node6:
       node_version: 6.x
+    node6:
+      node_version: 8.x
     node10:
       node_version: 10.x
 
@@ -40,9 +42,9 @@ steps:
 - task: publishTestResults@2
   inputs:
     testResultsFiles: './test_results.xml'
-    testRunTitle: 'Node $(node_version) tests'
   condition: always()
   displayName: 'Publish Test Results'
+  condition: eq($(node_version), '10.x'))
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -50,9 +52,10 @@ steps:
     codeCoverageTool: Cobertura
     reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
   displayName: 'Publish Test Coverage'
+  condition: eq($(node_version), '10.x'))
 
 - task: Npm@1
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq($(node_version), '10.x')), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     command: publish
     publishEndpoint: 'npmjs'
