@@ -93,7 +93,7 @@
       "text",
       "cobertura"
     ],
-    "coverageDirectory": "./coverage/",
+    "coverageDirectory": "./",
     "collectCoverage": false,
     "testEnvironment": "node"
   }
