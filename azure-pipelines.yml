@@ -6,14 +6,15 @@
 
 pool:
   vmImage: 'Ubuntu 16.04'
+
 strategy:
   matrix:
     node6:
       node_version: 6.x
     node10:
       node_version: 10.x
- steps:
 
+steps:
 - task: NodeTool@0
   inputs:
     versionSpec: $(node_version)

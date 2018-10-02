@@ -53,6 +53,7 @@
     "ajv": "~6.5.4",
     "chai": "~4.2.0",
     "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
     "source-map-support": "~0.5.9",
     "ts-jest": "^23.10.2",
     "ts-node": "^7.0.1",
