@@ -48,8 +48,9 @@ steps:
 
 - task: PublishCodeCoverageResults@1
   inputs:
-    summaryFileLocation: '$(Build.SourcesDirectory)/cobertura-coverage.xml'
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
     codeCoverageTool: Cobertura
+    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
   displayName: 'Publish Test Coverage'
 
 - task: Npm@1
