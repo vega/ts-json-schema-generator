@@ -90,7 +90,7 @@
       "src"
     ],
     "coverageReporters": [
-      "text",
+      "html",
       "cobertura"
     ],
     "coverageDirectory": "./coverage/",
