@@ -42,6 +42,7 @@ steps:
 - task: publishTestResults@2
   inputs:
     testResultsFiles: './test_results.xml'
+    testRunTitle: 'Node $(node_version) tests'
   displayName: 'Publish Test Results'
   condition: eq(variables['node_version'], '10.x')
 
