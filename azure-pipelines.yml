@@ -26,7 +26,7 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    JEST_JUNIT_OUTPUT="./test_results.xml" yarn test --ci --reporters=default --reporters=jest-junit
+    JEST_JUNIT_OUTPUT="./test_results.xml" yarn test --ci --reporters=default --reporters=jest-junit --coverage
   displayName: 'Test'
 
 - script: |
@@ -43,6 +43,12 @@ steps:
     testRunTitle: "Node $(node_version) tests"
   condition: always()
   displayName: 'Publish Test Results'
+
+- task: PublishCodeCoverageResults@1
+  inputs:
+    summaryFileLocation: "./coverage/cobertura-coverage.xml"
+    codeCoverageTool: "cobertura"
+  displayName: 'Publish Test Coverage'
 
 - task: Npm@1
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))

@@ -89,6 +89,10 @@
       "_site",
       "src"
     ],
+    "coverageReporters": [
+      "text",
+      "cobertura"
+    ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": false,
     "testEnvironment": "node"
