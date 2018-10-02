@@ -43,7 +43,7 @@ steps:
   inputs:
     testResultsFiles: './test_results.xml'
   displayName: 'Publish Test Results'
-  condition: eq($(node_version), '10.x'))
+  condition: eq($(node_version), '10.x')
 
 - task: PublishCodeCoverageResults@1
   inputs:
@@ -51,10 +51,10 @@ steps:
     codeCoverageTool: Cobertura
     reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
   displayName: 'Publish Test Coverage'
-  condition: eq($(node_version), '10.x'))
+  condition: eq($(node_version), '10.x')
 
 - task: Npm@1
-  condition: and(succeeded(), eq($(node_version), '10.x')), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq($(node_version), '10.x'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   inputs:
     command: publish
     publishEndpoint: 'npmjs'
