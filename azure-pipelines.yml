@@ -12,7 +12,7 @@ strategy:
   matrix:
     node6:
       node_version: 6.x
-    node6:
+    node8:
       node_version: 8.x
     node10:
       node_version: 10.x
@@ -42,7 +42,6 @@ steps:
 - task: publishTestResults@2
   inputs:
     testResultsFiles: './test_results.xml'
-  condition: always()
   displayName: 'Publish Test Results'
   condition: eq($(node_version), '10.x'))
 
