@@ -17,6 +17,12 @@ strategy:
     node10:
       node_version: 10.x
 
+trigger:
+  branches:
+    include:
+      - refs/heads/master
+      - refs/tags/*
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -55,7 +61,7 @@ steps:
   condition: eq(variables['node_version'], '10.x')
 
 - task: Npm@1
-  condition: and(succeeded(), eq(variables['node_version'], '10.x'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['node_version'], '10.x'), contains(variables['Build.SourceBranch'], 'refs/tags/'))
   inputs:
     command: publish
     publishEndpoint: 'npmjs'
