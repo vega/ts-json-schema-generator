@@ -27,8 +27,6 @@ steps:
 
 - script: |
     JEST_JUNIT_OUTPUT="./test_results.xml" yarn test --ci --reporters=default --reporters=jest-junit --coverage
-    ls
-    ls coverage
   displayName: 'Test'
 
 - script: |
