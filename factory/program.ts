@@ -51,9 +51,11 @@ export function createProgram(config: Config): ts.Program {
         createProgramFromConfig(config.path) :
         createProgramFromGlob(config.path);
 
-    const diagnostics = ts.getPreEmitDiagnostics(program);
-    if (diagnostics.length) {
-        throw new DiagnosticError(diagnostics);
+    if (!config.skipTypeCheck) {
+        const diagnostics = ts.getPreEmitDiagnostics(program);
+        if (diagnostics.length) {
+            throw new DiagnosticError(diagnostics);
+        }
     }
 
     return program;
