@@ -61,4 +61,13 @@ describe("config", () => {
 
     assertSchema("jsdoc-hide", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
     assertSchema("jsdoc-inheritance", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+
+    // ensure that skipping type checking doesn't alter the JSON schema output
+    assertSchema("jsdoc-complex-extended", {
+        type: "MyObject",
+        expose: "export",
+        topRef: true,
+        jsDoc: "extended",
+        skipTypeCheck: true,
+    });
 });
