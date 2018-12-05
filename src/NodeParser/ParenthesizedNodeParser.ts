@@ -5,7 +5,6 @@ import { BaseType } from "../Type/BaseType";
 
 export class ParenthesizedNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }

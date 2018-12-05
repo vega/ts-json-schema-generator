@@ -11,7 +11,6 @@ import { derefType } from "../Utils/derefType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }
@@ -42,7 +41,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType.getTypes().reduce((result: ObjectProperty[], key: LiteralType) => {
             const objectProperty = new ObjectProperty(
-                key.getValue() as string,
+                key.getValue().toString(),
                 this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
                 !node.questionToken,
             );
