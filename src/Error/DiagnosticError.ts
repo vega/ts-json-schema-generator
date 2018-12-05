@@ -2,7 +2,7 @@ import * as ts from "typescript";
 import { BaseError } from "./BaseError";
 
 export class DiagnosticError extends BaseError {
-    public constructor(private diagnostics: ts.Diagnostic[]) {
+    public constructor(private diagnostics: ReadonlyArray<ts.Diagnostic>) {
         super();
     }
 
@@ -15,7 +15,7 @@ export class DiagnosticError extends BaseError {
             .join("\n\n");
     }
 
-    public getDiagnostics(): ts.Diagnostic[] {
+    public getDiagnostics() {
         return this.diagnostics;
     }
 }
