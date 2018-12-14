@@ -124,6 +124,7 @@ describe("valid-data", () => {
     assertSchema("type-mapped-literal", "MyObject");
     assertSchema("type-mapped-generic", "MyObject");
     assertSchema("type-mapped-native", "MyObject");
+    assertSchema("type-mapped-native-single-literal", "MyObject");
     assertSchema("type-mapped-widened", "MyObject");
 
     assertSchema("generic-simple", "MyObject");

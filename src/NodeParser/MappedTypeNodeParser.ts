@@ -27,6 +27,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
         if (keyListType instanceof UnionType) {
             // Key type resolves to a set of known properties
             return new ObjectType(id, [], this.getProperties(node, keyListType, context), false);
+        } else if (keyListType instanceof LiteralType) {
+            // Key type resolves to single known property
+            return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
         } else if (keyListType instanceof StringType) {
             // Key type widens to `string`
             return new ObjectType(id, [], [], this.childNodeParser.createType(node.type!, context));
