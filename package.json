@@ -49,15 +49,15 @@
     "@types/glob": "^7.1.1",
     "@types/json-stable-stringify": "^1.0.32",
     "@types/mocha": "^5.2.5",
-    "@types/node": "10.12.12",
-    "ajv": "~6.6.1",
+    "@types/node": "10.12.18",
+    "ajv": "~6.6.2",
     "chai": "~4.2.0",
     "jest": "^23.6.0",
     "jest-junit": "^5.2.0",
     "source-map-support": "~0.5.9",
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
-    "tslint": "~5.11.0"
+    "tslint": "~5.12.0"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
