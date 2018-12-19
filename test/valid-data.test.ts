@@ -141,4 +141,6 @@ describe("valid-data", () => {
     assertSchema("undefined-alias", "MyType");
     assertSchema("undefined-union", "MyType");
     assertSchema("undefined-property", "MyType");
+
+    assertSchema("any-unknown", "MyObject");
 });
