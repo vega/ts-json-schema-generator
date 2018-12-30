@@ -19,6 +19,11 @@ export class TypeAliasNodeParser implements SubNodeParser {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
+
+                if (typeParam.default) {
+                    const type = this.childNodeParser.createType(typeParam.default, context);
+                    context.setDefault(nameSymbol.name, type);
+                }
             });
         }
 
