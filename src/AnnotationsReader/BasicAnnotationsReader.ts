@@ -9,6 +9,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         "format",
         "pattern",
+        "regexp"
     ];
     private static jsonTags: string[] = [
         "minimum",
