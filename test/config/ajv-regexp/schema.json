@@ -1,14 +1,25 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
+    "allOf": [
+        {
+            "$ref": "#/definitions/MyObject"
+        }
+    ],
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
+            "description": "Some description here",
             "properties": {
                 "stringValue": {
                     "type": "string",
                     "regexp": "/^hello$/i"
                 }
-            }
+            },
+            "required": [
+                "stringValue"
+            ],
+            "title": "Some title here",
+            "type": "object"
         }
     }
 }
