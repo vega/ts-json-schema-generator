@@ -63,6 +63,11 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         }
 
         if (BasicAnnotationsReader.textTags.indexOf(jsDocTag.name) >= 0) {
+            if(jsDocTag.name === "regexp") {
+                // filter out the zero width joiner that allows you to use '*/' in the regex which screws with the comment if you don't put the zero width joiner (&#8205;) in it.
+                jsDocTag.text = jsDocTag.text.replace(/&#8205;/g, '')
+            }
+
             return jsDocTag.text;
         } else if (BasicAnnotationsReader.jsonTags.indexOf(jsDocTag.name) >= 0) {
             return this.parseJson(jsDocTag.text);
