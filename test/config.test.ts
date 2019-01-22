@@ -62,6 +62,10 @@ describe("config", () => {
     assertSchema("ajv-regexp", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
     assertSchema("ajv-regexp-slashes", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 
+    // note : removed the @ symbol from this test because it was so problematic parsing without a dedicated jsdoc parser
+    // hackstack: rewrite ts_to_json_schema parser using simple-ast and jsdoc parser
+    assertSchema("ajv-regexp-url", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+
     // assertSchema("jsdoc-hide", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
     // assertSchema("jsdoc-inheritance", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
 });
