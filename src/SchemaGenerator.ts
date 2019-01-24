@@ -11,12 +11,26 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
     private allTypes: Map<string, ts.Node>;
+    private prioritizedFiles: ts.SourceFile[];
+    private unprioritizedFiles: ts.SourceFile[];
 
     public constructor(
         private program: ts.Program,
         private nodeParser: NodeParser,
         private typeFormatter: TypeFormatter,
     ) {
+        this.allTypes = new Map<string, ts.Node>();
+
+        const sourceFiles = this.program.getSourceFiles();
+        this.prioritizedFiles = [];
+        this.unprioritizedFiles = [];
+        sourceFiles.forEach((f) => {
+            if (!f.fileName.includes("/node_modules/")) {
+                this.prioritizedFiles.push(f);
+            } else {
+                this.unprioritizedFiles.push(f);
+            }
+        });
     }
 
     public createSchema(fullName: string): Schema {
@@ -33,19 +47,33 @@ export class SchemaGenerator {
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
 
-        if (!this.allTypes) {
-            this.allTypes = new Map<string, ts.Node>();
-
-            this.program.getSourceFiles().forEach(
-                (sourceFile) => this.inspectNode(sourceFile, typeChecker, this.allTypes),
+        if (this.prioritizedFiles.length) {
+            this.prioritizedFiles.forEach(
+                (sourceFile) => {
+                    this.inspectNode(sourceFile, typeChecker, this.allTypes);
+                },
             );
+            this.prioritizedFiles = [];
         }
 
-        if (!this.allTypes.has(fullName)) {
-            throw new NoRootTypeError(fullName);
+        if (this.allTypes.has(fullName)) {
+            return this.allTypes.get(fullName)!;
         }
 
-        return this.allTypes.get(fullName)!;
+        if (this.unprioritizedFiles.length) {
+            this.unprioritizedFiles.forEach(
+                (sourceFile) => {
+                    this.inspectNode(sourceFile, typeChecker, this.allTypes);
+                },
+            );
+            this.unprioritizedFiles = [];
+        }
+
+        if (this.allTypes.has(fullName)) {
+            return this.allTypes.get(fullName)!;
+        }
+
+        throw new NoRootTypeError(fullName);
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
