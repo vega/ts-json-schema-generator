@@ -31,6 +31,7 @@ function assertSchema(name: string, partialConfig: PartialConfig & {type: string
             program,
             createParser(program, config),
             createFormatter(config),
+            config,
         );
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
@@ -69,5 +70,14 @@ describe("config", () => {
         topRef: true,
         jsDoc: "extended",
         skipTypeCheck: true,
+    });
+
+    // ensure that prioritizing files doesn't alter the JSON schema output
+    assertSchema("jsdoc-complex-extended", {
+        type: "MyObject",
+        expose: "export",
+        topRef: true,
+        jsDoc: "extended",
+        files: "test/config/**/*",
     });
 });

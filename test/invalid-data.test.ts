@@ -23,6 +23,7 @@ function assertSchema(name: string, type: string, message: string): void {
             program,
             createParser(program, config),
             createFormatter(config),
+            config,
         );
 
         assert.throws(() => generator.createSchema(type), message);

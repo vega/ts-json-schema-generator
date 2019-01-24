@@ -49,6 +49,9 @@ npm install --save ts-json-schema-generator
 
 -u, --unstable
     Do not sort properties.
+
+-f, --files
+    Hint to the compiler which files to search first for your type. Should be a quoted glob (e.g., `'my/project/**/*.ts'`).
 ```
 
 

@@ -6,6 +6,7 @@ export interface PartialConfig {
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
+    files?: string;
 }
 
 export interface Config extends PartialConfig {
