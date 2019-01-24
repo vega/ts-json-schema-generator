@@ -1,0 +1,24 @@
+{
+    "allOf": [
+        {"$ref": "#/definitions/MyObject"}
+    ],
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "numbers": {
+                    "type": "number",
+                    "enum": [
+                        -1,
+                        0,
+                        10,
+                        20
+                    ]
+                }
+            },
+            "required": ["numbers"],
+            "additionalProperties": false
+        }
+    }
+}

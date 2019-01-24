@@ -36,6 +36,7 @@ import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+import { PrefixUnaryExpressionParser } from '../src/NodeParser/PrefixUnaryExpressionParser';
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -72,7 +73,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
-
+        .addNodeParser(new PrefixUnaryExpressionParser())
         .addNodeParser(new LiteralNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ParenthesizedNodeParser(typeChecker, chainNodeParser))
 
@@ -87,6 +88,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser))
+
 
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
