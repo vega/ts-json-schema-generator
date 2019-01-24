@@ -33,7 +33,7 @@ const args = commander
         "Do not allow additional items on tuples",
     )
     .option(
-        "-c, --skip-type-check",
+        "-c, --no-type-check",
         "Skip type checks to improve performance",
     )
     .parse(process.argv);
@@ -47,7 +47,7 @@ const config: Config = {
     jsDoc: args.jsDoc,
     sortProps: !args.unstable,
     strictTuples: args.strictTuples,
-    skipTypeCheck: args.skipTypeCheck,
+    skipTypeCheck: !args.typeCheck,
 };
 
 try {
