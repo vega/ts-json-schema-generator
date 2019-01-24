@@ -8,10 +8,8 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 strategy:
-  maxParallel: 4  # hack
+  maxParallel: 3  # hack
   matrix:
-    node6:
-      node_version: 6.x
     node8:
       node_version: 8.x
     node10:
