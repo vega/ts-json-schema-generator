@@ -24,13 +24,13 @@ export class SchemaGenerator {
         const sourceFiles = this.program.getSourceFiles();
         this.prioritizedFiles = [];
         this.unprioritizedFiles = [];
-        sourceFiles.forEach((f) => {
+        for (const f of sourceFiles) {
             if (!f.fileName.includes("/node_modules/")) {
                 this.prioritizedFiles.push(f);
             } else {
                 this.unprioritizedFiles.push(f);
             }
-        });
+        }
     }
 
     public createSchema(fullName: string): Schema {
@@ -48,11 +48,9 @@ export class SchemaGenerator {
         const typeChecker = this.program.getTypeChecker();
 
         if (this.prioritizedFiles.length) {
-            this.prioritizedFiles.forEach(
-                (sourceFile) => {
-                    this.inspectNode(sourceFile, typeChecker, this.allTypes);
-                },
-            );
+            for (const sourceFile of this.prioritizedFiles) {
+                this.inspectNode(sourceFile, typeChecker, this.allTypes);
+            }
             this.prioritizedFiles = [];
         }
 
@@ -61,11 +59,9 @@ export class SchemaGenerator {
         }
 
         if (this.unprioritizedFiles.length) {
-            this.unprioritizedFiles.forEach(
-                (sourceFile) => {
-                    this.inspectNode(sourceFile, typeChecker, this.allTypes);
-                },
-            );
+            for (const sourceFile of this.unprioritizedFiles) {
+                this.inspectNode(sourceFile, typeChecker, this.allTypes);
+            }
             this.unprioritizedFiles = [];
         }
 
