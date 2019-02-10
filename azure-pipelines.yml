@@ -20,7 +20,7 @@ strategy:
 trigger:
   branches:
     include:
-      - refs/heads/master
+      - refs/heads/*
       - refs/tags/*
 
 steps:
