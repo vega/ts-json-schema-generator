@@ -5,6 +5,9 @@
     "dist": true,
     "bin": true
   },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.tslint": true
+  },
   "files.trimTrailingWhitespace": true,
   "typescript.tsdk": "node_modules/typescript/lib",
 }

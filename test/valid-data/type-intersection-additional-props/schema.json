@@ -5,27 +5,16 @@
             "type": "object",
             "properties": {
                 "value": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/A"
-                            },
-                            {
-                                "type": [
-                                    "number",
-                                    "string"
-                                ]
-                            }
-                        ]
-                    },
-                    "properties": {
-                        "bar": {
-                            "type": "number"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/A"
+                        },
+                        {
+                            "$ref": "#/definitions/B"
+                        },
+                        {
+                            "$ref": "#/definitions/C"
                         }
-                    },
-                    "required": [
-                        "bar"
                     ]
                 }
             },
@@ -45,6 +34,28 @@
                 "bar"
             ],
             "additionalProperties": false
+        },
+        "B": {
+            "type": "object",
+            "additionalProperties": {
+                "type": [
+                    "number",
+                    "string"
+                ]
+            }
+        },
+        "C": {
+            "type": "object",
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/A"
+                    },
+                    {
+                        "type": "number"
+                    }
+                ]
+            }
         }
     },
     "$ref": "#/definitions/MyObject"

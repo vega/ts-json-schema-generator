@@ -1,4 +1,3 @@
-import { assert } from "chai";
 import { resolve } from "path";
 import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";
@@ -7,8 +6,8 @@ import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-function assertSchema(name: string, type: string, message: string): void {
-    it(name, () => {
+function assertSchema(name: string, type: string, message: string) {
+    return () => {
         const config: Config = {
             path: resolve(`test/invalid-data/${name}/*.ts`),
             type: type,
@@ -25,15 +24,15 @@ function assertSchema(name: string, type: string, message: string): void {
             createFormatter(config),
         );
 
-        assert.throws(() => generator.createSchema(type), message);
-    });
+        expect(() => generator.createSchema(type)).toThrowError(message);
+    };
 }
 
 describe("invalid-data", () => {
     // TODO: template recursive
 
-    assertSchema("script-empty", "MyType", `No root type "MyType" found`);
-    assertSchema("literal-index-type", "MyType", `Unknown node " ["abc", "def"]`);
-    assertSchema("literal-array-type", "MyType", `Unknown node " ["abc", "def"]`);
-    assertSchema("literal-object-type", "MyType", `Unknown node " {abc: "def"}`);
+    it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
+    it("literal-index-type", assertSchema("literal-index-type", "MyType", `Unknown node " ["abc", "def"]`));
+    it("literal-array-type", assertSchema("literal-array-type", "MyType", `Unknown node " ["abc", "def"]`));
+    it("literal-object-type", assertSchema("literal-object-type", "MyType", `Unknown node " {abc: "def"}`));
 });

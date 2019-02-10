@@ -1,5 +1,4 @@
 import * as Ajv from "ajv";
-import { assert } from "chai";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import * as ts from "typescript";
@@ -9,7 +8,6 @@ import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
-import { Run } from "./valid-data.test";
 
 const validator = new Ajv();
 const metaSchema: object = require("ajv/lib/refs/json-schema-draft-06.json");
@@ -17,9 +15,11 @@ validator.addMetaSchema(metaSchema);
 
 const basePath = "test/config";
 
-function assertSchema(name: string, partialConfig: PartialConfig & {type: string}, only: Boolean = false): void {
-    const run: Run = only ? it.only : it;
-    run(name, () => {
+function assertSchema(
+    name: string,
+    partialConfig: PartialConfig & { type: string },
+) {
+    return () => {
         const config: Config = {
             ...DEFAULT_CONFIG,
             ...partialConfig,
@@ -33,41 +33,144 @@ function assertSchema(name: string, partialConfig: PartialConfig & {type: string
             createFormatter(config),
         );
 
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
+        const expected: any = JSON.parse(
+            readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"),
+        );
+        const actual: any = JSON.parse(
+            JSON.stringify(generator.createSchema(config.type)),
+        );
 
-        assert.isObject(actual);
-        assert.deepEqual(actual, expected);
+        expect(typeof actual).toBe("object");
+        expect(actual).toEqual(expected);
 
         validator.validateSchema(actual);
-        assert.isNull(validator.errors);
-    });
+        expect(validator.errors).toBeNull();
+    };
 }
 
 describe("config", () => {
-    assertSchema("expose-all-topref-true", {type: "MyObject", expose: "all", topRef: true, jsDoc: "none"});
-    assertSchema("expose-all-topref-false", {type: "MyObject", expose: "all", topRef: false, jsDoc: "none"});
+    it(
+        "expose-all-topref-true",
+        assertSchema("expose-all-topref-true", {
+            type: "MyObject",
+            expose: "all",
+            topRef: true,
+            jsDoc: "none",
+        }),
+    );
+    it(
+        "expose-all-topref-false",
+        assertSchema("expose-all-topref-false", {
+            type: "MyObject",
+            expose: "all",
+            topRef: false,
+            jsDoc: "none",
+        }),
+    );
 
-    assertSchema("expose-none-topref-true", {type: "MyObject", expose: "none", topRef: true, jsDoc: "none"});
-    assertSchema("expose-none-topref-false", {type: "MyObject", expose: "none", topRef: false, jsDoc: "none"});
+    it(
+        "expose-none-topref-true",
+        assertSchema("expose-none-topref-true", {
+            type: "MyObject",
+            expose: "none",
+            topRef: true,
+            jsDoc: "none",
+        }),
+    );
+    it(
+        "expose-none-topref-false",
+        assertSchema("expose-none-topref-false", {
+            type: "MyObject",
+            expose: "none",
+            topRef: false,
+            jsDoc: "none",
+        }),
+    );
 
-    assertSchema("expose-export-topref-true", {type: "MyObject", expose:  "export", topRef: true, jsDoc: "none"});
-    assertSchema("expose-export-topref-false", {type: "MyObject", expose: "export", topRef: false, jsDoc: "none"});
+    it(
+        "expose-export-topref-true",
+        assertSchema("expose-export-topref-true", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "none",
+        }),
+    );
+    it(
+        "expose-export-topref-false",
+        assertSchema("expose-export-topref-false", {
+            type: "MyObject",
+            expose: "export",
+            topRef: false,
+            jsDoc: "none",
+        }),
+    );
 
-    assertSchema("jsdoc-complex-none", {type: "MyObject", expose: "export", topRef: true, jsDoc: "none"});
-    assertSchema("jsdoc-complex-basic", {type: "MyObject", expose: "export", topRef: true, jsDoc: "basic"});
-    assertSchema("jsdoc-complex-extended", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
-    assertSchema("jsdoc-description-only", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+    it(
+        "jsdoc-complex-none",
+        assertSchema("jsdoc-complex-none", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "none",
+        }),
+    );
+    it(
+        "jsdoc-complex-basic",
+        assertSchema("jsdoc-complex-basic", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "basic",
+        }),
+    );
+    it(
+        "jsdoc-complex-extended",
+        assertSchema("jsdoc-complex-extended", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        }),
+    );
+    it(
+        "jsdoc-description-only",
+        assertSchema("jsdoc-description-only", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        }),
+    );
 
-    assertSchema("jsdoc-hide", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
-    assertSchema("jsdoc-inheritance", {type: "MyObject", expose: "export", topRef: true, jsDoc: "extended"});
+    it(
+        "jsdoc-hide",
+        assertSchema("jsdoc-hide", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        }),
+    );
+    it(
+        "jsdoc-inheritance",
+        assertSchema("jsdoc-inheritance", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        }),
+    );
 
     // ensure that skipping type checking doesn't alter the JSON schema output
-    assertSchema("jsdoc-complex-extended", {
-        type: "MyObject",
-        expose: "export",
-        topRef: true,
-        jsDoc: "extended",
-        skipTypeCheck: true,
-    });
+    it(
+        "jsdoc-complex-extended",
+        assertSchema("jsdoc-complex-extended", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+            skipTypeCheck: true,
+        }),
+    );
 });

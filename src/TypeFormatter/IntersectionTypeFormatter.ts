@@ -16,20 +16,15 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
         return type instanceof IntersectionType;
     }
     public getDefinition(type: IntersectionType): Definition {
-        return type.getTypes().reduce(
-            getAllOfDefinitionReducer(this.childTypeFormatter),
-            {type: "object", additionalProperties: false} as Definition);
+        const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
+        return definitions.length > 1 ? {
+            allOf: definitions,
+        } : definitions[0];
     }
     public getChildren(type: IntersectionType): BaseType[] {
-        return type.getTypes().reduce((result: BaseType[], item) => {
-            // Remove the first child, which is the definition of the child itself because we are merging objects.
-            // However, if the child is just a reference, we cannot remove it.
-            const slice = item instanceof ObjectType ? 0 : 1;
-            return [
-                ...result,
-                ...this.childTypeFormatter.getChildren(item).slice(slice),
-            ];
-        }
-        , []);
+        return type.getTypes().reduce((result: BaseType[], item) => [
+            ...result,
+            ...this.childTypeFormatter.getChildren(item),
+        ], []);
     }
 }
