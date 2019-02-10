@@ -1,8 +1,8 @@
-import { BaseType } from "./BaseType";
+import { PrimitiveType } from "./PrimitiveType";
 
 export type LiteralValue = string|number|boolean;
 
-export class LiteralType extends BaseType {
+export class LiteralType extends PrimitiveType {
     public constructor(
         private value: LiteralValue,
     ) {
