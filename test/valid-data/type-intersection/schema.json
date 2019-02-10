@@ -1,38 +1,63 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "value": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "foo": {
-                            "$ref": "#/definitions/Type3"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/Type1"
                         },
-                        "value1": {
-                            "type": "string"
+                        {
+                            "$ref": "#/definitions/Type2"
                         },
-                        "value2": {
-                            "type": "number"
+                        {
+                            "type": "object",
+                            "properties": {
+                                "foo": {
+                                    "$ref": "#/definitions/Type3"
+                                }
+                            },
+                            "required": [
+                                "foo"
+                            ],
+                            "additionalProperties": false
                         }
-                    },
-                    "required": [
-                        "foo",
-                        "value1",
-                        "value2"
-                    ],
-                    "type": "object"
+                    ]
                 }
             },
             "required": [
                 "value"
             ],
-            "type": "object"
+            "additionalProperties": false
+        },
+        "Type1": {
+            "type": "object",
+            "properties": {
+                "value1": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "value1"
+            ],
+            "additionalProperties": false
+        },
+        "Type2": {
+            "type": "object",
+            "properties": {
+                "value2": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "value2"
+            ],
+            "additionalProperties": false
         },
         "Type3": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "value3": {
                     "type": "number"
@@ -41,7 +66,8 @@
             "required": [
                 "value3"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }
