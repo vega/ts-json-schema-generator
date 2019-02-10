@@ -5,7 +5,6 @@ import { BaseType } from "../Type/BaseType";
 import { PrimitiveType } from "../Type/PrimitiveType";
 import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
-import { LiteralType } from './../Type/LiteralType';
 
 import { BooleanType } from "../Type/BooleanType";
 import { NullType } from "../Type/NullType";
@@ -31,9 +30,7 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
         return type.getTypes().every((item) => item instanceof PrimitiveType);
     }
     private getPrimitiveType(item: BaseType): string {
-        if (item instanceof LiteralType) {
-            return typeof item.getValue();
-        } if (item instanceof StringType) {
+        if (item instanceof StringType) {
             return "string";
         } else if (item instanceof NumberType) {
             return "number";
