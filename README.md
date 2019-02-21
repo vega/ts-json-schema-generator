@@ -64,22 +64,22 @@ import { createProgram } from "ts-json-schema-generator/dist/factory/program";
 import { Config } from 	"ts-json-schema-generator/dist/src/Config";
 
 function generateSchema(filepath: string, type: string) {
-	 const config: Config = {
-		  path: path.resolve(`${filepath}`),
-		  type: type,
-		  expose: "export",
-		  topRef: true,
-		  jsDoc: "extended",
-  };
-	 const program: ts.Program = createProgram(config);
+    const config: Config = {
+       path: path.resolve(`${filepath}`),
+       type: type,
+       expose: "export",
+       topRef: true,
+       jsDoc: "extended",
+    };
+    const program: ts.Program = createProgram(config);
 
-	 const generator: SchemaGenerator = new SchemaGenerator(
-		  program,
-		  createParser(program, config),
-		  createFormatter(config),
-	 );
- 	const schema = generator.createSchema(type);
-	 return schema;
+    const generator: SchemaGenerator = new SchemaGenerator(
+        program,
+        createParser(program, config),
+        createFormatter(config),
+    );
+    const schema = generator.createSchema(type);
+    return schema;
 }
 ```
 
