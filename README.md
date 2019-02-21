@@ -51,6 +51,37 @@ npm install --save ts-json-schema-generator
     Do not sort properties.
 ```
 
+## Programmatic Usage
+
+Here is an example of using it programmatically:
+
+```typescript
+import { SchemaGenerator } from "ts-json-schema-generator";
+import * as ts from "typescript";
+import { createFormatter } from "ts-json-schema-generator/dist/factory/formatter";
+import { createParser } from "ts-json-schema-generator/dist/factory/parser";
+import { createProgram } from "ts-json-schema-generator/dist/factory/program";
+import { Config } from 	"ts-json-schema-generator/dist/src/Config";
+
+function generateSchema(filepath: string, type: string) {
+	 const config: Config = {
+		  path: path.resolve(`${filepath}`),
+		  type: type,
+		  expose: "export",
+		  topRef: true,
+		  jsDoc: "extended",
+  };
+	 const program: ts.Program = createProgram(config);
+
+	 const generator: SchemaGenerator = new SchemaGenerator(
+		  program,
+		  createParser(program, config),
+		  createFormatter(config),
+	 );
+ 	const schema = generator.createSchema(type);
+	 return schema;
+}
+```
 
 ## Current state
 
