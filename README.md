@@ -57,7 +57,7 @@ Here is an example of using it programmatically:
 
 ```typescript
 import { SchemaGenerator } from "ts-json-schema-generator";
-import * as ts from "typescript";
+import ts from "typescript";
 import { createFormatter } from "ts-json-schema-generator/dist/factory/formatter";
 import { createParser } from "ts-json-schema-generator/dist/factory/parser";
 import { createProgram } from "ts-json-schema-generator/dist/factory/program";
