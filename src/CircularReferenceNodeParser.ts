@@ -13,6 +13,9 @@ export class CircularReferenceNodeParser implements SubNodeParser {
     }
 
     public supportsNode(node: ts.Node): boolean {
+        if (node.getSourceFile().fileName.includes("/node_modules/")) {
+            return false;
+        }
         return this.childNodeParser.supportsNode(node);
     }
     public createType(node: ts.Node, context: Context): BaseType {
