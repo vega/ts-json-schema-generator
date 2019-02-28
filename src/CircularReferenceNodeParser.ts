@@ -4,6 +4,10 @@ import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
+const reserveTypes: { [index: number]: boolean } = {
+    [ts.SyntaxKind.TypeAliasDeclaration]: true,
+};
+
 export class CircularReferenceNodeParser implements SubNodeParser {
     private circular = new Map<string, BaseType>();
 
@@ -13,6 +17,9 @@ export class CircularReferenceNodeParser implements SubNodeParser {
     }
 
     public supportsNode(node: ts.Node): boolean {
+        if (!reserveTypes[node.kind] && node.getSourceFile().fileName.includes("/node_modules/")) {
+            return false;
+        }
         return this.childNodeParser.supportsNode(node);
     }
     public createType(node: ts.Node, context: Context): BaseType {

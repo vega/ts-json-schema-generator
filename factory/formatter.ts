@@ -23,7 +23,7 @@ import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
-
+import { UnknownNodeFormatter } from "../src/TypeFormatter/UnknownNodeFormatter";
 
 
 export function createFormatter(config: Config): TypeFormatter {
@@ -58,7 +58,10 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
+
+        .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter))
+
+        .addTypeFormatter(new UnknownNodeFormatter());
 
     return circularReferenceTypeFormatter;
 }
