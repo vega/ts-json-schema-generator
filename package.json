@@ -86,7 +86,8 @@
       "test-runtime",
       "<rootDir>/build",
       "_site",
-      "src"
+      "src",
+      "dist"
     ],
     "coverageReporters": [
       "html",

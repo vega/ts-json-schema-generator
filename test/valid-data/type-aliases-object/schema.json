@@ -5,6 +5,7 @@
             "$ref": "#/definitions/MyObject"
         },
         "MyObject": {
+            "type": "object",
             "properties": {
                 "number": {
                     "type": "number"
@@ -17,8 +18,7 @@
                 "number",
                 "string"
             ],
-            "additionalProperties": false,
-            "type": "object"
+            "additionalProperties": false
         }
     },
     "$ref": "#/definitions/MyAlias"

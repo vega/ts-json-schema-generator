@@ -2,7 +2,6 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
-import { ObjectType } from "../Type/ObjectType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 
@@ -16,15 +15,18 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
         return type instanceof IntersectionType;
     }
     public getDefinition(type: IntersectionType): Definition {
-        const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
-        return definitions.length > 1 ? {
-            allOf: definitions,
-        } : definitions[0];
+        const types = type.getTypes();
+
+        // FIXME: when we have union types as children, we have to translate.
+        // See https://github.com/vega/ts-json-schema-generator/issues/62
+
+        return types.length > 1 ? types.reduce(
+            getAllOfDefinitionReducer(this.childTypeFormatter),
+            {type: "object", additionalProperties: false} as Definition)
+            : this.childTypeFormatter.getDefinition(types[0]);
     }
     public getChildren(type: IntersectionType): BaseType[] {
-        return type.getTypes().reduce((result: BaseType[], item) => [
-            ...result,
-            ...this.childTypeFormatter.getChildren(item),
-        ], []);
+        // children is empty since we have to merge all properties into one object
+        return [];
     }
 }

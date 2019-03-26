@@ -37,7 +37,7 @@ function assertSchema(name: string, type: string) {
         const actual: any = JSON.parse(JSON.stringify(schema));
 
         // uncomment to write test files
-        // writeFileSync(resolve(`${basePath}/${name}/schema.json`), JSON.stringify(schema, null, 4), "utf8");
+        // writeFileSync(resolve(`${basePath}/${name}/schema.json`), JSON.stringify(schema, null, 4) + "\n", "utf8");
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
@@ -100,6 +100,7 @@ describe("valid-data", () => {
     it("type-union", assertSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertSchema("type-union-tagged", "Shape"));
     it("type-intersection", assertSchema("type-intersection", "MyObject"));
+    it("type-intersection-union", assertSchema("type-intersection", "MyObject"));
     it("type-intersection-additional-props", assertSchema("type-intersection-additional-props", "MyObject"));
 
     it("type-typeof", assertSchema("type-typeof", "MyType"));

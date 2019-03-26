@@ -1,38 +1,38 @@
 {
-  "$ref": "#/definitions/MyAlias",
-  "$schema": "http://json-schema.org/draft-06/schema#",
-  "definitions": {
-    "MyAlias": {
-      "additionalProperties": false,
-      "properties": {
-        "alias": {
-          "$ref": "#/definitions/MyAlias"
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyAlias": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "$ref": "#/definitions/MyAlias"
+                },
+                "self": {
+                    "$ref": "#/definitions/interface-0"
+                }
+            },
+            "required": [
+                "alias",
+                "self"
+            ],
+            "additionalProperties": false
         },
-        "self": {
-          "$ref": "#/definitions/interface-0"
+        "interface-0": {
+            "type": "object",
+            "properties": {
+                "alias": {
+                    "$ref": "#/definitions/MyAlias"
+                },
+                "self": {
+                    "$ref": "#/definitions/interface-0"
+                }
+            },
+            "required": [
+                "alias",
+                "self"
+            ],
+            "additionalProperties": false
         }
-      },
-      "required": [
-        "alias",
-        "self"
-      ],
-      "type": "object"
     },
-    "interface-0": {
-      "additionalProperties": false,
-      "properties": {
-        "alias": {
-          "$ref": "#/definitions/MyAlias"
-        },
-        "self": {
-          "$ref": "#/definitions/interface-0"
-        }
-      },
-      "required": [
-        "alias",
-        "self"
-      ],
-      "type": "object"
-    }
-  }
+    "$ref": "#/definitions/MyAlias"
 }

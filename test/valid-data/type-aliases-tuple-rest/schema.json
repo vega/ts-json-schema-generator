@@ -1,11 +1,9 @@
 {
-    "$ref": "#/definitions/MyTuple",
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
         "MyTuple": {
-            "additionalItems": {
-                "type": "number"
-            },
+            "type": "array",
+            "minItems": 2,
             "items": [
                 {
                     "type": "string"
@@ -17,8 +15,10 @@
                     "type": "string"
                 }
             ],
-            "minItems": 2,
-            "type": "array"
+            "additionalItems": {
+                "type": "number"
+            }
         }
-    }
+    },
+    "$ref": "#/definitions/MyTuple"
 }

@@ -1,31 +1,8 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-06/schema#",
     "definitions": {
-        "B.B": {
-            "additionalProperties": false,
-            "properties": {
-                "b": {
-                }
-            },
-            "required": [
-                "b"
-            ],
-            "type": "object"
-        },
-        "C.C": {
-            "additionalProperties": false,
-            "properties": {
-                "c": {
-                    "$ref": "#/definitions/B.B"
-                }
-            },
-            "required": [
-                "c"
-            ],
-            "type": "object"
-        },
         "MyObject": {
+            "type": "object",
             "additionalProperties": false,
             "properties": {
                 "d": {
@@ -34,8 +11,30 @@
             },
             "required": [
                 "d"
+            ]
+        },
+        "C.C": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "c": {
+                    "$ref": "#/definitions/B.B"
+                }
+            },
+            "required": [
+                "c"
+            ]
+        },
+        "B.B": {
+            "type": "object",
+            "properties": {
+                "b": {}
+            },
+            "required": [
+                "b"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

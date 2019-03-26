@@ -5,16 +5,27 @@
             "type": "object",
             "properties": {
                 "value": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/A"
-                        },
-                        {
-                            "$ref": "#/definitions/B"
-                        },
-                        {
-                            "$ref": "#/definitions/C"
+                    "type": "object",
+                    "additionalProperties": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/A"
+                            },
+                            {
+                                "type": [
+                                    "number",
+                                    "string"
+                                ]
+                            }
+                        ]
+                    },
+                    "properties": {
+                        "bar": {
+                            "type": "number"
                         }
+                    },
+                    "required": [
+                        "bar"
                     ]
                 }
             },
@@ -22,40 +33,6 @@
                 "value"
             ],
             "additionalProperties": false
-        },
-        "A": {
-            "type": "object",
-            "properties": {
-                "bar": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "bar"
-            ],
-            "additionalProperties": false
-        },
-        "B": {
-            "type": "object",
-            "additionalProperties": {
-                "type": [
-                    "number",
-                    "string"
-                ]
-            }
-        },
-        "C": {
-            "type": "object",
-            "additionalProperties": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/A"
-                    },
-                    {
-                        "type": "number"
-                    }
-                ]
-            }
         }
     },
     "$ref": "#/definitions/MyObject"

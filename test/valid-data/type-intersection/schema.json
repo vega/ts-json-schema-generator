@@ -5,66 +5,28 @@
             "type": "object",
             "properties": {
                 "value": {
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/Type1"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "foo": {
+                            "$ref": "#/definitions/Type3"
                         },
-                        {
-                            "$ref": "#/definitions/Type2"
+                        "value2": {
+                            "type": "number"
                         },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "foo": {
-                                    "$ref": "#/definitions/Type3"
-                                }
-                            },
-                            "required": [
-                                "foo"
-                            ],
-                            "additionalProperties": false
+                        "value1": {
+                            "type": "string"
                         }
+                    },
+                    "required": [
+                        "foo",
+                        "value1",
+                        "value2"
                     ]
                 }
             },
             "required": [
                 "value"
-            ],
-            "additionalProperties": false
-        },
-        "Type1": {
-            "type": "object",
-            "properties": {
-                "value1": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "value1"
-            ],
-            "additionalProperties": false
-        },
-        "Type2": {
-            "type": "object",
-            "properties": {
-                "value2": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "value2"
-            ],
-            "additionalProperties": false
-        },
-        "Type3": {
-            "type": "object",
-            "properties": {
-                "value3": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "value3"
             ],
             "additionalProperties": false
         }

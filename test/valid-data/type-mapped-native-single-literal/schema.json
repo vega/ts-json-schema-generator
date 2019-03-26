@@ -8,10 +8,10 @@
                     "type": "string"
                 }
             },
-            "additionalProperties": false,
             "required": [
                 "a"
-            ]
+            ],
+            "additionalProperties": false
         }
     },
     "$ref": "#/definitions/MyObject"

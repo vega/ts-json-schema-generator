@@ -4,17 +4,17 @@
         "MyObject": {
             "type": "object",
             "properties": {
+                "b": {
+                    "type": "number"
+                },
+                "c": {
+                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
+                },
                 "someGeneric": {
                     "$ref": "#/definitions/SomeGeneric<1,2>"
                 },
                 "someAlias": {
                     "$ref": "#/definitions/SomeAlias<\"alias\">"
-                },
-                "c": {
-                    "$ref": "#/definitions/GenericC<GenericC<GenericA<string>>>"
-                },
-                "b": {
-                    "type": "number"
                 }
             },
             "required": [

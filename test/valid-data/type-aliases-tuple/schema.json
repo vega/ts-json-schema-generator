@@ -3,6 +3,7 @@
     "definitions": {
         "MyTuple": {
             "type": "array",
+            "minItems": 2,
             "items": [
                 {
                     "type": "string"
@@ -11,7 +12,6 @@
                     "type": "number"
                 }
             ],
-            "minItems": 2,
             "maxItems": 2
         }
     },

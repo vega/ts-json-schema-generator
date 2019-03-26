@@ -1,21 +1,21 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "code": {
-          "enum": [
-            0
-          ],
-          "type": "number"
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "number",
+                    "enum": [
+                        0
+                    ]
+                }
+            },
+            "required": [
+                "code"
+            ],
+            "additionalProperties": false
         }
-      },
-      "required": [
-        "code"
-      ],
-      "type": "object"
-    }
-  },
-  "$ref": "#/definitions/MyObject"
+    },
+    "$ref": "#/definitions/MyObject"
 }
