@@ -2,6 +2,7 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
+import { ObjectType } from "../Type/ObjectType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 
@@ -26,7 +27,11 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
             : this.childTypeFormatter.getDefinition(types[0]);
     }
     public getChildren(type: IntersectionType): BaseType[] {
-        // children is empty since we have to merge all properties into one object
-        return [];
+        // ignore children that are objects as they get merged
+        const types = type.getTypes().filter(t => t instanceof ObjectType);
+        return types.reduce((result: BaseType[], item) => [
+            ...result,
+            ...this.childTypeFormatter.getChildren(item),
+        ], []);
     }
 }

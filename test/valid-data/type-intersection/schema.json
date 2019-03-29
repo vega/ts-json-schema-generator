@@ -29,6 +29,18 @@
                 "value"
             ],
             "additionalProperties": false
+        },
+        "Type3": {
+            "type": "object",
+            "properties": {
+                "value3": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "value3"
+            ],
+            "additionalProperties": false
         }
     },
     "$ref": "#/definitions/MyObject"
