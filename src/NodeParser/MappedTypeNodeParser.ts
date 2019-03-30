@@ -8,6 +8,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
+import { getKey } from "../Utils/nodeKey";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -22,7 +23,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     public createType(node: ts.MappedTypeNode, context: Context): BaseType {
         const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
         const keyListType = derefType(constraintType);
-        const id = `indexed-type-${node.getFullStart()}`;
+        const id = `indexed-type-${getKey(node, context)}`; ;
 
         if (keyListType instanceof UnionType) {
             // Key type resolves to a set of known properties
