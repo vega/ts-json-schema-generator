@@ -21,7 +21,8 @@
         "watch": false,
         "typeRoots": ["node_modules/@types"],
         "sourceRoot": "src",
-        "outDir": "dist"
+        "outDir": "dist",
+        "incremental": true
     },
     "files": [
         "ts-json-schema-generator.ts",
