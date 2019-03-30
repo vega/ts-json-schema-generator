@@ -110,9 +110,14 @@ export class SchemaGenerator {
     private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
         return this.typeFormatter.getChildren(rootType)
             .filter((child) => child instanceof DefinitionType)
-            .reduce((result: StringMap<Definition>, child: DefinitionType) => ({
-                ...result,
-                [child.getId()]: this.typeFormatter.getDefinition(child.getType()),
-            }), {});
+            .reduce((result: StringMap<Definition>, child: DefinitionType) => {
+                if (child.getId() in result) {
+                    throw new Error(`Type "${child.getId()}" has multiple definitions.`);
+                }
+                return {
+                    ...result,
+                    [child.getId()]: this.typeFormatter.getDefinition(child.getType()),
+                };
+            }, {});
     }
 }
