@@ -111,12 +111,13 @@ export class SchemaGenerator {
         return this.typeFormatter.getChildren(rootType)
             .filter((child) => child instanceof DefinitionType)
             .reduce((result: StringMap<Definition>, child: DefinitionType) => {
-                if (child.getId() in result) {
-                    throw new Error(`Type "${child.getId()}" has multiple definitions.`);
+                const id = child.getId();
+                if (id in result) {
+                    throw new Error(`Type "${id}" has multiple definitions.`);
                 }
                 return {
                     ...result,
-                    [child.getId()]: this.typeFormatter.getDefinition(child.getType()),
+                    [id]: this.typeFormatter.getDefinition(child.getType()),
                 };
             }, {});
     }
