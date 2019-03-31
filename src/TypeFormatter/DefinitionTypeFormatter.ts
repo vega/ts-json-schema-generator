@@ -14,7 +14,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
-        return {$ref: "#/definitions/" + type.getId()};
+        return {$ref: "#/definitions/" + type.getName()};
     }
     public getChildren(type: DefinitionType): BaseType[] {
         return [
