@@ -11,7 +11,7 @@
                             "type": "number"
                         },
                         "propB": {
-                            "$ref": "#/definitions/interface-0"
+                            "$ref": "#/definitions/interface-0-68-0-122"
                         }
                     },
                     "required": [
@@ -26,14 +26,14 @@
             ],
             "additionalProperties": false
         },
-        "interface-0": {
+        "interface-0-68-0-122": {
             "type": "object",
             "properties": {
                 "propA": {
                     "type": "number"
                 },
                 "propB": {
-                    "$ref": "#/definitions/interface-0"
+                    "$ref": "#/definitions/interface-0-68-0-122"
                 }
             },
             "required": [
