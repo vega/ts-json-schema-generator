@@ -23,6 +23,7 @@ function assertSchema(
         const config: Config = {
             ...DEFAULT_CONFIG,
             ...partialConfig,
+            skipTypeCheck: !!process.env.FAST_TEST,
             path: resolve(`${basePath}/${name}/*.ts`),
         };
 

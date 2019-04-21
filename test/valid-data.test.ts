@@ -23,6 +23,7 @@ function assertSchema(name: string, type: string) {
             expose: "export",
             topRef: true,
             jsDoc: "none",
+            skipTypeCheck: !!process.env.FAST_TEST
         };
 
         const program: ts.Program = createProgram(config);
