@@ -6,7 +6,8 @@ import { Context } from "../NodeParser";
 export function getKey(node: Node, context: Context) {
     const ids: (number | string)[] = [];
     while (node) {
-        ids.push(hash(node.getSourceFile().fileName), node.pos, node.end);
+        const file = node.getSourceFile().fileName.substr(process.cwd().length + 1);
+        ids.push(hash(file), node.pos, node.end);
 
         node = node.parent;
     }
