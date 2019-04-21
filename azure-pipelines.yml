@@ -10,8 +10,6 @@ pool:
 strategy:
   maxParallel: 3  # hack
   matrix:
-    node8:
-      node_version: 8.x
     node10:
       node_version: 10.x
     node11:
