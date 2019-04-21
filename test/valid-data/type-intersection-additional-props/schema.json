@@ -33,6 +33,18 @@
                 "value"
             ],
             "additionalProperties": false
+        },
+        "A": {
+            "type": "object",
+            "properties": {
+                "bar": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "bar"
+            ],
+            "additionalProperties": false
         }
     },
     "$ref": "#/definitions/MyObject"
