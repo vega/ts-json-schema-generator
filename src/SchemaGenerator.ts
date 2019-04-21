@@ -108,11 +108,29 @@ export class SchemaGenerator {
         return this.typeFormatter.getDefinition(rootType);
     }
     private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
-        return this.typeFormatter.getChildren(rootType)
+        const seen = new Set<string>();
+
+        const children = this
+            .typeFormatter.getChildren(rootType)
             .filter((child) => child instanceof DefinitionType)
-            .reduce((result: StringMap<Definition>, child: DefinitionType) => ({
-                ...result,
-                [child.getId()]: this.typeFormatter.getDefinition(child.getType()),
-            }), {});
+            .filter((child: DefinitionType) => {
+                if (!seen.has(child.getId())) {
+                    seen.add(child.getId());
+                    return true;
+                }
+                return false;
+            }) as DefinitionType[];
+
+        return children
+            .reduce((result: StringMap<Definition>, child) => {
+                const name = child.getName();
+                if (name in result) {
+                    throw new Error(`Type "${name}" has multiple definitions.`);
+                }
+                return {
+                    ...result,
+                    [name]: this.typeFormatter.getDefinition(child.getType()),
+                };
+            }, {});
     }
 }

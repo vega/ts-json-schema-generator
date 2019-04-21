@@ -7,6 +7,10 @@ export class ReferenceType extends BaseType {
         return this.type.getId();
     }
 
+    public getName(): string {
+        return this.type.getName();
+    }
+
     public getType(): BaseType {
         return this.type;
     }

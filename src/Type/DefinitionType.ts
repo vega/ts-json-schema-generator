@@ -9,6 +9,10 @@ export class DefinitionType extends BaseType {
     }
 
     public getId(): string {
+        return "def-" + this.type.getId();
+    }
+
+    public getName() {
         return this.name;
     }
 

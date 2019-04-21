@@ -19,11 +19,12 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return type instanceof ObjectType;
     }
     public getDefinition(type: ObjectType): Definition {
-        if (type.getBaseTypes().length === 0) {
+        const types = type.getBaseTypes();
+        if (types.length === 0) {
             return this.getObjectDefinition(type);
         }
 
-        return type.getBaseTypes().reduce(
+        return types.reduce(
             getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
     }
     public getChildren(type: ObjectType): BaseType[] {

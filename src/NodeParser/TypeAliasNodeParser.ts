@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
+import { getKey } from "../Utils/nodeKey";
 
 export class TypeAliasNodeParser implements SubNodeParser {
     public constructor(
@@ -34,9 +35,6 @@ export class TypeAliasNodeParser implements SubNodeParser {
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
-        const fullName = `alias-${node.getFullStart()}`;
-        const argumentIds = context.getArguments().map((arg) => arg.getId());
-
-        return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
+        return `alias-${getKey(node, context)}`;
     }
 }

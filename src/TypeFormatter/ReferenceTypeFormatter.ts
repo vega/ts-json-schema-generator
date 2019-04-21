@@ -15,7 +15,7 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
         return type instanceof ReferenceType;
     }
     public getDefinition(type: ReferenceType): Definition {
-        return {$ref: "#/definitions/" + type.getId()};
+        return {$ref: "#/definitions/" + type.getName()};
     }
     public getChildren(type: ReferenceType): BaseType[] {
         if (type.getType() instanceof DefinitionType) {
@@ -24,6 +24,6 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
 
         // this means that the referred interface is private
         // so we have to expose it in the schema definitions
-        return this.childTypeFormatter.getChildren(new DefinitionType(type.getId(), type.getType()));
+        return this.childTypeFormatter.getChildren(new DefinitionType(type.getName(), type.getType()));
     }
 }

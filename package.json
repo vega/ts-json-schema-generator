@@ -65,6 +65,7 @@
     "lint": "tslint -p .",
     "fix": "tslint -p . --fix",
     "test": "jest test/ --verbose",
+    "test:fast": "FAST_TEST=1 jest test/ --verbose",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
     "run": "ts-node ts-json-schema-generator.ts"
   },

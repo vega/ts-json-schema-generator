@@ -4,6 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { isHidden } from "../Utils/isHidden";
+import { getKey } from "../Utils/nodeKey";
 
 export class InterfaceNodeParser implements SubNodeParser {
     public constructor(
@@ -75,9 +76,6 @@ export class InterfaceNodeParser implements SubNodeParser {
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
-        const fullName = `interface-${node.getFullStart()}`;
-        const argumentIds = context.getArguments().map((arg) => arg.getId());
-
-        return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
+        return `interface-${getKey(node, context)}`;
     }
 }
