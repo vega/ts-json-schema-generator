@@ -8,7 +8,7 @@
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-0"
+                    "$ref": "#/definitions/interface--1861752476-0-62--1861752476-0-96"
                 }
             },
             "required": [
@@ -17,14 +17,14 @@
             ],
             "additionalProperties": false
         },
-        "interface-0": {
+        "interface--1861752476-0-62--1861752476-0-96": {
             "type": "object",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-0"
+                    "$ref": "#/definitions/interface--1861752476-0-62--1861752476-0-96"
                 }
             },
             "required": [
