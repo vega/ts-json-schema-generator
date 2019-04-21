@@ -5,20 +5,7 @@
             "type": "object",
             "properties": {
                 "sub": {
-                    "type": "object",
-                    "properties": {
-                        "propA": {
-                            "type": "number"
-                        },
-                        "propB": {
-                            "$ref": "#/definitions/interface--199375746-0-68--199375746-0-122"
-                        }
-                    },
-                    "required": [
-                        "propA",
-                        "propB"
-                    ],
-                    "additionalProperties": false
+                    "$ref": "#/definitions/MySubObject"
                 }
             },
             "required": [
@@ -26,14 +13,14 @@
             ],
             "additionalProperties": false
         },
-        "interface--199375746-0-68--199375746-0-122": {
+        "MySubObject": {
             "type": "object",
             "properties": {
                 "propA": {
                     "type": "number"
                 },
                 "propB": {
-                    "$ref": "#/definitions/interface--199375746-0-68--199375746-0-122"
+                    "$ref": "#/definitions/MySubObject"
                 }
             },
             "required": [

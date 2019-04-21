@@ -36,5 +36,11 @@ export function hash(a: any): string | number {
       h = (h << 5) - h + char;
       h = h & h; // Convert to 32bit integer
     }
+
+    // we only want positive integers
+    if (h < 0) {
+        return -h;
+    }
+
     return h;
   }
