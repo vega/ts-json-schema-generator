@@ -35,6 +35,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "default",
     ];
 
+    constructor(private extraJsonTags?: string[]) { }
+
+
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
         if (!symbol) {
@@ -65,6 +68,8 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         if (BasicAnnotationsReader.textTags.indexOf(jsDocTag.name) >= 0) {
             return jsDocTag.text;
         } else if (BasicAnnotationsReader.jsonTags.indexOf(jsDocTag.name) >= 0) {
+            return this.parseJson(jsDocTag.text);
+        } else if (this.extraJsonTags !== undefined && this.extraJsonTags.indexOf(jsDocTag.name) >= 0) {
             return this.parseJson(jsDocTag.text);
         } else {
             return undefined;
