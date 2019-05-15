@@ -52,9 +52,11 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         if (config.jsDoc === "extended") {
-            return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, config.extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser,
+                new ExtendedAnnotationsReader(typeChecker, config.extraJsonTags));
         } else if (config.jsDoc === "basic") {
-            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(config.extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser,
+                new BasicAnnotationsReader(config.extraJsonTags));
         } else {
             return nodeParser;
         }
