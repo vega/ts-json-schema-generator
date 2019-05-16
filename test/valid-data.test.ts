@@ -14,7 +14,7 @@ validator.addMetaSchema(metaSchema);
 
 const basePath = "test/valid-data";
 
-function assertSchema(name: string, type: string) {
+function assertSchema(name: string, type: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"]) {
     return () => {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
@@ -22,7 +22,8 @@ function assertSchema(name: string, type: string) {
 
             expose: "export",
             topRef: true,
-            jsDoc: "none",
+            jsDoc: jsDoc,
+            extraJsonTags: extra,
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
@@ -129,6 +130,14 @@ describe("valid-data", () => {
     it("generic-recursive", assertSchema("generic-recursive", "MyObject"));
     it("generic-hell", assertSchema("generic-hell", "MyObject"));
     it("generic-default", assertSchema("generic-default", "MyObject"));
+
+    it("annotation-custom", assertSchema("annotation-custom", "MyObject", "basic", [
+        "customNumberProperty",
+        "customStringProperty",
+        "customComplexProperty",
+        "customMultilineProperty",
+        "customInvalidProperty",
+    ]));
 
     it("nullable-null", assertSchema("nullable-null", "MyObject"));
 

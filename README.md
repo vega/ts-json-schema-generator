@@ -49,6 +49,9 @@ npm install --save ts-json-schema-generator
 
 -u, --unstable
     Do not sort properties.
+
+-k, --validationKeywords
+    Provide additional validation keywords to include.
 ```
 
 
