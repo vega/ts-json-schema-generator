@@ -35,10 +35,9 @@ export function makeNullable(def: Definition) {
             }
         }
 
-        for (const k in def) {
-            if (def.hasOwnProperty(k) && k !== "description" && k !== "title" && k !== "default") {
-                const key: keyof Definition = k as keyof Definition;
-                subdef[key] = def[key];
+        for (const key of Object.keys(def) as (keyof Definition)[]) {
+            if (key !== "description" && key !== "title" && key !== "default") {
+                subdef[key] = def[key] as any;
                 delete def[key];
             }
         }
