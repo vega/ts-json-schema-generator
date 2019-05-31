@@ -47,7 +47,7 @@
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.13",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^12.0.3",
+    "@types/node": "^12.0.4",
     "ajv": "~6.10.0",
     "chai": "~4.2.0",
     "jest": "^24.8.0",
@@ -55,7 +55,7 @@
     "source-map-support": "~0.5.12",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
-    "tslint": "~5.16.0"
+    "tslint": "~5.17.0"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
