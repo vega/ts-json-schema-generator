@@ -12,6 +12,7 @@ import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
+import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
@@ -19,6 +20,7 @@ import { InterfaceNodeParser } from "../src/NodeParser/InterfaceNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
+import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
@@ -71,6 +73,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new BooleanTypeNodeParser())
         .addNodeParser(new AnyTypeNodeParser())
         .addNodeParser(new UndefinedTypeNodeParser())
+        .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
 
         .addNodeParser(new StringLiteralNodeParser())
@@ -87,6 +90,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser))
+        .addNodeParser(new ConditionalTypeNodeParser(chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
