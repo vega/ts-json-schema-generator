@@ -1,7 +1,8 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
-import { EnumType, EnumValue } from "../Type/EnumType";
+import { EnumType } from "../Type/EnumType";
+import { typeName } from "../Utils/typeName";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class EnumTypeFormatter implements SubTypeFormatter {
@@ -10,7 +11,7 @@ export class EnumTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: EnumType): Definition {
         const values = uniqueArray(type.getValues());
-        const types = uniqueArray(values.map((value) => this.getValueType(value)));
+        const types = uniqueArray(values.map(typeName));
 
         return {
             type: types.length === 1 ? types[0] : types,
@@ -19,9 +20,5 @@ export class EnumTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(type: EnumType): BaseType[] {
         return [];
-    }
-
-    private getValueType(value: EnumValue): string {
-        return value === null ? "null" : typeof value;
     }
 }
