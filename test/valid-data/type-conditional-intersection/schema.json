@@ -1,0 +1,56 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "enum": [
+                        "a"
+                    ],
+                    "type": "string"
+                },
+                "b": {
+                    "enum": [
+                        "b"
+                    ],
+                    "type": "string"
+                },
+                "c": {
+                    "enum": [
+                        "a and b"
+                    ],
+                    "type": "string"
+                },
+                "d": {
+                    "enum": [
+                        "D"
+                    ],
+                    "type": "string"
+                },
+                "e": {
+                    "enum": [
+                        "a and b"
+                    ],
+                    "type": "string"
+                },
+                "f": {
+                    "enum": [
+                        "D"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f"
+            ],
+            "type": "object"
+        }
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "Map<A>": {
+            "enum": [
+                "a"
+            ],
+            "type": "string"
+        },
+        "Map<B>": {
+            "enum": [
+                "a"
+            ],
+            "type": "string"
+        },
+        "Map<C>": {
+            "enum": [
+                "a"
+            ],
+            "type": "string"
+        },
+        "Map<D>": {
+            "enum": [
+                "d"
+            ],
+            "type": "string"
+        },
+        "Map<E>": {
+            "enum": [
+                "d"
+            ],
+            "type": "string"
+        },
+        "Map<F>": {
+            "enum": [
+                "f"
+            ],
+            "type": "string"
+        },
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "$ref": "#/definitions/Map<A>"
+                },
+                "b": {
+                    "$ref": "#/definitions/Map<B>"
+                },
+                "c": {
+                    "$ref": "#/definitions/Map<C>"
+                },
+                "d": {
+                    "$ref": "#/definitions/Map<D>"
+                },
+                "e": {
+                    "$ref": "#/definitions/Map<E>"
+                },
+                "f": {
+                    "$ref": "#/definitions/Map<F>"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f"
+            ],
+            "type": "object"
+        }
+    }
+}
