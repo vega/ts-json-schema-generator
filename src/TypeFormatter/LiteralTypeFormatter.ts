@@ -2,6 +2,7 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
+import { typeName } from "../Utils/typeName";
 
 export class LiteralTypeFormatter implements SubTypeFormatter {
     public supportsType(type: LiteralType): boolean {
@@ -9,7 +10,7 @@ export class LiteralTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: LiteralType): Definition {
         return {
-            type: typeof type.getValue(),
+            type: typeName(type.getValue()),
             enum: [type.getValue()],
         };
     }
