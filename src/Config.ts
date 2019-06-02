@@ -10,8 +10,9 @@ export interface PartialConfig {
 }
 
 export interface Config extends PartialConfig {
-    path: string;
+    path?: string;
     type: string;
+    tsconfig?: string;
 }
 
 export const DEFAULT_CONFIG: PartialConfig = {

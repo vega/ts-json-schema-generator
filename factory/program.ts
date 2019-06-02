@@ -1,3 +1,4 @@
+import * as findUp from "find-up";
 import * as glob from "glob";
 import * as path from "path";
 import * as ts from "typescript";
@@ -5,8 +6,23 @@ import * as ts from "typescript";
 import { Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
 import { LogicError } from "../src/Error/LogicError";
+import { NoRootNamesError } from "../src/Error/NoRootNamesError";
 
-function createProgramFromConfig(configFile: string): ts.Program {
+function getDefaultTsConfig() {
+    return {
+        fileNames: [],
+        options: {
+            noEmit: true,
+            emitDecoratorMetadata: true,
+            experimentalDecorators: true,
+            target: ts.ScriptTarget.ES5,
+            module: ts.ModuleKind.CommonJS,
+            strictNullChecks: false,
+        },
+    };
+}
+
+function loadTsConfigFile(configFile: string) {
     const config = ts.parseConfigFileTextToJson(
         configFile,
         ts.sys.readFile(configFile)!,
@@ -30,26 +46,43 @@ function createProgramFromConfig(configFile: string): ts.Program {
     delete parseResult.options.outFile;
     delete parseResult.options.declaration;
 
-    return ts.createProgram(
-        parseResult.fileNames,
-        parseResult.options,
-    );
+    return parseResult;
 }
-function createProgramFromGlob(fileGlob: string): ts.Program {
-    return ts.createProgram(glob.sync(path.resolve(fileGlob)), {
-        noEmit: true,
-        emitDecoratorMetadata: true,
-        experimentalDecorators: true,
-        target: ts.ScriptTarget.ES5,
-        module: ts.ModuleKind.CommonJS,
-        strictNullChecks: false,
-    });
+
+function getTsConfigFilepath({ tsconfig }: Config, rootNames: string[]) {
+    if (tsconfig) {
+        return tsconfig;
+    }
+    if (rootNames.length) {
+        const found = findUp.sync("tsconfig.json", { cwd: rootNames[0] });
+        if (found) {
+            return found;
+        }
+    }
+    return;
+}
+
+function getTsConfig(config: Config, rootNames: string[]) {
+    const configFile = getTsConfigFilepath(config, rootNames);
+    if (configFile) {
+        return loadTsConfigFile(configFile);
+    }
+    return getDefaultTsConfig();
 }
 
 export function createProgram(config: Config): ts.Program {
-    const program: ts.Program = path.extname(config.path) === ".json" ?
-        createProgramFromConfig(config.path) :
-        createProgramFromGlob(config.path);
+    const rootNamesFromPath = config.path ? glob.sync(path.resolve(config.path)) : [];
+    const tsconfig = getTsConfig(config, rootNamesFromPath);
+    const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
+
+    if (!rootNames.length) {
+        throw new NoRootNamesError();
+    }
+
+    const program: ts.Program = ts.createProgram(
+        rootNames,
+        tsconfig.options,
+    );
 
     if (!config.skipTypeCheck) {
         const diagnostics = ts.getPreEmitDiagnostics(program);
