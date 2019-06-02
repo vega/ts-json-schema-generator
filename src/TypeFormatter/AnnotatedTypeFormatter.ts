@@ -1,3 +1,4 @@
+import { JSONSchema6 } from "json-schema";
 import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
@@ -8,7 +9,7 @@ import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export function makeNullable(def: Definition) {
-    const union: Definition[] | undefined = def.oneOf || def.anyOf;
+    const union: Definition[] | undefined = def.oneOf as Definition[] || def.anyOf;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
@@ -28,17 +29,16 @@ export function makeNullable(def: Definition) {
         const subdef: Definition = {};
 
         if ("anyOf" in def) {
-            for (const d of def.anyOf!) {
+            for (const d of def.anyOf as Definition[]) {
                 if (d.type === "null") {
                     return def;
                 }
             }
         }
 
-        for (const k in def) {
-            if (def.hasOwnProperty(k) && k !== "description" && k !== "title" && k !== "default") {
-                const key: keyof Definition = k as keyof Definition;
-                subdef[key] = def[key];
+        for (const key of Object.keys(def) as (keyof Definition)[]) {
+            if (key !== "description" && key !== "title" && key !== "default") {
+                (subdef  as any)[key] = def[key] as any;
                 delete def[key];
             }
         }
