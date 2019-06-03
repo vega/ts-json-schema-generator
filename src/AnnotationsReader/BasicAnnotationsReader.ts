@@ -23,6 +23,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "minLength",
         "maxLength",
 
+        "minProperties",
+        "maxProperties",
+
         "minItems",
         "maxItems",
         "uniqueItems",
