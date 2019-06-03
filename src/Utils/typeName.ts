@@ -19,6 +19,6 @@ export function typeName(value: RawType): RawTypeName {
     } else if (type === "object") {
         return "object";
     } else {
-        return "any";
+        throw new Error("Unsupported type: " + type);
     }
 }
