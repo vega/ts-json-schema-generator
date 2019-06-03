@@ -12,6 +12,7 @@ import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
+import { ClassNodeParser } from "../src/NodeParser/ClassNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
@@ -102,6 +103,9 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser)),
+        ))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(
+            new ClassNodeParser(typeChecker, withJsDoc(chainNodeParser)),
         ))))
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new TypeLiteralNodeParser(withJsDoc(chainNodeParser)),

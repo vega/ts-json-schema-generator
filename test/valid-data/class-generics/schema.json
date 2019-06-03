@@ -1,0 +1,54 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "definitions": {
+        "Base<boolean>": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "type": "object"
+        },
+        "Base<string>": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "type": "object"
+        },
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "type": "number"
+                },
+                "b": {
+                    "type": "string"
+                },
+                "c": {
+                    "$ref": "#/definitions/Base<string>"
+                },
+                "d": {
+                    "$ref": "#/definitions/Base<boolean>"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d"
+            ],
+            "type": "object"
+        }
+    }
+}

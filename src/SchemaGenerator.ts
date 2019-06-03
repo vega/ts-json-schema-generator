@@ -74,6 +74,7 @@ export class SchemaGenerator {
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
             node.kind === ts.SyntaxKind.InterfaceDeclaration ||
+            node.kind === ts.SyntaxKind.ClassDeclaration ||
             node.kind === ts.SyntaxKind.EnumDeclaration ||
             node.kind === ts.SyntaxKind.TypeAliasDeclaration
         ) {

@@ -58,6 +58,13 @@ describe("valid-data", () => {
     it("interface-recursion", assertSchema("interface-recursion", "MyObject"));
     it("interface-extra-props", assertSchema("interface-extra-props", "MyObject"));
 
+    it("class-single", assertSchema("class-single", "MyObject"));
+    it("class-multi", assertSchema("class-multi", "MyObject"));
+    it("class-recursion", assertSchema("class-recursion", "MyObject"));
+    it("class-extra-props", assertSchema("class-extra-props", "MyObject"));
+    it("class-inheritance", assertSchema("class-inheritance", "MyObject"));
+    it("class-generics", assertSchema("class-generics", "MyObject"));
+
     it("structure-private", assertSchema("structure-private", "MyObject"));
     it("structure-anonymous", assertSchema("structure-anonymous", "MyObject"));
     it("structure-recursion", assertSchema("structure-recursion", "MyObject"));
