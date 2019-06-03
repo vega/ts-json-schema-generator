@@ -21,23 +21,25 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
-        const extendsType = this.unwrapType(this.childNodeParser.createType(node.extendsType, context));
+        const extendsType = this.childNodeParser.createType(node.extendsType, context);
 
         // Get the check type from the condition and expand them into an array of check types in case the check
         // type is a union type. Each union type candidate is checked separately and the result is again grouped
         // into a union type if necessary
-        const checkType = this.unwrapType(this.childNodeParser.createType(node.checkType, context));
-        const checkTypes = checkType instanceof UnionType ? checkType.getTypes() : [ checkType ];
+        const checkType = this.childNodeParser.createType(node.checkType, context);
+        const unwrappedCheckType = this.unwrapType(checkType);
+        const checkTypes = unwrappedCheckType instanceof UnionType ? unwrappedCheckType.getTypes() : [ checkType ];
 
         // Process each part of the check type separately
         const resultTypes: BaseType[] = [];
         for (const type of checkTypes) {
-            const resultType = this.unwrapType(this.isAssignableFrom(extendsType, type)
+            const resultType = this.isAssignableFrom(extendsType, type)
                 ? this.childNodeParser.createType(node.trueType, context)
-                : this.childNodeParser.createType(node.falseType, context));
+                : this.childNodeParser.createType(node.falseType, context);
+            const unwrappedResultType = this.unwrapType(resultType);
 
             // Ignore never types (Used in exclude conditions) so they are not added to the result union type
-            if (resultType instanceof NeverType) {
+            if (unwrappedResultType instanceof NeverType) {
                 continue;
             }
 
