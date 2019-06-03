@@ -54,12 +54,13 @@ export class ClassNodeParser implements SubNodeParser {
             .filter(ts.isPropertyDeclaration)
             .reduce((result: ObjectProperty[], propertyNode) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
-                if (isHidden(propertySymbol)) {
+                const propertyType = propertyNode.type;
+                if (!propertyType || isHidden(propertySymbol)) {
                     return result;
                 }
                 const objectProperty: ObjectProperty = new ObjectProperty(
                     propertySymbol.getName(),
-                    this.childNodeParser.createType(propertyNode.type!, context),
+                    this.childNodeParser.createType(propertyType, context),
                     !propertyNode.questionToken,
                 );
 
