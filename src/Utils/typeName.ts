@@ -19,6 +19,6 @@ export function typeName(value: RawType): RawTypeName {
     } else if (type === "object") {
         return "object";
     } else {
-        throw new Error("Unsupported type: " + type);
+        throw new Error(`JavaScript type "${type}" can't be converted to JSON type name`);
     }
 }
