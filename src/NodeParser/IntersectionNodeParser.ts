@@ -43,8 +43,7 @@ export class IntersectionNodeParser implements SubNodeParser {
         const result: IntersectionType[] = [];
         function process(i: number, types: BaseType[] = []) {
             for (const type of unions[i]) {
-                const currentTypes = types.slice();
-                currentTypes.push(type);
+                const currentTypes = [...types, type];
                 if (i < unions.length - 1) {
                     process(i + 1, currentTypes);
                 } else {
