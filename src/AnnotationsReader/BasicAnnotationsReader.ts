@@ -10,6 +10,12 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         "format",
         "pattern",
+
+        // New since draft-07:
+        "$comment",
+        "contentMediaType",
+        "contentEncoding",
+
     ];
     private static jsonTags: string[] = [
         "minimum",
@@ -36,6 +42,13 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "examples",
 
         "default",
+
+        // New since draft-07:
+        "if",
+        "then",
+        "else",
+        "readOnly",
+        "writeOnly",
     ];
 
     constructor(private extraJsonTags?: string[]) { }
