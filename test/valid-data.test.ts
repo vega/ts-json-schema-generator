@@ -102,7 +102,7 @@ describe("valid-data", () => {
     it("type-union", assertSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertSchema("type-union-tagged", "Shape"));
     it("type-intersection", assertSchema("type-intersection", "MyObject"));
-    it("type-intersection-union", assertSchema("type-intersection", "MyObject"));
+    it("type-intersection-union", assertSchema("type-intersection-union", "MyObject"));
     it("type-intersection-additional-props", assertSchema("type-intersection-additional-props", "MyObject"));
 
     it("type-typeof", assertSchema("type-typeof", "MyType"));
