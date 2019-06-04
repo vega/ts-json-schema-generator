@@ -6,18 +6,18 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { isHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
-export class ClassNodeParser implements SubNodeParser {
+export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
     ) {
     }
 
-    public supportsNode(node: ts.ClassDeclaration): boolean {
-        return node.kind === ts.SyntaxKind.ClassDeclaration;
+    public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
+        return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
     }
 
-    public createType(node: ts.ClassDeclaration, context: Context): BaseType {
+    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -38,7 +38,7 @@ export class ClassNodeParser implements SubNodeParser {
         );
     }
 
-    private getBaseTypes(node: ts.ClassDeclaration, context: Context): BaseType[] {
+    private getBaseTypes(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType[] {
         if (!node.heritageClauses) {
             return [];
         }
@@ -49,9 +49,16 @@ export class ClassNodeParser implements SubNodeParser {
         ], []);
     }
 
-    private getProperties(node: ts.ClassDeclaration, context: Context): ObjectProperty[] {
-        return node.members
-            .filter(ts.isPropertyDeclaration)
+    private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
+        function isProperty(member: ts.Node): member is (ts.PropertyDeclaration | ts.PropertySignature) {
+            return ts.isPropertySignature(member) || ts.isPropertyDeclaration(member);
+        }
+        return (<ts.NodeArray<ts.NamedDeclaration>>node.members)
+            .filter(isProperty)
+            .filter(prop => !prop.modifiers || !prop.modifiers.some(modifier =>
+                modifier.kind === ts.SyntaxKind.PrivateKeyword ||
+                modifier.kind === ts.SyntaxKind.ProtectedKeyword ||
+                modifier.kind === ts.SyntaxKind.StaticKeyword))
             .reduce((result: ObjectProperty[], propertyNode) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 const propertyType = propertyNode.type;
@@ -69,8 +76,9 @@ export class ClassNodeParser implements SubNodeParser {
             }, []);
     }
 
-    private getAdditionalProperties(node: ts.ClassDeclaration, context: Context): BaseType | false {
-        const indexSignature = node.members.find(ts.isIndexSignatureDeclaration);
+    private getAdditionalProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context):
+            BaseType | false {
+        const indexSignature = (<ts.NodeArray<ts.NamedDeclaration>>node.members).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
             return false;
         }
@@ -79,6 +87,7 @@ export class ClassNodeParser implements SubNodeParser {
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
-        return `class-${getKey(node, context)}`;
+        const nodeType = ts.isInterfaceDeclaration(node) ? "interface" : "class";
+        return `${nodeType}-${getKey(node, context)}`;
     }
 }

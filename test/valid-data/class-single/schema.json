@@ -5,24 +5,16 @@
         "MyObject": {
             "additionalProperties": false,
             "properties": {
-                "privateProp": {
-                    "type": "boolean"
-                },
                 "propA": {
                     "type": "number"
                 },
                 "propB": {
                     "type": "number"
-                },
-                "protectedProp": {
-                    "type": "string"
                 }
             },
             "required": [
                 "propA",
-                "propB",
-                "protectedProp",
-                "privateProp"
+                "propB"
             ],
             "type": "object"
         }
