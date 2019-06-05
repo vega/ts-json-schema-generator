@@ -3,12 +3,10 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
-import { NullType } from "../Type/NullType";
 import { TypeFormatter } from "../TypeFormatter";
-import { uniqueArray } from "../Utils/uniqueArray";
 
 export function makeNullable(def: Definition) {
-    const union: Definition[] | undefined = def.oneOf || def.anyOf;
+    const union: Definition[] | undefined = def.oneOf as Definition[] || def.anyOf;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
@@ -28,7 +26,7 @@ export function makeNullable(def: Definition) {
         const subdef: Definition = {};
 
         if ("anyOf" in def) {
-            for (const d of def.anyOf!) {
+            for (const d of def.anyOf as Definition[]) {
                 if (d.type === "null") {
                     return def;
                 }
@@ -37,7 +35,7 @@ export function makeNullable(def: Definition) {
 
         for (const key of Object.keys(def) as (keyof Definition)[]) {
             if (key !== "description" && key !== "title" && key !== "default") {
-                subdef[key] = def[key] as any;
+                (subdef  as any)[key] = def[key] as any;
                 delete def[key];
             }
         }
