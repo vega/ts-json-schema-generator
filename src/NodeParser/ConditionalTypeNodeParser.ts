@@ -1,15 +1,13 @@
 import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { AliasType } from "../Type/AliasType";
-import { AnnotatedType } from "../Type/AnnotatedType";
 import { AnyType } from "../Type/AnyType";
 import { BaseType } from "../Type/BaseType";
-import { DefinitionType } from "../Type/DefinitionType";
 import { IntersectionType } from "../Type/IntersectionType";
 import { NeverType } from "../Type/NeverType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { UnionType } from "../Type/UnionType";
+import { derefType } from "../Utils/derefType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -27,7 +25,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         // type is a union type. Each union type candidate is checked separately and the result is again grouped
         // into a union type if necessary
         const checkType = this.childNodeParser.createType(node.checkType, context);
-        const unwrappedCheckType = this.unwrapType(checkType);
+        const unwrappedCheckType = derefType(checkType);
         const checkTypes = unwrappedCheckType instanceof UnionType ? unwrappedCheckType.getTypes() : [ checkType ];
 
         // Process each part of the check type separately
@@ -36,7 +34,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
             const resultType = this.isAssignableFrom(extendsType, type)
                 ? this.childNodeParser.createType(node.trueType, context)
                 : this.childNodeParser.createType(node.falseType, context);
-            const unwrappedResultType = this.unwrapType(resultType);
+            const unwrappedResultType = derefType(resultType);
 
             // Ignore never types (Used in exclude conditions) so they are not added to the result union type
             if (unwrappedResultType instanceof NeverType) {
@@ -64,26 +62,13 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
     }
 
     /**
-     * Unwraps a type if necessary.
-     *
-     * @param type - The type to unwrap
-     * @return The unwrapped type.
-     */
-    private unwrapType(type: BaseType): BaseType {
-        if (type instanceof AliasType || type instanceof DefinitionType || type instanceof AnnotatedType) {
-            return this.unwrapType(type.getType());
-        }
-        return type;
-    }
-
-    /**
      * Returns all properties of the given type and its base types (if any).
      *
      * @param type - The type for which to return the properties.
      * @return The object properties. May be empty if no objects are present or type is not an object type.
      */
     private getObjectProperties(type: BaseType): ObjectProperty[] {
-        type = this.unwrapType(type);
+        type = derefType(type);
         const properties: ObjectProperty[] = [];
         if (type instanceof ObjectType) {
             properties.push(...type.getProperties());
@@ -102,8 +87,8 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * @return True if source type is assignable to target type.
      */
     private isAssignableFrom(target: BaseType, source: BaseType): boolean {
-        source = this.unwrapType(source);
-        target = this.unwrapType(target);
+        source = derefType(source);
+        target = derefType(target);
 
         // If type IDs matches or target is any type then source can be assigned to target
         if (target.getId() === source.getId() || target instanceof AnyType) {
@@ -183,7 +168,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         // Check compatibility to base types
         for (const baseType of target.getBaseTypes()) {
-            const resolved = this.unwrapType(baseType);
+            const resolved = derefType(baseType);
             if (resolved instanceof ObjectType) {
                 if (!this.isCompatibleTo(resolved, source)) {
                     return false;
