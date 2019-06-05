@@ -10,8 +10,6 @@ import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator = new Ajv();
-const metaSchema: object = require("ajv/lib/refs/json-schema-draft-06.json");
-validator.addMetaSchema(metaSchema);
 
 const basePath = "test/config";
 
