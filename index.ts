@@ -82,7 +82,7 @@ export * from "./src/NodeParser/NumberTypeNodeParser";
 export * from "./src/NodeParser/StringTypeNodeParser";
 export * from "./src/NodeParser/EnumNodeParser";
 export * from "./src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
-export * from "./src/NodeParser/InterfaceNodeParser";
+export * from "./src/NodeParser/InterfaceAndClassNodeParser";
 export * from "./src/NodeParser/ParenthesizedNodeParser";
 export * from "./src/NodeParser/TypeAliasNodeParser";
 export * from "./src/NodeParser/TypeLiteralNodeParser";
