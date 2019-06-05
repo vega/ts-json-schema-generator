@@ -95,6 +95,9 @@ describe("valid-data", () => {
     it("type-aliases-local-namespace", assertSchema("type-aliases-local-namespace", "MyObject"));
     it("type-aliases-recursive-anonymous", assertSchema("type-aliases-recursive-anonymous", "MyAlias"));
     it("type-aliases-recursive-export", assertSchema("type-aliases-recursive-export", "MyObject"));
+    it("type-aliases-recursive-generics-anonymous", assertSchema("type-aliases-recursive-generics-anonymous",
+        "MyAlias"));
+    it("type-aliases-recursive-generics-export", assertSchema("type-aliases-recursive-generics-export", "MyAlias"));
 
     it("type-aliases-tuple", assertSchema("type-aliases-tuple", "MyTuple"));
     it("type-aliases-tuple-empty", assertSchema("type-aliases-tuple-empty", "MyTuple"));

@@ -1,6 +1,7 @@
 import * as ts from "typescript";
 import { LogicError } from "./Error/LogicError";
 import { BaseType } from "./Type/BaseType";
+import { ReferenceType } from "./Type/ReferenceType";
 
 export class Context {
     private arguments: BaseType[] = [];
@@ -48,5 +49,5 @@ export class Context {
 }
 
 export interface NodeParser {
-    createType(node: ts.Node, context: Context): BaseType;
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType;
 }
