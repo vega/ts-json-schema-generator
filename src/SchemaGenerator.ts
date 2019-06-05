@@ -38,7 +38,7 @@ export class SchemaGenerator {
         const rootType = this.nodeParser.createType(rootNode, new Context());
 
         return {
-            $schema: "http://json-schema.org/draft-06/schema#",
+            $schema: "http://json-schema.org/draft-07/schema#",
             definitions: this.getRootChildDefinitions(rootType),
             ...this.getRootTypeDefinition(rootType),
         };

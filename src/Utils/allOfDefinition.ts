@@ -1,5 +1,6 @@
 import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
+import { RawTypeName } from "../Schema/RawType";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { AnyType } from "../Type/AnyType";
@@ -40,11 +41,11 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             // additional properties is false only if all children also set additional properties to false
             // collect additional properties and merge into a single definition
             let additionalProps: Definition[] = [];
-            let additionalTypes: string[] = [];
+            let additionalTypes: RawTypeName[] = [];
             const addAdditionalProps: (addProps: Definition) => void = (addProps: Definition) => {
                 if (addProps !== false) {
                     if (addProps.anyOf) {
-                        for (const prop of addProps.anyOf) {
+                        for (const prop of addProps.anyOf as Definition[]) {
                             if (prop.type) {
                                 additionalTypes = additionalTypes.concat(isArray(prop.type) ?
                                     prop.type : [prop.type] );

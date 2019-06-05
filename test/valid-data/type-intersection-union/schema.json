@@ -1,0 +1,90 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "anyOf": [
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "b": {
+                            "type": "number"
+                        },
+                        "d": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b",
+                        "d"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "b": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b",
+                        "e"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "c": {
+                            "type": "number"
+                        },
+                        "d": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "c",
+                        "d"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "type": "number"
+                        },
+                        "c": {
+                            "type": "number"
+                        },
+                        "e": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "c",
+                        "e"
+                    ],
+                    "type": "object"
+                }
+            ]
+        }
+    }
+}

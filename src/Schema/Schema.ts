@@ -1,7 +1,3 @@
-import { StringMap } from "../Utils/StringMap";
-import { Definition } from "./Definition";
+import { JSONSchema7 } from "json-schema";
 
-export interface Schema extends Definition {
-    $schema: string;
-    definitions: StringMap<Definition>;
-}
+export type Schema = JSONSchema7;
