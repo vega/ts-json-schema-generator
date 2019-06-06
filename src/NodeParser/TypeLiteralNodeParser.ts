@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { ReferenceType } from "../Type/ReferenceType";
 import { isHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
@@ -15,9 +16,14 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
     }
-    public createType(node: ts.TypeLiteralNode, context: Context): BaseType {
+    public createType(node: ts.TypeLiteralNode, context: Context, reference?: ReferenceType): BaseType {
+        const id = this.getTypeId(node, context);
+        if (reference) {
+            reference.setId(id);
+            reference.setName(id);
+        }
         return new ObjectType(
-            this.getTypeId(node, context),
+            id,
             [],
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),

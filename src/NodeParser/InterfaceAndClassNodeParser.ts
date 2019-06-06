@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { ReferenceType } from "../Type/ReferenceType";
 import { isHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
@@ -17,7 +18,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
     }
 
-    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType {
+    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context,
+            reference?: ReferenceType): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -30,8 +32,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             });
         }
 
+        const id = this.getTypeId(node, context);
+        if (reference) {
+            reference.setId(id);
+            reference.setName(id);
+        }
         return new ObjectType(
-            this.getTypeId(node, context),
+            id,
             this.getBaseTypes(node, context),
             this.getProperties(node, context),
             this.getAdditionalProperties(node, context),
