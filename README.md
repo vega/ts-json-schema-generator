@@ -9,10 +9,9 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/typescript-json-schema). Here's the differences list:
 
 * this implementation does not use `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
-* the following features are not supported yet:
-  * `class` types
 * processing AST and formatting JSON schema have been split into two independent steps
 * not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
+* support for classes
 
 ## Contributors
 
