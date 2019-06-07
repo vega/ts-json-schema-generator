@@ -128,27 +128,27 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
     }
 
     if (target instanceof ObjectType) {
-        const membersA = getObjectProperties(target);
-        if (membersA.length === 0) {
+        const targetMembers = getObjectProperties(target);
+        if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it
             return !isAssignableTo(new UnionType([ new UndefinedType(), new NullType() ]), source);
         } else if (source instanceof ObjectType) {
-            const membersB = getObjectProperties(source);
+            const sourceMembers = getObjectProperties(source);
 
             // Check if target has properties in common with source
-            const inCommon = membersA.some(memberA => membersB.some(memberB =>
-                memberA.getName() === memberB.getName()));
+            const inCommon = targetMembers.some(targetMember => sourceMembers.some(sourceMember =>
+                targetMember.getName() === sourceMember.getName()));
 
-            return membersA.every(memberA => {
+            return targetMembers.every(targetMember => {
                 // Make sure that every required property in target type is present
-                const memberB = membersB.find(member => memberA.getName() === member.getName());
-                return memberB == null ? (inCommon && !memberA.isRequired()) : true;
-            }) && membersB.every(memberB => {
-                const memberA = membersA.find(member => member.getName() === memberB.getName());
-                if (memberA == null) {
+                const sourceMember = sourceMembers.find(member => targetMember.getName() === member.getName());
+                return sourceMember == null ? (inCommon && !targetMember.isRequired()) : true;
+            }) && sourceMembers.every(sourceMember => {
+                const targetMember = targetMembers.find(member => member.getName() === sourceMember.getName());
+                if (targetMember == null) {
                     return true;
                 }
-                return isAssignableTo(memberA.getType(), memberB.getType());
+                return isAssignableTo(targetMember.getType(), sourceMember.getType());
             });
         }
     }
@@ -156,17 +156,18 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
     // Check if tuple types are compatible
     if (target instanceof TupleType) {
         if (source instanceof TupleType) {
-            const membersB = source.getTypes();
-            return target.getTypes().every((memberA, i) => {
-                const memberB = membersB[i];
-                if (memberA instanceof OptionalType) {
-                    if (memberB) {
-                        return isAssignableTo(memberA, memberB) || isAssignableTo(memberA.getType(), memberB);
+            const sourceMembers = source.getTypes();
+            return target.getTypes().every((targetMember, i) => {
+                const sourceMember = sourceMembers[i];
+                if (targetMember instanceof OptionalType) {
+                    if (sourceMember) {
+                        return isAssignableTo(targetMember, sourceMember) ||
+                            isAssignableTo(targetMember.getType(), sourceMember);
                     } else {
                         return true;
                     }
                 } else {
-                    return isAssignableTo(memberA, memberB);
+                    return isAssignableTo(targetMember, sourceMember);
                 }
             });
         }
