@@ -291,4 +291,25 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(aAndB, ab)).toBe(true);
         expect(isAssignableTo(aAndB, aAndB)).toBe(true);
     });
+    it("correctly handles circular dependencies", () => {
+        const nodeTypeARef = new ReferenceType();
+        const nodeTypeA = new ObjectType("a", [], [ new ObjectProperty("parent", nodeTypeARef, false) ], false);
+        nodeTypeARef.setType(nodeTypeA);
+
+        const nodeTypeBRef = new ReferenceType();
+        const nodeTypeB = new ObjectType("b", [], [ new ObjectProperty("parent", nodeTypeBRef, false) ], false);
+        nodeTypeBRef.setType(nodeTypeB);
+
+        const nodeTypeCRef = new ReferenceType();
+        const nodeTypeC = new ObjectType("c", [], [ new ObjectProperty("child", nodeTypeCRef, false) ], false);
+        nodeTypeCRef.setType(nodeTypeC);
+
+        expect(isAssignableTo(nodeTypeA, nodeTypeA)).toBe(true);
+        expect(isAssignableTo(nodeTypeA, nodeTypeB)).toBe(true);
+        expect(isAssignableTo(nodeTypeB, nodeTypeA)).toBe(true);
+        expect(isAssignableTo(nodeTypeC, nodeTypeA)).toBe(false);
+        expect(isAssignableTo(nodeTypeC, nodeTypeB)).toBe(false);
+        expect(isAssignableTo(nodeTypeA, nodeTypeC)).toBe(false);
+        expect(isAssignableTo(nodeTypeB, nodeTypeC)).toBe(false);
+    });
 });

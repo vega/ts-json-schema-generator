@@ -59,17 +59,26 @@ function getObjectProperties(type: BaseType): ObjectProperty[] {
 /**
  * Checks if given source type is assignable to given target type.
  *
- * @param source - The source type.
- * @param target - The target type.
+ * The logic of this function is heavily inspired by
+ * https://github.com/runem/ts-simple-type/blob/master/src/is-assignable-to-simple-type.ts
+ *
+ * @param source      - The source type.
+ * @param target      - The target type.
+ * @param insideTypes - Optional parameter used internally to solve circular dependencies.
  * @return True if source type is assignable to target type.
  */
-export function isAssignableTo(target: BaseType, source: BaseType): boolean {
+export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: Set<BaseType> = new Set()): boolean {
     // Dereference source and target
     source = derefType(source);
     target = derefType(target);
 
     // Check for simple type equality
     if (source.getId() === target.getId()) {
+        return true;
+    }
+
+    /** Don't check types when already inside them. This solves circular dependencies. */
+    if (insideTypes.has(source) || insideTypes.has(target)) {
         return true;
     }
 
@@ -95,22 +104,22 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
 
     // Union type is assignable to target when all types in the union are assignable to it
     if (source instanceof UnionType) {
-        return source.getTypes().every(type => isAssignableTo(target, type));
+        return source.getTypes().every(type => isAssignableTo(target, type, insideTypes));
     }
 
     // When source is an intersection type then it can be assigned to target if any of the sub types matches. Object
     // types within the intersection must be combined first
     if (source instanceof IntersectionType) {
-        return combineIntersectingTypes(source).some(type => isAssignableTo(target, type));
+        return combineIntersectingTypes(source).some(type => isAssignableTo(target, type, insideTypes));
     }
 
     // For arrays check if item types are assignable
     if (target instanceof ArrayType) {
         const targetItemType = target.getItem();
         if (source instanceof ArrayType) {
-            return isAssignableTo(targetItemType, source.getItem());
+            return isAssignableTo(targetItemType, source.getItem(), insideTypes);
         } else if (source instanceof TupleType) {
-            return source.getTypes().every(type => isAssignableTo(targetItemType, type));
+            return source.getTypes().every(type => isAssignableTo(targetItemType, type, insideTypes));
         } else {
             return false;
         }
@@ -118,20 +127,20 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
 
     // When target is a union type then check if source type can be assigned to any variant
     if (target instanceof UnionType) {
-        return target.getTypes().some(type => isAssignableTo(type, source));
+        return target.getTypes().some(type => isAssignableTo(type, source, insideTypes));
     }
 
     // When target is an intersection type then source can be assigned to it if it matches all sub types. Object
     // types within the intersection must be combined first
     if (target instanceof IntersectionType) {
-        return combineIntersectingTypes(target).every(type => isAssignableTo(type, source));
+        return combineIntersectingTypes(target).every(type => isAssignableTo(type, source, insideTypes));
     }
 
     if (target instanceof ObjectType) {
         const targetMembers = getObjectProperties(target);
         if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it
-            return !isAssignableTo(new UnionType([ new UndefinedType(), new NullType() ]), source);
+            return !isAssignableTo(new UnionType([ new UndefinedType(), new NullType() ]), source, insideTypes);
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
 
@@ -148,7 +157,8 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
                 if (targetMember == null) {
                     return true;
                 }
-                return isAssignableTo(targetMember.getType(), sourceMember.getType());
+                return isAssignableTo(targetMember.getType(), sourceMember.getType(),
+                    new Set(insideTypes).add(source).add(target));
             });
         }
     }
@@ -161,13 +171,13 @@ export function isAssignableTo(target: BaseType, source: BaseType): boolean {
                 const sourceMember = sourceMembers[i];
                 if (targetMember instanceof OptionalType) {
                     if (sourceMember) {
-                        return isAssignableTo(targetMember, sourceMember) ||
-                            isAssignableTo(targetMember.getType(), sourceMember);
+                        return isAssignableTo(targetMember, sourceMember, insideTypes) ||
+                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes);
                     } else {
                         return true;
                     }
                 } else {
-                    return isAssignableTo(targetMember, sourceMember);
+                    return isAssignableTo(targetMember, sourceMember, insideTypes);
                 }
             });
         }
