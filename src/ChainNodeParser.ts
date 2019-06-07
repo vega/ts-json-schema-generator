@@ -5,6 +5,8 @@ import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
+const typeCaches = new Map<string, WeakMap<ts.Node, BaseType>>();
+
 export class ChainNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
@@ -22,7 +24,18 @@ export class ChainNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
-        return this.getNodeParser(node, context).createType(node, context, reference);
+        const contextCacheKey = context.getCacheKey();
+        let typeCache = typeCaches.get(contextCacheKey);
+        if (typeCache == null) {
+            typeCache = new WeakMap<ts.Node, BaseType>();
+            typeCaches.set(contextCacheKey, typeCache);
+        }
+        let type = typeCache.get(node);
+        if (!type) {
+            type = this.getNodeParser(node, context).createType(node, context, reference);
+            typeCache.set(node, type);
+        }
+        return type;
     }
 
     private getNodeParser(node: ts.Node, context: Context): SubNodeParser {

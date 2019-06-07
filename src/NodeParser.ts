@@ -4,6 +4,7 @@ import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
 export class Context {
+    private cacheKey: string | null = null;
     private arguments: BaseType[] = [];
     private parameters: string[] = [];
     private reference?: ts.Node;
@@ -15,13 +16,31 @@ export class Context {
 
     public pushArgument(argumentType: BaseType): void {
         this.arguments.push(argumentType);
+        this.cacheKey = null;
     }
+
     public pushParameter(parameterName: string): void {
         this.parameters.push(parameterName);
+        this.cacheKey = null;
     }
 
     public setDefault(parameterName: string, argumentType: BaseType) {
         this.defaultArgument.set(parameterName, argumentType);
+        this.cacheKey = null;
+    }
+
+    public getCacheKey() {
+        if (this.cacheKey == null) {
+            this.cacheKey = JSON.stringify([
+                this.arguments.map(argument => argument.getId()),
+                this.parameters,
+                Array.from(this.defaultArgument.entries()).reduce((object, [ name, type ]) => {
+                    object[name] = type.getId();
+                    return object;
+                }, <Record<string, string>>{}),
+            ]);
+        }
+        return this.cacheKey;
     }
 
     public getArgument(parameterName: string): BaseType {
