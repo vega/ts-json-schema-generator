@@ -27,10 +27,22 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         return resultType;
     }
 
+    private combineUnion(union: UnionType | EnumType): UnionType {
+        return new UnionType(union.getTypes().reduce((types, type) => {
+            const derefed = derefType(type);
+            if (derefed instanceof UnionType) {
+                types.push(...this.combineUnion(derefed).getTypes());
+            } else {
+                types.push(type);
+            }
+            return types;
+        }, <BaseType[]>[]));
+    }
+
     private narrowType(type: BaseType, predicate: (type: BaseType) => boolean): BaseType {
         const derefed = derefType(type);
         if (derefed instanceof UnionType || derefed instanceof EnumType) {
-            const matchingTypes = derefed.getTypes().filter(predicate);
+            const matchingTypes = this.combineUnion(derefed).getTypes().filter(predicate);
             return matchingTypes.length === 1 ? matchingTypes[0] : new UnionType(matchingTypes);
         } else {
             return type;

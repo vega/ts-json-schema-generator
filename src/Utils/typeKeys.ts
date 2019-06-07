@@ -65,9 +65,14 @@ export function getTypeByKey(type: BaseType, index: LiteralType): BaseType | und
         const property = type.getProperties().find((it) => it.getName() === index.getValue());
         if (property) {
             const propertyType = property.getType();
-            if (!property.isRequired() && !(propertyType instanceof UnionType &&
-                    propertyType.getTypes().some(subType => subType instanceof UndefinedType))) {
-                return new UnionType([propertyType, new UndefinedType() ]);
+            if (!property.isRequired()) {
+                if (propertyType instanceof UnionType) {
+                    if (!propertyType.getTypes().some(subType => subType instanceof UndefinedType)) {
+                        return new UnionType([ ...propertyType.getTypes(), new UndefinedType() ]);
+                    }
+                } else {
+                    return new UnionType([ propertyType, new UndefinedType() ]);
+                }
             }
             return propertyType;
         }
