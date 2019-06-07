@@ -4,6 +4,7 @@ import { IntersectionType } from "../Type/IntersectionType";
 import { LiteralType } from "../Type/LiteralType";
 import { ObjectType } from "../Type/ObjectType";
 import { TupleType } from "../Type/TupleType";
+import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "./derefType";
 import { uniqueArray } from "./uniqueArray";
@@ -63,7 +64,12 @@ export function getTypeByKey(type: BaseType, index: LiteralType): BaseType | und
     if (type instanceof ObjectType) {
         const property = type.getProperties().find((it) => it.getName() === index.getValue());
         if (property) {
-            return property.getType();
+            const propertyType = property.getType();
+            if (!property.isRequired() && !(propertyType instanceof UnionType &&
+                    propertyType.getTypes().some(subType => subType instanceof UndefinedType))) {
+                return new UnionType([propertyType, new UndefinedType() ]);
+            }
+            return propertyType;
         }
 
         const additionalProperty = type.getAdditionalProperties();
