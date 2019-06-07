@@ -62,6 +62,7 @@ describe("valid-data", () => {
     it("class-extra-props", assertSchema("class-extra-props", "MyObject"));
     it("class-inheritance", assertSchema("class-inheritance", "MyObject"));
     it("class-generics", assertSchema("class-generics", "MyObject"));
+    it("class-jsdoc", assertSchema("class-jsdoc", "MyObject", "extended"));
 
     it("structure-private", assertSchema("structure-private", "MyObject"));
     it("structure-anonymous", assertSchema("structure-anonymous", "MyObject"));

@@ -32,6 +32,8 @@ export class AnnotatedNodeParser implements SubNodeParser {
             return node;
         } else if (node.parent.kind === ts.SyntaxKind.PropertySignature) {
             return node.parent;
+        } else if (node.parent.kind === ts.SyntaxKind.PropertyDeclaration) {
+            return node.parent;
         } else if (node.parent.kind === ts.SyntaxKind.IndexSignature) {
             return node.parent;
         } else {
