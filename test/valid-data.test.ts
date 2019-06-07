@@ -161,4 +161,5 @@ describe("valid-data", () => {
     it("type-conditional-union", assertSchema("type-conditional-union", "MyObject"));
     it("type-conditional-intersection", assertSchema("type-conditional-intersection", "MyObject"));
     it("type-conditional-exclude", assertSchema("type-conditional-exclude", "MyObject"));
+    it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
 });
