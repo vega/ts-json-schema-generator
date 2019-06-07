@@ -18,20 +18,12 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
     public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
         const checkType = this.childNodeParser.createType(node.checkType, context);
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
-
-        if (isAssignableTo(extendsType, checkType)) {
-            const result = this.childNodeParser.createType(node.trueType, context);
-            if (derefType(result).getId() === derefType(checkType).getId()) {
-                return this.narrowType(result, type => isAssignableTo(extendsType, type));
-            }
-            return result;
-        } else {
-            const result = this.childNodeParser.createType(node.falseType, context);
-            if (derefType(result).getId() === derefType(checkType).getId()) {
-                return this.narrowType(result, type => !isAssignableTo(extendsType, type));
-            }
-            return result;
+        const result = isAssignableTo(extendsType, checkType);
+        const resultType = this.childNodeParser.createType(result ? node.trueType : node.falseType, context);
+        if (derefType(resultType).getId() === derefType(checkType).getId()) {
+            return this.narrowType(resultType, type => isAssignableTo(extendsType, type) === result);
         }
+        return resultType;
     }
 
     private narrowType(type: BaseType, predicate: (type: BaseType) => boolean): BaseType {
