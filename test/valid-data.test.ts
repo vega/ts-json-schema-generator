@@ -139,6 +139,7 @@ describe("valid-data", () => {
     it("generic-recursive", assertSchema("generic-recursive", "MyObject"));
     it("generic-hell", assertSchema("generic-hell", "MyObject"));
     it("generic-default", assertSchema("generic-default", "MyObject"));
+    it("generic-prefixed-number", assertSchema("generic-prefixed-number", "MyObject"));
 
     it("annotation-custom", assertSchema("annotation-custom", "MyObject", "basic", [
         "customNumberProperty",
