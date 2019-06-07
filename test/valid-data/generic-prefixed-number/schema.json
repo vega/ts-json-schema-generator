@@ -1,0 +1,21 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "angle": {
+                    "$ref": "#/definitions/Range<-180,180>"
+                }
+            },
+            "required": [
+                "angle"
+            ],
+            "type": "object"
+        },
+        "Range<-180,180>": {
+            "type": "number"
+        }
+    }
+}
