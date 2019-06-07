@@ -98,6 +98,7 @@ export * from "./src/NodeParser/TupleNodeParser";
 export * from "./src/NodeParser/AnnotatedNodeParser";
 export * from "./src/NodeParser/CallExpressionParser";
 export * from "./src/NodeParser/ConditionalTypeNodeParser";
+export * from "./src/NodeParser/PrefixUnaryExpressionNodeParser";
 
 export * from "./src/SchemaGenerator";
 

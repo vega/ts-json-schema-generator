@@ -27,6 +27,7 @@ import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
 import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser";
 import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser";
 import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser";
+import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryExpressionNodeParser";
 import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
@@ -81,6 +82,8 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
+
+        .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 
         .addNodeParser(new LiteralNodeParser(chainNodeParser))
         .addNodeParser(new ParenthesizedNodeParser(chainNodeParser))

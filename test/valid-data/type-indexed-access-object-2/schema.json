@@ -1,12 +1,19 @@
 {
+    "$ref": "#/definitions/MyType",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyType": {
-            "type": "string",
-            "enum": [
-                "bar"
+            "anyOf": [
+                {
+                    "enum": [
+                        "bar"
+                    ],
+                    "type": "string"
+                },
+                {
+                    "not": {}
+                }
             ]
         }
-    },
-    "$ref": "#/definitions/MyType"
+    }
 }
