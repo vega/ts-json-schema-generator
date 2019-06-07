@@ -312,4 +312,15 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(nodeTypeA, nodeTypeC)).toBe(false);
         expect(isAssignableTo(nodeTypeB, nodeTypeC)).toBe(false);
     });
+    it("can handle deep union structures", () => {
+        const objectType = new ObjectType("interface-src/test.ts-0-53-src/test.ts-0-317", [],
+            [ new ObjectProperty("a", new StringType(), true) ], false);
+        const innerDefinition = new DefinitionType("NumericValueRef", objectType);
+        const innerUnion = new UnionType([ new NumberType(), innerDefinition ]);
+        const alias = new AliasType("alias-src/test.ts-53-106-src/test.ts-0-317", innerUnion);
+        const outerDefinition = new DefinitionType("NumberValue", alias);
+        const outerUnion = new UnionType([ outerDefinition, new UndefinedType() ]);
+        const def = new DefinitionType("NumericValueRef", objectType);
+        expect(isAssignableTo(outerUnion, def)).toBe(true);
+    });
 });

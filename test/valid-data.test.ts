@@ -165,5 +165,6 @@ describe("valid-data", () => {
     it("type-conditional-enum", assertSchema("type-conditional-enum", "IParameter"));
     it("type-conditional-intersection", assertSchema("type-conditional-intersection", "MyObject"));
     it("type-conditional-exclude", assertSchema("type-conditional-exclude", "MyObject"));
+    it("type-conditional-exclude-complex", assertSchema("type-conditional-exclude-complex", "BaseAxisNoSignals"));
     it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
 });
