@@ -159,6 +159,7 @@ describe("valid-data", () => {
     it("type-conditional-simple", assertSchema("type-conditional-simple", "MyObject"));
     it("type-conditional-inheritance", assertSchema("type-conditional-inheritance", "MyObject"));
     it("type-conditional-union", assertSchema("type-conditional-union", "MyObject"));
+    it("type-conditional-enum", assertSchema("type-conditional-enum", "IParameter"));
     it("type-conditional-intersection", assertSchema("type-conditional-intersection", "MyObject"));
     it("type-conditional-exclude", assertSchema("type-conditional-exclude", "MyObject"));
     it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));

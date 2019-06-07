@@ -1,7 +1,9 @@
 import { AnyType } from "../Type/AnyType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { EnumType } from "../Type/EnumType";
 import { IntersectionType } from "../Type/IntersectionType";
+import { LiteralType } from "../Type/LiteralType";
 import { NeverType } from "../Type/NeverType";
 import { NullType } from "../Type/NullType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
@@ -11,6 +13,7 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { UnknownType } from "../Type/UnknownType";
 import { derefType } from "./derefType";
+import { uniqueArray } from "./uniqueArray";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -102,8 +105,8 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
         return true;
     }
 
-    // Union type is assignable to target when all types in the union are assignable to it
-    if (source instanceof UnionType) {
+    // Union and enum type is assignable to target when all types in the union/enum are assignable to it
+    if (source instanceof UnionType || source instanceof EnumType) {
         return source.getTypes().every(type => isAssignableTo(target, type, insideTypes));
     }
 
@@ -125,8 +128,8 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
         }
     }
 
-    // When target is a union type then check if source type can be assigned to any variant
-    if (target instanceof UnionType) {
+    // When target is a union or enum type then check if source type can be assigned to any variant
+    if (target instanceof UnionType || target instanceof EnumType) {
         return target.getTypes().some(type => isAssignableTo(type, source, insideTypes));
     }
 

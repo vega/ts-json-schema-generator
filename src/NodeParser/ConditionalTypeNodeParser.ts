@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { EnumType } from "../Type/EnumType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
 import { isAssignableTo } from "../Utils/isAssignableTo";
@@ -28,10 +29,11 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
     private narrowType(type: BaseType, predicate: (type: BaseType) => boolean): BaseType {
         const derefed = derefType(type);
-        if (!(derefed instanceof UnionType)) {
+        if (derefed instanceof UnionType || derefed instanceof EnumType) {
+            const matchingTypes = derefed.getTypes().filter(predicate);
+            return matchingTypes.length === 1 ? matchingTypes[0] : new UnionType(matchingTypes);
+        } else {
             return type;
         }
-        const matchingTypes = derefed.getTypes().filter(predicate);
-        return matchingTypes.length === 1 ? matchingTypes[0] : new UnionType(matchingTypes);
     }
 }
