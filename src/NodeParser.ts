@@ -1,3 +1,4 @@
+import * as stringify from "json-stable-stringify";
 import * as ts from "typescript";
 import { LogicError } from "./Error/LogicError";
 import { BaseType } from "./Type/BaseType";
@@ -30,7 +31,7 @@ export class Context {
 
     public getCacheKey() {
         if (this.cacheKey == null) {
-            this.cacheKey = JSON.stringify([
+            this.cacheKey = stringify([
                 this.reference ? getKey(this.reference, this) : "",
                 this.arguments.map(argument => argument.getId()),
             ]);
