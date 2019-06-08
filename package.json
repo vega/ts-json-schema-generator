@@ -56,19 +56,25 @@
     "source-map-support": "~0.5.12",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.2.0",
-    "tslint": "~5.17.0"
+    "vega-lite-dev-config": "^0.1.7"
   },
   "scripts": {
     "prepublishOnly": "npm run build",
     "preversion": "npm run lint",
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -p .",
-    "fix": "tslint -p . --fix",
+    "lint": "beemo eslint '{src,test,factory}/**/*.ts'",
+    "fix": "npm run lint -- --fix",
     "test": "jest test/ --verbose",
     "test:fast": "FAST_TEST=1 jest test/ --verbose",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
     "run": "ts-node ts-json-schema-generator.ts"
+  },
+  "beemo": {
+    "module": "vega-lite-dev-config",
+    "drivers": [
+      "eslint"
+    ]
   },
   "jest": {
     "transform": {
