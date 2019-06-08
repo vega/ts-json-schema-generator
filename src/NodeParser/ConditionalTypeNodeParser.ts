@@ -2,10 +2,9 @@ import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { EnumType } from "../Type/EnumType";
-import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
 import { isAssignableTo } from "../Utils/isAssignableTo";
+import { narrowType } from "../Utils/narrowType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -22,30 +21,8 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const result = isAssignableTo(extendsType, checkType);
         const resultType = this.childNodeParser.createType(result ? node.trueType : node.falseType, context);
         if (derefType(resultType).getId() === derefType(checkType).getId()) {
-            return this.narrowType(resultType, type => isAssignableTo(extendsType, type) === result);
+            return narrowType(resultType, type => isAssignableTo(extendsType, type) === result);
         }
         return resultType;
-    }
-
-    private combineUnion(union: UnionType | EnumType): UnionType {
-        return new UnionType(union.getTypes().reduce((types, type) => {
-            const derefed = derefType(type);
-            if (derefed instanceof UnionType) {
-                types.push(...this.combineUnion(derefed).getTypes());
-            } else {
-                types.push(type);
-            }
-            return types;
-        }, <BaseType[]>[]));
-    }
-
-    private narrowType(type: BaseType, predicate: (type: BaseType) => boolean): BaseType {
-        const derefed = derefType(type);
-        if (derefed instanceof UnionType || derefed instanceof EnumType) {
-            const matchingTypes = this.combineUnion(derefed).getTypes().filter(predicate);
-            return matchingTypes.length === 1 ? matchingTypes[0] : new UnionType(matchingTypes);
-        } else {
-            return type;
-        }
     }
 }
