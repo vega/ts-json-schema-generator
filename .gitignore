@@ -1,5 +1,5 @@
 .eslintrc.js
-*.ts
+/*.ts
 coverage/
 dist/
 node_modules/
