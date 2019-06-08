@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { LogicError } from "./Error/LogicError";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
+import { getKey } from "./Utils/nodeKey";
 
 export class Context {
     private cacheKey: string | null = null;
@@ -21,23 +22,17 @@ export class Context {
 
     public pushParameter(parameterName: string): void {
         this.parameters.push(parameterName);
-        this.cacheKey = null;
     }
 
     public setDefault(parameterName: string, argumentType: BaseType) {
         this.defaultArgument.set(parameterName, argumentType);
-        this.cacheKey = null;
     }
 
     public getCacheKey() {
         if (this.cacheKey == null) {
             this.cacheKey = JSON.stringify([
+                this.reference ? getKey(this.reference, this) : "",
                 this.arguments.map(argument => argument.getId()),
-                this.parameters,
-                Array.from(this.defaultArgument.entries()).reduce((object, [ name, type ]) => {
-                    object[name] = type.getId();
-                    return object;
-                }, <Record<string, string>>{}),
             ]);
         }
         return this.cacheKey;
