@@ -1,9 +1,12 @@
+import * as stringify from "json-stable-stringify";
 import * as ts from "typescript";
 import { LogicError } from "./Error/LogicError";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
+import { getKey } from "./Utils/nodeKey";
 
 export class Context {
+    private cacheKey: string | null = null;
     private arguments: BaseType[] = [];
     private parameters: string[] = [];
     private reference?: ts.Node;
@@ -15,13 +18,25 @@ export class Context {
 
     public pushArgument(argumentType: BaseType): void {
         this.arguments.push(argumentType);
+        this.cacheKey = null;
     }
+
     public pushParameter(parameterName: string): void {
         this.parameters.push(parameterName);
     }
 
     public setDefault(parameterName: string, argumentType: BaseType) {
         this.defaultArgument.set(parameterName, argumentType);
+    }
+
+    public getCacheKey() {
+        if (this.cacheKey == null) {
+            this.cacheKey = stringify([
+                this.reference ? getKey(this.reference, this) : "",
+                this.arguments.map(argument => argument.getId()),
+            ]);
+        }
+        return this.cacheKey;
     }
 
     public getArgument(parameterName: string): BaseType {
