@@ -3,6 +3,7 @@ import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
 import { LiteralType } from "../Type/LiteralType";
 import { ObjectType } from "../Type/ObjectType";
+import { StringType } from "../Type/StringType";
 import { TupleType } from "../Type/TupleType";
 import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
@@ -41,7 +42,7 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
     return [];
 }
 
-export function getTypeByKey(type: BaseType, index: LiteralType): BaseType | undefined {
+export function getTypeByKey(type: BaseType, index: LiteralType | StringType): BaseType | undefined {
     type = derefType(type);
 
     if (
@@ -58,18 +59,20 @@ export function getTypeByKey(type: BaseType, index: LiteralType): BaseType | und
         return undefined;
     }
 
-    if (type instanceof TupleType) {
+    if (type instanceof TupleType && index instanceof LiteralType) {
         return type.getTypes().find((it, idx) => idx === index.getValue());
     }
     if (type instanceof ObjectType) {
-        const property = type.getProperties().find((it) => it.getName() === index.getValue());
-        if (property) {
-            const propertyType = property.getType();
-            if (!property.isRequired() && !(propertyType instanceof UnionType &&
-                    propertyType.getTypes().some(subType => subType instanceof UndefinedType))) {
-                return new UnionType([propertyType, new UndefinedType() ]);
+        if (index instanceof LiteralType) {
+            const property = type.getProperties().find((it) => it.getName() === index.getValue());
+            if (property) {
+                const propertyType = property.getType();
+                if (!property.isRequired() && !(propertyType instanceof UnionType &&
+                        propertyType.getTypes().some(subType => subType instanceof UndefinedType))) {
+                    return new UnionType([propertyType, new UndefinedType() ]);
+                }
+                return propertyType;
             }
-            return propertyType;
         }
 
         const additionalProperty = type.getAdditionalProperties();

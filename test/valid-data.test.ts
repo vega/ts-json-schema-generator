@@ -132,6 +132,7 @@ describe("valid-data", () => {
     it("type-mapped-native-single-literal", assertSchema("type-mapped-native-single-literal", "MyObject"));
     it("type-mapped-widened", assertSchema("type-mapped-widened", "MyObject"));
     it("type-mapped-optional", assertSchema("type-mapped-optional", "MyObject"));
+    it("type-mapped-additional-props", assertSchema("type-mapped-additional-props", "MyObject"));
 
     it("generic-simple", assertSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertSchema("generic-arrays", "MyObject"));

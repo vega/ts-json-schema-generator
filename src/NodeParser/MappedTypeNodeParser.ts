@@ -27,7 +27,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
         if (keyListType instanceof UnionType) {
             // Key type resolves to a set of known properties
-            return new ObjectType(id, [], this.getProperties(node, keyListType, context), false);
+            return new ObjectType(id, [], this.getProperties(node, keyListType, context),
+                this.getAdditionalProperties(node, keyListType, context));
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
@@ -43,7 +44,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
     }
 
     private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
-        return keyListType.getTypes().reduce((result: ObjectProperty[], key: LiteralType) => {
+        return keyListType.getTypes()
+                .filter(type => type instanceof LiteralType)
+                .reduce((result: ObjectProperty[], key: LiteralType) => {
             const objectProperty = new ObjectProperty(
                 key.getValue().toString(),
                 this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
@@ -55,7 +58,17 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }, []);
     }
 
-    private createSubContext(node: ts.MappedTypeNode, key: LiteralType, parentContext: Context): Context {
+    private getAdditionalProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context):
+            BaseType | false {
+        const key = keyListType.getTypes().filter(type => !(type instanceof LiteralType))[0];
+        if (key) {
+            return this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context));
+        } else {
+            return false;
+        }
+    }
+
+    private createSubContext(node: ts.MappedTypeNode, key: LiteralType | StringType, parentContext: Context): Context {
         const subContext = new Context(node);
 
         parentContext.getParameters().forEach((parentParameter) => {
