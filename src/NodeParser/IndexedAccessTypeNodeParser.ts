@@ -4,6 +4,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
+import { NumberType } from "../Type/NumberType";
 import { StringType } from "../Type/StringType";
 import { getTypeByKey } from "../Utils/typeKeys";
 
@@ -18,8 +19,9 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
         const indexType = this.childNodeParser.createType(node.indexType, context);
-        if (!(indexType instanceof LiteralType || indexType instanceof StringType)) {
-            throw new LogicError(`Unexpected type "${indexType.getId()}" (expected "LiteralType" or "StringType")`);
+        if (!(indexType instanceof LiteralType || indexType instanceof StringType || indexType instanceof NumberType)) {
+            throw new LogicError(`Unexpected type "${indexType.getId()}" (expected "LiteralType" or "StringType" ` +
+                `or "NumberType")`);
         }
 
         const objectType = this.childNodeParser.createType(node.objectType, context);

@@ -1,7 +1,9 @@
 import { AnyType } from "../Type/AnyType";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
 import { LiteralType } from "../Type/LiteralType";
+import { NumberType } from "../Type/NumberType";
 import { ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { TupleType } from "../Type/TupleType";
@@ -61,6 +63,9 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType): B
 
     if (type instanceof TupleType && index instanceof LiteralType) {
         return type.getTypes().find((it, idx) => idx === index.getValue());
+    }
+    if (type instanceof ArrayType && index instanceof NumberType) {
+        return type.getItem();
     }
     if (type instanceof ObjectType) {
         if (index instanceof LiteralType) {

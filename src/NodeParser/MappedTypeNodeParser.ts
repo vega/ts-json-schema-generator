@@ -2,8 +2,10 @@ import * as ts from "typescript";
 import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
+import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
@@ -35,6 +37,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof StringType) {
             // Key type widens to `string`
             return new ObjectType(id, [], [], this.childNodeParser.createType(node.type!, context));
+        } else if (keyListType instanceof NumberType) {
+            return new ArrayType(this.childNodeParser.createType(node.type!,
+                this.createSubContext(node, keyListType, context)));
         } else {
             throw new LogicError(
                 // tslint:disable-next-line:max-line-length
