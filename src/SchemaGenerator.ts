@@ -51,11 +51,11 @@ export class SchemaGenerator {
         const projectFiles = new Array<ts.SourceFile>();
         const externalFiles = new Array<ts.SourceFile>();
 
-        for (const f of this.program.getSourceFiles()) {
-            if (!f.fileName.includes("/node_modules/")) {
-                projectFiles.push(f);
+        for (const sourceFile of this.program.getSourceFiles()) {
+            if (!sourceFile.fileName.includes("/node_modules/")) {
+                projectFiles.push(sourceFile);
             } else {
-                externalFiles.push(f);
+                externalFiles.push(sourceFile);
             }
         }
 
