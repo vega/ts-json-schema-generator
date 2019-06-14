@@ -18,10 +18,9 @@ export class SchemaGenerator {
         private nodeParser: NodeParser,
         private typeFormatter: TypeFormatter,
     ) {
-        const sourceFiles = this.program.getSourceFiles();
         this.prioritizedFiles = [];
         this.unprioritizedFiles = [];
-        for (const f of sourceFiles) {
+        for (const f of this.program.getSourceFiles()) {
             if (!f.fileName.includes("/node_modules/")) {
                 this.prioritizedFiles.push(f);
             } else {
