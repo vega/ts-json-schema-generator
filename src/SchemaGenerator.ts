@@ -10,23 +10,11 @@ import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
-    private prioritizedFiles: ts.SourceFile[];
-    private unprioritizedFiles: ts.SourceFile[];
-
     public constructor(
         private program: ts.Program,
         private nodeParser: NodeParser,
         private typeFormatter: TypeFormatter,
     ) {
-        this.prioritizedFiles = [];
-        this.unprioritizedFiles = [];
-        for (const f of this.program.getSourceFiles()) {
-            if (!f.fileName.includes("/node_modules/")) {
-                this.prioritizedFiles.push(f);
-            } else {
-                this.unprioritizedFiles.push(f);
-            }
-        }
     }
 
     public createSchema(fullName: string): Schema {
@@ -43,23 +31,33 @@ export class SchemaGenerator {
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
+        let prioritizedFiles = new Array<ts.SourceFile>();
+        let unprioritizedFiles = new Array<ts.SourceFile>();
 
-        if (this.prioritizedFiles.length) {
-            for (const sourceFile of this.prioritizedFiles) {
+        for (const f of this.program.getSourceFiles()) {
+            if (!f.fileName.includes("/node_modules/")) {
+                prioritizedFiles.push(f);
+            } else {
+                unprioritizedFiles.push(f);
+            }
+        }
+
+        if (prioritizedFiles.length) {
+            for (const sourceFile of prioritizedFiles) {
                 this.inspectNode(sourceFile, typeChecker, allTypes);
             }
-            this.prioritizedFiles = [];
+            prioritizedFiles = [];
         }
 
         if (allTypes.has(fullName)) {
             return allTypes.get(fullName)!;
         }
 
-        if (this.unprioritizedFiles.length) {
-            for (const sourceFile of this.unprioritizedFiles) {
+        if (unprioritizedFiles.length) {
+            for (const sourceFile of unprioritizedFiles) {
                 this.inspectNode(sourceFile, typeChecker, allTypes);
             }
-            this.unprioritizedFiles = [];
+            unprioritizedFiles = [];
         }
 
         if (allTypes.has(fullName)) {
