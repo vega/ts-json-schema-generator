@@ -70,9 +70,7 @@ export class SchemaGenerator {
             node.kind === ts.SyntaxKind.EnumDeclaration ||
             node.kind === ts.SyntaxKind.TypeAliasDeclaration
         ) {
-            if (!this.isExportType(node)) {
-                return;
-            } else if (this.isGenericType(node as ts.TypeAliasDeclaration)) {
+            if (!this.isExportType(node) || (this.isGenericType(node as ts.TypeAliasDeclaration))) {
                 return;
             }
 
