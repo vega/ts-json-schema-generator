@@ -62,10 +62,8 @@ export class SchemaGenerator {
         return { prioritizedFiles, unprioritizedFiles };
     }
     private appendTypes(sourceFiles: ts.SourceFile[], typeChecker: ts.TypeChecker, types: Map<string, ts.Node>) {
-        if (sourceFiles.length) {
-            for (const sourceFile of sourceFiles) {
-                this.inspectNode(sourceFile, typeChecker, types);
-            }
+        for (const sourceFile of sourceFiles) {
+            this.inspectNode(sourceFile, typeChecker, types);
         }
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
