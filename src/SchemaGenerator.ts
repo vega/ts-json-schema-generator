@@ -11,9 +11,9 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
     public constructor(
-        private program: ts.Program,
-        private nodeParser: NodeParser,
-        private typeFormatter: TypeFormatter,
+        private readonly program: ts.Program,
+        private readonly nodeParser: NodeParser,
+        private readonly typeFormatter: TypeFormatter,
     ) {
     }
 
