@@ -31,15 +31,15 @@ export class SchemaGenerator {
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
-        const { prioritizedFiles, unprioritizedFiles } = this.partitionFiles();
+        const { projectFiles, externalFiles } = this.partitionFiles();
 
-        this.appendTypes(prioritizedFiles, typeChecker, allTypes);
+        this.appendTypes(projectFiles, typeChecker, allTypes);
 
         if (allTypes.has(fullName)) {
             return allTypes.get(fullName)!;
         }
 
-        this.appendTypes(unprioritizedFiles, typeChecker, allTypes);
+        this.appendTypes(externalFiles, typeChecker, allTypes);
 
         if (allTypes.has(fullName)) {
             return allTypes.get(fullName)!;
@@ -48,18 +48,18 @@ export class SchemaGenerator {
         throw new NoRootTypeError(fullName);
     }
     private partitionFiles() {
-        const prioritizedFiles = new Array<ts.SourceFile>();
-        const unprioritizedFiles = new Array<ts.SourceFile>();
+        const projectFiles = new Array<ts.SourceFile>();
+        const externalFiles = new Array<ts.SourceFile>();
 
         for (const f of this.program.getSourceFiles()) {
             if (!f.fileName.includes("/node_modules/")) {
-                prioritizedFiles.push(f);
+                projectFiles.push(f);
             } else {
-                unprioritizedFiles.push(f);
+                externalFiles.push(f);
             }
         }
 
-        return { prioritizedFiles, unprioritizedFiles };
+        return { projectFiles, externalFiles };
     }
     private appendTypes(sourceFiles: ts.SourceFile[], typeChecker: ts.TypeChecker, types: Map<string, ts.Node>) {
         for (const sourceFile of sourceFiles) {
