@@ -31,8 +31,8 @@ export class SchemaGenerator {
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
-        let prioritizedFiles = new Array<ts.SourceFile>();
-        let unprioritizedFiles = new Array<ts.SourceFile>();
+        const prioritizedFiles = new Array<ts.SourceFile>();
+        const unprioritizedFiles = new Array<ts.SourceFile>();
 
         for (const f of this.program.getSourceFiles()) {
             if (!f.fileName.includes("/node_modules/")) {
@@ -46,7 +46,6 @@ export class SchemaGenerator {
             for (const sourceFile of prioritizedFiles) {
                 this.inspectNode(sourceFile, typeChecker, allTypes);
             }
-            prioritizedFiles = [];
         }
 
         if (allTypes.has(fullName)) {
@@ -57,7 +56,6 @@ export class SchemaGenerator {
             for (const sourceFile of unprioritizedFiles) {
                 this.inspectNode(sourceFile, typeChecker, allTypes);
             }
-            unprioritizedFiles = [];
         }
 
         if (allTypes.has(fullName)) {
