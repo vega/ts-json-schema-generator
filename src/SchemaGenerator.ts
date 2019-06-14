@@ -31,16 +31,7 @@ export class SchemaGenerator {
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
-        const prioritizedFiles = new Array<ts.SourceFile>();
-        const unprioritizedFiles = new Array<ts.SourceFile>();
-
-        for (const f of this.program.getSourceFiles()) {
-            if (!f.fileName.includes("/node_modules/")) {
-                prioritizedFiles.push(f);
-            } else {
-                unprioritizedFiles.push(f);
-            }
-        }
+        const { prioritizedFiles, unprioritizedFiles } = this.partitionFiles();
 
         if (prioritizedFiles.length) {
             for (const sourceFile of prioritizedFiles) {
@@ -63,6 +54,20 @@ export class SchemaGenerator {
         }
 
         throw new NoRootTypeError(fullName);
+    }
+    private partitionFiles() {
+        const prioritizedFiles = new Array<ts.SourceFile>();
+        const unprioritizedFiles = new Array<ts.SourceFile>();
+
+        for (const f of this.program.getSourceFiles()) {
+            if (!f.fileName.includes("/node_modules/")) {
+                prioritizedFiles.push(f);
+            } else {
+                unprioritizedFiles.push(f);
+            }
+        }
+
+        return { prioritizedFiles, unprioritizedFiles };
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
