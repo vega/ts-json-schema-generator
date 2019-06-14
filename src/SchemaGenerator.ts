@@ -33,21 +33,13 @@ export class SchemaGenerator {
         const allTypes = new Map<string, ts.Node>();
         const { prioritizedFiles, unprioritizedFiles } = this.partitionFiles();
 
-        if (prioritizedFiles.length) {
-            for (const sourceFile of prioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, allTypes);
-            }
-        }
+        this.appendTypes(prioritizedFiles, typeChecker, allTypes);
 
         if (allTypes.has(fullName)) {
             return allTypes.get(fullName)!;
         }
 
-        if (unprioritizedFiles.length) {
-            for (const sourceFile of unprioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, allTypes);
-            }
-        }
+        this.appendTypes(unprioritizedFiles, typeChecker, allTypes);
 
         if (allTypes.has(fullName)) {
             return allTypes.get(fullName)!;
@@ -68,6 +60,13 @@ export class SchemaGenerator {
         }
 
         return { prioritizedFiles, unprioritizedFiles };
+    }
+    private appendTypes(sourceFiles: ts.SourceFile[], typeChecker: ts.TypeChecker, types: Map<string, ts.Node>) {
+        if (sourceFiles.length) {
+            for (const sourceFile of sourceFiles) {
+                this.inspectNode(sourceFile, typeChecker, types);
+            }
+        }
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         if (
