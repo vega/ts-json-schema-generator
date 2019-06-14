@@ -10,7 +10,6 @@ import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
-    private allTypes: Map<string, ts.Node>;
     private prioritizedFiles: ts.SourceFile[];
     private unprioritizedFiles: ts.SourceFile[];
 
@@ -19,8 +18,6 @@ export class SchemaGenerator {
         private nodeParser: NodeParser,
         private typeFormatter: TypeFormatter,
     ) {
-        this.allTypes = new Map<string, ts.Node>();
-
         const sourceFiles = this.program.getSourceFiles();
         this.prioritizedFiles = [];
         this.unprioritizedFiles = [];
@@ -46,27 +43,28 @@ export class SchemaGenerator {
 
     private findRootNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
+        const allTypes = new Map<string, ts.Node>();
 
         if (this.prioritizedFiles.length) {
             for (const sourceFile of this.prioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, this.allTypes);
+                this.inspectNode(sourceFile, typeChecker, allTypes);
             }
             this.prioritizedFiles = [];
         }
 
-        if (this.allTypes.has(fullName)) {
-            return this.allTypes.get(fullName)!;
+        if (allTypes.has(fullName)) {
+            return allTypes.get(fullName)!;
         }
 
         if (this.unprioritizedFiles.length) {
             for (const sourceFile of this.unprioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, this.allTypes);
+                this.inspectNode(sourceFile, typeChecker, allTypes);
             }
             this.unprioritizedFiles = [];
         }
 
-        if (this.allTypes.has(fullName)) {
-            return this.allTypes.get(fullName)!;
+        if (allTypes.has(fullName)) {
+            return allTypes.get(fullName)!;
         }
 
         throw new NoRootTypeError(fullName);
