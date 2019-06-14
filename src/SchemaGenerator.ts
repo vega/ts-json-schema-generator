@@ -64,19 +64,20 @@ export class SchemaGenerator {
         }
     }
     private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        if (
-            node.kind === ts.SyntaxKind.InterfaceDeclaration ||
-            node.kind === ts.SyntaxKind.ClassDeclaration ||
-            node.kind === ts.SyntaxKind.EnumDeclaration ||
-            node.kind === ts.SyntaxKind.TypeAliasDeclaration
-        ) {
-            if (!this.isExportType(node) || (this.isGenericType(node as ts.TypeAliasDeclaration))) {
-                return;
-            }
+        switch (node.kind) {
+            case ts.SyntaxKind.InterfaceDeclaration:
+            case ts.SyntaxKind.ClassDeclaration:
+            case ts.SyntaxKind.EnumDeclaration:
+            case ts.SyntaxKind.TypeAliasDeclaration:
+                if (!this.isExportType(node) || (this.isGenericType(node as ts.TypeAliasDeclaration))) {
+                    return;
+                }
 
-            allTypes.set(this.getFullName(node, typeChecker), node);
-        } else {
-            ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                allTypes.set(this.getFullName(node, typeChecker), node);
+                break;
+            default:
+                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                break;
         }
     }
 
