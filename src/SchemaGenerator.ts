@@ -23,8 +23,8 @@ export class SchemaGenerator {
 
         return {
             $schema: "http://json-schema.org/draft-07/schema#",
-            definitions: this.getRootChildDefinitions(rootType),
             ...this.getRootTypeDefinition(rootType),
+            definitions: this.getRootChildDefinitions(rootType),
         };
     }
 
@@ -46,6 +46,35 @@ export class SchemaGenerator {
         }
 
         throw new NoRootTypeError(fullName);
+    }
+    private getRootTypeDefinition(rootType: BaseType): Definition {
+        return this.typeFormatter.getDefinition(rootType);
+    }
+    private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
+        const seen = new Set<string>();
+
+        const children = this
+            .typeFormatter.getChildren(rootType)
+            .filter((child) => child instanceof DefinitionType)
+            .filter((child: DefinitionType) => {
+                if (!seen.has(child.getId())) {
+                    seen.add(child.getId());
+                    return true;
+                }
+                return false;
+            }) as DefinitionType[];
+
+        return children
+            .reduce((result: StringMap<Definition>, child) => {
+                const name = child.getName();
+                if (name in result) {
+                    throw new Error(`Type "${name}" has multiple definitions.`);
+                }
+                return {
+                    ...result,
+                    [name]: this.typeFormatter.getDefinition(child.getType()),
+                };
+            }, {});
     }
     private partitionFiles() {
         const projectFiles = new Array<ts.SourceFile>();
@@ -80,7 +109,6 @@ export class SchemaGenerator {
                 break;
         }
     }
-
     private isExportType(node: ts.Node): boolean {
         const localSymbol = localSymbolAtNode(node);
         return localSymbol ? "exportSymbol" in localSymbol : false;
@@ -94,35 +122,5 @@ export class SchemaGenerator {
     private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
         const symbol = symbolAtNode(node)!;
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
-    }
-
-    private getRootTypeDefinition(rootType: BaseType): Definition {
-        return this.typeFormatter.getDefinition(rootType);
-    }
-    private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
-        const seen = new Set<string>();
-
-        const children = this
-            .typeFormatter.getChildren(rootType)
-            .filter((child) => child instanceof DefinitionType)
-            .filter((child: DefinitionType) => {
-                if (!seen.has(child.getId())) {
-                    seen.add(child.getId());
-                    return true;
-                }
-                return false;
-            }) as DefinitionType[];
-
-        return children
-            .reduce((result: StringMap<Definition>, child) => {
-                const name = child.getName();
-                if (name in result) {
-                    throw new Error(`Type "${name}" has multiple definitions.`);
-                }
-                return {
-                    ...result,
-                    [name]: this.typeFormatter.getDefinition(child.getType()),
-                };
-            }, {});
     }
 }
