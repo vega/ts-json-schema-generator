@@ -18,7 +18,7 @@ export class SchemaGenerator {
     }
 
     public createSchema(fullName: string): Schema {
-        const rootNode = this.findRootNode(fullName);
+        const rootNode = this.findNamedNode(fullName);
         const rootType = this.nodeParser.createType(rootNode, new Context());
 
         return {
@@ -28,7 +28,7 @@ export class SchemaGenerator {
         };
     }
 
-    private findRootNode(fullName: string): ts.Node {
+    private findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
         const { projectFiles, externalFiles } = this.partitionFiles();
