@@ -17,16 +17,30 @@ export class SchemaGenerator {
     ) {
     }
 
-    public createSchema(fullName: string): Schema {
-        const rootNode = this.findNamedNode(fullName);
-        const rootType = this.nodeParser.createType(rootNode, new Context());
-        const rootTypeDefinition = this.getRootTypeDefinition(rootType);
+    public createSchema(fullName: string | undefined): Schema {
+        const rootNodes = this.getRootNodes(fullName);
+        const rootTypes = rootNodes.map(rootNode => {
+            return this.nodeParser.createType(rootNode, new Context());
+        });
+        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : {};
         const definitions: StringMap<Definition> = {};
-        this.appendRootChildDefinitions(rootType, definitions);
+        rootTypes.forEach(rootType => this.appendRootChildDefinitions(rootType, definitions));
 
         return { $schema: "http://json-schema.org/draft-07/schema#", ...rootTypeDefinition, definitions };
     }
 
+    private getRootNodes(fullName: string | undefined) {
+        if (fullName && (fullName !== "*")) {
+            return [this.findNamedNode(fullName)];
+        } else {
+            const rootFileNames = this.program.getRootFileNames();
+            const rootSourceFiles =
+                this.program.getSourceFiles().filter(sourceFile => rootFileNames.includes(sourceFile.fileName));
+            const rootNodes = new Map<string, ts.Node>();
+            this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
+            return [...rootNodes.values()];
+        }
+    }
     private findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
