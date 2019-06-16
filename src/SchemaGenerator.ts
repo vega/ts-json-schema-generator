@@ -20,12 +20,11 @@ export class SchemaGenerator {
     public createSchema(fullName: string): Schema {
         const rootNode = this.findNamedNode(fullName);
         const rootType = this.nodeParser.createType(rootNode, new Context());
+        const rootTypeDefinition = this.getRootTypeDefinition(rootType);
+        const definitions: StringMap<Definition> = {};
+        this.appendRootChildDefinitions(rootType, definitions);
 
-        return {
-            $schema: "http://json-schema.org/draft-07/schema#",
-            ...this.getRootTypeDefinition(rootType),
-            definitions: this.getRootChildDefinitions(rootType),
-        };
+        return { $schema: "http://json-schema.org/draft-07/schema#", ...rootTypeDefinition, definitions };
     }
 
     private findNamedNode(fullName: string): ts.Node {
@@ -50,7 +49,7 @@ export class SchemaGenerator {
     private getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
+    private appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
 
         const children = this
@@ -64,17 +63,15 @@ export class SchemaGenerator {
                 return false;
             }) as DefinitionType[];
 
-        return children
-            .reduce((result: StringMap<Definition>, child) => {
+        children
+            .reduce((definitions, child) => {
                 const name = child.getName();
-                if (name in result) {
+                if (name in definitions) {
                     throw new Error(`Type "${name}" has multiple definitions.`);
                 }
-                return {
-                    ...result,
-                    [name]: this.typeFormatter.getDefinition(child.getType()),
-                };
-            }, {});
+                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+                return definitions;
+            }, childDefinitions);
     }
     private partitionFiles() {
         const projectFiles = new Array<ts.SourceFile>();
