@@ -1,3 +1,4 @@
+import { FunctionNodeParser } from './../src/NodeParser/FunctionNodeParser';
 import * as ts from "typescript";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
@@ -78,6 +79,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
+        .addNodeParser(new FunctionNodeParser())
 
         .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 
