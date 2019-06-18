@@ -39,6 +39,7 @@ import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodePars
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
 
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
@@ -78,6 +79,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
+        .addNodeParser(new FunctionNodeParser())
 
         .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 
