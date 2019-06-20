@@ -69,7 +69,8 @@ export class SchemaGenerator {
         const children = this
             .typeFormatter.getChildren(rootType)
             .filter((child) => child instanceof DefinitionType)
-            .filter((child: DefinitionType) => {
+            .map(child => child as DefinitionType)
+            .filter((child) => {
                 if (!seen.has(child.getId())) {
                     seen.add(child.getId());
                     return true;
