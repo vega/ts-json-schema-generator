@@ -1,0 +1,50 @@
+{
+    "$ref": "#/definitions/MyType",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyType": {
+            "additionalProperties": {
+                "type": "number"
+            },
+            "description": "A typed array of 8-bit unsigned integer values. The contents are initialized to 0. If the\r\nrequested number of bytes could not be allocated an exception is raised.",
+            "properties": {
+                "BYTES_PER_ELEMENT": {
+                    "description": "The size in bytes of each element in the array.",
+                    "type": "number"
+                },
+                "buffer": {
+                    "additionalProperties": false,
+                    "description": "The ArrayBuffer instance referenced by the array.",
+                    "properties": {
+                        "byteLength": {
+                            "description": "Read-only. The length of the ArrayBuffer (in bytes).",
+                            "type": "number"
+                        }
+                    },
+                    "required": ["byteLength"],
+                    "type": "object"
+                },
+                "byteLength": {
+                    "description": "The length in bytes of the array.",
+                    "type": "number"
+                },
+                "byteOffset": {
+                    "description": "The offset in bytes of the array.",
+                    "type": "number"
+                },
+                "length": {
+                    "description": "The length of the array.",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "BYTES_PER_ELEMENT",
+                "buffer",
+                "byteLength",
+                "byteOffset",
+                "length"
+            ],
+            "type": "object"
+        }
+    }
+}

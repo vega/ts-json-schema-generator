@@ -1,3 +1,4 @@
+import { UnionType } from './../Type/UnionType';
 import * as ts from "typescript";
 import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
@@ -18,7 +19,13 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
     }
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
-        const indexType = this.childNodeParser.createType(node.indexType, context);
+        let indexType = this.childNodeParser.createType(node.indexType, context);
+
+        if (indexType instanceof UnionType && indexType.getTypes().length === 1) {
+            // get type from union if there is exactly one as in e.g. ArrayBuffer
+            indexType = indexType.getTypes()[0];
+        }
+
         if (!(indexType instanceof LiteralType || indexType instanceof StringType || indexType instanceof NumberType)) {
             throw new LogicError(`Unexpected type "${indexType.getId()}" (expected "LiteralType" or "StringType" ` +
                 `or "NumberType")`);
