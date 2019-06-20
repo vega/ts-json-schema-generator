@@ -22,7 +22,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         let indexType = this.childNodeParser.createType(node.indexType, context);
 
         if (indexType instanceof UnionType && indexType.getTypes().length === 1) {
-            // get type from union if there is exactly one as in e.g. ArrayBuffer
+            // get type from union if there is exactly one as in e.g. Uint8Array
             indexType = indexType.getTypes()[0];
         }
 
