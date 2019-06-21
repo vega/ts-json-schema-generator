@@ -6,7 +6,9 @@ import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { NumberType } from "../Type/NumberType";
 import { StringType } from "../Type/StringType";
+import { TupleType } from "../Type/TupleType";
 import { UnionType } from "../Type/UnionType";
+import { derefType } from "../Utils/derefType";
 import { getTypeByKey } from "../Utils/typeKeys";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
@@ -20,7 +22,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
-        const objectType = this.childNodeParser.createType(node.objectType, context);
+        const objectType = derefType(this.childNodeParser.createType(node.objectType, context));
         const indexType = this.childNodeParser.createType(node.indexType, context);
         const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [ indexType ];
         const propertyTypes = indexTypes.map(type => {
@@ -32,7 +34,9 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
 
             const propertyType = getTypeByKey(objectType, type);
             if (!propertyType) {
-                if (type instanceof LiteralType) {
+                if (type instanceof NumberType && objectType instanceof TupleType) {
+                    return new UnionType(objectType.getTypes());
+                } else if (type instanceof LiteralType) {
                     throw new LogicError(`Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
                 } else {
                     throw new LogicError(`No additional properties in type "${objectType.getId()}"`);
