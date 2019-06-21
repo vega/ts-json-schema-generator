@@ -122,6 +122,7 @@ describe("valid-data", () => {
     it("type-indexed-access-tuple-2", assertSchema("type-indexed-access-tuple-2", "MyType"));
     it("type-indexed-access-object-1", assertSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertSchema("type-indexed-access-object-2", "MyType"));
+    it("type-indexed-access-keyof", assertSchema("type-indexed-access-keyof", "MyType"));
     it("type-keyof-tuple", assertSchema("type-keyof-tuple", "MyType"));
     it("type-keyof-object", assertSchema("type-keyof-object", "MyType"));
     it("type-keyof-object-function", assertSchema("type-keyof-object-function", "MyType"));
