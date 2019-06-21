@@ -15,7 +15,8 @@ export class MyObject {
     private privateProp: boolean;
 
     // Constructors must be ignored
-    public constructor() {
+    public constructor(protected a: number, private b: number, c: number, public propC: number,
+            public propD?: string) {
         this.privateProp = false;
     }
 
