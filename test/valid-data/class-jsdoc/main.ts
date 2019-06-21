@@ -9,4 +9,10 @@ export class MyObject {
      * @pattern /abc/
      */
     public y: string;
+
+    /**
+     * @param a Parameter a description
+     * @param b Parameter b description
+     */
+    public constructor(public a: string, public b: number) {}
 }
