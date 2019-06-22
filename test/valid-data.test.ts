@@ -174,4 +174,5 @@ describe("valid-data", () => {
     it("type-conditional-exclude-complex", assertSchema("type-conditional-exclude-complex", "BaseAxisNoSignals"));
     it("type-conditional-exclude-narrowing", assertSchema("type-conditional-exclude-narrowing", "MyObject"));
     it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
+    it("type-conditional-jsdoc", assertSchema("type-conditional-jsdoc", "MyObject", "extended"));
 });

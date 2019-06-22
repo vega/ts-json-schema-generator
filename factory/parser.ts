@@ -96,7 +96,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser))
-        .addNodeParser(new ConditionalTypeNodeParser(chainNodeParser))
+        .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))

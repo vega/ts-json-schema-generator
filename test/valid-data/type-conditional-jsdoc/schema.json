@@ -1,0 +1,53 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "description": "Number or string",
+                    "pattern": "foo",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                },
+                "b": {
+                    "description": "Description of b",
+                    "pattern": "foo",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                },
+                "c": {
+                    "type": "number"
+                },
+                "d": {
+                    "description": "No string",
+                    "pattern": "bar",
+                    "type": "number"
+                },
+                "e": {
+                    "description": "Description of e",
+                    "type": "number"
+                },
+                "f": {
+                    "description": "Description of f",
+                    "pattern": "bar",
+                    "type": "number"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d",
+                "e",
+                "f"
+            ],
+            "type": "object"
+        }
+    }
+}
