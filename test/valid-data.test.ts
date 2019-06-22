@@ -12,7 +12,7 @@ const validator = new Ajv();
 
 const basePath = "test/valid-data";
 
-function assertSchema(name: string, type: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"]) {
+function assertSchema(name: string, type?: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"]) {
     return () => {
         const config: Config = {
             path: resolve(`${basePath}/${name}/*.ts`),
@@ -162,4 +162,6 @@ describe("valid-data", () => {
     it("undefined-property", assertSchema("undefined-property", "MyType"));
 
     it("any-unknown", assertSchema("any-unknown", "MyObject"));
+
+    it("multiple-roots1", assertSchema("multiple-roots1"));
 });
