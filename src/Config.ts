@@ -11,7 +11,7 @@ export interface PartialConfig {
 
 export interface Config extends PartialConfig {
     path: string;
-    type: string | undefined;
+    type?: string;
 }
 
 export const DEFAULT_CONFIG: PartialConfig = {
