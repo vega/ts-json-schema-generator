@@ -37,6 +37,25 @@
                     "description": "Description of f",
                     "pattern": "bar",
                     "type": "number"
+                },
+                "g": {
+                    "description": "Number or string",
+                    "pattern": "foo",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
+                },
+                "h": {
+                    "type": "string"
+                },
+                "i": {
+                    "description": "Number or string",
+                    "pattern": "foo",
+                    "type": [
+                        "number",
+                        "string"
+                    ]
                 }
             },
             "required": [
@@ -45,7 +64,10 @@
                 "c",
                 "d",
                 "e",
-                "f"
+                "f",
+                "g",
+                "h",
+                "i"
             ],
             "type": "object"
         }

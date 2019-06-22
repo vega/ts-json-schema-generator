@@ -6,6 +6,8 @@ type NumberOrString = number | string;
 
 type NoString<T> = T extends string ? never : T;
 
+type BooleanOrNumberOrString = NumberOrString | boolean;
+
 /**
  * No string
  * @pattern bar
@@ -27,4 +29,10 @@ export type MyObject = {
 
     /** Description of f */
     f: NoStringDocumented<NumberOrString>;
+
+    g: Exclude<NumberOrString, boolean>;
+
+    h: Exclude<NumberOrString, number>;
+
+    i: Exclude<BooleanOrNumberOrString, boolean>;
 };
