@@ -164,4 +164,5 @@ describe("valid-data", () => {
     it("any-unknown", assertSchema("any-unknown", "MyObject"));
 
     it("multiple-roots1", assertSchema("multiple-roots1"));
+    it("multiple-roots1", assertSchema("multiple-roots1", "*"));
 });
