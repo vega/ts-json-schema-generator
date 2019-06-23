@@ -69,6 +69,7 @@ npm install --save ts-json-schema-generator
 * generics
 * `typeof`
 * `keyof`
+* conditional types
 
 ## Debug
 
