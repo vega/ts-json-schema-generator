@@ -51,7 +51,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "writeOnly",
     ];
 
-    constructor(private extraJsonTags?: string[]) { }
+    public constructor(private extraJsonTags?: string[]) { }
 
 
     public getAnnotations(node: ts.Node): Annotations | undefined {

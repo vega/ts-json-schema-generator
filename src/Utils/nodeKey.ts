@@ -3,21 +3,6 @@ import { Node } from "typescript";
 import { isNumber, isString } from "util";
 import { Context } from "../NodeParser";
 
-export function getKey(node: Node, context: Context) {
-    const ids: (number | string)[] = [];
-    while (node) {
-        const file = node.getSourceFile().fileName.substr(process.cwd().length + 1);
-        ids.push(hash(file), node.pos, node.end);
-
-        node = node.parent;
-    }
-    const id = ids.join("-");
-
-    const argumentIds = context.getArguments().map((arg) => arg.getId());
-
-    return argumentIds.length ? `${id}<${argumentIds.join(",")}>` : id;
-}
-
 export function hash(a: any): string | number {
     if (isNumber(a)) {
         return a;
@@ -44,4 +29,20 @@ export function hash(a: any): string | number {
     }
 
     return h;
+}
+
+
+export function getKey(node: Node, context: Context) {
+    const ids: (number | string)[] = [];
+    while (node) {
+        const file = node.getSourceFile().fileName.substr(process.cwd().length + 1);
+        ids.push(hash(file), node.pos, node.end);
+
+        node = node.parent;
+    }
+    const id = ids.join("-");
+
+    const argumentIds = context.getArguments().map((arg) => arg.getId());
+
+    return argumentIds.length ? `${id}<${argumentIds.join(",")}>` : id;
 }
