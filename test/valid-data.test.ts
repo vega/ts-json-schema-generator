@@ -164,4 +164,15 @@ describe("valid-data", () => {
     it("undefined-property", assertSchema("undefined-property", "MyType"));
 
     it("any-unknown", assertSchema("any-unknown", "MyObject"));
+
+    it("type-conditional-simple", assertSchema("type-conditional-simple", "MyObject"));
+    it("type-conditional-inheritance", assertSchema("type-conditional-inheritance", "MyObject"));
+    it("type-conditional-union", assertSchema("type-conditional-union", "MyObject"));
+    it("type-conditional-enum", assertSchema("type-conditional-enum", "IParameter"));
+    it("type-conditional-intersection", assertSchema("type-conditional-intersection", "MyObject"));
+    it("type-conditional-exclude", assertSchema("type-conditional-exclude", "MyObject"));
+    it("type-conditional-exclude-complex", assertSchema("type-conditional-exclude-complex", "BaseAxisNoSignals"));
+    it("type-conditional-exclude-narrowing", assertSchema("type-conditional-exclude-narrowing", "MyObject"));
+    it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
+    it("type-conditional-jsdoc", assertSchema("type-conditional-jsdoc", "MyObject", "extended"));
 });

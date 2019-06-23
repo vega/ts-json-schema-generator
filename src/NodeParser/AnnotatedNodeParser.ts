@@ -20,6 +20,9 @@ export class AnnotatedNodeParser implements SubNodeParser {
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         const baseType = this.childNodeParser.createType(node, context, reference);
+        if (node.getSourceFile().fileName.match(/[\/\\]typescript[\/\\]lib[\/\\]lib\.[^/\\]+\.d\.ts$/i)) {
+            return baseType;
+        }
         const annotatedNode = this.getAnnotatedNode(node);
         const annotations = this.annotationsReader.getAnnotations(annotatedNode);
         const nullable = this.annotationsReader instanceof ExtendedAnnotationsReader ?
