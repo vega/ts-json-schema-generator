@@ -1,3 +1,4 @@
 import { Asset } from "../Asset";
 
-export type AssetType = Asset["type"];
+const asset: Asset = { type: "One" };
+export type AssetType = typeof asset.type;
