@@ -7,6 +7,7 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
+import { derefType } from "../Utils/derefType";
 import { StringMap } from "../Utils/StringMap";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
@@ -75,7 +76,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
 
     private prepareObjectProperty(property: ObjectProperty): ObjectProperty {
-        const propType = property.getType();
+        const propType = derefType(property.getType());
         if (propType instanceof UndefinedType) {
             return new ObjectProperty(property.getName(), new UndefinedType(), false);
         } else if (!(propType instanceof UnionType)) {

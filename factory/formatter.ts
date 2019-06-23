@@ -12,6 +12,7 @@ import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
 import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
 import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter";
 import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter";
+import { NeverTypeFormatter } from "../src/TypeFormatter/NeverTypeFormatter";
 import { NullTypeFormatter } from "../src/TypeFormatter/NullTypeFormatter";
 import { NumberTypeFormatter } from "../src/TypeFormatter/NumberTypeFormatter";
 import { ObjectTypeFormatter } from "../src/TypeFormatter/ObjectTypeFormatter";
@@ -23,6 +24,7 @@ import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
 import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
+import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
 
 
 
@@ -39,7 +41,9 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new NullTypeFormatter())
 
         .addTypeFormatter(new AnyTypeFormatter())
+        .addTypeFormatter(new NeverTypeFormatter())
         .addTypeFormatter(new UndefinedTypeFormatter())
+        .addTypeFormatter(new UnknownTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())

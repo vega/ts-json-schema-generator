@@ -10,105 +10,60 @@ import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 
 export class SchemaGenerator {
-    private allTypes: Map<string, ts.Node>;
-    private prioritizedFiles: ts.SourceFile[];
-    private unprioritizedFiles: ts.SourceFile[];
-
     public constructor(
-        private program: ts.Program,
-        private nodeParser: NodeParser,
-        private typeFormatter: TypeFormatter,
+        private readonly program: ts.Program,
+        private readonly nodeParser: NodeParser,
+        private readonly typeFormatter: TypeFormatter,
     ) {
-        this.allTypes = new Map<string, ts.Node>();
+    }
 
-        const sourceFiles = this.program.getSourceFiles();
-        this.prioritizedFiles = [];
-        this.unprioritizedFiles = [];
-        for (const f of sourceFiles) {
-            if (!f.fileName.includes("/node_modules/")) {
-                this.prioritizedFiles.push(f);
-            } else {
-                this.unprioritizedFiles.push(f);
-            }
+    public createSchema(fullName: string | undefined): Schema {
+        const rootNodes = this.getRootNodes(fullName);
+        const rootTypes = rootNodes.map(rootNode => {
+            return this.nodeParser.createType(rootNode, new Context());
+        });
+        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : {};
+        const definitions: StringMap<Definition> = {};
+        rootTypes.forEach(rootType => this.appendRootChildDefinitions(rootType, definitions));
+
+        return { $schema: "http://json-schema.org/draft-07/schema#", ...rootTypeDefinition, definitions };
+    }
+
+    private getRootNodes(fullName: string | undefined) {
+        if (fullName && (fullName !== "*")) {
+            return [this.findNamedNode(fullName)];
+        } else {
+            const rootFileNames = this.program.getRootFileNames();
+            const rootSourceFiles =
+                this.program.getSourceFiles().filter(sourceFile => rootFileNames.includes(sourceFile.fileName));
+            const rootNodes = new Map<string, ts.Node>();
+            this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
+            return [...rootNodes.values()];
         }
     }
-
-    public createSchema(fullName: string): Schema {
-        const rootNode = this.findRootNode(fullName);
-        const rootType = this.nodeParser.createType(rootNode, new Context());
-
-        return {
-            $schema: "http://json-schema.org/draft-07/schema#",
-            definitions: this.getRootChildDefinitions(rootType),
-            ...this.getRootTypeDefinition(rootType),
-        };
-    }
-
-    private findRootNode(fullName: string): ts.Node {
+    private findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
+        const allTypes = new Map<string, ts.Node>();
+        const { projectFiles, externalFiles } = this.partitionFiles();
 
-        if (this.prioritizedFiles.length) {
-            for (const sourceFile of this.prioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, this.allTypes);
-            }
-            this.prioritizedFiles = [];
+        this.appendTypes(projectFiles, typeChecker, allTypes);
+
+        if (allTypes.has(fullName)) {
+            return allTypes.get(fullName)!;
         }
 
-        if (this.allTypes.has(fullName)) {
-            return this.allTypes.get(fullName)!;
-        }
+        this.appendTypes(externalFiles, typeChecker, allTypes);
 
-        if (this.unprioritizedFiles.length) {
-            for (const sourceFile of this.unprioritizedFiles) {
-                this.inspectNode(sourceFile, typeChecker, this.allTypes);
-            }
-            this.unprioritizedFiles = [];
-        }
-
-        if (this.allTypes.has(fullName)) {
-            return this.allTypes.get(fullName)!;
+        if (allTypes.has(fullName)) {
+            return allTypes.get(fullName)!;
         }
 
         throw new NoRootTypeError(fullName);
     }
-    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        if (
-            node.kind === ts.SyntaxKind.InterfaceDeclaration ||
-            node.kind === ts.SyntaxKind.ClassDeclaration ||
-            node.kind === ts.SyntaxKind.EnumDeclaration ||
-            node.kind === ts.SyntaxKind.TypeAliasDeclaration
-        ) {
-            if (!this.isExportType(node)) {
-                return;
-            } else if (this.isGenericType(node as ts.TypeAliasDeclaration)) {
-                return;
-            }
-
-            allTypes.set(this.getFullName(node, typeChecker), node);
-        } else {
-            ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
-        }
-    }
-
-    private isExportType(node: ts.Node): boolean {
-        const localSymbol = localSymbolAtNode(node);
-        return localSymbol ? "exportSymbol" in localSymbol : false;
-    }
-    private isGenericType(node: ts.TypeAliasDeclaration): boolean {
-        return !!(
-            node.typeParameters &&
-            node.typeParameters.length > 0
-        );
-    }
-    private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
-        const symbol = symbolAtNode(node)!;
-        return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
-    }
-
     private getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    private getRootChildDefinitions(rootType: BaseType): StringMap<Definition> {
+    private appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
 
         const children = this
@@ -122,16 +77,61 @@ export class SchemaGenerator {
                 return false;
             }) as DefinitionType[];
 
-        return children
-            .reduce((result: StringMap<Definition>, child) => {
+        children
+            .reduce((definitions, child) => {
                 const name = child.getName();
-                if (name in result) {
+                if (name in definitions) {
                     throw new Error(`Type "${name}" has multiple definitions.`);
                 }
-                return {
-                    ...result,
-                    [name]: this.typeFormatter.getDefinition(child.getType()),
-                };
-            }, {});
+                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+                return definitions;
+            }, childDefinitions);
+    }
+    private partitionFiles() {
+        const projectFiles = new Array<ts.SourceFile>();
+        const externalFiles = new Array<ts.SourceFile>();
+
+        for (const sourceFile of this.program.getSourceFiles()) {
+            const destination = sourceFile.fileName.includes("/node_modules/") ? externalFiles : projectFiles;
+            destination.push(sourceFile);
+        }
+
+        return { projectFiles, externalFiles };
+    }
+    private appendTypes(sourceFiles: ts.SourceFile[], typeChecker: ts.TypeChecker, types: Map<string, ts.Node>) {
+        for (const sourceFile of sourceFiles) {
+            this.inspectNode(sourceFile, typeChecker, types);
+        }
+    }
+    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
+        switch (node.kind) {
+            case ts.SyntaxKind.InterfaceDeclaration:
+            case ts.SyntaxKind.ClassDeclaration:
+            case ts.SyntaxKind.EnumDeclaration:
+            case ts.SyntaxKind.TypeAliasDeclaration:
+                if (!this.isExportType(node) || (this.isGenericType(node as ts.TypeAliasDeclaration))) {
+                    return;
+                }
+
+                allTypes.set(this.getFullName(node, typeChecker), node);
+                break;
+            default:
+                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                break;
+        }
+    }
+    private isExportType(node: ts.Node): boolean {
+        const localSymbol = localSymbolAtNode(node);
+        return localSymbol ? "exportSymbol" in localSymbol : false;
+    }
+    private isGenericType(node: ts.TypeAliasDeclaration): boolean {
+        return !!(
+            node.typeParameters &&
+            node.typeParameters.length > 0
+        );
+    }
+    private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
+        const symbol = symbolAtNode(node)!;
+        return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
 }

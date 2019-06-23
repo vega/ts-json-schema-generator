@@ -120,10 +120,13 @@ describe("valid-data", () => {
 
     it("type-indexed-access-tuple-1", assertSchema("type-indexed-access-tuple-1", "MyType"));
     it("type-indexed-access-tuple-2", assertSchema("type-indexed-access-tuple-2", "MyType"));
+    it("type-indexed-access-tuple-union", assertSchema("type-indexed-access-tuple-union", "FormLayout"));
     it("type-indexed-access-object-1", assertSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertSchema("type-indexed-access-object-2", "MyType"));
+    it("type-indexed-access-keyof", assertSchema("type-indexed-access-keyof", "MyType"));
     it("type-keyof-tuple", assertSchema("type-keyof-tuple", "MyType"));
     it("type-keyof-object", assertSchema("type-keyof-object", "MyType"));
+    it("type-keyof-object-function", assertSchema("type-keyof-object-function", "MyType"));
     it("type-mapped-simple", assertSchema("type-mapped-simple", "MyObject"));
     it("type-mapped-index", assertSchema("type-mapped-index", "MyObject"));
     it("type-mapped-literal", assertSchema("type-mapped-literal", "MyObject"));
@@ -132,6 +135,9 @@ describe("valid-data", () => {
     it("type-mapped-native-single-literal", assertSchema("type-mapped-native-single-literal", "MyObject"));
     it("type-mapped-widened", assertSchema("type-mapped-widened", "MyObject"));
     it("type-mapped-optional", assertSchema("type-mapped-optional", "MyObject"));
+    it("type-mapped-additional-props", assertSchema("type-mapped-additional-props", "MyObject"));
+    it("type-mapped-array", assertSchema("type-mapped-array", "MyObject"));
+    it("type-mapped-union-intersection", assertSchema("type-mapped-union-intersection", "MyObject"));
 
     it("generic-simple", assertSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertSchema("generic-arrays", "MyObject"));
@@ -158,4 +164,15 @@ describe("valid-data", () => {
     it("undefined-property", assertSchema("undefined-property", "MyType"));
 
     it("any-unknown", assertSchema("any-unknown", "MyObject"));
+
+    it("type-conditional-simple", assertSchema("type-conditional-simple", "MyObject"));
+    it("type-conditional-inheritance", assertSchema("type-conditional-inheritance", "MyObject"));
+    it("type-conditional-union", assertSchema("type-conditional-union", "MyObject"));
+    it("type-conditional-enum", assertSchema("type-conditional-enum", "IParameter"));
+    it("type-conditional-intersection", assertSchema("type-conditional-intersection", "MyObject"));
+    it("type-conditional-exclude", assertSchema("type-conditional-exclude", "MyObject"));
+    it("type-conditional-exclude-complex", assertSchema("type-conditional-exclude-complex", "BaseAxisNoSignals"));
+    it("type-conditional-exclude-narrowing", assertSchema("type-conditional-exclude-narrowing", "MyObject"));
+    it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
+    it("type-conditional-jsdoc", assertSchema("type-conditional-jsdoc", "MyObject", "extended"));
 });

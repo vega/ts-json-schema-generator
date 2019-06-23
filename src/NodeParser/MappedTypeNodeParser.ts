@@ -2,8 +2,10 @@ import * as ts from "typescript";
 import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
+import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
@@ -27,13 +29,17 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
         if (keyListType instanceof UnionType) {
             // Key type resolves to a set of known properties
-            return new ObjectType(id, [], this.getProperties(node, keyListType, context), false);
+            return new ObjectType(id, [], this.getProperties(node, keyListType, context),
+                this.getAdditionalProperties(node, keyListType, context));
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
         } else if (keyListType instanceof StringType) {
             // Key type widens to `string`
             return new ObjectType(id, [], [], this.childNodeParser.createType(node.type!, context));
+        } else if (keyListType instanceof NumberType) {
+            return new ArrayType(this.childNodeParser.createType(node.type!,
+                this.createSubContext(node, keyListType, context)));
         } else {
             throw new LogicError(
                 // tslint:disable-next-line:max-line-length
@@ -43,7 +49,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
     }
 
     private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
-        return keyListType.getTypes().reduce((result: ObjectProperty[], key: LiteralType) => {
+        return keyListType.getTypes()
+                .filter(type => type instanceof LiteralType)
+                .reduce((result: ObjectProperty[], key: LiteralType) => {
             const objectProperty = new ObjectProperty(
                 key.getValue().toString(),
                 this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
@@ -55,7 +63,17 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }, []);
     }
 
-    private createSubContext(node: ts.MappedTypeNode, key: LiteralType, parentContext: Context): Context {
+    private getAdditionalProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context):
+            BaseType | false {
+        const key = keyListType.getTypes().filter(type => !(type instanceof LiteralType))[0];
+        if (key) {
+            return this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context));
+        } else {
+            return false;
+        }
+    }
+
+    private createSubContext(node: ts.MappedTypeNode, key: LiteralType | StringType, parentContext: Context): Context {
         const subContext = new Context(node);
 
         parentContext.getParameters().forEach((parentParameter) => {
