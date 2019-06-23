@@ -1,5 +1,5 @@
 import * as Ajv from "ajv";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync } from "fs";
 import { resolve } from "path";
 import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";
@@ -29,7 +29,7 @@ function assertSchema(name: string, type: string, jsDoc: Config["jsDoc"] = "none
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config),
+            createFormatter(),
         );
 
         const schema = generator.createSchema(type);

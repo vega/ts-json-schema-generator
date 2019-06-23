@@ -1,6 +1,5 @@
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
-import { Config } from "../src/Config";
 import { TypeFormatter } from "../src/TypeFormatter";
 import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter";
 import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter";
@@ -28,7 +27,7 @@ import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter"
 
 
 
-export function createFormatter(config: Config): TypeFormatter {
+export function createFormatter(): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 
