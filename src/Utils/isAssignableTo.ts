@@ -3,7 +3,6 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { EnumType } from "../Type/EnumType";
 import { IntersectionType } from "../Type/IntersectionType";
-import { LiteralType } from "../Type/LiteralType";
 import { NeverType } from "../Type/NeverType";
 import { NullType } from "../Type/NullType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
@@ -13,7 +12,6 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { UnknownType } from "../Type/UnknownType";
 import { derefType } from "./derefType";
-import { uniqueArray } from "./uniqueArray";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more

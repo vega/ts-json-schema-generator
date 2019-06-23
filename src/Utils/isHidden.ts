@@ -25,7 +25,7 @@ export function referenceHidden(typeChecker: ts.TypeChecker) {
     return function(node: ts.Node) {
         if (node.kind === ts.SyntaxKind.TypeReference) {
             return isHidden(typeChecker.getSymbolAtLocation(
-                (<ts.TypeReferenceNode> node).typeName)!);
+                (node as ts.TypeReferenceNode).typeName)!);
         }
 
         return isNodeHidden(node);

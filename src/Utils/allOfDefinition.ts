@@ -3,7 +3,6 @@ import { Definition } from "../Schema/Definition";
 import { RawTypeName } from "../Schema/RawType";
 import { AliasType } from "../Type/AliasType";
 import { AnnotatedType } from "../Type/AnnotatedType";
-import { AnyType } from "../Type/AnyType";
 import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";

@@ -20,8 +20,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
     }
 
-    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context,
-            reference?: ReferenceType): BaseType {
+    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context, reference?: ReferenceType):
+    BaseType {
         if (node.typeParameters && node.typeParameters.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -95,7 +95,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     }
 
     private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
-        return (<ts.NodeArray<ts.TypeElement | ts.ClassElement>>node.members)
+        return (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce(
                 (members, member) => {
                     if (ts.isConstructorDeclaration(member)) {
@@ -104,7 +104,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                         members.push(member);
                     }
                     return members;
-                }, <Array<ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration>>[])
+                }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
             .filter(member => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
             .map(member => new ObjectProperty(
                 member.name.getText(),
@@ -113,8 +113,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     }
 
     private getAdditionalProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context):
-            BaseType | false {
-        const indexSignature = (<ts.NodeArray<ts.NamedDeclaration>>node.members).find(ts.isIndexSignatureDeclaration);
+    BaseType | false {
+        const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
             return false;
         }

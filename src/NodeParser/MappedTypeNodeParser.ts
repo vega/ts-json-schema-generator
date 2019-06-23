@@ -42,7 +42,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 this.createSubContext(node, keyListType, context)));
         } else {
             throw new LogicError(
-                // tslint:disable-next-line:max-line-length
+                // eslint-disable-next-line max-len
                 `Unexpected key type "${constraintType.getId()}" for type "${node.getText()}" (expected "UnionType" or "StringType")`,
             );
         }
@@ -50,21 +50,21 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
     private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType.getTypes()
-                .filter(type => type instanceof LiteralType)
-                .reduce((result: ObjectProperty[], key: LiteralType) => {
-            const objectProperty = new ObjectProperty(
-                key.getValue().toString(),
-                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
-                !node.questionToken,
-            );
+            .filter(type => type instanceof LiteralType)
+            .reduce((result: ObjectProperty[], key: LiteralType) => {
+                const objectProperty = new ObjectProperty(
+                    key.getValue().toString(),
+                    this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
+                    !node.questionToken,
+                );
 
-            result.push(objectProperty);
-            return result;
-        }, []);
+                result.push(objectProperty);
+                return result;
+            }, []);
     }
 
     private getAdditionalProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context):
-            BaseType | false {
+    BaseType | false {
         const key = keyListType.getTypes().filter(type => !(type instanceof LiteralType))[0];
         if (key) {
             return this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context));

@@ -51,10 +51,10 @@ export class Context {
         return this.arguments[index];
     }
 
-    public getParameters(): ReadonlyArray<string> {
+    public getParameters(): readonly string[] {
         return this.parameters;
     }
-    public getArguments(): ReadonlyArray<BaseType> {
+    public getArguments(): readonly BaseType[] {
         return this.arguments;
     }
 
