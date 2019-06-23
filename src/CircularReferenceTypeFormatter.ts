@@ -1,6 +1,7 @@
 import { Definition } from "./Schema/Definition";
 import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
+import { uniqueArray } from "./Utils/uniqueArray";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
     private definition = new Map<BaseType, Definition>();
@@ -31,7 +32,7 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
 
         const children: BaseType[] = [];
         this.children.set(type, children);
-        children.push(...this.childTypeFormatter.getChildren(type));
+        children.push(...uniqueArray(this.childTypeFormatter.getChildren(type)));
         return children;
     }
 }
