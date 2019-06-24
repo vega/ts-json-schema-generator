@@ -20,16 +20,15 @@ This project is made possible by a [community of contributors](https://github.co
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator \
-    --path 'my/project/**.*.ts' \
-    --type 'My.Type.Full.Name' \
-    --expose 'export' \
-    --jsDoc 'extended'
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
 ```
 
 ## Options
 
 ```
+-t, --type 'My.Type.Full.Name'
+    The type the generated schema will represent. If omitted, the generated schema will contain all types found in the files matching path. The same is true if '*' is specified.
+
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.

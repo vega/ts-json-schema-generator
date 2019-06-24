@@ -6,7 +6,7 @@ import { DefinitionType } from "./Type/DefinitionType";
 export class TopRefNodeParser implements NodeParser {
     public constructor(
         private childNodeParser: NodeParser,
-        private fullName: string,
+        private fullName: string | undefined,
         private topRef: boolean,
     ) {
     }
