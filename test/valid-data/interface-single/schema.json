@@ -9,11 +9,15 @@
                 },
                 "propB": {
                     "type": "number"
+                },
+                "propC": {
+                    "type": "string"
                 }
             },
             "required": [
                 "propA",
-                "propB"
+                "propB",
+                "propC"
             ],
             "additionalProperties": false
         }
