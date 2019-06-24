@@ -20,7 +20,7 @@ This project is made possible by a [community of contributors](https://github.co
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts'
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
 ```
 
 ## Options
