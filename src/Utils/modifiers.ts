@@ -23,7 +23,7 @@ export function hasModifier(node: ts.Node, modifier: ts.SyntaxKind): boolean {
  * @return True if node is public, false if not.
  */
 export function isPublic(node: ts.Node): boolean {
-    return node.modifiers == null || hasModifier(node, ts.SyntaxKind.PublicKeyword);
+    return !(hasModifier(node, ts.SyntaxKind.PrivateKeyword) || hasModifier(node, ts.SyntaxKind.ProtectedKeyword));
 }
 
 /**

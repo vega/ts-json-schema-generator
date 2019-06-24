@@ -14,9 +14,11 @@ export class MyObject {
     // Protected properties must be ignored
     private privateProp: boolean;
 
+    readonly readonlyProp: string;
+
     // Constructors must be ignored
     public constructor(protected a: number, private b: number, c: number, public propC: number,
-            public propD?: string) {
+        public propD?: string) {
         this.privateProp = false;
     }
 

@@ -16,11 +16,15 @@
                 },
                 "propD": {
                     "type": "string"
+                },
+                "readonlyProp": {
+                    "type": "string"
                 }
             },
             "required": [
                 "propA",
                 "propB",
+                "readonlyProp",
                 "propC"
             ],
             "type": "object"
