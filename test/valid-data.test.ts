@@ -12,10 +12,12 @@ const validator = new Ajv();
 
 const basePath = "test/valid-data";
 
-function assertSchema(name: string, type: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"]) {
+function assertSchema(
+    relativePath: string, type?: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"],
+) {
     return () => {
         const config: Config = {
-            path: resolve(`${basePath}/${name}/*.ts`),
+            path: resolve(`${basePath}/${relativePath}/*.ts`),
             type: type,
 
             expose: "export",
@@ -33,7 +35,7 @@ function assertSchema(name: string, type: string, jsDoc: Config["jsDoc"] = "none
         );
 
         const schema = generator.createSchema(type);
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
+        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${relativePath}/schema.json`), "utf8"));
         const actual: any = JSON.parse(JSON.stringify(schema));
 
         // uncomment to write test files
@@ -175,4 +177,8 @@ describe("valid-data", () => {
     it("type-conditional-exclude-narrowing", assertSchema("type-conditional-exclude-narrowing", "MyObject"));
     it("type-conditional-omit", assertSchema("type-conditional-omit", "MyObject"));
     it("type-conditional-jsdoc", assertSchema("type-conditional-jsdoc", "MyObject", "extended"));
+
+    it("multiple-roots1", assertSchema("multiple-roots1"));
+    it("multiple-roots1-star", assertSchema("multiple-roots1", "*"));
+    it("multiple-roots2", assertSchema("multiple-roots2/schema"));
 });
