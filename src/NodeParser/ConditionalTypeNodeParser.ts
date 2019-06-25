@@ -4,6 +4,8 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { isAssignableTo } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
+import { NeverType } from "../Type/NeverType";
+import { UnionType } from "../Type/UnionType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -18,18 +20,29 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
     public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
         const checkType = this.childNodeParser.createType(node.checkType, context);
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
-        const result = isAssignableTo(extendsType, checkType);
-        const tsResultType = result ? node.trueType : node.falseType;
-        const resultType = this.childNodeParser.createType(tsResultType, context);
-
-        // If result type is the same type parameter as the check type then narrow down the result type
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
-        const resultTypeParameterName = this.getTypeParameterName(tsResultType);
-        if (resultTypeParameterName != null && resultTypeParameterName === checkTypeParameterName) {
-            return narrowType(resultType, type => isAssignableTo(extendsType, type) === result);
+
+        // If check-type is not a type parameter then condition is very simple, no type narrowing needed
+        if (checkTypeParameterName == null) {
+            const result = isAssignableTo(extendsType, checkType);
+            return this.childNodeParser.createType(result ? node.trueType : node.falseType, context);
         }
 
-        return resultType;
+        // Narrow down check type for both condition branches
+        const trueCheckType = narrowType(checkType, type => isAssignableTo(extendsType, type));
+        const falseCheckType = narrowType(checkType, type => !isAssignableTo(extendsType, type));
+
+        // Follow the relevant branches and return the results from them
+        const results: BaseType[] = [];
+        if (!(trueCheckType instanceof NeverType)) {
+            results.push(this.childNodeParser.createType(node.trueType,
+                this.createSubContext(node, checkTypeParameterName, trueCheckType, context)));
+        }
+        if (!(falseCheckType instanceof NeverType)) {
+            results.push(this.childNodeParser.createType(node.falseType,
+                this.createSubContext(node, checkTypeParameterName, falseCheckType, context)));
+        }
+        return new UnionType(results).normalize();
     }
 
     /**
@@ -47,4 +60,35 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         }
         return null;
     }
+
+    /**
+     * Creates a sub context for evaluating the sub types of the conditional type. A sub context is needed in case
+     * the check-type is a type parameter which is then narrowed down by the extends-type.
+     *
+     * @param node                   - The reference node for the new context.
+     * @param checkTypeParameterName - The type parameter name of the check-type.
+     * @param narrowedCheckType      - The narrowed down check type to use for the type parameter in sub parsers.
+     * @return The created sub context.
+     */
+    private createSubContext(
+        node: ts.ConditionalTypeNode, checkTypeParameterName: string,
+        narrowedCheckType: BaseType, parentContext: Context
+    ): Context {
+        const subContext = new Context(node);
+
+        // Set new narrowed type for check type parameter
+        subContext.pushParameter(checkTypeParameterName);
+        subContext.pushArgument(narrowedCheckType);
+
+        // Copy all other type parameters from parent context
+        parentContext.getParameters().forEach((parentParameter) => {
+            if (parentParameter !== checkTypeParameterName) {
+                subContext.pushParameter(parentParameter);
+                subContext.pushArgument(parentContext.getArgument(parentParameter));
+            }
+        });
+
+        return subContext;
+    }
+
 }
