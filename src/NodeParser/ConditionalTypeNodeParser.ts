@@ -33,7 +33,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const falseCheckType = narrowType(checkType, type => !isAssignableTo(extendsType, type));
 
         // Follow the relevant branches and return the results from them
-        let results: BaseType[] = [];
+        const results: BaseType[] = [];
         if (!(trueCheckType instanceof NeverType)) {
             results.push(this.childNodeParser.createType(node.trueType,
                 this.createSubContext(node, checkTypeParameterName, trueCheckType, context)));
@@ -70,8 +70,10 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * @param narrowedCheckType      - The narrowed down check type to use for the type parameter in sub parsers.
      * @return The created sub context.
      */
-    private createSubContext(node: ts.ConditionalTypeNode, checkTypeParameterName: string, narrowedCheckType: BaseType,
-            parentContext: Context): Context {
+    private createSubContext(
+        node: ts.ConditionalTypeNode, checkTypeParameterName: string,
+        narrowedCheckType: BaseType, parentContext: Context
+    ): Context {
         const subContext = new Context(node);
 
         // Set new narrowed type for check type parameter
