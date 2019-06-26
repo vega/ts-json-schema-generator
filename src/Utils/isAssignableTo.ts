@@ -12,6 +12,10 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { UnknownType } from "../Type/UnknownType";
 import { derefType } from "./derefType";
+import { LiteralType } from "../Type/LiteralType";
+import { StringType } from "../Type/StringType";
+import { NumberType } from "../Type/NumberType";
+import { BooleanType } from "../Type/BooleanType";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -135,6 +139,18 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
     // types within the intersection must be combined first
     if (target instanceof IntersectionType) {
         return combineIntersectingTypes(target).every(type => isAssignableTo(type, source, insideTypes));
+    }
+
+    // Check literal types
+    if (source instanceof LiteralType) {
+        const value = source.getValue();
+        if (typeof value === "string") {
+            return isAssignableTo(target, new StringType());
+        } else if (typeof value === "number") {
+            return isAssignableTo(target, new NumberType());
+        } else if (typeof value === "boolean") {
+            return isAssignableTo(target, new BooleanType());
+        }
     }
 
     if (target instanceof ObjectType) {

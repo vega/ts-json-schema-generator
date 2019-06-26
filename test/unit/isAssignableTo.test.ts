@@ -323,4 +323,27 @@ describe("isAssignableTo", () => {
         const def = new DefinitionType("NumericValueRef", objectType);
         expect(isAssignableTo(outerUnion, def)).toBe(true);
     });
+    it("correctly handles literal types", () => {
+        expect(isAssignableTo(new StringType(), new LiteralType("foo"))).toBe(true);
+        expect(isAssignableTo(new NumberType(), new LiteralType("foo"))).toBe(false);
+        expect(isAssignableTo(new BooleanType(), new LiteralType("foo"))).toBe(false);
+        expect(isAssignableTo(new StringType(), new LiteralType(1))).toBe(false);
+        expect(isAssignableTo(new NumberType(), new LiteralType(1))).toBe(true);
+        expect(isAssignableTo(new BooleanType(), new LiteralType(1))).toBe(false);
+        expect(isAssignableTo(new StringType(), new LiteralType(true))).toBe(false);
+        expect(isAssignableTo(new NumberType(), new LiteralType(true))).toBe(false);
+        expect(isAssignableTo(new BooleanType(), new LiteralType(true))).toBe(true);
+
+        expect(isAssignableTo(new LiteralType("foo"), new StringType())).toBe(false);
+        expect(isAssignableTo(new LiteralType(1), new NumberType())).toBe(false);
+        expect(isAssignableTo(new LiteralType(true), new BooleanType())).toBe(false);
+
+        expect(isAssignableTo(new LiteralType("foo"), new LiteralType("bar"))).toBe(false);
+        expect(isAssignableTo(new LiteralType(1), new LiteralType(2))).toBe(false);
+        expect(isAssignableTo(new LiteralType(true), new LiteralType(false))).toBe(false);
+
+        expect(isAssignableTo(new LiteralType("foo"), new LiteralType("foo"))).toBe(true);
+        expect(isAssignableTo(new LiteralType(1), new LiteralType(1))).toBe(true);
+        expect(isAssignableTo(new LiteralType(true), new LiteralType(true))).toBe(true);
+    });
 });
