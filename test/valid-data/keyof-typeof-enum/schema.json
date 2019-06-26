@@ -1,0 +1,14 @@
+{
+    "$ref": "#/definitions/SizeName",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "SizeName": {
+            "enum": [
+                "Small",
+                "Medium",
+                "Large"
+            ],
+            "type": "string"
+        }
+    }
+}

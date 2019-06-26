@@ -1,0 +1,141 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "fromZero": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "enum": [
+                                0
+                            ],
+                            "type": "number"
+                        },
+                        "b": {
+                            "enum": [
+                                1
+                            ],
+                            "type": "number"
+                        },
+                        "c": {
+                            "enum": [
+                                2
+                            ],
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b",
+                        "c"
+                    ],
+                    "type": "object"
+                },
+                "mixedEnum": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "enum": [
+                                0
+                            ],
+                            "type": "number"
+                        },
+                        "b": {
+                            "enum": [
+                                10
+                            ],
+                            "type": "number"
+                        },
+                        "c": {
+                            "enum": [
+                                11
+                            ],
+                            "type": "number"
+                        },
+                        "d": {
+                            "enum": [
+                                "foo"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b",
+                        "c",
+                        "d"
+                    ],
+                    "type": "object"
+                },
+                "someCustomInitializers": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "enum": [
+                                10
+                            ],
+                            "type": "number"
+                        },
+                        "b": {
+                            "enum": [
+                                11
+                            ],
+                            "type": "number"
+                        },
+                        "c": {
+                            "enum": [
+                                20
+                            ],
+                            "type": "number"
+                        },
+                        "d": {
+                            "enum": [
+                                21
+                            ],
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b",
+                        "c",
+                        "d"
+                    ],
+                    "type": "object"
+                },
+                "stringEnum": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "a": {
+                            "enum": [
+                                "foo"
+                            ],
+                            "type": "string"
+                        },
+                        "b": {
+                            "enum": [
+                                "bar"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "a",
+                        "b"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "fromZero",
+                "someCustomInitializers",
+                "stringEnum",
+                "mixedEnum"
+            ],
+            "type": "object"
+        }
+    }
+}
