@@ -20,7 +20,10 @@ export class TypeofNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType {
-        const symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
+        let symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
+        if (symbol.flags & ts.SymbolFlags.Alias) {
+            symbol = this.typeChecker.getAliasedSymbol(symbol);
+        }
 
         const valueDec = symbol.valueDeclaration;
         if (ts.isEnumDeclaration(valueDec)) {
