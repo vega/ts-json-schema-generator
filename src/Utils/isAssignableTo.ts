@@ -12,7 +12,7 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { UnknownType } from "../Type/UnknownType";
 import { derefType } from "./derefType";
-import { LiteralType } from "../Type/LiteralType";
+import { LiteralType, LiteralValue } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
 import { NumberType } from "../Type/NumberType";
 import { BooleanType } from "../Type/BooleanType";
@@ -59,6 +59,17 @@ function getObjectProperties(type: BaseType): ObjectProperty[] {
         }
     }
     return properties;
+}
+
+function getPrimitiveType(value: LiteralValue) {
+    switch (typeof value) {
+        case "string":
+            return new StringType();
+        case "number":
+            return new NumberType();
+        case "boolean":
+            return new BooleanType();
+    }
 }
 
 /**
@@ -143,14 +154,7 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
 
     // Check literal types
     if (source instanceof LiteralType) {
-        const value = source.getValue();
-        if (typeof value === "string") {
-            return isAssignableTo(target, new StringType());
-        } else if (typeof value === "number") {
-            return isAssignableTo(target, new NumberType());
-        } else if (typeof value === "boolean") {
-            return isAssignableTo(target, new BooleanType());
-        }
+        return isAssignableTo(target, getPrimitiveType(source.getValue()));
     }
 
     if (target instanceof ObjectType) {
