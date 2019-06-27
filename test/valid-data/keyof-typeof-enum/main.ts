@@ -1,3 +1,3 @@
-enum Size { Small, Medium, Large };
+import { Size } from "./Size";
 
 export type SizeName = keyof typeof Size;
