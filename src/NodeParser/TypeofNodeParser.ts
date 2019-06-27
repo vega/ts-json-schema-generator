@@ -52,7 +52,7 @@ export class TypeofNodeParser implements SubNodeParser {
                 type = this.childNodeParser.createType(member.initializer, context);
             } else if (type === null) {
                 type = new LiteralType(0);
-            } else if (type instanceof LiteralType && typeof (type.getValue() === "number")) {
+            } else if (type instanceof LiteralType && ((typeof type.getValue()) === "number")) {
                 type = new LiteralType(+type.getValue() + 1);
             } else {
                 throw new LogicError(`Enum initializer missing for "${name}"`);
