@@ -27,7 +27,8 @@ npm install --save ts-json-schema-generator
 
 ```
 -t, --type 'My.Type.Full.Name'
-    The type the generated schema will represent. If omitted, the generated schema will contain all types found in the files matching path. The same is true if '*' is specified.
+    The type the generated schema will represent. If omitted, the generated schema will contain all
+    types found in the files matching path. The same is true if '*' is specified.
 
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
@@ -71,7 +72,7 @@ npm install --save ts-json-schema-generator
 
 ## Debug
 
-`npm run debug -- test/programs/type-alias-single/main.ts --aliasRefs true MyString`
+`npm run debug -- --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 And connect via the debugger protocol.
 
