@@ -15,14 +15,14 @@ const args = commander
         "export",
     )
     .option(
+        "-r, --no-top-ref",
+        "Do not create a top-level $ref definition",
+    )
+    .option(
         "-j, --jsDoc <extended>",
         "Read JsDoc annotations",
         /^(extended|none|basic)$/,
         "extended",
-    )
-    .option(
-        "-r, --no-top-ref",
-        "Do not create a top-level $ref definition",
     )
     .option(
         "-u, --unstable",

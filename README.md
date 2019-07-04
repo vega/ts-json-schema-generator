@@ -43,14 +43,14 @@ npm install --save ts-json-schema-generator
     extended: Also read @nullable, and @asType annotations.
     none: Do not use JsDoc annotations.
 
--c, --skip-type-check
-    Skip type checks for better performance.
+-u, --unstable
+    Do not sort properties.
 
 -s, --strict-tuples
     Do not allow additional items on tuples.
 
--u, --unstable
-    Do not sort properties.
+-c, --skip-type-check
+    Skip type checks for better performance.
 
 -k, --validationKeywords
     Provide additional validation keywords to include.
