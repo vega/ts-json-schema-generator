@@ -10,7 +10,7 @@ const args = commander
     .option("-t, --type <name>", "Type name")
     .option(
         "-e, --expose <expose>",
-        "Type exposing",
+        "Create shared $ref definitions for types",
         /^(all|none|export)$/,
         "export",
     )
