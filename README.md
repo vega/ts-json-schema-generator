@@ -33,15 +33,15 @@ npm install --save ts-json-schema-generator
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.
-    export:  Create shared $ref definitions only for exported types.
+    export: Create shared $ref definitions only for exported types.
 
 -r, --no-top-ref
     Do not create a top-level $ref definition.
 
 -j, --jsDoc <extended|none|basic>
+    none: Do not use JsDoc annotations.
     basic: Read JsDoc annotations to provide schema properties.
     extended: Also read @nullable, and @asType annotations.
-    none: Do not use JsDoc annotations.
 
 -u, --unstable
     Do not sort properties.

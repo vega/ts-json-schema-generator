@@ -21,7 +21,7 @@ const args = commander
     .option(
         "-j, --jsDoc <extended>",
         "Read JsDoc annotations",
-        /^(extended|none|basic)$/,
+        /^(none|basic|extended)$/,
         "extended",
     )
     .option(
