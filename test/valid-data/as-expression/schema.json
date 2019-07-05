@@ -1,0 +1,13 @@
+{
+  "$ref": "#/definitions/Names",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Names": {
+      "enum": [
+          "Joe",
+          "Bob"
+      ],
+      "type": "string"
+    }
+  }
+}

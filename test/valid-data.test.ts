@@ -184,4 +184,5 @@ describe("valid-data", () => {
     it("multiple-roots1-star", assertSchema("multiple-roots1", "*"));
     it("multiple-roots2", assertSchema("multiple-roots2/schema"));
     it("keyof-typeof-enum", assertSchema("keyof-typeof-enum", "MyObject"));
+    it("as-expression", assertSchema("as-expression", "Names"));
 });
