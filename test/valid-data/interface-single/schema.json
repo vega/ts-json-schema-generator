@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
             "type": "object",
@@ -9,11 +9,15 @@
                 },
                 "propB": {
                     "type": "number"
+                },
+                "propC": {
+                    "type": "string"
                 }
             },
             "required": [
                 "propA",
-                "propB"
+                "propB",
+                "propC"
             ],
             "additionalProperties": false
         }

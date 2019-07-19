@@ -24,7 +24,7 @@ export class CircularReferenceNodeParser implements SubNodeParser {
 
         const reference = new ReferenceType();
         this.circular.set(key, reference);
-        reference.setType(this.childNodeParser.createType(node, context));
+        reference.setType(this.childNodeParser.createType(node, context, reference));
         this.circular.delete(key);
 
         return reference.getType();

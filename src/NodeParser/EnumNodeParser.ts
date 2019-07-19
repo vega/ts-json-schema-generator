@@ -11,7 +11,7 @@ function isMemberHidden(member: ts.EnumMember) {
         return false;
     }
 
-    const symbol: ts.Symbol = (<any>member).symbol;
+    const symbol: ts.Symbol = (member as any).symbol;
     return isHidden(symbol);
 }
 

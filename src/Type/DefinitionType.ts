@@ -2,7 +2,7 @@ import { BaseType } from "./BaseType";
 
 export class DefinitionType extends BaseType {
     public constructor(
-        private name: string,
+        private name: string | undefined,
         private type: BaseType,
     ) {
         super();
@@ -13,7 +13,7 @@ export class DefinitionType extends BaseType {
     }
 
     public getName() {
-        return this.name;
+        return this.name || super.getName();
     }
 
     public getType(): BaseType {

@@ -3,6 +3,7 @@ import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
+import { ReferenceType } from "./Type/ReferenceType";
 import { symbolAtNode } from "./Utils/symbolAtNode";
 
 export class ExposeNodeParser implements SubNodeParser {
@@ -16,8 +17,9 @@ export class ExposeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.Node): boolean {
         return this.subNodeParser.supportsNode(node);
     }
-    public createType(node: ts.Node, context: Context): BaseType {
-        const baseType: BaseType = this.subNodeParser.createType(node, context);
+
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
+        const baseType: BaseType = this.subNodeParser.createType(node, context, reference);
         if (!this.isExportNode(node)) {
             return baseType;
         }

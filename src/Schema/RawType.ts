@@ -1,4 +1,4 @@
-import { JSONSchema6Type, JSONSchema6TypeName } from "json-schema";
+import { JSONSchema7Type, JSONSchema7TypeName } from "json-schema";
 
-export type RawType = JSONSchema6Type;
-export type RawTypeName = JSONSchema6TypeName;
+export type RawType = JSONSchema7Type;
+export type RawTypeName = JSONSchema7TypeName;

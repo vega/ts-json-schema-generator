@@ -12,19 +12,22 @@ import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
+import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
-import { InterfaceNodeParser } from "../src/NodeParser/InterfaceNodeParser";
+import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
+import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
 import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser";
 import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser";
 import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser";
+import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryExpressionNodeParser";
 import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
@@ -36,9 +39,10 @@ import { TypeOperatorNodeParser } from "../src/NodeParser/TypeOperatorNodeParser
 import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
 import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodeParser";
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
+import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
-
+import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -70,13 +74,18 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberTypeNodeParser())
         .addNodeParser(new BooleanTypeNodeParser())
         .addNodeParser(new AnyTypeNodeParser())
+        .addNodeParser(new UnknownTypeNodeParser())
         .addNodeParser(new UndefinedTypeNodeParser())
+        .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
 
         .addNodeParser(new StringLiteralNodeParser())
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
+        .addNodeParser(new FunctionNodeParser())
+
+        .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 
         .addNodeParser(new LiteralNodeParser(chainNodeParser))
         .addNodeParser(new ParenthesizedNodeParser(chainNodeParser))
@@ -87,6 +96,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser))
+        .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
@@ -101,7 +111,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
             new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
         .addNodeParser(withCircular(withExpose(withJsDoc(
-            new InterfaceNodeParser(typeChecker, withJsDoc(chainNodeParser)),
+            new InterfaceAndClassNodeParser(typeChecker, withJsDoc(chainNodeParser)),
         ))))
         .addNodeParser(withCircular(withExpose(withJsDoc(
             new TypeLiteralNodeParser(withJsDoc(chainNodeParser)),

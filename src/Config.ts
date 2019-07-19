@@ -10,8 +10,8 @@ export interface PartialConfig {
 }
 
 export interface Config extends PartialConfig {
-    path?: string;
-    type: string;
+    path: string;
+    type?: string;
     tsconfig?: string;
 }
 

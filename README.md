@@ -9,25 +9,27 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/typescript-json-schema). Here's the differences list:
 
 * this implementation does not use `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
-* the following features are not supported yet:
-  * `class` types
 * processing AST and formatting JSON schema have been split into two independent steps
 * not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
+
+## Contributors
+
+This project is made possible by a [community of contributors](https://github.com/vega/ts-json-schema-generator/graphs/contributors). We welcome contributions of any kind (issues, code, documentation, examples, tests,...). Please read our [code of conduct](https://github.com/vega/vega/blob/master/CODE_OF_CONDUCT.md).
 
 ## Usage
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator \
-    --path 'my/project/**.*.ts' \
-    --type 'My.Type.Full.Name' \
-    --expose 'export' \
-    --jsDoc 'extended'
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
 ```
 
 ## Options
 
 ```
+-t, --type 'My.Type.Full.Name'
+    The type the generated schema will represent. If omitted, the generated schema will contain all
+    types found in the files matching path. The same is true if '*' is specified.
+
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.
@@ -66,10 +68,11 @@ npm install --save ts-json-schema-generator
 * generics
 * `typeof`
 * `keyof`
+* conditional types
 
 ## Debug
 
-`npm run debug -- test/programs/type-alias-single/main.ts --aliasRefs true MyString`
+`npm run debug -- --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 And connect via the debugger protocol.
 
