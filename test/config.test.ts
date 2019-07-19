@@ -16,14 +16,26 @@ const basePath = "test/config";
 function assertSchema(
     name: string,
     partialConfig: PartialConfig & { type: string },
+    tsconfig?: boolean,
 ) {
     return () => {
-        const config: Config = {
+        const coreConfig: Partial<Config> = {
             ...DEFAULT_CONFIG,
             ...partialConfig,
-            skipTypeCheck: !!process.env.FAST_TEST,
-            path: resolve(`${basePath}/${name}/*.ts`),
+            skipTypeCheck: !!process.env.FAST_TEST
         };
+        let config: Config;
+        if (tsconfig) {
+            config = {
+                ...coreConfig,
+                tsconfig: resolve(`${basePath}/${name}/tsconfig.json`)
+            } as Config
+        } else {
+            config = {
+                ...coreConfig,
+                path: !tsconfig ? resolve(`${basePath}/${name}/*.ts`) : undefined,
+            } as Config
+        }
 
         const program: ts.Program = createProgram(config);
         const generator: SchemaGenerator = new SchemaGenerator(
@@ -171,5 +183,15 @@ describe("config", () => {
             jsDoc: "extended",
             skipTypeCheck: true,
         }),
+    );
+
+    it(
+        "tsconfig-support",
+        assertSchema("tsconfig-support", {
+            type: "MyObject",
+            expose: "all",
+            topRef: false,
+            jsDoc: "none"
+        }, true),
     );
 });

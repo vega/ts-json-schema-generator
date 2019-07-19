@@ -1,7 +1,5 @@
-import * as ts from "typescript";
-import { MySubObject } from "./sub";
+import { MySubObject } from '@src/import1';
 
 export interface MyObject {
     subObject: MySubObject;
-    fromTypes: ts.LineAndCharacter;
 }
