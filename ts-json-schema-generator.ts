@@ -7,8 +7,8 @@ import { formatError } from "./src/Utils/formatError";
 
 const args = commander
     .option("-p, --path <path>", "Source file path")
-    .option("-f, --tsconfig <path>", "TsConfig path")
     .option("-t, --type <name>", "Type name")
+    .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .option(
         "-e, --expose <expose>",
         "Type exposing",
