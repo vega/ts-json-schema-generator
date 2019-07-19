@@ -12,6 +12,7 @@ export interface PartialConfig {
 interface NormalConfig extends PartialConfig {
     path: string;
     type?: string;
+    tsconfig: undefined;
 }
 
 interface TSConfig extends PartialConfig {
