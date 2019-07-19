@@ -7,6 +7,7 @@ import { Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
 import { LogicError } from "../src/Error/LogicError";
 import { NoRootNamesError } from "../src/Error/NoRootNamesError";
+import { NoTSConfigError } from "../src/Error/NoTSConfigError";
 
 function getDefaultTsConfig() {
     return {
@@ -23,30 +24,36 @@ function getDefaultTsConfig() {
 }
 
 function loadTsConfigFile(configFile: string) {
-    const config = ts.parseConfigFileTextToJson(
-        configFile,
-        ts.sys.readFile(configFile)!,
-    );
-    if (config.error) {
-        throw new DiagnosticError([config.error]);
-    } else if (!config.config) {
-        throw new LogicError(`Invalid parsed config file "${configFile}"`);
+    const raw = ts.sys.readFile(configFile);
+    if (raw) {
+        const config = ts.parseConfigFileTextToJson(
+            configFile,
+            raw,
+        );
+        if (config.error) {
+            throw new DiagnosticError([config.error]);
+        } else if (!config.config) {
+            throw new LogicError(`Invalid parsed config file "${configFile}"`);
+        }
+
+
+        const parseResult = ts.parseJsonConfigFileContent(
+            config.config,
+            ts.sys,
+            path.dirname(configFile),
+            {},
+            configFile,
+        );
+        parseResult.options.noEmit = true;
+        delete parseResult.options.out;
+        delete parseResult.options.outDir;
+        delete parseResult.options.outFile;
+        delete parseResult.options.declaration;
+
+        return parseResult;
+    } else {
+        throw new NoTSConfigError();
     }
-
-    const parseResult = ts.parseJsonConfigFileContent(
-        config.config,
-        ts.sys,
-        path.dirname(configFile),
-        {},
-        configFile,
-    );
-    parseResult.options.noEmit = true;
-    delete parseResult.options.out;
-    delete parseResult.options.outDir;
-    delete parseResult.options.outFile;
-    delete parseResult.options.declaration;
-
-    return parseResult;
 }
 
 function getTsConfigFilepath({ tsconfig }: Config, rootNames: string[]) {
