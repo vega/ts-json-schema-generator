@@ -9,11 +9,18 @@ export interface PartialConfig {
     extraJsonTags?: string[];
 }
 
-export interface Config extends PartialConfig {
+interface NormalConfig extends PartialConfig {
     path: string;
     type?: string;
-    tsconfig?: string;
 }
+
+interface TSConfig extends PartialConfig {
+    tsconfig: string;
+    path: undefined;
+    type?: string;
+}
+
+export type Config = NormalConfig | TSConfig;
 
 export const DEFAULT_CONFIG: PartialConfig = {
     expose: "export",
