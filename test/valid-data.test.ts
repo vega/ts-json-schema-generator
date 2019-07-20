@@ -58,6 +58,7 @@ describe("valid-data", () => {
     it("interface-recursion", assertSchema("interface-recursion", "MyObject"));
     it("interface-extra-props", assertSchema("interface-extra-props", "MyObject"));
     it("interface-array", assertSchema("interface-array", "TagArray"));
+    it("interface-property-dash", assertSchema("interface-property-dash", "MyObject"));
 
     it("class-single", assertSchema("class-single", "MyObject"));
     it("class-multi", assertSchema("class-multi", "MyObject"));
