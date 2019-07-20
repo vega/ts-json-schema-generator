@@ -6,7 +6,7 @@ import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
+import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator = new Ajv();
@@ -15,26 +15,19 @@ const basePath = "test/config";
 
 function assertSchema(
     name: string,
-    partialConfig: PartialConfig & { type: string },
+    userConfig: Config & { type: string },
     tsconfig?: boolean,
 ) {
     return () => {
-        const coreConfig: Partial<Config> = {
+        const config: Config = {
             ...DEFAULT_CONFIG,
-            ...partialConfig,
+            ...userConfig,
             skipTypeCheck: !!process.env.FAST_TEST
         };
-        let config: Config;
         if (tsconfig) {
-            config = {
-                ...coreConfig,
-                tsconfig: resolve(`${basePath}/${name}/tsconfig.json`)
-            } as Config
+            config.tsconfig = resolve(`${basePath}/${name}/tsconfig.json`)
         } else {
-            config = {
-                ...coreConfig,
-                path: !tsconfig ? resolve(`${basePath}/${name}/*.ts`) : undefined,
-            } as Config
+            config.path = resolve(`${basePath}/${name}/*.ts`)
         }
 
         const program: ts.Program = createProgram(config);

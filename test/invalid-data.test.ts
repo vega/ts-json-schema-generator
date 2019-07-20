@@ -10,7 +10,6 @@ function assertSchema(name: string, type: string, message: string) {
     return () => {
         const config: Config = {
             path: resolve(`test/invalid-data/${name}/*.ts`),
-            tsconfig: undefined,
             type: type,
             expose: "export",
             topRef: true,

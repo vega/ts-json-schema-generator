@@ -1,5 +1,7 @@
-export interface PartialConfig {
-
+export interface Config {
+    path?: string;
+    type?: string;
+    tsconfig?: string;
     expose: "all" | "none" | "export";
     topRef: boolean;
     jsDoc: "none" | "extended" | "basic";
@@ -9,21 +11,7 @@ export interface PartialConfig {
     extraJsonTags?: string[];
 }
 
-interface NormalConfig extends PartialConfig {
-    path: string;
-    type?: string;
-    tsconfig: undefined;
-}
-
-interface TSConfig extends PartialConfig {
-    tsconfig: string;
-    path: undefined;
-    type?: string;
-}
-
-export type Config = NormalConfig | TSConfig;
-
-export const DEFAULT_CONFIG: PartialConfig = {
+export const DEFAULT_CONFIG: Config = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",
