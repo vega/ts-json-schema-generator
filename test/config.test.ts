@@ -1,3 +1,5 @@
+jest.mock('find-up');
+
 import * as Ajv from "ajv";
 import { readFileSync } from "fs";
 import { resolve } from "path";
