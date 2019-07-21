@@ -11,7 +11,6 @@ function assertSchema(name: string, type: string, message: string) {
         const config: Config = {
             path: resolve(`test/invalid-data/${name}/*.ts`),
             type: type,
-
             expose: "export",
             topRef: true,
             jsDoc: "none",

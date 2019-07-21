@@ -6,8 +6,9 @@ import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 
 const args = commander
-    .option("-p, --path <path>", "Typescript path")
+    .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
+    .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .option(
         "-e, --expose <expose>",
         "Type exposing",
@@ -47,6 +48,7 @@ const args = commander
 const config: Config = {
     ...DEFAULT_CONFIG,
     path: args.path,
+    tsconfig: args.tsconfig,
     type: args.type,
     expose: args.expose,
     topRef: args.topRef,

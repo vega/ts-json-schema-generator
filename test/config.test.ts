@@ -6,7 +6,7 @@ import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config, DEFAULT_CONFIG, PartialConfig } from "../src/Config";
+import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator = new Ajv();
@@ -15,15 +15,20 @@ const basePath = "test/config";
 
 function assertSchema(
     name: string,
-    partialConfig: PartialConfig & { type: string },
+    userConfig: Config & { type: string },
+    tsconfig?: boolean,
 ) {
     return () => {
         const config: Config = {
             ...DEFAULT_CONFIG,
-            ...partialConfig,
-            skipTypeCheck: !!process.env.FAST_TEST,
-            path: resolve(`${basePath}/${name}/*.ts`),
+            ...userConfig,
+            skipTypeCheck: !!process.env.FAST_TEST
         };
+        if (tsconfig) {
+            config.tsconfig = resolve(`${basePath}/${name}/tsconfig.json`)
+        } else {
+            config.path = resolve(`${basePath}/${name}/*.ts`)
+        }
 
         const program: ts.Program = createProgram(config);
         const generator: SchemaGenerator = new SchemaGenerator(
@@ -171,5 +176,15 @@ describe("config", () => {
             jsDoc: "extended",
             skipTypeCheck: true,
         }),
+    );
+
+    it(
+        "tsconfig-support",
+        assertSchema("tsconfig-support", {
+            type: "MyObject",
+            expose: "all",
+            topRef: false,
+            jsDoc: "none"
+        }, true),
     );
 });

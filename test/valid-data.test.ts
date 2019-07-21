@@ -19,7 +19,6 @@ function assertSchema(
         const config: Config = {
             path: resolve(`${basePath}/${relativePath}/*.ts`),
             type: type,
-
             expose: "export",
             topRef: true,
             jsDoc: jsDoc,
