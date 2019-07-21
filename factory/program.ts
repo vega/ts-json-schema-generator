@@ -1,4 +1,3 @@
-import * as findUp from "find-up";
 import * as glob from "glob";
 import * as path from "path";
 import * as ts from "typescript";
@@ -56,30 +55,16 @@ function loadTsConfigFile(configFile: string) {
     }
 }
 
-function getTsConfigFilepath({ tsconfig }: Config, rootNames: string[]) {
-    if (tsconfig) {
-        return tsconfig;
-    }
-    if (rootNames.length) {
-        const found = findUp.sync("tsconfig.json", { cwd: rootNames[0] });
-        if (found) {
-            return found;
-        }
-    }
-    return;
-}
-
-function getTsConfig(config: Config, rootNames: string[]) {
-    const configFile = getTsConfigFilepath(config, rootNames);
-    if (configFile) {
-        return loadTsConfigFile(configFile);
+function getTsConfig(config: Config) {
+    if (config.tsconfig) {
+        return loadTsConfigFile(config.tsconfig);
     }
     return getDefaultTsConfig();
 }
 
 export function createProgram(config: Config): ts.Program {
     const rootNamesFromPath = config.path ? glob.sync(path.resolve(config.path)) : [];
-    const tsconfig = getTsConfig(config, rootNamesFromPath);
+    const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
 
     if (!rootNames.length) {

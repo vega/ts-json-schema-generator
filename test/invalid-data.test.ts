@@ -1,5 +1,3 @@
-jest.mock('find-up');
-
 import { resolve } from "path";
 import * as ts from "typescript";
 import { createFormatter } from "../factory/formatter";

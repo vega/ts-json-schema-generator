@@ -39,13 +39,11 @@
   },
   "dependencies": {
     "commander": "~2.20.0",
-    "find-up": "^4.0.0",
     "glob": "~7.1.4",
     "json-stable-stringify": "^1.0.1",
     "typescript": "~3.5.2"
   },
   "devDependencies": {
-    "@types/find-up": "^2.1.1",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.15",
     "@types/json-schema": "^7.0.3",
