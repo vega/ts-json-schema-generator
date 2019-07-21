@@ -8,20 +8,6 @@ import { LogicError } from "../src/Error/LogicError";
 import { NoRootNamesError } from "../src/Error/NoRootNamesError";
 import { NoTSConfigError } from "../src/Error/NoTSConfigError";
 
-function getDefaultTsConfig() {
-    return {
-        fileNames: [],
-        options: {
-            noEmit: true,
-            emitDecoratorMetadata: true,
-            experimentalDecorators: true,
-            target: ts.ScriptTarget.ES5,
-            module: ts.ModuleKind.CommonJS,
-            strictNullChecks: false,
-        },
-    };
-}
-
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
     if (raw) {
@@ -29,12 +15,12 @@ function loadTsConfigFile(configFile: string) {
             configFile,
             raw,
         );
+
         if (config.error) {
             throw new DiagnosticError([config.error]);
         } else if (!config.config) {
             throw new LogicError(`Invalid parsed config file "${configFile}"`);
         }
-
 
         const parseResult = ts.parseJsonConfigFileContent(
             config.config,
@@ -59,7 +45,18 @@ function getTsConfig(config: Config) {
     if (config.tsconfig) {
         return loadTsConfigFile(config.tsconfig);
     }
-    return getDefaultTsConfig();
+
+    return {
+        fileNames: [],
+        options: {
+            noEmit: true,
+            emitDecoratorMetadata: true,
+            experimentalDecorators: true,
+            target: ts.ScriptTarget.ES5,
+            module: ts.ModuleKind.CommonJS,
+            strictNullChecks: false,
+        },
+    };
 }
 
 export function createProgram(config: Config): ts.Program {
