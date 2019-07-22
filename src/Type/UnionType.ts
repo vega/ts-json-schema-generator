@@ -7,22 +7,27 @@ export class UnionType extends BaseType {
 
     public constructor(types: BaseType[]) {
         super();
-        this.types = uniqueTypeArray(types.reduce((flatTypes, type) => {
-            if (type instanceof UnionType) {
-                flatTypes.push(...type.getTypes());
-            } else if (!(type instanceof NeverType)) {
-                flatTypes.push(type);
-            }
-            return flatTypes;
-        }, [] as BaseType[]));
+        this.types = uniqueTypeArray(
+            types.reduce(
+                (flatTypes, type) => {
+                    if (type instanceof UnionType) {
+                        flatTypes.push(...type.getTypes());
+                    } else if (!(type instanceof NeverType)) {
+                        flatTypes.push(type);
+                    }
+                    return flatTypes;
+                },
+                [] as BaseType[]
+            )
+        );
     }
 
     public getId(): string {
-        return "(" + this.types.map((type) => type.getId()).join("|") + ")";
+        return "(" + this.types.map(type => type.getId()).join("|") + ")";
     }
 
     public getName(): string {
-        return "(" + this.types.map((type) => type.getName()).join("|") + ")";
+        return "(" + this.types.map(type => type.getName()).join("|") + ")";
     }
 
     public getTypes(): BaseType[] {

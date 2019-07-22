@@ -1,0 +1,14 @@
+{
+    "trailingComma": "es5",
+    "printWidth": 120,
+    "tabWidth": 4,
+    "endOfLine": "lf",
+    "overrides": [
+        {
+            "files": "{package.json,.travis.yml}",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
+}

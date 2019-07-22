@@ -11,20 +11,13 @@ import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
-
 export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: UnionType): boolean {
-        return (
-            type instanceof UnionType &&
-            type.getTypes().length > 0 &&
-            this.isPrimitiveUnion(type)
-        );
+        return type instanceof UnionType && type.getTypes().length > 0 && this.isPrimitiveUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
         return {
-            type: uniqueArray(
-                type.getTypes().map((item) => this.getPrimitiveType(item)),
-            ),
+            type: uniqueArray(type.getTypes().map(item => this.getPrimitiveType(item))),
         };
     }
     public getChildren(type: UnionType): BaseType[] {
@@ -32,7 +25,7 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     }
 
     private isPrimitiveUnion(type: UnionType): boolean {
-        return type.getTypes().every((item) => item instanceof PrimitiveType);
+        return type.getTypes().every(item => item instanceof PrimitiveType);
     }
     private getPrimitiveType(item: BaseType): RawTypeName {
         if (item instanceof StringType) {

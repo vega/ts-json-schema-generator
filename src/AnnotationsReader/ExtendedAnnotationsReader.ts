@@ -28,8 +28,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return false;
         }
 
-        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find(
-            (tag: ts.JSDocTagInfo) => tag.name === "nullable");
+        const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find((tag: ts.JSDocTagInfo) => tag.name === "nullable");
         return !!jsDocTag;
     }
 
@@ -44,7 +43,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        return {description: comments.map((comment) => comment.text).join(" ")};
+        return { description: comments.map(comment => comment.text).join(" ") };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
@@ -57,11 +56,11 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        const jsDocTag = jsDocTags.find((tag) => tag.name === "asType");
+        const jsDocTag = jsDocTags.find(tag => tag.name === "asType");
         if (!jsDocTag || !jsDocTag.text) {
             return undefined;
         }
 
-        return {type: jsDocTag.text};
+        return { type: jsDocTag.text };
     }
 }

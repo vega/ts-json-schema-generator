@@ -13,7 +13,10 @@ const validator = new Ajv();
 const basePath = "test/valid-data";
 
 function assertSchema(
-    relativePath: string, type?: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"],
+    relativePath: string,
+    type?: string,
+    jsDoc: Config["jsDoc"] = "none",
+    extra?: Config["extraJsonTags"]
 ) {
     return () => {
         const config: Config = {
@@ -30,7 +33,7 @@ function assertSchema(
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(),
+            createFormatter()
         );
 
         const schema = generator.createSchema(type);
@@ -99,8 +102,10 @@ describe("valid-data", () => {
     it("type-aliases-local-namespace", assertSchema("type-aliases-local-namespace", "MyObject"));
     it("type-aliases-recursive-anonymous", assertSchema("type-aliases-recursive-anonymous", "MyAlias"));
     it("type-aliases-recursive-export", assertSchema("type-aliases-recursive-export", "MyObject"));
-    it("type-aliases-recursive-generics-anonymous", assertSchema("type-aliases-recursive-generics-anonymous",
-        "MyAlias"));
+    it(
+        "type-aliases-recursive-generics-anonymous",
+        assertSchema("type-aliases-recursive-generics-anonymous", "MyAlias")
+    );
     it("type-aliases-recursive-generics-export", assertSchema("type-aliases-recursive-generics-export", "MyAlias"));
 
     it("type-aliases-tuple", assertSchema("type-aliases-tuple", "MyTuple"));
@@ -156,13 +161,16 @@ describe("valid-data", () => {
     it("generic-default", assertSchema("generic-default", "MyObject"));
     it("generic-prefixed-number", assertSchema("generic-prefixed-number", "MyObject"));
 
-    it("annotation-custom", assertSchema("annotation-custom", "MyObject", "basic", [
-        "customNumberProperty",
-        "customStringProperty",
-        "customComplexProperty",
-        "customMultilineProperty",
-        "customInvalidProperty",
-    ]));
+    it(
+        "annotation-custom",
+        assertSchema("annotation-custom", "MyObject", "basic", [
+            "customNumberProperty",
+            "customStringProperty",
+            "customComplexProperty",
+            "customMultilineProperty",
+            "customInvalidProperty",
+        ])
+    );
 
     it("nullable-null", assertSchema("nullable-null", "MyObject"));
 

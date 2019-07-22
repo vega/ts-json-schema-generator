@@ -6,11 +6,7 @@ import { UnionType } from "../Type/UnionType";
 import { referenceHidden } from "../Utils/isHidden";
 
 export class UnionNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.UnionTypeNode): boolean {
         return node.kind === ts.SyntaxKind.UnionType;
@@ -19,10 +15,10 @@ export class UnionNodeParser implements SubNodeParser {
         const hidden = referenceHidden(this.typeChecker);
         return new UnionType(
             node.types
-                .filter((subnode) => !hidden(subnode))
-                .map((subnode) => {
+                .filter(subnode => !hidden(subnode))
+                .map(subnode => {
                     return this.childNodeParser.createType(subnode, context);
-                }),
+                })
         );
     }
 }

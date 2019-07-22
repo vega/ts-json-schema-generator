@@ -1,11 +1,9 @@
 import { BaseType } from "./BaseType";
 
-export type LiteralValue = string|number|boolean;
+export type LiteralValue = string | number | boolean;
 
 export class LiteralType extends BaseType {
-    public constructor(
-        private value: LiteralValue,
-    ) {
+    public constructor(private value: LiteralValue) {
         super();
     }
 

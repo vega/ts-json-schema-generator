@@ -1,4 +1,4 @@
-const quotes = new Set([ "'", '"' ]);
+const quotes = new Set(["'", '"']);
 
 export function strip(input: string, chars: Set<string> = quotes): string {
     const length = input.length;

@@ -8,11 +8,7 @@ import { derefType } from "../Utils/derefType";
 import { referenceHidden } from "../Utils/isHidden";
 
 export class IntersectionNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.IntersectionTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IntersectionType;
@@ -20,11 +16,13 @@ export class IntersectionNodeParser implements SubNodeParser {
 
     public createType(node: ts.IntersectionTypeNode, context: Context): BaseType {
         const hidden = referenceHidden(this.typeChecker);
-        return this.translate(new IntersectionType(
-            node.types
-                .filter((subnode) => !hidden(subnode))
-                .map((subnode) => this.childNodeParser.createType(subnode, context)),
-        ));
+        return this.translate(
+            new IntersectionType(
+                node.types
+                    .filter(subnode => !hidden(subnode))
+                    .map(subnode => this.childNodeParser.createType(subnode, context))
+            )
+        );
     }
 
     /**
@@ -38,7 +36,7 @@ export class IntersectionNodeParser implements SubNodeParser {
     private translate(intersection: IntersectionType): IntersectionType | UnionType {
         const unions = intersection.getTypes().map(type => {
             const derefed = derefType(type);
-            return derefed instanceof UnionType ? derefed.getTypes() : [ type ];
+            return derefed instanceof UnionType ? derefed.getTypes() : [type];
         });
         const result: IntersectionType[] = [];
         function process(i: number, types: BaseType[] = []) {

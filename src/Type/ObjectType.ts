@@ -1,13 +1,8 @@
 import { BaseType } from "./BaseType";
-import { strip } from '../Utils/String';
+import { strip } from "../Utils/String";
 
 export class ObjectProperty {
-    public constructor(
-        private name: string,
-        private type: BaseType,
-        private required: boolean,
-    ) {
-    }
+    public constructor(private name: string, private type: BaseType, private required: boolean) {}
 
     public getName(): string {
         return strip(this.name);
@@ -25,7 +20,7 @@ export class ObjectType extends BaseType {
         private id: string,
         private baseTypes: BaseType[],
         private properties: ObjectProperty[],
-        private additionalProperties: BaseType|boolean,
+        private additionalProperties: BaseType | boolean
     ) {
         super();
     }
@@ -40,7 +35,7 @@ export class ObjectType extends BaseType {
     public getProperties(): ObjectProperty[] {
         return this.properties;
     }
-    public getAdditionalProperties(): BaseType|boolean {
+    public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;
     }
 }

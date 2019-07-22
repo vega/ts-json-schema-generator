@@ -7,11 +7,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeAliasNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TypeAliasDeclaration): boolean {
         return node.kind === ts.SyntaxKind.TypeAliasDeclaration;
@@ -19,7 +15,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
 
     public createType(node: ts.TypeAliasDeclaration, context: Context, reference?: ReferenceType): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
-            node.typeParameters.forEach((typeParam) => {
+            node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
 
@@ -35,10 +31,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
             reference.setId(id);
             reference.setName(id);
         }
-        return new AliasType(
-            id,
-            this.childNodeParser.createType(node.type, context),
-        );
+        return new AliasType(id, this.childNodeParser.createType(node.type, context));
     }
 
     private getTypeId(node: ts.Node, context: Context): string {

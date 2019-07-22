@@ -2,17 +2,14 @@ import { BaseType } from "./BaseType";
 import { LiteralType } from "./LiteralType";
 import { NullType } from "./NullType";
 
-export type EnumValue = string|boolean|number|null;
+export type EnumValue = string | boolean | number | null;
 
 export class EnumType extends BaseType {
     private types: BaseType[];
 
-    public constructor(
-        private id: string,
-        private values: EnumValue[],
-    ) {
+    public constructor(private id: string, private values: EnumValue[]) {
         super();
-        this.types = values.map(value => value == null ? new NullType() : new LiteralType(value));
+        this.types = values.map(value => (value == null ? new NullType() : new LiteralType(value)));
     }
 
     public getId(): string {

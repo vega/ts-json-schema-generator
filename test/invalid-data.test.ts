@@ -21,7 +21,7 @@ function assertSchema(name: string, type: string, message: string) {
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(),
+            createFormatter()
         );
 
         expect(() => generator.createSchema(type)).toThrowError(message);

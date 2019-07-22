@@ -8,7 +8,7 @@ export class NullTypeFormatter implements SubTypeFormatter {
         return type instanceof NullType;
     }
     public getDefinition(type: NullType): Definition {
-        return {type: "null"};
+        return { type: "null" };
     }
     public getChildren(type: NullType): BaseType[] {
         return [];

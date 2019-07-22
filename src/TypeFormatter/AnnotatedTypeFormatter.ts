@@ -6,7 +6,7 @@ import { BaseType } from "../Type/BaseType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export function makeNullable(def: Definition) {
-    const union: Definition[] | undefined = def.oneOf as Definition[] || def.anyOf;
+    const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
@@ -35,20 +35,17 @@ export function makeNullable(def: Definition) {
 
         for (const key of Object.keys(def) as (keyof Definition)[]) {
             if (key !== "description" && key !== "title" && key !== "default") {
-                (subdef  as any)[key] = def[key] as any;
+                (subdef as any)[key] = def[key] as any;
                 delete def[key];
             }
         }
-        def.anyOf = [ subdef, { type: "null" } ];
+        def.anyOf = [subdef, { type: "null" }];
     }
     return def;
 }
 
 export class AnnotatedTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: AnnotatedType): boolean {
         return type instanceof AnnotatedType;
@@ -63,7 +60,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
             return makeNullable(def);
         }
 
-        return  def;
+        return def;
     }
     public getChildren(type: AnnotatedType): BaseType[] {
         return this.childTypeFormatter.getChildren(type.getType());

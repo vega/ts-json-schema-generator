@@ -2,9 +2,7 @@ import { ArrayType } from "./ArrayType";
 import { BaseType } from "./BaseType";
 
 export class RestType extends BaseType {
-    public constructor(
-        private item: ArrayType,
-    ) {
+    public constructor(private item: ArrayType) {
         super();
     }
 

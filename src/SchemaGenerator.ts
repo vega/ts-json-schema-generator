@@ -13,9 +13,8 @@ export class SchemaGenerator {
     public constructor(
         private readonly program: ts.Program,
         private readonly nodeParser: NodeParser,
-        private readonly typeFormatter: TypeFormatter,
-    ) {
-    }
+        private readonly typeFormatter: TypeFormatter
+    ) {}
 
     public createSchema(fullName: string | undefined): Schema {
         const rootNodes = this.getRootNodes(fullName);
@@ -30,12 +29,13 @@ export class SchemaGenerator {
     }
 
     private getRootNodes(fullName: string | undefined) {
-        if (fullName && (fullName !== "*")) {
+        if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
         } else {
             const rootFileNames = this.program.getRootFileNames();
-            const rootSourceFiles =
-                this.program.getSourceFiles().filter(sourceFile => rootFileNames.includes(sourceFile.fileName));
+            const rootSourceFiles = this.program
+                .getSourceFiles()
+                .filter(sourceFile => rootFileNames.includes(sourceFile.fileName));
             const rootNodes = new Map<string, ts.Node>();
             this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
             return [...rootNodes.values()];
@@ -66,10 +66,10 @@ export class SchemaGenerator {
     private appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
 
-        const children = this
-            .typeFormatter.getChildren(rootType)
+        const children = this.typeFormatter
+            .getChildren(rootType)
             .filter((child): child is DefinitionType => child instanceof DefinitionType)
-            .filter((child) => {
+            .filter(child => {
                 if (!seen.has(child.getId())) {
                     seen.add(child.getId());
                     return true;
@@ -77,15 +77,14 @@ export class SchemaGenerator {
                 return false;
             });
 
-        children
-            .reduce((definitions, child) => {
-                const name = child.getName();
-                if (name in definitions) {
-                    throw new Error(`Type "${name}" has multiple definitions.`);
-                }
-                definitions[name] = this.typeFormatter.getDefinition(child.getType());
-                return definitions;
-            }, childDefinitions);
+        children.reduce((definitions, child) => {
+            const name = child.getName();
+            if (name in definitions) {
+                throw new Error(`Type "${name}" has multiple definitions.`);
+            }
+            definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            return definitions;
+        }, childDefinitions);
     }
     private partitionFiles() {
         const projectFiles = new Array<ts.SourceFile>();
@@ -109,14 +108,14 @@ export class SchemaGenerator {
             case ts.SyntaxKind.ClassDeclaration:
             case ts.SyntaxKind.EnumDeclaration:
             case ts.SyntaxKind.TypeAliasDeclaration:
-                if (!this.isExportType(node) || (this.isGenericType(node as ts.TypeAliasDeclaration))) {
+                if (!this.isExportType(node) || this.isGenericType(node as ts.TypeAliasDeclaration)) {
                     return;
                 }
 
                 allTypes.set(this.getFullName(node, typeChecker), node);
                 break;
             default:
-                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                ts.forEachChild(node, subnode => this.inspectNode(subnode, typeChecker, allTypes));
                 break;
         }
     }
@@ -125,10 +124,7 @@ export class SchemaGenerator {
         return localSymbol ? "exportSymbol" in localSymbol : false;
     }
     private isGenericType(node: ts.TypeAliasDeclaration): boolean {
-        return !!(
-            node.typeParameters &&
-            node.typeParameters.length > 0
-        );
+        return !!(node.typeParameters && node.typeParameters.length > 0);
     }
     private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
         const symbol = symbolAtNode(node)!;
