@@ -44,5 +44,6 @@ module.exports = {
         "no-shadow": "error",
         "no-useless-concat": "error",
         "no-undef": "off",
+        "prettier/prettier": "error",
     },
 };
