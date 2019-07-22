@@ -8,11 +8,7 @@ import { BaseType } from "../Type/BaseType";
 import { ReferenceType } from "../Type/ReferenceType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
-    public constructor(
-        private childNodeParser: SubNodeParser,
-        private annotationsReader: AnnotationsReader,
-    ) {
-    }
+    public constructor(private childNodeParser: SubNodeParser, private annotationsReader: AnnotationsReader) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);
@@ -25,8 +21,10 @@ export class AnnotatedNodeParser implements SubNodeParser {
         }
         const annotatedNode = this.getAnnotatedNode(node);
         const annotations = this.annotationsReader.getAnnotations(annotatedNode);
-        const nullable = this.annotationsReader instanceof ExtendedAnnotationsReader ?
-            this.annotationsReader.isNullable(annotatedNode) : false;
+        const nullable =
+            this.annotationsReader instanceof ExtendedAnnotationsReader
+                ? this.annotationsReader.isNullable(annotatedNode)
+                : false;
         return !annotations && !nullable ? baseType : new AnnotatedType(baseType, annotations || {}, nullable);
     }
 

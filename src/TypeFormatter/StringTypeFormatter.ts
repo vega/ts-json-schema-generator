@@ -8,7 +8,7 @@ export class StringTypeFormatter implements SubTypeFormatter {
         return type instanceof StringType;
     }
     public getDefinition(type: StringType): Definition {
-        return {type: "string"};
+        return { type: "string" };
     }
     public getChildren(type: StringType): BaseType[] {
         return [];

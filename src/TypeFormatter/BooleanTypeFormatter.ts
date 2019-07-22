@@ -8,7 +8,7 @@ export class BooleanTypeFormatter implements SubTypeFormatter {
         return type instanceof BooleanType;
     }
     public getDefinition(type: BooleanType): Definition {
-        return {type: "boolean"};
+        return { type: "boolean" };
     }
     public getChildren(type: BooleanType): BaseType[] {
         return [];

@@ -1,9 +1,7 @@
 import { BaseType } from "./BaseType";
 
 export class OptionalType extends BaseType {
-    public constructor(
-        private item: BaseType,
-    ) {
+    public constructor(private item: BaseType) {
         super();
     }
 

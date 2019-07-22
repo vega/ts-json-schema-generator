@@ -8,10 +8,7 @@ import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {}
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ConditionalTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ConditionalType;
@@ -35,12 +32,20 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
         if (!(trueCheckType instanceof NeverType)) {
-            results.push(this.childNodeParser.createType(node.trueType,
-                this.createSubContext(node, checkTypeParameterName, trueCheckType, context)));
+            results.push(
+                this.childNodeParser.createType(
+                    node.trueType,
+                    this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
+                )
+            );
         }
         if (!(falseCheckType instanceof NeverType)) {
-            results.push(this.childNodeParser.createType(node.falseType,
-                this.createSubContext(node, checkTypeParameterName, falseCheckType, context)));
+            results.push(
+                this.childNodeParser.createType(
+                    node.falseType,
+                    this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
+                )
+            );
         }
         return new UnionType(results).normalize();
     }
@@ -71,8 +76,10 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * @return The created sub context.
      */
     private createSubContext(
-        node: ts.ConditionalTypeNode, checkTypeParameterName: string,
-        narrowedCheckType: BaseType, parentContext: Context
+        node: ts.ConditionalTypeNode,
+        checkTypeParameterName: string,
+        narrowedCheckType: BaseType,
+        parentContext: Context
     ): Context {
         const subContext = new Context(node);
 
@@ -81,7 +88,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         subContext.pushArgument(narrowedCheckType);
 
         // Copy all other type parameters from parent context
-        parentContext.getParameters().forEach((parentParameter) => {
+        parentContext.getParameters().forEach(parentParameter => {
             if (parentParameter !== checkTypeParameterName) {
                 subContext.pushParameter(parentParameter);
                 subContext.pushArgument(parentContext.getArgument(parentParameter));
@@ -90,5 +97,4 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         return subContext;
     }
-
 }

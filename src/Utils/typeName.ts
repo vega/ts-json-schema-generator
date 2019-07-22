@@ -6,11 +6,7 @@ export function typeName(value: RawType): RawTypeName {
     }
 
     const type = typeof value;
-    if (
-        type === "string" ||
-        type === "number" ||
-        type === "boolean"
-    ) {
+    if (type === "string" || type === "number" || type === "boolean") {
         return type;
     }
 

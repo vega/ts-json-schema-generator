@@ -8,12 +8,15 @@ import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "./uniqueArray";
-import { deepMerge } from './deepMerge';
-
+import { deepMerge } from "./deepMerge";
 
 function getNonRefType(type: BaseType): BaseType {
-    if (type instanceof ReferenceType || type instanceof DefinitionType ||
-        type instanceof AliasType || type instanceof AnnotatedType) {
+    if (
+        type instanceof ReferenceType ||
+        type instanceof DefinitionType ||
+        type instanceof AliasType ||
+        type instanceof AnnotatedType
+    ) {
         return getNonRefType(type.getType());
     }
     return type;
@@ -32,9 +35,10 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             return props !== undefined && props !== true;
         }
 
-        if (additionalPropsDefinition(definition.additionalProperties) &&
-                additionalPropsDefinition(other.additionalProperties)) {
-
+        if (
+            additionalPropsDefinition(definition.additionalProperties) &&
+            additionalPropsDefinition(other.additionalProperties)
+        ) {
             // additional properties is false only if all children also set additional properties to false
             // collect additional properties and merge into a single definition
             let additionalProps: Definition[] = [];
@@ -44,15 +48,15 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
                     if (addProps.anyOf) {
                         for (const prop of addProps.anyOf as Definition[]) {
                             if (prop.type) {
-                                additionalTypes = additionalTypes.concat(isArray(prop.type) ?
-                                    prop.type : [prop.type] );
+                                additionalTypes = additionalTypes.concat(isArray(prop.type) ? prop.type : [prop.type]);
                             } else {
                                 additionalProps.push(prop);
                             }
                         }
                     } else if (addProps.type) {
-                        additionalTypes = additionalTypes.concat(isArray(addProps.type) ?
-                            addProps.type : [addProps.type] );
+                        additionalTypes = additionalTypes.concat(
+                            isArray(addProps.type) ? addProps.type : [addProps.type]
+                        );
                     } else {
                         additionalProps.push(addProps);
                     }

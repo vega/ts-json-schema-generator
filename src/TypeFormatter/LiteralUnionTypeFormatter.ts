@@ -10,11 +10,7 @@ import { uniqueArray } from "../Utils/uniqueArray";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: UnionType): boolean {
-        return (
-            type instanceof UnionType &&
-            type.getTypes().length > 0 &&
-            this.isLiteralUnion(type)
-        );
+        return type instanceof UnionType && type.getTypes().length > 0 && this.isLiteralUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
         const values = uniqueArray(type.getTypes().map((item: LiteralType | NullType) => this.getLiteralValue(item)));
@@ -37,7 +33,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     }
 
     private isLiteralUnion(type: UnionType): boolean {
-        return type.getTypes().every((item) => item instanceof LiteralType || item instanceof NullType);
+        return type.getTypes().every(item => item instanceof LiteralType || item instanceof NullType);
     }
     private getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
         return value instanceof LiteralType ? value.getValue() : null;

@@ -10,20 +10,19 @@ import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
     }
 
-    public createType(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context, reference?: ReferenceType):
-    BaseType {
+    public createType(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
+        context: Context,
+        reference?: ReferenceType
+    ): BaseType {
         if (node.typeParameters && node.typeParameters.length) {
-            node.typeParameters.forEach((typeParam) => {
+            node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
 
@@ -51,12 +50,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(
-            id,
-            this.getBaseTypes(node, context),
-            properties,
-            additionalProperties,
-        );
+        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
     }
 
     /**
@@ -88,10 +82,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             return [];
         }
 
-        return node.heritageClauses.reduce((result: BaseType[], baseType) => [
-            ...result,
-            ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
-        ], []);
+        return node.heritageClauses.reduce(
+            (result: BaseType[], baseType) => [
+                ...result,
+                ...baseType.types.map(expression => this.childNodeParser.createType(expression, context)),
+            ],
+            []
+        );
     }
 
     private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
@@ -104,16 +101,24 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                         members.push(member);
                     }
                     return members;
-                }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
+                },
+                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[]
+            )
             .filter(member => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
-            .map(member => new ObjectProperty(
-                member.name.getText(),
-                this.childNodeParser.createType(member.type!, context),
-                !member.questionToken));
+            .map(
+                member =>
+                    new ObjectProperty(
+                        member.name.getText(),
+                        this.childNodeParser.createType(member.type!, context),
+                        !member.questionToken
+                    )
+            );
     }
 
-    private getAdditionalProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context):
-    BaseType | false {
+    private getAdditionalProperties(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
+        context: Context
+    ): BaseType | false {
         const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
             return false;

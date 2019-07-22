@@ -4,10 +4,7 @@ import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
 
 export class ChainTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private typeFormatters: SubTypeFormatter[],
-    ) {
-    }
+    public constructor(private typeFormatters: SubTypeFormatter[]) {}
 
     public addTypeFormatter(typeFormatter: SubTypeFormatter): this {
         this.typeFormatters.push(typeFormatter);
@@ -15,7 +12,7 @@ export class ChainTypeFormatter implements SubTypeFormatter {
     }
 
     public supportsType(type: BaseType): boolean {
-        return this.typeFormatters.some((typeFormatter) => typeFormatter.supportsType(type));
+        return this.typeFormatters.some(typeFormatter => typeFormatter.supportsType(type));
     }
     public getDefinition(type: BaseType): Definition {
         return this.getTypeFormatter(type).getDefinition(type);

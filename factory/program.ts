@@ -11,10 +11,7 @@ import { NoTSConfigError } from "../src/Error/NoTSConfigError";
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
     if (raw) {
-        const config = ts.parseConfigFileTextToJson(
-            configFile,
-            raw,
-        );
+        const config = ts.parseConfigFileTextToJson(configFile, raw);
 
         if (config.error) {
             throw new DiagnosticError([config.error]);
@@ -27,7 +24,7 @@ function loadTsConfigFile(configFile: string) {
             ts.sys,
             path.dirname(configFile),
             {},
-            configFile,
+            configFile
         );
         parseResult.options.noEmit = true;
         delete parseResult.options.out;
@@ -68,10 +65,7 @@ export function createProgram(config: Config): ts.Program {
         throw new NoRootNamesError();
     }
 
-    const program: ts.Program = ts.createProgram(
-        rootNames,
-        tsconfig.options,
-    );
+    const program: ts.Program = ts.createProgram(rootNames, tsconfig.options);
 
     if (!config.skipTypeCheck) {
         const diagnostics = ts.getPreEmitDiagnostics(program);

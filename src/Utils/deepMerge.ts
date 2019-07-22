@@ -10,7 +10,7 @@ export function deepMerge<A, B>(a: A, b: B): A & B | B;
 export function deepMerge(a: any, b: any): any {
     const typeA = typeof a;
     const typeB = typeof b;
-    if (typeA === typeB && typeA === 'object' && typeA !== null && a !== b) {
+    if (typeA === typeB && typeA === "object" && typeA !== null && a !== b) {
         const isArrayA = Array.isArray(a);
         const isArrayB = Array.isArray(b);
         // If they are both arrays just concatenate them.

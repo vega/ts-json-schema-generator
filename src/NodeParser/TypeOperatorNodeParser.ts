@@ -11,10 +11,7 @@ import { derefType } from "../Utils/derefType";
 import { getTypeKeys } from "../Utils/typeKeys";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
-    public constructor(
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TypeOperatorNode): boolean {
         return node.kind === ts.SyntaxKind.TypeOperator;
@@ -28,7 +25,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         }
         const keys = getTypeKeys(type);
         if (derefed instanceof ObjectType && derefed.getAdditionalProperties()) {
-            return new UnionType([ ...keys, new StringType() ] );
+            return new UnionType([...keys, new StringType()]);
         }
         return new UnionType(keys);
     }

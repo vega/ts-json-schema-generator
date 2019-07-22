@@ -12,10 +12,7 @@ import { derefType } from "../Utils/derefType";
 import { getTypeByKey } from "../Utils/typeKeys";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
-    public constructor(
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.IndexedAccessTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
@@ -24,12 +21,12 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
         const objectType = derefType(this.childNodeParser.createType(node.objectType, context));
         const indexType = this.childNodeParser.createType(node.indexType, context);
-        const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [ indexType ];
+        const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [indexType];
         const propertyTypes = indexTypes.map(type => {
-            if (!(type instanceof LiteralType || type instanceof StringType
-                    || type instanceof NumberType)) {
-                throw new LogicError(`Unexpected type "${type.getId()}" (expected "LiteralType" or "StringType" ` +
-                    `or "NumberType")`);
+            if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
+                throw new LogicError(
+                    `Unexpected type "${type.getId()}" (expected "LiteralType" or "StringType" or "NumberType")`
+                );
             }
 
             const propertyType = getTypeByKey(objectType, type);

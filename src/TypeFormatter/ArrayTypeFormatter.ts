@@ -5,10 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class ArrayTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: ArrayType): boolean {
         return type instanceof ArrayType;

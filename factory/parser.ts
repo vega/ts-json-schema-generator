@@ -56,11 +56,12 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         if (config.jsDoc === "extended") {
-            return new AnnotatedNodeParser(nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, config.extraJsonTags));
+            return new AnnotatedNodeParser(
+                nodeParser,
+                new ExtendedAnnotationsReader(typeChecker, config.extraJsonTags)
+            );
         } else if (config.jsDoc === "basic") {
-            return new AnnotatedNodeParser(nodeParser,
-                new BasicAnnotationsReader(config.extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(config.extraJsonTags));
         } else {
             return nodeParser;
         }
@@ -107,15 +108,14 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new CallExpressionParser(typeChecker, chainNodeParser))
 
-        .addNodeParser(withCircular(withExpose(withJsDoc(
-            new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
+        .addNodeParser(withCircular(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
-        .addNodeParser(withCircular(withExpose(withJsDoc(
-            new InterfaceAndClassNodeParser(typeChecker, withJsDoc(chainNodeParser)),
-        ))))
-        .addNodeParser(withCircular(withExpose(withJsDoc(
-            new TypeLiteralNodeParser(withJsDoc(chainNodeParser)),
-        ))))
+        .addNodeParser(
+            withCircular(
+                withExpose(withJsDoc(new InterfaceAndClassNodeParser(typeChecker, withJsDoc(chainNodeParser))))
+            )
+        )
+        .addNodeParser(withCircular(withExpose(withJsDoc(new TypeLiteralNodeParser(withJsDoc(chainNodeParser))))))
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));
 
