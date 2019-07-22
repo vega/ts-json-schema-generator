@@ -56,12 +56,12 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const required = objectProperties
             .map((property) => this.prepareObjectProperty(property))
             .filter((property) => property.isRequired())
-            .map((property) => property.getName(true));
+            .map((property) => property.getName());
         const properties = objectProperties
             .map((property) => this.prepareObjectProperty(property))
             .reduce((result: StringMap<Definition>, property) => ({
                 ...result,
-                [property.getName(true)]: this.childTypeFormatter.getDefinition(property.getType()),
+                [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
             }), {});
 
         return {

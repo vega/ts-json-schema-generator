@@ -9,11 +9,8 @@ export class ObjectProperty {
     ) {
     }
 
-    public getName(stripQuotes: boolean = false): string {
-        if (stripQuotes) {
-            return strip(this.name);
-        }
-        return this.name;
+    public getName(): string {
+        return strip(this.name);
     }
     public getType(): BaseType {
         return this.type;
