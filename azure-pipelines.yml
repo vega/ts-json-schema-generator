@@ -3,11 +3,12 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+
 pool:
   vmImage: 'Ubuntu 16.04'
 
 strategy:
-  maxParallel: 3 # hack
+  maxParallel: 3  # hack
   matrix:
     node10:
       node_version: 10.x
@@ -21,45 +22,45 @@ trigger:
       - refs/tags/*
 
 steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: $(node_version)
-    displayName: 'Install Node.js'
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(node_version)
+  displayName: 'Install Node.js'
 
-  - script: |
-      yarn
-    displayName: 'Install dependencies'
+- script: |
+    yarn
+  displayName: 'Install dependencies'
 
-  - script: |
-      JEST_JUNIT_OUTPUT="./test_results.xml" yarn test --ci --reporters=default --reporters=jest-junit --coverage
-    displayName: 'Test'
+- script: |
+    JEST_JUNIT_OUTPUT="./test_results.xml" yarn test --ci --reporters=default --reporters=jest-junit --coverage
+  displayName: 'Test'
 
-  - script: |
-      yarn lint
-    displayName: 'Lint'
+- script: |
+    yarn lint
+  displayName: 'Lint'
 
-  - script: |
-      yarn build
-    displayName: 'Build'
+- script: |
+    yarn build
+  displayName: 'Build'
 
-  - task: publishTestResults@2
-    inputs:
-      testResultsFiles: './test_results.xml'
-      testRunTitle: 'Node $(node_version) tests'
-    displayName: 'Publish Test Results'
-    condition: eq(variables['node_version'], '11.x')
+- task: publishTestResults@2
+  inputs:
+    testResultsFiles: './test_results.xml'
+    testRunTitle: 'Node $(node_version) tests'
+  displayName: 'Publish Test Results'
+  condition: eq(variables['node_version'], '11.x')
 
-  - task: PublishCodeCoverageResults@1
-    inputs:
-      summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
-      codeCoverageTool: Cobertura
-      reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
-    displayName: 'Publish Test Coverage'
-    condition: eq(variables['node_version'], '11.x')
+- task: PublishCodeCoverageResults@1
+  inputs:
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/coverage/cobertura-coverage.xml'
+    codeCoverageTool: Cobertura
+    reportDirectory: '$(System.DefaultWorkingDirectory)/coverage'
+  displayName: 'Publish Test Coverage'
+  condition: eq(variables['node_version'], '11.x')
 
-  - task: Npm@1
-    condition: and(succeeded(), eq(variables['node_version'], '11.x'), contains(variables['Build.SourceBranch'], 'refs/tags/'))
-    inputs:
-      command: publish
-      publishEndpoint: 'npmjs'
-    displayName: 'Deploy to NPM Registry'
+- task: Npm@1
+  condition: and(succeeded(), eq(variables['node_version'], '11.x'), contains(variables['Build.SourceBranch'], 'refs/tags/'))
+  inputs:
+    command: publish
+    publishEndpoint: 'npmjs'
+  displayName: 'Deploy to NPM Registry'
