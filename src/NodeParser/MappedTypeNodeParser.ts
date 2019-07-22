@@ -70,7 +70,14 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return keyListType.getValues()
             .filter((value: EnumValue) => !!value)
             .map((value: EnumValue) =>
-                new ObjectProperty(value!.toString(), new LiteralType(value!), !node.questionToken)
+                new ObjectProperty(
+                    value!.toString(),
+                    this.childNodeParser.createType(
+                        node.type!,
+                        this.createSubContext(node, new LiteralType(value!), context)
+                    ),
+                    !node.questionToken
+                )
             );
     }
 

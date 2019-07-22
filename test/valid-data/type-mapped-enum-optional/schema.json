@@ -5,22 +5,13 @@
             "type": "object",
             "properties": {
                 "a": {
-                    "type": "string",
-                    "enum": [
-                        "a"
-                    ]
+                    "type": "string"
                 },
                 "b": {
-                    "type": "string",
-                    "enum": [
-                        "b"
-                    ]
+                    "type": "string"
                 },
                 "c": {
-                    "type": "string",
-                    "enum": [
-                        "c"
-                    ]
+                    "type": "string"
                 }
             },
             "additionalProperties": false
