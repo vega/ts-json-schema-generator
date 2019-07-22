@@ -16,7 +16,6 @@ import { EnumType, EnumValue } from '../Type/EnumType';
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
         private childNodeParser: NodeParser,
-        private typeChecker: ts.TypeChecker,
     ) {
     }
 
