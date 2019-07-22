@@ -37,6 +37,7 @@ module.exports = {
     "no-useless-call": "error",
     "no-shadow": "error",
     "no-useless-concat": "error",
-    "no-undef": "off"
+    "no-undef": "off",
+    "no-prototype-builtins": "off"
   }
 };
