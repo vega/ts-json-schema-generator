@@ -8,6 +8,7 @@ import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "./uniqueArray";
+import { deepMerge } from './deepMerge';
 
 
 function getNonRefType(type: BaseType): BaseType {
@@ -25,10 +26,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     return (definition: Definition, baseType: BaseType) => {
         const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
 
-        definition.properties = {
-            ...other.properties || {},
-            ...definition.properties || {},
-        };
+        definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
             return props !== undefined && props !== true;
