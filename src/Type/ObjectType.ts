@@ -1,4 +1,5 @@
 import { BaseType } from "./BaseType";
+import { strip } from '../Utils/String';
 
 export class ObjectProperty {
     public constructor(
@@ -9,7 +10,7 @@ export class ObjectProperty {
     }
 
     public getName(): string {
-        return this.name;
+        return strip(this.name);
     }
     public getType(): BaseType {
         return this.type;
