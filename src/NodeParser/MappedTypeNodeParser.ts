@@ -11,6 +11,7 @@ import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
+import { EnumType, EnumValue } from '../Type/EnumType';
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -40,6 +41,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof NumberType) {
             return new ArrayType(this.childNodeParser.createType(node.type!,
                 this.createSubContext(node, keyListType, context)));
+        } else if (keyListType instanceof EnumType) {
+            return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
         } else {
             throw new LogicError(
                 // eslint-disable-next-line max-len
@@ -61,6 +64,21 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 result.push(objectProperty);
                 return result;
             }, []);
+    }
+
+    private getValues(node: ts.MappedTypeNode, keyListType: EnumType, context: Context): ObjectProperty[] {
+        return keyListType.getValues()
+            .filter((value: EnumValue) => !!value)
+            .map((value: EnumValue) =>
+                new ObjectProperty(
+                    value!.toString(),
+                    this.childNodeParser.createType(
+                        node.type!,
+                        this.createSubContext(node, new LiteralType(value!), context)
+                    ),
+                    !node.questionToken
+                )
+            );
     }
 
     private getAdditionalProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context):
