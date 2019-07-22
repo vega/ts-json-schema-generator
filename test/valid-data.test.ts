@@ -140,6 +140,7 @@ describe("valid-data", () => {
     it("type-mapped-additional-props", assertSchema("type-mapped-additional-props", "MyObject"));
     it("type-mapped-array", assertSchema("type-mapped-array", "MyObject"));
     it("type-mapped-union-intersection", assertSchema("type-mapped-union-intersection", "MyObject"));
+    it("type-mapped-enum", assertSchema("type-mapped-enum", "MyObject"));
 
     it("generic-simple", assertSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertSchema("generic-arrays", "MyObject"));
