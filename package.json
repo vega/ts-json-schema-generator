@@ -69,7 +69,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "lint": "eslint '{src,test,factory}/**/*.ts'",
-    "fix": "yarn lint --fix",
+    "format": "yarn lint --fix",
     "test": "jest test/ --verbose",
     "test:fast": "FAST_TEST=1 jest test/ --verbose",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
