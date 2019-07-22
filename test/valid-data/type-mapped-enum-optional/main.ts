@@ -5,5 +5,5 @@ enum Test {
 }
 
 export type MyObject = {
-    [P in Test]: string;
+    [P in Test]?: string;
 };
