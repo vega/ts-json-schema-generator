@@ -33,7 +33,7 @@ npm install --save ts-json-schema-generator
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.
-    export:  Create shared $ref definitions only for exported types.
+    export (default): Create shared $ref definitions only for exported types.
 
 -f, --tsconfig 'my/project/tsconfig.json'
     Use a custom tsconfig file for processing typescript (see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) instead of the default:
@@ -52,18 +52,18 @@ npm install --save ts-json-schema-generator
     Do not create a top-level $ref definition.
 
 -j, --jsDoc <extended|none|basic>
-    basic: Read JsDoc annotations to provide schema properties.
-    extended: Also read @nullable, and @asType annotations.
     none: Do not use JsDoc annotations.
+    basic: Read JsDoc annotations to provide schema properties.
+    extended (default): Also read @nullable, and @asType annotations.
 
--c, --skip-type-check
-    Skip type checks for better performance.
+-u, --unstable
+    Do not sort properties.
 
 -s, --strict-tuples
     Do not allow additional items on tuples.
 
--u, --unstable
-    Do not sort properties.
+-c, --skip-type-check
+    Skip type checks for better performance.
 
 -k, --validationKeywords
     Provide additional validation keywords to include.
