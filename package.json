@@ -1,6 +1,6 @@
 {
   "name": "ts-json-schema-generator",
-  "version": "0.52.4",
+  "version": "0.52.5",
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,8 +39,8 @@
   },
   "dependencies": {
     "commander": "~2.20.0",
-    "json-stable-stringify": "^1.0.1",
     "glob": "~7.1.4",
+    "json-stable-stringify": "^1.0.1",
     "typescript": "~3.5.3"
   },
   "devDependencies": {
@@ -53,11 +53,11 @@
     "@typescript-eslint/parser": "^1.13.0",
     "ajv": "~6.10.2",
     "chai": "~4.2.0",
+    "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint": "^6.1.0",
-    "jest-junit": "^6.4.0",
     "jest": "^24.8.0",
+    "jest-junit": "^6.4.0",
     "prettier": "^1.18.2",
     "source-map-support": "~0.5.12",
     "ts-jest": "^24.0.2",
