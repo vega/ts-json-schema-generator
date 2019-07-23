@@ -1,5 +1,8 @@
-export function deepMerge<T>(a: Partial<T>, b: Partial<T>): T;
-export function deepMerge<A, B>(a: A, b: B): A & B | B;
+import * as stringify from "json-stable-stringify";
+import { uniqueArrayWithHash } from "./uniqueArrayWithHash";
+
+export function deepMerge<T>(a: Partial<T>, b: Partial<T>, concatArrays: boolean): T;
+export function deepMerge<A, B>(a: A, b: B, concatArrays: boolean): A & B | B;
 /**
  * Merges nested objects and arrays.
  *
@@ -7,7 +10,7 @@ export function deepMerge<A, B>(a: A, b: B): A & B | B;
  * @param b - rhs to merge.
  * @returns a and b merged together.
  */
-export function deepMerge(a: any, b: any): any {
+export function deepMerge(a: any, b: any, concatArrays: boolean): any {
     const typeA = typeof a;
     const typeB = typeof b;
     if (typeA === typeB && typeA === "object" && typeA !== null && a !== b) {
@@ -15,16 +18,20 @@ export function deepMerge(a: any, b: any): any {
         const isArrayB = Array.isArray(b);
         // If they are both arrays just concatenate them.
         if (isArrayA && isArrayB) {
-            return a.concat(b);
+            if (concatArrays) {
+                return uniqueArrayWithHash(a.concat(b), stringify);
+            } else {
+                return b;
+            }
         } else if ((isArrayA && !isArrayB) || (!isArrayA && isArrayB)) {
             return b;
         } else {
-            // make a copy of a.
+            // make a shallow copy of a.
             const output = Object.assign({}, a);
             // deep merge all properties in both.
             for (const key in output) {
                 if (b.hasOwnProperty(key)) {
-                    output[key] = deepMerge(a[key], b[key]);
+                    output[key] = deepMerge(a[key], b[key], concatArrays);
                 }
             }
             // add properties from b that are not in a.
