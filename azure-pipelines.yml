@@ -8,7 +8,6 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 strategy:
-  maxParallel: 3  # hack
   matrix:
     node10:
       node_version: 10.x
@@ -18,15 +17,8 @@ strategy:
 trigger:
   branches:
     include:
-    - '*'
-  tags:
-    include:
-      - v*
-
-pr:
-  branches:
-    include:
-    - '*'
+      - refs/heads/*
+      - refs/tags/*
 
 steps:
 - task: NodeTool@0
