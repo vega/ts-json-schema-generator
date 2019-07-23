@@ -19,7 +19,9 @@ trigger:
   branches:
     include:
       - refs/heads/*
-      - refs/tags/*
+  tags:
+    include:
+      - v*
 
 steps:
 - task: NodeTool@0
