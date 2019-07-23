@@ -16,9 +16,6 @@ strategy:
       node_version: 12.x
 
 trigger:
-  branches:
-    include:
-      - refs/heads/*
   tags:
     include:
       - v*
