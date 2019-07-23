@@ -1,8 +1,9 @@
 # ts-json-schema-generator
 
-[![Build Status](https://dev.azure.com/vega-vis/ts-json-schema-generator/_apis/build/status/vega.ts-json-schema-generator)](https://dev.azure.com/vega-vis/ts-json-schema-generator/_build/latest?definitionId=3)
+[![CircleCI](https://circleci.com/gh/vega/ts-json-schema-generator.svg?style=svg)](https://circleci.com/gh/vega/ts-json-schema-generator)
 [![npm dependencies](https://david-dm.org/vega/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
-[![npm version](https://img.shields.io/npm/v/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator) [![Greenkeeper badge](https://badges.greenkeeper.io/vega/ts-json-schema-generator.svg)](https://greenkeeper.io/)
+[![npm version](https://img.shields.io/npm/v/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
+[![Greenkeeper badge](https://badges.greenkeeper.io/vega/ts-json-schema-generator.svg)](https://greenkeeper.io/)
 
 Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https://github.com/xiag-ag/typescript-to-json-schema).
 
