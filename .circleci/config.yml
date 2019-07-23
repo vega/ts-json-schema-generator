@@ -37,7 +37,7 @@ jobs:
 
       - run:
           name: Run tests with JUnit as reporter
-          command: yarn jest --ci --runInBand --reporters=default --reporters=jest-junit --collectCoverage=true
+          command: yarn jest --ci --maxWorkers=2 --reporters=default --reporters=jest-junit --collectCoverage=true
           environment:
             JEST_JUNIT_OUTPUT: "reports/junit/js-test-results.xml"
 
