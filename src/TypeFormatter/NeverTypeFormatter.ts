@@ -8,7 +8,7 @@ export class NeverTypeFormatter implements SubTypeFormatter {
         return type instanceof NeverType;
     }
     public getDefinition(type: NeverType): Definition {
-        return {not: {}};
+        return { not: {} };
     }
     public getChildren(type: NeverType): BaseType[] {
         return [];

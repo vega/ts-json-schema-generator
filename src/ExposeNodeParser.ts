@@ -10,9 +10,8 @@ export class ExposeNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
         private subNodeParser: SubNodeParser,
-        private expose: "all" | "none" | "export",
-    ) {
-    }
+        private expose: "all" | "none" | "export"
+    ) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.subNodeParser.supportsNode(node);
@@ -24,10 +23,7 @@ export class ExposeNodeParser implements SubNodeParser {
             return baseType;
         }
 
-        return new DefinitionType(
-            this.getDefinitionName(node, context),
-            baseType,
-        );
+        return new DefinitionType(this.getDefinitionName(node, context), baseType);
     }
 
     private isExportNode(node: ts.Node): boolean {
@@ -43,7 +39,7 @@ export class ExposeNodeParser implements SubNodeParser {
     private getDefinitionName(node: ts.Node, context: Context): string {
         const symbol = symbolAtNode(node)!;
         const fullName = this.typeChecker.getFullyQualifiedName(symbol).replace(/^".*"\./, "");
-        const argumentIds = context.getArguments().map((arg) => arg.getName());
+        const argumentIds = context.getArguments().map(arg => arg.getName());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

@@ -7,10 +7,7 @@ import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 
 export class IntersectionTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: IntersectionType): boolean {
         return type instanceof IntersectionType;
@@ -21,9 +18,11 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
         // FIXME: when we have union types as children, we have to translate.
         // See https://github.com/vega/ts-json-schema-generator/issues/62
 
-        return types.length > 1 ? types.reduce(
-            getAllOfDefinitionReducer(this.childTypeFormatter),
-            {type: "object", additionalProperties: false} as Definition)
+        return types.length > 1
+            ? types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, true), {
+                  type: "object",
+                  additionalProperties: false,
+              } as Definition)
             : this.childTypeFormatter.getDefinition(types[0]);
     }
     public getChildren(type: IntersectionType): BaseType[] {
@@ -31,10 +30,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
             // Remove the first child, which is the definition of the child itself because we are merging objects.
             // However, if the child is just a reference, we cannot remove it.
             const slice = item instanceof DefinitionType ? 1 : 0;
-            return [
-                ...result,
-                ...this.childTypeFormatter.getChildren(item).slice(slice),
-            ];
+            return [...result, ...this.childTypeFormatter.getChildren(item).slice(slice)];
         }, []);
     }
 }

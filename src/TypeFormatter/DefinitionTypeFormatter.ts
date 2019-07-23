@@ -5,21 +5,15 @@ import { DefinitionType } from "../Type/DefinitionType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class DefinitionTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
-        return {$ref: "#/definitions/" + type.getName()};
+        return { $ref: "#/definitions/" + type.getName() };
     }
     public getChildren(type: DefinitionType): BaseType[] {
-        return [
-            type,
-            ...this.childTypeFormatter.getChildren(type.getType()),
-        ];
+        return [type, ...this.childTypeFormatter.getChildren(type.getType())];
     }
 }

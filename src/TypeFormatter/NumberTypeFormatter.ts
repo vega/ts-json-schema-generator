@@ -8,7 +8,7 @@ export class NumberTypeFormatter implements SubTypeFormatter {
         return type instanceof NumberType;
     }
     public getDefinition(type: NumberType): Definition {
-        return {type: "number"};
+        return { type: "number" };
     }
     public getChildren(type: NumberType): BaseType[] {
         return [];

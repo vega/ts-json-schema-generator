@@ -35,6 +35,19 @@ npm install --save ts-json-schema-generator
     none: Do not create shared $ref definitions.
     export (default): Create shared $ref definitions only for exported types.
 
+-f, --tsconfig 'my/project/tsconfig.json'
+    Use a custom tsconfig file for processing typescript (see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) instead of the default:
+    {
+        "compilerOptions": {
+            "noEmit": true,
+            "emitDecoratorMetadata": true,
+            "experimentalDecorators": true,
+            "target": "ES5",
+            "module": "CommonJS",
+            "strictNullChecks": false,
+        }
+    }
+
 -r, --no-top-ref
     Do not create a top-level $ref definition.
 

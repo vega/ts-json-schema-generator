@@ -16,24 +16,19 @@ function isMemberHidden(member: ts.EnumMember) {
 }
 
 export class EnumNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker) {}
 
     public supportsNode(node: ts.EnumDeclaration | ts.EnumMember): boolean {
         return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
     }
     public createType(node: ts.EnumDeclaration | ts.EnumMember, context: Context): BaseType {
-        const members = node.kind === ts.SyntaxKind.EnumDeclaration
-            ? node.members.slice()
-            : [node];
+        const members = node.kind === ts.SyntaxKind.EnumDeclaration ? node.members.slice() : [node];
 
         return new EnumType(
             `enum-${getKey(node, context)}`,
             members
                 .filter((member: ts.EnumMember) => !isMemberHidden(member))
-                .map((member, index) => this.getMemberValue(member, index)),
+                .map((member, index) => this.getMemberValue(member, index))
         );
     }
 

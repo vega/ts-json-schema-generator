@@ -8,7 +8,7 @@ export class UndefinedTypeFormatter implements SubTypeFormatter {
         return type instanceof UndefinedType;
     }
     public getDefinition(type: UndefinedType): Definition {
-        return {not: {}};
+        return { not: {} };
     }
     public getChildren(type: UndefinedType): BaseType[] {
         return [];

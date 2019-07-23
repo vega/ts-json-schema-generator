@@ -10,4 +10,8 @@ src/
 test/
 ts-json-schema-generator.ts
 tsconfig.json
-tslint.json
+azure-pipelines.yml
+.eslintignore
+.eslintrc.js
+.prettierignore
+.prettierrc.json

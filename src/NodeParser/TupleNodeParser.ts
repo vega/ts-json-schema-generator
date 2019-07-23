@@ -6,11 +6,7 @@ import { TupleType } from "../Type/TupleType";
 import { referenceHidden } from "../Utils/isHidden";
 
 export class TupleNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TupleTypeNode): boolean {
         return node.kind === ts.SyntaxKind.TupleType;
@@ -19,10 +15,10 @@ export class TupleNodeParser implements SubNodeParser {
         const hidden = referenceHidden(this.typeChecker);
         return new TupleType(
             node.elementTypes
-                .filter((item) => !hidden(item))
-                .map((item) => {
+                .filter(item => !hidden(item))
+                .map(item => {
                     return this.childNodeParser.createType(item, context);
-                }),
+                })
         );
     }
 }

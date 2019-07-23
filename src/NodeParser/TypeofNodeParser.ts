@@ -9,11 +9,7 @@ import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
 
 export class TypeofNodeParser implements SubNodeParser {
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TypeQueryNode): boolean {
         return node.kind === ts.SyntaxKind.TypeQuery;
@@ -39,7 +35,7 @@ export class TypeofNodeParser implements SubNodeParser {
     }
 
     private createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {
-        const id = `typeof-enum-${getKey(node, context)}`
+        const id = `typeof-enum-${getKey(node, context)}`;
         if (reference) {
             reference.setId(id);
             reference.setName(id);
@@ -52,7 +48,7 @@ export class TypeofNodeParser implements SubNodeParser {
                 type = this.childNodeParser.createType(member.initializer, context);
             } else if (type === null) {
                 type = new LiteralType(0);
-            } else if (type instanceof LiteralType && ((typeof type.getValue()) === "number")) {
+            } else if (type instanceof LiteralType && typeof type.getValue() === "number") {
                 type = new LiteralType(+type.getValue() + 1);
             } else {
                 throw new LogicError(`Enum initializer missing for "${name}"`);

@@ -5,10 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class AliasTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: AliasType): boolean {
         return type instanceof AliasType;

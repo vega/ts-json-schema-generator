@@ -8,10 +8,7 @@ import { getKey } from "./Utils/nodeKey";
 export class CircularReferenceNodeParser implements SubNodeParser {
     private circular = new Map<string, BaseType>();
 
-    public constructor(
-        private childNodeParser: SubNodeParser,
-    ) {
-    }
+    public constructor(private childNodeParser: SubNodeParser) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);

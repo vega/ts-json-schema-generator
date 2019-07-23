@@ -1,0 +1,21 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "flag": {
+                    "type": "boolean",
+                    "enum": [
+                        true
+                    ]
+                }
+            },
+            "required": [
+                "flag"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}

@@ -11,10 +11,7 @@ import { derefType } from "../Utils/derefType";
 import { StringMap } from "../Utils/StringMap";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        private childTypeFormatter: TypeFormatter,
-    ) {
-    }
+    public constructor(private childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: ObjectType): boolean {
         return type instanceof ObjectType;
@@ -25,27 +22,34 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return this.getObjectDefinition(type);
         }
 
-        return types.reduce(
-            getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
+        return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, false), this.getObjectDefinition(type));
     }
     public getChildren(type: ObjectType): BaseType[] {
         const properties: ObjectProperty[] = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
         return [
-            ...type.getBaseTypes().reduce((result: BaseType[], baseType) => [
-                ...result,
-                ...this.childTypeFormatter.getChildren(baseType).slice(1),
-            ], []),
+            ...type
+                .getBaseTypes()
+                .reduce(
+                    (result: BaseType[], baseType) => [
+                        ...result,
+                        ...this.childTypeFormatter.getChildren(baseType).slice(1),
+                    ],
+                    []
+                ),
 
-            ...additionalProperties instanceof BaseType ?
-                this.childTypeFormatter.getChildren(additionalProperties) :
-                [],
+            ...(additionalProperties instanceof BaseType
+                ? this.childTypeFormatter.getChildren(additionalProperties)
+                : []),
 
-            ...properties.reduce((result: BaseType[], property) => [
-                ...result,
-                ...this.childTypeFormatter.getChildren(property.getType()),
-            ], []),
+            ...properties.reduce(
+                (result: BaseType[], property) => [
+                    ...result,
+                    ...this.childTypeFormatter.getChildren(property.getType()),
+                ],
+                []
+            ),
         ];
     }
 
@@ -54,24 +58,31 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
         const required = objectProperties
-            .map((property) => this.prepareObjectProperty(property))
-            .filter((property) => property.isRequired())
-            .map((property) => property.getName());
+            .map(property => this.prepareObjectProperty(property))
+            .filter(property => property.isRequired())
+            .map(property => property.getName());
         const properties = objectProperties
-            .map((property) => this.prepareObjectProperty(property))
-            .reduce((result: StringMap<Definition>, property) => ({
-                ...result,
-                [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
-            }), {});
+            .map(property => this.prepareObjectProperty(property))
+            .reduce(
+                (result: StringMap<Definition>, property) => ({
+                    ...result,
+                    [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
+                }),
+                {}
+            );
 
         return {
             type: "object",
-            ...(Object.keys(properties).length > 0 ? {properties} : {}),
-            ...(required.length > 0 ? {required} : {}),
-            ...(additionalProperties === true || additionalProperties instanceof AnyType ? {} :
-                {additionalProperties: additionalProperties instanceof BaseType ?
-                    this.childTypeFormatter.getDefinition(additionalProperties) :
-                    additionalProperties}),
+            ...(Object.keys(properties).length > 0 ? { properties } : {}),
+            ...(required.length > 0 ? { required } : {}),
+            ...(additionalProperties === true || additionalProperties instanceof AnyType
+                ? {}
+                : {
+                      additionalProperties:
+                          additionalProperties instanceof BaseType
+                              ? this.childTypeFormatter.getDefinition(additionalProperties)
+                              : additionalProperties,
+                  }),
         };
     }
 
@@ -83,7 +94,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return property;
         }
 
-        const requiredTypes = propType.getTypes().filter((it) => !(it instanceof UndefinedType));
+        const requiredTypes = propType.getTypes().filter(it => !(it instanceof UndefinedType));
         if (propType.getTypes().length === requiredTypes.length) {
             return property;
         } else if (requiredTypes.length === 0) {
@@ -93,7 +104,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return new ObjectProperty(
             property.getName(),
             requiredTypes.length === 1 ? requiredTypes[0] : new UnionType(requiredTypes),
-            false,
+            false
         );
     }
 }

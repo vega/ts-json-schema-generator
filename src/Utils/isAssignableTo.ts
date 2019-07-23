@@ -161,26 +161,33 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
         const targetMembers = getObjectProperties(target);
         if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it
-            return !isAssignableTo(new UnionType([ new UndefinedType(), new NullType() ]), source, insideTypes);
+            return !isAssignableTo(new UnionType([new UndefinedType(), new NullType()]), source, insideTypes);
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
 
             // Check if target has properties in common with source
-            const inCommon = targetMembers.some(targetMember => sourceMembers.some(sourceMember =>
-                targetMember.getName() === sourceMember.getName()));
+            const inCommon = targetMembers.some(targetMember =>
+                sourceMembers.some(sourceMember => targetMember.getName() === sourceMember.getName())
+            );
 
-            return targetMembers.every(targetMember => {
-                // Make sure that every required property in target type is present
-                const sourceMember = sourceMembers.find(member => targetMember.getName() === member.getName());
-                return sourceMember == null ? (inCommon && !targetMember.isRequired()) : true;
-            }) && sourceMembers.every(sourceMember => {
-                const targetMember = targetMembers.find(member => member.getName() === sourceMember.getName());
-                if (targetMember == null) {
-                    return true;
-                }
-                return isAssignableTo(targetMember.getType(), sourceMember.getType(),
-                    new Set(insideTypes).add(source).add(target));
-            });
+            return (
+                targetMembers.every(targetMember => {
+                    // Make sure that every required property in target type is present
+                    const sourceMember = sourceMembers.find(member => targetMember.getName() === member.getName());
+                    return sourceMember == null ? inCommon && !targetMember.isRequired() : true;
+                }) &&
+                sourceMembers.every(sourceMember => {
+                    const targetMember = targetMembers.find(member => member.getName() === sourceMember.getName());
+                    if (targetMember == null) {
+                        return true;
+                    }
+                    return isAssignableTo(
+                        targetMember.getType(),
+                        sourceMember.getType(),
+                        new Set(insideTypes).add(source).add(target)
+                    );
+                })
+            );
         }
     }
 
@@ -192,8 +199,10 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
                 const sourceMember = sourceMembers[i];
                 if (targetMember instanceof OptionalType) {
                     if (sourceMember) {
-                        return isAssignableTo(targetMember, sourceMember, insideTypes) ||
-                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes);
+                        return (
+                            isAssignableTo(targetMember, sourceMember, insideTypes) ||
+                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes)
+                        );
                     } else {
                         return true;
                     }

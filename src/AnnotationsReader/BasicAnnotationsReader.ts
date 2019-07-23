@@ -15,7 +15,6 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "$comment",
         "contentMediaType",
         "contentEncoding",
-
     ];
     private static jsonTags: string[] = [
         "minimum",
@@ -51,8 +50,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "writeOnly",
     ];
 
-    public constructor(private extraJsonTags?: string[]) { }
-
+    public constructor(private extraJsonTags?: string[]) {}
 
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);

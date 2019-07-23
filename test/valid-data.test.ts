@@ -13,13 +13,15 @@ const validator = new Ajv();
 const basePath = "test/valid-data";
 
 function assertSchema(
-    relativePath: string, type?: string, jsDoc: Config["jsDoc"] = "none", extra?: Config["extraJsonTags"],
+    relativePath: string,
+    type?: string,
+    jsDoc: Config["jsDoc"] = "none",
+    extra?: Config["extraJsonTags"]
 ) {
     return () => {
         const config: Config = {
             path: resolve(`${basePath}/${relativePath}/*.ts`),
             type: type,
-
             expose: "export",
             topRef: true,
             jsDoc: jsDoc,
@@ -31,7 +33,7 @@ function assertSchema(
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(),
+            createFormatter()
         );
 
         const schema = generator.createSchema(type);
@@ -58,6 +60,7 @@ describe("valid-data", () => {
     it("interface-recursion", assertSchema("interface-recursion", "MyObject"));
     it("interface-extra-props", assertSchema("interface-extra-props", "MyObject"));
     it("interface-array", assertSchema("interface-array", "TagArray"));
+    it("interface-property-dash", assertSchema("interface-property-dash", "MyObject"));
 
     it("class-single", assertSchema("class-single", "MyObject"));
     it("class-multi", assertSchema("class-multi", "MyObject"));
@@ -99,8 +102,10 @@ describe("valid-data", () => {
     it("type-aliases-local-namespace", assertSchema("type-aliases-local-namespace", "MyObject"));
     it("type-aliases-recursive-anonymous", assertSchema("type-aliases-recursive-anonymous", "MyAlias"));
     it("type-aliases-recursive-export", assertSchema("type-aliases-recursive-export", "MyObject"));
-    it("type-aliases-recursive-generics-anonymous", assertSchema("type-aliases-recursive-generics-anonymous",
-        "MyAlias"));
+    it(
+        "type-aliases-recursive-generics-anonymous",
+        assertSchema("type-aliases-recursive-generics-anonymous", "MyAlias")
+    );
     it("type-aliases-recursive-generics-export", assertSchema("type-aliases-recursive-generics-export", "MyAlias"));
 
     it("type-aliases-tuple", assertSchema("type-aliases-tuple", "MyTuple"));
@@ -114,8 +119,10 @@ describe("valid-data", () => {
     it("type-union", assertSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertSchema("type-union-tagged", "Shape"));
     it("type-intersection", assertSchema("type-intersection", "MyObject"));
+    it("type-intersection-conflict", assertSchema("type-intersection-conflict", "MyObject"));
     it("type-intersection-union", assertSchema("type-intersection-union", "MyObject"));
     it("type-intersection-additional-props", assertSchema("type-intersection-additional-props", "MyObject"));
+    it("type-extend", assertSchema("type-extend", "MyObject"));
 
     it("type-typeof", assertSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertSchema("type-typeof-value", "MyType"));
@@ -141,6 +148,9 @@ describe("valid-data", () => {
     it("type-mapped-additional-props", assertSchema("type-mapped-additional-props", "MyObject"));
     it("type-mapped-array", assertSchema("type-mapped-array", "MyObject"));
     it("type-mapped-union-intersection", assertSchema("type-mapped-union-intersection", "MyObject"));
+    it("type-mapped-enum", assertSchema("type-mapped-enum", "MyObject"));
+    it("type-mapped-enum-optional", assertSchema("type-mapped-enum-optional", "MyObject"));
+    it("type-mapped-enum-null", assertSchema("type-mapped-enum-null", "MyObject"));
 
     it("generic-simple", assertSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertSchema("generic-arrays", "MyObject"));
@@ -152,13 +162,16 @@ describe("valid-data", () => {
     it("generic-default", assertSchema("generic-default", "MyObject"));
     it("generic-prefixed-number", assertSchema("generic-prefixed-number", "MyObject"));
 
-    it("annotation-custom", assertSchema("annotation-custom", "MyObject", "basic", [
-        "customNumberProperty",
-        "customStringProperty",
-        "customComplexProperty",
-        "customMultilineProperty",
-        "customInvalidProperty",
-    ]));
+    it(
+        "annotation-custom",
+        assertSchema("annotation-custom", "MyObject", "basic", [
+            "customNumberProperty",
+            "customStringProperty",
+            "customComplexProperty",
+            "customMultilineProperty",
+            "customInvalidProperty",
+        ])
+    );
 
     it("nullable-null", assertSchema("nullable-null", "MyObject"));
 

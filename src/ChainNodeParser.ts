@@ -8,11 +8,7 @@ import { ReferenceType } from "./Type/ReferenceType";
 export class ChainNodeParser implements SubNodeParser {
     private typeCaches = new WeakMap<ts.Node, Map<string, BaseType>>();
 
-    public constructor(
-        private typeChecker: ts.TypeChecker,
-        private nodeParsers: SubNodeParser[],
-    ) {
-    }
+    public constructor(private typeChecker: ts.TypeChecker, private nodeParsers: SubNodeParser[]) {}
 
     public addNodeParser(nodeParser: SubNodeParser): this {
         this.nodeParsers.push(nodeParser);
@@ -20,7 +16,7 @@ export class ChainNodeParser implements SubNodeParser {
     }
 
     public supportsNode(node: ts.Node): boolean {
-        return this.nodeParsers.some((nodeParser) => nodeParser.supportsNode(node));
+        return this.nodeParsers.some(nodeParser => nodeParser.supportsNode(node));
     }
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
