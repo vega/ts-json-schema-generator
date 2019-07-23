@@ -1,4 +1,4 @@
-import * as stringify from "json-stable-stringify";
+import * as stringify from "fast-json-stable-stringify";
 import * as ts from "typescript";
 import { LogicError } from "./Error/LogicError";
 import { BaseType } from "./Type/BaseType";

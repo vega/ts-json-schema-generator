@@ -1,4 +1,4 @@
-import * as stringify from "json-stable-stringify";
+import * as stringify from "fast-json-stable-stringify";
 import { Node } from "typescript";
 import { isNumber, isString } from "util";
 import { Context } from "../NodeParser";

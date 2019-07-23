@@ -1,4 +1,5 @@
-import { uniqueArray } from "./uniqueArray";
+import * as stringify from "fast-json-stable-stringify";
+import { uniqueArrayWithHash } from "./uniqueArrayWithHash";
 
 export function deepMerge<T>(a: Partial<T>, b: Partial<T>, concatArrays: boolean): T;
 export function deepMerge<A, B>(a: A, b: B, concatArrays: boolean): A & B | B;
@@ -18,7 +19,7 @@ export function deepMerge(a: any, b: any, concatArrays: boolean): any {
         // If they are both arrays just concatenate them.
         if (isArrayA && isArrayB) {
             if (concatArrays) {
-                return uniqueArray(a.concat(b));
+                return uniqueArrayWithHash(a.concat(b), stringify);
             } else {
                 return b;
             }
