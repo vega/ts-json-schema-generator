@@ -11,7 +11,7 @@ const args = commander
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .option("-e, --expose <expose>", "Type exposing", /^(all|none|export)$/, "export")
     .option("-r, --no-top-ref", "Do not create a top-level $ref definition")
-    .option("-j, --jsDoc <extended>", "Read JsDoc annotations", /^(extended|none|basic)$/, "extended")
+    .option("-j, --jsDoc <extended>", "Read JsDoc annotations", /^(none|basic|extended)$/, "extended")
     .option("-u, --unstable", "Do not sort properties")
     .option("-s, --strict-tuples", "Do not allow additional items on tuples")
     .option("-c, --no-type-check", "Skip type checks to improve performance")
