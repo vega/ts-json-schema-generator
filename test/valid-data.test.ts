@@ -122,6 +122,7 @@ describe("valid-data", () => {
     it("type-intersection-conflict", assertSchema("type-intersection-conflict", "MyObject"));
     it("type-intersection-union", assertSchema("type-intersection-union", "MyObject"));
     it("type-intersection-additional-props", assertSchema("type-intersection-additional-props", "MyObject"));
+    it("type-extend", assertSchema("type-extend", "MyObject"));
 
     it("type-typeof", assertSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertSchema("type-typeof-value", "MyType"));

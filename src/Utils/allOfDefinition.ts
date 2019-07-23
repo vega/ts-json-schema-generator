@@ -24,12 +24,12 @@ function getNonRefType(type: BaseType): BaseType {
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
-export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
+export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter, concatArrays: boolean) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType) => {
         const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
 
-        definition.properties = deepMerge(other.properties || {}, definition.properties || {});
+        definition.properties = deepMerge(other.properties || {}, definition.properties || {}, concatArrays);
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
             return props !== undefined && props !== true;
