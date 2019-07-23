@@ -1,4 +1,4 @@
-import * as stringify from "fast-json-stable-stringify";
+import * as stringify from "json-stable-stringify";
 import { uniqueArrayWithHash } from "./uniqueArrayWithHash";
 
 export function deepMerge<T>(a: Partial<T>, b: Partial<T>, concatArrays: boolean): T;

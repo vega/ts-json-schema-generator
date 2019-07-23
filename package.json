@@ -38,12 +38,12 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "@types/fast-json-stable-stringify": "^2.0.0",
+    "@types/json-stable-stringify": "^1.0.32",
     "@types/glob": "^7.1.1",
     "@types/json-schema": "^7.0.3",
     "@types/node": "^12.6.8",
     "commander": "~2.20.0",
-    "fast-json-stable-stringify": "^2.0.0",
+    "json-stable-stringify": "^1.0.1",
     "glob": "~7.1.4",
     "typescript": "~3.5.3"
   },
