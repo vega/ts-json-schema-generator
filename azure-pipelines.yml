@@ -16,9 +16,17 @@ strategy:
       node_version: 12.x
 
 trigger:
+  branches:
+    include:
+    - '*'
   tags:
     include:
       - v*
+
+pr:
+  branches:
+    include:
+    - '*'
 
 steps:
 - task: NodeTool@0
