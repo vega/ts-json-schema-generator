@@ -13,7 +13,7 @@ defaults: &defaults
 
 jobs:
   test:
-     <<: *defaults
+    <<: *defaults
 
     steps:
       - checkout
