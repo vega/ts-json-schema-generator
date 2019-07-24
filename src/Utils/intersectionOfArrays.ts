@@ -1,11 +1,8 @@
 export function intersectionOfArrays<T>(a: T[], b: T[]): T[] {
     const output: T[] = [];
-    const inA: Map<T, boolean> = new Map<T, boolean>();
-    for (const value of a) {
-        inA.set(value, true);
-    }
+    const inA: Set<T> = new Set(a);
     for (const value of b) {
-        if (inA.get(value)) {
+        if (inA.has(value)) {
             output.push(value);
         }
     }
