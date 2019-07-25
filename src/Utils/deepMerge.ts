@@ -40,6 +40,11 @@ export function deepMerge(a: any, b: any, intersectArrays: boolean): any {
                     output[key] = b[key];
                 }
             }
+
+            if ("$ref" in output && ("allOf" in output || "anyOf" in output)) {
+                delete output.$ref;
+            }
+
             return output;
         }
     }

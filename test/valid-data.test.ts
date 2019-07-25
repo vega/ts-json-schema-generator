@@ -8,7 +8,9 @@ import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const validator = new Ajv();
+const validator = new Ajv({
+    extendRefs: "fail",
+});
 
 const basePath = "test/valid-data";
 
@@ -121,6 +123,7 @@ describe("valid-data", () => {
     it("type-intersection", assertSchema("type-intersection", "MyObject"));
     it("type-intersection-conflict", assertSchema("type-intersection-conflict", "MyObject"));
     it("type-intersection-partial-conflict", assertSchema("type-intersection-partial-conflict", "MyType"));
+    it("type-intersection-partial-conflict-ref", assertSchema("type-intersection-partial-conflict", "MyType"));
     it("type-intersection-union", assertSchema("type-intersection-union", "MyObject"));
     it("type-intersection-additional-props", assertSchema("type-intersection-additional-props", "MyObject"));
     it("type-extend", assertSchema("type-extend", "MyObject"));
