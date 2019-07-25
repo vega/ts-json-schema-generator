@@ -16,6 +16,7 @@ describe("deepMerge", () => {
         expect(deepMerge([1, 2, 3], [4, 5, 6], true)).toEqual([]);
         expect(deepMerge([1, 2, 3], [1, 2, 3], true)).toEqual([1, 2, 3]);
         expect(deepMerge([1, 2, 3], [4, 2, 6], true)).toEqual([2]);
+        expect(deepMerge([1, { foo: "bar" }], [1, { foo: "bar" }, 3], true)).toEqual([1, { foo: "bar" }]);
         expect(deepMerge([1, { foo: "bar" }], [1, { bar: "foo" }, 3], true)).toEqual([1]);
     });
 
