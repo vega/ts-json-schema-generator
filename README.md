@@ -28,6 +28,9 @@ npm install --save ts-json-schema-generator
 ## Options
 
 ```
+-p, --path 'index.ts'
+    The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`. 
+
 -t, --type 'My.Type.Full.Name'
     The type the generated schema will represent. If omitted, the generated schema will contain all
     types found in the files matching path. The same is true if '*' is specified.
