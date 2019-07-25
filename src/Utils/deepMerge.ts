@@ -9,6 +9,7 @@ export function deepMerge<A, B>(a: A, b: B, intersectArrays: boolean): A & B | B
  *
  * @param a - lhs to merge.
  * @param b - rhs to merge.
+ * @param intersectArrays - compute intersection of arrays (otherwise take the array from b).
  * @returns a and b merged together.
  */
 export function deepMerge(a: any, b: any, intersectArrays: boolean): any {
