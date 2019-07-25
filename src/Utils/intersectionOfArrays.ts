@@ -1,8 +1,10 @@
+import * as stringify from "json-stable-stringify";
+
 export function intersectionOfArrays<T>(a: T[], b: T[]): T[] {
     const output: T[] = [];
-    const inA: Set<T> = new Set(a);
+    const inA: Set<string> = new Set(a.map((item: T) => stringify(item)));
     for (const value of b) {
-        if (inA.has(value)) {
+        if (inA.has(stringify(value))) {
             output.push(value);
         }
     }

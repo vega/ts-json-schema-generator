@@ -1,5 +1,3 @@
-import * as stringify from "json-stable-stringify";
-import { uniqueArrayWithHash } from "./uniqueArrayWithHash";
 import { intersectionOfArrays } from "./intersectionOfArrays";
 
 export function deepMerge<T>(a: Partial<T>, b: Partial<T>, intersectArrays: boolean): T;
@@ -21,7 +19,7 @@ export function deepMerge(a: any, b: any, intersectArrays: boolean): any {
         // If they are both arrays just concatenate them.
         if (isArrayA && isArrayB) {
             if (intersectArrays) {
-                return uniqueArrayWithHash(intersectionOfArrays(a, b), stringify);
+                return intersectionOfArrays(a, b);
             } else {
                 return b;
             }
