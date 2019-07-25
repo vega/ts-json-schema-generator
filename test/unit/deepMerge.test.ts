@@ -12,19 +12,15 @@ describe("deepMerge", () => {
         expect(deepMerge({ foo: "bar" }, [2, 3, 4], true)).toEqual([2, 3, 4]);
     });
 
-    it("concatenates arrays", () => {
-        expect(deepMerge([1, 2, 3], [4, 5, 6], true)).toEqual([1, 2, 3, 4, 5, 6]);
+    it("intersects arrays", () => {
+        expect(deepMerge([1, 2, 3], [4, 5, 6], true)).toEqual([]);
         expect(deepMerge([1, 2, 3], [1, 2, 3], true)).toEqual([1, 2, 3]);
-        expect(deepMerge([1, [2], 3], [1, [2], 3], true)).toEqual([1, [2], 3]);
-        expect(deepMerge([1, { foo: "bar" }, 3], [1, { bar: "foo" }, 3], true)).toEqual([
-            1,
-            { foo: "bar" },
-            3,
-            { bar: "foo" },
-        ]);
+        expect(deepMerge([1, 2, 3], [4, 2, 6], true)).toEqual([2]);
+        expect(deepMerge([1, { foo: "bar" }], [1, { foo: "bar" }, 3], true)).toEqual([1, { foo: "bar" }]);
+        expect(deepMerge([1, { foo: "bar" }], [1, { bar: "foo" }, 3], true)).toEqual([1]);
     });
 
-    it("does not concatenate arrays if disabled", () => {
+    it("does not intersect arrays if disabled", () => {
         expect(deepMerge([1, 2, 3], [4, 5, 6], false)).toEqual([4, 5, 6]);
     });
 
@@ -35,7 +31,11 @@ describe("deepMerge", () => {
             flag: { type: "boolean", enums: [true] },
         });
         expect(
-            deepMerge({ flag: { type: "boolean", enums: [true] } }, { flag: { type: "boolean", enums: [false] } }, true)
-        ).toEqual({ flag: { type: "boolean", enums: [true, false] } });
+            deepMerge(
+                { flag: { type: "boolean", enums: [true] } },
+                { flag: { type: "boolean", enums: [true, false] } },
+                true
+            )
+        ).toEqual({ flag: { type: "boolean", enums: [true] } });
     });
 });

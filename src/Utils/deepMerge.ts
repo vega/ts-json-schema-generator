@@ -1,16 +1,16 @@
-import * as stringify from "json-stable-stringify";
-import { uniqueArrayWithHash } from "./uniqueArrayWithHash";
+import { intersectionOfArrays } from "./intersectionOfArrays";
 
-export function deepMerge<T>(a: Partial<T>, b: Partial<T>, concatArrays: boolean): T;
-export function deepMerge<A, B>(a: A, b: B, concatArrays: boolean): A & B | B;
+export function deepMerge<T>(a: Partial<T>, b: Partial<T>, intersectArrays: boolean): T;
+export function deepMerge<A, B>(a: A, b: B, intersectArrays: boolean): A & B | B;
 /**
  * Merges nested objects and arrays.
  *
  * @param a - lhs to merge.
  * @param b - rhs to merge.
+ * @param intersectArrays - compute intersection of arrays (otherwise take the array from b).
  * @returns a and b merged together.
  */
-export function deepMerge(a: any, b: any, concatArrays: boolean): any {
+export function deepMerge(a: any, b: any, intersectArrays: boolean): any {
     const typeA = typeof a;
     const typeB = typeof b;
     if (typeA === typeB && typeA === "object" && typeA !== null && a !== b) {
@@ -18,8 +18,8 @@ export function deepMerge(a: any, b: any, concatArrays: boolean): any {
         const isArrayB = Array.isArray(b);
         // If they are both arrays just concatenate them.
         if (isArrayA && isArrayB) {
-            if (concatArrays) {
-                return uniqueArrayWithHash(a.concat(b), stringify);
+            if (intersectArrays) {
+                return intersectionOfArrays(a, b);
             } else {
                 return b;
             }
@@ -31,7 +31,7 @@ export function deepMerge(a: any, b: any, concatArrays: boolean): any {
             // deep merge all properties in both.
             for (const key in output) {
                 if (b.hasOwnProperty(key)) {
-                    output[key] = deepMerge(a[key], b[key], concatArrays);
+                    output[key] = deepMerge(a[key], b[key], intersectArrays);
                 }
             }
             // add properties from b that are not in a.
