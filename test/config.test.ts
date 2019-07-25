@@ -9,7 +9,9 @@ import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const validator = new Ajv();
+const validator = new Ajv({
+    extendRefs: "fail",
+});
 
 const basePath = "test/config";
 
