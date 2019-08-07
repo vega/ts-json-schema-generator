@@ -46,9 +46,9 @@
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/jest": "^24.0.15",
+    "@types/jest": "^24.0.17",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^12.6.8",
+    "@types/node": "^12.7.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "ajv": "~6.10.2",
@@ -59,7 +59,7 @@
     "jest": "^24.8.0",
     "jest-junit": "^7.0.0",
     "prettier": "^1.18.2",
-    "source-map-support": "~0.5.12",
+    "source-map-support": "~0.5.13",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.3.0"
   },
