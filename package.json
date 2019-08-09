@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@types/json-schema": "^7.0.3",
-    "commander": "~2.20.0",
+    "commander": "~3.0.0",
     "glob": "~7.1.4",
     "json-stable-stringify": "^1.0.1",
     "typescript": "~3.5.3"
