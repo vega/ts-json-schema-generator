@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@types/json-schema": "^7.0.3",
-    "commander": "~2.20.0",
+    "commander": "~3.0.0",
     "glob": "~7.1.4",
     "json-stable-stringify": "^1.0.1",
     "typescript": "~3.5.3"
@@ -48,7 +48,7 @@
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.17",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^12.7.0",
+    "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^1.13.0",
     "ajv": "~6.10.2",
