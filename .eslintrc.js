@@ -33,7 +33,6 @@ module.exports = {
     ],
     "@typescript-eslint/no-object-literal-type-assertion": "off",
     "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/prefer-interface": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
     "max-len": ["error", { code: 120, tabWidth: 4 }],
     "linebreak-style": ["error", "unix"],
