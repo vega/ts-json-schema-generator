@@ -9,9 +9,9 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/typescript-json-schema). Here's the differences list:
 
-* this implementation does not use `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
-* processing AST and formatting JSON schema have been split into two independent steps
-* not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
+-   this implementation does not use `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
+-   processing AST and formatting JSON schema have been split into two independent steps
+-   not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
 
 ## Contributors
 
@@ -28,7 +28,7 @@ npm install --save ts-json-schema-generator
 
 ```
 -p, --path 'index.ts'
-    The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`. 
+    The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`.
 
 -t, --type 'My.Type.Full.Name'
     The type the generated schema will represent. If omitted, the generated schema will contain all
@@ -73,23 +73,22 @@ npm install --save ts-json-schema-generator
     Provide additional validation keywords to include.
 ```
 
-
 ## Current state
 
-* `interface` types
-* `enum` types
-* `union`, `tuple`, `type[]` types
-* `string`, `boolean`, `number` types
-* `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
-* type aliases
-* generics
-* `typeof`
-* `keyof`
-* conditional types
+-   `interface` types
+-   `enum` types
+-   `union`, `tuple`, `type[]` types
+-   `string`, `boolean`, `number` types
+-   `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
+-   type aliases
+-   generics
+-   `typeof`
+-   `keyof`
+-   conditional types
 
 ## Debug
 
-`npm run debug -- --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
+`yarn run debug --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 And connect via the debugger protocol.
 

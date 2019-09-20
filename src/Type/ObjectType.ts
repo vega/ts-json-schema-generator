@@ -18,8 +18,8 @@ export class ObjectProperty {
 export class ObjectType extends BaseType {
     public constructor(
         private id: string,
-        private baseTypes: BaseType[],
-        private properties: ObjectProperty[],
+        private baseTypes: readonly BaseType[],
+        private properties: readonly ObjectProperty[],
         private additionalProperties: BaseType | boolean
     ) {
         super();
@@ -29,10 +29,10 @@ export class ObjectType extends BaseType {
         return this.id;
     }
 
-    public getBaseTypes(): BaseType[] {
+    public getBaseTypes(): readonly BaseType[] {
         return this.baseTypes;
     }
-    public getProperties(): ObjectProperty[] {
+    public getProperties(): readonly ObjectProperty[] {
         return this.properties;
     }
     public getAdditionalProperties(): BaseType | boolean {

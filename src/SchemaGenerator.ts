@@ -77,12 +77,21 @@ export class SchemaGenerator {
                 return false;
             });
 
-        children.reduce((definitions, child) => {
+        const ids = new Map<string, string>();
+        for (const child of children) {
             const name = child.getName();
-            if (name in definitions) {
+            const previousId = ids.get(name);
+            if (previousId && child.getId() !== previousId) {
                 throw new Error(`Type "${name}" has multiple definitions.`);
             }
-            definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            ids.set(name, child.getId());
+        }
+
+        children.reduce((definitions, child) => {
+            const name = child.getName();
+            if (!(name in definitions)) {
+                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            }
             return definitions;
         }, childDefinitions);
     }
@@ -97,7 +106,11 @@ export class SchemaGenerator {
 
         return { projectFiles, externalFiles };
     }
-    private appendTypes(sourceFiles: ts.SourceFile[], typeChecker: ts.TypeChecker, types: Map<string, ts.Node>) {
+    private appendTypes(
+        sourceFiles: readonly ts.SourceFile[],
+        typeChecker: ts.TypeChecker,
+        types: Map<string, ts.Node>
+    ) {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);
         }
