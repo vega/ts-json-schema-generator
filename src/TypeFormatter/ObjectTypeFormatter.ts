@@ -9,6 +9,7 @@ import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { derefType } from "../Utils/derefType";
 import { StringMap } from "../Utils/StringMap";
+import { uniqueArray } from "../Utils/uniqueArray";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
@@ -28,7 +29,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const properties: ObjectProperty[] = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
-        return [
+        const children = [
             ...type
                 .getBaseTypes()
                 .reduce(
@@ -51,6 +52,8 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 []
             ),
         ];
+
+        return uniqueArray(children);
     }
 
     private getObjectDefinition(type: ObjectType): Definition {

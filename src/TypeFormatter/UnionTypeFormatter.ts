@@ -3,6 +3,7 @@ import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
@@ -39,8 +40,10 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             : definitions[0];
     }
     public getChildren(type: UnionType): BaseType[] {
-        return type
-            .getTypes()
-            .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []);
+        return uniqueArray(
+            type
+                .getTypes()
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+        );
     }
 }

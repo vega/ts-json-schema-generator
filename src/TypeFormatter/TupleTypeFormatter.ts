@@ -5,6 +5,7 @@ import { OptionalType } from "../Type/OptionalType";
 import { RestType } from "../Type/RestType";
 import { TupleType } from "../Type/TupleType";
 import { TypeFormatter } from "../TypeFormatter";
+import { uniqueArray } from "../Utils/uniqueArray";
 
 export class TupleTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
@@ -37,8 +38,10 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         };
     }
     public getChildren(type: TupleType): BaseType[] {
-        return type
-            .getTypes()
-            .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []);
+        return uniqueArray(
+            type
+                .getTypes()
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+        );
     }
 }

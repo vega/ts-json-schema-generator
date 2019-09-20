@@ -29,7 +29,7 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
 
         const children: BaseType[] = [];
         this.children.set(type, children);
-        children.push(...uniqueArray(this.childTypeFormatter.getChildren(type)));
-        return children;
+        children.push(...this.childTypeFormatter.getChildren(type));
+        return uniqueArray(children);
     }
 }
