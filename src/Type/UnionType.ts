@@ -5,7 +5,7 @@ import { NeverType } from "./NeverType";
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
 
-    public constructor(types: BaseType[]) {
+    public constructor(types: readonly BaseType[]) {
         super();
         this.types = uniqueTypeArray(
             types.reduce(

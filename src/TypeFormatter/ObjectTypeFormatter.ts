@@ -26,7 +26,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, false), this.getObjectDefinition(type));
     }
     public getChildren(type: ObjectType): BaseType[] {
-        const properties: ObjectProperty[] = type.getProperties();
+        const properties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
         const children = [
@@ -57,7 +57,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
 
     private getObjectDefinition(type: ObjectType): Definition {
-        const objectProperties: ObjectProperty[] = type.getProperties();
+        const objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
         const required = objectProperties

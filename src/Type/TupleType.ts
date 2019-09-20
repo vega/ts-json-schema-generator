@@ -1,7 +1,7 @@
 import { BaseType } from "./BaseType";
 
 export class TupleType extends BaseType {
-    public constructor(private types: BaseType[]) {
+    public constructor(private types: readonly BaseType[]) {
         super();
     }
 
@@ -9,7 +9,7 @@ export class TupleType extends BaseType {
         return "[" + this.types.map(item => item.getId()).join(",") + "]";
     }
 
-    public getTypes(): BaseType[] {
+    public getTypes(): readonly BaseType[] {
         return this.types;
     }
 }

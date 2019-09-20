@@ -1,5 +1,5 @@
 export interface MyObject1 {
-    propA: number;
+    propA: MyObject2;
 }
 
 export interface MyObject2 {
