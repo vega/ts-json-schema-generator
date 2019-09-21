@@ -159,6 +159,15 @@ describe("config", () => {
             jsDoc: "extended",
         })
     );
+    it(
+        "jsdoc-inheritance-exclude",
+        assertSchema("jsdoc-inheritance-exclude", {
+            type: "MyType",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
 
     // ensure that skipping type checking doesn't alter the JSON schema output
     it(

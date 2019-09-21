@@ -55,13 +55,11 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
+        const extraJsonTags = new Set(config.extraJsonTags);
         if (config.jsDoc === "extended") {
-            return new AnnotatedNodeParser(
-                nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, config.extraJsonTags)
-            );
+            return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, extraJsonTags));
         } else if (config.jsDoc === "basic") {
-            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(config.extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraJsonTags));
         } else {
             return nodeParser;
         }

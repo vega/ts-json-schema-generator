@@ -1,3 +1,4 @@
+import { DefinitionType } from "./../Type/DefinitionType";
 import * as ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader";
@@ -16,17 +17,42 @@ export class AnnotatedNodeParser implements SubNodeParser {
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         const baseType = this.childNodeParser.createType(node, context, reference);
+        const annotatedNode = this.getAnnotatedNode(node);
+        let annotations = this.annotationsReader.getAnnotations(annotatedNode);
+
         // Don't return annotations for lib types such as Exclude.
         if (node.getSourceFile().fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
-            return baseType;
+            let specialCase = false;
+
+            // Special case for Exclude<T, U>: use the annotation of T.
+            if (
+                node.kind === ts.SyntaxKind.TypeAliasDeclaration &&
+                (node as ts.TypeAliasDeclaration).name.text === "Exclude"
+            ) {
+                const t = context.getArgument("T");
+                if (t instanceof DefinitionType) {
+                    const at = t.getType();
+                    if (at instanceof AnnotatedType) {
+                        annotations = at.getAnnotations();
+                        specialCase = true;
+                    }
+                }
+            }
+
+            if (!specialCase) {
+                return baseType;
+            }
         }
-        const annotatedNode = this.getAnnotatedNode(node);
-        const annotations = this.annotationsReader.getAnnotations(annotatedNode);
-        const nullable =
-            this.annotationsReader instanceof ExtendedAnnotationsReader
-                ? this.annotationsReader.isNullable(annotatedNode)
-                : false;
+
+        const nullable = this.getNullable(annotatedNode);
+
         return !annotations && !nullable ? baseType : new AnnotatedType(baseType, annotations || {}, nullable);
+    }
+
+    private getNullable(annotatedNode: ts.Node) {
+        return this.annotationsReader instanceof ExtendedAnnotationsReader
+            ? this.annotationsReader.isNullable(annotatedNode)
+            : false;
     }
 
     private getAnnotatedNode(node: ts.Node): ts.Node {
