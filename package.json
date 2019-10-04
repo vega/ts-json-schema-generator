@@ -21,12 +21,7 @@
     "type": "git",
     "url": "https://github.com/vega/ts-json-schema-generator.git"
   },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "ts",
     "typescript",
