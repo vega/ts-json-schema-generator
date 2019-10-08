@@ -47,6 +47,8 @@
                     ]
                 },
                 "h": {
+                    "description": "Number or string",
+                    "pattern": "foo",
                     "type": "string"
                 },
                 "i": {

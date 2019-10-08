@@ -2,6 +2,7 @@ import { intersectionOfArrays } from "./intersectionOfArrays";
 
 export function deepMerge<T>(a: Partial<T>, b: Partial<T>, intersectArrays: boolean): T;
 export function deepMerge<A, B>(a: A, b: B, intersectArrays: boolean): A & B | B;
+
 /**
  * Merges nested objects and arrays.
  *

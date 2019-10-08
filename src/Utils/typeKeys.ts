@@ -9,7 +9,8 @@ import { StringType } from "../Type/StringType";
 import { TupleType } from "../Type/TupleType";
 import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
-import { derefType } from "./derefType";
+import { derefAnnotatedType, derefType } from "./derefType";
+import { preserveAnnotation } from "./preserveAnnotation";
 import { uniqueArray } from "./uniqueArray";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
@@ -69,16 +70,18 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType): B
             const property = type.getProperties().find(it => it.getName() === index.getValue());
             if (property) {
                 const propertyType = property.getType();
+                let newPropType = derefAnnotatedType(propertyType);
                 if (!property.isRequired()) {
-                    if (propertyType instanceof UnionType) {
-                        if (!propertyType.getTypes().some(subType => subType instanceof UndefinedType)) {
-                            return new UnionType([...propertyType.getTypes(), new UndefinedType()]);
+                    if (newPropType instanceof UnionType) {
+                        if (!newPropType.getTypes().some(subType => subType instanceof UndefinedType)) {
+                            newPropType = new UnionType([...newPropType.getTypes(), new UndefinedType()]);
                         }
                     } else {
-                        return new UnionType([propertyType, new UndefinedType()]);
+                        newPropType = new UnionType([newPropType, new UndefinedType()]);
                     }
                 }
-                return propertyType;
+
+                return preserveAnnotation(propertyType, newPropType);
             }
         }
 

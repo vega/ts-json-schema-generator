@@ -7,7 +7,7 @@ export function isHidden(symbol: ts.Symbol): boolean {
         return false;
     }
 
-    const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find((tag: ts.JSDocTagInfo) => tag.name === "hide");
+    const jsDocTag: ts.JSDocTagInfo | undefined = jsDocTags.find((tag: ts.JSDocTagInfo) => tag.name === "hidden");
     return !!jsDocTag;
 }
 

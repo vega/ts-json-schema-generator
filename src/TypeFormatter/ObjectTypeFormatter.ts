@@ -8,6 +8,8 @@ import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { derefType } from "../Utils/derefType";
+import { preserveAnnotation } from "../Utils/preserveAnnotation";
+import { removeUndefined } from "../Utils/removeUndefined";
 import { StringMap } from "../Utils/StringMap";
 import { uniqueArray } from "../Utils/uniqueArray";
 
@@ -60,19 +62,18 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
-        const required = objectProperties
-            .map(property => this.prepareObjectProperty(property))
+        const preparedProperties = objectProperties.map(property => this.prepareObjectProperty(property));
+
+        const required = preparedProperties
             .filter(property => property.isRequired())
             .map(property => property.getName());
-        const properties = objectProperties
-            .map(property => this.prepareObjectProperty(property))
-            .reduce(
-                (result: StringMap<Definition>, property) => ({
-                    ...result,
-                    [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
-                }),
-                {}
-            );
+        const properties = preparedProperties.reduce(
+            (result: StringMap<Definition>, property) => ({
+                ...result,
+                [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
+            }),
+            {}
+        );
 
         return {
             type: "object",
@@ -90,24 +91,20 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
 
     private prepareObjectProperty(property: ObjectProperty): ObjectProperty {
-        const propType = derefType(property.getType());
+        const propertyType = property.getType();
+        const propType = derefType(propertyType);
         if (propType instanceof UndefinedType) {
-            return new ObjectProperty(property.getName(), new UndefinedType(), false);
+            return new ObjectProperty(property.getName(), propertyType, false);
         } else if (!(propType instanceof UnionType)) {
             return property;
         }
 
-        const requiredTypes = propType.getTypes().filter(it => !(it instanceof UndefinedType));
-        if (propType.getTypes().length === requiredTypes.length) {
+        const { newType: newPropType, numRemoved } = removeUndefined(propType);
+
+        if (numRemoved == 0) {
             return property;
-        } else if (requiredTypes.length === 0) {
-            return new ObjectProperty(property.getName(), new UndefinedType(), false);
         }
 
-        return new ObjectProperty(
-            property.getName(),
-            requiredTypes.length === 1 ? requiredTypes[0] : new UnionType(requiredTypes),
-            false
-        );
+        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType, newPropType), false);
     }
 }

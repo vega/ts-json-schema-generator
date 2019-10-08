@@ -1,4 +1,3 @@
-import { DefinitionType } from "./../Type/DefinitionType";
 import * as ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader";
@@ -7,6 +6,9 @@ import { SubNodeParser } from "../SubNodeParser";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
 import { ReferenceType } from "../Type/ReferenceType";
+import { removeUndefined } from "../Utils/removeUndefined";
+import { DefinitionType } from "./../Type/DefinitionType";
+import { UnionType } from "./../Type/UnionType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: SubNodeParser, private annotationsReader: AnnotationsReader) {}
@@ -29,13 +31,20 @@ export class AnnotatedNodeParser implements SubNodeParser {
                 node.kind === ts.SyntaxKind.TypeAliasDeclaration &&
                 (node as ts.TypeAliasDeclaration).name.text === "Exclude"
             ) {
-                const t = context.getArgument("T");
+                let t = context.getArgument("T");
+
+                // Handle optional properties.
+                if (t instanceof UnionType) {
+                    t = removeUndefined(t).newType;
+                }
+
                 if (t instanceof DefinitionType) {
-                    const at = t.getType();
-                    if (at instanceof AnnotatedType) {
-                        annotations = at.getAnnotations();
-                        specialCase = true;
-                    }
+                    t = t.getType();
+                }
+
+                if (t instanceof AnnotatedType) {
+                    annotations = t.getAnnotations();
+                    specialCase = true;
                 }
             }
 

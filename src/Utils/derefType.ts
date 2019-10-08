@@ -16,3 +16,11 @@ export function derefType(type: BaseType): BaseType {
 
     return type;
 }
+
+export function derefAnnotatedType(type: BaseType): BaseType {
+    if (type instanceof AnnotatedType || type instanceof AliasType) {
+        return derefAnnotatedType(type.getType());
+    }
+
+    return type;
+}
