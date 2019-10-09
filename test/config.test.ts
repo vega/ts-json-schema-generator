@@ -142,8 +142,18 @@ describe("config", () => {
     );
 
     it(
-        "jsdoc-hide",
-        assertSchema("jsdoc-hide", {
+        "jsdoc-hidden",
+        assertSchema("jsdoc-hidden", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
+
+    it(
+        "jsdoc-inheritance",
+        assertSchema("jsdoc-inheritance", {
             type: "MyObject",
             expose: "export",
             topRef: true,
@@ -151,9 +161,9 @@ describe("config", () => {
         })
     );
     it(
-        "jsdoc-inheritance",
-        assertSchema("jsdoc-inheritance", {
-            type: "MyObject",
+        "jsdoc-inheritance-exclude",
+        assertSchema("jsdoc-inheritance-exclude", {
+            type: "MyType",
             expose: "export",
             topRef: true,
             jsDoc: "extended",

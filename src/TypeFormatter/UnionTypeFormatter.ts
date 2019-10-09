@@ -1,3 +1,4 @@
+import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
@@ -33,11 +34,22 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             };
         }
 
-        return definitions.length > 1
+        const flattenedDefinitions: JSONSchema7[] = [];
+
+        // Flatten anOf inside anyOf unless the anyOf has an annotation
+        for (const def of definitions) {
+            if (Object.keys(def) === ["anyOf"]) {
+                flattenedDefinitions.push(...(def.anyOf as any));
+            } else {
+                flattenedDefinitions.push(def);
+            }
+        }
+
+        return flattenedDefinitions.length > 1
             ? {
-                  anyOf: definitions,
+                  anyOf: flattenedDefinitions,
               }
-            : definitions[0];
+            : flattenedDefinitions[0];
     }
     public getChildren(type: UnionType): BaseType[] {
         return uniqueArray(

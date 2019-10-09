@@ -4,7 +4,7 @@ import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
-    private static textTags: string[] = [
+    private static textTags = new Set<string>([
         "title",
         "description",
 
@@ -15,8 +15,8 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "$comment",
         "contentMediaType",
         "contentEncoding",
-    ];
-    private static jsonTags: string[] = [
+    ]);
+    private static jsonTags = new Set<string>([
         "minimum",
         "exclusiveMinimum",
 
@@ -48,9 +48,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "else",
         "readOnly",
         "writeOnly",
-    ];
+    ]);
 
-    public constructor(private extraJsonTags?: string[]) {}
+    public constructor(private extraJsonTags?: Set<string>) {}
 
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
@@ -79,13 +79,14 @@ export class BasicAnnotationsReader implements AnnotationsReader {
             return undefined;
         }
 
-        if (BasicAnnotationsReader.textTags.indexOf(jsDocTag.name) >= 0) {
+        if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return jsDocTag.text;
-        } else if (BasicAnnotationsReader.jsonTags.indexOf(jsDocTag.name) >= 0) {
+        } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
             return this.parseJson(jsDocTag.text);
-        } else if (this.extraJsonTags && this.extraJsonTags.indexOf(jsDocTag.name) >= 0) {
+        } else if (this.extraJsonTags && this.extraJsonTags.has(jsDocTag.name)) {
             return this.parseJson(jsDocTag.text);
         } else {
+            // Unknown jsDoc tag.
             return undefined;
         }
     }

@@ -155,6 +155,8 @@ describe("valid-data", () => {
     it("type-mapped-enum", assertSchema("type-mapped-enum", "MyObject"));
     it("type-mapped-enum-optional", assertSchema("type-mapped-enum-optional", "MyObject"));
     it("type-mapped-enum-null", assertSchema("type-mapped-enum-null", "MyObject"));
+    it("type-mapped-exclude", assertSchema("type-mapped-exclude", "MyObject", "extended"));
+    it("type-mapped-double-exclude", assertSchema("type-mapped-double-exclude", "MyObject", "extended"));
 
     it("generic-simple", assertSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertSchema("generic-arrays", "MyObject"));

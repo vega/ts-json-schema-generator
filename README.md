@@ -86,9 +86,13 @@ npm install --save ts-json-schema-generator
 -   `keyof`
 -   conditional types
 
+## Run locally
+
+`yarn --silent run run --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
+
 ## Debug
 
-`yarn run debug --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
+`yarn --silent run debug --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 And connect via the debugger protocol.
 

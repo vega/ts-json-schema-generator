@@ -4,14 +4,16 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { EnumType, EnumValue } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
-import { derefType } from "../Utils/derefType";
+import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
-import { EnumType, EnumValue } from "../Type/EnumType";
+import { preserveAnnotation } from "../Utils/preserveAnnotation";
+import { removeUndefined } from "../Utils/removeUndefined";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: NodeParser) {}
@@ -58,10 +60,22 @@ export class MappedTypeNodeParser implements SubNodeParser {
             .getTypes()
             .filter(type => type instanceof LiteralType)
             .reduce((result: ObjectProperty[], key: LiteralType) => {
+                const propertyType = this.childNodeParser.createType(
+                    node.type!,
+                    this.createSubContext(node, key, context)
+                );
+                let newType = derefAnnotatedType(propertyType);
+                let hasUndefined = false;
+                if (newType instanceof UnionType) {
+                    const { newType: newType_, numRemoved } = removeUndefined(newType);
+                    hasUndefined = numRemoved > 0;
+                    newType = newType_;
+                }
+
                 const objectProperty = new ObjectProperty(
                     key.getValue().toString(),
-                    this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)),
-                    !node.questionToken
+                    preserveAnnotation(propertyType, newType),
+                    !node.questionToken && !hasUndefined
                 );
 
                 result.push(objectProperty);

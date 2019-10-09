@@ -1,17 +1,17 @@
-// You can hide enum entries and object proeprties by annotating them with @hide.
+// You can hide enum entries and object properties by annotating them with @hidden.
 
 export enum Enum {
     /**
      * Hidden. Comments for enum values are ignored.
      *
-     * @hide
+     * @hidden
      */
     X = "x",
     Y = "y",
 }
 
 /**
- * @hide
+ * @hidden
  */
 export type Hidden = "hidden";
 
@@ -26,7 +26,7 @@ export interface MyObject {
     /**
      * This property should not appear.
      *
-     * @hide
+     * @hidden
      */
     hidden: number;
 

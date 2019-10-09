@@ -3,20 +3,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyObject": {
-      "$ref": "#/definitions/NullableAndPartial<SomeInterface>"
-    },
-    "NullableAndPartial<SomeInterface>": {
       "additionalProperties": false,
       "properties": {
         "bar": {
-          "enum": ["bar", null],
-          "type": ["string", "null"]
+          "description": "Bar",
+          "type": "string"
         },
         "foo": {
-          "enum": [123, null],
-          "type": ["number", "null"]
+          "description": "Foo",
+          "type": "string"
         }
       },
+      "required": ["bar"],
       "type": "object"
     }
   }
