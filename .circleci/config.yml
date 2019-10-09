@@ -39,7 +39,7 @@ jobs:
 
       - run:
           name: Lint with ESLint
-          command: yarn lint -- --format junit -o reports/junit/js-lint-results.xml
+          command: yarn lint --format junit -o reports/junit/js-lint-results.xml
 
       - run:
           name: Run tests with JUnit as reporter
