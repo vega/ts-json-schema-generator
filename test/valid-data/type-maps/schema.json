@@ -11,6 +11,7 @@
                     "$ref": "#/definitions/MyMap2"
                 },
                 "map3": {
+                    "additionalProperties": true,
                     "type": "object"
                 }
             },
