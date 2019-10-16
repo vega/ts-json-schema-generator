@@ -28,7 +28,9 @@
         "B.B": {
             "type": "object",
             "properties": {
-                "b": {}
+                "b": {
+                    "additionalProperties": true
+                }
             },
             "required": [
                 "b"
