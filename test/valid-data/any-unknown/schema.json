@@ -4,12 +4,19 @@
         "MyObject": {
             "type": "object",
             "properties": {
-                "value1": {},
-                "value2": {}
+                "value1": {
+                    "additionalProperties": true
+                },
+                "value2": {},
+                "value3": {
+                    "additionalProperties": true,
+                    "type": "object"
+                }
             },
             "required": [
                 "value1",
-                "value2"
+                "value2",
+                "value3"
             ],
             "additionalProperties": false
         }

@@ -15,11 +15,18 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "anyArray": {
+                    "type": "array",
+                    "items": {
+                        "additionalProperties": true
+                    }
                 }
             },
             "required": [
                 "numberArray",
-                "stringArray"
+                "stringArray",
+                "anyArray"
             ],
             "additionalProperties": false
         }

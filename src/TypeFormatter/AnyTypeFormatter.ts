@@ -8,7 +8,7 @@ export class AnyTypeFormatter implements SubTypeFormatter {
         return type instanceof AnyType;
     }
     public getDefinition(type: AnyType): Definition {
-        return {};
+        return { additionalProperties: true };
     }
     public getChildren(type: AnyType): BaseType[] {
         return [];
