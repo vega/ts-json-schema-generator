@@ -11,6 +11,7 @@ import { TupleType } from "../Type/TupleType";
 import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { UnknownType } from "../Type/UnknownType";
+import { VoidType } from "../Type/VoidType";
 import { derefType } from "./derefType";
 import { LiteralType, LiteralValue } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
@@ -116,6 +117,11 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
     // Type "never" can be assigned to anything
     if (source instanceof NeverType) {
         return true;
+    }
+
+    // 'null', or 'undefined' can be assigned to the void
+    if (target instanceof VoidType) {
+        return source instanceof NullType || source instanceof UndefinedType;
     }
 
     // Union and enum type is assignable to target when all types in the union/enum are assignable to it
