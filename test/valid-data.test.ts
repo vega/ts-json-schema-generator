@@ -167,6 +167,7 @@ describe("valid-data", () => {
     it("generic-hell", assertSchema("generic-hell", "MyObject"));
     it("generic-default", assertSchema("generic-default", "MyObject"));
     it("generic-prefixed-number", assertSchema("generic-prefixed-number", "MyObject"));
+    it("generic-void", assertSchema("generic-void", "MyObject"));
 
     it(
         "annotation-custom",

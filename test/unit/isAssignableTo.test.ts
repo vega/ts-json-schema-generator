@@ -17,6 +17,7 @@ import { TupleType } from "../../src/Type/TupleType";
 import { UndefinedType } from "../../src/Type/UndefinedType";
 import { UnionType } from "../../src/Type/UnionType";
 import { UnknownType } from "../../src/Type/UnknownType";
+import { VoidType } from "../../src/Type/VoidType";
 import { isAssignableTo } from "../../src/Utils/isAssignableTo";
 
 describe("isAssignableTo", () => {
@@ -27,6 +28,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new BooleanType(), new BooleanType())).toBe(true);
         expect(isAssignableTo(new StringType(), new StringType())).toBe(true);
         expect(isAssignableTo(new UndefinedType(), new UndefinedType())).toBe(true);
+        expect(isAssignableTo(new VoidType(), new VoidType())).toBe(true);
     });
     it("returns false for different types", () => {
         expect(isAssignableTo(new BooleanType(), new NullType())).toBe(false);
@@ -200,6 +202,15 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new UnknownType())).toBe(false);
         expect(isAssignableTo(new UndefinedType(), new UnknownType())).toBe(false);
     });
+
+    it("lets 'any', 'never', 'null', and 'undefined' be assigned to type 'void'", () => {
+        expect(isAssignableTo(new VoidType(), new AnyType())).toBe(true);
+        expect(isAssignableTo(new VoidType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new VoidType(), new NullType())).toBe(true);
+        expect(isAssignableTo(new VoidType(), new UndefinedType())).toBe(true);
+        expect(isAssignableTo(new VoidType(), new UnknownType())).toBe(false);
+    });
+
     it("lets union type to be assigned if all sub types are compatible to target type", () => {
         const typeA = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], true);
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), true)], true);

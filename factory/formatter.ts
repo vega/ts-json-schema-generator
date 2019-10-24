@@ -24,6 +24,7 @@ import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
 import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
+import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 
 export function createFormatter(): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
@@ -41,6 +42,7 @@ export function createFormatter(): TypeFormatter {
         .addTypeFormatter(new NeverTypeFormatter())
         .addTypeFormatter(new UndefinedTypeFormatter())
         .addTypeFormatter(new UnknownTypeFormatter())
+        .addTypeFormatter(new VoidTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())
