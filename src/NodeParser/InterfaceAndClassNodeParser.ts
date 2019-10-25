@@ -96,7 +96,10 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             .reduce(
                 (members, member) => {
                     if (ts.isConstructorDeclaration(member)) {
-                        members.push(...member.parameters.filter(ts.isParameterPropertyDeclaration));
+                        const params = member.parameters.filter(param =>
+                            ts.isParameterPropertyDeclaration(param, param.parent)
+                        ) as ts.ParameterPropertyDeclaration[];
+                        members.push(...params);
                     } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
                         members.push(member);
                     }
