@@ -8,17 +8,14 @@ export class UnionType extends BaseType {
     public constructor(types: readonly BaseType[]) {
         super();
         this.types = uniqueTypeArray(
-            types.reduce(
-                (flatTypes, type) => {
-                    if (type instanceof UnionType) {
-                        flatTypes.push(...type.getTypes());
-                    } else if (!(type instanceof NeverType)) {
-                        flatTypes.push(type);
-                    }
-                    return flatTypes;
-                },
-                [] as BaseType[]
-            )
+            types.reduce((flatTypes, type) => {
+                if (type instanceof UnionType) {
+                    flatTypes.push(...type.getTypes());
+                } else if (!(type instanceof NeverType)) {
+                    flatTypes.push(type);
+                }
+                return flatTypes;
+            }, [] as BaseType[])
         );
     }
 

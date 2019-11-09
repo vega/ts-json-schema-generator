@@ -35,15 +35,15 @@
   "dependencies": {
     "@types/json-schema": "^7.0.3",
     "commander": "~4.0.0",
-    "glob": "~7.1.5",
+    "glob": "~7.1.6",
     "json-stable-stringify": "^1.0.1",
     "typescript": "~3.7.2"
   },
   "devDependencies": {
     "@types/glob": "^7.1.1",
-    "@types/jest": "^24.0.21",
+    "@types/jest": "^24.0.22",
     "@types/json-stable-stringify": "^1.0.32",
-    "@types/node": "^12.12.6",
+    "@types/node": "^12.12.7",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
     "ajv": "~6.10.2",
@@ -53,7 +53,7 @@
     "eslint-plugin-prettier": "^3.1.1",
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "source-map-support": "~0.5.16",
     "ts-jest": "^24.1.0",
     "ts-node": "^8.4.1"

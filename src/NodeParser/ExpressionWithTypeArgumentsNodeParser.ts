@@ -26,7 +26,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
 
     private createSubContext(node: ts.ExpressionWithTypeArguments, parentContext: Context): Context {
         const subContext = new Context(node);
-        if (node.typeArguments && node.typeArguments.length) {
+        if (node.typeArguments?.length) {
             node.typeArguments.forEach(typeArg => {
                 subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
             });

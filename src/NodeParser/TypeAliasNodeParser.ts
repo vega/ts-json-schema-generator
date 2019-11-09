@@ -14,7 +14,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeAliasDeclaration, context: Context, reference?: ReferenceType): BaseType {
-        if (node.typeParameters && node.typeParameters.length) {
+        if (node.typeParameters?.length) {
             node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
