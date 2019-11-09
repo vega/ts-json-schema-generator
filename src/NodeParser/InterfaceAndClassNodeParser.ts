@@ -21,7 +21,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         context: Context,
         reference?: ReferenceType
     ): BaseType {
-        if (node.typeParameters && node.typeParameters.length) {
+        if (node.typeParameters?.length) {
             node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
@@ -68,7 +68,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 const symbol = this.typeChecker.getSymbolAtLocation(type.expression);
                 if (symbol && (symbol.name === "Array" || symbol.name === "ReadonlyArray")) {
                     const typeArguments = type.typeArguments;
-                    if (typeArguments && typeArguments.length === 1) {
+                    if (typeArguments?.length === 1) {
                         return typeArguments[0];
                     }
                 }
@@ -93,20 +93,17 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
 
     private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
         return (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
-            .reduce(
-                (members, member) => {
-                    if (ts.isConstructorDeclaration(member)) {
-                        const params = member.parameters.filter(param =>
-                            ts.isParameterPropertyDeclaration(param, param.parent)
-                        ) as ts.ParameterPropertyDeclaration[];
-                        members.push(...params);
-                    } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                        members.push(member);
-                    }
-                    return members;
-                },
-                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[]
-            )
+            .reduce((members, member) => {
+                if (ts.isConstructorDeclaration(member)) {
+                    const params = member.parameters.filter(param =>
+                        ts.isParameterPropertyDeclaration(param, param.parent)
+                    ) as ts.ParameterPropertyDeclaration[];
+                    members.push(...params);
+                } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
+                    members.push(member);
+                }
+                return members;
+            }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
             .filter(member => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
             .map(
                 member =>
