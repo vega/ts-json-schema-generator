@@ -56,11 +56,11 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
-        const extraJsonTags = new Set(config.extraJsonTags);
+        const extraTags = new Set(config.extraTags);
         if (config.jsDoc === "extended") {
-            return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, extraTags));
         } else if (config.jsDoc === "basic") {
-            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraJsonTags));
+            return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
         } else {
             return nodeParser;
         }
