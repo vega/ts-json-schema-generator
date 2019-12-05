@@ -18,16 +18,16 @@ function assertSchema(
     relativePath: string,
     type?: string,
     jsDoc: Config["jsDoc"] = "none",
-    extra?: Config["extraJsonTags"]
+    extraTags?: Config["extraTags"]
 ) {
     return () => {
         const config: Config = {
             path: resolve(`${basePath}/${relativePath}/*.ts`),
-            type: type,
+            type,
             expose: "export",
             topRef: true,
-            jsDoc: jsDoc,
-            extraJsonTags: extra,
+            jsDoc,
+            extraTags,
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
@@ -176,7 +176,7 @@ describe("valid-data", () => {
             "customStringProperty",
             "customComplexProperty",
             "customMultilineProperty",
-            "customInvalidProperty",
+            "customUnquotedProperty",
         ])
     );
 

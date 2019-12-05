@@ -37,7 +37,7 @@ const config: Config = {
     sortProps: !args.unstable,
     strictTuples: args.strictTuples,
     skipTypeCheck: !args.typeCheck,
-    extraJsonTags: args.validationKeywords,
+    extraTags: args.validationKeywords,
 };
 
 try {

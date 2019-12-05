@@ -8,7 +8,7 @@ export interface Config {
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
-    extraJsonTags?: string[];
+    extraTags?: string[];
 }
 
 export const DEFAULT_CONFIG: Config = {
@@ -18,5 +18,5 @@ export const DEFAULT_CONFIG: Config = {
     sortProps: true,
     strictTuples: false,
     skipTypeCheck: false,
-    extraJsonTags: [],
+    extraTags: [],
 };

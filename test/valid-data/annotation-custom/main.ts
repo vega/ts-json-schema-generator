@@ -7,7 +7,7 @@
  *     "value2",
  *     "value3"
  * ]
- * @customInvalidProperty not-a-valid-json
+ * @customUnquotedProperty not-a-valid-json
  * @customOmittedProperty 42
  */
 export interface MyObject {}

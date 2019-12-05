@@ -4,8 +4,8 @@ import { symbolAtNode } from "../Utils/symbolAtNode";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
-    public constructor(private typeChecker: ts.TypeChecker, extraJsonTags?: Set<string>) {
-        super(extraJsonTags);
+    public constructor(private typeChecker: ts.TypeChecker, extraTags?: Set<string>) {
+        super(extraTags);
     }
 
     public getAnnotations(node: ts.Node): Annotations | undefined {

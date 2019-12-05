@@ -8,13 +8,10 @@
         "a": 1,
         "b": 2
       },
-      "customMultilineProperty": [
-        "value1",
-        "value2",
-        "value3"
-      ],
+      "customMultilineProperty": ["value1", "value2", "value3"],
       "customNumberProperty": 14,
       "customStringProperty": "string-value",
+      "customUnquotedProperty": "not-a-valid-json",
       "type": "object"
     }
   }
