@@ -1,6 +1,6 @@
 # ts-json-schema-generator
 
-[![CircleCI](https://circleci.com/gh/vega/ts-json-schema-generator.svg?style=svg)](https://circleci.com/gh/vega/ts-json-schema-generator)
+[![CircleCI](https://circleci.com/gh/vega/ts-json-schema-generator.svg?style=shield)](https://circleci.com/gh/vega/ts-json-schema-generator)
 [![codecov](https://codecov.io/gh/vega/ts-json-schema-generator/branch/master/graph/badge.svg)](https://codecov.io/gh/vega/ts-json-schema-generator)
 [![npm dependencies](https://david-dm.org/vega/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
 [![npm version](https://img.shields.io/npm/v/ts-json-schema-generator.svg)](https://www.npmjs.com/package/ts-json-schema-generator)
