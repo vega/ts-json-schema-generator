@@ -1,24 +1,22 @@
 {
-    "$ref": "#/definitions/MyAlias",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Map<alias-1142561764-44-93-1142561764-0-94>": {
-            "additionalProperties": {
-                "$ref": "#/definitions/MyAlias"
-            },
-            "type": "object"
-        },
-        "MyAlias": {
-            "additionalProperties": false,
-            "properties": {
-                "a": {
-                    "$ref": "#/definitions/Map<alias-1142561764-44-93-1142561764-0-94>"
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyAlias",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Map%3Calias-1142561764-44-93-1142561764-0-94%3E": {
+      "additionalProperties": {
+        "$ref": "#/definitions/MyAlias"
+      },
+      "type": "object"
+    },
+    "MyAlias": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/Map%3Calias-1142561764-44-93-1142561764-0-94%3E"
         }
+      },
+      "required": ["a"],
+      "type": "object"
     }
+  }
 }
