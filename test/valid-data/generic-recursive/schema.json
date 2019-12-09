@@ -15,13 +15,13 @@
       "type": "object",
       "properties": {
         "field": {
-          "$ref": "#/definitions/MyGeneric%3Cnumber,string%3E"
+          "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
         }
       },
       "required": ["field"],
       "additionalProperties": false
     },
-    "MyGeneric%3Cnumber,string%3E": {
+    "MyGeneric%3Cnumber%2Cstring%3E": {
       "type": "object",
       "properties": {
         "field": {
