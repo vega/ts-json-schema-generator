@@ -2,7 +2,19 @@ import { deepMerge } from "../../src/Utils/deepMerge";
 
 describe("deepMerge", () => {
     it("returns b if non mergable", () => {
-        const values = ["string", 1, null, false, true, undefined, BigInt(5), Symbol("symbol"), () => {}];
+        const values = [
+            "string",
+            1,
+            null,
+            false,
+            true,
+            undefined,
+            BigInt(5),
+            Symbol("symbol"),
+            () => {
+                // empty
+            },
+        ];
         for (const value of values) {
             expect(deepMerge(value, value, true)).toBe(value);
         }
