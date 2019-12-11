@@ -10,6 +10,7 @@ import { SchemaGenerator } from "../src/SchemaGenerator";
 
 const validator = new Ajv({
     extendRefs: "fail",
+    format: "full",
 });
 
 const basePath = "test/valid-data";
