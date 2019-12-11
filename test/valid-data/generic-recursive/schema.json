@@ -1,42 +1,36 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "value": {
-                    "$ref": "#/definitions/MyGeneric<string,number>"
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "additionalProperties": false
-        },
-        "MyGeneric<string,number>": {
-            "type": "object",
-            "properties": {
-                "field": {
-                    "$ref": "#/definitions/MyGeneric<number,string>"
-                }
-            },
-            "required": [
-                "field"
-            ],
-            "additionalProperties": false
-        },
-        "MyGeneric<number,string>": {
-            "type": "object",
-            "properties": {
-                "field": {
-                    "$ref": "#/definitions/MyGeneric<string,number>"
-                }
-            },
-            "required": [
-                "field"
-            ],
-            "additionalProperties": false
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
         }
+      },
+      "required": ["value"],
+      "additionalProperties": false
     },
-    "$ref": "#/definitions/MyObject"
+    "MyGeneric%3Cstring%2Cnumber%3E": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
+        }
+      },
+      "required": ["field"],
+      "additionalProperties": false
+    },
+    "MyGeneric%3Cnumber%2Cstring%3E": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+        }
+      },
+      "required": ["field"],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/definitions/MyObject"
 }

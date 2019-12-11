@@ -1,18 +1,15 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "$ref": "#/definitions/WithNumbers<Test>"
-        },
-        "WithNumbers<Test>": {
-            "additionalProperties": {
-                "type": [
-                    "string",
-                    "number"
-                ]
-            },
-            "type": "object"
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "$ref": "#/definitions/WithNumbers%3CTest%3E"
+    },
+    "WithNumbers%3CTest%3E": {
+      "additionalProperties": {
+        "type": ["string", "number"]
+      },
+      "type": "object"
     }
+  }
 }

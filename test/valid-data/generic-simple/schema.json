@@ -1,30 +1,26 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "value": {
-                    "$ref": "#/definitions/MyGeneric<number>"
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "additionalProperties": false
-        },
-        "MyGeneric<number>": {
-            "type": "object",
-            "properties": {
-                "field": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "field"
-            ],
-            "additionalProperties": false
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/MyGeneric%3Cnumber%3E"
         }
+      },
+      "required": ["value"],
+      "additionalProperties": false
     },
-    "$ref": "#/definitions/MyObject"
+    "MyGeneric%3Cnumber%3E": {
+      "type": "object",
+      "properties": {
+        "field": {
+          "type": "number"
+        }
+      },
+      "required": ["field"],
+      "additionalProperties": false
+    }
+  },
+  "$ref": "#/definitions/MyObject"
 }
