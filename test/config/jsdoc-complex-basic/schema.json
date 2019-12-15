@@ -26,7 +26,9 @@
         "exportString": {
           "$ref": "#/definitions/MyExportString",
           "description": "Export field description",
-          "default": { "length": 10 }
+          "default": {
+            "length": 10
+          }
         },
         "numberArray": {
           "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E",
@@ -36,7 +38,14 @@
           "type": "number"
         }
       },
-      "required": ["stringValue", "numberValue", "exportString", "privateString", "numberArray", "number"],
+      "required": [
+        "stringValue",
+        "numberValue",
+        "exportString",
+        "privateString",
+        "numberArray",
+        "number"
+      ],
       "additionalProperties": false,
       "description": "Some description here",
       "title": "Some title here"
@@ -45,7 +54,7 @@
       "type": "string",
       "title": "My export string"
     },
-    "MyNonEmptyArray%3Cnumber%3E": {
+    "MyNonEmptyArray<number>": {
       "type": "array",
       "items": {
         "type": "number"

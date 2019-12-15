@@ -2,28 +2,40 @@
   "$ref": "#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "Map%3CA%3E": {
-      "enum": ["a"],
+    "Map<A>": {
+      "enum": [
+        "a"
+      ],
       "type": "string"
     },
-    "Map%3CB%3E": {
-      "enum": ["a"],
+    "Map<B>": {
+      "enum": [
+        "a"
+      ],
       "type": "string"
     },
-    "Map%3CC%3E": {
-      "enum": ["a"],
+    "Map<C>": {
+      "enum": [
+        "a"
+      ],
       "type": "string"
     },
-    "Map%3CD%3E": {
-      "enum": ["d"],
+    "Map<D>": {
+      "enum": [
+        "d"
+      ],
       "type": "string"
     },
-    "Map%3CE%3E": {
-      "enum": ["d"],
+    "Map<E>": {
+      "enum": [
+        "d"
+      ],
       "type": "string"
     },
-    "Map%3CF%3E": {
-      "enum": ["f"],
+    "Map<F>": {
+      "enum": [
+        "f"
+      ],
       "type": "string"
     },
     "MyObject": {
@@ -48,7 +60,14 @@
           "$ref": "#/definitions/Map%3CF%3E"
         }
       },
-      "required": ["a", "b", "c", "d", "e", "f"],
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
       "type": "object"
     }
   }

@@ -9,10 +9,12 @@
           "$ref": "#/definitions/Range%3C-180%2C180%3E"
         }
       },
-      "required": ["angle"],
+      "required": [
+        "angle"
+      ],
       "type": "object"
     },
-    "Range%3C-180%2C180%3E": {
+    "Range<-180,180>": {
       "type": "number"
     }
   }

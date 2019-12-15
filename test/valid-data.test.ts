@@ -51,6 +51,7 @@ function assertSchema(
 
         validator.validateSchema(actual);
         expect(validator.errors).toBeNull();
+        validator.compile(actual); // Will find MissingRef errors
     };
 }
 

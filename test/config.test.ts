@@ -44,6 +44,7 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
 
         validator.validateSchema(actual);
         expect(validator.errors).toBeNull();
+        validator.compile(actual); // Will find MissingRef errors
     };
 }
 

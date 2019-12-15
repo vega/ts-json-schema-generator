@@ -12,7 +12,7 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
         return type instanceof ReferenceType;
     }
     public getDefinition(type: ReferenceType): Definition {
-        return { $ref: "#/definitions/" + type.getName() };
+        return { $ref: "#/definitions/" + encodeURIComponent(type.getName()) };
     }
     public getChildren(type: ReferenceType): BaseType[] {
         if (type.getType() instanceof DefinitionType) {
