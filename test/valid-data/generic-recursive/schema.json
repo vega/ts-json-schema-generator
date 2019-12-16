@@ -8,27 +8,33 @@
           "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
         }
       },
-      "required": ["value"],
+      "required": [
+        "value"
+      ],
       "additionalProperties": false
     },
-    "MyGeneric%3Cstring%2Cnumber%3E": {
+    "MyGeneric<string,number>": {
       "type": "object",
       "properties": {
         "field": {
           "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
         }
       },
-      "required": ["field"],
+      "required": [
+        "field"
+      ],
       "additionalProperties": false
     },
-    "MyGeneric%3Cnumber%2Cstring%3E": {
+    "MyGeneric<number,string>": {
       "type": "object",
       "properties": {
         "field": {
           "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
         }
       },
-      "required": ["field"],
+      "required": [
+        "field"
+      ],
       "additionalProperties": false
     }
   },

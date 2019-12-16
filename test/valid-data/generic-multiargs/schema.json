@@ -11,10 +11,13 @@
           "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
         }
       },
-      "required": ["value1", "value2"],
+      "required": [
+        "value1",
+        "value2"
+      ],
       "additionalProperties": false
     },
-    "MyGeneric%3Cstring%2Cnumber%3E": {
+    "MyGeneric<string,number>": {
       "type": "object",
       "properties": {
         "a": {
@@ -24,10 +27,13 @@
           "type": "number"
         }
       },
-      "required": ["a", "b"],
+      "required": [
+        "a",
+        "b"
+      ],
       "additionalProperties": false
     },
-    "MyGeneric%3Cnumber%2Cstring%3E": {
+    "MyGeneric<number,string>": {
       "type": "object",
       "properties": {
         "a": {
@@ -37,7 +43,10 @@
           "type": "string"
         }
       },
-      "required": ["a", "b"],
+      "required": [
+        "a",
+        "b"
+      ],
       "additionalProperties": false
     }
   },

@@ -5,9 +5,12 @@
     "MyObject": {
       "$ref": "#/definitions/WithNumbers%3CTest%3E"
     },
-    "WithNumbers%3CTest%3E": {
+    "WithNumbers<Test>": {
       "additionalProperties": {
-        "type": ["string", "number"]
+        "type": [
+          "string",
+          "number"
+        ]
       },
       "type": "object"
     }

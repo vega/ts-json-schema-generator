@@ -8,7 +8,7 @@
           "type": "number"
         },
         "c": {
-          "$ref": "#/definitions/GenericC%3CGenericC%253CGenericA%25253Cstring%25253E%253E%3E"
+          "$ref": "#/definitions/GenericC%3CGenericC%3CGenericA%3Cstring%3E%3E%3E"
         },
         "someGeneric": {
           "$ref": "#/definitions/SomeGeneric%3C1%2C2%3E"
@@ -17,49 +17,64 @@
           "$ref": "#/definitions/SomeAlias%3C%22alias%22%3E"
         }
       },
-      "required": ["b", "c", "someAlias", "someGeneric"],
+      "required": [
+        "b",
+        "c",
+        "someAlias",
+        "someGeneric"
+      ],
       "additionalProperties": false
     },
-    "GenericC%3CGenericC%253CGenericA%25253Cstring%25253E%253E%3E": {
+    "GenericC<GenericC<GenericA<string>>>": {
       "type": "object",
       "properties": {
         "c": {
-          "$ref": "#/definitions/GenericC%3CGenericA%253Cstring%253E%3E"
+          "$ref": "#/definitions/GenericC%3CGenericA%3Cstring%3E%3E"
         }
       },
-      "required": ["c"],
+      "required": [
+        "c"
+      ],
       "additionalProperties": false
     },
-    "GenericC%3CGenericA%253Cstring%253E%3E": {
+    "GenericC<GenericA<string>>": {
       "type": "object",
       "properties": {
         "c": {
           "$ref": "#/definitions/GenericA%3Cstring%3E"
         }
       },
-      "required": ["c"],
+      "required": [
+        "c"
+      ],
       "additionalProperties": false
     },
-    "GenericA%3Cstring%3E": {
+    "GenericA<string>": {
       "type": "object",
       "properties": {
         "a": {
           "type": "string"
         }
       },
-      "required": ["a"],
+      "required": [
+        "a"
+      ],
       "additionalProperties": false
     },
-    "SomeGeneric%3C1%2C2%3E": {
+    "SomeGeneric<1,2>": {
       "type": "object",
       "properties": {
         "a": {
           "type": "number",
-          "enum": [1]
+          "enum": [
+            1
+          ]
         },
         "b": {
           "type": "number",
-          "enum": [2]
+          "enum": [
+            2
+          ]
         },
         "c": {
           "$ref": "#/definitions/GenericA%3C1%3E"
@@ -68,44 +83,61 @@
           "$ref": "#/definitions/GenericC%3C2%3E"
         }
       },
-      "required": ["a", "b", "c", "d"],
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
       "additionalProperties": false
     },
-    "GenericA%3C1%3E": {
+    "GenericA<1>": {
       "type": "object",
       "properties": {
         "a": {
           "type": "number",
-          "enum": [1]
+          "enum": [
+            1
+          ]
         }
       },
-      "required": ["a"],
+      "required": [
+        "a"
+      ],
       "additionalProperties": false
     },
-    "GenericC%3C2%3E": {
+    "GenericC<2>": {
       "type": "object",
       "properties": {
         "c": {
           "type": "number",
-          "enum": [2]
+          "enum": [
+            2
+          ]
         }
       },
-      "required": ["c"],
+      "required": [
+        "c"
+      ],
       "additionalProperties": false
     },
-    "SomeAlias%3C%22alias%22%3E": {
+    "SomeAlias<\"alias\">": {
       "$ref": "#/definitions/SomeGeneric%3C%22alias%22%2C%22alias%22%3E"
     },
-    "SomeGeneric%3C%22alias%22%2C%22alias%22%3E": {
+    "SomeGeneric<\"alias\",\"alias\">": {
       "type": "object",
       "properties": {
         "a": {
           "type": "string",
-          "enum": ["alias"]
+          "enum": [
+            "alias"
+          ]
         },
         "b": {
           "type": "string",
-          "enum": ["alias"]
+          "enum": [
+            "alias"
+          ]
         },
         "c": {
           "$ref": "#/definitions/GenericA%3C%22alias%22%3E"
@@ -114,29 +146,42 @@
           "$ref": "#/definitions/GenericC%3C%22alias%22%3E"
         }
       },
-      "required": ["a", "b", "c", "d"],
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
       "additionalProperties": false
     },
-    "GenericA%3C%22alias%22%3E": {
+    "GenericA<\"alias\">": {
       "type": "object",
       "properties": {
         "a": {
           "type": "string",
-          "enum": ["alias"]
+          "enum": [
+            "alias"
+          ]
         }
       },
-      "required": ["a"],
+      "required": [
+        "a"
+      ],
       "additionalProperties": false
     },
-    "GenericC%3C%22alias%22%3E": {
+    "GenericC<\"alias\">": {
       "type": "object",
       "properties": {
         "c": {
           "type": "string",
-          "enum": ["alias"]
+          "enum": [
+            "alias"
+          ]
         }
       },
-      "required": ["c"],
+      "required": [
+        "c"
+      ],
       "additionalProperties": false
     }
   },

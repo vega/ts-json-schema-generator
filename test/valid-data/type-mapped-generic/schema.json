@@ -5,16 +5,28 @@
     "MyObject": {
       "$ref": "#/definitions/NullableAndPartial%3CSomeInterface%3E"
     },
-    "NullableAndPartial%3CSomeInterface%3E": {
+    "NullableAndPartial<SomeInterface>": {
       "additionalProperties": false,
       "properties": {
         "bar": {
-          "enum": ["bar", null],
-          "type": ["string", "null"]
+          "enum": [
+            "bar",
+            null
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
         },
         "foo": {
-          "enum": [123, null],
-          "type": ["number", "null"]
+          "enum": [
+            123,
+            null
+          ],
+          "type": [
+            "number",
+            "null"
+          ]
         }
       },
       "type": "object"

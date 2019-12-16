@@ -8,17 +8,21 @@
           "$ref": "#/definitions/MyGeneric%3Cnumber%3E"
         }
       },
-      "required": ["value"],
+      "required": [
+        "value"
+      ],
       "additionalProperties": false
     },
-    "MyGeneric%3Cnumber%3E": {
+    "MyGeneric<number>": {
       "type": "object",
       "properties": {
         "field": {
           "type": "number"
         }
       },
-      "required": ["field"],
+      "required": [
+        "field"
+      ],
       "additionalProperties": false
     }
   },
