@@ -96,6 +96,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
                         originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint!.typeName.text, false, this.childNodeParser.createType(node.type, context));
                     }
 
+                } else {
+                    originalPropsTemp = context.getParameterProperties(node.typeParameter.constraint.type.typeName.text);
                 }
                 // @ts-ignore
             } else if (node.type && node.type.typeName) { //Reference without type arguments
