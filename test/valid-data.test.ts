@@ -133,6 +133,7 @@ describe("valid-data", () => {
     it("type-typeof", assertSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertSchema("type-typeof-value", "MyType"));
     it("type-typeof-enum", assertSchema("type-typeof-enum", "MyObject"));
+    it("type-typeof-class", assertSchema("type-typeof-class", "MyObject"));
 
     it("type-indexed-access-tuple-1", assertSchema("type-indexed-access-tuple-1", "MyType"));
     it("type-indexed-access-tuple-2", assertSchema("type-indexed-access-tuple-2", "MyType"));
