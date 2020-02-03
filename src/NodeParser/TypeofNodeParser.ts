@@ -30,7 +30,10 @@ export class TypeofNodeParser implements SubNodeParser {
             } else if (valueDec.initializer) {
                 return this.childNodeParser.createType(valueDec.initializer, context);
             }
+        } else if (ts.isClassDeclaration(valueDec)) {
+            return this.childNodeParser.createType(valueDec, context);
         }
+
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
     }
 
