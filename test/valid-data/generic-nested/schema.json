@@ -38,7 +38,7 @@
             ],
             "additionalProperties": false
         },
-        "IStuff": {
+        "MyArrayObjectType": {
             "type": "object",
             "properties": {
                 "a": {
