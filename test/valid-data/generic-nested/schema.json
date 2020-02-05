@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "responseType": {
+                    "$ref": "#/definitions/IRes"
+                }
+            }
+        },
+        "IRes": {
+            "type": "object",
+            "properties": {
+                "foo": {
+                    "$ref": "#/definitions/IListsable"
+                }
+            },
+            "required": [
+                "foo"
+            ],
+            "additionalProperties": false
+        },
+        "IListsable": {
+            "type": "object",
+            "properties": {
+                "lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MyArrayObjectType"
+                    }
+                }
+            },
+            "required": [
+                "lists"
+            ],
+            "additionalProperties": false
+        },
+        "IStuff": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "string"
+                },
+                "b": {
+                    "type": "number"
+                },
+                "c": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

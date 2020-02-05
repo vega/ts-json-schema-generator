@@ -14,7 +14,7 @@ import { StringMap } from "../Utils/StringMap";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(private childTypeFormatter: TypeFormatter) { }
 
     public supportsType(type: ObjectType): boolean {
         return type instanceof ObjectType;
@@ -37,7 +37,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 .reduce(
                     (result: BaseType[], baseType) => [
                         ...result,
-                        ...this.childTypeFormatter.getChildren(baseType).slice(1),
+                        ...this.childTypeFormatter.getChildren(baseType).filter(type => type.getName() !== baseType.getName()),
                     ],
                     []
                 ),
@@ -82,11 +82,11 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             ...(additionalProperties === true || additionalProperties instanceof AnyType
                 ? {}
                 : {
-                      additionalProperties:
-                          additionalProperties instanceof BaseType
-                              ? this.childTypeFormatter.getDefinition(additionalProperties)
-                              : additionalProperties,
-                  }),
+                    additionalProperties:
+                        additionalProperties instanceof BaseType
+                            ? this.childTypeFormatter.getDefinition(additionalProperties)
+                            : additionalProperties,
+                }),
         };
     }
 
