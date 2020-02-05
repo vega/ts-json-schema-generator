@@ -37,9 +37,8 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 .reduce(
                     (result: BaseType[], baseType) => [
                         ...result,
-                        ...this.childTypeFormatter.getChildren(baseType).filter(childType =>
-                            childType.getName() !== baseType.getName()
-                        ),
+                        ...this.childTypeFormatter.getChildren(baseType)
+                            .filter(childType => childType.getName() !== baseType.getName())
                     ],
                     []
                 ),
@@ -54,7 +53,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                     ...this.childTypeFormatter.getChildren(property.getType()),
                 ],
                 []
-            ),
+            )
         ];
 
         return uniqueArray(children);
@@ -88,7 +87,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                         additionalProperties instanceof BaseType
                             ? this.childTypeFormatter.getDefinition(additionalProperties)
                             : additionalProperties,
-                }),
+                })
         };
     }
 
