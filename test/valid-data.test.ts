@@ -170,6 +170,7 @@ describe("valid-data", () => {
     it("generic-recursive", assertSchema("generic-recursive", "MyObject"));
     it("generic-hell", assertSchema("generic-hell", "MyObject"));
     it("generic-default", assertSchema("generic-default", "MyObject"));
+    it("generic-nested", assertSchema("generic-nested", "MyObject"));
     it("generic-prefixed-number", assertSchema("generic-prefixed-number", "MyObject"));
     it("generic-void", assertSchema("generic-void", "MyObject"));
 

@@ -37,7 +37,9 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 .reduce(
                     (result: BaseType[], baseType) => [
                         ...result,
-                        ...this.childTypeFormatter.getChildren(baseType).slice(1),
+                        ...this.childTypeFormatter
+                            .getChildren(baseType)
+                            .filter(childType => childType.getName() !== baseType.getName()),
                     ],
                     []
                 ),
