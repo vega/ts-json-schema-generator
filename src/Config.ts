@@ -8,6 +8,7 @@ export interface Config {
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
+    encodeRefs?: boolean;
     extraTags?: string[];
 }
 
@@ -18,5 +19,6 @@ export const DEFAULT_CONFIG: Config = {
     sortProps: true,
     strictTuples: false,
     skipTypeCheck: false,
+    encodeRefs: true,
     extraTags: [],
 };

@@ -7,7 +7,7 @@ import { createProgram } from "./program";
 export function createGenerator(config: Config): SchemaGenerator {
     const program = createProgram(config);
     const parser = createParser(program, config);
-    const formatter = createFormatter();
+    const formatter = createFormatter(config);
 
     return new SchemaGenerator(program, parser, formatter);
 }
