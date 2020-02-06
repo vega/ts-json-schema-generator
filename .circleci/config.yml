@@ -1,11 +1,11 @@
 version: 2.1
 
 orbs:
-  codecov: codecov/codecov@1.0.2
+  codecov: codecov/codecov@1.0.5
 
 defaults: &defaults
   docker:
-    - image: circleci/node:12
+    - image: circleci/node:13
 
   working_directory: ~/repo
 
