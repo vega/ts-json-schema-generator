@@ -9,11 +9,6 @@ import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const validator = new Ajv({
-    extendRefs: "fail",
-    format: "full",
-});
-
 const basePath = "test/config";
 
 function assertSchema(name: string, userConfig: Config & { type: string }, tsconfig?: boolean) {
@@ -33,7 +28,7 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter()
+            createFormatter(config)
         );
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
@@ -42,8 +37,15 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
 
+        const validator = new Ajv({
+            extendRefs: "fail",
+            // skip full check if we are not encoding refs
+            format: config.encodeRefs === false ? undefined : "full",
+        });
+
         validator.validateSchema(actual);
         expect(validator.errors).toBeNull();
+
         validator.compile(actual); // Will find MissingRef errors
     };
 }
@@ -196,5 +198,16 @@ describe("config", () => {
             },
             true
         )
+    );
+
+    it(
+        "no-ref-encode",
+        assertSchema("no-ref-encode", {
+            type: "MyObject",
+            expose: "all",
+            encodeRefs: false,
+            topRef: true,
+            jsDoc: "none",
+        })
     );
 });

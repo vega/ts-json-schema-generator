@@ -52,24 +52,27 @@ npm install --save ts-json-schema-generator
         }
     }
 
--r, --no-top-ref
-    Do not create a top-level $ref definition.
-
 -j, --jsDoc <extended|none|basic>
     none: Do not use JsDoc annotations.
     basic: Read JsDoc annotations to provide schema properties.
     extended (default): Also read @nullable, and @asType annotations.
 
--u, --unstable
+--unstable
     Do not sort properties.
 
--s, --strict-tuples
+--strict-tuples
     Do not allow additional items on tuples.
 
--c, --no-type-check
+--no-top-ref
+    Do not create a top-level $ref definition.
+
+--no-type-check
     Skip type checks for better performance.
 
--k, --validationKeywords
+--no-ref-encode
+    Do not encode references. According to the standard, references must be valid URIs but some tools do not support encoded references.
+
+--validationKeywords
     Provide additional validation keywords to include.
 ```
 

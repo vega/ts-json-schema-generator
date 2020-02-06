@@ -6,13 +6,14 @@ import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class DefinitionTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(private childTypeFormatter: TypeFormatter, private encodeRefs: boolean) {}
 
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
-        return { $ref: "#/definitions/" + encodeURIComponent(type.getName()) };
+        const ref = type.getName();
+        return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
     }
     public getChildren(type: DefinitionType): BaseType[] {
         return uniqueArray([type, ...this.childTypeFormatter.getChildren(type.getType())]);
