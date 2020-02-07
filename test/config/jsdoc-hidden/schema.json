@@ -31,8 +31,16 @@
       "type": "string"
     },
     "Options2": {
-      "enum": ["up", "down"],
-      "type": "string"
+      "anyOf": [
+        {
+          "enum": ["up"],
+          "type": "string"
+        },
+        {
+          "enum": ["down"],
+          "type": "string"
+        }
+      ]
     }
   }
 }
