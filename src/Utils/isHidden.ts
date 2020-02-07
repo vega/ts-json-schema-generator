@@ -19,13 +19,3 @@ export function isNodeHidden(node: ts.Node): boolean | null {
 
     return isHidden(symbol);
 }
-
-export function referenceHidden(typeChecker: ts.TypeChecker) {
-    return function(node: ts.Node) {
-        if (node.kind === ts.SyntaxKind.TypeReference) {
-            return isHidden(typeChecker.getSymbolAtLocation((node as ts.TypeReferenceNode).typeName)!);
-        }
-
-        return isNodeHidden(node);
-    };
-}
