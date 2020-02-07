@@ -19,7 +19,8 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     public supportsType(type: ObjectType): boolean {
         return type instanceof ObjectType;
     }
-    public getDefinition(type: ObjectType): Definition {
+
+    public getDefinition(type: ObjectType): Definition | undefined {
         const types = type.getBaseTypes();
         if (types.length === 0) {
             return this.getObjectDefinition(type);
@@ -27,6 +28,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
 
         return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, false), this.getObjectDefinition(type));
     }
+
     public getChildren(type: ObjectType): BaseType[] {
         const properties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
@@ -66,16 +68,19 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
 
         const preparedProperties = objectProperties.map(property => this.prepareObjectProperty(property));
 
+        const properties = preparedProperties.reduce((result: StringMap<Definition>, property) => {
+            const propType = this.childTypeFormatter.getDefinition(property.getType());
+            if (propType !== undefined) {
+                result[property.getName()] = propType;
+            }
+            return result;
+        }, {});
+
         const required = preparedProperties
             .filter(property => property.isRequired())
-            .map(property => property.getName());
-        const properties = preparedProperties.reduce(
-            (result: StringMap<Definition>, property) => ({
-                ...result,
-                [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
-            }),
-            {}
-        );
+            .map(property => property.getName())
+            // required properties need to be properties which may not be true for hidden properties
+            .filter(property => !!properties[property]);
 
         return {
             type: "object",

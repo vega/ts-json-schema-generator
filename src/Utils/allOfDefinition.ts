@@ -29,6 +29,10 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter, con
     return (definition: Definition, baseType: BaseType) => {
         const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
 
+        if (other === undefined) {
+            return undefined;
+        }
+
         definition.properties = deepMerge(other.properties || {}, definition.properties || {}, concatArrays);
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {

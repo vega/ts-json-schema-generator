@@ -10,9 +10,15 @@ export class AliasTypeFormatter implements SubTypeFormatter {
     public supportsType(type: AliasType): boolean {
         return type instanceof AliasType;
     }
-    public getDefinition(type: AliasType): Definition {
+
+    public getDefinition(type: AliasType): Definition | undefined {
+        // let reffedType = type.getType();
+        // while (reffedType instanceof AliasType) {
+        //     reffedType = reffedType.getType();
+        // }
         return this.childTypeFormatter.getDefinition(type.getType());
     }
+
     public getChildren(type: AliasType): BaseType[] {
         return this.childTypeFormatter.getChildren(type.getType());
     }

@@ -61,7 +61,7 @@ export class SchemaGenerator {
         throw new NoRootTypeError(fullName);
     }
     private getRootTypeDefinition(rootType: BaseType): Definition {
-        return this.typeFormatter.getDefinition(rootType);
+        return this.typeFormatter.getDefinition(rootType) || { not: {} };
     }
     private appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
@@ -90,7 +90,10 @@ export class SchemaGenerator {
         children.reduce((definitions, child) => {
             const name = child.getName();
             if (!(name in definitions)) {
-                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+                const definition = this.typeFormatter.getDefinition(child.getType());
+                if (definition) {
+                    definitions[name] = definition;
+                }
             }
             return definitions;
         }, childDefinitions);

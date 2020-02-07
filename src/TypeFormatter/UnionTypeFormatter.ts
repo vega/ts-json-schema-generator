@@ -13,7 +13,11 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
-        const definitions = type.getTypes().map(item => this.childTypeFormatter.getDefinition(item));
+        const definitions = type
+            .getTypes()
+            .map(item => this.childTypeFormatter.getDefinition(item))
+            // filter all never or hidden types
+            .filter(d => d !== undefined) as Definition[];
 
         // TODO: why is this not covered by LiteralUnionTypeFormatter?
         // special case for string literals | string -> string
@@ -36,7 +40,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const flattenedDefinitions: JSONSchema7[] = [];
 
-        // Flatten anOf inside anyOf unless the anyOf has an annotation
+        // Flatten anyOf inside anyOf unless the anyOf has an annotation
         for (const def of definitions) {
             if (Object.keys(def) === ["anyOf"]) {
                 flattenedDefinitions.push(...(def.anyOf as any));
@@ -51,6 +55,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
               }
             : flattenedDefinitions[0];
     }
+
     public getChildren(type: UnionType): BaseType[] {
         return uniqueArray(
             type

@@ -4,6 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { NeverType } from "./../Type/NeverType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
+import { isHidden } from "../Utils/isHidden";
 
 export class HiddenNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker) {}
@@ -11,7 +12,7 @@ export class HiddenNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {
         const symbol = symbolAtNode(node);
         if (symbol) {
-            return symbol.getJsDocTags().filter(value => value.name === "hidden").length > 0;
+            return isHidden(symbol);
         }
         return false;
     }

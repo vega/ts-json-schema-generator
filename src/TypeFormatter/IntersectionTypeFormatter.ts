@@ -13,7 +13,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: IntersectionType): boolean {
         return type instanceof IntersectionType;
     }
-    public getDefinition(type: IntersectionType): Definition {
+    public getDefinition(type: IntersectionType): Definition | undefined {
         const types = type.getTypes();
 
         // FIXME: when we have union types as children, we have to translate.

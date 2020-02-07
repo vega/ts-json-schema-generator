@@ -10,7 +10,7 @@ export class RestTypeFormatter implements SubTypeFormatter {
     public supportsType(type: RestType): boolean {
         return type instanceof RestType;
     }
-    public getDefinition(type: RestType): Definition {
+    public getDefinition(type: RestType): Definition | undefined {
         return this.childTypeFormatter.getDefinition(type.getType());
     }
     public getChildren(type: RestType): BaseType[] {

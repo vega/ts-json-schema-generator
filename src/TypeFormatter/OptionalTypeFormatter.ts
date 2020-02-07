@@ -10,7 +10,7 @@ export class OptionalTypeFormatter implements SubTypeFormatter {
     public supportsType(type: OptionalType): boolean {
         return type instanceof OptionalType;
     }
-    public getDefinition(type: OptionalType): Definition {
+    public getDefinition(type: OptionalType): Definition | undefined {
         return this.childTypeFormatter.getDefinition(type.getType());
     }
     public getChildren(type: OptionalType): BaseType[] {

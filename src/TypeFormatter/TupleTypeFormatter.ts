@@ -13,6 +13,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
     public supportsType(type: TupleType): boolean {
         return type instanceof TupleType;
     }
+
     public getDefinition(type: TupleType): Definition {
         const subTypes = type.getTypes();
 
@@ -20,8 +21,12 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         const optionalElements = subTypes.filter(t => t instanceof OptionalType) as OptionalType[];
         const restElements = subTypes.filter(t => t instanceof RestType) as RestType[];
 
-        const requiredDefinitions = requiredElements.map(item => this.childTypeFormatter.getDefinition(item));
-        const optionalDefinitions = optionalElements.map(item => this.childTypeFormatter.getDefinition(item));
+        const requiredDefinitions = requiredElements.map(
+            item => this.childTypeFormatter.getDefinition(item) ?? { not: {} }
+        );
+        const optionalDefinitions = optionalElements.map(
+            item => this.childTypeFormatter.getDefinition(item) ?? { not: {} }
+        );
         const itemsTotal = requiredDefinitions.length + optionalDefinitions.length;
 
         const restType = restElements.length ? restElements[0].getType().getItem() : undefined;
@@ -37,6 +42,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             ...(!restDefinition && itemsTotal ? { maxItems: itemsTotal } : {}), // without rest
         };
     }
+
     public getChildren(type: TupleType): BaseType[] {
         return uniqueArray(
             type
