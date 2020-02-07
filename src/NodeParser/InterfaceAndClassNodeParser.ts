@@ -43,6 +43,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         const properties = this.getProperties(node, context);
         const additionalProperties = this.getAdditionalProperties(node, context);
 
+        // When a required property is never, this type is never
+        const hasRequiredNever = properties.find(property => property.isRequired() && property.getType() === undefined);
+        if (hasRequiredNever) {
+            return undefined;
+        }
+
         // When type only extends Array or ReadonlyArray then create an array type instead of an object type
         if (properties.length === 0 && additionalProperties === false) {
             const arrayItemType = this.getArrayItemType(node);

@@ -44,7 +44,7 @@ export class ExposeNodeParser implements SubNodeParser {
     private getDefinitionName(node: ts.Node, context: Context): string {
         const symbol = symbolAtNode(node)!;
         const fullName = this.typeChecker.getFullyQualifiedName(symbol).replace(/^".*"\./, "");
-        const argumentIds = context.getArguments().map(arg => arg.getName());
+        const argumentIds = context.getArguments().map(arg => arg?.getName());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

@@ -26,7 +26,11 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);
         } else if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
-            return new ArrayType(this.createSubContext(node, context).getArguments()[0]);
+            const type = this.createSubContext(node, context).getArguments()[0];
+            if (type === undefined) {
+                return undefined;
+            }
+            return new ArrayType(type);
         } else {
             return this.childNodeParser.createType(
                 typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
@@ -38,12 +42,10 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     private createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {
         const subContext = new Context(node);
         if (node.typeArguments && node.typeArguments.length) {
-            node.typeArguments.forEach(typeArg => {
+            for (const typeArg of node.typeArguments) {
                 const type = this.childNodeParser.createType(typeArg, parentContext);
-                if (type != undefined) {
-                    subContext.pushArgument(type);
-                }
-            });
+                subContext.pushArgument(type);
+            }
         }
         return subContext;
     }

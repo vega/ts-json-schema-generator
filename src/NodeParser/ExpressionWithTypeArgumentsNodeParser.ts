@@ -29,9 +29,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         if (node.typeArguments?.length) {
             node.typeArguments.forEach(typeArg => {
                 const type = this.childNodeParser.createType(typeArg, parentContext);
-                if (type !== undefined) {
-                    subContext.pushArgument(type);
-                }
+                subContext.pushArgument(type);
             });
         }
         return subContext;
