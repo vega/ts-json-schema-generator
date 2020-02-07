@@ -5,7 +5,6 @@ import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
-import { referenceHidden } from "../Utils/isHidden";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -14,15 +13,15 @@ export class IntersectionNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IntersectionType;
     }
 
-    public createType(node: ts.IntersectionTypeNode, context: Context): BaseType {
-        const hidden = referenceHidden(this.typeChecker);
-        return this.translate(
-            new IntersectionType(
-                node.types
-                    .filter(subnode => !hidden(subnode))
-                    .map(subnode => this.childNodeParser.createType(subnode, context))
-            )
-        );
+    public createType(node: ts.IntersectionTypeNode, context: Context): BaseType | undefined {
+        const types = node.types.map(subnode => this.childNodeParser.createType(subnode, context));
+
+        // if any type is undefined (never), an intersection type should be undefined (never)
+        if (types.filter(t => t === undefined).length) {
+            return undefined;
+        }
+
+        return this.translate(new IntersectionType(types as BaseType[]));
     }
 
     /**

@@ -45,7 +45,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return false;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context);
+        return this.childNodeParser.createType(indexSignature.type!, context) ?? false;
     }
 
     private getTypeId(node: ts.Node, context: Context): string {

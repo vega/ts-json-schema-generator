@@ -18,9 +18,14 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IndexedAccessType;
     }
 
-    public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
+    public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType | undefined {
         const objectType = derefType(this.childNodeParser.createType(node.objectType, context));
         const indexType = this.childNodeParser.createType(node.indexType, context);
+
+        if (objectType === undefined || indexType === undefined) {
+            return undefined;
+        }
+
         const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [indexType];
         const propertyTypes = indexTypes.map(type => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {

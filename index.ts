@@ -48,7 +48,6 @@ export * from "./src/TypeFormatter/AnyTypeFormatter";
 export * from "./src/TypeFormatter/UnknownTypeFormatter";
 export * from "./src/TypeFormatter/NullTypeFormatter";
 export * from "./src/TypeFormatter/UndefinedTypeFormatter";
-export * from "./src/TypeFormatter/NeverTypeFormatter";
 export * from "./src/TypeFormatter/BooleanTypeFormatter";
 export * from "./src/TypeFormatter/NumberTypeFormatter";
 export * from "./src/TypeFormatter/StringTypeFormatter";

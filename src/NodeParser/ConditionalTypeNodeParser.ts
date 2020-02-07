@@ -4,7 +4,6 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { isAssignableTo } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
-import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
@@ -14,7 +13,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ConditionalType;
     }
 
-    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
+    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType | undefined {
         const checkType = this.childNodeParser.createType(node.checkType, context);
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
@@ -31,21 +30,23 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
-        if (!(trueCheckType instanceof NeverType)) {
-            results.push(
-                this.childNodeParser.createType(
-                    node.trueType,
-                    this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
-                )
+        if (trueCheckType !== undefined) {
+            const result = this.childNodeParser.createType(
+                node.trueType,
+                this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
             );
+            if (result) {
+                results.push(result);
+            }
         }
-        if (!(falseCheckType instanceof NeverType)) {
-            results.push(
-                this.childNodeParser.createType(
-                    node.falseType,
-                    this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
-                )
+        if (falseCheckType !== undefined) {
+            const result = this.childNodeParser.createType(
+                node.falseType,
+                this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
             );
+            if (result) {
+                results.push(result);
+            }
         }
         return new UnionType(results).normalize();
     }

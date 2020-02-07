@@ -13,6 +13,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: IntersectionType): boolean {
         return type instanceof IntersectionType;
     }
+
     public getDefinition(type: IntersectionType): Definition {
         const types = type.getTypes();
 
@@ -26,6 +27,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
               } as Definition)
             : this.childTypeFormatter.getDefinition(types[0]);
     }
+
     public getChildren(type: IntersectionType): BaseType[] {
         return uniqueArray(
             type.getTypes().reduce((result: BaseType[], item) => {

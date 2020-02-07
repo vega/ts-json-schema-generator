@@ -8,6 +8,7 @@ import { DefinitionType } from "./Type/DefinitionType";
 import { TypeFormatter } from "./TypeFormatter";
 import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
+import { notUndefined } from "./Utils/notUndefined";
 
 export class SchemaGenerator {
     public constructor(
@@ -18,9 +19,11 @@ export class SchemaGenerator {
 
     public createSchema(fullName: string | undefined): Schema {
         const rootNodes = this.getRootNodes(fullName);
-        const rootTypes = rootNodes.map(rootNode => {
-            return this.nodeParser.createType(rootNode, new Context());
-        });
+        const rootTypes = rootNodes
+            .map(rootNode => {
+                return this.nodeParser.createType(rootNode, new Context());
+            })
+            .filter(notUndefined);
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : {};
         const definitions: StringMap<Definition> = {};
         rootTypes.forEach(rootType => this.appendRootChildDefinitions(rootType, definitions));

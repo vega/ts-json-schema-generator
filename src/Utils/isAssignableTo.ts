@@ -3,7 +3,6 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { EnumType } from "../Type/EnumType";
 import { IntersectionType } from "../Type/IntersectionType";
-import { NeverType } from "../Type/NeverType";
 import { NullType } from "../Type/NullType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { OptionalType } from "../Type/OptionalType";
@@ -51,7 +50,7 @@ function combineIntersectingTypes(intersection: IntersectionType): BaseType[] {
  * @return All object properties of the type. Empty if none.
  */
 function getObjectProperties(type: BaseType): ObjectProperty[] {
-    type = derefType(type);
+    type = derefType(type)!;
     const properties = [];
     if (type instanceof ObjectType) {
         properties.push(...type.getProperties());
@@ -84,10 +83,24 @@ function getPrimitiveType(value: LiteralValue) {
  * @param insideTypes - Optional parameter used internally to solve circular dependencies.
  * @return True if source type is assignable to target type.
  */
-export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: Set<BaseType> = new Set()): boolean {
+export function isAssignableTo(
+    target: BaseType | undefined,
+    source: BaseType | undefined,
+    insideTypes: Set<BaseType> = new Set()
+): boolean {
     // Dereference source and target
     source = derefType(source);
     target = derefType(target);
+
+    // Type "never" can be assigned to anything
+    if (source === undefined) {
+        return true;
+    }
+
+    // Nothing can be assigned to undefined (e.g. never-type)
+    if (target === undefined) {
+        return false;
+    }
 
     // Check for simple type equality
     if (source.getId() === target.getId()) {
@@ -99,11 +112,6 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
         return true;
     }
 
-    // Nothing can be assigned to never-type
-    if (target instanceof NeverType) {
-        return false;
-    }
-
     // Assigning from or to any-type is always possible
     if (source instanceof AnyType || target instanceof AnyType) {
         return true;
@@ -111,11 +119,6 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
 
     // assigning to unknown type is always possible
     if (target instanceof UnknownType) {
-        return true;
-    }
-
-    // Type "never" can be assigned to anything
-    if (source instanceof NeverType) {
         return true;
     }
 
@@ -190,7 +193,7 @@ export function isAssignableTo(target: BaseType, source: BaseType, insideTypes: 
                     return isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
-                        new Set(insideTypes).add(source).add(target)
+                        new Set(insideTypes).add(source!).add(target!)
                     );
                 })
             );

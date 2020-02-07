@@ -1,9 +1,10 @@
 import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
 import { UnionType } from "../Type/UnionType";
 import { referenceHidden } from "../Utils/isHidden";
+import { BaseType } from "../Type/BaseType";
+import { notUndefined } from "../Utils/notUndefined";
 
 export class UnionNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -13,12 +14,12 @@ export class UnionNodeParser implements SubNodeParser {
     }
     public createType(node: ts.UnionTypeNode, context: Context): BaseType {
         const hidden = referenceHidden(this.typeChecker);
-        return new UnionType(
-            node.types
-                .filter(subnode => !hidden(subnode))
-                .map(subnode => {
-                    return this.childNodeParser.createType(subnode, context);
-                })
-        );
+        const types = node.types
+            .filter(subnode => !hidden(subnode))
+            .map(subnode => {
+                return this.childNodeParser.createType(subnode, context);
+            })
+            .filter(notUndefined);
+        return new UnionType(types);
     }
 }

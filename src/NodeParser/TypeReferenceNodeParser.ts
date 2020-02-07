@@ -15,7 +15,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TypeReferenceNode): boolean {
         return node.kind === ts.SyntaxKind.TypeReference;
     }
-    public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
+    public createType(node: ts.TypeReferenceNode, context: Context): BaseType | undefined {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
@@ -39,7 +39,10 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         const subContext = new Context(node);
         if (node.typeArguments && node.typeArguments.length) {
             node.typeArguments.forEach(typeArg => {
-                subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
+                const type = this.childNodeParser.createType(typeArg, parentContext);
+                if (type != undefined) {
+                    subContext.pushArgument(type);
+                }
             });
         }
         return subContext;

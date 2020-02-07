@@ -10,7 +10,7 @@ export class Context {
     private arguments: BaseType[] = [];
     private parameters: string[] = [];
     private reference?: ts.Node;
-    private defaultArgument = new Map<string, BaseType>();
+    private defaultArgument = new Map<string, BaseType | undefined>();
 
     public constructor(reference?: ts.Node) {
         this.reference = reference;
@@ -25,7 +25,7 @@ export class Context {
         this.parameters.push(parameterName);
     }
 
-    public setDefault(parameterName: string, argumentType: BaseType) {
+    public setDefault(parameterName: string, argumentType: BaseType | undefined) {
         this.defaultArgument.set(parameterName, argumentType);
     }
 
@@ -64,5 +64,5 @@ export class Context {
 }
 
 export interface NodeParser {
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType;
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined;
 }

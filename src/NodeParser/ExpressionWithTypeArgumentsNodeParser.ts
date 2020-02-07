@@ -9,7 +9,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public supportsNode(node: ts.ExpressionWithTypeArguments): boolean {
         return node.kind === ts.SyntaxKind.ExpressionWithTypeArguments;
     }
-    public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
+    public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType | undefined {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
@@ -28,7 +28,10 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         const subContext = new Context(node);
         if (node.typeArguments?.length) {
             node.typeArguments.forEach(typeArg => {
-                subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
+                const type = this.childNodeParser.createType(typeArg, parentContext);
+                if (type !== undefined) {
+                    subContext.pushArgument(type);
+                }
             });
         }
         return subContext;

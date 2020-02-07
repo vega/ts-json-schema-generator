@@ -18,7 +18,7 @@ function uniqueLiterals(types: LiteralType[]): LiteralType[] {
     return uniqueArray(values).map(value => new LiteralType(value));
 }
 
-export function getTypeKeys(type: BaseType): LiteralType[] {
+export function getTypeKeys(type: BaseType | undefined): LiteralType[] {
     type = derefType(type);
 
     if (type instanceof IntersectionType || type instanceof UnionType) {
@@ -45,7 +45,7 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
     return [];
 }
 
-export function getTypeByKey(type: BaseType, index: LiteralType | StringType): BaseType | undefined {
+export function getTypeByKey(type: BaseType | undefined, index: LiteralType | StringType): BaseType | undefined {
     type = derefType(type);
 
     if (type instanceof IntersectionType || type instanceof UnionType) {
@@ -70,6 +70,9 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType): B
             const property = type.getProperties().find(it => it.getName() === index.getValue());
             if (property) {
                 const propertyType = property.getType();
+                if (propertyType === undefined) {
+                    return undefined;
+                }
                 let newPropType = derefAnnotatedType(propertyType);
                 if (!property.isRequired()) {
                     if (newPropType instanceof UnionType) {

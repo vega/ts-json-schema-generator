@@ -17,8 +17,13 @@ export class AnnotatedNodeParser implements SubNodeParser {
         return this.childNodeParser.supportsNode(node);
     }
 
-    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
         const baseType = this.childNodeParser.createType(node, context, reference);
+
+        if (baseType === undefined) {
+            return undefined;
+        }
+
         const annotatedNode = this.getAnnotatedNode(node);
         let annotations = this.annotationsReader.getAnnotations(annotatedNode);
 
