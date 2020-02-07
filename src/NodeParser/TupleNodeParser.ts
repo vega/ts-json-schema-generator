@@ -11,6 +11,7 @@ export class TupleNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TupleTypeNode): boolean {
         return node.kind === ts.SyntaxKind.TupleType;
     }
+
     public createType(node: ts.TupleTypeNode, context: Context): BaseType {
         const hidden = referenceHidden(this.typeChecker);
         return new TupleType(
