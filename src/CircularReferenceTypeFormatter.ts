@@ -1,4 +1,3 @@
-import { NeverType } from "./Type/NeverType";
 import { Definition } from "./Schema/Definition";
 import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
@@ -21,10 +20,6 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
         if (this.neverTypes.has(type)) {
             return undefined;
         }
-        // if (type instanceof NeverType) {
-        //     this.neverTypes.add(type);
-        //     return undefined;
-        // }
 
         const definition: Definition = {};
         this.definition.set(type, definition);
