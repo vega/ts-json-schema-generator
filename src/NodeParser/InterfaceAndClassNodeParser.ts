@@ -41,13 +41,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         }
 
         const properties = this.getProperties(node, context);
-        const additionalProperties = this.getAdditionalProperties(node, context);
 
-        // When a required property is never, this type is never
-        const hasRequiredNever = properties.find(property => property.isRequired() && property.getType() === undefined);
-        if (hasRequiredNever) {
+        if (properties === undefined) {
             return undefined;
         }
+
+        const additionalProperties = this.getAdditionalProperties(node, context);
 
         // When type only extends Array or ReadonlyArray then create an array type instead of an object type
         if (properties.length === 0 && additionalProperties === false) {
@@ -104,8 +103,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         );
     }
 
-    private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
-        return (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
+    private getProperties(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
+        context: Context
+    ): ObjectProperty[] | undefined {
+        let hasRequiredNever = false;
+
+        const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce((members, member) => {
                 if (ts.isConstructorDeclaration(member)) {
                     const params = member.parameters.filter(param =>
@@ -125,7 +129,19 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                         this.childNodeParser.createType(member.type!, context),
                         !member.questionToken
                     )
-            );
+            )
+            .filter(prop => {
+                if (prop.isRequired() && prop.getType() === undefined) {
+                    hasRequiredNever = true;
+                }
+                return prop.getType() !== undefined;
+            });
+
+        if (hasRequiredNever) {
+            return undefined;
+        }
+
+        return properties;
     }
 
     private getAdditionalProperties(

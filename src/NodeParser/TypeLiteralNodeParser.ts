@@ -4,7 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
-import { isHidden } from "../Utils/isHidden";
+import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
@@ -13,30 +13,47 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
     }
-    public createType(node: ts.TypeLiteralNode, context: Context, reference?: ReferenceType): BaseType {
+    public createType(node: ts.TypeLiteralNode, context: Context, reference?: ReferenceType): BaseType | undefined {
         const id = this.getTypeId(node, context);
         if (reference) {
             reference.setId(id);
             reference.setName(id);
         }
-        return new ObjectType(id, [], this.getProperties(node, context), this.getAdditionalProperties(node, context));
+
+        const properties = this.getProperties(node, context);
+
+        if (properties === undefined) {
+            return undefined;
+        }
+
+        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
     }
 
-    private getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] {
-        return node.members.filter(ts.isPropertySignature).reduce((result: ObjectProperty[], propertyNode) => {
-            const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
-            if (isHidden(propertySymbol)) {
-                return result;
-            }
-            const objectProperty = new ObjectProperty(
-                propertySymbol.getName(),
-                this.childNodeParser.createType(propertyNode.type!, context),
-                !propertyNode.questionToken
-            );
+    private getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
+        let hasRequiredNever = false;
 
-            result.push(objectProperty);
-            return result;
-        }, []);
+        const properties = node.members
+            .filter(ts.isPropertySignature)
+            .filter(propertyNode => !isNodeHidden(propertyNode))
+            .map(propertyNode => {
+                const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
+                const type = this.childNodeParser.createType(propertyNode.type!, context);
+                const objectProperty = new ObjectProperty(propertySymbol.getName(), type, !propertyNode.questionToken);
+
+                return objectProperty;
+            })
+            .filter(prop => {
+                if (prop.isRequired() && prop.getType() === undefined) {
+                    hasRequiredNever = true;
+                }
+                return prop.getType() !== undefined;
+            });
+
+        if (hasRequiredNever) {
+            return undefined;
+        }
+
+        return properties;
     }
 
     private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | false {
