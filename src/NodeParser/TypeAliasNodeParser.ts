@@ -13,7 +13,11 @@ export class TypeAliasNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeAliasDeclaration;
     }
 
-    public createType(node: ts.TypeAliasDeclaration, context: Context, reference?: ReferenceType): BaseType {
+    public createType(
+        node: ts.TypeAliasDeclaration,
+        context: Context,
+        reference?: ReferenceType
+    ): BaseType | undefined {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -31,7 +35,12 @@ export class TypeAliasNodeParser implements SubNodeParser {
             reference.setId(id);
             reference.setName(id);
         }
-        return new AliasType(id, this.childNodeParser.createType(node.type, context));
+
+        const type = this.childNodeParser.createType(node.type, context);
+        if (type === undefined) {
+            return undefined;
+        }
+        return new AliasType(id, type);
     }
 
     private getTypeId(node: ts.Node, context: Context): string {

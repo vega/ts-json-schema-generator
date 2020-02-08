@@ -48,13 +48,14 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 ? this.childTypeFormatter.getChildren(additionalProperties)
                 : []),
 
-            ...properties.reduce(
-                (result: BaseType[], property) => [
-                    ...result,
-                    ...this.childTypeFormatter.getChildren(property.getType()),
-                ],
-                []
-            ),
+            ...properties.reduce((result: BaseType[], property) => {
+                const propertyType = property.getType();
+                if (propertyType === undefined) {
+                    return result;
+                }
+
+                return [...result, ...this.childTypeFormatter.getChildren(propertyType)];
+            }, []),
         ];
 
         return uniqueArray(children);
@@ -69,13 +70,16 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const required = preparedProperties
             .filter(property => property.isRequired())
             .map(property => property.getName());
-        const properties = preparedProperties.reduce(
-            (result: StringMap<Definition>, property) => ({
-                ...result,
-                [property.getName()]: this.childTypeFormatter.getDefinition(property.getType()),
-            }),
-            {}
-        );
+
+        const properties = preparedProperties.reduce((result: StringMap<Definition>, property) => {
+            const propertyType = property.getType();
+
+            if (propertyType !== undefined) {
+                result[property.getName()] = this.childTypeFormatter.getDefinition(propertyType);
+            }
+
+            return result;
+        }, {});
 
         return {
             type: "object",
@@ -107,6 +111,6 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return property;
         }
 
-        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType, newPropType), false);
+        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType!, newPropType), false);
     }
 }

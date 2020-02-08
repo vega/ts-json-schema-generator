@@ -15,7 +15,11 @@ export enum Enum {
  */
 export type Hidden = "hidden";
 
+export type Hidden2 = Hidden;
+
 export type Options = Hidden | "up" | "down";
+
+export type Options2 = Hidden2 | "up" | "down";
 
 export interface MyObject {
     /**
@@ -33,4 +37,5 @@ export interface MyObject {
     bar: Enum;
 
     options: Options;
+    options2: Options2;
 }

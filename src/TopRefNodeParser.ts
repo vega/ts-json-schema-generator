@@ -10,8 +10,13 @@ export class TopRefNodeParser implements NodeParser {
         private topRef: boolean
     ) {}
 
-    public createType(node: ts.Node, context: Context): BaseType {
+    public createType(node: ts.Node, context: Context): BaseType | undefined {
         const baseType = this.childNodeParser.createType(node, context);
+
+        if (baseType === undefined) {
+            return undefined;
+        }
+
         if (this.topRef && !(baseType instanceof DefinitionType)) {
             return new DefinitionType(this.fullName, baseType);
         } else if (!this.topRef && baseType instanceof DefinitionType) {

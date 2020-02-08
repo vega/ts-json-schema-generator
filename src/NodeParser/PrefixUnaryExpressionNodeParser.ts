@@ -27,7 +27,9 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
                     throw new Error(`Unsupported prefix unary operator: ${node.operator}`);
             }
         } else {
-            throw new Error(`Expected operand to be "LiteralType" but is "${operand.constructor.name}"`);
+            throw new Error(
+                `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`
+            );
         }
     }
 }

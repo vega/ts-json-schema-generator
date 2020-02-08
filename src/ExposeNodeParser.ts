@@ -17,8 +17,13 @@ export class ExposeNodeParser implements SubNodeParser {
         return this.subNodeParser.supportsNode(node);
     }
 
-    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
-        const baseType: BaseType = this.subNodeParser.createType(node, context, reference);
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+        const baseType = this.subNodeParser.createType(node, context, reference);
+
+        if (baseType === undefined) {
+            return undefined;
+        }
+
         if (!this.isExportNode(node)) {
             return baseType;
         }
@@ -39,7 +44,7 @@ export class ExposeNodeParser implements SubNodeParser {
     private getDefinitionName(node: ts.Node, context: Context): string {
         const symbol = symbolAtNode(node)!;
         const fullName = this.typeChecker.getFullyQualifiedName(symbol).replace(/^".*"\./, "");
-        const argumentIds = context.getArguments().map(arg => arg.getName());
+        const argumentIds = context.getArguments().map(arg => arg?.getName());
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;
     }

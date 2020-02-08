@@ -156,6 +156,16 @@ describe("config", () => {
     );
 
     it(
+        "jsdoc-hidden-types",
+        assertSchema("jsdoc-hidden", {
+            type: "MyObject",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
+
+    it(
         "jsdoc-inheritance",
         assertSchema("jsdoc-inheritance", {
             type: "MyObject",

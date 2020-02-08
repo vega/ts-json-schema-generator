@@ -8,6 +8,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
+import { notUndefined } from "../Utils/notUndefined";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -20,7 +21,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context,
         reference?: ReferenceType
-    ): BaseType {
+    ): BaseType | undefined {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach(typeParam => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -40,13 +41,22 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         }
 
         const properties = this.getProperties(node, context);
+
+        if (properties === undefined) {
+            return undefined;
+        }
+
         const additionalProperties = this.getAdditionalProperties(node, context);
 
         // When type only extends Array or ReadonlyArray then create an array type instead of an object type
         if (properties.length === 0 && additionalProperties === false) {
             const arrayItemType = this.getArrayItemType(node);
             if (arrayItemType) {
-                return new ArrayType(this.childNodeParser.createType(arrayItemType, context));
+                const type = this.childNodeParser.createType(arrayItemType, context);
+                if (type === undefined) {
+                    return undefined;
+                }
+                return new ArrayType(type);
             }
         }
 
@@ -85,14 +95,21 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.heritageClauses.reduce(
             (result: BaseType[], baseType) => [
                 ...result,
-                ...baseType.types.map(expression => this.childNodeParser.createType(expression, context)),
+                ...baseType.types
+                    .map(expression => this.childNodeParser.createType(expression, context))
+                    .filter(notUndefined),
             ],
             []
         );
     }
 
-    private getProperties(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): ObjectProperty[] {
-        return (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
+    private getProperties(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
+        context: Context
+    ): ObjectProperty[] | undefined {
+        let hasRequiredNever = false;
+
+        const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce((members, member) => {
                 if (ts.isConstructorDeclaration(member)) {
                     const params = member.parameters.filter(param =>
@@ -112,7 +129,19 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                         this.childNodeParser.createType(member.type!, context),
                         !member.questionToken
                     )
-            );
+            )
+            .filter(prop => {
+                if (prop.isRequired() && prop.getType() === undefined) {
+                    hasRequiredNever = true;
+                }
+                return prop.getType() !== undefined;
+            });
+
+        if (hasRequiredNever) {
+            return undefined;
+        }
+
+        return properties;
     }
 
     private getAdditionalProperties(
@@ -124,7 +153,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             return false;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context);
+        return this.childNodeParser.createType(indexSignature.type!, context) ?? false;
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
