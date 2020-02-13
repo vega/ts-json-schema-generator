@@ -17,11 +17,50 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 This project is made possible by a [community of contributors](https://github.com/vega/ts-json-schema-generator/graphs/contributors). We welcome contributions of any kind (issues, code, documentation, examples, tests,...). Please read our [code of conduct](https://github.com/vega/vega/blob/master/CODE_OF_CONDUCT.md).
 
-## Usage
+## CLI Usage
 
 ```bash
 npm install --save ts-json-schema-generator
 ./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
+```
+
+## Programmatic Usage
+
+```js
+// ts-json-schema.config.js
+
+const tsj = require("ts-json-schema-generator");
+const fs = require("fs");
+
+// Use default config
+const DEFAULT_CONFIG = tsj.DEFAULT_CONFIG;
+
+// OR use custom config
+const config = {
+    path: "path/to/source/file",
+    tsconfig: "path/to/tsconfig.json",
+    type: "*", // Or <type-name> if you want to generate schema for that one type only
+    expose: "export",
+};
+
+const output_path = "path/to/output/file";
+
+try {
+    const schema = tsj.createGenerator(config).createSchema(config.type);
+    const schemaString = JSON.stringify(schema, null, 2);
+    fs.writeFile(output_path, schemaString, err => {
+        if (err) throw err;
+    });
+} catch (error) {
+    if (error instanceof tsj.BaseError) {
+        process.stderr.write(tsj.formatError(error));
+        process.exit(1);
+    } else {
+        throw error;
+    }
+}
+
+// Run the command as `node ts-json-schem.config.js`
 ```
 
 ## Options
