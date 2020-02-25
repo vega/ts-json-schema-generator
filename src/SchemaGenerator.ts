@@ -19,6 +19,10 @@ export class SchemaGenerator {
 
     public createSchema(fullName: string | undefined): Schema {
         const rootNodes = this.getRootNodes(fullName);
+        return this.createSchemaFromNodes(rootNodes);
+    }
+
+    public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
         const rootTypes = rootNodes
             .map(rootNode => {
                 return this.nodeParser.createType(rootNode, new Context());
