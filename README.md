@@ -21,7 +21,7 @@ This project is made possible by a [community of contributors](https://github.co
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'  // Logs the schema to console
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
 ./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name' --out 'my/output/file.json'
 ```
 
@@ -105,6 +105,9 @@ Run the schema generator via `node ts-json-schema.js`.
 
 --validationKeywords
     Provide additional validation keywords to include.
+
+-o, --out
+    Specify the output file path. Without this option, the generator logs the response in the console.
 ```
 
 ## Current state
