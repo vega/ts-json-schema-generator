@@ -28,13 +28,13 @@ npm install --save ts-json-schema-generator
 ## Programmatic Usage
 
 ```js
-// ts-json-schema.config.js
+// ts-json-schema.js
 
 const tsj = require("ts-json-schema-generator");
 const fs = require("fs");
 
 // Use default config
-const DEFAULT_CONFIG = tsj.DEFAULT_CONFIG;
+// const DEFAULT_CONFIG = tsj.DEFAULT_CONFIG;
 
 // OR use custom config
 const config = {
@@ -46,23 +46,14 @@ const config = {
 
 const output_path = "path/to/output/file";
 
-try {
-    const schema = tsj.createGenerator(config).createSchema(config.type);
-    const schemaString = JSON.stringify(schema, null, 2);
-    fs.writeFile(output_path, schemaString, err => {
-        if (err) throw err;
-    });
-} catch (error) {
-    if (error instanceof tsj.BaseError) {
-        process.stderr.write(tsj.formatError(error));
-        process.exit(1);
-    } else {
-        throw error;
-    }
-}
-
-// Run the command as `node ts-json-schem.config.js`
+const schema = tsj.createGenerator(config).createSchema(config.type);
+const schemaString = JSON.stringify(schema, null, 2);
+fs.writeFile(output_path, schemaString, err => {
+    if (err) throw err;
+});
 ```
+
+Run the command as `node ts-json-schema.js`
 
 ## Options
 
