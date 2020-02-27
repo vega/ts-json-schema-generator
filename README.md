@@ -33,7 +33,7 @@ const tsj = require("ts-json-schema-generator");
 const fs = require("fs");
 
 // Use default config
-// const DEFAULT_CONFIG = tsj.DEFAULT_CONFIG;
+// const config = tsj.DEFAULT_CONFIG;
 
 // OR use custom config
 const config = {
