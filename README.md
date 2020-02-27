@@ -53,7 +53,7 @@ fs.writeFile(output_path, schemaString, err => {
 });
 ```
 
-Run the command as `node ts-json-schema.js`
+Run the schema generator via `node ts-json-schema.js`.
 
 ## Options
 
