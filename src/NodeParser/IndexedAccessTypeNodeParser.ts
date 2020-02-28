@@ -20,7 +20,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
 
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType | undefined {
         const objectType = derefType(this.childNodeParser.createType(node.objectType, context));
-        const indexType = this.childNodeParser.createType(node.indexType, context);
+        const indexType = derefType(this.childNodeParser.createType(node.indexType, context));
 
         if (objectType === undefined || indexType === undefined) {
             return undefined;
