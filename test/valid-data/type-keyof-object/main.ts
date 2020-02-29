@@ -1,6 +1,6 @@
 interface SomeInterface {
     foo: 12;
-    bar: "baz";
+    bar?: "baz";
 }
 
 export type MyType = keyof SomeInterface;
