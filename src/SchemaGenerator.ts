@@ -9,6 +9,7 @@ import { TypeFormatter } from "./TypeFormatter";
 import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 import { notUndefined } from "./Utils/notUndefined";
+import { removeUnreachable } from "./Utils/removeUnreachable";
 
 export class SchemaGenerator {
     public constructor(
@@ -28,11 +29,17 @@ export class SchemaGenerator {
                 return this.nodeParser.createType(rootNode, new Context());
             })
             .filter(notUndefined);
-        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : {};
+        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
         rootTypes.forEach(rootType => this.appendRootChildDefinitions(rootType, definitions));
 
-        return { $schema: "http://json-schema.org/draft-07/schema#", ...rootTypeDefinition, definitions };
+        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+
+        return {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            ...(rootTypeDefinition ?? {}),
+            definitions: reachableDefinitions,
+        };
     }
 
     private getRootNodes(fullName: string | undefined) {

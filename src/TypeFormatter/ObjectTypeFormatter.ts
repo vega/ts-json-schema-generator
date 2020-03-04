@@ -36,12 +36,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const childrenOfBase = type
             .getBaseTypes()
             .reduce(
-                (result: BaseType[], baseType) => [
-                    ...result,
-                    ...this.childTypeFormatter
-                        .getChildren(baseType)
-                        .filter(childType => childType.getName() !== baseType.getName()),
-                ],
+                (result: BaseType[], baseType) => [...result, ...this.childTypeFormatter.getChildren(baseType)],
                 []
             );
 
@@ -57,34 +52,9 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return [...result, ...this.childTypeFormatter.getChildren(propertyType)];
         }, []);
 
-        const children = [
-            ...childrenOfBase,
-            ...childrenOfAdditionalProps,
-            ...childrenOfProps,
-            ...this.getCircularChildRefs(type),
-        ];
+        const children = [...childrenOfBase, ...childrenOfAdditionalProps, ...childrenOfProps];
 
         return uniqueArray(children);
-    }
-
-    /**
-     * Return list of base types that
-     */
-    private getCircularChildRefs(type: ObjectType) {
-        const children = [];
-        for (const baseType of type.getBaseTypes()) {
-            const dereffedType = derefType(baseType);
-            if (dereffedType instanceof ObjectType) {
-                for (const prop of dereffedType.getProperties()) {
-                    if (prop.getType()?.getName() === baseType.getName()) {
-                        children.push(baseType);
-                        break;
-                    }
-                }
-            }
-        }
-
-        return children;
     }
 
     private getObjectDefinition(type: ObjectType): Definition {
