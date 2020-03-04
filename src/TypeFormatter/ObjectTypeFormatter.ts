@@ -19,6 +19,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     public supportsType(type: ObjectType): boolean {
         return type instanceof ObjectType;
     }
+
     public getDefinition(type: ObjectType): Definition {
         const types = type.getBaseTypes();
         if (types.length === 0) {
@@ -27,38 +28,63 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
 
         return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, false), this.getObjectDefinition(type));
     }
+
     public getChildren(type: ObjectType): BaseType[] {
         const properties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
+        const childrenOfBase = type
+            .getBaseTypes()
+            .reduce(
+                (result: BaseType[], baseType) => [
+                    ...result,
+                    ...this.childTypeFormatter
+                        .getChildren(baseType)
+                        .filter(childType => childType.getName() !== baseType.getName()),
+                ],
+                []
+            );
+
+        const childrenOfAdditionalProps =
+            additionalProperties instanceof BaseType ? this.childTypeFormatter.getChildren(additionalProperties) : [];
+
+        const childrenOfProps = properties.reduce((result: BaseType[], property) => {
+            const propertyType = property.getType();
+            if (propertyType === undefined) {
+                return result;
+            }
+
+            return [...result, ...this.childTypeFormatter.getChildren(propertyType)];
+        }, []);
+
         const children = [
-            ...type
-                .getBaseTypes()
-                .reduce(
-                    (result: BaseType[], baseType) => [
-                        ...result,
-                        ...this.childTypeFormatter
-                            .getChildren(baseType)
-                            .filter(childType => childType.getName() !== baseType.getName()),
-                    ],
-                    []
-                ),
-
-            ...(additionalProperties instanceof BaseType
-                ? this.childTypeFormatter.getChildren(additionalProperties)
-                : []),
-
-            ...properties.reduce((result: BaseType[], property) => {
-                const propertyType = property.getType();
-                if (propertyType === undefined) {
-                    return result;
-                }
-
-                return [...result, ...this.childTypeFormatter.getChildren(propertyType)];
-            }, []),
+            ...childrenOfBase,
+            ...childrenOfAdditionalProps,
+            ...childrenOfProps,
+            ...this.getCircularChildRefs(type),
         ];
 
         return uniqueArray(children);
+    }
+
+    /**
+     * Return list of base types that
+     */
+    private getCircularChildRefs(type: ObjectType) {
+        const children = [];
+        for (const baseType of type.getBaseTypes()) {
+            const dereffedType = derefType(baseType);
+            if (dereffedType instanceof ObjectType) {
+                for (const prop of dereffedType.getProperties()) {
+                    if (prop.getType()?.getName() === baseType.getName()) {
+                        children.push(baseType);
+                        break;
+                    }
+                }
+            }
+        }
+
+        return children;
     }
 
     private getObjectDefinition(type: ObjectType): Definition {
