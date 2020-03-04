@@ -1,33 +1,18 @@
 import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { RawTypeName } from "../Schema/RawType";
-import { AliasType } from "../Type/AliasType";
-import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "./uniqueArray";
 import { deepMerge } from "./deepMerge";
-
-function getNonRefType(type: BaseType): BaseType {
-    if (
-        type instanceof ReferenceType ||
-        type instanceof DefinitionType ||
-        type instanceof AliasType ||
-        type instanceof AnnotatedType
-    ) {
-        return getNonRefType(type.getType());
-    }
-    return type;
-}
+import { derefType } from "./derefType";
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter, concatArrays: boolean) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType) => {
-        const other = childTypeFormatter.getDefinition(getNonRefType(baseType));
+        const other = childTypeFormatter.getDefinition(derefType(baseType)!);
 
         definition.properties = deepMerge(other.properties || {}, definition.properties || {}, concatArrays);
 
