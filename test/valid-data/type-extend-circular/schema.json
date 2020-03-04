@@ -2,11 +2,11 @@
   "$ref": "#/definitions/MyType",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "MyObject<number>": {
+    "MyObject": {
       "additionalProperties": false,
       "properties": {
         "foo": {
-          "$ref": "#/definitions/MyObject%3Cnumber%3E"
+          "$ref": "#/definitions/MyObject"
         }
       },
       "required": ["foo"],
@@ -19,7 +19,7 @@
           "type": "string"
         },
         "foo": {
-          "$ref": "#/definitions/MyObject%3Cnumber%3E"
+          "$ref": "#/definitions/MyObject"
         }
       },
       "required": ["bar", "foo"],

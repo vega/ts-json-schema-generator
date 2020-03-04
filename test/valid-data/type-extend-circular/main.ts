@@ -1,7 +1,7 @@
-export interface MyObject<T> {
-    foo: MyObject<T>;
+export interface MyObject {
+    foo: MyObject;
 }
 
-export interface MyType extends MyObject<number> {
+export interface MyType extends MyObject {
     bar: string;
 }
