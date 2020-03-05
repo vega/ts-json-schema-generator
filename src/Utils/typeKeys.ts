@@ -7,7 +7,6 @@ import { NumberType } from "../Type/NumberType";
 import { ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { TupleType } from "../Type/TupleType";
-import { UndefinedType } from "../Type/UndefinedType";
 import { UnionType } from "../Type/UnionType";
 import { derefAnnotatedType, derefType } from "./derefType";
 import { preserveAnnotation } from "./preserveAnnotation";
@@ -73,16 +72,7 @@ export function getTypeByKey(type: BaseType | undefined, index: LiteralType | St
                 if (propertyType === undefined) {
                     return undefined;
                 }
-                let newPropType = derefAnnotatedType(propertyType);
-                if (!property.isRequired()) {
-                    if (newPropType instanceof UnionType) {
-                        if (!newPropType.getTypes().some(subType => subType instanceof UndefinedType)) {
-                            newPropType = new UnionType([...newPropType.getTypes(), new UndefinedType()]);
-                        }
-                    } else {
-                        newPropType = new UnionType([newPropType, new UndefinedType()]);
-                    }
-                }
+                const newPropType = derefAnnotatedType(propertyType);
 
                 return preserveAnnotation(propertyType, newPropType);
             }
