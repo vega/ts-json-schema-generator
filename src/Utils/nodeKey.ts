@@ -34,7 +34,10 @@ export function hash(a: any): string | number {
 export function getKey(node: Node, context: Context) {
     const ids: (number | string)[] = [];
     while (node) {
-        const file = node.getSourceFile().fileName.substr(process.cwd().length + 1);
+        const file = node
+            .getSourceFile()
+            .fileName.substr(process.cwd().length + 1)
+            .replace(/\//g, "_");
         ids.push(hash(file), node.pos, node.end);
 
         node = node.parent;
