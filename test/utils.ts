@@ -44,7 +44,11 @@ export function assertValidSchema(
         const actual: any = JSON.parse(JSON.stringify(schema));
 
         // uncomment to write test files
-        // writeFileSync(resolve(`${basePath}/${name}/schema.json`), JSON.stringify(schema, null, 4) + "\n", "utf8");
+        // writeFileSync(
+        //     resolve(`${basePath}/${relativePath}/schema.json`),
+        //     JSON.stringify(schema, null, 4) + "\n",
+        //     "utf8"
+        // );
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);

@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyAlias",
     "definitions": {
         "MyAlias": {
             "type": "object",
@@ -8,7 +9,7 @@
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-1975771820-0-62-1975771820-0-96"
+                    "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
                 }
             },
             "required": [
@@ -17,14 +18,14 @@
             ],
             "additionalProperties": false
         },
-        "interface-1975771820-0-62-1975771820-0-96": {
+        "interface-425636228-0-62-425636228-0-96": {
             "type": "object",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-1975771820-0-62-1975771820-0-96"
+                    "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
                 }
             },
             "required": [
@@ -33,6 +34,5 @@
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyAlias"
+    }
 }
