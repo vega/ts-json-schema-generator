@@ -26,7 +26,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return this.getObjectDefinition(type);
         }
 
-        return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter, false), this.getObjectDefinition(type));
+        return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
     }
 
     public getChildren(type: ObjectType): BaseType[] {

@@ -9,12 +9,12 @@ import { derefType } from "./derefType";
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
-export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter, concatArrays: boolean) {
+export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType) => {
         const other = childTypeFormatter.getDefinition(derefType(baseType)!);
 
-        definition.properties = deepMerge(other.properties || {}, definition.properties || {}, concatArrays);
+        definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
             return props !== undefined && props !== true;

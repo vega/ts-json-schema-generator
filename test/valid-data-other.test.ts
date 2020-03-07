@@ -1,6 +1,6 @@
 import { assertValidSchema } from "./utils";
 
-describe("valid-data", () => {
+describe("valid-data-other", () => {
     it("enums-string", assertValidSchema("enums-string", "Enum"));
     it("enums-number", assertValidSchema("enums-number", "Enum"));
     it("enums-initialized", assertValidSchema("enums-initialized", "Enum"));

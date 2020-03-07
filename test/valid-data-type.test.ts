@@ -1,6 +1,6 @@
 import { assertValidSchema } from "./utils";
 
-describe("valid-data", () => {
+describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
     it("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
     it("type-aliases-mixed", assertValidSchema("type-aliases-mixed", "MyObject"));

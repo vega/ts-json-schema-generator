@@ -1,6 +1,6 @@
 import { assertValidSchema } from "./utils";
 
-describe("valid-data", () => {
+describe("valid-data-struct", () => {
     // TODO: generics recursive
     it("simple-object", assertValidSchema("simple-object", "SimpleObject"));
 
