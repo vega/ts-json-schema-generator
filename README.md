@@ -36,9 +36,9 @@ const config = {
     path: "path/to/source/file",
     tsconfig: "path/to/tsconfig.json",
     type: "*", // Or <type-name> if you want to generate schema for that one type only
-    expose: "export", // Default when using cli
-    jsDoc: "extended", // Default when using cli
-    topRef: true, // Default when using cli
+    expose: "export",
+    jsDoc: "extended",
+    topRef: true
 };
 
 const output_path = "path/to/output/file";
