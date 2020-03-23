@@ -25,11 +25,7 @@ export function formatError(error: BaseError): string {
         });
     } else if (error instanceof UnknownNodeError) {
         const unknownNode: ts.Node = error.getReference() || error.getNode();
-        const nodeFullText: string = unknownNode
-            .getFullText()
-            .trim()
-            .split("\n")[0]
-            .trim();
+        const nodeFullText: string = unknownNode.getFullText().trim().split("\n")[0].trim();
         const [sourceFile, lineNumber, charPos]: [string, number, number] = getNodeLocation(unknownNode);
         return (
             `${error.name}: Unknown node "${nodeFullText}" (ts.SyntaxKind = ${error.getNode().kind}) ` +

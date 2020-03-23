@@ -14,10 +14,10 @@ export class IntersectionNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.IntersectionTypeNode, context: Context): BaseType | undefined {
-        const types = node.types.map(subnode => this.childNodeParser.createType(subnode, context));
+        const types = node.types.map((subnode) => this.childNodeParser.createType(subnode, context));
 
         // if any type is undefined (never), an intersection type should be undefined (never)
-        if (types.filter(t => t === undefined).length) {
+        if (types.filter((t) => t === undefined).length) {
             return undefined;
         }
 
@@ -33,7 +33,7 @@ export class IntersectionNodeParser implements SubNodeParser {
      *         if no translation is needed.
      */
     private translate(intersection: IntersectionType): IntersectionType | UnionType {
-        const unions = intersection.getTypes().map(type => {
+        const unions = intersection.getTypes().map((type) => {
             const derefed = derefType(type);
             return derefed instanceof UnionType ? derefed.getTypes() : [type];
         });

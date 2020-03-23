@@ -14,8 +14,8 @@ import { preserveAnnotation } from "./preserveAnnotation";
 import { uniqueArray } from "./uniqueArray";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
-    const values = types.map(type => type.getValue());
-    return uniqueArray(values).map(value => new LiteralType(value));
+    const values = types.map((type) => type.getValue());
+    return uniqueArray(values).map((value) => new LiteralType(value));
 }
 
 export function getTypeKeys(type: BaseType | undefined): LiteralType[] {
@@ -31,7 +31,7 @@ export function getTypeKeys(type: BaseType | undefined): LiteralType[] {
         return type.getTypes().map((it, idx) => new LiteralType(idx));
     }
     if (type instanceof ObjectType) {
-        const objectProperties = type.getProperties().map(it => new LiteralType(it.getName()));
+        const objectProperties = type.getProperties().map((it) => new LiteralType(it.getName()));
         return uniqueLiterals(
             type
                 .getBaseTypes()
@@ -67,7 +67,7 @@ export function getTypeByKey(type: BaseType | undefined, index: LiteralType | St
     }
     if (type instanceof ObjectType) {
         if (index instanceof LiteralType) {
-            const property = type.getProperties().find(it => it.getName() === index.getValue());
+            const property = type.getProperties().find((it) => it.getName() === index.getValue());
             if (property) {
                 const propertyType = property.getType();
                 if (propertyType === undefined) {
@@ -76,7 +76,7 @@ export function getTypeByKey(type: BaseType | undefined, index: LiteralType | St
                 let newPropType = derefAnnotatedType(propertyType);
                 if (!property.isRequired()) {
                     if (newPropType instanceof UnionType) {
-                        if (!newPropType.getTypes().some(subType => subType instanceof UndefinedType)) {
+                        if (!newPropType.getTypes().some((subType) => subType instanceof UndefinedType)) {
                             newPropType = new UnionType([...newPropType.getTypes(), new UndefinedType()]);
                         }
                     } else {

@@ -25,13 +25,13 @@ export class SchemaGenerator {
 
     public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
         const rootTypes = rootNodes
-            .map(rootNode => {
+            .map((rootNode) => {
                 return this.nodeParser.createType(rootNode, new Context());
             })
             .filter(notUndefined);
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach(rootType => this.appendRootChildDefinitions(rootType, definitions));
+        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
@@ -49,7 +49,7 @@ export class SchemaGenerator {
             const rootFileNames = this.program.getRootFileNames();
             const rootSourceFiles = this.program
                 .getSourceFiles()
-                .filter(sourceFile => rootFileNames.includes(sourceFile.fileName));
+                .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
             const rootNodes = new Map<string, ts.Node>();
             this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
             return [...rootNodes.values()];
@@ -83,7 +83,7 @@ export class SchemaGenerator {
         const children = this.typeFormatter
             .getChildren(rootType)
             .filter((child): child is DefinitionType => child instanceof DefinitionType)
-            .filter(child => {
+            .filter((child) => {
                 if (!seen.has(child.getId())) {
                     seen.add(child.getId());
                     return true;
@@ -142,7 +142,7 @@ export class SchemaGenerator {
                 allTypes.set(this.getFullName(node, typeChecker), node);
                 break;
             default:
-                ts.forEachChild(node, subnode => this.inspectNode(subnode, typeChecker, allTypes));
+                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
                 break;
         }
     }

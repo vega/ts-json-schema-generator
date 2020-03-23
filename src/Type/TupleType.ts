@@ -6,7 +6,7 @@ export class TupleType extends BaseType {
     }
 
     public getId(): string {
-        return "[" + this.types.map(item => item.getId()).join(",") + "]";
+        return "[" + this.types.map((item) => item.getId()).join(",") + "]";
     }
 
     public getTypes(): readonly BaseType[] {

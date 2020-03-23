@@ -49,7 +49,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
     }
 
     private getTypeName(node: ts.TypeAliasDeclaration, context: Context): string {
-        const argumentIds = context.getArguments().map(arg => arg?.getName());
+        const argumentIds = context.getArguments().map((arg) => arg?.getName());
         const fullName = node.name.getText();
 
         return argumentIds.length ? `${fullName}<${argumentIds.join(",")}>` : fullName;

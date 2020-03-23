@@ -25,8 +25,8 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         }
 
         // Narrow down check type for both condition branches
-        const trueCheckType = narrowType(checkType, type => isAssignableTo(extendsType, type));
-        const falseCheckType = narrowType(checkType, type => !isAssignableTo(extendsType, type));
+        const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type));
+        const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
 
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
@@ -89,7 +89,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         subContext.pushArgument(narrowedCheckType);
 
         // Copy all other type parameters from parent context
-        parentContext.getParameters().forEach(parentParameter => {
+        parentContext.getParameters().forEach((parentParameter) => {
             if (parentParameter !== checkTypeParameterName) {
                 subContext.pushParameter(parentParameter);
                 subContext.pushArgument(parentContext.getArgument(parentParameter));

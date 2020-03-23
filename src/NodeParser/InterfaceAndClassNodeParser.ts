@@ -23,7 +23,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         reference?: ReferenceType
     ): BaseType | undefined {
         if (node.typeParameters?.length) {
-            node.typeParameters.forEach(typeParam => {
+            node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
                 context.pushParameter(nameSymbol.name);
 
@@ -96,7 +96,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             (result: BaseType[], baseType) => [
                 ...result,
                 ...baseType.types
-                    .map(expression => this.childNodeParser.createType(expression, context))
+                    .map((expression) => this.childNodeParser.createType(expression, context))
                     .filter(notUndefined),
             ],
             []
@@ -112,7 +112,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce((members, member) => {
                 if (ts.isConstructorDeclaration(member)) {
-                    const params = member.parameters.filter(param =>
+                    const params = member.parameters.filter((param) =>
                         ts.isParameterPropertyDeclaration(param, param.parent)
                     ) as ts.ParameterPropertyDeclaration[];
                     members.push(...params);
@@ -121,16 +121,16 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
                 return members;
             }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
-            .filter(member => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
+            .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
             .map(
-                member =>
+                (member) =>
                     new ObjectProperty(
                         member.name.getText(),
                         this.childNodeParser.createType(member.type!, context),
                         !member.questionToken
                     )
             )
-            .filter(prop => {
+            .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {
                     hasRequiredNever = true;
                 }

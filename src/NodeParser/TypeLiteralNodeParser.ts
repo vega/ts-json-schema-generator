@@ -34,15 +34,15 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
         const properties = node.members
             .filter(ts.isPropertySignature)
-            .filter(propertyNode => !isNodeHidden(propertyNode))
-            .map(propertyNode => {
+            .filter((propertyNode) => !isNodeHidden(propertyNode))
+            .map((propertyNode) => {
                 const propertySymbol: ts.Symbol = (propertyNode as any).symbol;
                 const type = this.childNodeParser.createType(propertyNode.type!, context);
                 const objectProperty = new ObjectProperty(propertySymbol.getName(), type, !propertyNode.questionToken);
 
                 return objectProperty;
             })
-            .filter(prop => {
+            .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {
                     hasRequiredNever = true;
                 }

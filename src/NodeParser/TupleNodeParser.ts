@@ -15,7 +15,7 @@ export class TupleNodeParser implements SubNodeParser {
     public createType(node: ts.TupleTypeNode, context: Context): BaseType {
         return new TupleType(
             node.elementTypes
-                .map(item => {
+                .map((item) => {
                     return this.childNodeParser.createType(item, context);
                 })
                 .filter(notUndefined)

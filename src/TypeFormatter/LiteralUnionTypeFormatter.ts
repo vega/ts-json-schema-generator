@@ -33,7 +33,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     }
 
     private isLiteralUnion(type: UnionType): boolean {
-        return type.getTypes().every(item => item instanceof LiteralType || item instanceof NullType);
+        return type.getTypes().every((item) => item instanceof LiteralType || item instanceof NullType);
     }
     private getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
         return value instanceof LiteralType ? value.getValue() : null;

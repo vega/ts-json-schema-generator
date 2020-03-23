@@ -14,7 +14,7 @@ export class UnionNodeParser implements SubNodeParser {
 
     public createType(node: ts.UnionTypeNode, context: Context): BaseType | undefined {
         const types = node.types
-            .map(subnode => {
+            .map((subnode) => {
                 return this.childNodeParser.createType(subnode, context);
             })
             .filter(notUndefined);

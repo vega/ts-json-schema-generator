@@ -61,11 +61,11 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
-        const preparedProperties = objectProperties.map(property => this.prepareObjectProperty(property));
+        const preparedProperties = objectProperties.map((property) => this.prepareObjectProperty(property));
 
         const required = preparedProperties
-            .filter(property => property.isRequired())
-            .map(property => property.getName());
+            .filter((property) => property.isRequired())
+            .map((property) => property.getName());
 
         const properties = preparedProperties.reduce((result: StringMap<Definition>, property) => {
             const propertyType = property.getType();
