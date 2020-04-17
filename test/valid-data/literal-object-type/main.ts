@@ -1,2 +1,3 @@
-const obj = {abc: "def"};
+const obj = { abc: "def" };
+
 export type MyType = typeof obj;
