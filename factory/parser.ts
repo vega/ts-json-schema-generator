@@ -45,6 +45,7 @@ import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
+import { ObjectLiteralExpressionNodeParser } from "./../src/NodeParser/ObjectLiteralExpressionNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -87,6 +88,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
         .addNodeParser(new FunctionNodeParser())
+        .addNodeParser(new ObjectLiteralExpressionNodeParser())
 
         .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 

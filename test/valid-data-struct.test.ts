@@ -4,6 +4,8 @@ describe("valid-data-struct", () => {
     // TODO: generics recursive
     it("simple-object", assertValidSchema("simple-object", "SimpleObject"));
 
+    it("object-literal-expression", assertValidSchema("object-literal-expression", "MyType"));
+
     it("interface-single", assertValidSchema("interface-single", "MyObject"));
     it("interface-multi", assertValidSchema("interface-multi", "MyObject"));
     it("interface-recursion", assertValidSchema("interface-recursion", "MyObject"));
