@@ -25,8 +25,6 @@ export function assertValidSchema(
         const config: Config = {
             path: resolve(`${basePath}/${relativePath}/*.ts`),
             type,
-            expose: "export",
-            topRef: true,
             jsDoc,
             extraTags,
             skipTypeCheck: !!process.env.FAST_TEST,

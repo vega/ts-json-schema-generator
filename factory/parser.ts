@@ -3,7 +3,7 @@ import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotation
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
-import { Config } from "../src/Config";
+import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
 import { NodeParser } from "../src/NodeParser";
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
@@ -50,17 +50,19 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
     const chainNodeParser = new ChainNodeParser(typeChecker, []);
 
+    const mergedConfig = { ...DEFAULT_CONFIG, ...config };
+
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
-        return new ExposeNodeParser(typeChecker, nodeParser, config.expose);
+        return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose);
     }
     function withTopRef(nodeParser: NodeParser): NodeParser {
-        return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
+        return new TopRefNodeParser(chainNodeParser, mergedConfig.type, mergedConfig.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
-        const extraTags = new Set(config.extraTags);
-        if (config.jsDoc === "extended") {
+        const extraTags = new Set(mergedConfig.extraTags);
+        if (mergedConfig.jsDoc === "extended") {
             return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, extraTags));
-        } else if (config.jsDoc === "basic") {
+        } else if (mergedConfig.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
         } else {
             return nodeParser;
