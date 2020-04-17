@@ -5,6 +5,7 @@ describe("valid-data-struct", () => {
     it("simple-object", assertValidSchema("simple-object", "SimpleObject"));
 
     it("object-literal-expression", assertValidSchema("object-literal-expression", "MyType"));
+    it("literal-object-type", assertValidSchema("literal-object-type", "MyType"));
 
     it("interface-single", assertValidSchema("interface-single", "MyObject"));
     it("interface-multi", assertValidSchema("interface-multi", "MyObject"));

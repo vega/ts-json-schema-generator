@@ -34,6 +34,5 @@ describe("invalid-data", () => {
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("literal-index-type", assertSchema("literal-index-type", "MyType", `Unknown node " ["abc", "def"]`));
     it("literal-array-type", assertSchema("literal-array-type", "MyType", `Unknown node " ["abc", "def"]`));
-    it("literal-object-type", assertSchema("literal-object-type", "MyType", `Unknown node " {abc: "def"}`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
 });

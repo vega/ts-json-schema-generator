@@ -90,7 +90,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
         .addNodeParser(new FunctionNodeParser())
-        .addNodeParser(new ObjectLiteralExpressionNodeParser())
+        .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
 
         .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
 
