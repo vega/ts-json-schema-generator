@@ -18,7 +18,7 @@ export class SchemaGenerator {
         private readonly typeFormatter: TypeFormatter
     ) {}
 
-    public createSchema(fullName: string | undefined): Schema {
+    public createSchema(fullName?: string): Schema {
         const rootNodes = this.getRootNodes(fullName);
         return this.createSchemaFromNodes(rootNodes);
     }
