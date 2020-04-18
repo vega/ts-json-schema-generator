@@ -13,7 +13,7 @@ const basePath = "test/config";
 
 function assertSchema(name: string, userConfig: Config & { type: string }, tsconfig?: boolean) {
     return () => {
-        const config = {
+        const config: Config = {
             ...DEFAULT_CONFIG,
             ...userConfig,
             skipTypeCheck: !!process.env.FAST_TEST,
