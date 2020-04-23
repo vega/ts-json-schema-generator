@@ -24,6 +24,8 @@ npm install --save ts-json-schema-generator
 ./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
 ```
 
+Note that windows is not officially supported and the above command may need modification on that platform.
+
 ## Programmatic Usage
 
 ```js
