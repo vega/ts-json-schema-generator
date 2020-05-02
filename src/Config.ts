@@ -1,13 +1,10 @@
-export type ExposeOption = "all" | "none" | "export";
-export type JSDocOption = "none" | "extended" | "basic";
-
 export interface Config {
     path?: string;
     type?: string;
     tsconfig?: string;
-    expose?: ExposeOption;
+    expose?: "all" | "none" | "export";
     topRef?: boolean;
-    jsDoc?: JSDocOption;
+    jsDoc?: "none" | "extended" | "basic";
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
@@ -15,10 +12,10 @@ export interface Config {
     extraTags?: string[];
 }
 
-export const DEFAULT_CONFIG = {
-    expose: "export" as ExposeOption,
+export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"> = {
+    expose: "export",
     topRef: true,
-    jsDoc: "extended" as JSDocOption,
+    jsDoc: "extended",
     sortProps: true,
     strictTuples: false,
     skipTypeCheck: false,
