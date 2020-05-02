@@ -2,9 +2,9 @@ export interface Config {
     path?: string;
     type?: string;
     tsconfig?: string;
-    expose: "all" | "none" | "export";
-    topRef: boolean;
-    jsDoc: "none" | "extended" | "basic";
+    expose?: "all" | "none" | "export";
+    topRef?: boolean;
+    jsDoc?: "none" | "extended" | "basic";
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
@@ -12,7 +12,7 @@ export interface Config {
     extraTags?: string[];
 }
 
-export const DEFAULT_CONFIG: Config = {
+export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"> = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",
