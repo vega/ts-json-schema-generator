@@ -6,11 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node: [10, 12, 14]
-
-    name: Node ${{ matrix.node }}
+    name: Test
 
     steps:
       - uses: actions/checkout@v2
@@ -27,10 +23,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Setup Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      - uses: actions/setup-node@v1
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
