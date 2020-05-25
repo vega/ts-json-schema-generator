@@ -1,7 +1,12 @@
 .editorconfig
+.eslintignore
+.eslintrc.js
+.github/
 .idea/
-.travis.yml
+.prettierignore
+.prettierrc.json
 .vscode/
+azure-pipelines.yml
 coverage/
 factory/
 index.ts
@@ -10,8 +15,3 @@ src/
 test/
 ts-json-schema-generator.ts
 tsconfig.json
-azure-pipelines.yml
-.eslintignore
-.eslintrc.js
-.prettierignore
-.prettierrc.json
