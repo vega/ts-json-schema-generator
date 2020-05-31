@@ -9,5 +9,5 @@ export function createGenerator(config: Config): SchemaGenerator {
     const parser = createParser(program, config);
     const formatter = createFormatter(config);
 
-    return new SchemaGenerator(program, parser, formatter);
+    return new SchemaGenerator(program, parser, formatter, config);
 }

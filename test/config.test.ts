@@ -28,7 +28,8 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config)
+            createFormatter(config),
+            config
         );
 
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
@@ -61,8 +62,27 @@ describe("config", () => {
         })
     );
     it(
+        "expose-all-topref-true-not-exported",
+        assertSchema("expose-all-topref-true-not-exported", {
+            type: "MyObject",
+            expose: "all",
+            topRef: true,
+            jsDoc: "none",
+        })
+    );
+
+    it(
         "expose-all-topref-false",
         assertSchema("expose-all-topref-false", {
+            type: "MyObject",
+            expose: "all",
+            topRef: false,
+            jsDoc: "none",
+        })
+    );
+    it(
+        "expose-all-topref-false-not-exported",
+        assertSchema("expose-all-topref-false-not-exported", {
             type: "MyObject",
             expose: "all",
             topRef: false,
