@@ -10,12 +10,14 @@ import { StringMap } from "./Utils/StringMap";
 import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 import { notUndefined } from "./Utils/notUndefined";
 import { removeUnreachable } from "./Utils/removeUnreachable";
+import { Config } from "./Config";
 
 export class SchemaGenerator {
     public constructor(
         private readonly program: ts.Program,
         private readonly nodeParser: NodeParser,
-        private readonly typeFormatter: TypeFormatter
+        private readonly typeFormatter: TypeFormatter,
+        private readonly config?: Config
     ) {}
 
     public createSchema(fullName?: string): Schema {
@@ -135,15 +137,17 @@ export class SchemaGenerator {
             case ts.SyntaxKind.ClassDeclaration:
             case ts.SyntaxKind.EnumDeclaration:
             case ts.SyntaxKind.TypeAliasDeclaration:
-                if (!this.isExportType(node) || this.isGenericType(node as ts.TypeAliasDeclaration)) {
+                if (
+                    this.config?.expose === "all" ||
+                    (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
+                ) {
+                    allTypes.set(this.getFullName(node, typeChecker), node);
                     return;
                 }
-
-                allTypes.set(this.getFullName(node, typeChecker), node);
-                break;
+                return;
             default:
                 ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
-                break;
+                return;
         }
     }
     private isExportType(node: ts.Node): boolean {
