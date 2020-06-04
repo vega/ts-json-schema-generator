@@ -24,7 +24,10 @@ const args = commander
         (value: string, list: string[]) => list.concat(value),
         []
     )
-    .option("--additional-properties", "Allows objects to have additional properties (default: false)")
+    .option(
+        "--additional-properties",
+        "Allow additional properties for objects with no index signature (default: false)"
+    )
     .parse(process.argv);
 
 const config: Config = {
