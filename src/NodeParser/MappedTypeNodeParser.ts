@@ -17,7 +17,7 @@ import { removeUndefined } from "../Utils/removeUndefined";
 import { notUndefined } from "../Utils/notUndefined";
 
 export class MappedTypeNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
 
     public supportsNode(node: ts.MappedTypeNode): boolean {
         return node.kind === ts.SyntaxKind.MappedType;
@@ -114,12 +114,15 @@ export class MappedTypeNodeParser implements SubNodeParser {
         node: ts.MappedTypeNode,
         keyListType: UnionType,
         context: Context
-    ): BaseType | false {
+    ): BaseType | boolean {
         const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
         if (key) {
-            return this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ?? false;
+            return (
+                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
+                this.additionalProperties
+            );
         } else {
-            return false;
+            return this.additionalProperties;
         }
     }
 

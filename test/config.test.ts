@@ -240,4 +240,12 @@ describe("config", () => {
             jsDoc: "none",
         })
     );
+
+    it(
+        "additional-properties",
+        assertSchema("additional-properties", {
+            type: "MyObject",
+            additionalProperties: true,
+        })
+    );
 });

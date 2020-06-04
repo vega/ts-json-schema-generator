@@ -24,7 +24,10 @@ const args = commander
         (value: string, list: string[]) => list.concat(value),
         []
     )
-
+    .option(
+        "--additional-properties",
+        "Allow additional properties for objects with no index signature (default: false)"
+    )
     .parse(process.argv);
 
 const config: Config = {
@@ -40,6 +43,7 @@ const config: Config = {
     skipTypeCheck: !args.typeCheck,
     encodeRefs: args.refEncode,
     extraTags: args.validationKeywords,
+    additionalProperties: args.additionalProperties,
 };
 
 try {
@@ -48,7 +52,7 @@ try {
 
     if (args.out) {
         // write to file
-        writeFile(args.out, schemaString, err => {
+        writeFile(args.out, schemaString, (err) => {
             if (err) throw err;
         });
     } else {

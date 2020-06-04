@@ -104,6 +104,12 @@ Run the schema generator via `node main.js`.
 
 -o, --out
     Specify the output file path. Without this option, the generator logs the response in the console.
+
+--additional-properties <true|false>
+    Controls whether or not to allow additional properties for objects that have no index signature.
+
+    true: Additional properties are allowed
+    false (default): Additional properties are not allowed
 ```
 
 ## Current state
