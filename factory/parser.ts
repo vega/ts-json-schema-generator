@@ -106,7 +106,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.allowAdditionalProperties))
+        .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
 
@@ -127,7 +127,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
                         new InterfaceAndClassNodeParser(
                             typeChecker,
                             withJsDoc(chainNodeParser),
-                            mergedConfig.allowAdditionalProperties
+                            mergedConfig.additionalProperties
                         )
                     )
                 )
@@ -136,9 +136,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(
             withCircular(
                 withExpose(
-                    withJsDoc(
-                        new TypeLiteralNodeParser(withJsDoc(chainNodeParser), mergedConfig.allowAdditionalProperties)
-                    )
+                    withJsDoc(new TypeLiteralNodeParser(withJsDoc(chainNodeParser), mergedConfig.additionalProperties))
                 )
             )
         )

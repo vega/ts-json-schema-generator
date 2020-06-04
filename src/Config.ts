@@ -10,7 +10,7 @@ export interface Config {
     skipTypeCheck?: boolean;
     encodeRefs?: boolean;
     extraTags?: string[];
-    allowAdditionalProperties?: boolean;
+    additionalProperties?: boolean;
 }
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"> = {
@@ -22,5 +22,5 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"
     skipTypeCheck: false,
     encodeRefs: true,
     extraTags: [],
-    allowAdditionalProperties: false,
+    additionalProperties: false,
 };

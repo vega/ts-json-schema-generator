@@ -242,10 +242,10 @@ describe("config", () => {
     );
 
     it(
-        "allow-additional-properties",
-        assertSchema("allow-additional-properties", {
+        "additional-properties",
+        assertSchema("additional-properties", {
             type: "MyObject",
-            allowAdditionalProperties: true,
+            additionalProperties: true,
         })
     );
 });

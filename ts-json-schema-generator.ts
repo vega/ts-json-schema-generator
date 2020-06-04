@@ -24,7 +24,7 @@ const args = commander
         (value: string, list: string[]) => list.concat(value),
         []
     )
-    .option("--allow-additional-properties", "Allows objects to have additional properties (default: false)")
+    .option("--additional-properties", "Allows objects to have additional properties (default: false)")
     .parse(process.argv);
 
 const config: Config = {
@@ -40,7 +40,7 @@ const config: Config = {
     skipTypeCheck: !args.typeCheck,
     encodeRefs: args.refEncode,
     extraTags: args.validationKeywords,
-    allowAdditionalProperties: args.allowAdditionalProperties,
+    additionalProperties: args.additionalProperties,
 };
 
 try {

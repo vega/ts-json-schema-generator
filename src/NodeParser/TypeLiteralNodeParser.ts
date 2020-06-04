@@ -8,7 +8,7 @@ import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser, private readonly allowAdditionalProperties: boolean) {}
+    public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
@@ -59,10 +59,10 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | boolean {
         const indexSignature = node.members.find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
-            return this.allowAdditionalProperties;
+            return this.additionalProperties;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.allowAdditionalProperties;
+        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
     }
 
     private getTypeId(node: ts.Node, context: Context): string {

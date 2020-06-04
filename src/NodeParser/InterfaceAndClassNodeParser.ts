@@ -14,7 +14,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
         private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
-        private readonly allowAdditionalProperties: boolean
+        private readonly additionalProperties: boolean
     ) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
@@ -154,10 +154,10 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     ): BaseType | boolean {
         const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
-            return this.allowAdditionalProperties;
+            return this.additionalProperties;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.allowAdditionalProperties;
+        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
