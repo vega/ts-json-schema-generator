@@ -11,7 +11,11 @@ import { getKey } from "../Utils/nodeKey";
 import { notUndefined } from "../Utils/notUndefined";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(
+        private typeChecker: ts.TypeChecker,
+        private childNodeParser: NodeParser,
+        private readonly allowAdditionalProperties: boolean
+    ) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
@@ -147,13 +151,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     private getAdditionalProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context
-    ): BaseType | false {
+    ): BaseType | boolean {
         const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
-            return false;
+            return this.allowAdditionalProperties;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context) ?? false;
+        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.allowAdditionalProperties;
     }
 
     private getTypeId(node: ts.Node, context: Context): string {
