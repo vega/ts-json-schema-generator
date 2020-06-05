@@ -26,7 +26,8 @@ const args = commander
     )
     .option(
         "--additional-properties",
-        "Allow additional properties for objects with no index signature (default: false)"
+        "Allow additional properties for objects with no index signature (default: false)",
+        false
     )
     .parse(process.argv);
 
