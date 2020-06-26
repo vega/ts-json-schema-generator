@@ -1,7 +1,7 @@
 import { BaseType } from "./BaseType";
 
 export class FunctionType extends BaseType {
-    public getId() {
+    public getId(): string {
         return "function";
     }
 }

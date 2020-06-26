@@ -11,13 +11,9 @@ import { intersectionOfArrays } from "./intersectionOfArrays";
  * @returns a and b merged together.
  */
 export function deepMerge(
-    a: {
-        [key: string]: JSONSchema7Definition;
-    },
-    b: {
-        [key: string]: JSONSchema7Definition;
-    }
-) {
+    a: { [key: string]: JSONSchema7Definition },
+    b: { [key: string]: JSONSchema7Definition }
+): { [x: string]: JSONSchema7Definition } {
     const output = { ...a, ...b };
 
     for (const key in a) {

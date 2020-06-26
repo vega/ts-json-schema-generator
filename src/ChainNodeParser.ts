@@ -6,7 +6,7 @@ import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
 export class ChainNodeParser implements SubNodeParser {
-    private typeCaches = new WeakMap<ts.Node, Map<string, BaseType | undefined>>();
+    private readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType | undefined>>();
 
     public constructor(private typeChecker: ts.TypeChecker, private nodeParsers: SubNodeParser[]) {}
 
