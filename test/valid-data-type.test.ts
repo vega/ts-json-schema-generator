@@ -45,6 +45,7 @@ describe("valid-data-type", () => {
     it("type-indexed-access-tuple-1", assertValidSchema("type-indexed-access-tuple-1", "MyType"));
     it("type-indexed-access-tuple-2", assertValidSchema("type-indexed-access-tuple-2", "MyType"));
     it("type-indexed-access-tuple-union", assertValidSchema("type-indexed-access-tuple-union", "FormLayout"));
+    it("type-indexed-access-type-union", assertValidSchema("type-indexed-access-type-union", "MyType"));
     it("type-indexed-access-object-1", assertValidSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertValidSchema("type-indexed-access-object-2", "MyType"));
     it("type-indexed-access-keyof", assertValidSchema("type-indexed-access-keyof", "MyType"));

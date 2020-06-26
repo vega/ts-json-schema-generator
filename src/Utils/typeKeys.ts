@@ -49,10 +49,20 @@ export function getTypeByKey(type: BaseType | undefined, index: LiteralType | St
     type = derefType(type);
 
     if (type instanceof IntersectionType || type instanceof UnionType) {
+        const subTypes: BaseType[] = [];
         for (const subType of type.getTypes()) {
             const subKeyType = getTypeByKey(subType, index);
             if (subKeyType) {
-                return subKeyType;
+                subTypes.push(subKeyType);
+            }
+        }
+        if (subTypes.length == 1) {
+            return subTypes[0];
+        } else if (subTypes.length > 1) {
+            if (type instanceof UnionType) {
+                return new UnionType(subTypes);
+            } else {
+                return new IntersectionType(subTypes);
             }
         }
 
