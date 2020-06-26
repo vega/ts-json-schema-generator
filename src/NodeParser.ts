@@ -24,11 +24,11 @@ export class Context {
         this.parameters.push(parameterName);
     }
 
-    public setDefault(parameterName: string, argumentType: BaseType | undefined) {
+    public setDefault(parameterName: string, argumentType: BaseType | undefined): void {
         this.defaultArgument.set(parameterName, argumentType);
     }
 
-    public getCacheKey() {
+    public getCacheKey(): string {
         if (this.cacheKey == null) {
             this.cacheKey = stringify([
                 this.reference ? getKey(this.reference, this) : "",
