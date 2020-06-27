@@ -33,6 +33,7 @@ describe("valid-data-type", () => {
     it("type-intersection-partial-conflict", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it("type-intersection-partial-conflict-ref", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it("type-intersection-union", assertValidSchema("type-intersection-union", "MyObject"));
+    it("type-intersection-union-primitive", assertValidSchema("type-intersection-union", "MyObject"));
     it("type-intersection-additional-props", assertValidSchema("type-intersection-additional-props", "MyObject"));
     it("type-extend", assertValidSchema("type-extend", "MyObject"));
     it("type-extend-circular", assertValidSchema("type-extend-circular", "MyType"));
