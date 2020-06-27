@@ -8,7 +8,7 @@ import { preserveAnnotation } from "./preserveAnnotation";
  * Remove undefined types from union type. Returns the number of non-undefined properties.
  */
 export function removeUndefined(propertyType: UnionType): { numRemoved: number; newType: BaseType } {
-    const types = [];
+    const types: BaseType[] = [];
     let numRemoved = 0;
 
     for (const type of propertyType.getTypes()) {
