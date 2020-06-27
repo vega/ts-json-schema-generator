@@ -1,3 +1,4 @@
+import { translate } from "../NodeParser/IntersectionNodeParser";
 import { AnyType } from "../Type/AnyType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
@@ -12,6 +13,7 @@ import { UnionType } from "../Type/UnionType";
 import { derefAnnotatedType, derefType } from "./derefType";
 import { preserveAnnotation } from "./preserveAnnotation";
 import { uniqueArray } from "./uniqueArray";
+import { uniqueTypeArray } from "./uniqueTypeArray";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
     const values = types.map((type) => type.getValue());
@@ -49,14 +51,42 @@ export function getTypeByKey(type: BaseType | undefined, index: LiteralType | St
     type = derefType(type);
 
     if (type instanceof IntersectionType || type instanceof UnionType) {
+        let subTypes: BaseType[] = [];
+
+        // we use the annotation from the first type so we need to get a reference to it
+        let firstType: BaseType | undefined;
+
         for (const subType of type.getTypes()) {
             const subKeyType = getTypeByKey(subType, index);
             if (subKeyType) {
-                return subKeyType;
+                subTypes.push(subKeyType);
+                if (!firstType) {
+                    firstType = subKeyType;
+                }
             }
         }
 
-        return undefined;
+        subTypes = uniqueTypeArray(subTypes);
+        let returnType: BaseType | undefined = undefined;
+
+        if (subTypes.length == 1) {
+            return firstType;
+        } else if (subTypes.length > 1) {
+            if (type instanceof UnionType) {
+                returnType = new UnionType(subTypes);
+            } else {
+                returnType = translate(subTypes);
+            }
+        }
+
+        if (!returnType) {
+            return undefined;
+        }
+        if (!firstType) {
+            return returnType;
+        }
+
+        return preserveAnnotation(firstType, returnType);
     }
 
     if (type instanceof TupleType && index instanceof LiteralType) {

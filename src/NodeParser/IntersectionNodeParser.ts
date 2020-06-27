@@ -3,8 +3,11 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
+import { PrimitiveType } from "../Type/PrimitiveType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
+import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
+import { UndefinedType } from "./../Type/UndefinedType";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -21,34 +24,59 @@ export class IntersectionNodeParser implements SubNodeParser {
             return undefined;
         }
 
-        return this.translate(new IntersectionType(types as BaseType[]));
+        return translate(types as BaseType[]);
+    }
+}
+
+/**
+ * Translates the given intersection type into a union type if necessary so `A & (B | C)` becomes
+ * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
+ */
+export function translate(types: BaseType[]): BaseType | undefined {
+    types = uniqueTypeArray(types as BaseType[]);
+
+    if (types.length == 1) {
+        return types[0];
     }
 
-    /**
-     * Translates the given intersection type into a union type if necessary so `A & (B | C)` becomes
-     * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
-     *
-     * @param intersection - The intersection type to translate.
-     * @return Either the union type into which the intersection type was translated or the original intersection type
-     *         if no translation is needed.
-     */
-    private translate(intersection: IntersectionType): IntersectionType | UnionType {
-        const unions = intersection.getTypes().map((type) => {
-            const derefed = derefType(type);
-            return derefed instanceof UnionType ? derefed.getTypes() : [type];
-        });
-        const result: IntersectionType[] = [];
-        function process(i: number, types: BaseType[] = []) {
-            for (const type of unions[i]) {
-                const currentTypes = [...types, type];
-                if (i < unions.length - 1) {
-                    process(i + 1, currentTypes);
+    const unions = types.map((type) => {
+        const derefed = derefType(type);
+        return derefed instanceof UnionType ? derefed.getTypes() : [type];
+    });
+    const result: BaseType[] = [];
+    function process(i: number, t: BaseType[] = []) {
+        for (const type of unions[i]) {
+            let currentTypes = [...t, type];
+            if (i < unions.length - 1) {
+                process(i + 1, currentTypes);
+            } else {
+                currentTypes = uniqueTypeArray(currentTypes);
+
+                if (currentTypes.some((c) => c instanceof UndefinedType)) {
+                    // never
+                    result.push(new UndefinedType());
                 } else {
-                    result.push(new IntersectionType(currentTypes));
+                    const primitives = currentTypes.filter((c) => c instanceof PrimitiveType);
+                    if (primitives.length === 1) {
+                        result.push(primitives[0]);
+                    } else if (primitives.length > 1) {
+                        // conflict -> ignore
+                    } else if (currentTypes.length === 1) {
+                        result.push(currentTypes[0]);
+                    } else {
+                        result.push(new IntersectionType(currentTypes));
+                    }
                 }
             }
         }
-        process(0);
-        return result.length > 1 ? new UnionType(result) : intersection;
     }
+    process(0);
+
+    if (result.length === 1) {
+        return result[0];
+    } else if (result.length > 1) {
+        return new UnionType(result);
+    }
+
+    return undefined;
 }

@@ -27,6 +27,11 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         if (derefed instanceof ObjectType && derefed.getAdditionalProperties()) {
             return new UnionType([...keys, new StringType()]);
         }
+
+        if (keys.length === 1) {
+            return keys[0];
+        }
+
         return new UnionType(keys);
     }
 }
