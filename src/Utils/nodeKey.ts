@@ -3,7 +3,7 @@ import { Node } from "typescript";
 import { isNumber, isString } from "util";
 import { Context } from "../NodeParser";
 
-export function hash(a: any): string | number {
+export function hash(a: unknown): string | number {
     if (isNumber(a)) {
         return a;
     }
@@ -31,7 +31,7 @@ export function hash(a: any): string | number {
     return h;
 }
 
-export function getKey(node: Node, context: Context) {
+export function getKey(node: Node, context: Context): string {
     const ids: (number | string)[] = [];
     while (node) {
         const file = node

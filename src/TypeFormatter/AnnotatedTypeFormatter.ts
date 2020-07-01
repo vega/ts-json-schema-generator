@@ -1,3 +1,4 @@
+import { JSONSchema7 } from "json-schema";
 import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
@@ -5,7 +6,7 @@ import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
 import { TypeFormatter } from "../TypeFormatter";
 
-export function makeNullable(def: Definition) {
+export function makeNullable(def: Definition): JSONSchema7 {
     const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });

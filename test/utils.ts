@@ -21,7 +21,7 @@ export function assertValidSchema(
     jsDoc: Config["jsDoc"] = "none",
     extraTags?: Config["extraTags"]
 ) {
-    return () => {
+    return (): void => {
         const config: Config = {
             path: resolve(`${basePath}/${relativePath}/*.ts`),
             type,

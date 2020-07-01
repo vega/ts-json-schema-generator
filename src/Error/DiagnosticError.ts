@@ -8,7 +8,7 @@ export class DiagnosticError extends BaseError {
         );
     }
 
-    public getDiagnostics() {
+    public getDiagnostics(): readonly ts.Diagnostic[] {
         return this.diagnostics;
     }
 }

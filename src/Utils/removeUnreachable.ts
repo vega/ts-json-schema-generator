@@ -1,5 +1,5 @@
-import { JSONSchema7Definition } from "json-schema";
-import { isBoolean, isArray } from "util";
+import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import { isArray, isBoolean } from "util";
 import { Definition } from "./../Schema/Definition";
 import { StringMap } from "./StringMap";
 
@@ -15,7 +15,7 @@ function addReachable(
     if (definition.$ref) {
         const typeName = decodeURIComponent(definition.$ref.slice(14));
         if (reachable.has(typeName)) {
-            // we've already propcessed this definition
+            // we've already processed this definition
             return;
         }
         reachable.add(typeName);
@@ -56,7 +56,10 @@ function addReachable(
     }
 }
 
-export function removeUnreachable(rootTypeDefinition: Definition | undefined, definitions: StringMap<Definition>) {
+export function removeUnreachable(
+    rootTypeDefinition: Definition | undefined,
+    definitions: StringMap<Definition>
+): StringMap<JSONSchema7> {
     if (!rootTypeDefinition) {
         return definitions;
     }
