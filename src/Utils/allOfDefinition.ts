@@ -11,7 +11,7 @@ import { derefType } from "./derefType";
 // TODO: We really only need this if the children use additionalProperties: false.
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     // combine object instead of using allOf because allOf does not work well with additional properties
-    return (definition: Definition, baseType: BaseType): BaseType => {
+    return (definition: Definition, baseType: BaseType): Definition => {
         const other = childTypeFormatter.getDefinition(derefType(baseType)!);
 
         definition.properties = deepMerge(other.properties || {}, definition.properties || {});

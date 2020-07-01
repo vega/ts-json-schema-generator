@@ -1,4 +1,4 @@
-import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import { JSONSchema7Definition } from "json-schema";
 import { isArray, isBoolean } from "util";
 import { Definition } from "./../Schema/Definition";
 import { StringMap } from "./StringMap";
@@ -59,7 +59,7 @@ function addReachable(
 export function removeUnreachable(
     rootTypeDefinition: Definition | undefined,
     definitions: StringMap<Definition>
-): StringMap<JSONSchema7> {
+): StringMap<Definition> {
     if (!rootTypeDefinition) {
         return definitions;
     }
