@@ -37,7 +37,7 @@
     "commander": "~5.1.0",
     "glob": "~7.1.6",
     "json-stable-stringify": "^1.0.1",
-    "typescript": "~3.9.5"
+    "typescript": "~3.9.6"
   },
   "devDependencies": {
     "@types/glob": "^7.1.2",
@@ -49,7 +49,7 @@
     "ajv": "~6.12.2",
     "chai": "~4.2.0",
     "codecov": "^3.7.0",
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.1.0",
