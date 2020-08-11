@@ -117,6 +117,7 @@ Run the schema generator via `node main.js`.
 -   `interface` types
 -   `enum` types
 -   `union`, `tuple`, `type[]` types
+-   `Date`, `RegExp` types
 -   `string`, `boolean`, `number` types
 -   `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
 -   type aliases

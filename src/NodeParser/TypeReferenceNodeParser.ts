@@ -1,8 +1,10 @@
 import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { AnnotatedType } from "../Type/AnnotatedType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { StringType } from "../Type/StringType";
 
 const invlidTypes: { [index: number]: boolean } = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
@@ -32,6 +34,10 @@ export class TypeReferenceNodeParser implements SubNodeParser {
                 return undefined;
             }
             return new ArrayType(type);
+        } else if (typeSymbol.name === "Date") {
+            return new AnnotatedType(new StringType(), { format: "date-time" }, false);
+        } else if (typeSymbol.name === "RegExp") {
+            return new AnnotatedType(new StringType(), { format: "regex" }, false);
         } else {
             return this.childNodeParser.createType(
                 typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
