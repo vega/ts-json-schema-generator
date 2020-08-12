@@ -1,4 +1,4 @@
-import { AsExpressionNodeParser } from "./../src/NodeParser/AsExpressionNodeParser";
+import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser";
 import * as ts from "typescript";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
@@ -45,9 +45,10 @@ import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
-import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
-import { ObjectLiteralExpressionNodeParser } from "./../src/NodeParser/ObjectLiteralExpressionNodeParser";
+import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
+import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
+import { TypeParameterParser } from "../src/NodeParser/TypeParameterParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -92,7 +93,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
-        .addNodeParser(new FunctionNodeParser())
+        .addNodeParser(new FunctionNodeParser(chainNodeParser))
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
@@ -109,6 +110,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
+        .addNodeParser(new TypeParameterParser(chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))

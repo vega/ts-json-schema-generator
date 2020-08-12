@@ -1,10 +1,9 @@
-import { JSONSchema7Definition } from "json-schema";
 import { isArray, isBoolean } from "util";
-import { Definition } from "./../Schema/Definition";
+import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
 function addReachable(
-    definition: Definition | JSONSchema7Definition,
+    definition: Definition | boolean,
     definitions: StringMap<Definition>,
     reachable: Set<string>
 ) {
@@ -52,6 +51,19 @@ function addReachable(
             }
         } else if (items) {
             addReachable(items, definitions, reachable);
+        }
+    } else if (definition.type === "promise") {
+        if (definition.response) {
+            addReachable(definition.response, definitions, reachable);
+        }
+    } else if (definition.type === "function") {
+        for (const arg in definition.arguments || {}) {
+            const argDefinition = definition.arguments![arg];
+            addReachable(argDefinition, definitions, reachable);
+        }
+
+        if (definition.response) {
+            addReachable(definition.response, definitions, reachable);
         }
     }
 }

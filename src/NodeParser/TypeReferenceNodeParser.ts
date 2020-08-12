@@ -2,6 +2,7 @@ import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ArrayType } from "../Type/ArrayType";
+import { PromiseType } from "../Type/PromiseType";
 import { BaseType } from "../Type/BaseType";
 
 const invlidTypes: { [index: number]: boolean } = {
@@ -25,13 +26,23 @@ export class TypeReferenceNodeParser implements SubNodeParser {
                 this.createSubContext(node, context)
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
-            return context.getArgument(typeSymbol.name);
+            const argument = context.getArgument(typeSymbol.name);
+            if (!argument) {
+                return this.childNodeParser.createType(
+                    typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            }
+            return argument;
         } else if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
             const type = this.createSubContext(node, context).getArguments()[0];
             if (type === undefined) {
                 return undefined;
             }
             return new ArrayType(type);
+        } else if (typeSymbol.name === "Promise") {
+            const typeArgument = node.typeArguments?.[0];
+            return new PromiseType(typeArgument ? this.childNodeParser.createType(typeArgument, context) : undefined);
         } else {
             return this.childNodeParser.createType(
                 typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],

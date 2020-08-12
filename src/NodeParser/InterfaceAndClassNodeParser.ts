@@ -114,26 +114,34 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         let hasRequiredNever = false;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
+            .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
             .reduce((members, member) => {
                 if (ts.isConstructorDeclaration(member)) {
-                    const params = member.parameters.filter((param) =>
-                        ts.isParameterPropertyDeclaration(param, param.parent)
-                    ) as ts.ParameterPropertyDeclaration[];
-                    members.push(...params);
+                    // const params = member.parameters.filter((param) =>
+                    //     ts.isParameterPropertyDeclaration(param, param.parent)
+                    // ) as ts.ParameterPropertyDeclaration[];
+                    // members.push(...params);
                 } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                    members.push(member);
+                    if (member.type) {
+                        members.push(
+                            new ObjectProperty(
+                                member.name.getText(),
+                                this.childNodeParser.createType(member.type!, context),
+                                !member.questionToken
+                            )
+                        );
+                    }
+                } else if (ts.isMethodSignature(member) || ts.isMethodDeclaration(member)) {
+                    members.push(
+                        new ObjectProperty(
+                            member.name.getText(),
+                            this.childNodeParser.createType(member, context),
+                            !member.questionToken
+                        )
+                    );
                 }
                 return members;
-            }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
-            .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
-            .map(
-                (member) =>
-                    new ObjectProperty(
-                        member.name.getText(),
-                        this.childNodeParser.createType(member.type!, context),
-                        !member.questionToken
-                    )
-            )
+            }, [] as ObjectProperty[])
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {
                     hasRequiredNever = true;
