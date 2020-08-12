@@ -53,8 +53,8 @@ function addReachable(
             addReachable(items, definitions, reachable);
         }
     } else if (definition.type === "promise") {
-        if (definition.response) {
-            addReachable(definition.response, definitions, reachable);
+        if (definition.return) {
+            addReachable(definition.return, definitions, reachable);
         }
     } else if (definition.type === "function") {
         for (const arg in definition.arguments || {}) {
@@ -62,8 +62,8 @@ function addReachable(
             addReachable(argDefinition, definitions, reachable);
         }
 
-        if (definition.response) {
-            addReachable(definition.response, definitions, reachable);
+        if (definition.return) {
+            addReachable(definition.return, definitions, reachable);
         }
     }
 }
