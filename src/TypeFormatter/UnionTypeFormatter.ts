@@ -1,4 +1,3 @@
-import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
@@ -34,7 +33,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             };
         }
 
-        const flattenedDefinitions: JSONSchema7[] = [];
+        const flattenedDefinitions: Definition[] = [];
 
         // Flatten anOf inside anyOf unless the anyOf has an annotation
         for (const def of definitions) {

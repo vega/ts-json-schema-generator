@@ -1,4 +1,4 @@
-import { JSONSchema7Type, JSONSchema7TypeName } from "json-schema";
+import { JSONSchemaXType, JSONSchemaXTypeName } from "./JSONSchemaX";
 
-export type RawType = JSONSchema7Type;
-export type RawTypeName = JSONSchema7TypeName;
+export type RawType = JSONSchemaXType;
+export type RawTypeName = JSONSchemaXTypeName;
