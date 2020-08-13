@@ -1,10 +1,4 @@
-import {
-    JSONSchema7, JSONSchema7Array,
-    JSONSchema7Definition, JSONSchema7Object,
-    JSONSchema7Type,
-    JSONSchema7TypeName,
-    JSONSchema7Version
-} from "json-schema";
+import { JSONSchema7, JSONSchema7Type, JSONSchema7TypeName, JSONSchema7Version } from "json-schema";
 
 export type JSONSchemaXType = JSONSchema7Type;
 export type JSONSchemaXTypeName = JSONSchema7TypeName | "function" | "promise";

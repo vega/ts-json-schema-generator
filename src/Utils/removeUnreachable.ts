@@ -2,11 +2,7 @@ import { isArray, isBoolean } from "util";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
-function addReachable(
-    definition: Definition | boolean,
-    definitions: StringMap<Definition>,
-    reachable: Set<string>
-) {
+function addReachable(definition: Definition | boolean, definitions: StringMap<Definition>, reachable: Set<string>) {
     if (isBoolean(definition)) {
         return;
     }

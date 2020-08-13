@@ -42,7 +42,7 @@ export class SourceFileNodeParser implements SubNodeParser {
         return properties;
     }
 
-    private resolveAliasedSymbol(symbol: ts.Symbol,): ts.Symbol {
+    private resolveAliasedSymbol(symbol: ts.Symbol): ts.Symbol {
         return symbol && ts.SymbolFlags.Alias & symbol.flags ? this.typeChecker.getAliasedSymbol(symbol) : symbol;
     }
 }

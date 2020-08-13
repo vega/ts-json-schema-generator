@@ -40,7 +40,6 @@ export class SchemaGenerator {
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-
         return {
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
