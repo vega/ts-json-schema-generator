@@ -49,6 +49,8 @@ import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
 import { TypeParameterParser } from "../src/NodeParser/TypeParameterParser";
+import { SourceFileNodeParser } from "../src/NodeParser/SourceFileNodeParser";
+import { VariableDeclarationNodeParser } from "../src/NodeParser/VariableDeclarationNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -111,6 +113,8 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
         .addNodeParser(new TypeParameterParser(chainNodeParser))
+        .addNodeParser(new SourceFileNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new VariableDeclarationNodeParser(chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
