@@ -31,6 +31,8 @@ function loadTsConfigFile(configFile: string) {
         delete parseResult.options.outDir;
         delete parseResult.options.outFile;
         delete parseResult.options.declaration;
+        delete parseResult.options.declarationDir;
+        delete parseResult.options.declarationMap;
 
         return parseResult;
     } else {
