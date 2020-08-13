@@ -44,7 +44,6 @@ import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
-import { TopRefNodeParser } from "../src/TopRefNodeParser";
 import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
@@ -60,9 +59,6 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
         return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose);
-    }
-    function withTopRef(nodeParser: NodeParser): NodeParser {
-        return new TopRefNodeParser(chainNodeParser, mergedConfig.type, mergedConfig.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         const extraTags = new Set(mergedConfig.extraTags);
@@ -149,5 +145,5 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));
 
-    return withTopRef(chainNodeParser);
+    return chainNodeParser;
 }

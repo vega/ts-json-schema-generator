@@ -1,5 +1,4 @@
 import * as ts from "typescript";
-import { NoRootTypeError } from "./Error/NoRootTypeError";
 import { Context, NodeParser } from "./NodeParser";
 import { Definition } from "./Schema/Definition";
 import { Schema } from "./Schema/Schema";
@@ -7,7 +6,6 @@ import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
 import { TypeFormatter } from "./TypeFormatter";
 import { StringMap } from "./Utils/StringMap";
-import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 import { notUndefined } from "./Utils/notUndefined";
 import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
@@ -21,60 +19,33 @@ export class SchemaGenerator {
     ) {}
 
     public createSchema(fullName?: string): Schema {
-        const rootNodes = this.getRootNodes(fullName);
-        return this.createSchemaFromNodes(rootNodes);
+        return this.createSchemaFromNodes();
     }
 
-    public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
-        const rootTypes = rootNodes
-            .map((rootNode) => {
-                return this.nodeParser.createType(rootNode, new Context());
+    public createSchemaFromNodes(): Schema {
+        const rootFileNames = this.program.getRootFileNames();
+        const rootSourceFiles = this.program
+            .getSourceFiles()
+            .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
+
+        const rootTypes = rootSourceFiles
+            .map((sourceFile) => {
+                return this.nodeParser.createType(sourceFile, new Context());
             })
             .filter(notUndefined);
+
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
         rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
+
         return {
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
-    }
-
-    private getRootNodes(fullName: string | undefined) {
-        if (fullName && fullName !== "*") {
-            return [this.findNamedNode(fullName)];
-        } else {
-            const rootFileNames = this.program.getRootFileNames();
-            const rootSourceFiles = this.program
-                .getSourceFiles()
-                .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
-            const rootNodes = new Map<string, ts.Node>();
-            this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
-            return [...rootNodes.values()];
-        }
-    }
-    private findNamedNode(fullName: string): ts.Node {
-        const typeChecker = this.program.getTypeChecker();
-        const allTypes = new Map<string, ts.Node>();
-        const { projectFiles, externalFiles } = this.partitionFiles();
-
-        this.appendTypes(projectFiles, typeChecker, allTypes);
-
-        if (allTypes.has(fullName)) {
-            return allTypes.get(fullName)!;
-        }
-
-        this.appendTypes(externalFiles, typeChecker, allTypes);
-
-        if (allTypes.has(fullName)) {
-            return allTypes.get(fullName)!;
-        }
-
-        throw new NoRootTypeError(fullName);
     }
     private getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
@@ -110,55 +81,5 @@ export class SchemaGenerator {
             }
             return definitions;
         }, childDefinitions);
-    }
-    private partitionFiles() {
-        const projectFiles = new Array<ts.SourceFile>();
-        const externalFiles = new Array<ts.SourceFile>();
-
-        for (const sourceFile of this.program.getSourceFiles()) {
-            const destination = sourceFile.fileName.includes("/node_modules/") ? externalFiles : projectFiles;
-            destination.push(sourceFile);
-        }
-
-        return { projectFiles, externalFiles };
-    }
-    private appendTypes(
-        sourceFiles: readonly ts.SourceFile[],
-        typeChecker: ts.TypeChecker,
-        types: Map<string, ts.Node>
-    ) {
-        for (const sourceFile of sourceFiles) {
-            this.inspectNode(sourceFile, typeChecker, types);
-        }
-    }
-    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        switch (node.kind) {
-            case ts.SyntaxKind.InterfaceDeclaration:
-            case ts.SyntaxKind.ClassDeclaration:
-            case ts.SyntaxKind.EnumDeclaration:
-            case ts.SyntaxKind.TypeAliasDeclaration:
-                if (
-                    this.config?.expose === "all" ||
-                    (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
-                ) {
-                    allTypes.set(this.getFullName(node, typeChecker), node);
-                    return;
-                }
-                return;
-            default:
-                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
-                return;
-        }
-    }
-    private isExportType(node: ts.Node): boolean {
-        const localSymbol = localSymbolAtNode(node);
-        return localSymbol ? "exportSymbol" in localSymbol : false;
-    }
-    private isGenericType(node: ts.TypeAliasDeclaration): boolean {
-        return !!(node.typeParameters && node.typeParameters.length > 0);
-    }
-    private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
-        const symbol = symbolAtNode(node)!;
-        return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
 }
