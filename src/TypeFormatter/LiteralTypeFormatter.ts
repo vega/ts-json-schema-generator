@@ -11,7 +11,7 @@ export class LiteralTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: LiteralType): Definition {
         return {
             type: typeName(type.getValue()),
-            enum: [type.getValue()],
+            const: type.getValue(),
         };
     }
     public getChildren(type: LiteralType): BaseType[] {

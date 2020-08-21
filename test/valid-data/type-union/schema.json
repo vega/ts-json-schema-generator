@@ -46,17 +46,13 @@
                     "anyOf": [
                         {
                             "type": "string",
-                            "enum": [
-                                "s"
-                            ]
+                            "const": "s"
                         },
                         {
                             "type": "array",
                             "items": {
                                 "type": "number",
-                                "enum": [
-                                    1
-                                ]
+                                "const": 1
                             }
                         }
                     ]

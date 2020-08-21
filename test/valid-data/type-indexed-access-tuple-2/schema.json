@@ -3,9 +3,7 @@
     "definitions": {
         "MyType": {
             "type": "string",
-            "enum": [
-                "bar"
-            ]
+            "const": "bar"
         }
     },
     "$ref": "#/definitions/MyType"

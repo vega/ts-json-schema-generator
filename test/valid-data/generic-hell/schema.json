@@ -66,15 +66,11 @@
       "properties": {
         "a": {
           "type": "number",
-          "enum": [
-            1
-          ]
+          "const": 1
         },
         "b": {
           "type": "number",
-          "enum": [
-            2
-          ]
+          "const": 2
         },
         "c": {
           "$ref": "#/definitions/GenericA%3C1%3E"
@@ -96,9 +92,7 @@
       "properties": {
         "a": {
           "type": "number",
-          "enum": [
-            1
-          ]
+          "const": 1
         }
       },
       "required": [
@@ -111,9 +105,7 @@
       "properties": {
         "c": {
           "type": "number",
-          "enum": [
-            2
-          ]
+          "const": 2
         }
       },
       "required": [
@@ -129,15 +121,11 @@
       "properties": {
         "a": {
           "type": "string",
-          "enum": [
-            "alias"
-          ]
+          "const": "alias"
         },
         "b": {
           "type": "string",
-          "enum": [
-            "alias"
-          ]
+          "const": "alias"
         },
         "c": {
           "$ref": "#/definitions/GenericA%3C%22alias%22%3E"
@@ -159,9 +147,7 @@
       "properties": {
         "a": {
           "type": "string",
-          "enum": [
-            "alias"
-          ]
+          "const": "alias"
         }
       },
       "required": [
@@ -174,9 +160,7 @@
       "properties": {
         "c": {
           "type": "string",
-          "enum": [
-            "alias"
-          ]
+          "const": "alias"
         }
       },
       "required": [

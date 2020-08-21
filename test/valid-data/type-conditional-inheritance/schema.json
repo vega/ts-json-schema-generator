@@ -3,39 +3,27 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Map<A>": {
-      "enum": [
-        "a"
-      ],
+      "const": "a",
       "type": "string"
     },
     "Map<B>": {
-      "enum": [
-        "a"
-      ],
+      "const": "a",
       "type": "string"
     },
     "Map<C>": {
-      "enum": [
-        "a"
-      ],
+      "const": "a",
       "type": "string"
     },
     "Map<D>": {
-      "enum": [
-        "d"
-      ],
+      "const": "d",
       "type": "string"
     },
     "Map<E>": {
-      "enum": [
-        "d"
-      ],
+      "const": "d",
       "type": "string"
     },
     "Map<F>": {
-      "enum": [
-        "f"
-      ],
+      "const": "f",
       "type": "string"
     },
     "MyObject": {

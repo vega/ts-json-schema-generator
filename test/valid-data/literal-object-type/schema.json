@@ -6,7 +6,7 @@
       "additionalProperties": false,
       "properties": {
         "abc": {
-          "enum": ["def"],
+          "const": "def",
           "type": "string"
         }
       },

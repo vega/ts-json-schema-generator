@@ -1,5 +1,6 @@
 import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "./../Schema/Definition";
+import { RawType } from "./../Schema/RawType";
 import { intersectionOfArrays } from "./intersectionOfArrays";
 
 /**
@@ -30,15 +31,11 @@ export function deepMerge(
                 "type" in elementB
             ) {
                 if (elementA.type == elementB.type) {
-                    if (elementA.enum == null && elementB.enum != null) {
-                        (output as any)[key].enum = elementB.enum;
-                    } else if (elementA.enum != null && elementB.enum == null) {
-                        (output as any)[key].enum = elementA.enum;
-                    } else if (elementA.enum != null && elementB.enum != null) {
-                        (output as any)[key].enum = intersectionOfArrays(
-                            elementA.enum as any[],
-                            elementB.enum as any[]
-                        );
+                    const enums = mergeConstsAndEnums(elementA, elementB);
+                    if (enums != null) {
+                        const isSingle = enums.length === 1;
+                        (output as any)[key][isSingle ? 'const' : 'enum'] = isSingle ? enums[0] : enums;
+                        delete (output as any)[key][isSingle ? 'enum' : 'const'];
                     }
                 }
             }
@@ -46,4 +43,20 @@ export function deepMerge(
     }
 
     return output;
+}
+
+function mergeConstsAndEnums(a: Definition, b: Definition): RawType[] | undefined {
+    // NOTE: const is basically a syntactic sugar for an enum with a single element.
+    const enumA = a.const !== undefined ? [a.const] : a.enum;
+    const enumB = b.const !== undefined ? [b.const] : b.enum;
+
+    if (enumA == null && enumB != null) {
+        return enumB;
+    } else if (enumA != null && enumB == null) {
+        return enumA;
+    } else if (enumA != null && enumB != null) {
+        return intersectionOfArrays(enumA, enumB);
+    } else {
+        return undefined;
+    }
 }

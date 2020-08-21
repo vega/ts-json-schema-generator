@@ -6,27 +6,19 @@
             "additionalProperties": false,
             "properties": {
                 "a": {
-                    "enum": [
-                        "a or b"
-                    ],
+                    "const": "a or b",
                     "type": "string"
                 },
                 "b": {
-                    "enum": [
-                        "a or b"
-                    ],
+                    "const": "a or b",
                     "type": "string"
                 },
                 "c": {
-                    "enum": [
-                        "unknown"
-                    ],
+                    "const": "unknown",
                     "type": "string"
                 },
                 "d": {
-                    "enum": [
-                        "a or b"
-                    ],
+                    "const": "a or b",
                     "type": "string"
                 }
             },
