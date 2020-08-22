@@ -5,9 +5,7 @@
         "MyType": {
             "anyOf": [
                 {
-                    "enum": [
-                        "bar"
-                    ],
+                    "const": "bar",
                     "type": "string"
                 },
                 {

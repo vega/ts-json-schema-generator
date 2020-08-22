@@ -6,21 +6,15 @@
             "properties": {
                 "a": {
                     "type": "string",
-                    "enum": [
-                        "a"
-                    ]
+                    "const": "a"
                 },
                 "b": {
                     "type": "string",
-                    "enum": [
-                        "b"
-                    ]
+                    "const": "b"
                 },
                 "c": {
                     "type": "string",
-                    "enum": [
-                        "c"
-                    ]
+                    "const": "c"
                 }
             },
             "additionalProperties": false

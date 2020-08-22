@@ -9,21 +9,15 @@
                     "additionalProperties": false,
                     "properties": {
                         "a": {
-                            "enum": [
-                                0
-                            ],
+                            "const": 0,
                             "type": "number"
                         },
                         "b": {
-                            "enum": [
-                                1
-                            ],
+                            "const": 1,
                             "type": "number"
                         },
                         "c": {
-                            "enum": [
-                                2
-                            ],
+                            "const": 2,
                             "type": "number"
                         }
                     },
@@ -38,27 +32,19 @@
                     "additionalProperties": false,
                     "properties": {
                         "a": {
-                            "enum": [
-                                0
-                            ],
+                            "const": 0,
                             "type": "number"
                         },
                         "b": {
-                            "enum": [
-                                10
-                            ],
+                            "const": 10,
                             "type": "number"
                         },
                         "c": {
-                            "enum": [
-                                11
-                            ],
+                            "const": 11,
                             "type": "number"
                         },
                         "d": {
-                            "enum": [
-                                "foo"
-                            ],
+                            "const": "foo",
                             "type": "string"
                         }
                     },
@@ -74,27 +60,19 @@
                     "additionalProperties": false,
                     "properties": {
                         "a": {
-                            "enum": [
-                                10
-                            ],
+                            "const": 10,
                             "type": "number"
                         },
                         "b": {
-                            "enum": [
-                                11
-                            ],
+                            "const": 11,
                             "type": "number"
                         },
                         "c": {
-                            "enum": [
-                                20
-                            ],
+                            "const": 20,
                             "type": "number"
                         },
                         "d": {
-                            "enum": [
-                                21
-                            ],
+                            "const": 21,
                             "type": "number"
                         }
                     },
@@ -110,15 +88,11 @@
                     "additionalProperties": false,
                     "properties": {
                         "a": {
-                            "enum": [
-                                "foo"
-                            ],
+                            "const": "foo",
                             "type": "string"
                         },
                         "b": {
-                            "enum": [
-                                "bar"
-                            ],
+                            "const": "bar",
                             "type": "string"
                         }
                     },

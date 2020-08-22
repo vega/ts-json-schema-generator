@@ -6,39 +6,27 @@
             "additionalProperties": false,
             "properties": {
                 "a": {
-                    "enum": [
-                        "a"
-                    ],
+                    "const": "a",
                     "type": "string"
                 },
                 "b": {
-                    "enum": [
-                        "b"
-                    ],
+                    "const": "b",
                     "type": "string"
                 },
                 "c": {
-                    "enum": [
-                        "a and b"
-                    ],
+                    "const": "a and b",
                     "type": "string"
                 },
                 "d": {
-                    "enum": [
-                        "D"
-                    ],
+                    "const": "D",
                     "type": "string"
                 },
                 "e": {
-                    "enum": [
-                        "a and b"
-                    ],
+                    "const": "a and b",
                     "type": "string"
                 },
                 "f": {
-                    "enum": [
-                        "D"
-                    ],
+                    "const": "D",
                     "type": "string"
                 }
             },

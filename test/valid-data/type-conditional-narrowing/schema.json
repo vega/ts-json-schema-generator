@@ -6,9 +6,7 @@
             "additionalProperties": false,
             "properties": {
                 "number": {
-                    "enum": [
-                        "number"
-                    ],
+                    "const": "number",
                     "type": "string"
                 },
                 "numberOrUnknown": {
@@ -19,9 +17,7 @@
                     "type": "string"
                 },
                 "string": {
-                    "enum": [
-                        "string"
-                    ],
+                    "const": "string",
                     "type": "string"
                 },
                 "stringOrNumber": {
@@ -39,9 +35,7 @@
                     "type": "string"
                 },
                 "unknown": {
-                    "enum": [
-                        "unknown"
-                    ],
+                    "const": "unknown",
                     "type": "string"
                 }
             },

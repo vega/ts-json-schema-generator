@@ -19,9 +19,7 @@
             "properties": {
                 "kind": {
                     "type": "string",
-                    "enum": [
-                        "square"
-                    ]
+                    "const": "square"
                 },
                 "size": {
                     "type": "number"
@@ -38,9 +36,7 @@
             "properties": {
                 "kind": {
                     "type": "string",
-                    "enum": [
-                        "rectangle"
-                    ]
+                    "const": "rectangle"
                 },
                 "width": {
                     "type": "number"
@@ -61,9 +57,7 @@
             "properties": {
                 "kind": {
                     "type": "string",
-                    "enum": [
-                        "circle"
-                    ]
+                    "const": "circle"
                 },
                 "radius": {
                     "type": "number"

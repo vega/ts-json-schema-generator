@@ -6,7 +6,7 @@
             "additionalProperties": false,
             "properties": {
                 "a": {
-                    "enum": ["hello"],
+                    "const": "hello",
                     "type": "string"
                 }
             },

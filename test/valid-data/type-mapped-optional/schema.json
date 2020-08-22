@@ -6,15 +6,11 @@
             "additionalProperties": false,
             "properties": {
                 "bar": {
-                    "enum": [
-                        "baz"
-                    ],
+                    "const": "baz",
                     "type": "string"
                 },
                 "foo": {
-                    "enum": [
-                        123
-                    ],
+                    "const": 123,
                     "type": "number"
                 }
             },

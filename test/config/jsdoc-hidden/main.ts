@@ -8,6 +8,7 @@ export enum Enum {
      */
     X = "x",
     Y = "y",
+    Z = "z",
 }
 
 /**

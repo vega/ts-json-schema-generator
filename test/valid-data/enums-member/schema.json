@@ -6,9 +6,7 @@
             "properties": {
                 "code": {
                     "type": "number",
-                    "enum": [
-                        0
-                    ]
+                    "const": 0
                 }
             },
             "required": [
