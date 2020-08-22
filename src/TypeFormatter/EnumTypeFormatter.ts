@@ -12,10 +12,11 @@ export class EnumTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: EnumType): Definition {
         const values = uniqueArray(type.getValues());
         const types = uniqueArray(values.map(typeName));
+        const isSingle = values.length === 1;
 
         return {
             type: types.length === 1 ? types[0] : types,
-            enum: values,
+            [isSingle ? 'const' : 'enum']: isSingle ? values[0] : values,
         };
     }
     public getChildren(type: EnumType): BaseType[] {
