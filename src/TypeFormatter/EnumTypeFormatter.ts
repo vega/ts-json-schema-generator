@@ -16,7 +16,7 @@ export class EnumTypeFormatter implements SubTypeFormatter {
 
         return {
             type: types.length === 1 ? types[0] : types,
-            [isSingle ? 'const' : 'enum']: isSingle ? values[0] : values,
+            [isSingle ? "const" : "enum"]: isSingle ? values[0] : values,
         };
     }
     public getChildren(type: EnumType): BaseType[] {

@@ -39,9 +39,7 @@ describe("deepMerge", () => {
         expect(deepMerge({ flag: { type: "number", const: 1 } }, { flag: { type: "number" } })).toEqual({
             flag: { type: "number", const: 1 },
         });
-        expect(
-            deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } })
-        ).toEqual({
+        expect(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } })).toEqual({
             flag: { type: "number", const: 2 },
         });
     });

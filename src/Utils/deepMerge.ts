@@ -34,8 +34,8 @@ export function deepMerge(
                     const enums = mergeConstsAndEnums(elementA, elementB);
                     if (enums != null) {
                         const isSingle = enums.length === 1;
-                        (output as any)[key][isSingle ? 'const' : 'enum'] = isSingle ? enums[0] : enums;
-                        delete (output as any)[key][isSingle ? 'enum' : 'const'];
+                        (output as any)[key][isSingle ? "const" : "enum"] = isSingle ? enums[0] : enums;
+                        delete (output as any)[key][isSingle ? "enum" : "const"];
                     }
                 }
             }
