@@ -50,6 +50,13 @@ import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteral
 import { TypeParameterParser } from "../src/NodeParser/TypeParameterParser";
 import { SourceFileNodeParser } from "../src/NodeParser/SourceFileNodeParser";
 import { VariableDeclarationNodeParser } from "../src/NodeParser/VariableDeclarationNodeParser";
+import { ImportTypeNodeParser } from "../src/NodeParser/ImportTypeNodeParser";
+import { ExportSpecifierNodeParser } from "../src/NodeParser/ExportSpecifierNodeParser";
+import { ThisTypeNodeParser } from "../src/NodeParser/ThisTypeNodeParser";
+import { ReactFunctionComponentNodeParser } from "../src/NodeParser/ReactFunctionComponentNodeParser";
+import { ReactComponentNodeParser } from "../src/NodeParser/ReactComponentNodeParser";
+import { SpecificInterfaceAndClassNodeParser } from "../src/NodeParser/SpecificInterfaceAndClassNodeParser";
+import { SpecificTypeAliasNodeParser } from "../src/NodeParser/SpecificTypeAliasNodeParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -75,6 +82,21 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
 
     chainNodeParser
+        .addNodeParser(new SpecificInterfaceAndClassNodeParser(typeChecker, mergedConfig.specificInterfaceTarget))
+        /*[
+            { name: "ReactElement", moduleName: "React", definitionType: "UI.Element" },
+            { name: "SyntheticEvent", moduleName: "React", definitionType: "UI.Event" },
+            { name: "CSSProperties", moduleName: "React", definitionType: "UI.CSS" },
+            { name: "HTMLElement" },
+            { name: "SVGElement" },
+            { name: "Date" },
+            { name: "Event" },
+        ]*/
+        .addNodeParser(new SpecificTypeAliasNodeParser(typeChecker, mergedConfig.specificTypeTarget))
+        /*[
+            { name: "ReactNode", moduleName: "React", definitionType: "UI.Element" },
+        ]*/
+
         .addNodeParser(new HiddenNodeParser(typeChecker))
         .addNodeParser(new StringTypeNodeParser())
         .addNodeParser(new NumberTypeNodeParser())
@@ -91,6 +113,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
+        .addNodeParser(withCircular(withExpose(new ReactFunctionComponentNodeParser())))
         .addNodeParser(new FunctionNodeParser(chainNodeParser))
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
@@ -111,6 +134,10 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new TypeParameterParser(chainNodeParser))
         .addNodeParser(new SourceFileNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new VariableDeclarationNodeParser(chainNodeParser))
+        .addNodeParser(new ImportTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ExportSpecifierNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ThisTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(withCircular(withExpose(new ReactComponentNodeParser(typeChecker, chainNodeParser))))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
