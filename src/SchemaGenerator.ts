@@ -66,9 +66,13 @@ export class SchemaGenerator {
         const ids = new Map<string, string>();
         for (const child of children) {
             const name = child.getName();
+
             const previousId = ids.get(name);
             if (previousId && child.getId() !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
+                // throw new Error(`Type "${name}" has multiple definitions.`);
+
+                // export overrides are allowed
+                console.warn(`Type "${name}" has multiple definitions.`);
             }
             ids.set(name, child.getId());
         }
