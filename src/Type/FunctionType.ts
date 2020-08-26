@@ -22,7 +22,7 @@ export class FunctionType extends BaseType {
     }
 
     public getId(): string {
-        return "function";
+        return this.id;
     }
 
     public getArguments(): readonly FunctionArgument[] {
