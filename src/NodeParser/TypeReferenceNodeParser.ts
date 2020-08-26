@@ -21,10 +21,19 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
-            return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
-                this.createSubContext(node, context)
-            );
+            if (aliasedSymbol.declarations) {
+                return this.childNodeParser.createType(
+                    aliasedSymbol.declarations.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            } else if (typeSymbol.declarations) {
+                return this.childNodeParser.createType(
+                    typeSymbol.declarations.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            }
+
+            return undefined;
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             const argument = context.getArgument(typeSymbol.name);
             if (!argument) {
