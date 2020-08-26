@@ -14,7 +14,11 @@ function addReachable(definition: Definition | boolean, definitions: StringMap<D
             return;
         }
         reachable.add(typeName);
-        addReachable(definitions[typeName], definitions, reachable);
+        if (definitions[typeName]) {
+            addReachable(definitions[typeName], definitions, reachable);
+        } else {
+            throw new Error(`Definition name "${typeName}" not found`);
+        }
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
             addReachable(def, definitions, reachable);
@@ -60,6 +64,10 @@ function addReachable(definition: Definition | boolean, definitions: StringMap<D
 
         if (definition.return) {
             addReachable(definition.return, definitions, reachable);
+        }
+    } else if (definition.type === "UI.Component") {
+        if (definition.props) {
+            addReachable(definition.props, definitions, reachable);
         }
     }
 }
