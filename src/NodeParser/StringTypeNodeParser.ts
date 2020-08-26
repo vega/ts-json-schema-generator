@@ -6,7 +6,7 @@ import { StringType } from "../Type/StringType";
 
 export class StringTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {
-        return node.kind === ts.SyntaxKind.StringKeyword;
+        return node.kind === ts.SyntaxKind.StringKeyword || node.kind === ts.SyntaxKind.SymbolKeyword;
     }
 
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
