@@ -1,7 +1,7 @@
 import { JSONSchema7, JSONSchema7Type, JSONSchema7TypeName, JSONSchema7Version } from "json-schema";
 
 export type JSONSchemaXType = JSONSchema7Type;
-export type JSONSchemaXTypeName = JSONSchema7TypeName | "function" | "promise";
+export type JSONSchemaXTypeName = JSONSchema7TypeName | "function" | "promise" | "UI.Component" | string;
 
 export type JSONSchemaXDefinition = JSONSchemaX | boolean;
 
@@ -112,4 +112,5 @@ export interface JSONSchemaX {
         [key: string]: JSONSchemaX;
     };
     return?: JSONSchemaX;
+    props?: JSONSchemaX;
 }
