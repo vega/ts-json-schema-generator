@@ -4,6 +4,7 @@ import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
+import { AnyType } from "./Type/AnyType";
 
 export class ChainNodeParser implements SubNodeParser {
     private readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType | undefined>>();
@@ -28,21 +29,29 @@ export class ChainNodeParser implements SubNodeParser {
         const contextCacheKey = context.getCacheKey();
         let type = typeCache.get(contextCacheKey);
         if (!type) {
-            type = this.getNodeParser(node, context).createType(node, context, reference);
-            if (!(type instanceof ReferenceType)) {
-                typeCache.set(contextCacheKey, type);
+            const parser = this.getNodeParser(node, context);
+            if (parser) {
+                type = parser.createType(node, context, reference);
+                if (!(type instanceof ReferenceType)) {
+                    typeCache.set(contextCacheKey, type);
+                }
+            } else {
+                console.error(new UnknownNodeError(node, context.getReference()).message);
+
+                type = new AnyType();
             }
         }
         return type;
     }
 
-    private getNodeParser(node: ts.Node, context: Context): SubNodeParser {
+    private getNodeParser(node: ts.Node, context: Context): SubNodeParser | undefined {
         for (const nodeParser of this.nodeParsers) {
             if (nodeParser.supportsNode(node)) {
                 return nodeParser;
             }
         }
 
-        throw new UnknownNodeError(node, context.getReference());
+        // throw new UnknownNodeError(node, context.getReference());
+        return undefined;
     }
 }
