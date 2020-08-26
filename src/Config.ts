@@ -11,6 +11,32 @@ export interface Config {
     encodeRefs?: boolean;
     extraTags?: string[];
     additionalProperties?: boolean;
+    /**
+     * @example:
+     * [
+     *  { name: "ReactElement", moduleName: "React", definitionType: "UI.Element" },
+     *  { name: "HTMLElement" },
+     *  { name: "Date" }
+     * ]
+     *
+     */
+    specificInterfaceTarget: {
+        name: string;
+        moduleName?: string;
+        definitionType?: string;
+    }[];
+    /**
+     * @example:
+     * [
+     *  { name: "ReactNode", moduleName: "React", definitionType: "UI.Element" }
+     * ]
+     *
+     */
+    specificTypeTarget: {
+        name: string;
+        moduleName?: string;
+        definitionType?: string;
+    }[];
 }
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"> = {
@@ -23,4 +49,6 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"
     encodeRefs: true,
     extraTags: [],
     additionalProperties: false,
+    specificInterfaceTarget: [],
+    specificTypeTarget: [],
 };
