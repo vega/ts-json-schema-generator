@@ -7,6 +7,14 @@ import { uniqueArray } from "./uniqueArray";
 import { deepMerge } from "./deepMerge";
 import { derefType } from "./derefType";
 
+export function canReduceAllOfDefinition(childTypeFormatter: TypeFormatter, types: BaseType[]): boolean {
+    return types.every((baseType) => {
+        const definition = childTypeFormatter.getDefinition(derefType(baseType)!);
+
+        return !definition.type || definition.properties;
+    });
+}
+
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
