@@ -35,13 +35,18 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const flattenedDefinitions: Definition[] = [];
 
-        // Flatten anOf inside anyOf unless the anyOf has an annotation
+        // Flatten anyOf inside anyOf unless the anyOf has an annotation
         for (const def of definitions) {
             if (Object.keys(def) === ["anyOf"]) {
                 flattenedDefinitions.push(...(def.anyOf as any));
             } else {
                 flattenedDefinitions.push(def);
             }
+        }
+
+        // If {} present in the object, bypass the anyOf
+        if (flattenedDefinitions.some((def) => Object.keys(def).length === 0)) {
+            return {};
         }
 
         return flattenedDefinitions.length > 1
