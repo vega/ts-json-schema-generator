@@ -22,19 +22,25 @@ export class TypeofNodeParser implements SubNodeParser {
         }
 
         const valueDec = symbol.valueDeclaration;
-        if (ts.isEnumDeclaration(valueDec)) {
-            return this.createObjectFromEnum(valueDec, context, reference);
-        } else if (ts.isVariableDeclaration(valueDec) || ts.isPropertySignature(valueDec)) {
-            if (valueDec.type) {
-                return this.childNodeParser.createType(valueDec.type, context);
-            } else if (valueDec.initializer) {
-                return this.childNodeParser.createType(valueDec.initializer, context);
+        if (valueDec) {
+            if (ts.isEnumDeclaration(valueDec)) {
+                return this.createObjectFromEnum(valueDec, context, reference);
+            } else if (ts.isVariableDeclaration(valueDec) || ts.isPropertySignature(valueDec)) {
+                if (valueDec.type) {
+                    return this.childNodeParser.createType(valueDec.type, context);
+                } else if (valueDec.initializer) {
+                    return this.childNodeParser.createType(valueDec.initializer, context);
+                }
+            } else if (ts.isClassDeclaration(valueDec)) {
+                return this.childNodeParser.createType(valueDec, context);
+            } else if (ts.isFunctionDeclaration(valueDec)) {
+                return this.childNodeParser.createType(valueDec, context);
             }
-        } else if (ts.isClassDeclaration(valueDec)) {
-            return this.childNodeParser.createType(valueDec, context);
+
+            throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
         }
 
-        throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
+        return undefined;
     }
 
     private createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {
