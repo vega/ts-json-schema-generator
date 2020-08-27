@@ -31,24 +31,6 @@ export class ReactComponentNodeParser implements SubNodeParser {
         return new UIComponentType(id, typeArgument);
     }
 
-    private isReactComponentNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
-        const name = node.name?.text;
-        if (name === "PureComponent" || name === "Component") {
-            let parent = node.parent;
-            if (ts.isModuleBlock(parent)) {
-                parent = parent.parent;
-            }
-
-            if (ts.isModuleDeclaration(parent)) {
-                return parent.name.text === "React";
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
     private isReactComponentImplementation(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
         if (this.isReactComponentNode(node)) {
             return true;
@@ -113,6 +95,20 @@ export class ReactComponentNodeParser implements SubNodeParser {
         }
 
         return propsType;
+    }
+
+    private isReactComponentNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
+        const name = node.name?.text;
+        return (name === "PureComponent" || name === "Component") && this.isReactModule(node);
+    }
+
+    private isReactModule(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
+        let parent = node.parent;
+        if (ts.isModuleBlock(parent)) {
+            parent = parent.parent;
+        }
+
+        return ts.isModuleDeclaration(parent) && parent.name.text === "React";
     }
 
     private createSubContext(node: ts.ExpressionWithTypeArguments, parentContext: Context): Context {

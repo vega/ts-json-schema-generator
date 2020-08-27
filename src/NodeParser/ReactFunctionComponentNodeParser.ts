@@ -7,8 +7,11 @@ import { UIComponentType } from "../Type/UIComponentType";
 import { getKey } from "../Utils/nodeKey";
 
 export class ReactFunctionComponentNodeParser implements SubNodeParser {
-    public supportsNode(node: ts.InterfaceDeclaration): boolean {
-        return node.kind === ts.SyntaxKind.InterfaceDeclaration && this.isReactFunctionComponent(node);
+    public supportsNode(node: ts.InterfaceDeclaration | ts.TypeAliasDeclaration): boolean {
+        return (
+            (ts.isInterfaceDeclaration(node) && this.isReactFunctionComponentInterface(node)) ||
+            (ts.isTypeAliasDeclaration(node) && this.isReactFCType(node))
+        );
     }
 
     public createType(node: ts.InterfaceDeclaration, context: Context, reference?: ReferenceType): BaseType {
@@ -26,7 +29,20 @@ export class ReactFunctionComponentNodeParser implements SubNodeParser {
         return `reactFunctionComponent-${getKey(node, context)}`;
     }
 
-    private isReactFunctionComponent(node: ts.InterfaceDeclaration): boolean {
-        return node.name.text === "FunctionComponent";
+    private isReactFunctionComponentInterface(node: ts.InterfaceDeclaration): boolean {
+        return node.name.text === "FunctionComponent" && this.isReactModule(node);
+    }
+
+    private isReactFCType(node: ts.TypeAliasDeclaration): boolean {
+        return node.name.text === "FC" && this.isReactModule(node);
+    }
+
+    private isReactModule(node: ts.InterfaceDeclaration | ts.TypeAliasDeclaration): boolean {
+        let parent = node.parent;
+        if (ts.isModuleBlock(parent)) {
+            parent = parent.parent;
+        }
+
+        return ts.isModuleDeclaration(parent) && parent.name.text === "React";
     }
 }
