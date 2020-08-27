@@ -5,7 +5,7 @@ import { ArrayType } from "../Type/ArrayType";
 import { PromiseType } from "../Type/PromiseType";
 import { BaseType } from "../Type/BaseType";
 
-const invlidTypes: { [index: number]: boolean } = {
+const invalidTypes: { [index: number]: boolean } = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
     [ts.SyntaxKind.VariableDeclaration]: true,
 };
@@ -23,12 +23,12 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             if (aliasedSymbol.declarations) {
                 return this.childNodeParser.createType(
-                    aliasedSymbol.declarations.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    aliasedSymbol.declarations.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                     this.createSubContext(node, context)
                 );
             } else if (typeSymbol.declarations) {
                 return this.childNodeParser.createType(
-                    typeSymbol.declarations.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    typeSymbol.declarations.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                     this.createSubContext(node, context)
                 );
             }
@@ -38,7 +38,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             const argument = context.getArgument(typeSymbol.name);
             if (!argument) {
                 return this.childNodeParser.createType(
-                    typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                    typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                     this.createSubContext(node, context)
                 );
             }
@@ -54,7 +54,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return new PromiseType(typeArgument ? this.childNodeParser.createType(typeArgument, context) : undefined);
         } else {
             return this.childNodeParser.createType(
-                typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                 this.createSubContext(node, context)
             );
         }
