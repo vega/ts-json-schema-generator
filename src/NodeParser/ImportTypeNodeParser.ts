@@ -21,10 +21,24 @@ export class ImportTypeNodeParser implements SubNodeParser {
             });
 
             if (exportSymbol && exportSymbol.declarations.length) {
-                return this.childNodeParser.createType(exportSymbol.declarations[0], context);
+                return this.childNodeParser.createType(
+                    exportSymbol.declarations[0],
+                    this.createSubContext(node, context)
+                );
             }
         }
 
         return undefined;
+    }
+
+    private createSubContext(node: ts.ImportTypeNode, parentContext: Context): Context {
+        const subContext = new Context(node);
+        if (node.typeArguments && node.typeArguments.length) {
+            for (const typeArg of node.typeArguments) {
+                const type = this.childNodeParser.createType(typeArg, parentContext);
+                subContext.pushArgument(type);
+            }
+        }
+        return subContext;
     }
 }
