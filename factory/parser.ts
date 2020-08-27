@@ -83,19 +83,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
 
     chainNodeParser
         .addNodeParser(new SpecificInterfaceAndClassNodeParser(typeChecker, mergedConfig.specificInterfaceTarget))
-        /*[
-            { name: "ReactElement", moduleName: "React", definitionType: "UI.Element" },
-            { name: "SyntheticEvent", moduleName: "React", definitionType: "UI.Event" },
-            { name: "CSSProperties", moduleName: "React", definitionType: "UI.CSS" },
-            { name: "HTMLElement" },
-            { name: "SVGElement" },
-            { name: "Date" },
-            { name: "Event" },
-        ]*/
         .addNodeParser(new SpecificTypeAliasNodeParser(typeChecker, mergedConfig.specificTypeTarget))
-        /*[
-            { name: "ReactNode", moduleName: "React", definitionType: "UI.Element" },
-        ]*/
 
         .addNodeParser(new HiddenNodeParser(typeChecker))
         .addNodeParser(new StringTypeNodeParser())
