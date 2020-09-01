@@ -17,6 +17,8 @@ import { derefType } from "./derefType";
  */
 export function narrowType(
     type: BaseType | undefined,
+    // TODO: remove the next line
+    // eslint-disable-next-line no-shadow
     predicate: (type: BaseType | undefined) => boolean
 ): BaseType | undefined {
     const derefed = derefType(type);
