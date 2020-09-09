@@ -10,6 +10,7 @@ export interface TypeTarget {
     name: string;
     moduleName?: string;
     definitionType?: string;
+    multiple?: boolean;
 }
 
 export class SpecificTypeAliasNodeParser implements SubNodeParser {
@@ -23,7 +24,8 @@ export class SpecificTypeAliasNodeParser implements SubNodeParser {
         const typeTarget = this.getSpecificTarget(node)!;
         return new SpecificObjectType(
             `specificobject-${getKey(node, context)}`,
-            typeTarget.definitionType || typeTarget.name
+            typeTarget.definitionType || typeTarget.name,
+            !!typeTarget.multiple
         );
     }
 

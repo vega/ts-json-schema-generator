@@ -8,6 +8,15 @@ export class SpecificObjectTypeFormatter implements SubTypeFormatter {
         return type instanceof SpecificObjectType;
     }
     public getDefinition(type: SpecificObjectType): Definition {
+        if (type.isMultiple()) {
+            return {
+                type: "array",
+                items: {
+                    type: type.getDefinitionType(),
+                },
+            };
+        }
+
         return {
             type: type.getDefinitionType(),
         };

@@ -10,6 +10,7 @@ export interface InterfaceTarget {
     name: string;
     moduleName?: string;
     definitionType?: string;
+    multiple?: boolean;
 }
 
 export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
@@ -26,7 +27,8 @@ export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
         const interfaceTarget = this.getSpecificTarget(node)!;
         return new SpecificObjectType(
             `specificobject-${getKey(node, context)}`,
-            interfaceTarget.definitionType || interfaceTarget.name
+            interfaceTarget.definitionType || interfaceTarget.name,
+            !!interfaceTarget.multiple
         );
     }
 

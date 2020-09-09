@@ -20,22 +20,24 @@ export interface Config {
      * ]
      *
      */
-    specificInterfaceTarget: {
+    specificInterfaceTarget?: {
         name: string;
         moduleName?: string;
         definitionType?: string;
+        multiple?: boolean;
     }[];
     /**
      * @example:
      * [
-     *  { name: "ReactNode", moduleName: "React", definitionType: "UI.Element" }
+     *  { name: "ReactNode", moduleName: "React", definitionType: "UI.Element", multiple: true }
      * ]
      *
      */
-    specificTypeTarget: {
+    specificTypeTarget?: {
         name: string;
         moduleName?: string;
         definitionType?: string;
+        multiple?: boolean;
     }[];
 }
 
