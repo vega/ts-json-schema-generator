@@ -14,6 +14,8 @@ export interface MyObject {
      * This field is of integer type.
      * Integer!
      *
+     * The type of this field is integer.
+     *
      * @title Number field title
      * @exclusiveMaximum 10
      * @multipleOf 3
