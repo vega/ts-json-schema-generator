@@ -43,7 +43,9 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        return { description: comments.map((comment) => comment.text).join(" ") };
+        return {
+            description: comments.map((comment) => comment.text.replace(/(?<=[^\n])\n(?=[^\n])/g, " ")).join(" "),
+        };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
