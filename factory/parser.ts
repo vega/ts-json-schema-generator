@@ -48,6 +48,7 @@ import { TopRefNodeParser } from "../src/TopRefNodeParser";
 import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
 import { ObjectLiteralExpressionNodeParser } from "./../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
+import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser";
 
 export function createParser(program: ts.Program, config: Config): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -117,6 +118,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new RestTypeNodeParser(chainNodeParser))
 
         .addNodeParser(new CallExpressionParser(typeChecker, chainNodeParser))
+        .addNodeParser(new PropertyAccessExpressionParser(typeChecker, chainNodeParser))
 
         .addNodeParser(withCircular(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser)))))
         .addNodeParser(withExpose(withJsDoc(new EnumNodeParser(typeChecker))))
