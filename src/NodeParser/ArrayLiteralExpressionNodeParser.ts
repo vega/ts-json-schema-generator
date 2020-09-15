@@ -3,8 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { notUndefined } from "../Utils/notUndefined";
-import { ArrayType } from "./../Type/ArrayType";
-import { UnionType } from "./../Type/UnionType";
+import { TupleType } from "../Type/TupleType";
 
 export class ArrayLiteralExpressionNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: NodeParser) {}
@@ -17,7 +16,7 @@ export class ArrayLiteralExpressionNodeParser implements SubNodeParser {
         if (node.elements) {
             const elements = node.elements.map((t) => this.childNodeParser.createType(t, context)).filter(notUndefined);
 
-            return new ArrayType(new UnionType(elements));
+            return new TupleType(elements);
         }
 
         // TODO: implement this?
