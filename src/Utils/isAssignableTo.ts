@@ -198,6 +198,25 @@ export function isAssignableTo(
                 })
             );
         }
+
+        const isArrayLikeType = source instanceof ArrayType || source instanceof TupleType;
+        if (isArrayLikeType) {
+            const lengthPropType = targetMembers
+                .find((prop) => prop.getName() === "length" && prop.isRequired())
+                ?.getType();
+
+            if (source instanceof ArrayType) {
+                return lengthPropType instanceof NumberType;
+            }
+
+            if (source instanceof TupleType) {
+                if (lengthPropType instanceof LiteralType) {
+                    const types = source.getTypes();
+                    const lengthPropValue = lengthPropType.getValue();
+                    return types.length === lengthPropValue;
+                }
+            }
+        }
     }
 
     // Check if tuple types are compatible

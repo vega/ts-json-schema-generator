@@ -236,6 +236,45 @@ describe("isAssignableTo", () => {
             isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new NumberType()]))
         ).toBe(false);
     });
+    it("lets array types to be assigned to array-like object", () => {
+        const fixedLengthArrayLike = new ObjectType(
+            "fixedLengthArrayLike",
+            [],
+            [new ObjectProperty("length", new LiteralType(2), true)],
+            false
+        );
+        const nonFixedLengthArrayLike = new ObjectType(
+            "nonFixedLengthArrayLike",
+            [],
+            [new ObjectProperty("length", new NumberType(), true)],
+            false
+        );
+        const optionalLengthArrayLike = new ObjectType(
+            "optionalLengthArrayLike",
+            [],
+            [new ObjectProperty("length", new NumberType(), false)],
+            false
+        );
+        const nonArrayLike = new ObjectType(
+            "nonArrayLike",
+            [],
+            [new ObjectProperty("foo", new NumberType(), true)],
+            false
+        );
+
+        const arrayType = new ArrayType(new StringType());
+        const tupleType = new TupleType([new StringType(), new NumberType()]);
+
+        expect(isAssignableTo(fixedLengthArrayLike, arrayType)).toBe(false);
+        expect(isAssignableTo(nonFixedLengthArrayLike, arrayType)).toBe(true);
+        expect(isAssignableTo(optionalLengthArrayLike, arrayType)).toBe(false);
+        expect(isAssignableTo(nonArrayLike, arrayType)).toBe(false);
+
+        expect(isAssignableTo(fixedLengthArrayLike, tupleType)).toBe(true);
+        expect(isAssignableTo(nonFixedLengthArrayLike, tupleType)).toBe(false);
+        expect(isAssignableTo(optionalLengthArrayLike, tupleType)).toBe(false);
+        expect(isAssignableTo(nonArrayLike, tupleType)).toBe(false);
+    });
     it("lets only compatible tuple type to be assigned to tuple type", () => {
         expect(
             isAssignableTo(new TupleType([new StringType(), new StringType()]), new ArrayType(new StringType()))
