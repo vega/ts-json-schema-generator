@@ -51,6 +51,8 @@
     "eslint": "^7.8.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "fp-ts": "^2.8.2",
+    "io-ts": "^2.2.10",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
     "prettier": "^2.1.1",

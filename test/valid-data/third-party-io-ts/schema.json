@@ -1,0 +1,69 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "$ref": "#/definitions/TypeOf%3Calias-1882395447-309-349-1882395447-0-395%3E"
+    },
+    "TypeOf<(StringC|NumberC)>": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "TypeOf<BooleanC>": {
+      "type": "boolean"
+    },
+    "TypeOf<LiteralC<\"some-type\">>": {
+      "const": "some-type",
+      "type": "string"
+    },
+    "TypeOf<NumberC>": {
+      "type": "number"
+    },
+    "TypeOf<StringC>": {
+      "type": "string"
+    },
+    "TypeOf<TypeC<object-1882395447-254-295-1882395447-246-296-1882395447-233-296-1882395447-209-303-1882395447-194-304-1882395447-65-307-1882395447-49-308-1882395447-33-308-1882395447-27-308-1882395447-27-309-1882395447-0-395>>": {
+      "additionalProperties": false,
+      "properties": {
+        "inner": {
+          "$ref": "#/definitions/TypeOf%3CBooleanC%3E"
+        }
+      },
+      "required": [
+        "inner"
+      ],
+      "type": "object"
+    },
+    "TypeOf<UnionC<[def-interface-1974598259-5346-5417-1974598259-0-31185,def-interface-1974598259-5659-5730-1974598259-0-31185]>>": {
+      "$ref": "#/definitions/TypeOf%3C(StringC%7CNumberC)%3E"
+    },
+    "TypeOf<alias-1882395447-309-349-1882395447-0-395>": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "$ref": "#/definitions/TypeOf%3CNumberC%3E"
+        },
+        "baz": {
+          "$ref": "#/definitions/TypeOf%3CTypeC%3Cobject-1882395447-254-295-1882395447-246-296-1882395447-233-296-1882395447-209-303-1882395447-194-304-1882395447-65-307-1882395447-49-308-1882395447-33-308-1882395447-27-308-1882395447-27-309-1882395447-0-395%3E%3E"
+        },
+        "foo": {
+          "$ref": "#/definitions/TypeOf%3CStringC%3E"
+        },
+        "type": {
+          "$ref": "#/definitions/TypeOf%3CLiteralC%3C%22some-type%22%3E%3E"
+        },
+        "union": {
+          "$ref": "#/definitions/TypeOf%3CUnionC%3C%5Bdef-interface-1974598259-5346-5417-1974598259-0-31185%2Cdef-interface-1974598259-5659-5730-1974598259-0-31185%5D%3E%3E"
+        }
+      },
+      "required": [
+        "foo",
+        "type",
+        "union"
+      ],
+      "type": "object"
+    }
+  }
+}
