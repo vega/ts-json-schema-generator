@@ -1,0 +1,57 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "privateSubType": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string"
+                        },
+                        "exposedSubType": {
+                            "$ref": "#/definitions/ExposedSubType"
+                        },
+                        "privateAlias": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    "required": [
+                        "text",
+                        "exposedSubType"
+                    ],
+                    "additionalProperties": false
+                },
+                "privateAlias": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "exposedSubType": {
+                    "$ref": "#/definitions/ExposedSubType"
+                }
+            },
+            "required": [
+                "privateSubType",
+                "privateAlias",
+                "exposedSubType"
+            ],
+            "additionalProperties": false
+        },
+        "ExposedSubType": {
+            "type": "object",
+            "properties": {
+                "privateAlias": {
+                    "type": "string",
+                    "format": "date-time"
+                }
+            },
+            "required": [
+                "privateAlias"
+            ],
+            "additionalProperties": false
+        }
+    },
+    "$ref": "#/definitions/MyObject"
+}
