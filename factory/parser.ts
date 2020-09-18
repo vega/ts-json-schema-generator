@@ -56,7 +56,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     const mergedConfig = { ...DEFAULT_CONFIG, ...config };
 
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
-        return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose);
+        return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose, mergedConfig.jsDoc);
     }
     function withTopRef(nodeParser: NodeParser): NodeParser {
         return new TopRefNodeParser(chainNodeParser, mergedConfig.type, mergedConfig.topRef);
