@@ -8,7 +8,7 @@ export class HiddenNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker) {}
 
     public supportsNode(node: ts.KeywordTypeNode): boolean {
-        return !!isNodeHidden(node);
+        return isNodeHidden(node);
     }
 
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType | undefined {
