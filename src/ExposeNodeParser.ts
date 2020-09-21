@@ -38,7 +38,7 @@ export class ExposeNodeParser implements SubNodeParser {
             return node.kind !== ts.SyntaxKind.TypeLiteral;
         } else if (this.expose === "none") {
             return false;
-        } else if (this.jsDoc !== "none" && hasJsDocTag(node, "private")) {
+        } else if (this.jsDoc !== "none" && hasJsDocTag(node, "internal")) {
             return false;
         }
 

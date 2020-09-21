@@ -64,7 +64,7 @@ Run the schema generator via `node main.js`.
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.
-    export (default): Create shared $ref definitions only for exported types (not tagged as `@private`).
+    export (default): Create shared $ref definitions only for exported types (not tagged as `@internal`).
 
 -f, --tsconfig 'my/project/tsconfig.json'
     Use a custom tsconfig file for processing typescript (see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) instead of the default:

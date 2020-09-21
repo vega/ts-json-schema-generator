@@ -152,7 +152,7 @@ export class SchemaGenerator {
         }
     }
     private isExportType(node: ts.Node): boolean {
-        if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "private")) {
+        if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "internal")) {
             return false;
         }
         const localSymbol = localSymbolAtNode(node);
