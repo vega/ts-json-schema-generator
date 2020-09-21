@@ -1,7 +1,7 @@
 import * as ts from "typescript";
 import { symbolAtNode } from "./symbolAtNode";
 
-export function isHidden(symbol: ts.Symbol): boolean {
+function isHidden(symbol: ts.Symbol): boolean {
     const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
     if (!jsDocTags || !jsDocTags.length) {
         return false;
