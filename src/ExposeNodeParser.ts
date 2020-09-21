@@ -4,6 +4,7 @@ import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
 import { ReferenceType } from "./Type/ReferenceType";
+import { hasJsDocTag } from "./Utils/hasJsDocTag";
 import { symbolAtNode } from "./Utils/symbolAtNode";
 
 export class ExposeNodeParser implements SubNodeParser {
@@ -37,19 +38,12 @@ export class ExposeNodeParser implements SubNodeParser {
             return node.kind !== ts.SyntaxKind.TypeLiteral;
         } else if (this.expose === "none") {
             return false;
-        } else if (this.jsDoc !== "none" && this.isPrivateNode(node)) {
+        } else if (this.jsDoc !== "none" && hasJsDocTag(node, "private")) {
             return false;
         }
 
         const localSymbol: ts.Symbol = (node as any).localSymbol;
         return localSymbol ? "exportSymbol" in localSymbol : false;
-    }
-
-    private isPrivateNode(node: ts.Node): boolean {
-        const jsDocTags = symbolAtNode(node)?.getJsDocTags();
-        const privateTag = jsDocTags?.find((tag) => tag.name === "private");
-
-        return !!privateTag;
     }
 
     private getDefinitionName(node: ts.Node, context: Context): string {

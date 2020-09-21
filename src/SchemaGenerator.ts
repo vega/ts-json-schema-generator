@@ -11,6 +11,7 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 import { notUndefined } from "./Utils/notUndefined";
 import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
+import { hasJsDocTag } from "./Utils/hasJsDocTag";
 
 export class SchemaGenerator {
     public constructor(
@@ -151,17 +152,11 @@ export class SchemaGenerator {
         }
     }
     private isExportType(node: ts.Node): boolean {
-        if (this.config?.jsDoc !== "none" && this.isPrivateType(node)) {
+        if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "private")) {
             return false;
         }
         const localSymbol = localSymbolAtNode(node);
         return localSymbol ? "exportSymbol" in localSymbol : false;
-    }
-    private isPrivateType(node: ts.Node): boolean {
-        const jsDocTags = symbolAtNode(node)?.getJsDocTags();
-        const privateTag = jsDocTags?.find((tag) => tag.name === "private");
-
-        return !!privateTag;
     }
     private isGenericType(node: ts.TypeAliasDeclaration): boolean {
         return !!(node.typeParameters && node.typeParameters.length > 0);
