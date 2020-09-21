@@ -3,17 +3,8 @@ import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
-import { isHidden } from "../Utils/isHidden";
+import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
-
-function isMemberHidden(member: ts.EnumMember) {
-    if (!("symbol" in member)) {
-        return false;
-    }
-
-    const symbol: ts.Symbol = (member as any).symbol;
-    return isHidden(symbol);
-}
 
 export class EnumNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker) {}
@@ -27,7 +18,7 @@ export class EnumNodeParser implements SubNodeParser {
         return new EnumType(
             `enum-${getKey(node, context)}`,
             members
-                .filter((member: ts.EnumMember) => !isMemberHidden(member))
+                .filter((member: ts.EnumMember) => !isNodeHidden(member))
                 .map((member, index) => this.getMemberValue(member, index))
         );
     }
