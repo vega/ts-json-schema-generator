@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";

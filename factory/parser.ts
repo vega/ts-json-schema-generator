@@ -1,5 +1,5 @@
 import { AsExpressionNodeParser } from "./../src/NodeParser/AsExpressionNodeParser";
-import * as ts from "typescript";
+import ts from "typescript";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";

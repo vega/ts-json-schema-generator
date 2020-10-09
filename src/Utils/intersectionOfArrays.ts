@@ -1,4 +1,4 @@
-import * as stringify from "json-stable-stringify";
+import stringify from "fast-json-stable-stringify";
 
 export function intersectionOfArrays<T>(a: T[], b: T[]): T[] {
     const output: T[] = [];

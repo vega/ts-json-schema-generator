@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { FunctionType } from "./../Type/FunctionType";

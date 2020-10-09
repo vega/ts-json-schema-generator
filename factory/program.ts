@@ -1,6 +1,6 @@
 import * as glob from "glob";
 import * as path from "path";
-import * as ts from "typescript";
+import ts from "typescript";
 
 import { Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
