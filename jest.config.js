@@ -3,5 +3,6 @@ module.exports = {
     moduleFileExtensions: ["js", "ts", "json"],
     testPathIgnorePatterns: ["<rootDir>/dist/", "<rootDir>/node_modules/", "<rootDir>/build/"],
     coverageDirectory: "./coverage/",
-    collectCoverage: true,
+    collectCoverage: false,
+    testEnvironment: "node",
 };
