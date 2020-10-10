@@ -46,6 +46,7 @@ describe("valid-data-type", () => {
     it("type-typeof-object-property", assertValidSchema("type-typeof-object-property", "MyType"));
     it("type-typeof-enum", assertValidSchema("type-typeof-enum", "MyObject"));
     it("type-typeof-class", assertValidSchema("type-typeof-class", "MyObject"));
+    it("type-keys", assertValidSchema("type-typeof-keys", "MyType"));
 
     it("type-indexed-access-tuple-1", assertValidSchema("type-indexed-access-tuple-1", "MyType"));
     it("type-indexed-access-tuple-2", assertValidSchema("type-indexed-access-tuple-2", "MyType"));
