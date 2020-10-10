@@ -1,3 +1,3 @@
-const FOO =  { bar: "foo" };
+const Foo = { bar: "foo" };
 
-export type MyType = typeof FOO.bar;
+export type MyType = typeof Foo.bar;
