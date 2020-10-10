@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 
 export function symbolAtNode(node: ts.Node): ts.Symbol | undefined {
     return (node as any).symbol;

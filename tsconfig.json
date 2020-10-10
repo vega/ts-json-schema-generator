@@ -1,39 +1,31 @@
 {
-    "compilerOptions": {
-        "target": "es2017",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "isolatedModules": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "declaration": true,
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "noImplicitReturns": true,
-        "suppressExcessPropertyErrors": false,
-        "suppressImplicitAnyIndexErrors": false,
-        "strictNullChecks": true,
-        "preserveConstEnums": true,
-        "removeComments": true,
-        "noLib": false,
-        "sourceMap": true,
-        "pretty": true,
-        "watch": false,
-        "typeRoots": ["node_modules/@types"],
-        "sourceRoot": "src",
-        "outDir": "dist",
-        "incremental": true
-    },
-    "files": [
-        "ts-json-schema-generator.ts",
-        "index.ts"
-    ],
-    "include": [
-        "./src/**/*.ts",
-        "./factory/**/*.ts",
-        "./test/**.ts"
-    ],
-    "exclude": [
-        "dist"
-    ]
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "suppressExcessPropertyErrors": false,
+    "suppressImplicitAnyIndexErrors": false,
+    "strictNullChecks": true,
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "noLib": false,
+    "sourceMap": true,
+    "pretty": true,
+    "watch": false,
+    "typeRoots": ["node_modules/@types"],
+    "sourceRoot": "src",
+    "outDir": "dist",
+    "incremental": true
+  },
+  "files": ["ts-json-schema-generator.ts", "index.ts"],
+  "include": ["./src/**/*.ts", "./factory/**/*.ts", "./test/**.ts"],
+  "exclude": ["dist"]
 }

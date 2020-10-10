@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { NodeParser } from "./NodeParser";
 
 export interface SubNodeParser extends NodeParser {

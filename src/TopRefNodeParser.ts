@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { Context, NodeParser } from "./NodeParser";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";

@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { NoRootTypeError } from "./Error/NoRootTypeError";
 import { Context, NodeParser } from "./NodeParser";
 import { Definition } from "./Schema/Definition";

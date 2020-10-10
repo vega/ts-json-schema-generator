@@ -1,14 +1,13 @@
-import * as stringify from "json-stable-stringify";
+import stringify from "fast-json-stable-stringify";
 import { Node } from "typescript";
-import { isNumber, isString } from "util";
 import { Context } from "../NodeParser";
 
 export function hash(a: unknown): string | number {
-    if (isNumber(a)) {
+    if (typeof a === "number") {
         return a;
     }
 
-    const str = isString(a) ? a : stringify(a);
+    const str = typeof a === "string" ? a : stringify(a);
 
     // short strings can be used as hash directly, longer strings are hashed to reduce memory usage
     if (str.length < 20) {

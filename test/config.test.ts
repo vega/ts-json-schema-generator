@@ -1,7 +1,7 @@
-import * as Ajv from "ajv";
+import Ajv from "ajv";
 import { readFileSync } from "fs";
 import { resolve } from "path";
-import * as ts from "typescript";
+import ts from "typescript";
 
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";

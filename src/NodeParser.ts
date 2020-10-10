@@ -1,5 +1,5 @@
-import * as stringify from "json-stable-stringify";
-import * as ts from "typescript";
+import stringify from "fast-json-stable-stringify";
+import ts from "typescript";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 import { getKey } from "./Utils/nodeKey";

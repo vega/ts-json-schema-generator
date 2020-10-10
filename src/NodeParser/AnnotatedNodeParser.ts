@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader";
 import { Context } from "../NodeParser";

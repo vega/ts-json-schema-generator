@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { UnknownNodeError } from "./Error/UnknownNodeError";
 import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";

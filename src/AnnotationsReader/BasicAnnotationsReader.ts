@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
