@@ -20,10 +20,10 @@ export class CallExpressionParser implements SubNodeParser {
     private createSubContext(node: ts.CallExpression, parentContext: Context): Context {
         const subContext = new Context(node);
 
-        node.arguments.forEach((arg) => {
+        for (const arg of node.arguments) {
             const type = this.childNodeParser.createType(arg, parentContext);
             subContext.pushArgument(type);
-        });
+        }
         return subContext;
     }
 }
