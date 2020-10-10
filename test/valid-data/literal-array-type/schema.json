@@ -3,10 +3,18 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyType": {
-      "items": {
-        "enum": ["abc", "def"],
-        "type": "string"
-      },
+      "items": [
+        {
+          "type": "string",
+          "const": "abc"
+        },
+        {
+          "type": "string",
+          "const": "def"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2,
       "type": "array"
     }
   }

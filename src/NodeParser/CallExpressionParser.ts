@@ -2,9 +2,6 @@ import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { TupleType } from "../Type/TupleType";
-import { UnionType } from "../Type/UnionType";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -14,10 +11,19 @@ export class CallExpressionParser implements SubNodeParser {
     }
     public createType(node: ts.CallExpression, context: Context): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
+        const symbol = type.symbol || type.aliasSymbol;
+        const decl = symbol.valueDeclaration || symbol.declarations[0];
+        const subContext = this.createSubContext(node, context);
+        return this.childNodeParser.createType(decl, subContext)!;
+    }
 
-        // FIXME: make this general
-        return new TupleType([
-            new UnionType((type as any).typeArguments[0].types.map((t: any) => new LiteralType(t.value))),
-        ]);
+    private createSubContext(node: ts.CallExpression, parentContext: Context): Context {
+        const subContext = new Context(node);
+
+        node.arguments.forEach((arg) => {
+            const type = this.childNodeParser.createType(arg, parentContext);
+            subContext.pushArgument(type);
+        });
+        return subContext;
     }
 }
