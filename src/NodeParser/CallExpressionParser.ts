@@ -1,7 +1,10 @@
+import { TupleType } from "./../Type/TupleType";
 import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { UnionType } from "../Type/UnionType";
+import { LiteralType } from "../Type/LiteralType";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -11,6 +14,14 @@ export class CallExpressionParser implements SubNodeParser {
     }
     public createType(node: ts.CallExpression, context: Context): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
+
+        // FIXME: remove special case
+        if ("typeArguments" in type) {
+            return new TupleType([
+                new UnionType((type as any).typeArguments[0].types.map((t: any) => new LiteralType(t.value))),
+            ]);
+        }
+
         const symbol = type.symbol || type.aliasSymbol;
         const decl = symbol.valueDeclaration || symbol.declarations[0];
         const subContext = this.createSubContext(node, context);
