@@ -5,4 +5,7 @@ module.exports = {
     coverageDirectory: "./coverage/",
     collectCoverage: false,
     testEnvironment: "node",
+    transform: {
+        ".*": "babel-jest",
+    },
 };
