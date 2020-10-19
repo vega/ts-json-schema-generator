@@ -137,3 +137,7 @@ Run the schema generator via `node main.js`.
 And connect via the debugger protocol.
 
 [AST Explorer](https://astexplorer.net/) is amazing for developers of this tool!
+
+### Debug Vega-Lite
+
+To debug Vega-Lite's schema generation, you can clone Vega-Lite in the same directory as this library and run `yarn run debug -f ../vega-lite/tsconfig.json -p ../vega-lite/src/index.ts -t TopLevelSpec --no-type-check`.
