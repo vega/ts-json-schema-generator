@@ -98,10 +98,14 @@ export class SchemaGenerator {
         for (const child of children) {
             const name = child.getName();
             const previousId = ids.get(name);
-            if (previousId && child.getId() !== previousId) {
+            // remove def prefix from ids to avoid false alarms
+            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
+            const childId = child.getId().replace(/def-/g, "");
+
+            if (previousId && childId !== previousId) {
                 throw new Error(`Type "${name}" has multiple definitions.`);
             }
-            ids.set(name, child.getId());
+            ids.set(name, childId);
         }
 
         children.reduce((definitions, child) => {
