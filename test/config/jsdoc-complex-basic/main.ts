@@ -22,6 +22,19 @@ export interface MyObject {
     numberValue: number;
 
     /**
+     * @title Required value
+     */
+    requiredValue: number | string;
+    /**
+     * @title Nullable value
+     */
+    nullableValue: number | string |null;
+    /**
+     * @title Optional value
+     */
+    optionalValue: number | string | undefined;
+
+    /**
      * Some ignored comment description
      *
      * @description Export field description

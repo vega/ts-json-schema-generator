@@ -18,6 +18,18 @@
           "exclusiveMaximum": 10,
           "multipleOf": 3
         },
+        "requiredValue": {
+          "type": ["number", "string"],
+          "title": "Required value"
+        },
+        "nullableValue": {
+          "type": ["number", "string", "null"],
+          "title": "Nullable value"
+        },
+        "optionalValue": {
+          "type": ["number", "string"],
+          "title": "Optional value"
+        },
         "privateString": {
           "type": "string",
           "title": "My private string",
@@ -43,15 +55,14 @@
           "title": "Non empty array"
         },
         "number": {
-          "type": [
-            "number",
-            "null"
-          ]
+          "type": ["number", "null"]
         }
       },
       "required": [
         "stringValue",
         "numberValue",
+        "requiredValue",
+        "nullableValue",
         "exportString",
         "privateString",
         "numberArray",

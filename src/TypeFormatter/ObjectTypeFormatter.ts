@@ -95,6 +95,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     private prepareObjectProperty(property: ObjectProperty): ObjectProperty {
         const propertyType = property.getType();
         const propType = derefType(propertyType);
+
         if (propType instanceof UndefinedType) {
             return new ObjectProperty(property.getName(), propertyType, false);
         } else if (!(propType instanceof UnionType)) {

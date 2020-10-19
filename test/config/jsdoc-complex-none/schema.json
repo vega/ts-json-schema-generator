@@ -10,6 +10,15 @@
         "numberValue": {
           "type": "number"
         },
+        "requiredValue": {
+          "type": ["number", "string"]
+        },
+        "nullableValue": {
+          "type": ["number", "string", "null"]
+        },
+        "optionalValue": {
+          "type": ["number", "string"]
+        },
         "privateString": {
           "type": "string"
         },
@@ -26,6 +35,8 @@
       "required": [
         "stringValue",
         "numberValue",
+        "requiredValue",
+        "nullableValue",
         "exportString",
         "privateString",
         "numberArray",
