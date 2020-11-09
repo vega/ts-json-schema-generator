@@ -1,9 +1,10 @@
 import { UnknownTypeError } from "./Error/UnknownTypeError";
+import { MutableTypeFormatter } from "./MutableTypeFormatter";
 import { Definition } from "./Schema/Definition";
 import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
 
-export class ChainTypeFormatter implements SubTypeFormatter {
+export class ChainTypeFormatter implements SubTypeFormatter, MutableTypeFormatter {
     public constructor(private typeFormatters: SubTypeFormatter[]) {}
 
     public addTypeFormatter(typeFormatter: SubTypeFormatter): this {
