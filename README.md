@@ -86,7 +86,7 @@ export class MyFunctionTypeFormatter implements SubTypeFormatter {
 }
 ```
 
-2. Then we add the formatter as a child to the core formatter using the configuration callback:
+2. Then we add the formatter as a child to the core formatter using the augmentation callback:
 
 ```ts
 import { createProgram, createParser, SchemaGenerator, createFormatter } from 'ts-json-schema-generator';

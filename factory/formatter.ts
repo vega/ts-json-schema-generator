@@ -29,7 +29,7 @@ import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 
 export type FormatterAugmentor = (formatter: MutableTypeFormatter) => void;
 
-export function createFormatter(config: Config, configurator?: FormatterAugmentor): TypeFormatter {
+export function createFormatter(config: Config, augmentor?: FormatterAugmentor): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 
@@ -65,8 +65,8 @@ export function createFormatter(config: Config, configurator?: FormatterAugmento
         .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
 
-    if (configurator) {
-        configurator(chainTypeFormatter);
+    if (augmentor) {
+        augmentor(chainTypeFormatter);
     }
 
     return circularReferenceTypeFormatter;
