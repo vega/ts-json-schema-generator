@@ -27,9 +27,9 @@ import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter"
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 
-export type FormatterConfigurator = (formatter: MutableTypeFormatter) => void;
+export type FormatterAugmentor = (formatter: MutableTypeFormatter) => void;
 
-export function createFormatter(config: Config, configurator?: FormatterConfigurator): TypeFormatter {
+export function createFormatter(config: Config, configurator?: FormatterAugmentor): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 

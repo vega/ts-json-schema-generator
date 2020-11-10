@@ -3,7 +3,7 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
 
-import { createFormatter, FormatterConfigurator } from "../factory/formatter";
+import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
@@ -19,7 +19,7 @@ function assertSchema(
     name: string,
     userConfig: Config & { type: string },
     tsconfig?: boolean,
-    formatterConfigurator?: FormatterConfigurator
+    formatterAugmentor?: FormatterAugmentor
 ) {
     return () => {
         const config: Config = {
@@ -37,7 +37,7 @@ function assertSchema(
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config, formatterConfigurator),
+            createFormatter(config, formatterAugmentor),
             config
         );
 
