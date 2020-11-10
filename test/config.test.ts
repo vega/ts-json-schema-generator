@@ -19,7 +19,7 @@ function assertSchema(
     name: string,
     userConfig: Config & { type: string },
     tsconfig?: boolean,
-    formatterAugmentor?: FormatterAugmentor
+    augmentor?: FormatterAugmentor
 ) {
     return () => {
         const config: Config = {
