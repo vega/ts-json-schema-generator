@@ -51,6 +51,69 @@ fs.writeFile(output_path, schemaString, (err) => {
 
 Run the schema generator via `node main.js`.
 
+### Custom formatting
+
+Extending the built-in formatting is possible by creating a custom formatter and adding it to the main formatter:
+
+1. First we create a formatter, in this case for formatting function types:
+
+```ts
+// my-function-formatter.ts
+import { BaseType, Definition, FunctionType, SubTypeFormatter } from 'ts-json-schema-generator';
+
+export class MyFunctionTypeFormatter implements SubTypeFormatter {
+
+    public supportsType(type: FunctionType): boolean {
+        return type instanceof FunctionType;
+    }
+
+    public getDefinition(_type: FunctionType): Definition {
+        // Return a custom schema for the function property.
+        return {
+            type: "object",
+            properties: {
+                isFunction: {
+                    type: "boolean",
+                    const: true,
+                },
+            },
+        };
+    }
+
+    public getChildren(_type: FunctionType): BaseType[] {
+        return [];
+    }
+}
+```
+
+2. Then we add the formatter as a child to the core formatter using the augmentation callback:
+
+```ts
+import { createProgram, createParser, SchemaGenerator, createFormatter } from 'ts-json-schema-generator';
+import { MyFunctionTypeFormatter } from './my-function-formatter.ts';
+import fs from 'fs'
+
+const config = {
+    path: "path/to/source/file",
+    tsconfig: "path/to/tsconfig.json",
+    type: "*", // Or <type-name> if you want to generate schema for that one type only
+};
+
+// We configure the formatter an add our custom formatter to it.
+const formatter = createFormatter(config, fmt => {
+    fmt.addTypeFormatter(new MyFunctionTypeFormatter());
+});
+
+const program = createProgram(config);
+const generator = new SchemaGenerator(program, parser, formatter, config);
+const schema = generator.createSchema(config.type);
+
+const schemaString = JSON.stringify(schema, null, 2);
+fs.writeFile(output_path, schemaString, (err) => {
+    if (err) throw err;
+});
+```
+
 ## Options
 
 ```

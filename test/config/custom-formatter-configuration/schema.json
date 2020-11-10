@@ -1,0 +1,131 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ExportInterface": {
+            "type": "object",
+            "properties": {
+                "exportValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "exportValue"
+            ],
+            "additionalProperties": false
+        },
+        "ExportAlias": {
+            "$ref": "#/definitions/ExportInterface"
+        },
+        "MixedAlias": {
+            "type": "object",
+            "properties": {
+                "privateValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "privateValue"
+            ],
+            "additionalProperties": false
+        },
+        "PublicAnonymousTypeLiteral": {
+            "type": "object",
+            "properties": {
+                "publicValue": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "publicValue"
+            ],
+            "additionalProperties": false
+        },
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "exportInterface": {
+                    "$ref": "#/definitions/ExportInterface"
+                },
+                "exportAlias": {
+                    "$ref": "#/definitions/ExportAlias"
+                },
+                "privateInterface": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "privateAlias": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "mixedInterface": {
+                    "type": "object",
+                    "properties": {
+                        "mixedValue": {
+                            "$ref": "#/definitions/ExportAlias"
+                        }
+                    },
+                    "required": [
+                        "mixedValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "mixedAlias": {
+                    "$ref": "#/definitions/MixedAlias"
+                },
+                "publicAnonymousTypeLiteral": {
+                    "$ref": "#/definitions/PublicAnonymousTypeLiteral"
+                },
+                "privateAnonymousTypeLiteral": {
+                    "type": "object",
+                    "properties": {
+                        "privateValue": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "privateValue"
+                    ],
+                    "additionalProperties": false
+                },
+                "exportedFunction": {
+                    "type": "object",
+                    "properties": {
+                        "isFunction": {
+                            "type": "boolean",
+                            "const": true
+                        }
+                    }
+                }
+            },
+            "required": [
+                "exportInterface",
+                "exportAlias",
+                "privateInterface",
+                "privateAlias",
+                "mixedInterface",
+                "mixedAlias",
+                "publicAnonymousTypeLiteral",
+                "privateAnonymousTypeLiteral",
+                "exportedFunction"
+            ],
+            "additionalProperties": false
+        }
+    }
+}

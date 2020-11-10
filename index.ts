@@ -35,6 +35,7 @@ export * from "./src/Type/AliasType";
 export * from "./src/Type/ReferenceType";
 export * from "./src/Type/DefinitionType";
 export * from "./src/Type/AnnotatedType";
+export * from "./src/Type/FunctionType";
 
 export * from "./src/AnnotationsReader";
 export * from "./src/AnnotationsReader/BasicAnnotationsReader";
@@ -43,6 +44,7 @@ export * from "./src/AnnotationsReader/ExtendedAnnotationsReader";
 export * from "./src/TypeFormatter";
 export * from "./src/SubTypeFormatter";
 export * from "./src/ChainTypeFormatter";
+export * from "./src/MutableTypeFormatter";
 export * from "./src/CircularReferenceTypeFormatter";
 export * from "./src/TypeFormatter/AnyTypeFormatter";
 export * from "./src/TypeFormatter/UnknownTypeFormatter";

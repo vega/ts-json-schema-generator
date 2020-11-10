@@ -25,8 +25,11 @@ import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormat
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
+import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 
-export function createFormatter(config: Config): TypeFormatter {
+export type FormatterAugmentor = (formatter: MutableTypeFormatter) => void;
+
+export function createFormatter(config: Config, augmentor?: FormatterAugmentor): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 
@@ -61,6 +64,10 @@ export function createFormatter(config: Config): TypeFormatter {
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
+
+    if (augmentor) {
+        augmentor(chainTypeFormatter);
+    }
 
     return circularReferenceTypeFormatter;
 }

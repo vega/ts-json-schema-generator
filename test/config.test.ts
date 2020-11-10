@@ -3,15 +3,24 @@ import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
 
-import { createFormatter } from "../factory/formatter";
+import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { SubTypeFormatter } from "../src/SubTypeFormatter";
+import { BaseType } from "../src/Type/BaseType";
+import { FunctionType } from "../src/Type/FunctionType";
 
 const basePath = "test/config";
 
-function assertSchema(name: string, userConfig: Config & { type: string }, tsconfig?: boolean) {
+function assertSchema(
+    name: string,
+    userConfig: Config & { type: string },
+    tsconfig?: boolean,
+    augmentor?: FormatterAugmentor
+) {
     return () => {
         const config: Config = {
             ...DEFAULT_CONFIG,
@@ -28,7 +37,7 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config),
+            createFormatter(config, augmentor),
             config
         );
 
@@ -49,6 +58,26 @@ function assertSchema(name: string, userConfig: Config & { type: string }, tscon
 
         validator.compile(actual); // Will find MissingRef errors
     };
+}
+
+export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
+    public supportsType(type: FunctionType): boolean {
+        return type instanceof FunctionType;
+    }
+    public getDefinition(_type: FunctionType): Definition {
+        return {
+            type: "object",
+            properties: {
+                isFunction: {
+                    type: "boolean",
+                    const: true,
+                },
+            },
+        };
+    }
+    public getChildren(_type: FunctionType): BaseType[] {
+        return [];
+    }
 }
 
 describe("config", () => {
@@ -247,5 +276,17 @@ describe("config", () => {
             type: "MyObject",
             additionalProperties: true,
         })
+    );
+
+    it(
+        "custom-formatter-configuration",
+        assertSchema(
+            "custom-formatter-configuration",
+            {
+                type: "MyObject",
+            },
+            false,
+            (formatter) => formatter.addTypeFormatter(new ExampleFunctionTypeFormatter())
+        )
     );
 });
