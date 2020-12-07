@@ -19,11 +19,11 @@ export class UnionType extends BaseType {
     }
 
     public getId(): string {
-        return "(" + this.types.map((type) => type.getId()).join("|") + ")";
+        return `(${this.types.map((type) => type.getId()).join("|")})`;
     }
 
     public getName(): string {
-        return "(" + this.types.map((type) => type.getName()).join("|") + ")";
+        return `(${this.types.map((type) => type.getName()).join("|")})`;
     }
 
     public getTypes(): BaseType[] {
