@@ -37,7 +37,7 @@ function combineIntersectingTypes(intersection: IntersectionType): BaseType[] {
     if (objectTypes.length === 1) {
         combined.push(objectTypes[0]);
     } else if (objectTypes.length > 1) {
-        combined.push(new ObjectType("combined-objects-" + intersection.getId(), objectTypes, [], false));
+        combined.push(new ObjectType(`combined-objects-${intersection.getId()}`, objectTypes, [], false));
     }
     return combined;
 }

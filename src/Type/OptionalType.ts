@@ -6,7 +6,7 @@ export class OptionalType extends BaseType {
     }
 
     public getId(): string {
-        return this.item.getId() + "?";
+        return `${this.item.getId()}?`;
     }
 
     public getType(): BaseType {
