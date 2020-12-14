@@ -13,8 +13,6 @@ import { SubTypeFormatter } from "../src/SubTypeFormatter";
 import { BaseType } from "../src/Type/BaseType";
 import { EnumType } from "../src/Type/EnumType";
 import { FunctionType } from "../src/Type/FunctionType";
-import { typeName } from "../src/Utils/typeName";
-import { uniqueArray } from "../src/Utils/uniqueArray";
 
 const basePath = "test/config";
 
@@ -89,17 +87,17 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: EnumType): Definition {
         return {
-            type: 'object',
+            type: "object",
             properties: {
                 isEnum: {
-                    type: 'boolean',
-                    const: true
+                    type: "boolean",
+                    const: true,
                 },
                 enumLength: {
-                    type: 'number',
-                    const: type.getValues().length
-                }
-            }
+                    type: "number",
+                    const: type.getValues().length,
+                },
+            },
         };
     }
     public getChildren(_type: EnumType): BaseType[] {
