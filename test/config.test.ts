@@ -11,7 +11,10 @@ import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { SubTypeFormatter } from "../src/SubTypeFormatter";
 import { BaseType } from "../src/Type/BaseType";
+import { EnumType } from "../src/Type/EnumType";
 import { FunctionType } from "../src/Type/FunctionType";
+import { typeName } from "../src/Utils/typeName";
+import { uniqueArray } from "../src/Utils/uniqueArray";
 
 const basePath = "test/config";
 
@@ -76,6 +79,30 @@ export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
         };
     }
     public getChildren(_type: FunctionType): BaseType[] {
+        return [];
+    }
+}
+
+export class ExampleEnumTypeFormatter implements SubTypeFormatter {
+    public supportsType(type: EnumType): boolean {
+        return type instanceof EnumType;
+    }
+    public getDefinition(type: EnumType): Definition {
+        return {
+            type: 'object',
+            properties: {
+                isEnum: {
+                    type: 'boolean',
+                    const: true
+                },
+                enumLength: {
+                    type: 'number',
+                    const: type.getValues().length
+                }
+            }
+        };
+    }
+    public getChildren(_type: EnumType): BaseType[] {
         return [];
     }
 }
@@ -287,6 +314,18 @@ describe("config", () => {
             },
             false,
             (formatter) => formatter.addTypeFormatter(new ExampleFunctionTypeFormatter())
+        )
+    );
+
+    it(
+        "custom-formatter-configuration-override",
+        assertSchema(
+            "custom-formatter-configuration-override",
+            {
+                type: "MyObject",
+            },
+            false,
+            (formatter) => formatter.addTypeFormatter(new ExampleEnumTypeFormatter())
         )
     );
 });
