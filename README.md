@@ -105,6 +105,7 @@ const formatter = createFormatter(config, fmt => {
 });
 
 const program = createProgram(config);
+const parser = createParser(program, config);
 const generator = new SchemaGenerator(program, parser, formatter, config);
 const schema = generator.createSchema(config.type);
 
