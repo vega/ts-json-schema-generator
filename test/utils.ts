@@ -1,4 +1,5 @@
 import Ajv from "ajv";
+import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
@@ -8,10 +9,8 @@ import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const validator = new Ajv({
-    extendRefs: "fail",
-    format: "full",
-});
+const validator = new Ajv();
+addFormats(validator);
 
 const basePath = "test/valid-data";
 
@@ -51,8 +50,14 @@ export function assertValidSchema(
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
 
-        validator.validateSchema(actual);
-        expect(validator.errors).toBeNull();
-        validator.compile(actual); // Will find MissingRef errors
+        let localValidator = validator;
+        if (extraTags) {
+            localValidator = new Ajv({ strict: false });
+            addFormats(localValidator);
+        }
+
+        localValidator.validateSchema(actual);
+        expect(localValidator.errors).toBeNull();
+        localValidator.compile(actual); // Will find MissingRef errors
     };
 }
