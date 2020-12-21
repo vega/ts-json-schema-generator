@@ -1,8 +1,8 @@
 import Ajv from "ajv";
+import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
-
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
@@ -49,10 +49,11 @@ function assertSchema(
         expect(actual).toEqual(expected);
 
         const validator = new Ajv({
-            extendRefs: "fail",
             // skip full check if we are not encoding refs
-            format: config.encodeRefs === false ? undefined : "full",
+            validateFormats: config.encodeRefs === false ? undefined : true,
         });
+
+        addFormats(validator);
 
         validator.validateSchema(actual);
         expect(validator.errors).toBeNull();
