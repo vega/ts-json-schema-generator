@@ -19,7 +19,7 @@ const args = commander
     .option("--no-ref-encode", "Do not encode references")
     .option("-o, --out <file>", "Set the output file (default: stdout)")
     .option(
-        "--validationKeywords [value]",
+        "--validation-keywords [value]",
         "Provide additional validation keywords to include",
         (value: string, list: string[]) => list.concat(value),
         []
