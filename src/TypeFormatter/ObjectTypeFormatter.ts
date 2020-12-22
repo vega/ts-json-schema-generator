@@ -82,12 +82,9 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             type: "object",
             ...(Object.keys(properties).length > 0 ? { properties } : {}),
             ...(required.length > 0 ? { required } : {}),
-            ...(
-                (
-                    additionalProperties === true
-                    || additionalProperties instanceof AnyType
-                    || additionalProperties instanceof SymbolType
-                )
+            ...(additionalProperties === true ||
+            additionalProperties instanceof AnyType ||
+            additionalProperties instanceof SymbolType
                 ? {}
                 : {
                       additionalProperties:
