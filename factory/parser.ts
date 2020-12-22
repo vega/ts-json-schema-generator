@@ -33,6 +33,7 @@ import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryEx
 import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
+import { SymbolTypeNodeParser } from "../src/NodeParser/SymbolTypeNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
 import { TypeAliasNodeParser } from "../src/NodeParser/TypeAliasNodeParser";
 import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
@@ -79,6 +80,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     chainNodeParser
         .addNodeParser(new HiddenNodeParser(typeChecker))
         .addNodeParser(new StringTypeNodeParser())
+        .addNodeParser(new SymbolTypeNodeParser())
         .addNodeParser(new NumberTypeNodeParser())
         .addNodeParser(new BooleanTypeNodeParser())
         .addNodeParser(new AnyTypeNodeParser())
