@@ -59,10 +59,9 @@ Extending the built-in formatting is possible by creating a custom formatter and
 
 ```ts
 // my-function-formatter.ts
-import { BaseType, Definition, FunctionType, SubTypeFormatter } from 'ts-json-schema-generator';
+import { BaseType, Definition, FunctionType, SubTypeFormatter } from "ts-json-schema-generator";
 
 export class MyFunctionTypeFormatter implements SubTypeFormatter {
-
     public supportsType(type: FunctionType): boolean {
         return type instanceof FunctionType;
     }
@@ -89,9 +88,9 @@ export class MyFunctionTypeFormatter implements SubTypeFormatter {
 2. Then we add the formatter as a child to the core formatter using the augmentation callback:
 
 ```ts
-import { createProgram, createParser, SchemaGenerator, createFormatter } from 'ts-json-schema-generator';
-import { MyFunctionTypeFormatter } from './my-function-formatter.ts';
-import fs from 'fs'
+import { createProgram, createParser, SchemaGenerator, createFormatter } from "ts-json-schema-generator";
+import { MyFunctionTypeFormatter } from "./my-function-formatter.ts";
+import fs from "fs";
 
 const config = {
     path: "path/to/source/file",
@@ -100,7 +99,7 @@ const config = {
 };
 
 // We configure the formatter an add our custom formatter to it.
-const formatter = createFormatter(config, fmt => {
+const formatter = createFormatter(config, (fmt) => {
     fmt.addTypeFormatter(new MyFunctionTypeFormatter());
 });
 
@@ -163,7 +162,7 @@ fs.writeFile(output_path, schemaString, (err) => {
 --no-ref-encode
     Do not encode references. According to the standard, references must be valid URIs but some tools do not support encoded references.
 
---validationKeywords
+--validation-keywords
     Provide additional validation keywords to include.
 
 -o, --out
