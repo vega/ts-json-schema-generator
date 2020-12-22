@@ -1,6 +1,7 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnyType } from "../Type/AnyType";
+import { SymbolType } from "../Type/SymbolType";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { UndefinedType } from "../Type/UndefinedType";
@@ -81,7 +82,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             type: "object",
             ...(Object.keys(properties).length > 0 ? { properties } : {}),
             ...(required.length > 0 ? { required } : {}),
-            ...(additionalProperties === true || additionalProperties instanceof AnyType
+            ...(additionalProperties === true || additionalProperties instanceof AnyType || additionalProperties instanceof SymbolType
                 ? {}
                 : {
                       additionalProperties:

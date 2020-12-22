@@ -15,6 +15,7 @@ import { getKey } from "../Utils/nodeKey";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 import { notUndefined } from "../Utils/notUndefined";
+import { SymbolType } from "../Type/SymbolType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
@@ -39,7 +40,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
-        } else if (keyListType instanceof StringType) {
+        } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
             return type === undefined ? undefined : new ObjectType(id, [], [], type);

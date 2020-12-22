@@ -74,6 +74,7 @@ describe("valid-data-type", () => {
     it("type-mapped-enum-null", assertValidSchema("type-mapped-enum-null", "MyObject"));
     it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject", "extended"));
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject", "extended"));
+    it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
 
     it("type-conditional-simple", assertValidSchema("type-conditional-simple", "MyObject"));
     it("type-conditional-inheritance", assertValidSchema("type-conditional-inheritance", "MyObject"));

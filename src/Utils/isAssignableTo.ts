@@ -16,6 +16,7 @@ import { LiteralType, LiteralValue } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
 import { NumberType } from "../Type/NumberType";
 import { BooleanType } from "../Type/BooleanType";
+import { SymbolType } from "../Type/SymbolType";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -69,6 +70,8 @@ function getPrimitiveType(value: LiteralValue) {
             return new NumberType();
         case "boolean":
             return new BooleanType();
+        case "symbol":
+            return new SymbolType();
     }
 }
 

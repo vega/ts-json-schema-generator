@@ -5,6 +5,7 @@ import { TypeFormatter } from "../src/TypeFormatter";
 import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter";
 import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter";
 import { AnyTypeFormatter } from "../src/TypeFormatter/AnyTypeFormatter";
+import { SymbolTypeFormatter } from "../src/TypeFormatter/SymbolTypeFormatter";
 import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
@@ -44,6 +45,7 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
         .addTypeFormatter(new NumberTypeFormatter())
         .addTypeFormatter(new BooleanTypeFormatter())
         .addTypeFormatter(new NullTypeFormatter())
+        .addTypeFormatter(new SymbolTypeFormatter())
 
         .addTypeFormatter(new AnyTypeFormatter())
         .addTypeFormatter(new UndefinedTypeFormatter())
