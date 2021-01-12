@@ -58,7 +58,7 @@ try {
         });
     } else {
         // write to stdout
-        process.stdout.write(schemaString);
+        process.stdout.write(`${schemaString}\n` );
     }
 } catch (error) {
     if (error instanceof BaseError) {
