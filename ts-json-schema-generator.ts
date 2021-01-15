@@ -1,18 +1,25 @@
-import commander from "commander";
+import commander, { Option } from "commander";
 import { writeFile } from "fs";
 import stringify from "json-stable-stringify";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
+import * as pkg from "./package.json";
 
 const args = commander
     .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
-    .option("-e, --expose <expose>", "Type exposing", /^(all|none|export)$/, "export")
-    .option("-j, --jsDoc <extended>", "Read JsDoc annotations", /^(none|basic|extended)$/, "extended")
+    .addOption(
+        new Option("-e, --expose <expose>", "Type exposing").choices(["all", "none", "export"]).default("export")
+    )
+    .addOption(
+        new Option("-j, --jsDoc <extended>", "Read JsDoc annotations")
+            .choices(["none", "basic", "extended"])
+            .default("extended")
+    )
     .option("--unstable", "Do not sort properties")
     .option("--strict-tuples", "Do not allow additional items on tuples")
     .option("--no-top-ref", "Do not create a top-level $ref definition")
@@ -30,7 +37,9 @@ const args = commander
         "Allow additional properties for objects with no index signature (default: false)",
         false
     )
-    .parse(process.argv);
+    .version(pkg.version)
+    .parse(process.argv)
+    .opts();
 
 const config: Config = {
     ...DEFAULT_CONFIG,
@@ -60,7 +69,7 @@ try {
         });
     } else {
         // write to stdout
-        process.stdout.write(`${schemaString}\n` );
+        process.stdout.write(`${schemaString}\n`);
     }
 } catch (error) {
     if (error instanceof BaseError) {
