@@ -16,6 +16,7 @@
     "strictNullChecks": true,
     "preserveConstEnums": true,
     "removeComments": true,
+    "resolveJsonModule": true,
     "noLib": false,
     "sourceMap": true,
     "pretty": true,
