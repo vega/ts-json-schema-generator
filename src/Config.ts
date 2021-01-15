@@ -1,6 +1,7 @@
 export interface Config {
     path?: string;
     type?: string;
+    schemaId?: string;
     tsconfig?: string;
     expose?: "all" | "none" | "export";
     topRef?: boolean;
@@ -13,7 +14,7 @@ export interface Config {
     additionalProperties?: boolean;
 }
 
-export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "tsconfig"> = {
+export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig"> = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",

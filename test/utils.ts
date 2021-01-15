@@ -18,7 +18,8 @@ export function assertValidSchema(
     relativePath: string,
     type?: string,
     jsDoc: Config["jsDoc"] = "none",
-    extraTags?: Config["extraTags"]
+    extraTags?: Config["extraTags"],
+    schemaId?: Config["schemaId"]
 ) {
     return (): void => {
         const config: Config = {
@@ -29,11 +30,16 @@ export function assertValidSchema(
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
+        if (schemaId) {
+            config.schemaId = schemaId;
+        }
+
         const program: ts.Program = createProgram(config);
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config)
+            createFormatter(config),
+            config
         );
 
         const schema = generator.createSchema(type);
