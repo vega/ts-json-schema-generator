@@ -2,7 +2,10 @@ import { assertValidSchema } from "./utils";
 
 describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
-    it("type-aliases-primitive-with-id", assertValidSchema("type-aliases-primitive-with-id", "MyString", "none", undefined, "testId"));
+    it(
+        "type-aliases-primitive-with-id",
+        assertValidSchema("type-aliases-primitive-with-id", "MyString", "none", undefined, "testId")
+    );
     it("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
     it("type-aliases-mixed", assertValidSchema("type-aliases-mixed", "MyObject"));
     it("type-aliases-union", assertValidSchema("type-aliases-union", "MyUnion"));

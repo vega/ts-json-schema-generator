@@ -20,7 +20,6 @@ export function assertValidSchema(
     jsDoc: Config["jsDoc"] = "none",
     extraTags?: Config["extraTags"],
     schemaId?: Config["schemaId"]
-
 ) {
     return (): void => {
         const config: Config = {
