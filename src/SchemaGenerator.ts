@@ -38,11 +38,15 @@ export class SchemaGenerator {
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        return {
+        const jsonSchema = {
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+        if (this.config?.schemaId) {
+            jsonSchema.$id = this.config.schemaId;
+        }
+        return jsonSchema;
     }
 
     private getRootNodes(fullName: string | undefined) {

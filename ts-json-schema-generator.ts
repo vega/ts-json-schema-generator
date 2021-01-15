@@ -9,6 +9,7 @@ import { formatError } from "./src/Utils/formatError";
 const args = commander
     .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
+    .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .option("-e, --expose <expose>", "Type exposing", /^(all|none|export)$/, "export")
     .option("-j, --jsDoc <extended>", "Read JsDoc annotations", /^(none|basic|extended)$/, "extended")
@@ -36,6 +37,7 @@ const config: Config = {
     path: args.path,
     tsconfig: args.tsconfig,
     type: args.type,
+    schemaId: args.id,
     expose: args.expose,
     topRef: args.topRef,
     jsDoc: args.jsDoc,

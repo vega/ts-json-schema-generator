@@ -124,6 +124,9 @@ fs.writeFile(output_path, schemaString, (err) => {
     The type the generated schema will represent. If omitted, the generated schema will contain all
     types found in the files matching path. The same is true if '*' is specified.
 
+-i, --id 'generatedSchemaId'
+    The `$id` of the generated schema. If omitted, there will be no `$id`.
+
 -e, --expose <all|none|export>
     all: Create shared $ref definitions for all types.
     none: Do not create shared $ref definitions.
