@@ -14,8 +14,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: actions/setup-node@v1
-        with:
-          registry-url: "https://registry.npmjs.org"
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
       - run: yarn semantic-release
