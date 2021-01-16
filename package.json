@@ -10,7 +10,9 @@
   "files": [
     "dist",
     "src",
-    "factory"
+    "factory",
+    "index.ts",
+    "ts-json-schema-generator.ts"
   ],
   "author": {
     "name": "Alexander Evtushenko",
