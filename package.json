@@ -11,8 +11,8 @@
     "dist",
     "src",
     "factory",
-    "index.ts",
-    "ts-json-schema-generator.ts"
+    "index.*",
+    "ts-json-schema-generator.*"
   ],
   "author": {
     "name": "Alexander Evtushenko",
