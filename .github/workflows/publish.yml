@@ -1,24 +1,24 @@
 name: Publish
 
-on:
-  push:
-    tags:
-      - 'v*'
+on: workflow_dispatch
 
 jobs:
   publish:
     runs-on: ubuntu-latest
 
-    name: Publish to NPM
+    name: Make a release and publish to NPM
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
       - uses: actions/setup-node@v1
         with:
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
-      - run: yarn build
-      - run: npm publish
+      - run: npx -p @semantic-release/git -p semantic-release semantic-release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
