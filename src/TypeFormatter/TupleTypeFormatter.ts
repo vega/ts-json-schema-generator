@@ -21,7 +21,8 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         const restElements = subTypes.filter((t) => t instanceof RestType) as RestType[];
         const restType = restElements.length ? restElements[0].getType().getItem() : undefined;
 
-        // When the tuple is of the form [A, A, A] or [A, A, A, ...A[]], generate a simple array with minItems instead.
+        // When the tuple is of the form [A, A, A] or [A, A, A, ...A[]], generate a simple array
+        // with minItems (and possibly maxItems) instead.
         const isUniformArray =
             requiredElements.length > 0 &&
             optionalElements.length === 0 &&
@@ -32,16 +33,16 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         if (isUniformArray) {
             return {
                 type: "array",
-                minItems: requiredElements.length,
                 items: this.childTypeFormatter.getDefinition(requiredElements[0]),
+                minItems: requiredElements.length,
                 ...(restType ? {} : { maxItems: requiredElements.length }),
             };
         }
 
         const requiredDefinitions = requiredElements.map((item) => this.childTypeFormatter.getDefinition(item));
         const optionalDefinitions = optionalElements.map((item) => this.childTypeFormatter.getDefinition(item));
-        const restDefinition = restType ? this.childTypeFormatter.getDefinition(restType) : undefined;
         const itemsTotal = requiredDefinitions.length + optionalDefinitions.length;
+        const restDefinition = restType ? this.childTypeFormatter.getDefinition(restType) : undefined;
 
         return {
             type: "array",
