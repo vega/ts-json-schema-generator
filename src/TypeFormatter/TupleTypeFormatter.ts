@@ -19,28 +19,28 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         const requiredElements = subTypes.filter((t) => !(t instanceof OptionalType) && !(t instanceof RestType));
         const optionalElements = subTypes.filter((t) => t instanceof OptionalType) as OptionalType[];
         const restElements = subTypes.filter((t) => t instanceof RestType) as RestType[];
-
         const restType = restElements.length ? restElements[0].getType().getItem() : undefined;
-        const restDefinition = restType ? this.childTypeFormatter.getDefinition(restType) : undefined;
 
-        // When the tuple is of the form [A, A, A, ...A[]], generate a simple array with minItems instead.
+        // When the tuple is of the form [A, A, A] or [A, A, A, ...A[]], generate a simple array with minItems instead.
         const isUniformArray =
             requiredElements.length > 0 &&
             optionalElements.length === 0 &&
-            restElements.length === 1 &&
             requiredElements.slice(1).every((item) => item.getId() === requiredElements[0].getId()) &&
-            restType?.getId() === requiredElements[0].getId();
+            (restElements.length === 0 ||
+                (restElements.length === 1 && restType?.getId() === requiredElements[0].getId()));
 
         if (isUniformArray) {
             return {
                 type: "array",
                 minItems: requiredElements.length,
-                items: restDefinition,
+                items: this.childTypeFormatter.getDefinition(requiredElements[0]),
+                ...(restType ? {} : { maxItems: requiredElements.length }),
             };
         }
 
         const requiredDefinitions = requiredElements.map((item) => this.childTypeFormatter.getDefinition(item));
         const optionalDefinitions = optionalElements.map((item) => this.childTypeFormatter.getDefinition(item));
+        const restDefinition = restType ? this.childTypeFormatter.getDefinition(restType) : undefined;
         const itemsTotal = requiredDefinitions.length + optionalDefinitions.length;
 
         return {
