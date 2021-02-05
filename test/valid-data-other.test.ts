@@ -58,4 +58,10 @@ describe("valid-data-other", () => {
     it("keyof-typeof-enum", assertValidSchema("keyof-typeof-enum", "MyObject"));
 
     it("symbol", assertValidSchema("symbol", "MyObject"));
+
+    it("array-min-items-1", assertValidSchema("array-min-items-1", "MyType"));
+    it("array-min-items-2", assertValidSchema("array-min-items-2", "MyType"));
+    it("array-min-max-items", assertValidSchema("array-min-max-items", "MyType"));
+    it("array-min-max-items-optional", assertValidSchema("array-min-max-items-optional", "MyType"));
+    it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
 });
