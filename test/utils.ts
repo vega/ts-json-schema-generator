@@ -48,7 +48,6 @@ export function assertValidSchema(
 
         // uncomment to write test files
         if (process.env.UPDATE_SCHEMA) {
-            console.log(`updating schema ${basePath}/${relativePath}/schema.json`);
             writeFileSync(
                 resolve(`${basePath}/${relativePath}/schema.json`),
                 JSON.stringify(schema, null, 4) + "\n",
