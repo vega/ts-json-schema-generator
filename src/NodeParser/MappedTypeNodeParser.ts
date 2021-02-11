@@ -143,12 +143,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
     ): BaseType | boolean {
         const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
         if (key) {
-            return (key instanceof NeverType)
-            ? false
-            : (
-                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
-                this.additionalProperties
-            );
+            return key instanceof NeverType
+                ? false
+                : this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
+                      this.additionalProperties;
         } else {
             return this.additionalProperties;
         }
