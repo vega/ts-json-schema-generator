@@ -1,22 +1,27 @@
 {
-    "$ref": "#/definitions/IParameter",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/IParameter",
     "definitions": {
         "IParameter": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "type": {
-                    "enum": [
-                        "string",
-                        "date"
-                    ],
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "const": "string"
+                        },
+                        {
+                            "type": "string",
+                            "const": "date"
+                        }
+                    ]
                 }
             },
             "required": [
                 "type"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

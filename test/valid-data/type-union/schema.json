@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/TypeUnion",
     "definitions": {
         "TypeUnion": {
             "type": "object",
@@ -81,6 +82,5 @@
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/TypeUnion"
+    }
 }

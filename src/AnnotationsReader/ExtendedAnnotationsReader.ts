@@ -44,7 +44,9 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         }
 
         return {
-            description: comments.map((comment) => comment.text.replace(/(?<=[^\n])\n(?=[^\n])/g, " ")).join(" "),
+            description: comments
+                .map((comment) => comment.text.replace(/\r\n/g, "\n").replace(/(?<=[^\n])\n(?=[^\n])/g, " "))
+                .join(" "),
         };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {

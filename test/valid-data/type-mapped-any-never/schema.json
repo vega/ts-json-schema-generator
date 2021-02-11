@@ -6,45 +6,36 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "d": {
-                    "type": "string"
+                "whitelist": {
+                    "type": "object",
+                    "additionalProperties": false
                 },
-                "c": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/A"
-                        },
-                        {
-                            "$ref": "#/definitions/B"
-                        }
-                    ]
+                "blacklist": {
+                    "$ref": "#/definitions/Main%3Calias-1970614978-87-108-1970614978-0-347%3E"
                 }
             },
             "required": [
-                "d"
+                "blacklist",
+                "whitelist"
             ]
         },
-        "A": {
+        "Main<alias-1970614978-87-108-1970614978-0-347>": {
             "type": "object",
             "properties": {
+                "id": {
+                    "type": "string",
+                    "const": "MyId"
+                },
                 "a": {
                     "type": "string"
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "additionalProperties": false
-        },
-        "B": {
-            "type": "object",
-            "properties": {
+                },
                 "b": {
                     "type": "string"
                 }
             },
             "required": [
-                "b"
+                "id",
+                "a"
             ],
             "additionalProperties": false
         }

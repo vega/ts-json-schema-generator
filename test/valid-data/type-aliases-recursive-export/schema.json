@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
@@ -20,6 +21,5 @@
         "MyAlias": {
             "$ref": "#/definitions/MyObject"
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

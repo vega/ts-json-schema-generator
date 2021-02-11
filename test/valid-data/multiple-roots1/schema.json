@@ -8,7 +8,9 @@
                     "$ref": "#/definitions/MyObject2"
                 }
             },
-            "required": ["propA"],
+            "required": [
+                "propA"
+            ],
             "additionalProperties": false
         },
         "MyObject2": {
@@ -18,7 +20,9 @@
                     "type": "string"
                 }
             },
-            "required": ["propB"],
+            "required": [
+                "propB"
+            ],
             "additionalProperties": false
         },
         "MyObject3": {
@@ -28,7 +32,9 @@
                     "type": "boolean"
                 }
             },
-            "required": ["propC"],
+            "required": [
+                "propC"
+            ],
             "additionalProperties": false
         }
     }

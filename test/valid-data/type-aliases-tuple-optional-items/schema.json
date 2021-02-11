@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyTuple",
     "definitions": {
         "MyTuple": {
             "type": "array",
@@ -20,6 +21,5 @@
             ],
             "maxItems": 4
         }
-    },
-    "$ref": "#/definitions/MyTuple"
+    }
 }

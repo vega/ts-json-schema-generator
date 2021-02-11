@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyUnion",
     "definitions": {
         "MyUnion": {
             "type": "array",
@@ -32,6 +33,5 @@
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyUnion"
+    }
 }

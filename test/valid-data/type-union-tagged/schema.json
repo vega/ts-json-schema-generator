@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/Shape",
     "definitions": {
         "Shape": {
             "anyOf": [
@@ -69,6 +70,5 @@
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/Shape"
+    }
 }

@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
     "definitions": {
         "MyType": {
             "type": "array",
@@ -8,6 +9,5 @@
             },
             "minItems": 1
         }
-    },
-    "$ref": "#/definitions/MyType"
+    }
 }

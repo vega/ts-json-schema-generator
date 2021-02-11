@@ -1,27 +1,26 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
-            "description": "Class Description",
+            "type": "object",
             "properties": {
-                "a": {
-                    "description": "Parameter a description",
-                    "type": "string"
-                },
-                "b": {
-                    "description": "Parameter b description",
-                    "type": "number"
-                },
                 "x": {
-                    "description": "Property x description",
-                    "type": "string"
+                    "type": "string",
+                    "description": "Property x description"
                 },
                 "y": {
+                    "type": "string",
                     "description": "Property y description",
-                    "pattern": "/abc/",
-                    "type": "string"
+                    "pattern": "/abc/"
+                },
+                "a": {
+                    "type": "string",
+                    "description": "Parameter a description"
+                },
+                "b": {
+                    "type": "number",
+                    "description": "Parameter b description"
                 }
             },
             "required": [
@@ -30,7 +29,8 @@
                 "a",
                 "b"
             ],
-            "type": "object"
+            "additionalProperties": false,
+            "description": "Class Description"
         }
     }
 }

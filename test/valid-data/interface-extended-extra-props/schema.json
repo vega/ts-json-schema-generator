@@ -3,6 +3,7 @@
     "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
+            "type": "object",
             "properties": {
                 "param": {
                     "type": "string"
@@ -10,8 +11,7 @@
             },
             "required": [
                 "param"
-            ],
-            "type": "object"
+            ]
         }
     }
 }

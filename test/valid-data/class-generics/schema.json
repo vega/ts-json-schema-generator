@@ -1,54 +1,54 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "Base<boolean>": {
-      "additionalProperties": false,
-      "properties": {
-        "a": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "a"
-      ],
-      "type": "object"
-    },
-    "Base<string>": {
-      "additionalProperties": false,
-      "properties": {
-        "a": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "a"
-      ],
-      "type": "object"
-    },
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "a": {
-          "type": "number"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "number"
+                },
+                "b": {
+                    "type": "string"
+                },
+                "c": {
+                    "$ref": "#/definitions/Base%3Cstring%3E"
+                },
+                "d": {
+                    "$ref": "#/definitions/Base%3Cboolean%3E"
+                }
+            },
+            "required": [
+                "a",
+                "b",
+                "c",
+                "d"
+            ],
+            "additionalProperties": false
         },
-        "b": {
-          "type": "string"
+        "Base<string>": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "additionalProperties": false
         },
-        "c": {
-          "$ref": "#/definitions/Base%3Cstring%3E"
-        },
-        "d": {
-          "$ref": "#/definitions/Base%3Cboolean%3E"
+        "Base<boolean>": {
+            "type": "object",
+            "properties": {
+                "a": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "a"
+            ],
+            "additionalProperties": false
         }
-      },
-      "required": [
-        "a",
-        "b",
-        "c",
-        "d"
-      ],
-      "type": "object"
     }
-  }
 }

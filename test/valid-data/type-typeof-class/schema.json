@@ -1,23 +1,27 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "classType": {
-          "additionalProperties": false,
-          "properties": {
-            "myValue": {
-              "type": "number"
-            }
-          },
-          "required": ["myValue"],
-          "type": "object"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "properties": {
+                "classType": {
+                    "type": "object",
+                    "properties": {
+                        "myValue": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "myValue"
+                    ],
+                    "additionalProperties": false
+                }
+            },
+            "required": [
+                "classType"
+            ],
+            "additionalProperties": false
         }
-      },
-      "required": ["classType"],
-      "type": "object"
     }
-  }
 }

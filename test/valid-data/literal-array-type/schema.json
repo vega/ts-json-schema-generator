@@ -1,21 +1,21 @@
 {
-  "$ref": "#/definitions/MyType",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "MyType": {
-      "items": [
-        {
-          "type": "string",
-          "const": "abc"
-        },
-        {
-          "type": "string",
-          "const": "def"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
+    "definitions": {
+        "MyType": {
+            "type": "array",
+            "minItems": 2,
+            "items": [
+                {
+                    "type": "string",
+                    "const": "abc"
+                },
+                {
+                    "type": "string",
+                    "const": "def"
+                }
+            ],
+            "maxItems": 2
         }
-      ],
-      "minItems": 2,
-      "maxItems": 2,
-      "type": "array"
     }
-  }
 }

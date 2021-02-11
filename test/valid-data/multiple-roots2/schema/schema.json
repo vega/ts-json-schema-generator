@@ -1,31 +1,31 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "AssetType": {
+            "type": "string",
+            "enum": [
+                "One",
+                "Two"
+            ]
+        },
+        "MyAsset": {
+            "$ref": "#/definitions/Asset"
+        },
         "Asset": {
             "type": "object",
             "properties": {
                 "type": {
+                    "type": "string",
                     "enum": [
                         "One",
                         "Two"
-                    ],
-                    "type": "string"
+                    ]
                 }
             },
             "required": [
                 "type"
             ],
             "additionalProperties": false
-        },
-        "AssetType": {
-            "enum": [
-                "One",
-                "Two"
-            ],
-            "type": "string"
-        },
-        "MyAsset": {
-            "$ref": "#/definitions/Asset"
         }
     }
 }

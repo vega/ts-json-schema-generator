@@ -1,23 +1,23 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
-                "bar": {
-                    "const": "baz",
-                    "type": "string"
-                },
                 "foo": {
-                    "const": 123,
-                    "type": "number"
+                    "type": "number",
+                    "const": 123
+                },
+                "bar": {
+                    "type": "string",
+                    "const": "baz"
                 }
             },
             "required": [
                 "bar"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

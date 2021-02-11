@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/SimpleObject",
     "definitions": {
         "SimpleObject": {
             "type": "object",
@@ -16,6 +17,5 @@
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/SimpleObject"
+    }
 }
