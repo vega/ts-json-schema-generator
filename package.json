@@ -84,8 +84,6 @@
     "test": "jest test/ --verbose",
     "test:fast": "FAST_TEST=1 jest test/ --verbose",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
-    "dbg": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p ../template-provider/src/component/template-component/.schema/index.ts -t IConfig",
-    "dbg2": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p ./test/valid-data/type-conditional-enum/main.ts",
     "run": "ts-node ts-json-schema-generator.ts"
   },
   "release": {

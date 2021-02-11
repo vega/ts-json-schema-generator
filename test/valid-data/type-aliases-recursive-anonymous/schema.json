@@ -9,7 +9,7 @@
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-425636228-0-65-425636228-0-102"
+                    "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
                 }
             },
             "required": [
@@ -18,14 +18,14 @@
             ],
             "additionalProperties": false
         },
-        "interface-425636228-0-65-425636228-0-102": {
+        "interface-425636228-0-62-425636228-0-96": {
             "type": "object",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
                 },
                 "self": {
-                    "$ref": "#/definitions/interface-425636228-0-65-425636228-0-102"
+                    "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
                 }
             },
             "required": [
