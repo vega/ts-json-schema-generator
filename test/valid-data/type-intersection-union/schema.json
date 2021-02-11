@@ -1,20 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
             "anyOf": [
                 {
-                    "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                        "d": {
-                            "type": "number"
-                        },
                         "a": {
                             "type": "number"
                         },
                         "b": {
+                            "type": "number"
+                        },
+                        "d": {
                             "type": "number"
                         }
                     },
@@ -22,19 +21,19 @@
                         "a",
                         "b",
                         "d"
-                    ]
+                    ],
+                    "type": "object"
                 },
                 {
-                    "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                        "e": {
-                            "type": "number"
-                        },
                         "a": {
                             "type": "number"
                         },
                         "b": {
+                            "type": "number"
+                        },
+                        "e": {
                             "type": "number"
                         }
                     },
@@ -42,19 +41,19 @@
                         "a",
                         "b",
                         "e"
-                    ]
+                    ],
+                    "type": "object"
                 },
                 {
-                    "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                        "d": {
-                            "type": "number"
-                        },
                         "a": {
                             "type": "number"
                         },
                         "c": {
+                            "type": "number"
+                        },
+                        "d": {
                             "type": "number"
                         }
                     },
@@ -62,19 +61,19 @@
                         "a",
                         "c",
                         "d"
-                    ]
+                    ],
+                    "type": "object"
                 },
                 {
-                    "type": "object",
                     "additionalProperties": false,
                     "properties": {
-                        "e": {
-                            "type": "number"
-                        },
                         "a": {
                             "type": "number"
                         },
                         "c": {
+                            "type": "number"
+                        },
+                        "e": {
                             "type": "number"
                         }
                     },
@@ -82,7 +81,8 @@
                         "a",
                         "c",
                         "e"
-                    ]
+                    ],
+                    "type": "object"
                 }
             ]
         }

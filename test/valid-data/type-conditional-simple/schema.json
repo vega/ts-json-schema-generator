@@ -1,21 +1,21 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
-                    "type": "string",
-                    "const": "string"
+                    "const": "string",
+                    "type": "string"
                 },
                 "b": {
-                    "type": "string",
-                    "const": "number"
+                    "const": "number",
+                    "type": "string"
                 },
                 "c": {
-                    "type": "string",
-                    "const": "unknown"
+                    "const": "unknown",
+                    "type": "string"
                 }
             },
             "required": [
@@ -23,7 +23,7 @@
                 "b",
                 "c"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

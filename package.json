@@ -66,6 +66,7 @@
     "ajv": "^7.0.3",
     "ajv-formats": "^1.5.1",
     "chai": "^4.2.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.18.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -84,6 +85,7 @@
     "test": "jest test/ --verbose",
     "test:fast": "FAST_TEST=1 jest test/ --verbose",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
+    "update-schema": "cross-env UPDATE_SCHEMA=true test",
     "run": "ts-node ts-json-schema-generator.ts"
   },
   "release": {

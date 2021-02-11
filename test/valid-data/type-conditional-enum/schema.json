@@ -1,19 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/IParameter",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "IParameter": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "type": {
                     "anyOf": [
                         {
-                            "type": "string",
-                            "const": "string"
+                            "const": "string",
+                            "type": "string"
                         },
                         {
-                            "type": "string",
-                            "const": "date"
+                            "const": "date",
+                            "type": "string"
                         }
                     ]
                 }
@@ -21,7 +21,7 @@
             "required": [
                 "type"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

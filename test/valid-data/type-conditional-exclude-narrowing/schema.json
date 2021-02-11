@@ -1,36 +1,38 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "Align": {
+            "enum": [
+                "left",
+                "right",
+                "center"
+            ],
+            "type": "string"
+        },
+        "BadPrimitives": {
+            "type": [
+                "null",
+                "boolean"
+            ]
+        },
+        "GoodPrimitives": {
+            "type": [
+                "string",
+                "number"
+            ]
+        },
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
-                "textWithoutAlign": {
-                    "type": "object",
-                    "properties": {
-                        "align": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                "textWithoutNumbers": {
-                    "type": "object",
-                    "properties": {
-                        "align": {
-                            "$ref": "#/definitions/Align"
-                        }
-                    },
-                    "additionalProperties": false
-                },
                 "allPrims": {
                     "$ref": "#/definitions/Primitives"
                 },
-                "goodPrims": {
-                    "$ref": "#/definitions/GoodPrimitives"
-                },
                 "badPrims": {
                     "$ref": "#/definitions/BadPrimitives"
+                },
+                "goodPrims": {
+                    "$ref": "#/definitions/GoodPrimitives"
                 },
                 "stringOrNull": {
                     "anyOf": [
@@ -41,6 +43,24 @@
                             "type": "null"
                         }
                     ]
+                },
+                "textWithoutAlign": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "align": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "textWithoutNumbers": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "align": {
+                            "$ref": "#/definitions/Align"
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "required": [
@@ -51,15 +71,7 @@
                 "badPrims",
                 "stringOrNull"
             ],
-            "additionalProperties": false
-        },
-        "Align": {
-            "type": "string",
-            "enum": [
-                "left",
-                "right",
-                "center"
-            ]
+            "type": "object"
         },
         "Primitives": {
             "anyOf": [
@@ -69,18 +81,6 @@
                 {
                     "$ref": "#/definitions/BadPrimitives"
                 }
-            ]
-        },
-        "GoodPrimitives": {
-            "type": [
-                "string",
-                "number"
-            ]
-        },
-        "BadPrimitives": {
-            "type": [
-                "null",
-                "boolean"
             ]
         }
     }

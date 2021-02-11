@@ -1,9 +1,33 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "Map<A>": {
+            "const": "a",
+            "type": "string"
+        },
+        "Map<B>": {
+            "const": "a",
+            "type": "string"
+        },
+        "Map<C>": {
+            "const": "a",
+            "type": "string"
+        },
+        "Map<D>": {
+            "const": "d",
+            "type": "string"
+        },
+        "Map<E>": {
+            "const": "d",
+            "type": "string"
+        },
+        "Map<F>": {
+            "const": "f",
+            "type": "string"
+        },
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
                     "$ref": "#/definitions/Map%3CA%3E"
@@ -32,31 +56,7 @@
                 "e",
                 "f"
             ],
-            "additionalProperties": false
-        },
-        "Map<A>": {
-            "type": "string",
-            "const": "a"
-        },
-        "Map<B>": {
-            "type": "string",
-            "const": "a"
-        },
-        "Map<C>": {
-            "type": "string",
-            "const": "a"
-        },
-        "Map<D>": {
-            "type": "string",
-            "const": "d"
-        },
-        "Map<E>": {
-            "type": "string",
-            "const": "d"
-        },
-        "Map<F>": {
-            "type": "string",
-            "const": "f"
+            "type": "object"
         }
     }
 }

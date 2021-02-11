@@ -1,21 +1,21 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/SimpleObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "SimpleObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
-                "required": {
-                    "type": "string"
-                },
                 "optional": {
                     "type": "number"
+                },
+                "required": {
+                    "type": "string"
                 }
             },
             "required": [
                 "required"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

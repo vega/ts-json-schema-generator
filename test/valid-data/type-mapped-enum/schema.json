@@ -1,9 +1,9 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
                     "type": "string"
@@ -20,7 +20,7 @@
                 "b",
                 "c"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

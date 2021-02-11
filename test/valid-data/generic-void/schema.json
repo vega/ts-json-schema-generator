@@ -1,21 +1,9 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "value": {
-                    "$ref": "#/definitions/MyGeneric%3Cvoid%3E"
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "additionalProperties": false
-        },
         "MyGeneric<void>": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "field": {
                     "type": "null"
@@ -24,7 +12,19 @@
             "required": [
                 "field"
             ],
-            "additionalProperties": false
+            "type": "object"
+        },
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "$ref": "#/definitions/MyGeneric%3Cvoid%3E"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "type": "object"
         }
     }
 }

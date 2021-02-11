@@ -1,9 +1,9 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/TypeUnion",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "TypeUnion": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "var1": {
                     "type": [
@@ -17,59 +17,59 @@
                             "type": "string"
                         },
                         {
-                            "type": "array",
                             "items": {
                                 "type": "number"
-                            }
+                            },
+                            "type": "array"
                         }
                     ]
                 },
                 "var3": {
-                    "type": "array",
                     "items": {
                         "type": [
                             "string",
                             "number"
                         ]
-                    }
+                    },
+                    "type": "array"
                 },
                 "var4": {
-                    "type": [
-                        "string",
-                        "number"
-                    ],
                     "enum": [
                         "s",
                         1
+                    ],
+                    "type": [
+                        "string",
+                        "number"
                     ]
                 },
                 "var5": {
                     "anyOf": [
                         {
-                            "type": "string",
-                            "const": "s"
+                            "const": "s",
+                            "type": "string"
                         },
                         {
-                            "type": "array",
                             "items": {
-                                "type": "number",
-                                "const": 1
-                            }
+                                "const": 1,
+                                "type": "number"
+                            },
+                            "type": "array"
                         }
                     ]
                 },
                 "var6": {
-                    "type": "array",
                     "items": {
-                        "type": [
-                            "string",
-                            "number"
-                        ],
                         "enum": [
                             "s",
                             1
+                        ],
+                        "type": [
+                            "string",
+                            "number"
                         ]
-                    }
+                    },
+                    "type": "array"
                 }
             },
             "required": [
@@ -80,7 +80,7 @@
                 "var5",
                 "var6"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

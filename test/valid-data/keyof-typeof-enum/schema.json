@@ -1,27 +1,27 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
+                "orientationName": {
+                    "enum": [
+                        "Horizontal",
+                        "Vertical"
+                    ],
+                    "type": "string"
+                },
                 "sizeName": {
-                    "type": "string",
                     "enum": [
                         "Small",
                         "Medium",
                         "Large"
-                    ]
-                },
-                "orientationName": {
-                    "type": "string",
-                    "enum": [
-                        "Horizontal",
-                        "Vertical"
-                    ]
+                    ],
+                    "type": "string"
                 }
             },
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

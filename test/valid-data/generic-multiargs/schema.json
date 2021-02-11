@@ -1,9 +1,41 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "MyGeneric<number,string>": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "type": "number"
+                },
+                "b": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "a",
+                "b"
+            ],
+            "type": "object"
+        },
+        "MyGeneric<string,number>": {
+            "additionalProperties": false,
+            "properties": {
+                "a": {
+                    "type": "string"
+                },
+                "b": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "a",
+                "b"
+            ],
+            "type": "object"
+        },
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "value1": {
                     "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
@@ -16,39 +48,7 @@
                 "value1",
                 "value2"
             ],
-            "additionalProperties": false
-        },
-        "MyGeneric<string,number>": {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "type": "string"
-                },
-                "b": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "a",
-                "b"
-            ],
-            "additionalProperties": false
-        },
-        "MyGeneric<number,string>": {
-            "type": "object",
-            "properties": {
-                "a": {
-                    "type": "number"
-                },
-                "b": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "a",
-                "b"
-            ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

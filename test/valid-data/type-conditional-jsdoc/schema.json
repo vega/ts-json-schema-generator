@@ -1,63 +1,63 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
+                    "description": "Number or string",
+                    "pattern": "foo",
                     "type": [
                         "number",
                         "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
+                    ]
                 },
                 "b": {
+                    "description": "Description of b",
+                    "pattern": "foo",
                     "type": [
                         "number",
                         "string"
-                    ],
-                    "description": "Description of b",
-                    "pattern": "foo"
+                    ]
                 },
                 "c": {
                     "type": "number"
                 },
                 "d": {
-                    "type": "number",
                     "description": "No string",
-                    "pattern": "bar"
+                    "pattern": "bar",
+                    "type": "number"
                 },
                 "e": {
-                    "type": "number",
-                    "description": "Description of e"
+                    "description": "Description of e",
+                    "type": "number"
                 },
                 "f": {
-                    "type": "number",
                     "description": "Description of f",
-                    "pattern": "bar"
+                    "pattern": "bar",
+                    "type": "number"
                 },
                 "g": {
+                    "description": "Number or string",
+                    "pattern": "foo",
                     "type": [
                         "number",
                         "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
+                    ]
                 },
                 "h": {
-                    "type": "string",
                     "description": "Number or string",
-                    "pattern": "foo"
+                    "pattern": "foo",
+                    "type": "string"
                 },
                 "i": {
+                    "description": "Number or string",
+                    "pattern": "foo",
                     "type": [
                         "number",
                         "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
+                    ]
                 }
             },
             "required": [
@@ -71,7 +71,7 @@
                 "h",
                 "i"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

@@ -1,21 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "MyObject": {
-            "type": "object",
+        "B.B": {
             "additionalProperties": false,
             "properties": {
-                "d": {
-                    "$ref": "#/definitions/C.C"
+                "b": {
                 }
             },
             "required": [
-                "d"
-            ]
+                "b"
+            ],
+            "type": "object"
         },
         "C.C": {
-            "type": "object",
             "additionalProperties": false,
             "properties": {
                 "c": {
@@ -24,17 +22,20 @@
             },
             "required": [
                 "c"
-            ]
+            ],
+            "type": "object"
         },
-        "B.B": {
-            "type": "object",
+        "MyObject": {
+            "additionalProperties": false,
             "properties": {
-                "b": {}
+                "d": {
+                    "$ref": "#/definitions/C.C"
+                }
             },
             "required": [
-                "b"
+                "d"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

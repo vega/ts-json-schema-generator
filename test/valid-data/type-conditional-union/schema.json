@@ -1,25 +1,25 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
-                    "type": "string",
-                    "const": "a or b"
+                    "const": "a or b",
+                    "type": "string"
                 },
                 "b": {
-                    "type": "string",
-                    "const": "a or b"
+                    "const": "a or b",
+                    "type": "string"
                 },
                 "c": {
-                    "type": "string",
-                    "const": "unknown"
+                    "const": "unknown",
+                    "type": "string"
                 },
                 "d": {
-                    "type": "string",
-                    "const": "a or b"
+                    "const": "a or b",
+                    "type": "string"
                 }
             },
             "required": [
@@ -28,7 +28,7 @@
                 "c",
                 "d"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }

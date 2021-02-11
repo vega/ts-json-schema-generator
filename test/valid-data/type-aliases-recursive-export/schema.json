@@ -1,9 +1,12 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "MyAlias": {
+            "$ref": "#/definitions/MyObject"
+        },
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
@@ -16,10 +19,7 @@
                 "alias",
                 "self"
             ],
-            "additionalProperties": false
-        },
-        "MyAlias": {
-            "$ref": "#/definitions/MyObject"
+            "type": "object"
         }
     }
 }

@@ -1,28 +1,28 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
-                "primitive": {
-                    "$ref": "#/definitions/MyString"
-                },
                 "object": {
                     "$ref": "#/definitions/MySubObject"
+                },
+                "primitive": {
+                    "$ref": "#/definitions/MyString"
                 }
             },
             "required": [
                 "primitive",
                 "object"
             ],
-            "additionalProperties": false
+            "type": "object"
         },
         "MyString": {
             "type": "string"
         },
         "MySubObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "propA": {
                     "type": "number"
@@ -35,7 +35,7 @@
                 "propA",
                 "propB"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
     }
 }
