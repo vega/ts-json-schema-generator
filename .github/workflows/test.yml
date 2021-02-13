@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - type-mapped-any-never
   pull_request:
 
 jobs:
