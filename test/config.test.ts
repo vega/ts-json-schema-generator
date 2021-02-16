@@ -49,6 +49,7 @@ function assertSchema(
         expect(actual).toEqual(expected);
 
         const validator = new Ajv({
+            allowUnionTypes: true,
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
         });
