@@ -27,8 +27,7 @@ jobs:
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
 
-      - name: lint (only on ubuntu)
-        if: ${{ matrix.os !== 'windows-latest' }}
+      - name: lint
         run: yarn lint
 
       - run: yarn build
