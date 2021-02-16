@@ -104,6 +104,7 @@ export class SchemaGenerator {
             const childId = child.getId().replace(/def-/g, "");
 
             if (previousId && childId !== previousId) {
+                
                 throw new Error(`Type "${name}" has multiple definitions.`);
             }
             ids.set(name, childId);

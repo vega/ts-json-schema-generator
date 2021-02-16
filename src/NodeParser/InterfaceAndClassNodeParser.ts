@@ -64,7 +64,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
+        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties, node.getSourceFile().fileName);
     }
 
     /**

@@ -24,7 +24,7 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
                     )
             );
 
-            return new ObjectType(`object-${getKey(node, context)}`, [], properties, false);
+            return new ObjectType(`object-${getKey(node, context)}`, [], properties, false, node.getSourceFile().fileName);
         }
 
         // TODO: implement this?
