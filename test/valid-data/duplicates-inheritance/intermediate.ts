@@ -1,4 +1,4 @@
-import * as Base from "./Base";
+import * as Base from "./base";
 
 export interface MyObject extends Base.MyObject {
     b: string;
