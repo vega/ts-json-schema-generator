@@ -1,2 +1,3 @@
 azure-pipelines.yml
 package.json
+test/valid-data/**/*.json

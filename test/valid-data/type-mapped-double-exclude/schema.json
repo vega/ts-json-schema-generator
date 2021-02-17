@@ -8,8 +8,8 @@
         "bar": {
           "anyOf": [
             {
-              "type": "number",
-              "description": "Bar"
+              "description": "Bar",
+              "type": "number"
             },
             {
               "type": "null"
@@ -28,7 +28,9 @@
           ]
         }
       },
-      "required": ["foo"],
+      "required": [
+        "foo"
+      ],
       "type": "object"
     }
   }

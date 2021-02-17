@@ -1,28 +1,28 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyType": {
-            "type": "object",
-            "properties": {
-                "numberArray": {
-                    "type": "array",
-                    "items": {
-                        "type": "number"
-                    }
-                },
-                "stringArray": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "numberArray",
-                "stringArray"
-            ],
-            "additionalProperties": false
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "additionalProperties": false,
+      "properties": {
+        "numberArray": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        },
+        "stringArray": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
-    },
-    "$ref": "#/definitions/MyType"
+      },
+      "required": [
+        "numberArray",
+        "stringArray"
+      ],
+      "type": "object"
+    }
+  }
 }

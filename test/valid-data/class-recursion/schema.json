@@ -1,22 +1,22 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "propA": {
-                    "type": "number"
-                },
-                "propB": {
-                    "$ref": "#/definitions/MyObject"
-                }
-            },
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "type": "number"
+        },
+        "propB": {
+          "$ref": "#/definitions/MyObject"
         }
-    },
-    "$ref": "#/definitions/MyObject"
+      },
+      "required": [
+        "propA",
+        "propB"
+      ],
+      "type": "object"
+    }
+  }
 }

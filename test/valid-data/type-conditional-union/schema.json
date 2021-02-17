@@ -1,34 +1,34 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "a": {
-                    "const": "a or b",
-                    "type": "string"
-                },
-                "b": {
-                    "const": "a or b",
-                    "type": "string"
-                },
-                "c": {
-                    "const": "unknown",
-                    "type": "string"
-                },
-                "d": {
-                    "const": "a or b",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "a",
-                "b",
-                "c",
-                "d"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "const": "a or b",
+          "type": "string"
+        },
+        "b": {
+          "const": "a or b",
+          "type": "string"
+        },
+        "c": {
+          "const": "unknown",
+          "type": "string"
+        },
+        "d": {
+          "const": "a or b",
+          "type": "string"
         }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d"
+      ],
+      "type": "object"
     }
+  }
 }

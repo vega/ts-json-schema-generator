@@ -1,45 +1,45 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "map1": {
-                    "$ref": "#/definitions/MyMap1"
-                },
-                "map2": {
-                    "$ref": "#/definitions/MyMap2"
-                },
-                "map3": {
-                    "type": "object"
-                }
-            },
-            "required": [
-                "map1",
-                "map2",
-                "map3"
-            ],
-            "additionalProperties": false
-        },
-        "MyMap1": {
-            "type": "object",
-            "additionalProperties": {
-                "$ref": "#/definitions/MyType"
-            }
-        },
-        "MyType": {
-            "type": "object",
-            "additionalProperties": false
-        },
-        "MyMap2": {
-            "type": "object",
-            "additionalProperties": {
-                "type": [
-                    "string",
-                    "number"
-                ]
-            }
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyMap1": {
+      "additionalProperties": {
+        "$ref": "#/definitions/MyType"
+      },
+      "type": "object"
     },
-    "$ref": "#/definitions/MyObject"
+    "MyMap2": {
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ]
+      },
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "map1": {
+          "$ref": "#/definitions/MyMap1"
+        },
+        "map2": {
+          "$ref": "#/definitions/MyMap2"
+        },
+        "map3": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "map1",
+        "map2",
+        "map3"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
 }

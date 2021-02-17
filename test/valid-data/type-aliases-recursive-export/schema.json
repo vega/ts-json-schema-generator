@@ -1,25 +1,25 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "alias": {
-                    "$ref": "#/definitions/MyAlias"
-                },
-                "self": {
-                    "$ref": "#/definitions/MyObject"
-                }
-            },
-            "required": [
-                "alias",
-                "self"
-            ],
-            "additionalProperties": false
-        },
-        "MyAlias": {
-            "$ref": "#/definitions/MyObject"
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyAlias": {
+      "$ref": "#/definitions/MyObject"
     },
-    "$ref": "#/definitions/MyObject"
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "$ref": "#/definitions/MyAlias"
+        },
+        "self": {
+          "$ref": "#/definitions/MyObject"
+        }
+      },
+      "required": [
+        "alias",
+        "self"
+      ],
+      "type": "object"
+    }
+  }
 }

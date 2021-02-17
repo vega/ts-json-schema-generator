@@ -1,17 +1,18 @@
 {
-    "$ref": "#/definitions/MyType",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyType": {
-            "anyOf": [
-                {
-                    "const": "bar",
-                    "type": "string"
-                },
-                {
-                    "not": {}
-                }
-            ]
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "anyOf": [
+        {
+          "const": "bar",
+          "type": "string"
+        },
+        {
+          "not": {
+          }
         }
+      ]
     }
+  }
 }

@@ -1,19 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyTuple": {
-            "type": "array",
-            "minItems": 2,
-            "items": [
-                {
-                    "type": "string"
-                },
-                {
-                    "type": "number"
-                }
-            ],
-            "maxItems": 2
+  "$ref": "#/definitions/MyTuple",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyTuple": {
+      "items": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number"
         }
-    },
-    "$ref": "#/definitions/MyTuple"
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    }
+  }
 }

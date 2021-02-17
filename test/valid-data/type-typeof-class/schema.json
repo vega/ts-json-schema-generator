@@ -12,11 +12,15 @@
               "type": "number"
             }
           },
-          "required": ["myValue"],
+          "required": [
+            "myValue"
+          ],
           "type": "object"
         }
       },
-      "required": ["classType"],
+      "required": [
+        "classType"
+      ],
       "type": "object"
     }
   }

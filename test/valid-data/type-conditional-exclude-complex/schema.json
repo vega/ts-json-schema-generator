@@ -1,18 +1,18 @@
 {
-    "$ref": "#/definitions/BaseAxisNoSignals",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "BaseAxisNoSignals": {
-            "additionalProperties": false,
-            "properties": {
-                "minExtent": {
-                    "type": "number"
-                },
-                "titleFont": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
+  "$ref": "#/definitions/BaseAxisNoSignals",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "BaseAxisNoSignals": {
+      "additionalProperties": false,
+      "properties": {
+        "minExtent": {
+          "type": "number"
+        },
+        "titleFont": {
+          "type": "string"
         }
+      },
+      "type": "object"
     }
+  }
 }

@@ -1,83 +1,83 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Align": {
-            "enum": [
-                "left",
-                "right",
-                "center"
-            ],
-            "type": "string"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Align": {
+      "enum": [
+        "left",
+        "right",
+        "center"
+      ],
+      "type": "string"
+    },
+    "BadPrimitives": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
+    "GoodPrimitives": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "allPrims": {
+          "$ref": "#/definitions/Primitives"
         },
-        "BadPrimitives": {
-            "type": [
-                "null",
-                "boolean"
-            ]
+        "badPrims": {
+          "$ref": "#/definitions/BadPrimitives"
         },
-        "GoodPrimitives": {
-            "type": [
-                "string",
-                "number"
-            ]
+        "goodPrims": {
+          "$ref": "#/definitions/GoodPrimitives"
         },
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "allPrims": {
-                    "$ref": "#/definitions/Primitives"
-                },
-                "badPrims": {
-                    "$ref": "#/definitions/BadPrimitives"
-                },
-                "goodPrims": {
-                    "$ref": "#/definitions/GoodPrimitives"
-                },
-                "stringOrNull": {
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "textWithoutAlign": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "align": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "textWithoutNumbers": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "align": {
-                            "$ref": "#/definitions/Align"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "required": [
-                "textWithoutAlign",
-                "textWithoutNumbers",
-                "allPrims",
-                "goodPrims",
-                "badPrims",
-                "stringOrNull"
-            ],
-            "type": "object"
+        "stringOrNull": {
+          "type": [
+            "string",
+            "null"
+          ]
         },
-        "Primitives": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/GoodPrimitives"
-                },
-                {
-                    "$ref": "#/definitions/BadPrimitives"
-                }
-            ]
+        "textWithoutAlign": {
+          "additionalProperties": false,
+          "properties": {
+            "align": {
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "textWithoutNumbers": {
+          "additionalProperties": false,
+          "properties": {
+            "align": {
+              "$ref": "#/definitions/Align"
+            }
+          },
+          "type": "object"
         }
+      },
+      "required": [
+        "textWithoutAlign",
+        "textWithoutNumbers",
+        "allPrims",
+        "goodPrims",
+        "badPrims",
+        "stringOrNull"
+      ],
+      "type": "object"
+    },
+    "Primitives": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/GoodPrimitives"
+        },
+        {
+          "$ref": "#/definitions/BadPrimitives"
+        }
+      ]
     }
+  }
 }

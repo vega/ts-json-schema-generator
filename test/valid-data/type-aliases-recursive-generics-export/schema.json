@@ -15,7 +15,9 @@
           "$ref": "#/definitions/Map%3CMyAlias%3E"
         }
       },
-      "required": ["a"],
+      "required": [
+        "a"
+      ],
       "type": "object"
     }
   }

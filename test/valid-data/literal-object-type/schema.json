@@ -10,7 +10,9 @@
           "type": "string"
         }
       },
-      "required": ["abc"],
+      "required": [
+        "abc"
+      ],
       "type": "object"
     }
   }

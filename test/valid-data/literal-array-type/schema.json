@@ -5,16 +5,16 @@
     "MyType": {
       "items": [
         {
-          "type": "string",
-          "const": "abc"
+          "const": "abc",
+          "type": "string"
         },
         {
-          "type": "string",
-          "const": "def"
+          "const": "def",
+          "type": "string"
         }
       ],
-      "minItems": 2,
       "maxItems": 2,
+      "minItems": 2,
       "type": "array"
     }
   }

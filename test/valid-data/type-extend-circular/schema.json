@@ -9,7 +9,9 @@
           "$ref": "#/definitions/MyObject"
         }
       },
-      "required": ["foo"],
+      "required": [
+        "foo"
+      ],
       "type": "object"
     },
     "MyType": {
@@ -22,7 +24,10 @@
           "$ref": "#/definitions/MyObject"
         }
       },
-      "required": ["bar", "foo"],
+      "required": [
+        "bar",
+        "foo"
+      ],
       "type": "object"
     }
   }

@@ -1,40 +1,41 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "d": {
-                    "$ref": "#/definitions/C.C"
-                }
-            },
-            "required": [
-                "d"
-            ]
-        },
-        "C.C": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "c": {
-                    "$ref": "#/definitions/B.B"
-                }
-            },
-            "required": [
-                "c"
-            ]
-        },
-        "B.B": {
-            "type": "object",
-            "properties": {
-                "b": {}
-            },
-            "required": [
-                "b"
-            ],
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "B.B": {
+      "additionalProperties": false,
+      "properties": {
+        "b": {
         }
+      },
+      "required": [
+        "b"
+      ],
+      "type": "object"
     },
-    "$ref": "#/definitions/MyObject"
+    "C.C": {
+      "additionalProperties": false,
+      "properties": {
+        "c": {
+          "$ref": "#/definitions/B.B"
+        }
+      },
+      "required": [
+        "c"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "d": {
+          "$ref": "#/definitions/C.C"
+        }
+      },
+      "required": [
+        "d"
+      ],
+      "type": "object"
+    }
+  }
 }

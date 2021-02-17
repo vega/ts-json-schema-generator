@@ -6,7 +6,10 @@
       "additionalProperties": false,
       "properties": {
         "foo": {
-          "type": ["number", "boolean"]
+          "type": [
+            "number",
+            "boolean"
+          ]
         }
       },
       "type": "object"
