@@ -1,11 +1,11 @@
 {
+    "$ref": "#/definitions/MyTuple",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyTuple": {
-            "type": "array",
+            "maxItems": 0,
             "minItems": 0,
-            "maxItems": 0
+            "type": "array"
         }
-    },
-    "$ref": "#/definitions/MyTuple"
+    }
 }

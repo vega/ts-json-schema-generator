@@ -1,8 +1,9 @@
 {
+    "$ref": "#/definitions/RootNamespace.Def",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "RootNamespace.Def": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "nest": {
                     "$ref": "#/definitions/RootNamespace.Def"
@@ -23,10 +24,10 @@
                 "propA",
                 "propB"
             ],
-            "additionalProperties": false
+            "type": "object"
         },
         "RootNamespace.SubNamespace.HelperA": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "propA": {
                     "type": "number"
@@ -39,10 +40,10 @@
                 "propA",
                 "propB"
             ],
-            "additionalProperties": false
+            "type": "object"
         },
         "RootNamespace.SubNamespace.HelperB": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "propA": {
                     "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
@@ -55,8 +56,7 @@
                 "propA",
                 "propB"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
-    },
-    "$ref": "#/definitions/RootNamespace.Def"
+    }
 }

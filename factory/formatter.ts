@@ -27,6 +27,7 @@ import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
+import { NeverTypeFormatter } from "../src/TypeFormatter/NeverTypeFormatter";
 
 export type FormatterAugmentor = (formatter: MutableTypeFormatter) => void;
 
@@ -51,6 +52,7 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
         .addTypeFormatter(new UndefinedTypeFormatter())
         .addTypeFormatter(new UnknownTypeFormatter())
         .addTypeFormatter(new VoidTypeFormatter())
+        .addTypeFormatter(new NeverTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())

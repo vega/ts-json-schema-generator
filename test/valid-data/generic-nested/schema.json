@@ -1,18 +1,24 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "MyObject": {
-            "type": "object",
+        "IListsable": {
             "additionalProperties": false,
             "properties": {
-                "responseType": {
-                    "$ref": "#/definitions/IRes"
+                "lists": {
+                    "items": {
+                        "$ref": "#/definitions/MyArrayObjectType"
+                    },
+                    "type": "array"
                 }
-            }
+            },
+            "required": [
+                "lists"
+            ],
+            "type": "object"
         },
         "IRes": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "foo": {
                     "$ref": "#/definitions/IListsable"
@@ -21,25 +27,10 @@
             "required": [
                 "foo"
             ],
-            "additionalProperties": false
-        },
-        "IListsable": {
-            "type": "object",
-            "properties": {
-                "lists": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/MyArrayObjectType"
-                    }
-                }
-            },
-            "required": [
-                "lists"
-            ],
-            "additionalProperties": false
+            "type": "object"
         },
         "MyArrayObjectType": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "a": {
                     "type": "string"
@@ -56,7 +47,16 @@
                 "b",
                 "c"
             ],
-            "additionalProperties": false
+            "type": "object"
+        },
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "responseType": {
+                    "$ref": "#/definitions/IRes"
+                }
+            },
+            "type": "object"
         }
     }
 }

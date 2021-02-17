@@ -1,42 +1,42 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "MyObject": {
-      "type": "object",
-      "properties": {
-        "value": {
-          "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyGeneric<number,string>": {
+            "additionalProperties": false,
+            "properties": {
+                "field": {
+                    "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "type": "object"
+        },
+        "MyGeneric<string,number>": {
+            "additionalProperties": false,
+            "properties": {
+                "field": {
+                    "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
+                }
+            },
+            "required": [
+                "field"
+            ],
+            "type": "object"
+        },
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+                }
+            },
+            "required": [
+                "value"
+            ],
+            "type": "object"
         }
-      },
-      "required": [
-        "value"
-      ],
-      "additionalProperties": false
-    },
-    "MyGeneric<string,number>": {
-      "type": "object",
-      "properties": {
-        "field": {
-          "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
-        }
-      },
-      "required": [
-        "field"
-      ],
-      "additionalProperties": false
-    },
-    "MyGeneric<number,string>": {
-      "type": "object",
-      "properties": {
-        "field": {
-          "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
-        }
-      },
-      "required": [
-        "field"
-      ],
-      "additionalProperties": false
     }
-  },
-  "$ref": "#/definitions/MyObject"
 }

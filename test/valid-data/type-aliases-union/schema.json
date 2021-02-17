@@ -1,8 +1,26 @@
 {
+    "$ref": "#/definitions/MyUnion",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "array": {
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ]
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "array"
+            ],
+            "type": "object"
+        },
         "MyUnion": {
-            "type": "array",
             "items": {
                 "anyOf": [
                     {
@@ -12,26 +30,8 @@
                         "$ref": "#/definitions/MyObject"
                     }
                 ]
-            }
-        },
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "array": {
-                    "type": "array",
-                    "items": {
-                        "type": [
-                            "string",
-                            "number"
-                        ]
-                    }
-                }
             },
-            "required": [
-                "array"
-            ],
-            "additionalProperties": false
+            "type": "array"
         }
-    },
-    "$ref": "#/definitions/MyUnion"
+    }
 }

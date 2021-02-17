@@ -1,37 +1,38 @@
 {
+    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "value": {
-                    "type": "object",
                     "additionalProperties": false,
                     "properties": {
                         "foo": {
                             "$ref": "#/definitions/Type3"
                         },
-                        "value2": {
-                            "type": "number"
-                        },
                         "value1": {
                             "type": "string"
+                        },
+                        "value2": {
+                            "type": "number"
                         }
                     },
                     "required": [
                         "foo",
                         "value1",
                         "value2"
-                    ]
+                    ],
+                    "type": "object"
                 }
             },
             "required": [
                 "value"
             ],
-            "additionalProperties": false
+            "type": "object"
         },
         "Type3": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "value3": {
                     "type": "number"
@@ -40,8 +41,7 @@
             "required": [
                 "value3"
             ],
-            "additionalProperties": false
+            "type": "object"
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

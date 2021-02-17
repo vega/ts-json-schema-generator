@@ -1,11 +1,23 @@
 {
+    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "A": {
+            "additionalProperties": false,
+            "properties": {
+                "bar": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "bar"
+            ],
+            "type": "object"
+        },
         "MyObject": {
-            "type": "object",
+            "additionalProperties": false,
             "properties": {
                 "value": {
-                    "type": "object",
                     "additionalProperties": {
                         "anyOf": [
                             {
@@ -26,26 +38,14 @@
                     },
                     "required": [
                         "bar"
-                    ]
+                    ],
+                    "type": "object"
                 }
             },
             "required": [
                 "value"
             ],
-            "additionalProperties": false
-        },
-        "A": {
-            "type": "object",
-            "properties": {
-                "bar": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "bar"
-            ],
-            "additionalProperties": false
+            "type": "object"
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }
