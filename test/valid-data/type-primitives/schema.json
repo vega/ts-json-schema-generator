@@ -1,29 +1,28 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "boolean": {
                     "type": "boolean"
-                },
-                "datetime": {
-                    "type": "string"
-                },
-                "decimal": {
-                    "type": "string"
-                },
-                "double": {
-                    "type": "number"
-                },
-                "integer": {
-                    "type": "number"
                 },
                 "number": {
                     "type": "number"
                 },
                 "string": {
+                    "type": "string"
+                },
+                "integer": {
+                    "type": "number"
+                },
+                "double": {
+                    "type": "number"
+                },
+                "decimal": {
+                    "type": "string"
+                },
+                "datetime": {
                     "type": "string"
                 }
             },
@@ -36,7 +35,8 @@
                 "decimal",
                 "datetime"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

@@ -1,24 +1,8 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "MyMap1": {
-            "additionalProperties": {
-                "$ref": "#/definitions/MyType"
-            },
-            "type": "object"
-        },
-        "MyMap2": {
-            "additionalProperties": {
-                "type": [
-                    "string",
-                    "number"
-                ]
-            },
-            "type": "object"
-        },
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "map1": {
                     "$ref": "#/definitions/MyMap1"
@@ -35,11 +19,27 @@
                 "map2",
                 "map3"
             ],
-            "type": "object"
+            "additionalProperties": false
+        },
+        "MyMap1": {
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/definitions/MyType"
+            }
         },
         "MyType": {
-            "additionalProperties": false,
-            "type": "object"
+            "type": "object",
+            "additionalProperties": false
+        },
+        "MyMap2": {
+            "type": "object",
+            "additionalProperties": {
+                "type": [
+                    "string",
+                    "number"
+                ]
+            }
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

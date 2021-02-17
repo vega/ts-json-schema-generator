@@ -1,9 +1,8 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "a": {
                     "type": "string"
@@ -15,7 +14,8 @@
                     "type": "string"
                 }
             },
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

@@ -71,7 +71,6 @@ describe("valid-data-type", () => {
     it("type-mapped-widened", assertValidSchema("type-mapped-widened", "MyObject"));
     it("type-mapped-optional", assertValidSchema("type-mapped-optional", "MyObject"));
     it("type-mapped-additional-props", assertValidSchema("type-mapped-additional-props", "MyObject"));
-    it("type-mapped-any-never", assertValidSchema("type-mapped-any-never", "MyObject"));
     it("type-mapped-array", assertValidSchema("type-mapped-array", "MyObject"));
     it("type-mapped-union-intersection", assertValidSchema("type-mapped-union-intersection", "MyObject"));
     it("type-mapped-enum", assertValidSchema("type-mapped-enum", "MyObject"));

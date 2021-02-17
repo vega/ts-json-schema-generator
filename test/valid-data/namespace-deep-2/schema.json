@@ -1,9 +1,40 @@
 {
-    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "RootNamespace.SubNamespace.HelperA": {
+            "type": "object",
+            "properties": {
+                "propA": {
+                    "type": "number"
+                },
+                "propB": {
+                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
+                }
+            },
+            "required": [
+                "propA",
+                "propB"
+            ],
+            "additionalProperties": false
+        },
+        "RootNamespace.SubNamespace.HelperB": {
+            "type": "object",
+            "properties": {
+                "propA": {
+                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
+                },
+                "propB": {
+                    "$ref": "#/definitions/RootNamespace.Def"
+                }
+            },
+            "required": [
+                "propA",
+                "propB"
+            ],
+            "additionalProperties": false
+        },
         "RootNamespace.Def": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "nest": {
                     "$ref": "#/definitions/RootNamespace.Def"
@@ -24,39 +55,8 @@
                 "propA",
                 "propB"
             ],
-            "type": "object"
-        },
-        "RootNamespace.SubNamespace.HelperA": {
-            "additionalProperties": false,
-            "properties": {
-                "propA": {
-                    "type": "number"
-                },
-                "propB": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
-                }
-            },
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "type": "object"
-        },
-        "RootNamespace.SubNamespace.HelperB": {
-            "additionalProperties": false,
-            "properties": {
-                "propA": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
-                },
-                "propB": {
-                    "$ref": "#/definitions/RootNamespace.Def"
-                }
-            },
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
 }

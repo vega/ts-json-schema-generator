@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "Asset": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "type": {
                     "enum": [
@@ -15,7 +15,7 @@
             "required": [
                 "type"
             ],
-            "type": "object"
+            "additionalProperties": false
         },
         "AssetType": {
             "enum": [

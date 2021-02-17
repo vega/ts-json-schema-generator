@@ -36,17 +36,12 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const flattenedDefinitions: JSONSchema7[] = [];
 
-        // Flatten anyOf inside anyOf unless the anyOf has an annotation
+        // Flatten anOf inside anyOf unless the anyOf has an annotation
         for (const def of definitions) {
-            const keys = Object.keys(def);
-            if (keys.length === 1 && keys[0] === "anyOf") {
+            if (Object.keys(def) === ["anyOf"]) {
                 flattenedDefinitions.push(...(def.anyOf as any));
-            } else if (keys.length > 0) {
-                flattenedDefinitions.push(def);
             } else {
-                // skip adding empty elements to flattendedDefinitions
-                // "never" types return an empty def
-                continue;
+                flattenedDefinitions.push(def);
             }
         }
 

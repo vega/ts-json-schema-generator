@@ -1,9 +1,9 @@
 {
-    "$ref": "#/definitions/MyString",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyString": {
             "type": "string"
         }
-    }
+    },
+    "$ref": "#/definitions/MyString"
 }

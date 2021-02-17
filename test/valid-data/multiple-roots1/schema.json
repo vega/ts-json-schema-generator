@@ -2,40 +2,34 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject1": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "propA": {
                     "$ref": "#/definitions/MyObject2"
                 }
             },
-            "required": [
-                "propA"
-            ],
-            "type": "object"
+            "required": ["propA"],
+            "additionalProperties": false
         },
         "MyObject2": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "propB": {
                     "type": "string"
                 }
             },
-            "required": [
-                "propB"
-            ],
-            "type": "object"
+            "required": ["propB"],
+            "additionalProperties": false
         },
         "MyObject3": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "propC": {
                     "type": "boolean"
                 }
             },
-            "required": [
-                "propC"
-            ],
-            "type": "object"
+            "required": ["propC"],
+            "additionalProperties": false
         }
     }
 }

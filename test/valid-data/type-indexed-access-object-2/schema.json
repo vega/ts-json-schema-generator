@@ -9,8 +9,7 @@
                     "type": "string"
                 },
                 {
-                    "not": {
-                    }
+                    "not": {}
                 }
             ]
         }

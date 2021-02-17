@@ -1,21 +1,8 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "ExposedSubType": {
-            "additionalProperties": false,
-            "properties": {
-                "subvalue": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "subvalue"
-            ],
-            "type": "object"
-        },
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "field": {
                     "$ref": "#/definitions/MySubObject"
@@ -24,10 +11,10 @@
             "required": [
                 "field"
             ],
-            "type": "object"
+            "additionalProperties": false
         },
         "MySubObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "value": {
                     "$ref": "#/definitions/ExposedSubType"
@@ -36,7 +23,20 @@
             "required": [
                 "value"
             ],
-            "type": "object"
+            "additionalProperties": false
+        },
+        "ExposedSubType": {
+            "type": "object",
+            "properties": {
+                "subvalue": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "subvalue"
+            ],
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

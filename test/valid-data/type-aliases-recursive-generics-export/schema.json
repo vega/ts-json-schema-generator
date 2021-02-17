@@ -1,24 +1,22 @@
 {
-    "$ref": "#/definitions/MyAlias",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Map<MyAlias>": {
-            "additionalProperties": {
-                "$ref": "#/definitions/MyAlias"
-            },
-            "type": "object"
-        },
-        "MyAlias": {
-            "additionalProperties": false,
-            "properties": {
-                "a": {
-                    "$ref": "#/definitions/Map%3CMyAlias%3E"
-                }
-            },
-            "required": [
-                "a"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyAlias",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Map<MyAlias>": {
+      "additionalProperties": {
+        "$ref": "#/definitions/MyAlias"
+      },
+      "type": "object"
+    },
+    "MyAlias": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/Map%3CMyAlias%3E"
         }
+      },
+      "required": ["a"],
+      "type": "object"
     }
+  }
 }

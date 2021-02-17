@@ -1,9 +1,11 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
+        "MyObject": {
+            "$ref": "#/definitions/Generic"
+        },
         "Generic": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "foo": {
                     "type": "number"
@@ -12,10 +14,8 @@
             "required": [
                 "foo"
             ],
-            "type": "object"
-        },
-        "MyObject": {
-            "$ref": "#/definitions/Generic"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

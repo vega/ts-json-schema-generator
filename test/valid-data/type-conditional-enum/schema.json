@@ -6,16 +6,11 @@
             "additionalProperties": false,
             "properties": {
                 "type": {
-                    "anyOf": [
-                        {
-                            "const": "string",
-                            "type": "string"
-                        },
-                        {
-                            "const": "date",
-                            "type": "string"
-                        }
-                    ]
+                    "enum": [
+                        "string",
+                        "date"
+                    ],
+                    "type": "string"
                 }
             },
             "required": [

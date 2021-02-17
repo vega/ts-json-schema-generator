@@ -1,24 +1,24 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "regexp": {
-                    "format": "regex",
-                    "type": "string"
+                    "type": "string",
+                    "format": "regex"
                 },
                 "regexpAlias": {
-                    "format": "regex",
-                    "type": "string"
+                    "type": "string",
+                    "format": "regex"
                 }
             },
             "required": [
                 "regexp",
                 "regexpAlias"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

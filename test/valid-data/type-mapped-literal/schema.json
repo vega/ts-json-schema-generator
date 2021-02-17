@@ -1,24 +1,24 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "a": {
-                    "const": "a",
-                    "type": "string"
+                    "type": "string",
+                    "const": "a"
                 },
                 "b": {
-                    "const": "b",
-                    "type": "string"
+                    "type": "string",
+                    "const": "b"
                 },
                 "c": {
-                    "const": "c",
-                    "type": "string"
+                    "type": "string",
+                    "const": "c"
                 }
             },
-            "type": "object"
+            "additionalProperties": false
         }
-    }
+    },
+    "$ref": "#/definitions/MyObject"
 }

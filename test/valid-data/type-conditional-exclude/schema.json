@@ -6,13 +6,9 @@
             "additionalProperties": false,
             "properties": {
                 "noNumber": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "boolean"
-                        }
+                    "type": [
+                        "string",
+                        "boolean"
                     ]
                 },
                 "noNumberAndBoolean": {

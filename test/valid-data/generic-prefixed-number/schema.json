@@ -1,21 +1,21 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "angle": {
-                    "$ref": "#/definitions/Range%3C-180%2C180%3E"
-                }
-            },
-            "required": [
-                "angle"
-            ],
-            "type": "object"
-        },
-        "Range<-180,180>": {
-            "type": "number"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "angle": {
+          "$ref": "#/definitions/Range%3C-180%2C180%3E"
         }
+      },
+      "required": [
+        "angle"
+      ],
+      "type": "object"
+    },
+    "Range<-180,180>": {
+      "type": "number"
     }
+  }
 }

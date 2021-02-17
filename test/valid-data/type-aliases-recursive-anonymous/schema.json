@@ -1,9 +1,9 @@
 {
-    "$ref": "#/definitions/MyAlias",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyAlias",
     "definitions": {
         "MyAlias": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
@@ -16,10 +16,10 @@
                 "alias",
                 "self"
             ],
-            "type": "object"
+            "additionalProperties": false
         },
         "interface-425636228-0-62-425636228-0-96": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "alias": {
                     "$ref": "#/definitions/MyAlias"
@@ -32,7 +32,7 @@
                 "alias",
                 "self"
             ],
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

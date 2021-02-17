@@ -1,24 +1,18 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
-        "IListsable": {
+        "MyObject": {
+            "type": "object",
             "additionalProperties": false,
             "properties": {
-                "lists": {
-                    "items": {
-                        "$ref": "#/definitions/MyArrayObjectType"
-                    },
-                    "type": "array"
+                "responseType": {
+                    "$ref": "#/definitions/IRes"
                 }
-            },
-            "required": [
-                "lists"
-            ],
-            "type": "object"
+            }
         },
         "IRes": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "foo": {
                     "$ref": "#/definitions/IListsable"
@@ -27,10 +21,25 @@
             "required": [
                 "foo"
             ],
-            "type": "object"
+            "additionalProperties": false
+        },
+        "IListsable": {
+            "type": "object",
+            "properties": {
+                "lists": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/MyArrayObjectType"
+                    }
+                }
+            },
+            "required": [
+                "lists"
+            ],
+            "additionalProperties": false
         },
         "MyArrayObjectType": {
-            "additionalProperties": false,
+            "type": "object",
             "properties": {
                 "a": {
                     "type": "string"
@@ -47,16 +56,7 @@
                 "b",
                 "c"
             ],
-            "type": "object"
-        },
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "responseType": {
-                    "$ref": "#/definitions/IRes"
-                }
-            },
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

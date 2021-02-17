@@ -1,6 +1,6 @@
 {
-    "$ref": "#/definitions/MyType",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
     "definitions": {
         "MyType": {
             "additionalProperties": false,
@@ -10,9 +10,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "a"
-            ],
+            "required": ["a"],
             "type": "object"
         }
     }
