@@ -11,7 +11,12 @@ jobs:
   test:
     name: Test
 
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
@@ -23,8 +28,11 @@ jobs:
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
 
-      - run: yarn lint
-      - run: yarn build
+      - name: Lint
+        run: yarn lint
+
+      - name: Build
+        run: yarn build
 
       - name: Test coverage
         run: yarn jest test/ --collectCoverage=true

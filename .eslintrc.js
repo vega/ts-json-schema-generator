@@ -35,7 +35,6 @@ module.exports = {
         "@typescript-eslint/no-namespace": "error",
         "@typescript-eslint/no-non-null-assertion": "off",
         "max-len": ["error", { code: 120, tabWidth: 4 }],
-        "linebreak-style": ["error", "unix"],
         "no-alert": "error",
         "prefer-const": "error",
         "no-return-assign": "error",
