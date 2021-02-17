@@ -40,21 +40,21 @@ export class SchemaGenerator {
         rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idNameMap));
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        // if (false) {
-        //     // TODO: remove this.
-        //     console.log(
-        //         JSON.stringify(
-        //             {
-        //                 rootTypeDefinition,
-        //                 definitions,
-        //                 reachableDefinitions,
-        //             },
-        //             null,
-        //             2
-        //         )
-        //     );
-        //     console.log(idNameMap);
-        // }
+        if (true) {
+            // TODO: remove this.
+            console.log(
+                JSON.stringify(
+                    {
+                        rootTypeDefinition,
+                        definitions,
+                        reachableDefinitions,
+                    },
+                    null,
+                    2
+                )
+            );
+            console.log(idNameMap);
+        }
 
         // create schema - all $ref's use getId().
         const schema: JSONSchema7Definition = {

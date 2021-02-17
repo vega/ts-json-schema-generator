@@ -5,10 +5,12 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
+import { hasJsDocTag } from "../Utils/hasJsDocTag";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
 import { notUndefined } from "../Utils/notUndefined";
+import { localSymbolAtNode } from "../Utils/symbolAtNode";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -168,6 +170,14 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
 
     private getTypeId(node: ts.Node, context: Context): string {
         const nodeType = ts.isInterfaceDeclaration(node) ? "interface" : "class";
-        return `${nodeType}-${getKey(node, context)}`;
+        return `${this.isExportType(node) ? "def-" : ""}${nodeType}-${getKey(node, context)}`;
+    }
+
+    private isExportType(node: ts.Node): boolean {
+        if (hasJsDocTag(node, "internal")) {
+            return false;
+        }
+        const localSymbol = localSymbolAtNode(node);
+        return localSymbol ? "exportSymbol" in localSymbol : false;
     }
 }
