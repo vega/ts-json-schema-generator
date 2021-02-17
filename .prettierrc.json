@@ -5,6 +5,12 @@
   "endOfLine": "lf",
   "overrides": [
     {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
       "files": "*.yml",
       "options": {
         "tabWidth": 2
