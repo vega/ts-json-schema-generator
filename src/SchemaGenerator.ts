@@ -12,6 +12,7 @@ import { notUndefined } from "./Utils/notUndefined";
 import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
+import { JSONSchema7, JSONSchema7Definition } from "json-schema";
 
 export class SchemaGenerator {
     public constructor(
@@ -34,16 +35,31 @@ export class SchemaGenerator {
             .filter(notUndefined);
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+        const idNameMap = new Map<string, string>();
 
+        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idNameMap));
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        return {
+        if (false) {
+            // TODO: remove this.
+            console.log(
+                JSON.stringify({
+                    rootTypeDefinition,
+                    definitions,
+                    reachableDefinitions,
+                }, null, 2)
+            );
+            console.log(idNameMap);
+        }
+        // create schema - all $ref's use getId().
+        const schema: JSONSchema7Definition = {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+        // Finally, replace all getId() by their equivalent names.
+        return resolveIdRefs(schema, idNameMap, this.config?.encodeRefs ?? true) as JSONSchema7;
     }
 
     private getRootNodes(fullName: string | undefined) {
@@ -81,9 +97,12 @@ export class SchemaGenerator {
     private getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    private appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
+    private appendRootChildDefinitions(
+        rootType: BaseType,
+        childDefinitions: StringMap<Definition>,
+        idNameMap: Map<string, string>
+    ): void {
         const seen = new Set<string>();
-
         const children = this.typeFormatter
             .getChildren(rootType)
             .filter((child): child is DefinitionType => child instanceof DefinitionType)
@@ -95,25 +114,22 @@ export class SchemaGenerator {
                 return false;
             });
 
-        const ids = new Map<string, string>();
+        const duplicates: StringMap<Set<DefinitionType>> = {};
         for (const child of children) {
-            const name = child.getName();
-            const previousId = ids.get(name);
-            // remove def prefix from ids to avoid false alarms
-            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
-            const childId = child.getId().replace(/def-/g, "");
-
-            if (previousId && childId !== previousId) {
-                
-                throw new Error(`Type "${name}" has multiple definitions.`);
-            }
-            ids.set(name, childId);
+            const name = child.getName(); // .replace(/^def-interface/, "interface");
+            duplicates[name] = duplicates[name] ?? new Set<DefinitionType>();
+            duplicates[name].add(child);
         }
 
         children.reduce((definitions, child) => {
-            const name = child.getName();
-            if (!(name in definitions)) {
-                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            const id = child.getId(); // .replace(/^def-interface/, "interface");
+            if (!(id in definitions)) {
+                // Record the schema against the ID, allowing steps like removeUnreachable to work
+                definitions[id] = this.typeFormatter.getDefinition(child.getType());
+                // Create a record of id->name mapping. This is used in the final step
+                // to resolve id -> name before delivering the schema to caller.
+                const name = unambiguousName(child, child === rootType, [...duplicates[child.getName()]]);
+                idNameMap.set(id, name);
             }
             return definitions;
         }, childDefinitions);
@@ -171,4 +187,101 @@ export class SchemaGenerator {
         const symbol = symbolAtNode(node)!;
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }
+}
+
+/**
+ * Given a set of paths, will strip the common-prefix, and return an array of remaining substrings.
+ * Also removes any file extensions, and replaces any '/' with '-' in the path.
+ * Each return value can be used as a name prefix for disambiguation.
+ * The returned prefixes array maintains input order.
+ */
+function getCommonPrefixes(paths: string[]) {
+    // clone before sorting to maintain input order.
+    const sorted = [...paths].sort();
+    const shortest = sorted[0];
+    const second = sorted[sorted.length - 1];
+    const maxPrefix = shortest.length;
+    let pos = 0;
+    let path_pos = 0;
+    while (pos < maxPrefix && shortest.charAt(pos) === second.charAt(pos)) {
+        if (shortest.charAt(pos) === "/") {
+            path_pos = pos;
+        }
+        pos++;
+    }
+    return paths.map((p) =>
+        p
+            .substr(path_pos + 1)
+            .replace(/\//g, "__")
+            .replace(/\.[^\.]+$/, "")
+    );
+}
+
+function unambiguousName(child: DefinitionType, isRoot: boolean, peers: DefinitionType[]) {
+    if (peers.length === 1 || isRoot) {
+        return child.getName();
+    } else {
+        let index = -1;
+        const srcPaths = peers.map((peer: DefinitionType, count) => {
+            index = child === peer ? count : index;
+            return peer.getType().getSrcFileName();
+        });
+        const prefixes = getCommonPrefixes(srcPaths);
+        return `${prefixes[index]}-${child.getName()}`;
+    }
+}
+
+/**
+ * Resolve all `#/definitions/...` and `$ref` in schema with appropriate disambiguated names
+ */
+function resolveIdRefs(
+    schema: JSONSchema7Definition,
+    idNameMap: Map<string, string>,
+    encodeRefs: boolean
+): JSONSchema7Definition {
+    if (!schema || typeof schema === "boolean") {
+        return schema;
+    }
+    let { $ref, allOf, oneOf, anyOf, not, properties, items, definitions, additionalProperties, ...rest } = schema;
+    const result: JSONSchema7Definition = { ...rest };
+    if ($ref) {
+        // THE Money Shot.
+        const id = encodeRefs ? decodeURIComponent($ref.slice(14)) : $ref.slice(14);
+        const name = idNameMap.get(id);
+        result.$ref = `#/definitions/${encodeRefs ? encodeURIComponent(name!) : name}`;
+    }
+    if (definitions) {
+        result.definitions = Object.entries(definitions).reduce((acc, [prop, value]) => {
+            const name = idNameMap.get(prop)!;
+            acc[name] = resolveIdRefs(value, idNameMap, encodeRefs);
+            return acc;
+        }, {} as StringMap<JSONSchema7Definition>);
+    }
+    if (properties) {
+        result.properties = Object.entries(properties).reduce((acc, [prop, value]) => {
+            acc[prop] = resolveIdRefs(value, idNameMap, encodeRefs);
+            return acc;
+        }, {} as StringMap<JSONSchema7Definition>);
+    }
+    if (additionalProperties || additionalProperties === false) {
+        result.additionalProperties = resolveIdRefs(additionalProperties, idNameMap, encodeRefs);
+    }
+    if (items) {
+        result.items = Array.isArray(items)
+            ? items.map((el) => resolveIdRefs(el, idNameMap, encodeRefs))
+            : resolveIdRefs(items, idNameMap, encodeRefs);
+    }
+    if (allOf) {
+        result.allOf = allOf.map((el) => resolveIdRefs(el, idNameMap, encodeRefs));
+    }
+    if (anyOf) {
+        result.anyOf = anyOf.map((el) => resolveIdRefs(el, idNameMap, encodeRefs));
+    }
+    if (oneOf) {
+        result.oneOf = oneOf.map((el) => resolveIdRefs(el, idNameMap, encodeRefs));
+    }
+    if (not) {
+        result.not = resolveIdRefs(not, idNameMap, encodeRefs);
+    }
+    return result;
 }

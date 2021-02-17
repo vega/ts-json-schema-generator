@@ -1,11 +1,21 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "internalSubType",
+                "internalAlias",
+                "exposedSubType"
+            ],
             "properties": {
                 "internalSubType": {
                     "type": "object",
+                    "required": [
+                        "text",
+                        "exposedSubType"
+                    ],
                     "properties": {
                         "text": {
                             "type": "string"
@@ -18,10 +28,6 @@
                             "format": "date-time"
                         }
                     },
-                    "required": [
-                        "text",
-                        "exposedSubType"
-                    ],
                     "additionalProperties": false
                 },
                 "internalAlias": {
@@ -32,26 +38,20 @@
                     "$ref": "#/definitions/ExposedSubType"
                 }
             },
-            "required": [
-                "internalSubType",
-                "internalAlias",
-                "exposedSubType"
-            ],
             "additionalProperties": false
         },
         "ExposedSubType": {
             "type": "object",
+            "required": [
+                "internalAlias"
+            ],
             "properties": {
                 "internalAlias": {
                     "type": "string",
                     "format": "date-time"
                 }
             },
-            "required": [
-                "internalAlias"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

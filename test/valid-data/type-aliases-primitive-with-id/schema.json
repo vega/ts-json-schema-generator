@@ -1,10 +1,10 @@
 {
     "$id": "testId",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyString",
     "definitions": {
         "MyString": {
             "type": "string"
         }
-    },
-    "$ref": "#/definitions/MyString"
+    }
 }

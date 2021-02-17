@@ -1,8 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "propA",
+                "propB",
+                "propC"
+            ],
             "properties": {
                 "propA": {
                     "type": "number"
@@ -14,13 +20,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "propA",
-                "propB",
-                "propC"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

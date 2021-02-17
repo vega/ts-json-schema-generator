@@ -1,9 +1,13 @@
 {
-    "$ref": "#/definitions/MyType",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
     "definitions": {
         "MyType": {
-            "additionalProperties": false,
+            "type": "object",
+            "required": [
+                "types1",
+                "types2"
+            ],
             "properties": {
                 "types1": {
                     "type": "string"
@@ -15,11 +19,7 @@
                     ]
                 }
             },
-            "required": [
-                "types1",
-                "types2"
-            ],
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

@@ -1,6 +1,6 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
@@ -47,11 +47,11 @@ export function assertValidSchema(
         const actual: any = JSON.parse(JSON.stringify(schema));
 
         // uncomment to write test files
-        // writeFileSync(
-        //     resolve(`${basePath}/${relativePath}/schema.json`),
-        //     JSON.stringify(schema, null, 4) + "\n",
-        //     "utf8"
-        // );
+        writeFileSync(
+            resolve(`${basePath}/${relativePath}/schema.json`),
+            JSON.stringify(schema, null, 4) + "\n",
+            "utf8"
+        );
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);

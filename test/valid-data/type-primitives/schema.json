@@ -1,8 +1,18 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "boolean",
+                "number",
+                "string",
+                "integer",
+                "double",
+                "decimal",
+                "datetime"
+            ],
             "properties": {
                 "boolean": {
                     "type": "boolean"
@@ -26,17 +36,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "boolean",
-                "number",
-                "string",
-                "integer",
-                "double",
-                "decimal",
-                "datetime"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

@@ -1,49 +1,49 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "number": {
-                    "const": "number",
-                    "type": "string"
-                },
-                "numberOrUnknown": {
-                    "enum": [
-                        "number",
-                        "unknown"
-                    ],
-                    "type": "string"
-                },
-                "string": {
-                    "const": "string",
-                    "type": "string"
-                },
-                "stringOrNumber": {
-                    "enum": [
-                        "string",
-                        "number"
-                    ],
-                    "type": "string"
-                },
-                "stringOrUnknown": {
-                    "enum": [
-                        "string",
-                        "unknown"
-                    ],
-                    "type": "string"
-                },
-                "unknown": {
-                    "const": "unknown",
-                    "type": "string"
-                }
-            },
+            "type": "object",
             "required": [
                 "string",
                 "stringOrNumber"
             ],
-            "type": "object"
+            "properties": {
+                "string": {
+                    "type": "string",
+                    "const": "string"
+                },
+                "number": {
+                    "type": "string",
+                    "const": "number"
+                },
+                "stringOrNumber": {
+                    "type": "string",
+                    "enum": [
+                        "string",
+                        "number"
+                    ]
+                },
+                "unknown": {
+                    "type": "string",
+                    "const": "unknown"
+                },
+                "stringOrUnknown": {
+                    "type": "string",
+                    "enum": [
+                        "string",
+                        "unknown"
+                    ]
+                },
+                "numberOrUnknown": {
+                    "type": "string",
+                    "enum": [
+                        "number",
+                        "unknown"
+                    ]
+                }
+            },
+            "additionalProperties": false
         }
     }
 }

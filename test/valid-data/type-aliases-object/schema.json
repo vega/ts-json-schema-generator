@@ -1,11 +1,16 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyAlias",
     "definitions": {
         "MyAlias": {
             "$ref": "#/definitions/MyObject"
         },
         "MyObject": {
             "type": "object",
+            "required": [
+                "number",
+                "string"
+            ],
             "properties": {
                 "number": {
                     "type": "number"
@@ -14,12 +19,7 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "number",
-                "string"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyAlias"
+    }
 }

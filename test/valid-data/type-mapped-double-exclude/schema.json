@@ -1,35 +1,37 @@
 {
-  "$ref": "#/definitions/MyObject",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "MyObject": {
-      "additionalProperties": false,
-      "properties": {
-        "bar": {
-          "anyOf": [
-            {
-              "type": "number",
-              "description": "Bar"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "required": [
+                "foo"
+            ],
+            "properties": {
+                "foo": {
+                    "anyOf": [
+                        {
+                            "type": "number",
+                            "description": "Foo"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "bar": {
+                    "anyOf": [
+                        {
+                            "type": "number",
+                            "description": "Bar"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
             },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "foo": {
-          "anyOf": [
-            {
-              "description": "Foo",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
-          ]
+            "additionalProperties": false
         }
-      },
-      "required": ["foo"],
-      "type": "object"
     }
-  }
 }

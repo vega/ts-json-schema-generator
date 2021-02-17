@@ -32,5 +32,4 @@ describe("invalid-data", () => {
     // TODO: template recursive
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
-    it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
 });

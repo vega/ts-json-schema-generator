@@ -1,10 +1,19 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
+            "required": [
+                "primitives",
+                "noNumber",
+                "noNumberAndBoolean",
+                "noStringAndNumber"
+            ],
             "properties": {
+                "primitives": {
+                    "$ref": "#/definitions/Primitives"
+                },
                 "noNumber": {
                     "type": [
                         "string",
@@ -16,18 +25,9 @@
                 },
                 "noStringAndNumber": {
                     "type": "boolean"
-                },
-                "primitives": {
-                    "$ref": "#/definitions/Primitives"
                 }
             },
-            "required": [
-                "primitives",
-                "noNumber",
-                "noNumberAndBoolean",
-                "noStringAndNumber"
-            ],
-            "type": "object"
+            "additionalProperties": false
         },
         "Primitives": {
             "type": [

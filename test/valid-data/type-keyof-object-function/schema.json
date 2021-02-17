@@ -1,10 +1,10 @@
 {
-    "$ref": "#/definitions/MyType",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
     "definitions": {
-      "MyType": {
-        "const": "key",
-        "type": "string"
-      }
+        "MyType": {
+            "type": "string",
+            "const": "key"
+        }
     }
 }

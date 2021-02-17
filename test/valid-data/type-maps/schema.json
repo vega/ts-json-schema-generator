@@ -1,8 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "map1",
+                "map2",
+                "map3"
+            ],
             "properties": {
                 "map1": {
                     "$ref": "#/definitions/MyMap1"
@@ -14,11 +20,6 @@
                     "type": "object"
                 }
             },
-            "required": [
-                "map1",
-                "map2",
-                "map3"
-            ],
             "additionalProperties": false
         },
         "MyMap1": {
@@ -40,6 +41,5 @@
                 ]
             }
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

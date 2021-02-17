@@ -1,54 +1,54 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "definitions": {
-    "MyObject": {
-      "type": "object",
-      "properties": {
-        "value1": {
-          "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
+    "definitions": {
+        "MyObject": {
+            "type": "object",
+            "required": [
+                "value1",
+                "value2"
+            ],
+            "properties": {
+                "value1": {
+                    "$ref": "#/definitions/MyGeneric%3Cstring%2Cnumber%3E"
+                },
+                "value2": {
+                    "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
+                }
+            },
+            "additionalProperties": false
         },
-        "value2": {
-          "$ref": "#/definitions/MyGeneric%3Cnumber%2Cstring%3E"
-        }
-      },
-      "required": [
-        "value1",
-        "value2"
-      ],
-      "additionalProperties": false
-    },
-    "MyGeneric<string,number>": {
-      "type": "object",
-      "properties": {
-        "a": {
-          "type": "string"
+        "MyGeneric<string,number>": {
+            "type": "object",
+            "required": [
+                "a",
+                "b"
+            ],
+            "properties": {
+                "a": {
+                    "type": "string"
+                },
+                "b": {
+                    "type": "number"
+                }
+            },
+            "additionalProperties": false
         },
-        "b": {
-          "type": "number"
+        "MyGeneric<number,string>": {
+            "type": "object",
+            "required": [
+                "a",
+                "b"
+            ],
+            "properties": {
+                "a": {
+                    "type": "number"
+                },
+                "b": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "required": [
-        "a",
-        "b"
-      ],
-      "additionalProperties": false
-    },
-    "MyGeneric<number,string>": {
-      "type": "object",
-      "properties": {
-        "a": {
-          "type": "number"
-        },
-        "b": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "a",
-        "b"
-      ],
-      "additionalProperties": false
     }
-  },
-  "$ref": "#/definitions/MyObject"
 }

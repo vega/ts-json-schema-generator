@@ -1,115 +1,115 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "fromZero": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "a": {
-                            "const": 0,
-                            "type": "number"
-                        },
-                        "b": {
-                            "const": 1,
-                            "type": "number"
-                        },
-                        "c": {
-                            "const": 2,
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "a",
-                        "b",
-                        "c"
-                    ],
-                    "type": "object"
-                },
-                "mixedEnum": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "a": {
-                            "const": 0,
-                            "type": "number"
-                        },
-                        "b": {
-                            "const": 10,
-                            "type": "number"
-                        },
-                        "c": {
-                            "const": 11,
-                            "type": "number"
-                        },
-                        "d": {
-                            "const": "foo",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "a",
-                        "b",
-                        "c",
-                        "d"
-                    ],
-                    "type": "object"
-                },
-                "someCustomInitializers": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "a": {
-                            "const": 10,
-                            "type": "number"
-                        },
-                        "b": {
-                            "const": 11,
-                            "type": "number"
-                        },
-                        "c": {
-                            "const": 20,
-                            "type": "number"
-                        },
-                        "d": {
-                            "const": 21,
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "a",
-                        "b",
-                        "c",
-                        "d"
-                    ],
-                    "type": "object"
-                },
-                "stringEnum": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "a": {
-                            "const": "foo",
-                            "type": "string"
-                        },
-                        "b": {
-                            "const": "bar",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "a",
-                        "b"
-                    ],
-                    "type": "object"
-                }
-            },
+            "type": "object",
             "required": [
                 "fromZero",
                 "someCustomInitializers",
                 "stringEnum",
                 "mixedEnum"
             ],
-            "type": "object"
+            "properties": {
+                "fromZero": {
+                    "type": "object",
+                    "required": [
+                        "a",
+                        "b",
+                        "c"
+                    ],
+                    "properties": {
+                        "a": {
+                            "type": "number",
+                            "const": 0
+                        },
+                        "b": {
+                            "type": "number",
+                            "const": 1
+                        },
+                        "c": {
+                            "type": "number",
+                            "const": 2
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "someCustomInitializers": {
+                    "type": "object",
+                    "required": [
+                        "a",
+                        "b",
+                        "c",
+                        "d"
+                    ],
+                    "properties": {
+                        "a": {
+                            "type": "number",
+                            "const": 10
+                        },
+                        "b": {
+                            "type": "number",
+                            "const": 11
+                        },
+                        "c": {
+                            "type": "number",
+                            "const": 20
+                        },
+                        "d": {
+                            "type": "number",
+                            "const": 21
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "stringEnum": {
+                    "type": "object",
+                    "required": [
+                        "a",
+                        "b"
+                    ],
+                    "properties": {
+                        "a": {
+                            "type": "string",
+                            "const": "foo"
+                        },
+                        "b": {
+                            "type": "string",
+                            "const": "bar"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "mixedEnum": {
+                    "type": "object",
+                    "required": [
+                        "a",
+                        "b",
+                        "c",
+                        "d"
+                    ],
+                    "properties": {
+                        "a": {
+                            "type": "number",
+                            "const": 0
+                        },
+                        "b": {
+                            "type": "number",
+                            "const": 10
+                        },
+                        "c": {
+                            "type": "number",
+                            "const": 11
+                        },
+                        "d": {
+                            "type": "string",
+                            "const": "foo"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
         }
     }
 }

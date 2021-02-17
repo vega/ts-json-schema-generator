@@ -1,5 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/Shape",
     "definitions": {
         "Shape": {
             "anyOf": [
@@ -16,6 +17,10 @@
         },
         "Square": {
             "type": "object",
+            "required": [
+                "kind",
+                "size"
+            ],
             "properties": {
                 "kind": {
                     "type": "string",
@@ -25,14 +30,15 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "kind",
-                "size"
-            ],
             "additionalProperties": false
         },
         "Rectangle": {
             "type": "object",
+            "required": [
+                "kind",
+                "width",
+                "height"
+            ],
             "properties": {
                 "kind": {
                     "type": "string",
@@ -45,15 +51,14 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "kind",
-                "width",
-                "height"
-            ],
             "additionalProperties": false
         },
         "Circle": {
             "type": "object",
+            "required": [
+                "kind",
+                "radius"
+            ],
             "properties": {
                 "kind": {
                     "type": "string",
@@ -63,12 +68,7 @@
                     "type": "number"
                 }
             },
-            "required": [
-                "kind",
-                "radius"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/Shape"
+    }
 }

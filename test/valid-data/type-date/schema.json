@@ -1,8 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "date",
+                "dateAlias"
+            ],
             "properties": {
                 "date": {
                     "type": "string",
@@ -13,12 +18,7 @@
                     "format": "date-time"
                 }
             },
-            "required": [
-                "date",
-                "dateAlias"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

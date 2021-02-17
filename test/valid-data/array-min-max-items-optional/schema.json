@@ -1,14 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyType",
     "definitions": {
         "MyType": {
             "type": "array",
+            "minItems": 2,
+            "maxItems": 3,
             "items": {
                 "type": "string"
-            },
-            "minItems": 2,
-            "maxItems": 3
+            }
         }
-    },
-    "$ref": "#/definitions/MyType"
+    }
 }

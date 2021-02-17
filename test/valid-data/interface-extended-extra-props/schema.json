@@ -3,15 +3,15 @@
     "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
+            "type": "object",
+            "required": [
+                "param"
+            ],
             "properties": {
                 "param": {
                     "type": "string"
                 }
-            },
-            "required": [
-                "param"
-            ],
-            "type": "object"
+            }
         }
     }
 }

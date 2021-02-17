@@ -3,32 +3,38 @@
     "definitions": {
         "MyObject1": {
             "type": "object",
+            "required": [
+                "propA"
+            ],
             "properties": {
                 "propA": {
                     "$ref": "#/definitions/MyObject2"
                 }
             },
-            "required": ["propA"],
             "additionalProperties": false
         },
         "MyObject2": {
             "type": "object",
+            "required": [
+                "propB"
+            ],
             "properties": {
                 "propB": {
                     "type": "string"
                 }
             },
-            "required": ["propB"],
             "additionalProperties": false
         },
         "MyObject3": {
             "type": "object",
+            "required": [
+                "propC"
+            ],
             "properties": {
                 "propC": {
                     "type": "boolean"
                 }
             },
-            "required": ["propC"],
             "additionalProperties": false
         }
     }

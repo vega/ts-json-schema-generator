@@ -1,8 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
             "type": "object",
+            "required": [
+                "regexp",
+                "regexpAlias"
+            ],
             "properties": {
                 "regexp": {
                     "type": "string",
@@ -13,12 +18,7 @@
                     "format": "regex"
                 }
             },
-            "required": [
-                "regexp",
-                "regexpAlias"
-            ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }

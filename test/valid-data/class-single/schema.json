@@ -1,9 +1,15 @@
 {
-    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "$ref": "#/definitions/MyObject",
     "definitions": {
         "MyObject": {
-            "additionalProperties": false,
+            "type": "object",
+            "required": [
+                "propA",
+                "propB",
+                "readonlyProp",
+                "propC"
+            ],
             "properties": {
                 "propA": {
                     "type": "number"
@@ -11,23 +17,17 @@
                 "propB": {
                     "type": "number"
                 },
+                "readonlyProp": {
+                    "type": "string"
+                },
                 "propC": {
                     "type": "number"
                 },
                 "propD": {
                     "type": "string"
-                },
-                "readonlyProp": {
-                    "type": "string"
                 }
             },
-            "required": [
-                "propA",
-                "propB",
-                "readonlyProp",
-                "propC"
-            ],
-            "type": "object"
+            "additionalProperties": false
         }
     }
 }

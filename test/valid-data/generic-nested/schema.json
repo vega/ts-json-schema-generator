@@ -4,27 +4,30 @@
     "definitions": {
         "MyObject": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
                 "responseType": {
                     "$ref": "#/definitions/IRes"
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "IRes": {
             "type": "object",
+            "required": [
+                "foo"
+            ],
             "properties": {
                 "foo": {
                     "$ref": "#/definitions/IListsable"
                 }
             },
-            "required": [
-                "foo"
-            ],
             "additionalProperties": false
         },
         "IListsable": {
             "type": "object",
+            "required": [
+                "lists"
+            ],
             "properties": {
                 "lists": {
                     "type": "array",
@@ -33,13 +36,15 @@
                     }
                 }
             },
-            "required": [
-                "lists"
-            ],
             "additionalProperties": false
         },
         "MyArrayObjectType": {
             "type": "object",
+            "required": [
+                "a",
+                "b",
+                "c"
+            ],
             "properties": {
                 "a": {
                     "type": "string"
@@ -51,11 +56,6 @@
                     "type": "string"
                 }
             },
-            "required": [
-                "a",
-                "b",
-                "c"
-            ],
             "additionalProperties": false
         }
     }
