@@ -40,7 +40,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
             );
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
-            return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false, node.getSourceFile().fileName);
+            return new ObjectType(
+                id,
+                [],
+                this.getProperties(node, new UnionType([keyListType]), context),
+                false,
+                node.getSourceFile().fileName
+            );
         } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
@@ -49,7 +55,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             return type === undefined ? undefined : new ArrayType(type);
         } else if (keyListType instanceof EnumType) {
-            return new ObjectType(id, [], this.getValues(node, keyListType, context), false, node.getSourceFile().fileName);
+            return new ObjectType(
+                id,
+                [],
+                this.getValues(node, keyListType, context),
+                false,
+                node.getSourceFile().fileName
+            );
         } else {
             throw new LogicError(
                 // eslint-disable-next-line max-len

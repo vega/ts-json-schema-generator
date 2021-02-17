@@ -40,17 +40,22 @@ export class SchemaGenerator {
         rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idNameMap));
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        if (false) {
-            // TODO: remove this.
-            console.log(
-                JSON.stringify({
-                    rootTypeDefinition,
-                    definitions,
-                    reachableDefinitions,
-                }, null, 2)
-            );
-            console.log(idNameMap);
-        }
+        // if (false) {
+        //     // TODO: remove this.
+        //     console.log(
+        //         JSON.stringify(
+        //             {
+        //                 rootTypeDefinition,
+        //                 definitions,
+        //                 reachableDefinitions,
+        //             },
+        //             null,
+        //             2
+        //         )
+        //     );
+        //     console.log(idNameMap);
+        // }
+
         // create schema - all $ref's use getId().
         const schema: JSONSchema7Definition = {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -62,7 +67,7 @@ export class SchemaGenerator {
         return resolveIdRefs(schema, idNameMap, this.config?.encodeRefs ?? true) as JSONSchema7;
     }
 
-    protected getRootNodes(fullName: string | undefined) {
+    protected getRootNodes(fullName: string | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
         } else {
@@ -97,7 +102,11 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>, idNameMap: Map<string, string>): void {
+    protected appendRootChildDefinitions(
+        rootType: BaseType,
+        childDefinitions: StringMap<Definition>,
+        idNameMap: Map<string, string>
+    ): void {
         const seen = new Set<string>();
         const children = this.typeFormatter
             .getChildren(rootType)
@@ -130,7 +139,7 @@ export class SchemaGenerator {
             return definitions;
         }, childDefinitions);
     }
-    protected partitionFiles() {
+    protected partitionFiles(): { projectFiles: ts.SourceFile[]; externalFiles: ts.SourceFile[] } {
         const projectFiles = new Array<ts.SourceFile>();
         const externalFiles = new Array<ts.SourceFile>();
 
@@ -145,7 +154,7 @@ export class SchemaGenerator {
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
         types: Map<string, ts.Node>
-    ) {
+    ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);
         }
@@ -209,7 +218,7 @@ function getCommonPrefixes(paths: string[]) {
         p
             .substr(path_pos + 1)
             .replace(/\//g, "__")
-            .replace(/\.[^\.]+$/, "")
+            .replace(/\.[^.]+$/, "")
     );
 }
 
@@ -238,7 +247,7 @@ function resolveIdRefs(
     if (!schema || typeof schema === "boolean") {
         return schema;
     }
-    let { $ref, allOf, oneOf, anyOf, not, properties, items, definitions, additionalProperties, ...rest } = schema;
+    const { $ref, allOf, oneOf, anyOf, not, properties, items, definitions, additionalProperties, ...rest } = schema;
     const result: JSONSchema7Definition = { ...rest };
     if ($ref) {
         // THE Money Shot.
