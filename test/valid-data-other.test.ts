@@ -67,4 +67,5 @@ describe("valid-data-other", () => {
     it("duplicates", assertValidSchema("duplicates", "MyType"));
     it("duplicates-composition", assertValidSchema("duplicates-composition", "MyObject"));
     it("duplicates-inheritance", assertValidSchema("duplicates-inheritance", "MyObject"));
+    it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
 });

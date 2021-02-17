@@ -16,10 +16,10 @@ import { JSONSchema7, JSONSchema7Definition } from "json-schema";
 
 export class SchemaGenerator {
     public constructor(
-        private readonly program: ts.Program,
-        private readonly nodeParser: NodeParser,
-        private readonly typeFormatter: TypeFormatter,
-        private readonly config?: Config
+        protected readonly program: ts.Program,
+        protected readonly nodeParser: NodeParser,
+        protected readonly typeFormatter: TypeFormatter,
+        protected readonly config?: Config
     ) {}
 
     public createSchema(fullName?: string): Schema {
@@ -62,7 +62,7 @@ export class SchemaGenerator {
         return resolveIdRefs(schema, idNameMap, this.config?.encodeRefs ?? true) as JSONSchema7;
     }
 
-    private getRootNodes(fullName: string | undefined) {
+    protected getRootNodes(fullName: string | undefined) {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
         } else {
@@ -75,7 +75,7 @@ export class SchemaGenerator {
             return [...rootNodes.values()];
         }
     }
-    private findNamedNode(fullName: string): ts.Node {
+    protected findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
         const { projectFiles, externalFiles } = this.partitionFiles();
@@ -94,14 +94,10 @@ export class SchemaGenerator {
 
         throw new NoRootTypeError(fullName);
     }
-    private getRootTypeDefinition(rootType: BaseType): Definition {
+    protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    private appendRootChildDefinitions(
-        rootType: BaseType,
-        childDefinitions: StringMap<Definition>,
-        idNameMap: Map<string, string>
-    ): void {
+    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>, idNameMap: Map<string, string>): void {
         const seen = new Set<string>();
         const children = this.typeFormatter
             .getChildren(rootType)
@@ -134,7 +130,7 @@ export class SchemaGenerator {
             return definitions;
         }, childDefinitions);
     }
-    private partitionFiles() {
+    protected partitionFiles() {
         const projectFiles = new Array<ts.SourceFile>();
         const externalFiles = new Array<ts.SourceFile>();
 
@@ -145,7 +141,7 @@ export class SchemaGenerator {
 
         return { projectFiles, externalFiles };
     }
-    private appendTypes(
+    protected appendTypes(
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
         types: Map<string, ts.Node>
@@ -154,7 +150,7 @@ export class SchemaGenerator {
             this.inspectNode(sourceFile, typeChecker, types);
         }
     }
-    private inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
+    protected inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         switch (node.kind) {
             case ts.SyntaxKind.InterfaceDeclaration:
             case ts.SyntaxKind.ClassDeclaration:
@@ -173,17 +169,17 @@ export class SchemaGenerator {
                 return;
         }
     }
-    private isExportType(node: ts.Node): boolean {
+    protected isExportType(node: ts.Node): boolean {
         if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "internal")) {
             return false;
         }
         const localSymbol = localSymbolAtNode(node);
         return localSymbol ? "exportSymbol" in localSymbol : false;
     }
-    private isGenericType(node: ts.TypeAliasDeclaration): boolean {
+    protected isGenericType(node: ts.TypeAliasDeclaration): boolean {
         return !!(node.typeParameters && node.typeParameters.length > 0);
     }
-    private getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
+    protected getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
         const symbol = symbolAtNode(node)!;
         return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
     }

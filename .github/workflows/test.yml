@@ -27,11 +27,11 @@ jobs:
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
 
-      - name: lint (only on ubuntu)
-        if: ${{ matrix.os !== 'windows-latest' }}
+      - name: Lint
         run: yarn lint
 
-      - run: yarn build
+      - name: Build
+        run: yarn build
 
       - name: Test coverage
         run: yarn jest test/ --collectCoverage=true
