@@ -1,24 +1,24 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "regexp": {
-                    "format": "regex",
-                    "type": "string"
-                },
-                "regexpAlias": {
-                    "format": "regex",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "regexp",
-                "regexpAlias"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "regexp": {
+          "format": "regex",
+          "type": "string"
+        },
+        "regexpAlias": {
+          "format": "regex",
+          "type": "string"
         }
+      },
+      "required": [
+        "regexp",
+        "regexpAlias"
+      ],
+      "type": "object"
     }
+  }
 }

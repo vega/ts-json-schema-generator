@@ -1,15 +1,15 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "items": {
-                "type": [
-                    "string",
-                    "number"
-                ]
-            },
-            "type": "array"
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "items": {
+        "type": [
+          "string",
+          "number"
+        ]
+      },
+      "type": "array"
     }
+  }
 }

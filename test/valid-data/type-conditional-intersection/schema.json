@@ -1,44 +1,44 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "a": {
-                    "const": "a",
-                    "type": "string"
-                },
-                "b": {
-                    "const": "b",
-                    "type": "string"
-                },
-                "c": {
-                    "const": "a and b",
-                    "type": "string"
-                },
-                "d": {
-                    "const": "D",
-                    "type": "string"
-                },
-                "e": {
-                    "const": "a and b",
-                    "type": "string"
-                },
-                "f": {
-                    "const": "D",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "const": "a",
+          "type": "string"
+        },
+        "b": {
+          "const": "b",
+          "type": "string"
+        },
+        "c": {
+          "const": "a and b",
+          "type": "string"
+        },
+        "d": {
+          "const": "D",
+          "type": "string"
+        },
+        "e": {
+          "const": "a and b",
+          "type": "string"
+        },
+        "f": {
+          "const": "D",
+          "type": "string"
         }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "type": "object"
     }
+  }
 }

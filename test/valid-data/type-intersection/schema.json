@@ -1,47 +1,47 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "value": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "foo": {
-                            "$ref": "#/definitions/Type3"
-                        },
-                        "value1": {
-                            "type": "string"
-                        },
-                        "value2": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "foo",
-                        "value1",
-                        "value2"
-                    ],
-                    "type": "object"
-                }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "foo": {
+              "$ref": "#/definitions/Type3"
             },
-            "required": [
-                "value"
-            ],
-            "type": "object"
-        },
-        "Type3": {
-            "additionalProperties": false,
-            "properties": {
-                "value3": {
-                    "type": "number"
-                }
+            "value1": {
+              "type": "string"
             },
-            "required": [
-                "value3"
-            ],
-            "type": "object"
+            "value2": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "foo",
+            "value1",
+            "value2"
+          ],
+          "type": "object"
         }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "Type3": {
+      "additionalProperties": false,
+      "properties": {
+        "value3": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "value3"
+      ],
+      "type": "object"
     }
+  }
 }

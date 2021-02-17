@@ -1,30 +1,30 @@
 {
-    "$ref": "#/definitions/TagArray",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Tag": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/TagPrimitive"
-                },
-                {
-                    "$ref": "#/definitions/TagArray"
-                }
-            ]
+  "$ref": "#/definitions/TagArray",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Tag": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/TagPrimitive"
         },
-        "TagArray": {
-            "items": {
-                "$ref": "#/definitions/Tag"
-            },
-            "type": "array"
-        },
-        "TagPrimitive": {
-            "type": [
-                "string",
-                "number",
-                "boolean",
-                "null"
-            ]
+        {
+          "$ref": "#/definitions/TagArray"
         }
+      ]
+    },
+    "TagArray": {
+      "items": {
+        "$ref": "#/definitions/Tag"
+      },
+      "type": "array"
+    },
+    "TagPrimitive": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "null"
+      ]
     }
+  }
 }

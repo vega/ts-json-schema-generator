@@ -1,34 +1,34 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "enum1": {
-                    "enum": [
-                        "a",
-                        "b",
-                        null
-                    ],
-                    "type": [
-                        "string",
-                        "null"
-                    ]
-                },
-                "enum2": {
-                    "enum": [
-                        "a",
-                        "b"
-                    ],
-                    "type": "string"
-                }
-            },
-            "required": [
-                "enum1",
-                "enum2"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "enum1": {
+          "enum": [
+            "a",
+            "b",
+            null
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "enum2": {
+          "enum": [
+            "a",
+            "b"
+          ],
+          "type": "string"
         }
+      },
+      "required": [
+        "enum1",
+        "enum2"
+      ],
+      "type": "object"
     }
+  }
 }

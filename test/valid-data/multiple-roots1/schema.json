@@ -1,41 +1,41 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject1": {
-            "additionalProperties": false,
-            "properties": {
-                "propA": {
-                    "$ref": "#/definitions/MyObject2"
-                }
-            },
-            "required": [
-                "propA"
-            ],
-            "type": "object"
-        },
-        "MyObject2": {
-            "additionalProperties": false,
-            "properties": {
-                "propB": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "propB"
-            ],
-            "type": "object"
-        },
-        "MyObject3": {
-            "additionalProperties": false,
-            "properties": {
-                "propC": {
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "propC"
-            ],
-            "type": "object"
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject1": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "$ref": "#/definitions/MyObject2"
         }
+      },
+      "required": [
+        "propA"
+      ],
+      "type": "object"
+    },
+    "MyObject2": {
+      "additionalProperties": false,
+      "properties": {
+        "propB": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "propB"
+      ],
+      "type": "object"
+    },
+    "MyObject3": {
+      "additionalProperties": false,
+      "properties": {
+        "propC": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "propC"
+      ],
+      "type": "object"
     }
+  }
 }

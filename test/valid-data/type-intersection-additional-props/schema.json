@@ -1,51 +1,51 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "A": {
-            "additionalProperties": false,
-            "properties": {
-                "bar": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "bar"
-            ],
-            "type": "object"
-        },
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "value": {
-                    "additionalProperties": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/A"
-                            },
-                            {
-                                "type": [
-                                    "number",
-                                    "string"
-                                ]
-                            }
-                        ]
-                    },
-                    "properties": {
-                        "bar": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "bar"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "value"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "A": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "number"
         }
+      },
+      "required": [
+        "bar"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/A"
+              },
+              {
+                "type": [
+                  "number",
+                  "string"
+                ]
+              }
+            ]
+          },
+          "properties": {
+            "bar": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "bar"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
     }
+  }
 }

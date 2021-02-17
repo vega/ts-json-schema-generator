@@ -1,42 +1,42 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "boolean": {
-                    "type": "boolean"
-                },
-                "datetime": {
-                    "type": "string"
-                },
-                "decimal": {
-                    "type": "string"
-                },
-                "double": {
-                    "type": "number"
-                },
-                "integer": {
-                    "type": "number"
-                },
-                "number": {
-                    "type": "number"
-                },
-                "string": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "boolean",
-                "number",
-                "string",
-                "integer",
-                "double",
-                "decimal",
-                "datetime"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "boolean": {
+          "type": "boolean"
+        },
+        "datetime": {
+          "type": "string"
+        },
+        "decimal": {
+          "type": "string"
+        },
+        "double": {
+          "type": "number"
+        },
+        "integer": {
+          "type": "number"
+        },
+        "number": {
+          "type": "number"
+        },
+        "string": {
+          "type": "string"
         }
+      },
+      "required": [
+        "boolean",
+        "number",
+        "string",
+        "integer",
+        "double",
+        "decimal",
+        "datetime"
+      ],
+      "type": "object"
     }
+  }
 }

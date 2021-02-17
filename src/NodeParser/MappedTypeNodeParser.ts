@@ -16,8 +16,6 @@ import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 import { notUndefined } from "../Utils/notUndefined";
 import { SymbolType } from "../Type/SymbolType";
-import { AnyType } from "../Type/AnyType";
-import { NeverType } from "../Type/NeverType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
@@ -51,29 +49,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return type === undefined ? undefined : new ArrayType(type);
         } else if (keyListType instanceof EnumType) {
             return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
-        } else if (keyListType instanceof AnyType) {
-            // Example:
-            //     export interface Derived<
-            //         ID extends string,
-            //         KEYS extends keyof Base<ID> = any,
-            //     > {
-            //       inner: Readonly<Pick<Derived<ID>, KEYS>>;
-            //     }
-            // We come here with the KEYS=`never`
-            // The simplest thing to do it to return the first argument here!
-            return context.getArguments()[0];
-        } else if (keyListType instanceof NeverType) {
-            // Example:
-            //     export interface Derived<
-            //         ID extends string,
-            //         KEYS extends keyof Base<ID> = never,
-            //     > {
-            //       inner: Readonly<Pick<Derived<ID>, KEYS>>;
-            //     }
-            // We come here with the KEYS=`never`
-            // The simplest thing to do it to create a new Object with id, but no props.
-            const props: ObjectProperty[] = []; // we don't allow any propertiess
-            return new ObjectType(id, [], props, false);
         } else {
             throw new LogicError(
                 // eslint-disable-next-line max-len
@@ -143,10 +118,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
     ): BaseType | boolean {
         const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
         if (key) {
-            return key instanceof NeverType
-                ? false
-                : this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
-                      this.additionalProperties;
+            return (
+                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
+                this.additionalProperties
+            );
         } else {
             return this.additionalProperties;
         }

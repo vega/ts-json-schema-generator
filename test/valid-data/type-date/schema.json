@@ -1,24 +1,24 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "date": {
-                    "format": "date-time",
-                    "type": "string"
-                },
-                "dateAlias": {
-                    "format": "date-time",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "date",
-                "dateAlias"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "date": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "dateAlias": {
+          "format": "date-time",
+          "type": "string"
         }
+      },
+      "required": [
+        "date",
+        "dateAlias"
+      ],
+      "type": "object"
     }
+  }
 }

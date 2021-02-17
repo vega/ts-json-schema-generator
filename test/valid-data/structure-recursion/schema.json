@@ -1,34 +1,34 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "sub": {
-                    "$ref": "#/definitions/MySubObject"
-                }
-            },
-            "required": [
-                "sub"
-            ],
-            "type": "object"
-        },
-        "MySubObject": {
-            "additionalProperties": false,
-            "properties": {
-                "propA": {
-                    "type": "number"
-                },
-                "propB": {
-                    "$ref": "#/definitions/MySubObject"
-                }
-            },
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "type": "object"
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "sub": {
+          "$ref": "#/definitions/MySubObject"
         }
+      },
+      "required": [
+        "sub"
+      ],
+      "type": "object"
+    },
+    "MySubObject": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "type": "number"
+        },
+        "propB": {
+          "$ref": "#/definitions/MySubObject"
+        }
+      },
+      "required": [
+        "propA",
+        "propB"
+      ],
+      "type": "object"
     }
+  }
 }
