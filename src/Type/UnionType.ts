@@ -4,7 +4,7 @@ import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
 
-    public constructor(types: readonly BaseType[]) {
+    public constructor(types: readonly (BaseType | undefined)[]) {
         super();
         this.types = uniqueTypeArray(
             types.reduce((flatTypes, type) => {
