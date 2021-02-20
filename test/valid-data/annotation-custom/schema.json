@@ -1,22 +1,21 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "customNumberProperty": 14,
-            "customStringProperty": "string-value",
-            "customComplexProperty": {
-                "a": 1,
-                "b": 2
-            },
-            "customMultilineProperty": [
-                "value1",
-                "value2",
-                "value3"
-            ],
-            "customUnquotedProperty": "not-a-valid-json",
-            "additionalProperties": false
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "customComplexProperty": {
+        "a": 1,
+        "b": 2
+      },
+      "customMultilineProperty": [
+        "value1",
+        "value2",
+        "value3"
+      ],
+      "customNumberProperty": 14,
+      "customStringProperty": "string-value",
+      "customUnquotedProperty": "not-a-valid-json",
+      "type": "object"
     }
 }

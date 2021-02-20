@@ -1,36 +1,36 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "x",
-                "y",
-                "a",
-                "b"
-            ],
-            "description": "Class Description",
-            "properties": {
-                "x": {
-                    "type": "string",
-                    "description": "Property x description"
-                },
-                "y": {
-                    "type": "string",
-                    "description": "Property y description",
-                    "pattern": "/abc/"
-                },
-                "a": {
-                    "type": "string",
-                    "description": "Parameter a description"
-                },
-                "b": {
-                    "type": "number",
-                    "description": "Parameter b description"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "description": "Class Description",
+      "properties": {
+        "a": {
+          "description": "Parameter a description",
+          "type": "string"
+        },
+        "b": {
+          "description": "Parameter b description",
+          "type": "number"
+        },
+        "x": {
+          "description": "Property x description",
+          "type": "string"
+        },
+        "y": {
+          "description": "Property y description",
+          "pattern": "/abc/",
+          "type": "string"
         }
+      },
+      "required": [
+        "x",
+        "y",
+        "a",
+        "b"
+      ],
+      "type": "object"
     }
+  }
 }

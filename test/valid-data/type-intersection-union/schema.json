@@ -1,90 +1,90 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "anyOf": [
-                {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "b",
-                        "d"
-                    ],
-                    "properties": {
-                        "d": {
-                            "type": "number"
-                        },
-                        "a": {
-                            "type": "number"
-                        },
-                        "b": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "b",
-                        "e"
-                    ],
-                    "properties": {
-                        "e": {
-                            "type": "number"
-                        },
-                        "a": {
-                            "type": "number"
-                        },
-                        "b": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "c",
-                        "d"
-                    ],
-                    "properties": {
-                        "d": {
-                            "type": "number"
-                        },
-                        "a": {
-                            "type": "number"
-                        },
-                        "c": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "c",
-                        "e"
-                    ],
-                    "properties": {
-                        "e": {
-                            "type": "number"
-                        },
-                        "a": {
-                            "type": "number"
-                        },
-                        "c": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            ]
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "b": {
+              "type": "number"
+            },
+            "d": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "d"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "b": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "e"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "c": {
+              "type": "number"
+            },
+            "d": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a",
+            "c",
+            "d"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "c": {
+              "type": "number"
+            },
+            "e": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a",
+            "c",
+            "e"
+          ],
+          "type": "object"
         }
+      ]
     }
+  }
 }

@@ -1,62 +1,62 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA",
-    "definitions": {
-        "RootNamespace.SubNamespace.HelperA": {
-            "type": "object",
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "properties": {
-                "propA": {
-                    "type": "number"
-                },
-                "propB": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "RootNamespace.Def": {
+      "additionalProperties": false,
+      "properties": {
+        "nest": {
+          "$ref": "#/definitions/RootNamespace.Def"
         },
-        "RootNamespace.SubNamespace.HelperB": {
-            "type": "object",
-            "required": [
-                "propA",
-                "propB"
-            ],
-            "properties": {
-                "propA": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
-                },
-                "propB": {
-                    "$ref": "#/definitions/RootNamespace.Def"
-                }
-            },
-            "additionalProperties": false
+        "prev": {
+          "$ref": "#/definitions/RootNamespace.Def"
         },
-        "RootNamespace.Def": {
-            "type": "object",
-            "required": [
-                "nest",
-                "prev",
-                "propA",
-                "propB"
-            ],
-            "properties": {
-                "nest": {
-                    "$ref": "#/definitions/RootNamespace.Def"
-                },
-                "prev": {
-                    "$ref": "#/definitions/RootNamespace.Def"
-                },
-                "propA": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
-                },
-                "propB": {
-                    "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
-                }
-            },
-            "additionalProperties": false
+        "propA": {
+          "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
+        },
+        "propB": {
+          "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
         }
+      },
+      "required": [
+        "nest",
+        "prev",
+        "propA",
+        "propB"
+      ],
+      "type": "object"
+    },
+    "RootNamespace.SubNamespace.HelperA": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "type": "number"
+        },
+        "propB": {
+          "$ref": "#/definitions/RootNamespace.SubNamespace.HelperB"
+        }
+      },
+      "required": [
+        "propA",
+        "propB"
+      ],
+      "type": "object"
+    },
+    "RootNamespace.SubNamespace.HelperB": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "$ref": "#/definitions/RootNamespace.SubNamespace.HelperA"
+        },
+        "propB": {
+          "$ref": "#/definitions/RootNamespace.Def"
+        }
+      },
+      "required": [
+        "propA",
+        "propB"
+      ],
+      "type": "object"
     }
+  }
 }

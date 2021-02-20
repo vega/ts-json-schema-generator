@@ -1,25 +1,25 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "export",
-                "private"
-            ],
-            "properties": {
-                "export": {
-                    "$ref": "#/definitions/MyExportString"
-                },
-                "private": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyExportString": {
+      "type": "string"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "export": {
+          "$ref": "#/definitions/MyExportString"
         },
-        "MyExportString": {
-            "type": "string"
+        "private": {
+          "type": "string"
         }
+      },
+      "required": [
+        "export",
+        "private"
+      ],
+      "type": "object"
     }
+  }
 }

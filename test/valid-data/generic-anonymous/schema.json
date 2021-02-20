@@ -1,48 +1,48 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "value1",
-                "value2"
-            ],
-            "properties": {
-                "value1": {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "b"
-                    ],
-                    "properties": {
-                        "a": {
-                            "type": "string"
-                        },
-                        "b": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                "value2": {
-                    "type": "object",
-                    "required": [
-                        "a",
-                        "b"
-                    ],
-                    "properties": {
-                        "a": {
-                            "type": "number"
-                        },
-                        "b": {
-                            "type": "string"
-                        }
-                    },
-                    "additionalProperties": false
-                }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value1": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
             },
-            "additionalProperties": false
+            "b": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "a",
+            "b"
+          ],
+          "type": "object"
+        },
+        "value2": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "b": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "a",
+            "b"
+          ],
+          "type": "object"
         }
+      },
+      "required": [
+        "value1",
+        "value2"
+      ],
+      "type": "object"
     }
+  }
 }

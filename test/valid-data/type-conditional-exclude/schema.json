@@ -1,40 +1,40 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "primitives",
-                "noNumber",
-                "noNumberAndBoolean",
-                "noStringAndNumber"
-            ],
-            "properties": {
-                "primitives": {
-                    "$ref": "#/definitions/Primitives"
-                },
-                "noNumber": {
-                    "type": [
-                        "string",
-                        "boolean"
-                    ]
-                },
-                "noNumberAndBoolean": {
-                    "type": "string"
-                },
-                "noStringAndNumber": {
-                    "type": "boolean"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "noNumber": {
+          "type": [
+            "string",
+            "boolean"
+          ]
         },
-        "Primitives": {
-            "type": [
-                "string",
-                "number",
-                "boolean"
-            ]
+        "noNumberAndBoolean": {
+          "type": "string"
+        },
+        "noStringAndNumber": {
+          "type": "boolean"
+        },
+        "primitives": {
+          "$ref": "#/definitions/Primitives"
         }
+      },
+      "required": [
+        "primitives",
+        "noNumber",
+        "noNumberAndBoolean",
+        "noStringAndNumber"
+      ],
+      "type": "object"
+    },
+    "Primitives": {
+      "type": [
+        "string",
+        "number",
+        "boolean"
+      ]
     }
+  }
 }

@@ -15,5 +15,10 @@
             },
             "additionalProperties": false
         }
+      },
+      "required": [
+        "abc"
+      ],
+      "type": "object"
     }
 }

@@ -1,62 +1,62 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "responseType": {
-                    "$ref": "#/definitions/IRes"
-                }
-            },
-            "additionalProperties": false
-        },
-        "IRes": {
-            "type": "object",
-            "required": [
-                "foo"
-            ],
-            "properties": {
-                "foo": {
-                    "$ref": "#/definitions/IListsable"
-                }
-            },
-            "additionalProperties": false
-        },
-        "IListsable": {
-            "type": "object",
-            "required": [
-                "lists"
-            ],
-            "properties": {
-                "lists": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/MyArrayObjectType"
-                    }
-                }
-            },
-            "additionalProperties": false
-        },
-        "MyArrayObjectType": {
-            "type": "object",
-            "required": [
-                "a",
-                "b",
-                "c"
-            ],
-            "properties": {
-                "a": {
-                    "type": "string"
-                },
-                "b": {
-                    "type": "number"
-                },
-                "c": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "IListsable": {
+      "additionalProperties": false,
+      "properties": {
+        "lists": {
+          "items": {
+            "$ref": "#/definitions/MyArrayObjectType"
+          },
+          "type": "array"
         }
+      },
+      "required": [
+        "lists"
+      ],
+      "type": "object"
+    },
+    "IRes": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "$ref": "#/definitions/IListsable"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    },
+    "MyArrayObjectType": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "number"
+        },
+        "c": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "c"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "responseType": {
+          "$ref": "#/definitions/IRes"
+        }
+      },
+      "type": "object"
     }
+  }
 }

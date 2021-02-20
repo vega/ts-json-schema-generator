@@ -1,45 +1,45 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "map1",
-                "map2",
-                "map3"
-            ],
-            "properties": {
-                "map1": {
-                    "$ref": "#/definitions/MyMap1"
-                },
-                "map2": {
-                    "$ref": "#/definitions/MyMap2"
-                },
-                "map3": {
-                    "type": "object"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyMap1": {
+      "additionalProperties": {
+        "$ref": "#/definitions/MyType"
+      },
+      "type": "object"
+    },
+    "MyMap2": {
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ]
+      },
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "map1": {
+          "$ref": "#/definitions/MyMap1"
         },
-        "MyMap1": {
-            "type": "object",
-            "additionalProperties": {
-                "$ref": "#/definitions/MyType"
-            }
+        "map2": {
+          "$ref": "#/definitions/MyMap2"
         },
-        "MyType": {
-            "type": "object",
-            "additionalProperties": false
-        },
-        "MyMap2": {
-            "type": "object",
-            "additionalProperties": {
-                "type": [
-                    "string",
-                    "number"
-                ]
-            }
+        "map3": {
+          "type": "object"
         }
+      },
+      "required": [
+        "map1",
+        "map2",
+        "map3"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "additionalProperties": false,
+      "type": "object"
     }
+  }
 }

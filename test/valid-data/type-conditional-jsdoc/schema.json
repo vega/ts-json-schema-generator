@@ -1,77 +1,77 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f",
-                "g",
-                "h",
-                "i"
-            ],
-            "properties": {
-                "a": {
-                    "type": [
-                        "number",
-                        "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
-                },
-                "b": {
-                    "type": [
-                        "number",
-                        "string"
-                    ],
-                    "description": "Description of b",
-                    "pattern": "foo"
-                },
-                "c": {
-                    "type": "number"
-                },
-                "d": {
-                    "type": "number",
-                    "description": "No string",
-                    "pattern": "bar"
-                },
-                "e": {
-                    "type": "number",
-                    "description": "Description of e"
-                },
-                "f": {
-                    "type": "number",
-                    "description": "Description of f",
-                    "pattern": "bar"
-                },
-                "g": {
-                    "type": [
-                        "number",
-                        "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
-                },
-                "h": {
-                    "type": "string",
-                    "description": "Number or string",
-                    "pattern": "foo"
-                },
-                "i": {
-                    "type": [
-                        "number",
-                        "string"
-                    ],
-                    "description": "Number or string",
-                    "pattern": "foo"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "description": "Number or string",
+          "pattern": "foo",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "b": {
+          "description": "Description of b",
+          "pattern": "foo",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "c": {
+          "type": "number"
+        },
+        "d": {
+          "description": "No string",
+          "pattern": "bar",
+          "type": "number"
+        },
+        "e": {
+          "description": "Description of e",
+          "type": "number"
+        },
+        "f": {
+          "description": "Description of f",
+          "pattern": "bar",
+          "type": "number"
+        },
+        "g": {
+          "description": "Number or string",
+          "pattern": "foo",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "h": {
+          "description": "Number or string",
+          "pattern": "foo",
+          "type": "string"
+        },
+        "i": {
+          "description": "Number or string",
+          "pattern": "foo",
+          "type": [
+            "number",
+            "string"
+          ]
         }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i"
+      ],
+      "type": "object"
     }
+  }
 }

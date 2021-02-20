@@ -1,18 +1,15 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyType",
-    "definitions": {
-        "MyType": {
-            "type": "object",
-            "properties": {
-                "foo": {
-                    "type": [
-                        "number",
-                        "boolean"
-                    ]
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "type": [
+            "number",
+            "boolean"
+          ]
         }
     }
 }

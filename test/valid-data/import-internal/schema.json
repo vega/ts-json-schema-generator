@@ -1,57 +1,57 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "internalSubType",
-                "internalAlias",
-                "exposedSubType"
-            ],
-            "properties": {
-                "internalSubType": {
-                    "type": "object",
-                    "required": [
-                        "text",
-                        "exposedSubType"
-                    ],
-                    "properties": {
-                        "text": {
-                            "type": "string"
-                        },
-                        "exposedSubType": {
-                            "$ref": "#/definitions/ExposedSubType"
-                        },
-                        "internalAlias": {
-                            "type": "string",
-                            "format": "date-time"
-                        }
-                    },
-                    "additionalProperties": false
-                },
-                "internalAlias": {
-                    "type": "string",
-                    "format": "date-time"
-                },
-                "exposedSubType": {
-                    "$ref": "#/definitions/ExposedSubType"
-                }
-            },
-            "additionalProperties": false
-        },
-        "ExposedSubType": {
-            "type": "object",
-            "required": [
-                "internalAlias"
-            ],
-            "properties": {
-                "internalAlias": {
-                    "type": "string",
-                    "format": "date-time"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ExposedSubType": {
+      "additionalProperties": false,
+      "properties": {
+        "internalAlias": {
+          "format": "date-time",
+          "type": "string"
         }
+      },
+      "required": [
+        "internalAlias"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "exposedSubType": {
+          "$ref": "#/definitions/ExposedSubType"
+        },
+        "internalAlias": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "internalSubType": {
+          "additionalProperties": false,
+          "properties": {
+            "exposedSubType": {
+              "$ref": "#/definitions/ExposedSubType"
+            },
+            "internalAlias": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "text",
+            "exposedSubType"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "internalSubType",
+        "internalAlias",
+        "exposedSubType"
+      ],
+      "type": "object"
     }
+  }
 }

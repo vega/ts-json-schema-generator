@@ -19,5 +19,10 @@
             },
             "additionalProperties": false
         }
+      },
+      "required": [
+        "bar"
+      ],
+      "type": "object"
     }
 }

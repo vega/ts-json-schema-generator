@@ -1,19 +1,19 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "flag"
-            ],
-            "properties": {
-                "flag": {
-                    "type": "boolean",
-                    "const": true
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "flag": {
+          "const": true,
+          "type": "boolean"
         }
+      },
+      "required": [
+        "flag"
+      ],
+      "type": "object"
     }
+  }
 }

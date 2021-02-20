@@ -1,39 +1,39 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "field"
-            ],
-            "properties": {
-                "field": {
-                    "$ref": "#/definitions/MySubObject"
-                }
-            },
-            "additionalProperties": false
-        },
-        "MySubObject": {
-            "type": "object",
-            "required": [
-                "value"
-            ],
-            "properties": {
-                "value": {
-                    "type": "object",
-                    "required": [
-                        "subvalue"
-                    ],
-                    "properties": {
-                        "subvalue": {
-                            "type": "number"
-                        }
-                    },
-                    "additionalProperties": false
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "#/definitions/MySubObject"
         }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
+    "MySubObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "additionalProperties": false,
+          "properties": {
+            "subvalue": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "subvalue"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
     }
+  }
 }

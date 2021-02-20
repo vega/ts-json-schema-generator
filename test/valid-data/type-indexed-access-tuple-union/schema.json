@@ -1,14 +1,14 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/FormLayout",
-    "definitions": {
-        "FormLayout": {
-            "type": "string",
-            "enum": [
-                "horizontal",
-                "inline",
-                "vertical"
-            ]
-        }
+  "$ref": "#/definitions/FormLayout",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "FormLayout": {
+      "enum": [
+        "horizontal",
+        "inline",
+        "vertical"
+      ],
+      "type": "string"
     }
+  }
 }

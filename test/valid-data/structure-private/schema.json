@@ -1,50 +1,50 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "field"
-            ],
-            "properties": {
-                "field": {
-                    "type": "object",
-                    "required": [
-                        "subfieldA",
-                        "subfieldB",
-                        "subfieldC"
-                    ],
-                    "properties": {
-                        "subfieldA": {
-                            "type": "number"
-                        },
-                        "subfieldB": {
-                            "type": [
-                                "string",
-                                "number"
-                            ]
-                        },
-                        "subfieldC": {
-                            "type": "object",
-                            "required": [
-                                "subsubfieldA"
-                            ],
-                            "properties": {
-                                "subsubfieldA": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "number"
-                                    }
-                                }
-                            },
-                            "additionalProperties": false
-                        }
-                    },
-                    "additionalProperties": false
-                }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "additionalProperties": false,
+          "properties": {
+            "subfieldA": {
+              "type": "number"
             },
-            "additionalProperties": false
+            "subfieldB": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "subfieldC": {
+              "additionalProperties": false,
+              "properties": {
+                "subsubfieldA": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "subsubfieldA"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "subfieldA",
+            "subfieldB",
+            "subfieldC"
+          ],
+          "type": "object"
         }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
     }
+  }
 }

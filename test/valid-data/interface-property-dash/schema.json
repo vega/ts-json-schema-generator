@@ -1,26 +1,26 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "with-dash",
-                "without",
-                "nodash"
-            ],
-            "properties": {
-                "with-dash": {
-                    "type": "string"
-                },
-                "without": {
-                    "type": "string"
-                },
-                "nodash": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "nodash": {
+          "type": "string"
+        },
+        "with-dash": {
+          "type": "string"
+        },
+        "without": {
+          "type": "string"
         }
+      },
+      "required": [
+        "with-dash",
+        "without",
+        "nodash"
+      ],
+      "type": "object"
     }
+  }
 }

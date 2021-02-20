@@ -1,22 +1,38 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyAlias",
-    "definitions": {
-        "MyAlias": {
-            "type": "object",
-            "required": [
-                "alias",
-                "self"
-            ],
-            "properties": {
-                "alias": {
-                    "$ref": "#/definitions/MyAlias"
-                },
-                "self": {
-                    "$ref": "#/definitions/undefined"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyAlias",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyAlias": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "$ref": "#/definitions/MyAlias"
+        },
+        "self": {
+          "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
         }
+      },
+      "required": [
+        "alias",
+        "self"
+      ],
+      "type": "object"
+    },
+    "interface-425636228-0-62-425636228-0-96": {
+      "additionalProperties": false,
+      "properties": {
+        "alias": {
+          "$ref": "#/definitions/MyAlias"
+        },
+        "self": {
+          "$ref": "#/definitions/interface-425636228-0-62-425636228-0-96"
+        }
+      },
+      "required": [
+        "alias",
+        "self"
+      ],
+      "type": "object"
     }
+  }
 }

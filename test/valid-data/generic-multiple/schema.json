@@ -1,46 +1,46 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "value1",
-                "value2"
-            ],
-            "properties": {
-                "value1": {
-                    "$ref": "#/definitions/MyGeneric%3Cnumber%3E"
-                },
-                "value2": {
-                    "$ref": "#/definitions/MyGeneric%3Cstring%3E"
-                }
-            },
-            "additionalProperties": false
-        },
-        "MyGeneric<number>": {
-            "type": "object",
-            "required": [
-                "field"
-            ],
-            "properties": {
-                "field": {
-                    "type": "number"
-                }
-            },
-            "additionalProperties": false
-        },
-        "MyGeneric<string>": {
-            "type": "object",
-            "required": [
-                "field"
-            ],
-            "properties": {
-                "field": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyGeneric<number>": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "type": "number"
         }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
+    "MyGeneric<string>": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value1": {
+          "$ref": "#/definitions/MyGeneric%3Cnumber%3E"
+        },
+        "value2": {
+          "$ref": "#/definitions/MyGeneric%3Cstring%3E"
+        }
+      },
+      "required": [
+        "value1",
+        "value2"
+      ],
+      "type": "object"
     }
+  }
 }
