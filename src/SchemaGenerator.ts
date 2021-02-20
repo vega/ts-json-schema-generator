@@ -13,9 +13,6 @@ import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
 import { JSONSchema7, JSONSchema7Definition } from "json-schema";
-import { derefType } from "./Utils/derefType";
-import { AliasType } from "./Type/AliasType";
-import { ObjectType } from "./Type/ObjectType";
 
 export class SchemaGenerator {
     public constructor(
