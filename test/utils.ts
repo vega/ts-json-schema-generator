@@ -15,6 +15,11 @@ addFormats(validator);
 
 const basePath = "test/valid-data";
 
+export function createGenerator(config: Config) {
+    const program: ts.Program = createProgram(config);
+    return new SchemaGenerator(program, createParser(program, config), createFormatter(config), config);
+}
+
 export function assertValidSchema(
     relativePath: string,
     type?: string,
@@ -24,7 +29,7 @@ export function assertValidSchema(
 ) {
     return (): void => {
         const config: Config = {
-            path: resolve(`${basePath}/${relativePath}/*.ts`),
+            path: `${basePath}/${relativePath}/*.ts`,
             type,
             jsDoc,
             extraTags,
@@ -35,13 +40,7 @@ export function assertValidSchema(
             config.schemaId = schemaId;
         }
 
-        const program: ts.Program = createProgram(config);
-        const generator: SchemaGenerator = new SchemaGenerator(
-            program,
-            createParser(program, config),
-            createFormatter(config),
-            config
-        );
+        const generator = createGenerator(config);
 
         const schema = generator.createSchema(type);
         const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${relativePath}/schema.json`), "utf8"));
