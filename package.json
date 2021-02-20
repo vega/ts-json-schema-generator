@@ -87,8 +87,6 @@
     "test:coverage": "yarn jest test/ --collectCoverage=true",
     "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
-    "dbg": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p test/valid-data/type-aliases-recursive-anonymous/main.ts -t MyAlias",
-    "dbg-vega": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p ../../../tmp/vega-lite/src/index.ts -t TopLevelSpec --no-type-check --no-ref-encode > ../../../tmp/vega-lite/build/vega-lite-schema2.json",
     "run": "ts-node ts-json-schema-generator.ts"
   },
   "release": {
