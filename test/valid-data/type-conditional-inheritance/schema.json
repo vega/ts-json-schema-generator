@@ -1,62 +1,62 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "a",
-                "b",
-                "c",
-                "d",
-                "e",
-                "f"
-            ],
-            "properties": {
-                "a": {
-                    "$ref": "#/definitions/Map%3CA%3E"
-                },
-                "b": {
-                    "$ref": "#/definitions/Map%3CB%3E"
-                },
-                "c": {
-                    "$ref": "#/definitions/Map%3CC%3E"
-                },
-                "d": {
-                    "$ref": "#/definitions/Map%3CD%3E"
-                },
-                "e": {
-                    "$ref": "#/definitions/Map%3CE%3E"
-                },
-                "f": {
-                    "$ref": "#/definitions/Map%3CF%3E"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Map<A>": {
+      "const": "a",
+      "type": "string"
+    },
+    "Map<B>": {
+      "const": "a",
+      "type": "string"
+    },
+    "Map<C>": {
+      "const": "a",
+      "type": "string"
+    },
+    "Map<D>": {
+      "const": "d",
+      "type": "string"
+    },
+    "Map<E>": {
+      "const": "d",
+      "type": "string"
+    },
+    "Map<F>": {
+      "const": "f",
+      "type": "string"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/Map%3CA%3E"
         },
-        "Map<A>": {
-            "type": "string",
-            "const": "a"
+        "b": {
+          "$ref": "#/definitions/Map%3CB%3E"
         },
-        "Map<B>": {
-            "type": "string",
-            "const": "a"
+        "c": {
+          "$ref": "#/definitions/Map%3CC%3E"
         },
-        "Map<C>": {
-            "type": "string",
-            "const": "a"
+        "d": {
+          "$ref": "#/definitions/Map%3CD%3E"
         },
-        "Map<D>": {
-            "type": "string",
-            "const": "d"
+        "e": {
+          "$ref": "#/definitions/Map%3CE%3E"
         },
-        "Map<E>": {
-            "type": "string",
-            "const": "d"
-        },
-        "Map<F>": {
-            "type": "string",
-            "const": "f"
+        "f": {
+          "$ref": "#/definitions/Map%3CF%3E"
         }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f"
+      ],
+      "type": "object"
     }
+  }
 }

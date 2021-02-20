@@ -12,7 +12,7 @@ export abstract class BaseType {
      * Provide a base class implementation. Will only be exported for entities
      * exposed in a schema - Alias|Enum|Class|Interface.
      */
-    public getSrcFileName(): string {
-        throw new Error(`Missing sourceFileName '${this.getId()}'`);
+    public getSrcFileName(): string | null {
+        return null;
     }
 }

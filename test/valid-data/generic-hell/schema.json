@@ -128,31 +128,8 @@
           "const": "alias",
           "type": "string"
         },
-        "SomeGeneric<\"alias\",\"alias\">": {
-            "type": "object",
-            "required": [
-                "a",
-                "b",
-                "c",
-                "d"
-            ],
-            "properties": {
-                "a": {
-                    "type": "string",
-                    "const": "alias"
-                },
-                "b": {
-                    "type": "string",
-                    "const": "alias"
-                },
-                "c": {
-                    "$ref": "#/definitions/GenericA%3C%22alias%22%3E"
-                },
-                "d": {
-                    "$ref": "#/definitions/GenericC%3C%22alias%22%3E"
-                }
-            },
-            "additionalProperties": false
+        "c": {
+          "$ref": "#/definitions/GenericA%3C%22alias%22%3E"
         },
         "d": {
           "$ref": "#/definitions/GenericC%3C%22alias%22%3E"

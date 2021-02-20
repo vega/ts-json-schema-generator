@@ -13,6 +13,9 @@ import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
 import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import { derefType } from "./Utils/derefType";
+import { AliasType } from "./Type/AliasType";
+import { ObjectType } from "./Type/ObjectType";
 
 export class SchemaGenerator {
     public constructor(
@@ -39,22 +42,6 @@ export class SchemaGenerator {
 
         rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idNameMap));
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
-
-        if (true) {
-            // TODO: remove this.
-            console.log(
-                JSON.stringify(
-                    {
-                        rootTypeDefinition,
-                        definitions,
-                        reachableDefinitions,
-                    },
-                    null,
-                    2
-                )
-            );
-            console.log(idNameMap);
-        }
 
         // create schema - all $ref's use getId().
         const schema: JSONSchema7Definition = {
@@ -121,19 +108,19 @@ export class SchemaGenerator {
 
         const duplicates: StringMap<Set<DefinitionType>> = {};
         for (const child of children) {
-            const name = child.getName(); // .replace(/^def-interface/, "interface");
+            const name = child.getName();
             duplicates[name] = duplicates[name] ?? new Set<DefinitionType>();
             duplicates[name].add(child);
         }
 
         children.reduce((definitions, child) => {
-            const id = child.getId(); // .replace(/^def-interface/, "interface");
+            const id = child.getId().replace(/^def-/, "");
             if (!(id in definitions)) {
+                const name = unambiguousName(child, child === rootType, [...duplicates[child.getName()]]);
                 // Record the schema against the ID, allowing steps like removeUnreachable to work
                 definitions[id] = this.typeFormatter.getDefinition(child.getType());
                 // Create a record of id->name mapping. This is used in the final step
                 // to resolve id -> name before delivering the schema to caller.
-                const name = unambiguousName(child, child === rootType, [...duplicates[child.getName()]]);
                 idNameMap.set(id, name);
             }
             return definitions;
@@ -222,17 +209,33 @@ function getCommonPrefixes(paths: string[]) {
     );
 }
 
-function unambiguousName(child: DefinitionType, isRoot: boolean, peers: DefinitionType[]) {
+function unambiguousName(child: DefinitionType, isRoot: boolean, peers: DefinitionType[]): string {
     if (peers.length === 1 || isRoot) {
         return child.getName();
-    } else {
+    } else if (child.getType().getSrcFileName()) {
         let index = -1;
-        const srcPaths = peers.map((peer: DefinitionType, count) => {
+
+        // filter unique peers to be those that have srcFileNames.
+        // Intermediate Types - AnnotationTypes, UnionTypes, do not have sourceFileNames
+        const uniques = peers.filter((peer) => peer.getType().getSrcFileName());
+        if (uniques.length === 1) {
+            return uniques[0].getName();
+        }
+        const srcPaths = uniques.map((peer: DefinitionType, count) => {
             index = child === peer ? count : index;
-            return peer.getType().getSrcFileName();
+            return peer.getType().getSrcFileName()!;
         });
         const prefixes = getCommonPrefixes(srcPaths);
         return `${prefixes[index]}-${child.getName()}`;
+    } else {
+        // intermediate type.
+        const name = child.getName();
+        // TODO: Perhaps we should maintain a name-id map, and throw a duplicate error on collision.
+        if (name === undefined) {
+            // this might be unreachable code.
+            throw new Error(`Unable to disambiguate types`);
+        }
+        return name;
     }
 }
 

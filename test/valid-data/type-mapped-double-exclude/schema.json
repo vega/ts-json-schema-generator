@@ -11,7 +11,21 @@
               "description": "Bar",
               "type": "number"
             },
-            "additionalProperties": false
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "foo": {
+          "anyOf": [
+            {
+              "description": "Foo",
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -19,4 +33,5 @@
       ],
       "type": "object"
     }
+  }
 }

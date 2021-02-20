@@ -12,7 +12,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
-        const ref = type.getId();
+        const ref = type.getId().replace(/^def-/, "");
         return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
     }
     public getChildren(type: DefinitionType): BaseType[] {

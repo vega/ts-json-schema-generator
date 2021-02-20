@@ -17,4 +17,5 @@
       "minItems": 2,
       "type": "array"
     }
+  }
 }

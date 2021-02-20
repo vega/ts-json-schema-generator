@@ -18,4 +18,5 @@
       "customUnquotedProperty": "not-a-valid-json",
       "type": "object"
     }
+  }
 }

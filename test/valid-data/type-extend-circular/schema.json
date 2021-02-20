@@ -20,17 +20,8 @@
         "bar": {
           "type": "string"
         },
-        "MyObject": {
-            "type": "object",
-            "required": [
-                "foo"
-            ],
-            "properties": {
-                "foo": {
-                    "$ref": "#/definitions/MyObject"
-                }
-            },
-            "additionalProperties": false
+        "foo": {
+          "$ref": "#/definitions/MyObject"
         }
       },
       "required": [
@@ -39,4 +30,5 @@
       ],
       "type": "object"
     }
+  }
 }

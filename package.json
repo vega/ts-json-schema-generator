@@ -66,6 +66,7 @@
     "ajv": "^7.1.1",
     "ajv-formats": "^1.5.1",
     "chai": "^4.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -82,11 +83,12 @@
     "lint": "eslint {src,test,factory}/**/*.ts",
     "format": "yarn lint --fix",
     "test": "jest test/ --verbose",
-    "test:fast": "FAST_TEST=1 jest test/ --verbose",
+    "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
     "test:coverage": "yarn jest test/ --collectCoverage=true",
-    "test:update": "UPDATE_SCHEMA=true yarn test:fast",
+    "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
-    "dbg": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p test/valid-data/duplicates-composition/main.ts -t MyObject",
+    "dbg": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p test/valid-data/type-aliases-recursive-anonymous/main.ts -t MyAlias",
+    "dbg-vega": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts -p ../../../tmp/vega-lite/src/index.ts -t TopLevelSpec --no-type-check --no-ref-encode > ../../../tmp/vega-lite/build/vega-lite-schema2.json",
     "run": "ts-node ts-json-schema-generator.ts"
   },
   "release": {
