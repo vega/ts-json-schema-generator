@@ -8,10 +8,11 @@
 // of the CI build, with the hope of preventing such degradation
 // of coverage metrics.
 
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Config } from "../src/Config";
 import { createGenerator } from "./utils";
+import stringify from "json-stable-stringify";
 
 describe("vega-lite", () => {
     it("schema", () => {
@@ -19,7 +20,7 @@ describe("vega-lite", () => {
         const config: Config = {
             path: `node_modules/vega-lite/src/index.ts`,
             type,
-            jsDoc: `none`,
+            jsDoc: "basic",
             extraTags: [],
             encodeRefs: false,
             skipTypeCheck: true,
@@ -27,10 +28,10 @@ describe("vega-lite", () => {
 
         const generator = createGenerator(config);
         const schema = generator.createSchema(type);
-        const vegaLiteSchema = JSON.parse(
-            readFileSync(resolve("node_modules/vega-lite/build/vega-lite-schema.json"), "utf8")
-        );
+        const vegaLiteSchema = JSON.parse(readFileSync(resolve("test/vega-lite/schema.json"), "utf8"));
+        writeFileSync(resolve("test/vega-lite/generated.json"), stringify(schema, { space: 2 }), "utf8");
 
-        expect(schema).toEqual(vegaLiteSchema);
+        const generatedSchema = JSON.parse(stringify(schema));
+        expect(generatedSchema).toEqual(vegaLiteSchema);
     });
 });
