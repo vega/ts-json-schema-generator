@@ -15,7 +15,7 @@ addFormats(validator);
 
 const basePath = "test/valid-data";
 
-export function createGenerator(config: Config) {
+export function createGenerator(config: Config): SchemaGenerator {
     const program: ts.Program = createProgram(config);
     return new SchemaGenerator(program, createParser(program, config), createFormatter(config), config);
 }

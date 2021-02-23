@@ -16,20 +16,22 @@ import stringify from "json-stable-stringify";
 
 describe("vega-lite", () => {
     it("schema", () => {
-        const type = `TopLevelSpec`;
+        const type = "TopLevelSpec";
         const config: Config = {
             path: `node_modules/vega-lite/src/index.ts`,
             type,
-            jsDoc: "basic",
-            extraTags: [],
             encodeRefs: false,
             skipTypeCheck: true,
         };
 
         const generator = createGenerator(config);
         const schema = generator.createSchema(type);
+
+        if (process.env.UPDATE_SCHEMA) {
+            writeFileSync(resolve("test/vega-lite/schema.json"), stringify(schema, { space: 2 }) + "\n", "utf8");
+        }
+
         const vegaLiteSchema = JSON.parse(readFileSync(resolve("test/vega-lite/schema.json"), "utf8"));
-        writeFileSync(resolve("test/vega-lite/generated.json"), stringify(schema, { space: 2 }), "utf8");
 
         const generatedSchema = JSON.parse(stringify(schema));
         expect(generatedSchema).toEqual(vegaLiteSchema);
