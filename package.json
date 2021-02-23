@@ -74,7 +74,9 @@
     "jest-junit": "^12.0.0",
     "prettier": "^2.2.1",
     "semantic-release": "^17.3.9",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "vega": "^5.19.1",
+    "vega-lite": "^4.17.0"
   },
   "scripts": {
     "prepublishOnly": "yarn build",
