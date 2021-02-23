@@ -1,13 +1,3 @@
-// An implicit assumption of using vega/ts-json-schema-generator
-// is that we need to not add regressions to the vega-lite schemas.
-// When added capabilities to ts-json-schema-generator, the vega-lite
-// constraint exposes corner cases that one is forced to tackle
-// These are however difficult to create tests for, ultimately
-// causing the CI to fail a PR for coverage.
-// This is meant as a simple test, that will run within the context
-// of the CI build, with the hope of preventing such degradation
-// of coverage metrics.
-
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Config } from "../src/Config";
