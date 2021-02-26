@@ -5,33 +5,33 @@
     "MyType": {
       "anyOf": [
         {
-          "type": "object",
+          "additionalProperties": false,
           "properties": {
             "values": {
-              "type": "string",
               "enum": [
                 "a",
                 "b"
-              ]
+              ],
+              "type": "string"
             }
           },
           "required": [
             "values"
           ],
-          "additionalProperties": false
+          "type": "object"
         },
         {
-          "type": "object",
+          "additionalProperties": false,
           "properties": {
             "noValuesHere": {
-              "type": "boolean",
-              "const": true
+              "const": true,
+              "type": "boolean"
             }
           },
           "required": [
             "noValuesHere"
           ],
-          "additionalProperties": false
+          "type": "object"
         }
       ]
     }
