@@ -1,11 +1,12 @@
 import ts from "typescript";
 import { UnknownNodeError } from "./Error/UnknownNodeError";
+import { MutableParser } from "./MutableParser";
 import { Context } from "./NodeParser";
 import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
-export class ChainNodeParser implements SubNodeParser {
+export class ChainNodeParser implements SubNodeParser, MutableParser {
     private readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType | undefined>>();
 
     public constructor(private typeChecker: ts.TypeChecker, private nodeParsers: SubNodeParser[]) {}
