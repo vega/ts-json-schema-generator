@@ -3,16 +3,17 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
+import { BaseType, Context, ReferenceType, SubNodeParser } from "..";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
-import { createParser } from "../factory/parser";
+import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { SubTypeFormatter } from "../src/SubTypeFormatter";
-import { BaseType } from "../src/Type/BaseType";
 import { EnumType } from "../src/Type/EnumType";
 import { FunctionType } from "../src/Type/FunctionType";
+import { StringType } from "../src/Type/StringType";
 
 const basePath = "test/config";
 
@@ -20,7 +21,8 @@ function assertSchema(
     name: string,
     userConfig: Config & { type: string },
     tsconfig?: boolean,
-    augmentor?: FormatterAugmentor
+    formatterAugmentor?: FormatterAugmentor,
+    parserAugmentor?: ParserAugmentor
 ) {
     return () => {
         const config: Config = {
@@ -37,8 +39,8 @@ function assertSchema(
         const program: ts.Program = createProgram(config);
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
-            createParser(program, config),
-            createFormatter(config, augmentor),
+            createParser(program, config, parserAugmentor),
+            createFormatter(config, formatterAugmentor),
             config
         );
 
@@ -103,6 +105,24 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(_type: EnumType): BaseType[] {
         return [];
+    }
+}
+
+export class ExampleConstructorParser implements SubNodeParser {
+    supportsNode(node: ts.Node): boolean {
+        return node.kind === ts.SyntaxKind.ConstructorType;
+    }
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+        return new StringType();
+    }
+}
+
+export class ExampleNullParser implements SubNodeParser {
+    supportsNode(node: ts.Node): boolean {
+        return node.kind === ts.SyntaxKind.NullKeyword;
+    }
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+        return new StringType();
     }
 }
 
@@ -325,6 +345,32 @@ describe("config", () => {
             },
             false,
             (formatter) => formatter.addTypeFormatter(new ExampleEnumTypeFormatter())
+        )
+    );
+
+    it(
+        "custom-parser-configuration",
+        assertSchema(
+            "custom-parser-configuration",
+            {
+                type: "MyObject",
+            },
+            false,
+            undefined,
+            (parser) => parser.addNodeParser(new ExampleConstructorParser())
+        )
+    );
+
+    it(
+        "custom-parser-configuration-override",
+        assertSchema(
+            "custom-parser-configuration-override",
+            {
+                type: "MyObject",
+            },
+            false,
+            undefined,
+            (parser) => parser.addNodeParser(new ExampleNullParser())
         )
     );
 });
