@@ -59,6 +59,7 @@ Extending the built-in formatting is possible by creating a custom formatter and
 ```ts
 // my-function-formatter.ts
 import { BaseType, Definition, FunctionType, SubTypeFormatter } from "ts-json-schema-generator";
+import ts from "typescript";
 
 export class MyFunctionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: FunctionType): boolean {
@@ -104,6 +105,57 @@ const formatter = createFormatter(config, (fmt) => {
 
 const program = createProgram(config);
 const parser = createParser(program, config);
+const generator = new SchemaGenerator(program, parser, formatter, config);
+const schema = generator.createSchema(config.type);
+
+const schemaString = JSON.stringify(schema, null, 2);
+fs.writeFile(output_path, schemaString, (err) => {
+    if (err) throw err;
+});
+```
+
+### Custom parsing
+
+Similar to custom formatting, extending the built-in parsing works practically the same way:
+
+1. First we create a parser, in this case for parsing construct types:
+
+```ts
+// my-constructor-parser.ts
+import { Context, StringType, ReferenceType, BaseType, SubNodeParser } from "ts-json-schema-generator";
+import ts from "typescript";
+
+export class MyConstructorParser implements SubNodeParser {
+    supportsNode(node: ts.Node): boolean {
+        return node.kind === ts.SyntaxKind.ConstructorType;
+    }
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+        return new StringType(); // Treat constructors as strings in this example
+    }
+}
+```
+
+2. Then we add the parser as a child to the core parser using the augmentation callback:
+
+```ts
+import { createProgram, createParser, SchemaGenerator, createFormatter } from "ts-json-schema-generator";
+import { MyConstructorParser } from "./my-constructor-parser.ts";
+import fs from "fs";
+
+const config = {
+    path: "path/to/source/file",
+    tsconfig: "path/to/tsconfig.json",
+    type: "*", // Or <type-name> if you want to generate schema for that one type only
+};
+
+const program = createProgram(config);
+
+// We configure the parser an add our custom parser to it.
+const parser = createParser(program, config, (prs) => {
+    prs.addNodeParser(new MyConstructorParser());
+});
+
+const formatter = createFormatter(config);
 const generator = new SchemaGenerator(program, parser, formatter, config);
 const schema = generator.createSchema(config.type);
 
