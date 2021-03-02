@@ -48,6 +48,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "else",
         "readOnly",
         "writeOnly",
+
+        // New since draft 2019-09:
+        "deprecated",
     ]);
 
     public constructor(private extraTags?: Set<string>) {}
