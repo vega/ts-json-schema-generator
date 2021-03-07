@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "values": {
+              "enum": [
+                "a",
+                "b"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "values"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "noValuesHere": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "noValuesHere"
+          ],
+          "type": "object"
+        }
+      ]
+    }
+  }
+}

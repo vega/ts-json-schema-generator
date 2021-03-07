@@ -44,6 +44,7 @@ describe("valid-data-type", () => {
     it("type-intersection-additional-props", assertValidSchema("type-intersection-additional-props", "MyObject"));
     it("type-extend", assertValidSchema("type-extend", "MyObject"));
     it("type-extend-circular", assertValidSchema("type-extend-circular", "MyType"));
+    it("type-extends-never", assertValidSchema("type-extends-never", "MyType"));
 
     it("type-typeof", assertValidSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertValidSchema("type-typeof-value", "MyType"));

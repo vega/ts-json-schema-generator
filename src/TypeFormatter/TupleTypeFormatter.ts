@@ -5,6 +5,7 @@ import { OptionalType } from "../Type/OptionalType";
 import { RestType } from "../Type/RestType";
 import { TupleType } from "../Type/TupleType";
 import { TypeFormatter } from "../TypeFormatter";
+import { notUndefined } from "../Utils/notUndefined";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class TupleTypeFormatter implements SubTypeFormatter {
@@ -14,7 +15,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         return type instanceof TupleType;
     }
     public getDefinition(type: TupleType): Definition {
-        const subTypes = type.getTypes();
+        const subTypes = type.getTypes().filter(notUndefined);
 
         const requiredElements = subTypes.filter((t) => !(t instanceof OptionalType) && !(t instanceof RestType));
         const optionalElements = subTypes.filter((t) => t instanceof OptionalType) as OptionalType[];
@@ -62,6 +63,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         return uniqueArray(
             type
                 .getTypes()
+                .filter(notUndefined)
                 .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
         );
     }

@@ -50,8 +50,11 @@ import { FunctionNodeParser } from "./../src/NodeParser/FunctionNodeParser";
 import { ObjectLiteralExpressionNodeParser } from "./../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
 import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser";
+import { MutableParser } from "../src/MutableParser";
 
-export function createParser(program: ts.Program, config: Config): NodeParser {
+export type ParserAugmentor = (parser: MutableParser) => void;
+
+export function createParser(program: ts.Program, config: Config, augmentor?: ParserAugmentor): NodeParser {
     const typeChecker = program.getTypeChecker();
     const chainNodeParser = new ChainNodeParser(typeChecker, []);
 
@@ -75,6 +78,10 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
     }
     function withCircular(nodeParser: SubNodeParser): SubNodeParser {
         return new CircularReferenceNodeParser(nodeParser);
+    }
+
+    if (augmentor) {
+        augmentor(chainNodeParser);
     }
 
     chainNodeParser
