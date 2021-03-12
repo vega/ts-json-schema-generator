@@ -14,7 +14,7 @@
         "numberValue": {
           "type": "integer",
           "title": "Number field title",
-          "description": "This field is of integer type. Integer!\n\nThe type of this field is integer.",
+          "description": "This field is of integer type. Integer!\n\nThe type of this field is integer.\n\nThis is of type\n- integer\n- number",
           "exclusiveMaximum": 10,
           "multipleOf": 3
         },

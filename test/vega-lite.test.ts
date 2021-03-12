@@ -16,12 +16,13 @@ describe("vega-lite", () => {
 
         const generator = createGenerator(config);
         const schema = generator.createSchema(type);
+        const schemaFile = resolve("test/vega-lite/schema.json");
 
         if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(resolve("test/vega-lite/schema.json"), stringify(schema, { space: 2 }) + "\n", "utf8");
+            writeFileSync(schemaFile, stringify(schema, { space: 2 }) + "\n", "utf8");
         }
 
-        const vegaLiteSchema = JSON.parse(readFileSync(resolve("test/vega-lite/schema.json"), "utf8"));
+        const vegaLiteSchema = JSON.parse(readFileSync(schemaFile, "utf8"));
 
         expect(schema).toEqual(vegaLiteSchema);
     });
