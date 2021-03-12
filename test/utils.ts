@@ -41,18 +41,15 @@ export function assertValidSchema(
         }
 
         const generator = createGenerator(config);
-
         const schema = generator.createSchema(type);
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${relativePath}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(schema));
+        const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(
-                resolve(`${basePath}/${relativePath}/schema.json`),
-                stringify(schema, { space: 2 }) + "\n",
-                "utf8"
-            );
+            writeFileSync(schemaFile, stringify(schema, { space: 2 }) + "\n", "utf8");
         }
+
+        const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const actual: any = JSON.parse(JSON.stringify(schema));
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);

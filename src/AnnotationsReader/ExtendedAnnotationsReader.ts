@@ -45,7 +45,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
 
         return {
             description: comments
-                .map((comment) => comment.text.replace(/\r/g, "").replace(/(?<=[^\n])\n(?=[^\n])/g, " "))
+                .map((comment) => comment.text.replace(/\r/g, "").replace(/(?<=[^\n])\n(?=[^\n*-])/g, " "))
                 .join(" "),
         };
     }
