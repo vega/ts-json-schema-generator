@@ -127,12 +127,23 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
             .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
             .map(
-                (member) =>
-                    new ObjectProperty(
-                        member.name.getText(),
+                (member) => {
+                    let nameToExport = member.name.getText();
+                    if (member.name.kind === ts.SyntaxKind.ComputedPropertyName) {
+                        const f = require(member.name.getSourceFile().fileName);
+                        // @ts-ignore
+                        if (member.name.expression && member.name.expression.escapedText!) {
+                            // @ts-ignore
+                            nameToExport = f[member.name.expression.escapedText];
+                        }
+                    }
+
+                    return new ObjectProperty(
+                        nameToExport,
                         this.childNodeParser.createType(member.type!, context),
                         !member.questionToken
                     )
+                }
             )
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {

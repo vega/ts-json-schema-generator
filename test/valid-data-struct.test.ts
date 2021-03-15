@@ -10,6 +10,7 @@ describe("valid-data-struct", () => {
     it("literal-array-type", assertValidSchema("literal-array-type", "MyType"));
     it("literal-index-type", assertValidSchema("literal-index-type", "MyType"));
 
+    it("interface-computed-property-name", assertValidSchema("interface-computed-property-name", "MyObject"));
     it("interface-single", assertValidSchema("interface-single", "MyObject"));
     it("interface-multi", assertValidSchema("interface-multi", "MyObject"));
     it("interface-recursion", assertValidSchema("interface-recursion", "MyObject"));
