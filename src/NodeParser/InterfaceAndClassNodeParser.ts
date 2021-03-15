@@ -134,7 +134,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     const f = require(member.name.getSourceFile().fileName);
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
-                    if (member.name.expression && member.name.expression.escapedText!) {
+                    if (member.name.expression && member.name.expression.escapedText) {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         nameToExport = f[member.name.expression.escapedText];
