@@ -126,25 +126,27 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 return members;
             }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
             .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
-            .map(
-                (member) => {
-                    let nameToExport = member.name.getText();
-                    if (member.name.kind === ts.SyntaxKind.ComputedPropertyName) {
-                        const f = require(member.name.getSourceFile().fileName);
+            .map((member) => {
+                let nameToExport = member.name.getText();
+                if (member.name.kind === ts.SyntaxKind.ComputedPropertyName) {
+                    // eslint-disable-next-line max-len
+                    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+                    const f = require(member.name.getSourceFile().fileName);
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    if (member.name.expression && member.name.expression.escapedText!) {
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
-                        if (member.name.expression && member.name.expression.escapedText!) {
-                            // @ts-ignore
-                            nameToExport = f[member.name.expression.escapedText];
-                        }
+                        nameToExport = f[member.name.expression.escapedText];
                     }
-
-                    return new ObjectProperty(
-                        nameToExport,
-                        this.childNodeParser.createType(member.type!, context),
-                        !member.questionToken
-                    )
                 }
-            )
+
+                return new ObjectProperty(
+                    nameToExport,
+                    this.childNodeParser.createType(member.type!, context),
+                    !member.questionToken
+                );
+            })
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {
                     hasRequiredNever = true;
