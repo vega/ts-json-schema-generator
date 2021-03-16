@@ -1,4 +1,5 @@
 {
+    "$ref": "#/definitions/MyObject",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "MyObject": {
@@ -25,11 +26,10 @@
             },
             "required": [
                 "defaultFormat",
-                "dateAlias",
+                "time",
                 "dateOnly"
             ],
             "additionalProperties": false
         }
-    },
-    "$ref": "#/definitions/MyObject"
+    }
 }
