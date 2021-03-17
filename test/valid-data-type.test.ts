@@ -31,7 +31,7 @@ describe("valid-data-type", () => {
     it("type-maps", assertValidSchema("type-maps", "MyObject"));
     it("type-primitives", assertValidSchema("type-primitives", "MyObject"));
     it("type-date", assertValidSchema("type-date", "MyObject"));
-    it("type-date-annotation", assertValidSchema("type-date", "MyObject", "basic"));
+    it("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", "basic"));
     it("type-regexp", assertValidSchema("type-regexp", "MyObject"));
     it("type-union", assertValidSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertValidSchema("type-union-tagged", "Shape"));
