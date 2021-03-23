@@ -13,12 +13,19 @@
           "type": "string"
         },
         "field2": {
-          "enum": [
-            "foo",
-            "bar",
-            "moo"
-          ],
-          "type": "string"
+          "oneOf": [
+            {
+              "enum": [
+                "foo",
+                "bar"
+              ],
+              "type": "string"
+            },
+            {
+              "const": "moo",
+              "type": "string"
+            }
+          ]
         }
       },
       "required": [
