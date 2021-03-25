@@ -17,7 +17,7 @@ export function mergeDefinitions(def1: Definition, def2: Definition): Definition
     if (!type1 || !type2 || uniqueArray(types).length !== types.length) {
         return null;
     }
-    const keys = [Object.keys(props1), Object.keys(props2)].flat();
+    const keys = [...Object.keys(props1), ...Object.keys(props2)];
     if (keys.includes("enum") || keys.includes("const") || uniqueArray(keys).length !== keys.length) {
         return null;
     }
