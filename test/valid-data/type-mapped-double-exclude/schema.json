@@ -6,25 +6,17 @@
       "additionalProperties": false,
       "properties": {
         "bar": {
-          "anyOf": [
-            {
-              "description": "Bar",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
+          "description": "Bar",
+          "type": [
+            "number",
+            "null"
           ]
         },
         "foo": {
-          "anyOf": [
-            {
-              "description": "Foo",
-              "type": "number"
-            },
-            {
-              "type": "null"
-            }
+          "description": "Foo",
+          "type": [
+            "number",
+            "null"
           ]
         }
       },

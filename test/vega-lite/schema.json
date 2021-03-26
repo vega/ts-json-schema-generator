@@ -867,22 +867,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -1558,18 +1554,14 @@
           "description": "The anchor position of the axis in pixels. For x-axes with top or bottom orientation, this sets the axis group x coordinate. For y-axes with left or right orientation, this sets the axis group y coordinate.\n\n__Default value__: `0`"
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the axis. A style is a named collection of axis property defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ (none) __Note:__ Any specified style will augment the default style. For example, an x-axis mark with `\"style\": \"foo\"` will use `config.axisX` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the axis. A style is a named collection of axis property defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ (none) __Note:__ Any specified style will augment the default style. For example, an x-axis mark with `\"style\": \"foo\"` will use `config.axisX` and `config.style.foo` (the specified style `\"foo\"` has higher precedence).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         },
         "tickBand": {
           "anyOf": [
@@ -2515,18 +2507,14 @@
           "description": "The anchor position of the axis in pixels. For x-axes with top or bottom orientation, this sets the axis group x coordinate. For y-axes with left or right orientation, this sets the axis group y coordinate.\n\n__Default value__: `0`"
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the axis. A style is a named collection of axis property defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ (none) __Note:__ Any specified style will augment the default style. For example, an x-axis mark with `\"style\": \"foo\"` will use `config.axisX` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the axis. A style is a named collection of axis property defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ (none) __Note:__ Any specified style will augment the default style. For example, an x-axis mark with `\"style\": \"foo\"` will use `config.axisX` and `config.style.foo` (the specified style `\"foo\"` has higher precedence).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         },
         "tickBand": {
           "anyOf": [
@@ -3686,22 +3674,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -4947,10 +4931,10 @@
               "items": {
                 "$ref": "#/definitions/StringFieldDef<Field>"
               },
-              "type": "array"
-            },
-            {
-              "type": "null"
+              "type": [
+                "array",
+                "null"
+              ]
             }
           ],
           "description": "The tooltip text to show upon mouse hover. Specifying `tooltip` encoding overrides [the `tooltip` property in the mark definition](https://vega.github.io/vega-lite/docs/mark.html#mark-def).\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip in Vega-Lite."
@@ -5534,18 +5518,14 @@
               ]
             },
             "value": {
-              "anyOf": [
-                {
-                  "items": {
-                    "type": "number"
-                  },
-                  "type": "array"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+              "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity).",
+              "items": {
+                "type": "number"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
             }
           },
           "required": [
@@ -5726,13 +5706,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -5893,13 +5873,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -6058,7 +6038,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -6066,9 +6049,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -6149,10 +6129,10 @@
               "$ref": "#/definitions/Gradient"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -6300,10 +6280,10 @@
         "value": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -6585,18 +6565,14 @@
               "description": "Predicate for triggering the condition"
             },
             "value": {
-              "anyOf": [
-                {
-                  "items": {
-                    "type": "number"
-                  },
-                  "type": "array"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity)."
+              "description": "A constant value in visual domain (e.g., `\"red\"` / `\"#0099ff\"` / [gradient definition](https://vega.github.io/vega-lite/docs/types.html#gradient) for color, values between `0` to `1` for opacity).",
+              "items": {
+                "type": "number"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
             }
           },
           "required": [
@@ -6729,13 +6705,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -6888,13 +6864,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -7045,7 +7021,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -7053,9 +7032,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -7128,10 +7104,10 @@
               "$ref": "#/definitions/Gradient"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -7259,10 +7235,10 @@
         "value": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -8612,13 +8588,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -8734,13 +8710,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -8984,10 +8960,10 @@
               "items": {
                 "$ref": "#/definitions/StringFieldDef<Field>"
               },
-              "type": "array"
-            },
-            {
-              "type": "null"
+              "type": [
+                "array",
+                "null"
+              ]
             }
           ],
           "description": "The tooltip text to show upon mouse hover. Specifying `tooltip` encoding overrides [the `tooltip` property in the mark definition](https://vega.github.io/vega-lite/docs/mark.html#mark-def).\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip in Vega-Lite."
@@ -9238,13 +9214,11 @@
         "equal": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "number"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
             },
             {
               "$ref": "#/definitions/DateTime"
@@ -9287,10 +9261,10 @@
         "gte": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "number"
+              "type": [
+                "string",
+                "number"
+              ]
             },
             {
               "$ref": "#/definitions/DateTime"
@@ -9329,10 +9303,10 @@
         "gt": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "number"
+              "type": [
+                "string",
+                "number"
+              ]
             },
             {
               "$ref": "#/definitions/DateTime"
@@ -9371,10 +9345,10 @@
         "lte": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "number"
+              "type": [
+                "string",
+                "number"
+              ]
             },
             {
               "$ref": "#/definitions/DateTime"
@@ -9413,10 +9387,10 @@
         "lt": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "number"
+              "type": [
+                "string",
+                "number"
+              ]
             },
             {
               "$ref": "#/definitions/DateTime"
@@ -9711,13 +9685,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -9812,13 +9786,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -9913,13 +9887,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -10014,13 +9988,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -10178,7 +10152,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -10186,9 +10163,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -10272,7 +10246,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -10280,9 +10257,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -10362,13 +10336,13 @@
               "items": {
                 "anyOf": [
                   {
-                    "type": "number"
+                    "type": [
+                      "number",
+                      "null"
+                    ]
                   },
                   {
                     "$ref": "#/definitions/DateTime"
-                  },
-                  {
-                    "type": "null"
                   },
                   {
                     "$ref": "#/definitions/ExprRef"
@@ -11845,7 +11819,11 @@
           "items": {
             "type": "number"
           },
-          "type": "array"
+          "type": [
+            "array",
+            "string",
+            "object"
+          ]
         },
         {
           "items": {
@@ -11864,12 +11842,6 @@
             "type": "object"
           },
           "type": "array"
-        },
-        {
-          "type": "string"
-        },
-        {
-          "type": "object"
         }
       ]
     },
@@ -11929,10 +11901,10 @@
               "$ref": "#/definitions/Stream"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "string",
+                "boolean"
+              ]
             }
           ],
           "description": "Clears the selection, emptying it of all values. This property can be a [Event Stream](https://vega.github.io/vega/docs/event-streams/) or `false` to disable clear.\n\n__Default value:__ `dblclick`.\n\n__See also:__ [`clear` examples ](https://vega.github.io/vega-lite/docs/selection.html#clear) in the documentation."
@@ -12004,10 +11976,10 @@
               "$ref": "#/definitions/Stream"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "string",
+                "boolean"
+              ]
             }
           ],
           "description": "Clears the selection, emptying it of all values. This property can be a [Event Stream](https://vega.github.io/vega/docs/event-streams/) or `false` to disable clear.\n\n__Default value:__ `dblclick`.\n\n__See also:__ [`clear` examples ](https://vega.github.io/vega-lite/docs/selection.html#clear) in the documentation."
@@ -14870,22 +14842,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -15968,22 +15936,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -16782,18 +16746,14 @@
           ]
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](https://vega.github.io/vega-lite/docs/encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name. For example, a bar mark will have style `\"bar\"` by default. __Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](https://vega.github.io/vega-lite/docs/encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name. For example, a bar mark will have style `\"bar\"` by default. __Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         },
         "tension": {
           "anyOf": [
@@ -16879,22 +16839,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -17354,7 +17310,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -17362,9 +17321,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -18120,18 +18076,14 @@
           ]
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](https://vega.github.io/vega-lite/docs/encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name. For example, a bar mark will have style `\"bar\"` by default. __Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence)."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the mark. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles. Any [mark properties](https://vega.github.io/vega-lite/docs/encoding.html#mark-prop) explicitly defined within the `encoding` will override a style default.\n\n__Default value:__ The mark's name. For example, a bar mark will have style `\"bar\"` by default. __Note:__ Any specified style will augment the default style. For example, a bar mark with `\"style\": \"foo\"` will receive from `config.style.bar` and `config.style.foo` (the specified style `\"foo\"` has higher precedence).",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         },
         "tension": {
           "anyOf": [
@@ -18212,22 +18164,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -18362,30 +18310,26 @@
       "type": "object"
     },
     "Padding": {
-      "anyOf": [
-        {
+      "additionalProperties": false,
+      "minimum": 0,
+      "properties": {
+        "bottom": {
           "type": "number"
         },
-        {
-          "additionalProperties": false,
-          "properties": {
-            "bottom": {
-              "type": "number"
-            },
-            "left": {
-              "type": "number"
-            },
-            "right": {
-              "type": "number"
-            },
-            "top": {
-              "type": "number"
-            }
-          },
-          "type": "object"
+        "left": {
+          "type": "number"
+        },
+        "right": {
+          "type": "number"
+        },
+        "top": {
+          "type": "number"
         }
-      ],
-      "minimum": 0
+      },
+      "type": [
+        "number",
+        "object"
+      ]
     },
     "ParameterExtent": {
       "anyOf": [
@@ -18454,10 +18398,10 @@
     "ParseValue": {
       "anyOf": [
         {
-          "type": "null"
-        },
-        {
-          "type": "string"
+          "type": [
+            "null",
+            "string"
+          ]
         },
         {
           "const": "string",
@@ -18519,10 +18463,10 @@
               "$ref": "#/definitions/Stream"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "string",
+                "boolean"
+              ]
             }
           ],
           "description": "Clears the selection, emptying it of all values. This property can be a [Event Stream](https://vega.github.io/vega/docs/event-streams/) or `false` to disable clear.\n\n__Default value:__ `dblclick`.\n\n__See also:__ [`clear` examples ](https://vega.github.io/vega-lite/docs/selection.html#clear) in the documentation."
@@ -18587,10 +18531,10 @@
               "$ref": "#/definitions/Stream"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "string",
+                "boolean"
+              ]
             }
           ],
           "description": "Clears the selection, emptying it of all values. This property can be a [Event Stream](https://vega.github.io/vega/docs/event-streams/) or `false` to disable clear.\n\n__Default value:__ `dblclick`.\n\n__See also:__ [`clear` examples ](https://vega.github.io/vega-lite/docs/selection.html#clear) in the documentation."
@@ -18729,10 +18673,10 @@
               "$ref": "#/definitions/StackOffset"
             },
             {
-              "type": "null"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "null",
+                "boolean"
+              ]
             }
           ],
           "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -18787,10 +18731,10 @@
               "$ref": "#/definitions/StackOffset"
             },
             {
-              "type": "null"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "null",
+                "boolean"
+              ]
             }
           ],
           "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -18842,7 +18786,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -18850,9 +18797,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -18893,10 +18837,10 @@
               "$ref": "#/definitions/StackOffset"
             },
             {
-              "type": "null"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "null",
+                "boolean"
+              ]
             }
           ],
           "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -18946,7 +18890,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -18954,9 +18901,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -18986,10 +18930,10 @@
               "$ref": "#/definitions/StackOffset"
             },
             {
-              "type": "null"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "null",
+                "boolean"
+              ]
             }
           ],
           "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -19566,16 +19510,12 @@
       "items": {
         "anyOf": [
           {
-            "type": "null"
-          },
-          {
-            "type": "boolean"
-          },
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
+            "type": [
+              "null",
+              "boolean",
+              "string",
+              "number"
+            ]
           },
           {
             "$ref": "#/definitions/RangeRawArray"
@@ -19613,13 +19553,13 @@
             "scheme": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
                   "items": {
                     "type": "string"
                   },
-                  "type": "array"
+                  "type": [
+                    "string",
+                    "array"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ColorScheme"
@@ -20350,22 +20290,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -20659,13 +20595,13 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -20809,16 +20745,12 @@
               "items": {
                 "anyOf": [
                   {
-                    "type": "null"
-                  },
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "boolean"
+                    "type": [
+                      "null",
+                      "string",
+                      "number",
+                      "boolean"
+                    ]
                   },
                   {
                     "$ref": "#/definitions/DateTime"
@@ -20913,10 +20845,10 @@
         "nice": {
           "anyOf": [
             {
-              "type": "boolean"
-            },
-            {
-              "type": "number"
+              "type": [
+                "boolean",
+                "number"
+              ]
             },
             {
               "$ref": "#/definitions/TimeInterval"
@@ -20974,29 +20906,24 @@
               "$ref": "#/definitions/RangeEnum"
             },
             {
+              "additionalProperties": false,
               "items": {
                 "anyOf": [
-                  {
-                    "type": "number"
-                  },
-                  {
-                    "type": "string"
-                  },
                   {
                     "items": {
                       "type": "number"
                     },
-                    "type": "array"
+                    "type": [
+                      "number",
+                      "string",
+                      "array"
+                    ]
                   },
                   {
                     "$ref": "#/definitions/ExprRef"
                   }
                 ]
               },
-              "type": "array"
-            },
-            {
-              "additionalProperties": false,
               "properties": {
                 "field": {
                   "type": "string"
@@ -21005,7 +20932,10 @@
               "required": [
                 "field"
               ],
-              "type": "object"
+              "type": [
+                "array",
+                "object"
+              ]
             }
           ],
           "description": "The range of the scale. One of:\n\n- A string indicating a [pre-defined named scale range](https://vega.github.io/vega-lite/docs/scale.html#range-config) (e.g., example, `\"symbol\"`, or `\"diverging\"`).\n\n- For [continuous scales](https://vega.github.io/vega-lite/docs/scale.html#continuous), two-element array indicating  minimum and maximum values, or an array with more than two entries for specifying a [piecewise scale](https://vega.github.io/vega-lite/docs/scale.html#piecewise).\n\n- For [discrete](https://vega.github.io/vega-lite/docs/scale.html#discrete) and [discretizing](https://vega.github.io/vega-lite/docs/scale.html#discretizing) scales, an array of desired output values or an object with a `field` property representing the range values.  For example, if a field `color` contains CSS color names, we can set `range` to `{field: \"color\"}`.\n\n__Notes:__\n\n1) For color scales you can also specify a color [`scheme`](https://vega.github.io/vega-lite/docs/scale.html#scheme) instead of `range`.\n\n2) Any directly specified `range` for `x` and `y` channels will be ignored. Range can be customized via the view's corresponding [size](https://vega.github.io/vega-lite/docs/size.html) (`width` and `height`)."
@@ -21013,10 +20943,10 @@
         "rangeMax": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
+              "type": [
+                "number",
+                "string"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -21027,10 +20957,10 @@
         "rangeMin": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
+              "type": [
+                "number",
+                "string"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -21902,13 +21832,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22061,13 +21991,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22196,10 +22126,10 @@
                   "$ref": "#/definitions/Gradient"
                 },
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -22226,7 +22156,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -22234,9 +22167,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22325,10 +22255,10 @@
             "value": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -22369,13 +22299,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22504,10 +22434,10 @@
                   "$ref": "#/definitions/Gradient"
                 },
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -22534,13 +22464,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22693,7 +22623,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -22701,9 +22634,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -22792,10 +22722,10 @@
             "value": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -22822,7 +22752,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -22830,9 +22763,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -23212,13 +23142,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -23388,7 +23318,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -23396,9 +23329,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -23445,10 +23375,10 @@
                   "$ref": "#/definitions/StackOffset"
                 },
                 {
-                  "type": "null"
-                },
-                {
-                  "type": "boolean"
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
                 }
               ],
               "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -23612,13 +23542,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -23744,10 +23674,10 @@
             "value": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23774,13 +23704,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -23933,13 +23863,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24068,10 +23998,10 @@
                   "$ref": "#/definitions/Gradient"
                 },
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -24098,13 +24028,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24260,13 +24190,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24419,13 +24349,13 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24578,7 +24508,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -24586,9 +24519,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24730,7 +24660,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -24738,9 +24671,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -24787,10 +24717,10 @@
                   "$ref": "#/definitions/StackOffset"
                 },
                 {
-                  "type": "null"
-                },
-                {
-                  "type": "boolean"
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
                 }
               ],
               "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -24950,10 +24880,10 @@
               "items": {
                 "$ref": "#/definitions/StringFieldDef<Field>"
               },
-              "type": "array"
-            },
-            {
-              "type": "null"
+              "type": [
+                "array",
+                "null"
+              ]
             }
           ],
           "description": "The tooltip text to show upon mouse hover. Specifying `tooltip` encoding overrides [the `tooltip` property in the mark definition](https://vega.github.io/vega-lite/docs/mark.html#mark-def).\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip in Vega-Lite."
@@ -24974,7 +24904,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -24982,9 +24915,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -25073,10 +25003,10 @@
             "value": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
+                  "type": [
+                    "string",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25114,7 +25044,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -25122,9 +25055,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -25182,10 +25112,10 @@
                   "$ref": "#/definitions/StackOffset"
                 },
                 {
-                  "type": "null"
-                },
-                {
-                  "type": "boolean"
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
                 }
               ],
               "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -25460,7 +25390,10 @@
             "bin": {
               "anyOf": [
                 {
-                  "type": "boolean"
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/BinParams"
@@ -25468,9 +25401,6 @@
                 {
                   "const": "binned",
                   "type": "string"
-                },
-                {
-                  "type": "null"
                 }
               ],
               "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -25528,10 +25458,10 @@
                   "$ref": "#/definitions/StackOffset"
                 },
                 {
-                  "type": "null"
-                },
-                {
-                  "type": "boolean"
+                  "type": [
+                    "null",
+                    "boolean"
+                  ]
                 }
               ],
               "description": "Type of stacking offset if the field should be stacked. `stack` is only applicable for `x`, `y`, `theta`, and `radius` channels with continuous domains. For example, `stack` of `y` can be used to customize stacking for a vertical bar chart.\n\n`stack` can be one of the following values:\n- `\"zero\"` or `true`: stacking with baseline offset at zero value of the scale (for creating typical stacked [bar](https://vega.github.io/vega-lite/docs/stack.html#bar) and [area](https://vega.github.io/vega-lite/docs/stack.html#area) chart).\n- `\"normalize\"` - stacking with normalized domain (for creating [normalized stacked bar and area charts](https://vega.github.io/vega-lite/docs/stack.html#normalized). <br/>\n-`\"center\"` - stacking with center baseline (for [streamgraph](https://vega.github.io/vega-lite/docs/stack.html#streamgraph)).\n- `null` or `false` - No-stacking. This will produce layered [bar](https://vega.github.io/vega-lite/docs/stack.html#layered-bar-chart) and area chart.\n\n__Default value:__ `zero` for plots with all of the following conditions are true: (1) the mark is `bar`, `area`, or `arc`; (2) the stacked measure channel (x or y) has a linear scale; (3) At least one of non-position channels mapped to an unaggregated field that is different from x and y. Otherwise, `null` by default.\n\n__See also:__ [`stack`](https://vega.github.io/vega-lite/docs/stack.html) documentation."
@@ -26101,7 +26031,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -26109,9 +26042,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -26281,16 +26211,12 @@
       "type": "string"
     },
     "Text": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
+      "items": {
+        "type": "string"
+      },
+      "type": [
+        "string",
+        "array"
       ]
     },
     "TextBaseline": {
@@ -27036,22 +26962,18 @@
         "tooltip": {
           "anyOf": [
             {
-              "type": "number"
-            },
-            {
-              "type": "string"
-            },
-            {
-              "type": "boolean"
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/TooltipContent"
             },
             {
               "$ref": "#/definitions/ExprRef"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "The tooltip text string to show upon mouse hover or an object defining which fields should the tooltip be derived from.\n\n- If `tooltip` is `true` or `{\"content\": \"encoding\"}`, then all fields from `encoding` will be used.\n- If `tooltip` is `{\"content\": \"data\"}`, then all fields that appear in the highlighted data point will be used.\n- If set to `null` or `false`, then no tooltip will be used.\n\nSee the [`tooltip`](https://vega.github.io/vega-lite/docs/tooltip.html) documentation for a detailed discussion about tooltip  in Vega-Lite.\n\n__Default value:__ `null`"
@@ -27463,18 +27385,14 @@
           ]
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A [mark style property](https://vega.github.io/vega-lite/docs/config.html#style) to apply to the title text mark.\n\n__Default value:__ `\"group-title\"`."
+          "description": "A [mark style property](https://vega.github.io/vega-lite/docs/config.html#style) to apply to the title text mark.\n\n__Default value:__ `\"group-title\"`.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         },
         "subtitle": {
           "$ref": "#/definitions/Text",
@@ -28815,16 +28733,12 @@
         "views": {
           "description": "By default, top-level selections are applied to every view in the visualization. If this property is specified, selections will only be applied to views with the given names.",
           "items": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "items": {
-                  "type": "string"
-                },
-                "type": "array"
-              }
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "string",
+              "array"
             ]
           },
           "type": "array"
@@ -29188,7 +29102,10 @@
         "bin": {
           "anyOf": [
             {
-              "type": "boolean"
+              "type": [
+                "boolean",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/BinParams"
@@ -29196,9 +29113,6 @@
             {
               "const": "binned",
               "type": "string"
-            },
-            {
-              "type": "null"
             }
           ],
           "description": "A flag for binning a `quantitative` field, [an object defining binning parameters](https://vega.github.io/vega-lite/docs/bin.html#params), or indicating that the data for `x` or `y` channel are binned before they are imported into Vega-Lite (`\"binned\"`).\n\n- If `true`, default [binning parameters](https://vega.github.io/vega-lite/docs/bin.html) will be applied.\n\n- If `\"binned\"`, this indicates that the data for the `x` (or `y`) channel are already binned. You can map the bin-start field to `x` (or `y`) and the bin-end field to `x2` (or `y2`). The scale and axis will be formatted similar to binning in Vega-Lite.  To adjust the axis ticks based on the bin step, you can also set the axis's [`tickMinStep`](https://vega.github.io/vega-lite/docs/axis.html#ticks) property.\n\n__Default value:__ `false`\n\n__See also:__ [`bin`](https://vega.github.io/vega-lite/docs/bin.html) documentation."
@@ -29491,10 +29405,10 @@
               "$ref": "#/definitions/Gradient"
             },
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -29529,10 +29443,10 @@
         "value": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -29640,10 +29554,10 @@
         "value": {
           "anyOf": [
             {
-              "type": "string"
-            },
-            {
-              "type": "null"
+              "type": [
+                "string",
+                "null"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
@@ -29917,18 +29831,14 @@
           ]
         },
         "style": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "string"
-              },
-              "type": "array"
-            }
-          ],
-          "description": "A string or array of strings indicating the name of custom styles to apply to the view background. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ `\"cell\"` __Note:__ Any specified view background properties will augment the default style."
+          "description": "A string or array of strings indicating the name of custom styles to apply to the view background. A style is a named collection of mark property defaults defined within the [style configuration](https://vega.github.io/vega-lite/docs/mark.html#style-config). If style is an array, later styles will override earlier styles.\n\n__Default value:__ `\"cell\"` __Note:__ Any specified view background properties will augment the default style.",
+          "items": {
+            "type": "string"
+          },
+          "type": [
+            "string",
+            "array"
+          ]
         }
       },
       "type": "object"
@@ -29964,44 +29874,36 @@
           "description": "The mouse cursor used over the view. Any valid [CSS cursor type](https://developer.mozilla.org/en-US/docs/Web/CSS/cursor#Values) can be used."
         },
         "discreteHeight": {
-          "anyOf": [
-            {
+          "additionalProperties": false,
+          "description": "The default height when the plot has non arc marks and either a discrete y-field or no y-field. The height can be either a number indicating a fixed height or an object in the form of `{step: number}` defining the height per discrete step.\n\n__Default value:__ a step size based on `config.view.step`.",
+          "properties": {
+            "step": {
               "type": "number"
-            },
-            {
-              "additionalProperties": false,
-              "properties": {
-                "step": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "step"
-              ],
-              "type": "object"
             }
+          },
+          "required": [
+            "step"
           ],
-          "description": "The default height when the plot has non arc marks and either a discrete y-field or no y-field. The height can be either a number indicating a fixed height or an object in the form of `{step: number}` defining the height per discrete step.\n\n__Default value:__ a step size based on `config.view.step`."
+          "type": [
+            "number",
+            "object"
+          ]
         },
         "discreteWidth": {
-          "anyOf": [
-            {
+          "additionalProperties": false,
+          "description": "The default width when the plot has non-arc marks and either a discrete x-field or no x-field. The width can be either a number indicating a fixed width or an object in the form of `{step: number}` defining the width per discrete step.\n\n__Default value:__ a step size based on `config.view.step`.",
+          "properties": {
+            "step": {
               "type": "number"
-            },
-            {
-              "additionalProperties": false,
-              "properties": {
-                "step": {
-                  "type": "number"
-                }
-              },
-              "required": [
-                "step"
-              ],
-              "type": "object"
             }
+          },
+          "required": [
+            "step"
           ],
-          "description": "The default width when the plot has non-arc marks and either a discrete x-field or no x-field. The width can be either a number indicating a fixed width or an object in the form of `{step: number}` defining the width per discrete step.\n\n__Default value:__ a step size based on `config.view.step`."
+          "type": [
+            "number",
+            "object"
+          ]
         },
         "fill": {
           "anyOf": [

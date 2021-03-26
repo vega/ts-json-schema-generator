@@ -12,16 +12,12 @@
           ]
         },
         "var2": {
-          "anyOf": [
-            {
-              "type": "string"
-            },
-            {
-              "items": {
-                "type": "number"
-              },
-              "type": "array"
-            }
+          "items": {
+            "type": "number"
+          },
+          "type": [
+            "string",
+            "array"
           ]
         },
         "var3": {
