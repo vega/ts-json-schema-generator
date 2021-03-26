@@ -16,7 +16,7 @@ export class CallExpressionParser implements SubNodeParser {
         const type = this.typeChecker.getTypeAtLocation(node);
 
         // FIXME: remove special case
-        if ("typeArguments" in type) {
+        if ("typeArguments" in type && (type as any).typeArguments) {
             return new TupleType([
                 new UnionType((type as any).typeArguments[0].types.map((t: any) => new LiteralType(t.value))),
             ]);
