@@ -4,7 +4,7 @@ describe("valid-data-struct", () => {
     // TODO: generics recursive
     it("simple-object", assertValidSchema("simple-object", "SimpleObject"));
 
-    it.only("object-function-expression", assertValidSchema("object-function-expression", "MyType"));
+    it("object-function-expression", assertValidSchema("object-function-expression", "MyType"));
     it("object-literal-expression", assertValidSchema("object-literal-expression", "MyType"));
 
     it("literal-object-type", assertValidSchema("literal-object-type", "MyType"));
