@@ -1,6 +1,9 @@
-import { assertValidSchema } from "./utils";
+import { assertValidSchema, assertValidSchemaEx } from "./utils";
 
 describe("valid-data-type", () => {
+    // default export names for the valid/invalid exemplar types
+    const valid = "VALID",
+        invalid = "INVALID";
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
     it(
         "type-aliases-primitive-with-id",
@@ -35,6 +38,10 @@ describe("valid-data-type", () => {
     it("type-regexp", assertValidSchema("type-regexp", "MyObject"));
     it("type-union", assertValidSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertValidSchema("type-union-tagged", "Shape"));
+    it(
+        "type-union-weird",
+        assertValidSchemaEx("type-union-weird", "WeirdUnion", { valid, invalid, jsDoc: "extended" })
+    );
     it("type-intersection", assertValidSchema("type-intersection", "MyObject"));
     it("type-intersection-conflict", assertValidSchema("type-intersection-conflict", "MyObject"));
     it("type-intersection-partial-conflict", assertValidSchema("type-intersection-partial-conflict", "MyType"));
