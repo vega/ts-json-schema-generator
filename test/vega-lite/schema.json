@@ -12115,9 +12115,7 @@
             "parity",
             "greedy"
           ],
-          "type": [
-            "string"
-          ]
+          "type": "string"
         }
       ]
     },
@@ -18397,24 +18395,9 @@
       "type": "object"
     },
     "ParseValue": {
-      "anyOf": [
-        {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        {
-          "enum": [
-            "string",
-            "boolean",
-            "date",
-            "number"
-          ],
-          "type": [
-            "string"
-          ]
-        }
+      "type": [
+        "null",
+        "string"
       ]
     },
     "PivotTransform": {
@@ -22947,9 +22930,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23111,9 +23092,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23426,9 +23405,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23513,9 +23490,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -24770,9 +24745,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -24857,9 +24830,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25167,9 +25138,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25254,9 +25223,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25515,9 +25482,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25602,9 +25567,7 @@
                     "width",
                     "height"
                   ],
-                  "type": [
-                    "string"
-                  ]
+                  "type": "string"
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -26233,9 +26196,7 @@
             "line-top",
             "line-bottom"
           ],
-          "type": [
-            "string"
-          ]
+          "type": "string"
         },
         {
           "$ref": "#/definitions/Baseline"
@@ -29353,9 +29314,7 @@
                 "width",
                 "height"
               ],
-              "type": [
-                "string"
-              ]
+              "type": "string"
             },
             {
               "$ref": "#/definitions/ExprRef"

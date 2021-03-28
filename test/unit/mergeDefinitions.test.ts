@@ -8,16 +8,16 @@ function assertMerges(def1: Definition, def2: Definition, expected?: Definition)
             expect(actual).toEqual(expected);
         } else {
             expect(actual).not.toBeNull();
-        }
-        const allKeys = Array.from(new Set(Object.keys(def1).concat(Object.keys(def2))));
-        if (allKeys.includes("const")) {
-            // 'const' keys turn into 'enum' keys
-            allKeys.splice(allKeys.indexOf("const"), 1);
-            if (!allKeys.includes("enum")) {
-                allKeys.push("enum");
+            const allKeys = Array.from(new Set(Object.keys(def1).concat(Object.keys(def2))));
+            if (allKeys.includes("const")) {
+                // 'const' keys turn into 'enum' keys
+                allKeys.splice(allKeys.indexOf("const"), 1);
+                if (!allKeys.includes("enum")) {
+                    allKeys.push("enum");
+                }
             }
+            expect(Object.keys(actual).sort()).toEqual(allKeys.sort());
         }
-        expect(Object.keys(actual).sort()).toEqual(allKeys.sort());
     };
 }
 
@@ -33,7 +33,6 @@ describe("mergeDefinitions", () => {
         "merges simple unlike types",
         assertMerges({ type: "string" }, { type: "number" }, { type: ["string", "number"] })
     );
-    it("does not merge identical types", assertDoesNotMerge({ type: "number" }, { type: "number" }));
     it(
         "merges complex unlike types",
         assertMerges({ type: "object", additionalProperties: false }, { type: "array", additionalItems: false })
@@ -59,4 +58,38 @@ describe("mergeDefinitions", () => {
         assertDoesNotMerge({ const: 1, description: "#1" }, { const: "two", description: "#2" })
     );
     it("does not merge an enum with a non-enum", assertDoesNotMerge({ const: 1 }, { type: "string" }));
+
+    it(
+        "merges types with identical annotations",
+        assertMerges(
+            { type: "string", title: "title" },
+            { type: "number", title: "title" },
+            { type: ["string", "number"], title: "title" }
+        )
+    );
+    it(
+        "merges same types with no validations",
+        assertMerges({ type: "string" }, { type: "string" }, { type: "string" })
+    );
+    it(
+        "merges same types with identical validations",
+        assertMerges(
+            { type: "string", minLength: 5 },
+            { type: "string", minLength: 5 },
+            { type: "string", minLength: 5 }
+        )
+    );
+    it(
+        "does not merge same types with different validations",
+        assertDoesNotMerge({ type: "string", minLength: 5 }, { type: "string", maxLength: 10 })
+    );
+    it(
+        "collapses types with validations into types without",
+        assertMerges({ type: "string" }, { type: "string", minLength: 5 }, { type: "string" })
+    );
+    it(
+        "collapses types with enums into types without validations",
+        assertMerges({ type: "number" }, { type: "number", const: 7 }, { type: "number" })
+    );
+    it("does not merge when general validations are present", assertDoesNotMerge({ type: "string" }, { anyOf: [] }));
 });

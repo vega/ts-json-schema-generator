@@ -16,25 +16,6 @@ export class UnionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: UnionType): Definition {
         const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
 
-        // TODO: why is this not covered by LiteralUnionTypeFormatter?
-        // special case for string literals | string -> string
-        let stringType = true;
-        let oneNotEnum = false;
-        for (const def of definitions) {
-            if (def.type !== "string") {
-                stringType = false;
-                break;
-            }
-            if (def.enum === undefined) {
-                oneNotEnum = true;
-            }
-        }
-        if (stringType && oneNotEnum) {
-            return {
-                type: "string",
-            };
-        }
-
         const flattenedDefinitions: JSONSchema7[] = [];
 
         // Flatten anyOf inside anyOf unless the anyOf has an annotation

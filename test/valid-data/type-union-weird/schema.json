@@ -6,15 +6,7 @@
       "additionalProperties": false,
       "properties": {
         "actuallyAnyNumber": {
-          "anyOf": [
-            {
-              "maximum": 5,
-              "type": "number"
-            },
-            {
-              "type": "number"
-            }
-          ]
+          "type": "number"
         },
         "actuallyAnyString": {
           "type": "string"
@@ -32,8 +24,20 @@
             "number"
           ]
         },
+        "collapse3": {
+          "type": "number"
+        },
         "digitsOrLongString": {
-          "type": "string"
+          "anyOf": [
+            {
+              "minLength": 10,
+              "type": "string"
+            },
+            {
+              "pattern": "^\\d+$",
+              "type": "string"
+            }
+          ]
         },
         "digitsOrNumber": {
           "description": "Also has a definition",
@@ -66,26 +70,7 @@
                 2,
                 3
               ],
-              "type": [
-                "number"
-              ]
-            }
-          ]
-        },
-        "noCollapse3": {
-          "anyOf": [
-            {
               "type": "number"
-            },
-            {
-              "enum": [
-                1,
-                2,
-                3
-              ],
-              "type": [
-                "number"
-              ]
             }
           ]
         },

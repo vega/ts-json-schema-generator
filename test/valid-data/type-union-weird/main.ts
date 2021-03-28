@@ -32,9 +32,9 @@ interface UnionElements {
 export interface WeirdUnion {
     noCollapse1?: UnionElements['stringWithDefinition'] | UnionElements['numberWithDefinition'];
     noCollapse2?: UnionElements['stringWithoutDefinition'] | UnionElements['enumNumber'];
-    noCollapse3?: UnionElements['numberWithoutDefinition'] | UnionElements['enumNumber'];
     collapse1?: UnionElements['stringWithDefinition'] | UnionElements['numberWithoutDefinition'];
     collapse2?: UnionElements['stringWithoutDefinition'] | UnionElements['numberWithoutDefinition'];
+    collapse3?: UnionElements['numberWithoutDefinition'] | UnionElements['enumNumber'];
     actuallyAnyString?: UnionElements['stringWithMinLength'] | UnionElements['stringWithoutDefinition'];
     actuallyAnyNumber?: UnionElements['numberWithMaximum'] | UnionElements['numberWithoutDefinition'];
     digitsOrLongString?: UnionElements['stringWithMinLength'] | UnionElements['stringWithOnlyDigits'];
