@@ -12111,12 +12111,13 @@
           "type": "boolean"
         },
         {
-          "const": "parity",
-          "type": "string"
-        },
-        {
-          "const": "greedy",
-          "type": "string"
+          "enum": [
+            "parity",
+            "greedy"
+          ],
+          "type": [
+            "string"
+          ]
         }
       ]
     },
@@ -18404,20 +18405,15 @@
           ]
         },
         {
-          "const": "string",
-          "type": "string"
-        },
-        {
-          "const": "boolean",
-          "type": "string"
-        },
-        {
-          "const": "date",
-          "type": "string"
-        },
-        {
-          "const": "number",
-          "type": "string"
+          "enum": [
+            "string",
+            "boolean",
+            "date",
+            "number"
+          ],
+          "type": [
+            "string"
+          ]
         }
       ]
     },
@@ -22947,12 +22943,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23110,12 +23107,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23424,12 +23422,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -23510,12 +23509,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -24766,12 +24766,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -24852,12 +24853,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25161,12 +25163,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25247,12 +25250,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25507,12 +25511,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -25593,12 +25598,13 @@
                   "type": "number"
                 },
                 {
-                  "const": "width",
-                  "type": "string"
-                },
-                {
-                  "const": "height",
-                  "type": "string"
+                  "enum": [
+                    "width",
+                    "height"
+                  ],
+                  "type": [
+                    "string"
+                  ]
                 },
                 {
                   "$ref": "#/definitions/ExprRef"
@@ -26222,19 +26228,17 @@
     "TextBaseline": {
       "anyOf": [
         {
-          "const": "alphabetic",
-          "type": "string"
+          "enum": [
+            "alphabetic",
+            "line-top",
+            "line-bottom"
+          ],
+          "type": [
+            "string"
+          ]
         },
         {
           "$ref": "#/definitions/Baseline"
-        },
-        {
-          "const": "line-top",
-          "type": "string"
-        },
-        {
-          "const": "line-bottom",
-          "type": "string"
         }
       ]
     },
@@ -29345,12 +29349,13 @@
               "type": "number"
             },
             {
-              "const": "width",
-              "type": "string"
-            },
-            {
-              "const": "height",
-              "type": "string"
+              "enum": [
+                "width",
+                "height"
+              ],
+              "type": [
+                "string"
+              ]
             },
             {
               "$ref": "#/definitions/ExprRef"
