@@ -4,6 +4,7 @@ import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { mergeDefinitions } from "../Utils/mergeDefinitions";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
@@ -15,25 +16,6 @@ export class UnionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: UnionType): Definition {
         const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
 
-        // TODO: why is this not covered by LiteralUnionTypeFormatter?
-        // special case for string literals | string -> string
-        let stringType = true;
-        let oneNotEnum = false;
-        for (const def of definitions) {
-            if (def.type !== "string") {
-                stringType = false;
-                break;
-            }
-            if (def.enum === undefined) {
-                oneNotEnum = true;
-            }
-        }
-        if (stringType && oneNotEnum) {
-            return {
-                type: "string",
-            };
-        }
-
         const flattenedDefinitions: JSONSchema7[] = [];
 
         // Flatten anyOf inside anyOf unless the anyOf has an annotation
@@ -42,6 +24,18 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 flattenedDefinitions.push(...(def.anyOf as any));
             } else {
                 flattenedDefinitions.push(def);
+            }
+        }
+
+        for (let idx = 0; idx < flattenedDefinitions.length - 1; idx++) {
+            for (let comp = idx + 1; comp < flattenedDefinitions.length; ) {
+                const merged = mergeDefinitions(flattenedDefinitions[idx], flattenedDefinitions[comp]);
+                if (merged) {
+                    flattenedDefinitions[idx] = merged;
+                    flattenedDefinitions.splice(comp, 1);
+                } else {
+                    comp++;
+                }
             }
         }
 

@@ -1,14 +1,24 @@
 import { JSONSchema7Definition } from "json-schema";
-import { isArray, isBoolean } from "util";
 import { Definition } from "./../Schema/Definition";
 import { StringMap } from "./StringMap";
 
 function addReachable(
-    definition: Definition | JSONSchema7Definition,
+    definition: Definition | JSONSchema7Definition | undefined | Array<Definition | JSONSchema7Definition>,
     definitions: StringMap<Definition>,
     reachable: Set<string>
 ) {
-    if (isBoolean(definition)) {
+    function addReachableProperties(properties: Record<any, Definition | JSONSchema7Definition> | undefined) {
+        for (const def of Object.values(properties || {})) {
+            addReachable(def, definitions, reachable);
+        }
+    }
+    if (!definition || typeof definition !== "object") {
+        return;
+    }
+    if (Array.isArray(definition)) {
+        for (const def of definition) {
+            addReachable(def, definitions, reachable);
+        }
         return;
     }
 
@@ -20,39 +30,23 @@ function addReachable(
         }
         reachable.add(typeName);
         addReachable(definitions[typeName], definitions, reachable);
-    } else if (definition.anyOf) {
-        for (const def of definition.anyOf) {
-            addReachable(def, definitions, reachable);
-        }
-    } else if (definition.allOf) {
-        for (const def of definition.allOf) {
-            addReachable(def, definitions, reachable);
-        }
-    } else if (definition.oneOf) {
-        for (const def of definition.oneOf) {
-            addReachable(def, definitions, reachable);
-        }
-    } else if (definition.not) {
+    } else {
+        addReachable(definition.anyOf, definitions, reachable);
+        addReachable(definition.allOf, definitions, reachable);
+        addReachable(definition.oneOf, definitions, reachable);
         addReachable(definition.not, definitions, reachable);
-    } else if (definition.type === "object") {
-        for (const prop in definition.properties || {}) {
-            const propDefinition = definition.properties![prop];
-            addReachable(propDefinition, definitions, reachable);
-        }
+        addReachable(definition.contains, definitions, reachable);
 
-        const additionalProperties = definition.additionalProperties;
-        if (additionalProperties) {
-            addReachable(additionalProperties, definitions, reachable);
-        }
-    } else if (definition.type === "array") {
-        const items = definition.items;
-        if (isArray(items)) {
-            for (const item of items) {
-                addReachable(item, definitions, reachable);
-            }
-        } else if (items) {
-            addReachable(items, definitions, reachable);
-        }
+        addReachable(definition.if, definitions, reachable);
+        addReachable(definition.then, definitions, reachable);
+        addReachable(definition.else, definitions, reachable);
+
+        addReachableProperties(definition.properties);
+        addReachableProperties(definition.patternProperties);
+        addReachable(definition.additionalProperties, definitions, reachable);
+
+        addReachable(definition.items, definitions, reachable);
+        addReachable(definition.additionalItems, definitions, reachable);
     }
 }
 
