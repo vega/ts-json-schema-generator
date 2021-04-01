@@ -20,7 +20,7 @@ This project is made possible by a [community of contributors](https://github.co
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator --path 'my/project/**.*.ts' --type 'My.Type.Full.Name'
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Full.Name'
 ```
 
 Note that different platforms (e.g. Windows) may different path separators so you may have to adjust the command above.
@@ -254,10 +254,6 @@ fs.writeFile(output_path, schemaString, (err) => {
 And connect via the debugger protocol.
 
 [AST Explorer](https://astexplorer.net/) is amazing for developers of this tool!
-
-### Debug Vega-Lite
-
-To debug Vega-Lite's schema generation, you can clone Vega-Lite in the same directory as this library and run `yarn run debug -f ../vega-lite/tsconfig.json -p ../vega-lite/src/index.ts -t TopLevelSpec --no-type-check`.
 
 ## Publish
 
