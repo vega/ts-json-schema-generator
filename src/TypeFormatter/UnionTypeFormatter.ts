@@ -29,16 +29,22 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             }
         }
         if (stringType && oneNotEnum) {
-            const containsGeneric = definitions.some((d) => d.enum === undefined && d.const === undefined);
-            if (containsGeneric === true) {
-                return {
-                    type: "string",
-                };
-            } else {
-                return {
-                    oneOf: definitions,
-                };
+            const values = [];
+            for (const def of definitions) {
+                if (def.enum) {
+                    values.push(...def.enum);
+                } else if (def.const) {
+                    values.push(def.const);
+                } else {
+                    return {
+                        type: "string",
+                    };
+                }
             }
+            return {
+                type: "string",
+                enum: values,
+            };
         }
 
         const flattenedDefinitions: JSONSchema7[] = [];
