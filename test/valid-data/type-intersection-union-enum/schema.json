@@ -1,0 +1,40 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "field1": {
+          "$ref": "#/definitions/type1"
+        },
+        "field2": {
+          "$ref": "#/definitions/type2"
+        }
+      },
+      "required": [
+        "field1",
+        "field2"
+      ],
+      "type": "object"
+    },
+    "type1": {
+      "enum": [
+        "foo",
+        "bar"
+      ],
+      "type": "string"
+    },
+    "type2": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/type1"
+        },
+        {
+          "const": "baz",
+          "type": "string"
+        }
+      ]
+    }
+  }
+}
