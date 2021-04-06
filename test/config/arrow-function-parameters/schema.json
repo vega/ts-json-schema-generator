@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Parameters%3Ctypeof%20myFunction%3E",
+  "definitions": {
+    "Parameters<typeof myFunction>": {
+      "type": "object",
+      "properties": {
+        "stringValue": {
+          "$ref": "#/definitions/StringValue"
+        },
+        "numberValue": {
+          "$ref": "#/definitions/NumberValue"
+        },
+        "nullableNumber": {
+          "type": ["number", "null"]
+        },
+        "optionalArgument": {
+          "type": "string"
+        },
+        "optionalArgumentWithDefault": {
+          "type": "number"
+        }
+      },
+      "required": ["stringValue", "numberValue", "nullableNumber"],
+      "additionalProperties": false
+    },
+    "StringValue": {
+      "type": "string",
+      "title": "String field title",
+      "minLength": 10,
+      "format": "date-time",
+      "pattern": "/^\\d+$/"
+    },
+    "NumberValue": {
+      "type": "string",
+      "title": "String field title",
+      "minLength": 10,
+      "format": "date-time",
+      "pattern": "/^\\d+$/"
+    }
+  }
+}

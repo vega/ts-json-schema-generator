@@ -8,6 +8,8 @@ import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
 import { NodeParser } from "../src/NodeParser";
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
+import { FunctionParser } from "../src/NodeParser/FunctionParser";
+import { ParameterParser } from "../src/NodeParser/ParameterParser";
 import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
@@ -97,7 +99,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
         .addNodeParser(new AsExpressionNodeParser(chainNodeParser))
-
+        .addNodeParser(new FunctionParser(chainNodeParser))
+        .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
