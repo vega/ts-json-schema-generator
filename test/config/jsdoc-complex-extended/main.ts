@@ -63,6 +63,11 @@ export interface MyObject {
      * @nullable
      */
     number: number;
+
+    /**
+     * @asType number
+     */
+    overriddenRefType: MyExportString;
 }
 
 /**
