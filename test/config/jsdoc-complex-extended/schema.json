@@ -56,6 +56,9 @@
         },
         "number": {
           "type": ["number", "null"]
+        },
+        "overriddenRefType": {
+          "type": "number"
         }
       },
       "required": [
@@ -66,7 +69,8 @@
         "exportString",
         "privateString",
         "numberArray",
-        "number"
+        "number",
+        "overriddenRefType"
       ],
       "additionalProperties": false,
       "description": "Some description here",

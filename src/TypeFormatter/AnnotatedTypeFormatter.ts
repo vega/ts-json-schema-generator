@@ -56,6 +56,10 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
             ...type.getAnnotations(),
         };
 
+        if ("$ref" in def && "type" in def) {
+            delete def["$ref"];
+        }
+
         if (type.isNullable()) {
             return makeNullable(def);
         }
