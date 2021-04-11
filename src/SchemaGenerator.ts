@@ -151,6 +151,7 @@ export class SchemaGenerator {
                     return;
                 }
                 return;
+            case ts.SyntaxKind.FunctionDeclaration:
             case ts.SyntaxKind.ArrowFunction:
                 allTypes.set(`Parameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
                 return;
