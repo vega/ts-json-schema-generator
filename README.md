@@ -172,7 +172,7 @@ fs.writeFile(output_path, schemaString, (err) => {
     The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`.
 
 -t, --type 'My.Type.Selector'
-    The type the generated schema will represent. Can be expressed as either as the Type Reference name or as a type utility (E.g. `Parameters<typeof func>`). If omitted, the generated schema will contain all
+    The type the generated schema will represent. Can be expressed as either as the Type Reference name or as a type utility (e.g. `Parameters<typeof func>`). If omitted, the generated schema will contain all
     types found in the files matching path. The same is true if '*' is specified.
 
 -i, --id 'generatedSchemaId'
