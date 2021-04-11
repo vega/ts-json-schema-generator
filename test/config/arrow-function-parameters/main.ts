@@ -1,30 +1,13 @@
 /**
- * @minItems 1
- */
-export type MyNonEmptyArray<T> = T[];
-/**
- * @title String field title
- * @minLength 10
- * @format date-time
- * @pattern /^\d+$/
+ * @description Type reference description
  */
 export type StringValue = string;
 
-/**
- * @title String field title
- * @minLength 10
- * @format date-time
- * @pattern /^\d+$/
- */
-export type NumberValue = string;
-
 export const myFunction = (
     stringValue: StringValue,
-    numberValue: NumberValue,
     /**
-     * @nullable
+     * @description Inline parameter description
      */
-    nullableNumber: number,
     optionalArgument?: string,
     optionalArgumentWithDefault: number = 42
 ) => {

@@ -8,35 +8,20 @@
         "stringValue": {
           "$ref": "#/definitions/StringValue"
         },
-        "numberValue": {
-          "$ref": "#/definitions/NumberValue"
-        },
-        "nullableNumber": {
-          "type": ["number", "null"]
-        },
         "optionalArgument": {
-          "type": "string"
+          "type": "string",
+          "description": "Inline parameter description"
         },
         "optionalArgumentWithDefault": {
           "type": "number"
         }
       },
-      "required": ["stringValue", "numberValue", "nullableNumber"],
+      "required": ["stringValue"],
       "additionalProperties": false
     },
     "StringValue": {
       "type": "string",
-      "title": "String field title",
-      "minLength": 10,
-      "format": "date-time",
-      "pattern": "/^\\d+$/"
-    },
-    "NumberValue": {
-      "type": "string",
-      "title": "String field title",
-      "minLength": 10,
-      "format": "date-time",
-      "pattern": "/^\\d+$/"
+      "description": "Type reference description"
     }
   }
 }
