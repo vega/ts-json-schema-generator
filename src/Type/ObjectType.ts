@@ -20,7 +20,8 @@ export class ObjectType extends BaseType {
         private id: string,
         private baseTypes: readonly BaseType[],
         private properties: readonly ObjectProperty[],
-        private additionalProperties: BaseType | boolean
+        private additionalProperties: BaseType | boolean,
+        private srcFileName: string
     ) {
         super();
     }
@@ -37,5 +38,8 @@ export class ObjectType extends BaseType {
     }
     public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;
+    }
+    public getSrcFileName(): string {
+        return this.srcFileName;
     }
 }

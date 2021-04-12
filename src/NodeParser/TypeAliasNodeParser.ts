@@ -41,7 +41,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
         if (type === undefined) {
             return undefined;
         }
-        return new AliasType(id, type);
+        return new AliasType(id, type, node.getSourceFile().fileName);
     }
 
     private getTypeId(node: ts.TypeAliasDeclaration, context: Context): string {

@@ -7,6 +7,8 @@ export class ReferenceType extends BaseType {
 
     private name: string | null = null;
 
+    private srcFileName: string | null = null;
+
     public getId(): string {
         if (this.id == null) {
             throw new Error("Reference type ID not set yet");
@@ -40,5 +42,12 @@ export class ReferenceType extends BaseType {
         this.type = type;
         this.setId(type.getId());
         this.setName(type.getName());
+    }
+
+    public getSrcFileName(): string {
+        if (!this.srcFileName) {
+            throw new Error("Reference srcFileName not set yet");
+        }
+        return this.srcFileName;
     }
 }

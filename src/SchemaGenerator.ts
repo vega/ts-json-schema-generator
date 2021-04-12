@@ -12,6 +12,9 @@ import { notUndefined } from "./Utils/notUndefined";
 import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
+import { JSONSchema7, JSONSchema7Definition } from "json-schema";
+import { unambiguousName } from "./Utils/unambiguousName";
+import { resolveIdRefs } from "./Utils/resolveIdRefs";
 
 export class SchemaGenerator {
     public constructor(
@@ -34,19 +37,23 @@ export class SchemaGenerator {
             .filter(notUndefined);
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+        const idNameMap = new Map<string, string>();
 
+        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idNameMap));
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        return {
+        // create schema - all $ref's use getId().
+        const schema: JSONSchema7Definition = {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+        // Finally, replace all getId() by their equivalent names.
+        return resolveIdRefs(schema, idNameMap, this.config?.encodeRefs ?? true) as JSONSchema7;
     }
 
-    protected getRootNodes(fullName: string | undefined) {
+    protected getRootNodes(fullName: string | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
         } else {
@@ -81,9 +88,12 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
+    protected appendRootChildDefinitions(
+        rootType: BaseType,
+        childDefinitions: StringMap<Definition>,
+        idNameMap: Map<string, string>
+    ): void {
         const seen = new Set<string>();
-
         const children = this.typeFormatter
             .getChildren(rootType)
             .filter((child): child is DefinitionType => child instanceof DefinitionType)
@@ -95,29 +105,27 @@ export class SchemaGenerator {
                 return false;
             });
 
-        const ids = new Map<string, string>();
+        const duplicates: StringMap<Set<DefinitionType>> = {};
         for (const child of children) {
             const name = child.getName();
-            const previousId = ids.get(name);
-            // remove def prefix from ids to avoid false alarms
-            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
-            const childId = child.getId().replace(/def-/g, "");
-
-            if (previousId && childId !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
-            }
-            ids.set(name, childId);
+            duplicates[name] = duplicates[name] ?? new Set<DefinitionType>();
+            duplicates[name].add(child);
         }
 
         children.reduce((definitions, child) => {
-            const name = child.getName();
-            if (!(name in definitions)) {
-                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            const id = child.getId().replace(/^def-/, "");
+            if (!(id in definitions)) {
+                const name = unambiguousName(child, child === rootType, [...duplicates[child.getName()]]);
+                // Record the schema against the ID, allowing steps like removeUnreachable to work
+                definitions[id] = this.typeFormatter.getDefinition(child.getType());
+                // Create a record of id->name mapping. This is used in the final step
+                // to resolve id -> name before delivering the schema to caller.
+                idNameMap.set(id, name);
             }
             return definitions;
         }, childDefinitions);
     }
-    protected partitionFiles() {
+    protected partitionFiles(): { projectFiles: ts.SourceFile[]; externalFiles: ts.SourceFile[] } {
         const projectFiles = new Array<ts.SourceFile>();
         const externalFiles = new Array<ts.SourceFile>();
 
@@ -132,7 +140,7 @@ export class SchemaGenerator {
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
         types: Map<string, ts.Node>
-    ) {
+    ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);
         }

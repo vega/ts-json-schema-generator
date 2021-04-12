@@ -7,4 +7,12 @@ export abstract class BaseType {
     public getName(): string {
         return this.getId();
     }
+
+    /**
+     * Provide a base class implementation. Will only be exported for entities
+     * exposed in a schema - Alias|Enum|Class|Interface.
+     */
+    public getSrcFileName(): string | null {
+        return null;
+    }
 }

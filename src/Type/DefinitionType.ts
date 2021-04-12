@@ -16,4 +16,8 @@ export class DefinitionType extends BaseType {
     public getType(): BaseType {
         return this.type;
     }
+
+    public getSrcFileName(): string | null {
+        return this.type.getSrcFileName();
+    }
 }

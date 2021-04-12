@@ -26,7 +26,13 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return undefined;
         }
 
-        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
+        return new ObjectType(
+            id,
+            [],
+            properties,
+            this.getAdditionalProperties(node, context),
+            node.getSourceFile().fileName
+        );
     }
 
     private getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {

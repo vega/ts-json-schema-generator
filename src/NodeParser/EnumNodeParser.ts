@@ -19,7 +19,8 @@ export class EnumNodeParser implements SubNodeParser {
             `enum-${getKey(node, context)}`,
             members
                 .filter((member: ts.EnumMember) => !isNodeHidden(member))
-                .map((member, index) => this.getMemberValue(member, index))
+                .map((member, index) => this.getMemberValue(member, index)),
+            node.getSourceFile().fileName
         );
     }
 

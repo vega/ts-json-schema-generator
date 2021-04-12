@@ -1,7 +1,7 @@
 import { BaseType } from "./BaseType";
 
 export class AliasType extends BaseType {
-    public constructor(private id: string, private type: BaseType) {
+    public constructor(private id: string, private type: BaseType, private srcFileName: string) {
         super();
     }
 
@@ -11,5 +11,9 @@ export class AliasType extends BaseType {
 
     public getType(): BaseType {
         return this.type;
+    }
+
+    public getSrcFileName(): string {
+        return this.srcFileName;
     }
 }

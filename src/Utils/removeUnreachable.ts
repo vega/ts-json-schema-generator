@@ -8,7 +8,7 @@ function addReachable(
     definitions: StringMap<Definition>,
     reachable: Set<string>
 ) {
-    if (isBoolean(definition)) {
+    if (!definition || isBoolean(definition)) {
         return;
     }
 

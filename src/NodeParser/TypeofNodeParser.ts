@@ -61,6 +61,6 @@ export class TypeofNodeParser implements SubNodeParser {
             return new ObjectProperty(name, type, true);
         });
 
-        return new ObjectType(id, [], properties, false);
+        return new ObjectType(id, [], properties, false, node.getSourceFile().fileName);
     }
 }
