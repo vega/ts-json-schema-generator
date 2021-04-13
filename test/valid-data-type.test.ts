@@ -82,6 +82,7 @@ describe("valid-data-type", () => {
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject", "extended"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
     it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "ExchangeRate", "extended"));
+    it("type-mapped-undefined-value", assertValidSchema("type-mapped-undefined-value", "MyObject"));
 
     it("type-conditional-simple", assertValidSchema("type-conditional-simple", "MyObject"));
     it("type-conditional-inheritance", assertValidSchema("type-conditional-inheritance", "MyObject"));
