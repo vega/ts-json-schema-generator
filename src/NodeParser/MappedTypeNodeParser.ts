@@ -44,14 +44,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
-            if (type === undefined) {
-                return undefined;
-            }
-            const resultType = new ObjectType(id, [], [], type);
-            if (constraintType instanceof AnnotatedType) {
-                const annotations = constraintType.getAnnotations();
-                if (annotations) {
-                    return new AnnotatedType(resultType, { propertyNames: annotations }, false);
+            const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
+            if (resultType) {
+                if (constraintType instanceof AnnotatedType) {
+                    const annotations = constraintType.getAnnotations();
+                    if (annotations) {
+                        return new AnnotatedType(resultType, { propertyNames: annotations }, false);
+                    }
                 }
             }
             return resultType;
