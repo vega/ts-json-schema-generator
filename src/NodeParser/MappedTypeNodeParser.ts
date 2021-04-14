@@ -2,6 +2,7 @@ import ts from "typescript";
 import { LogicError } from "../Error/LogicError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { AnnotatedType } from "../Type/AnnotatedType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
@@ -43,7 +44,14 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
-            return type === undefined ? undefined : new ObjectType(id, [], [], type);
+            const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
+            if (resultType && constraintType instanceof AnnotatedType) {
+                const annotations = constraintType.getAnnotations();
+                if (annotations) {
+                    return new AnnotatedType(resultType, { propertyNames: annotations }, false);
+                }
+            }
+            return resultType;
         } else if (keyListType instanceof NumberType) {
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             return type === undefined ? undefined : new ArrayType(type);
