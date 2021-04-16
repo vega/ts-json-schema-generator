@@ -151,6 +151,10 @@ export class SchemaGenerator {
                     return;
                 }
                 return;
+            case ts.SyntaxKind.FunctionDeclaration:
+            case ts.SyntaxKind.ArrowFunction:
+                allTypes.set(`Parameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
+                return;
             default:
                 ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
                 return;

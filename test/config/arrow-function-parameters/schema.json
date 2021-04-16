@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Parameters%3Ctypeof%20myFunction%3E",
+  "definitions": {
+    "Parameters<typeof myFunction>": {
+      "type": "object",
+      "properties": {
+        "stringValue": {
+          "$ref": "#/definitions/StringValue"
+        },
+        "optionalArgument": {
+          "type": "string",
+          "description": "Inline parameter description"
+        },
+        "optionalArgumentWithDefault": {
+          "type": "number"
+        }
+      },
+      "required": ["stringValue"],
+      "additionalProperties": false
+    },
+    "StringValue": {
+      "type": "string",
+      "description": "Type reference description"
+    }
+  }
+}

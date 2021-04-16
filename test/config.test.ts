@@ -325,6 +325,14 @@ describe("config", () => {
     );
 
     it(
+        "arrow-function-parameters",
+        assertSchema("arrow-function-parameters", {
+            type: "Parameters<typeof myFunction>",
+            expose: "all",
+        })
+    );
+
+    it(
         "custom-formatter-configuration",
         assertSchema(
             "custom-formatter-configuration",
