@@ -8,6 +8,23 @@ describe("valid-data-other", () => {
     it("enums-mixed", assertValidSchema("enums-mixed", "Enum"));
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
 
+    it(
+        "function-parameters-default-value",
+        assertValidSchema("function-parameters-default-value", "Parameters<typeof myFunction>")
+    );
+    it(
+        "function-parameters-jsdoc",
+        assertValidSchema("function-parameters-jsdoc", "Parameters<typeof myFunction>", "basic")
+    );
+    it(
+        "function-parameters-optional",
+        assertValidSchema("function-parameters-optional", "Parameters<typeof myFunction>")
+    );
+    it(
+        "function-parameters-required",
+        assertValidSchema("function-parameters-required", "Parameters<typeof myFunction>")
+    );
+
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));
     it("string-literals-null", assertValidSchema("string-literals-null", "MyObject"));

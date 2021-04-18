@@ -20,10 +20,10 @@ This project is made possible by a [community of contributors](https://github.co
 
 ```bash
 npm install --save ts-json-schema-generator
-./node_modules/.bin/ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Full.Name'
+./node_modules/.bin/ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Name'
 ```
 
-Note that different platforms (e.g. Windows) may different path separators so you may have to adjust the command above.
+Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
 
 ## Programmatic Usage
 
@@ -171,7 +171,7 @@ fs.writeFile(output_path, schemaString, (err) => {
 -p, --path 'index.ts'
     The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`.
 
--t, --type 'My.Type.Full.Name'
+-t, --type 'My.Type.Name'
     The type the generated schema will represent. If omitted, the generated schema will contain all
     types found in the files matching path. The same is true if '*' is specified.
 
