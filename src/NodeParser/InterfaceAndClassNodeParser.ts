@@ -1,4 +1,4 @@
-import ts from "typescript";
+import ts, { PropertyName } from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ArrayType } from "../Type/ArrayType";
@@ -129,7 +129,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             .map(
                 (member) =>
                     new ObjectProperty(
-                        member.name.getText(),
+                        this.getPropertyName(member.name),
                         this.childNodeParser.createType(member.type!, context),
                         !member.questionToken
                     )
@@ -163,5 +163,15 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     private getTypeId(node: ts.Node, context: Context): string {
         const nodeType = ts.isInterfaceDeclaration(node) ? "interface" : "class";
         return `${nodeType}-${getKey(node, context)}`;
+    }
+
+    private getPropertyName(propertyName: PropertyName): string {
+        if (propertyName.kind === ts.SyntaxKind.ComputedPropertyName) {
+            const symbol = this.typeChecker.getSymbolAtLocation(propertyName);
+            if (symbol) {
+                return symbol.getName();
+            }
+        }
+        return propertyName.getText();
     }
 }

@@ -18,6 +18,7 @@ describe("valid-data-struct", () => {
     it("interface-extended-extra-props", assertValidSchema("interface-extended-extra-props", "MyObject"));
     it("interface-array", assertValidSchema("interface-array", "TagArray"));
     it("interface-property-dash", assertValidSchema("interface-property-dash", "MyObject"));
+    it("interface-computed-property-name", assertValidSchema("interface-computed-property-name", "MyObject"));
 
     it("class-single", assertValidSchema("class-single", "MyObject"));
     it("class-multi", assertValidSchema("class-multi", "MyObject"));
