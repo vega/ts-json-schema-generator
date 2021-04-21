@@ -166,13 +166,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     }
 
     private getPropertyName(propertyName: PropertyName): string {
-        let result = propertyName.getText();
         if (propertyName.kind === ts.SyntaxKind.ComputedPropertyName) {
             const symbol = this.typeChecker.getSymbolAtLocation(propertyName);
             if (symbol) {
-                result = symbol.getName();
+                return symbol.getName();
             }
         }
-        return result;
+        return propertyName.getText();
     }
 }
