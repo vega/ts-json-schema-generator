@@ -1,17 +1,17 @@
 {
-    "$ref":        "#/definitions/ExchangeRate",
-    "$schema":     "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "ExchangeRate": {
-            "type": "object",
-            "additionalProperties": {
-                "type": "number"
-            },
-            "propertyNames": {
-                "description": "Currency",
-                "pattern":     "^[A-Z]{3,3}$"
-            },
-            "description": "Exchange rate"
-        }
+  "$ref": "#/definitions/ExchangeRate",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ExchangeRate": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "Exchange rate",
+      "propertyNames": {
+        "description": "Currency",
+        "pattern": "^[A-Z]{3,3}$"
+      },
+      "type": "object"
     }
+  }
 }

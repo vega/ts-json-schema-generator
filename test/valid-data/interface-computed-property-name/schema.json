@@ -1,24 +1,24 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$ref": "#/definitions/MyObject",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "localKey": {
-                    "type": "string"
-                },
-                "localEnumKey": {
-                    "type": "string"
-                },
-                "exportedKey": {
-                    "type": "string"
-                },
-                "exportedEnumKey": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "exportedEnumKey": {
+          "type": "string"
+        },
+        "exportedKey": {
+          "type": "string"
+        },
+        "localEnumKey": {
+          "type": "string"
+        },
+        "localKey": {
+          "type": "string"
         }
+      },
+      "type": "object"
     }
+  }
 }
