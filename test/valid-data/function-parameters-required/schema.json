@@ -3,14 +3,16 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Parameters<typeof myFunction>": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
         "requiredString": {
           "type": "string"
         }
       },
-      "required": ["requiredString"],
-      "additionalProperties": false
+      "required": [
+        "requiredString"
+      ],
+      "type": "object"
     }
   }
 }
