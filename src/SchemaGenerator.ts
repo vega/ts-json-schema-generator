@@ -46,7 +46,7 @@ export class SchemaGenerator {
         };
     }
 
-    protected getRootNodes(fullName: string | undefined) {
+    protected getRootNodes(fullName: string | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
         } else {
@@ -117,7 +117,10 @@ export class SchemaGenerator {
             return definitions;
         }, childDefinitions);
     }
-    protected partitionFiles() {
+    protected partitionFiles(): {
+        projectFiles: ts.SourceFile[];
+        externalFiles: ts.SourceFile[];
+    } {
         const projectFiles = new Array<ts.SourceFile>();
         const externalFiles = new Array<ts.SourceFile>();
 
@@ -132,7 +135,7 @@ export class SchemaGenerator {
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
         types: Map<string, ts.Node>
-    ) {
+    ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);
         }
