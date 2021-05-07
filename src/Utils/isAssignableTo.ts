@@ -167,6 +167,14 @@ export function isAssignableTo(
     }
 
     if (target instanceof ObjectType) {
+        // primitives are not assignable to `object`
+        if (
+            target.getNonPrimitive() &&
+            (source instanceof NumberType || source instanceof StringType || source instanceof BooleanType)
+        ) {
+            return false;
+        }
+
         const targetMembers = getObjectProperties(target);
         if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it

@@ -11,6 +11,6 @@ export class ObjectTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
-        return new ObjectType(`object-${getKey(node, context)}`, [], [], true);
+        return new ObjectType(`object-${getKey(node, context)}`, [], [], true, true);
     }
 }

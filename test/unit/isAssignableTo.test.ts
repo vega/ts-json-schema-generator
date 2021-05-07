@@ -436,4 +436,16 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new LiteralType(1), new LiteralType(1))).toBe(true);
         expect(isAssignableTo(new LiteralType(true), new LiteralType(true))).toBe(true);
     });
+
+    it("correctly handle object keyword and {}", () => {
+        // {}
+        const obj1 = new ObjectType("obj", [], [], true);
+        expect(isAssignableTo(obj1, new NumberType())).toBe(true);
+
+        // object
+        const obj2 = new ObjectType("obj", [], [], true, true);
+        expect(isAssignableTo(obj2, new NumberType())).toBe(false);
+        expect(isAssignableTo(obj2, new StringType())).toBe(false);
+        expect(isAssignableTo(obj2, new BooleanType())).toBe(false);
+    });
 });
