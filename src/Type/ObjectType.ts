@@ -20,7 +20,9 @@ export class ObjectType extends BaseType {
         private id: string,
         private baseTypes: readonly BaseType[],
         private properties: readonly ObjectProperty[],
-        private additionalProperties: BaseType | boolean
+        private additionalProperties: BaseType | boolean,
+        // whether the object is `object`
+        private nonPrimitive: boolean = false
     ) {
         super();
     }
@@ -37,5 +39,8 @@ export class ObjectType extends BaseType {
     }
     public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;
+    }
+    public getNonPrimitive(): boolean {
+        return this.nonPrimitive;
     }
 }

@@ -94,4 +94,6 @@ describe("valid-data-type", () => {
     it("type-conditional-narrowing", assertValidSchema("type-conditional-narrowing", "MyObject"));
     it("type-conditional-omit", assertValidSchema("type-conditional-omit", "MyObject"));
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
+
+    it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
 });
