@@ -327,7 +327,7 @@ describe("config", () => {
     it(
         "arrow-function-parameters",
         assertSchema("arrow-function-parameters", {
-            type: "Parameters<typeof myFunction>",
+            type: "NamedParameters<typeof myFunction>",
             expose: "all",
         })
     );
