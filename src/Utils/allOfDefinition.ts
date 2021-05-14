@@ -1,4 +1,3 @@
-import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { RawTypeName } from "../Schema/RawType";
 import { BaseType } from "../Type/BaseType";
@@ -33,14 +32,16 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
                     if (addProps.anyOf) {
                         for (const prop of addProps.anyOf as Definition[]) {
                             if (prop.type) {
-                                additionalTypes = additionalTypes.concat(isArray(prop.type) ? prop.type : [prop.type]);
+                                additionalTypes = additionalTypes.concat(
+                                    Array.isArray(prop.type) ? prop.type : [prop.type]
+                                );
                             } else {
                                 additionalProps.push(prop);
                             }
                         }
                     } else if (addProps.type) {
                         additionalTypes = additionalTypes.concat(
-                            isArray(addProps.type) ? addProps.type : [addProps.type]
+                            Array.isArray(addProps.type) ? addProps.type : [addProps.type]
                         );
                     } else {
                         additionalProps.push(addProps);
