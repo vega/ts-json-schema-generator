@@ -1,4 +1,3 @@
-import { isArray } from "util";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnnotatedType } from "../Type/AnnotatedType";
@@ -10,7 +9,7 @@ export function makeNullable(def: Definition): Definition {
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
-        if (isArray(def.type)) {
+        if (Array.isArray(def.type)) {
             if (def.type.indexOf("null") === -1) {
                 def.type.push("null");
             }
