@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/Parameters%3Ctypeof%20myFunction%3E",
+  "$ref": "#/definitions/NamedParameters%3Ctypeof%20myFunction%3E",
   "definitions": {
-    "Parameters<typeof myFunction>": {
+    "NamedParameters<typeof myFunction>": {
       "type": "object",
       "properties": {
         "stringValue": {
