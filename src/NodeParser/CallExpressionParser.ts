@@ -1,4 +1,4 @@
-import { TupleType } from "./../Type/TupleType";
+import { TupleType } from "../Type/TupleType";
 import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
@@ -23,7 +23,7 @@ export class CallExpressionParser implements SubNodeParser {
         }
 
         const symbol = type.symbol || type.aliasSymbol;
-        const decl = symbol.valueDeclaration || symbol.declarations[0];
+        const decl = symbol.valueDeclaration || symbol.declarations![0];
         const subContext = this.createSubContext(node, context);
         return this.childNodeParser.createType(decl, subContext)!;
     }

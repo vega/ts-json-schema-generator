@@ -1,4 +1,4 @@
-import { Config } from "./../src/Config";
+import { Config } from "../src/Config";
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
 import { TypeFormatter } from "../src/TypeFormatter";

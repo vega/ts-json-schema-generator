@@ -1,5 +1,5 @@
 import { JSONSchema7Definition } from "json-schema";
-import { Definition } from "./../Schema/Definition";
+import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
 function addReachable(

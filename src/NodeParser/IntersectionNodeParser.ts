@@ -7,7 +7,7 @@ import { PrimitiveType } from "../Type/PrimitiveType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
-import { UndefinedType } from "./../Type/UndefinedType";
+import { UndefinedType } from "../Type/UndefinedType";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}

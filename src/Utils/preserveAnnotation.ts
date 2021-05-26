@@ -1,5 +1,5 @@
 import { BaseType } from "../Type/BaseType";
-import { AnnotatedType } from "./../Type/AnnotatedType";
+import { AnnotatedType } from "../Type/AnnotatedType";
 
 /**
  * Return the new type wrapped in an annotated type with the same annotations as the original type.

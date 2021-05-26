@@ -1,7 +1,7 @@
 import ts from "typescript";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { FunctionType } from "./../Type/FunctionType";
+import { FunctionType } from "../Type/FunctionType";
 
 /**
  * A function node parser that creates a function type so that mapped types can

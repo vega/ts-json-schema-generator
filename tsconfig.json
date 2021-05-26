@@ -28,5 +28,5 @@
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
   "include": ["./src/**/*.ts", "./factory/**/*.ts", "./test/**.ts"],
-  "exclude": ["dist"]
+  "exclude": ["node_modules", "dist"]
 }

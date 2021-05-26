@@ -46,7 +46,9 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         return {
             description: comments
                 .map((comment) => comment.text.replace(/\r/g, "").replace(/(?<=[^\n])\n(?=[^\n*-])/g, " "))
-                .join(" "),
+                .join(" ")
+                // strip newlines
+                .replace(/^\s+|\s+$/g, ""),
         };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
@@ -65,6 +67,6 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        return { type: jsDocTag.text };
+        return { type: jsDocTag.text[0].text };
     }
 }
