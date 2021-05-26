@@ -82,11 +82,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
             return undefined;
         }
 
-        const text = jsDocTag.text
-            ?.map((part) => part.text)
-            .join("")
-            // remove newlines
-            .replace(/^\s+|\s+$/g, "");
+        const text = jsDocTag.text?.map((part) => part.text).join("");
         if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {

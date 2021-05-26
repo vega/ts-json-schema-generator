@@ -65,6 +65,6 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        return { type: jsDocTag.text };
+        return { type: jsDocTag.text[0].text };
     }
 }
