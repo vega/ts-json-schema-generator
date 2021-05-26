@@ -1,23 +1,23 @@
-import { AliasType } from ".../src/Type/AliasType";
-import { AnnotatedType } from ".../src/Type/AnnotatedType";
-import { AnyType } from ".../src/Type/AnyType";
-import { ArrayType } from ".../src/Type/ArrayType";
-import { BooleanType } from ".../src/Type/BooleanType";
-import { DefinitionType } from ".../src/Type/DefinitionType";
-import { IntersectionType } from ".../src/Type/IntersectionType";
-import { LiteralType } from ".../src/Type/LiteralType";
-import { NullType } from ".../src/Type/NullType";
-import { NumberType } from ".../src/Type/NumberType";
-import { ObjectProperty, ObjectType } from ".../src/Type/ObjectType";
-import { OptionalType } from ".../src/Type/OptionalType";
-import { ReferenceType } from ".../src/Type/ReferenceType";
-import { StringType } from ".../src/Type/StringType";
-import { TupleType } from ".../src/Type/TupleType";
-import { UndefinedType } from ".../src/Type/UndefinedType";
-import { UnionType } from ".../src/Type/UnionType";
-import { UnknownType } from ".../src/Type/UnknownType";
-import { VoidType } from ".../src/Type/VoidType";
-import { isAssignableTo } from ".../src/Utils/isAssignableTo";
+import { AliasType } from "../../src/Type/AliasType";
+import { AnnotatedType } from "../../src/Type/AnnotatedType";
+import { AnyType } from "../../src/Type/AnyType";
+import { ArrayType } from "../../src/Type/ArrayType";
+import { BooleanType } from "../../src/Type/BooleanType";
+import { DefinitionType } from "../../src/Type/DefinitionType";
+import { IntersectionType } from "../../src/Type/IntersectionType";
+import { LiteralType } from "../../src/Type/LiteralType";
+import { NullType } from "../../src/Type/NullType";
+import { NumberType } from "../../src/Type/NumberType";
+import { ObjectProperty, ObjectType } from "../../src/Type/ObjectType";
+import { OptionalType } from "../../src/Type/OptionalType";
+import { ReferenceType } from "../../src/Type/ReferenceType";
+import { StringType } from "../../src/Type/StringType";
+import { TupleType } from "../../src/Type/TupleType";
+import { UndefinedType } from "../../src/Type/UndefinedType";
+import { UnionType } from "../../src/Type/UnionType";
+import { UnknownType } from "../../src/Type/UnknownType";
+import { VoidType } from "../../src/Type/VoidType";
+import { isAssignableTo } from "../../src/Utils/isAssignableTo";
 
 describe("isAssignableTo", () => {
     it("returns true for same types", () => {

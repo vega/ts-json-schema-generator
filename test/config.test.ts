@@ -3,7 +3,7 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
-import { BaseType, Context, ReferenceType, SubNodeParser } from "..";
+import { BaseType, Context, ReferenceType, SubNodeParser } from "../index";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
