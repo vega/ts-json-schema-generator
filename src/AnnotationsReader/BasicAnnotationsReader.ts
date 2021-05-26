@@ -1,7 +1,6 @@
 import ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { Annotations } from "../Type/AnnotatedType";
-import { strip } from "../Utils/String";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
@@ -83,7 +82,11 @@ export class BasicAnnotationsReader implements AnnotationsReader {
             return undefined;
         }
 
-        const text = strip(jsDocTag.text?.map((part) => part.text).join(""));
+        const text = jsDocTag.text
+            ?.map((part) => part.text)
+            .join("")
+            // remove newlines
+            .replace(/^\s+|\s+$/g, "");
         if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
