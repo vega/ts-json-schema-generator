@@ -21,7 +21,7 @@ export class TypeofNodeParser implements SubNodeParser {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
         }
 
-        const valueDec = symbol.valueDeclaration;
+        const valueDec = symbol.valueDeclaration!;
         if (ts.isEnumDeclaration(valueDec)) {
             return this.createObjectFromEnum(valueDec, context, reference);
         } else if (ts.isVariableDeclaration(valueDec) || ts.isPropertySignature(valueDec)) {

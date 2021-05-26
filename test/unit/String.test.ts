@@ -1,4 +1,4 @@
-import { strip } from "../../src/Utils/String";
+import { strip } from ".../src/Utils/String";
 
 describe("strip", () => {
     it("removes quotes", () => {

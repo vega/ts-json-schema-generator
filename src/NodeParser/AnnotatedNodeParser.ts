@@ -7,8 +7,8 @@ import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { removeUndefined } from "../Utils/removeUndefined";
-import { DefinitionType } from "./../Type/DefinitionType";
-import { UnionType } from "./../Type/UnionType";
+import { DefinitionType } from "../Type/DefinitionType";
+import { UnionType } from "../Type/UnionType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(private childNodeParser: SubNodeParser, private annotationsReader: AnnotationsReader) {}

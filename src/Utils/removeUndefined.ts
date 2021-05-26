@@ -1,6 +1,6 @@
 import { BaseType } from "../Type/BaseType";
 import { UndefinedType } from "../Type/UndefinedType";
-import { UnionType } from "./../Type/UnionType";
+import { UnionType } from "../Type/UnionType";
 import { derefAnnotatedType } from "./derefType";
 import { preserveAnnotation } from "./preserveAnnotation";
 

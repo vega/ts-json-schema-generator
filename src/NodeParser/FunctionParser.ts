@@ -2,7 +2,7 @@ import ts from "typescript";
 import { NodeParser } from "../NodeParser";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { ObjectProperty, ObjectType } from "./../Type/ObjectType";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
 
 /**

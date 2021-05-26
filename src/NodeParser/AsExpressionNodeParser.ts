@@ -1,4 +1,4 @@
-import { NodeParser } from "./../NodeParser";
+import { NodeParser } from "../NodeParser";
 import ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";

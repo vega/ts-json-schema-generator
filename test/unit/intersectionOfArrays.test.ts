@@ -1,4 +1,4 @@
-import { intersectionOfArrays } from "../../src/Utils/intersectionOfArrays";
+import { intersectionOfArrays } from ".../src/Utils/intersectionOfArrays";
 
 describe("intersectionOfArrays", () => {
     it("returns members of a in b", () => {
