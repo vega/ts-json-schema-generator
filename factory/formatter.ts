@@ -28,14 +28,17 @@ import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter"
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 
-export type FormatterAugmentor = (formatter: MutableTypeFormatter) => void;
+export type FormatterAugmentor = (
+    formatter: MutableTypeFormatter,
+    circularReferenceTypeFormatter: CircularReferenceTypeFormatter
+) => void;
 
 export function createFormatter(config: Config, augmentor?: FormatterAugmentor): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 
     if (augmentor) {
-        augmentor(chainTypeFormatter);
+        augmentor(chainTypeFormatter, circularReferenceTypeFormatter);
     }
 
     chainTypeFormatter

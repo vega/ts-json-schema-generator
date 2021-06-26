@@ -66,7 +66,7 @@ export class MyFunctionTypeFormatter implements SubTypeFormatter {
         return type instanceof FunctionType;
     }
 
-    public getDefinition(_type: FunctionType): Definition {
+    public getDefinition(type: FunctionType): Definition {
         // Return a custom schema for the function property.
         return {
             type: "object",
@@ -79,8 +79,15 @@ export class MyFunctionTypeFormatter implements SubTypeFormatter {
         };
     }
 
-    public getChildren(_type: FunctionType): BaseType[] {
+    // If this type does NOT HAVE children, generally all you need is:
+    public getChildren(type: FunctionType): BaseType[] {
         return [];
+    }
+
+    // However, if children ARE supported, you'll need something similar to
+    // this (see src/TypeFormatter/{Array,Definition,etc}.ts for some examples):
+    public getChildren(type: FunctionType): BaseType[] {
+        return this.childTypeFormatter.getChildren(type.getType());
     }
 }
 ```
@@ -99,8 +106,11 @@ const config = {
 };
 
 // We configure the formatter an add our custom formatter to it.
-const formatter = createFormatter(config, (fmt) => {
+const formatter = createFormatter(config, (fmt, circularReferenceTypeFormatter) => {
+    // If your formatter DOES NOT support children, e.g. getChildren() { return [] }:
     fmt.addTypeFormatter(new MyFunctionTypeFormatter());
+    // If your formatter DOES support children, you'll need this reference too:
+    fmt.addTypeFormatter(new MyFunctionTypeFormatter(circularReferenceTypeFormatter));
 });
 
 const program = createProgram(config);
