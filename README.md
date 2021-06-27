@@ -62,6 +62,9 @@ import { BaseType, Definition, FunctionType, SubTypeFormatter } from "ts-json-sc
 import ts from "typescript";
 
 export class MyFunctionTypeFormatter implements SubTypeFormatter {
+    // You can skip this line if you don't need childTypeFormatter
+    public constructor(private childTypeFormatter: TypeFormatter) {}
+
     public supportsType(type: FunctionType): boolean {
         return type instanceof FunctionType;
     }
