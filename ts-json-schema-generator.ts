@@ -1,4 +1,4 @@
-import commander, { Option } from "commander";
+import { Command, Option } from "commander";
 import { writeFile } from "fs";
 import stringify from "json-stable-stringify";
 import { createGenerator } from "./factory/generator";
@@ -7,7 +7,7 @@ import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 import * as pkg from "./package.json";
 
-const args = commander
+const args = new Command()
     .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
     .option("-i, --id <name>", "$id for generated schema")
