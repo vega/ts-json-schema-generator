@@ -13,9 +13,14 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+
       - uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14
+
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
+
       - run: yarn semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
