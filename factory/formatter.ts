@@ -30,7 +30,7 @@ import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 
 export type FormatterAugmentor = (
     formatter: MutableTypeFormatter,
-    circularReferenceTypeFormatter?: CircularReferenceTypeFormatter
+    circularReferenceTypeFormatter: CircularReferenceTypeFormatter
 ) => void;
 
 export function createFormatter(config: Config, augmentor?: FormatterAugmentor): TypeFormatter {
