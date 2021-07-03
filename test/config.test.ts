@@ -3,7 +3,7 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
-import { BaseType, Context, ReferenceType, SubNodeParser } from "../index";
+import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
@@ -14,6 +14,8 @@ import { SubTypeFormatter } from "../src/SubTypeFormatter";
 import { EnumType } from "../src/Type/EnumType";
 import { FunctionType } from "../src/Type/FunctionType";
 import { StringType } from "../src/Type/StringType";
+import { TypeFormatter } from "../src/TypeFormatter";
+import { uniqueArray } from "../src/Utils/uniqueArray";
 
 const basePath = "test/config";
 
@@ -105,6 +107,21 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
     }
     public getChildren(_type: EnumType): BaseType[] {
         return [];
+    }
+}
+
+// Just like DefinitionFormatter but adds { $comment: "overriden" }
+export class ExampleDefinitionOverrideFormatter implements SubTypeFormatter {
+    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public supportsType(type: DefinitionType): boolean {
+        return type instanceof DefinitionType;
+    }
+    public getDefinition(type: DefinitionType): Definition {
+        const ref = type.getName();
+        return { $ref: `#/definitions/${ref}`, $comment: "overriden" };
+    }
+    public getChildren(type: DefinitionType): BaseType[] {
+        return uniqueArray([type, ...this.childTypeFormatter.getChildren(type.getType())]);
     }
 }
 
@@ -353,6 +370,19 @@ describe("config", () => {
             },
             false,
             (formatter) => formatter.addTypeFormatter(new ExampleEnumTypeFormatter())
+        )
+    );
+
+    it(
+        "custom-formatter-configuration-circular",
+        assertSchema(
+            "custom-formatter-configuration-circular",
+            {
+                type: "MyObject",
+            },
+            false,
+            (formatter, circularReferenceTypeFormatter) =>
+                formatter.addTypeFormatter(new ExampleDefinitionOverrideFormatter(circularReferenceTypeFormatter))
         )
     );
 
