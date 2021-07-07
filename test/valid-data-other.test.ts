@@ -24,6 +24,10 @@ describe("valid-data-other", () => {
         "function-parameters-required",
         assertValidSchema("function-parameters-required", "NamedParameters<typeof myFunction>")
     );
+    it(
+        "function-parameters-variable-assignment",
+        assertValidSchema("function-parameters-variable-assignment", "NamedParameters<typeof myFunction>")
+    );
 
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));

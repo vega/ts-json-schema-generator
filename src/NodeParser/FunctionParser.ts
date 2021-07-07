@@ -4,6 +4,7 @@ import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
+import { DefinitionType } from "../Type/DefinitionType";
 
 /**
  * This function parser supports both `FunctionDeclaration` & `ArrowFunction` nodes.
@@ -13,15 +14,20 @@ import { getKey } from "../Utils/nodeKey";
 export class FunctionParser implements SubNodeParser {
     constructor(private childNodeParser: NodeParser) {}
 
-    public supportsNode(node: ts.ArrowFunction): boolean {
-        return node.kind === ts.SyntaxKind.ArrowFunction || node.kind === ts.SyntaxKind.FunctionDeclaration;
+    public supportsNode(node: ts.ArrowFunction | ts.FunctionDeclaration): boolean {
+        if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
+            // Functions needs a name for us to include it in the json schema
+            return Boolean(node.name);
+        }
+        // We can figure out the name of arrow functions if their parent is a variable declaration
+        return node.kind === ts.SyntaxKind.ArrowFunction && ts.isVariableDeclaration(node.parent);
     }
-    public createType(node: ts.FunctionTypeNode | ts.ArrowFunction, context: Context): ObjectType | undefined {
+    public createType(node: ts.FunctionDeclaration | ts.ArrowFunction, context: Context): DefinitionType {
         const parameterTypes = node.parameters.map((parameter) => {
             return this.childNodeParser.createType(parameter, context);
         });
 
-        return new ObjectType(
+        const namedArguments = new ObjectType(
             `object-${getKey(node, context)}`,
             [],
             parameterTypes.map((parameterType, index) => {
@@ -32,5 +38,19 @@ export class FunctionParser implements SubNodeParser {
             }),
             false
         );
+        return new DefinitionType(this.getTypeName(node, context), namedArguments);
+    }
+
+    public getTypeName(node: ts.FunctionDeclaration | ts.ArrowFunction, context: Context): string {
+        if (ts.isArrowFunction(node)) {
+            const parent = node.parent;
+            if (ts.isVariableDeclaration(parent)) {
+                return `NamedParameters<typeof ${parent.name.getText()}>`;
+            }
+        }
+        if (ts.isFunctionDeclaration(node)) {
+            return `NamedParameters<typeof ${node.name!.getText()}>`;
+        }
+        throw new Error("Expected to find a name for function but couldn't");
     }
 }
