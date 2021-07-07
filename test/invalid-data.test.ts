@@ -33,5 +33,12 @@ describe("invalid-data", () => {
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
-    it("no-function-name", assertSchema("function-parameters-declaration-missing-name", "*", `Unknown node \"export default function () { }`));
+    it(
+        "no-function-name",
+        assertSchema(
+            "function-parameters-declaration-missing-name",
+            "*",
+            `Unknown node "export default function () { }`
+        )
+    );
 });
