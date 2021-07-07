@@ -348,6 +348,12 @@ describe("config", () => {
             expose: "all",
         })
     );
+    it(
+        "function-parameters-all",
+        assertSchema("function-parameters-all", {
+            type: "*",
+        })
+    );
 
     it(
         "custom-formatter-configuration",

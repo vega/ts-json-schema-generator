@@ -13,6 +13,10 @@ describe("valid-data-other", () => {
         assertValidSchema("function-parameters-default-value", "NamedParameters<typeof myFunction>")
     );
     it(
+        "function-parameters-declaration",
+        assertValidSchema("function-parameters-declaration", "NamedParameters<typeof myFunction>")
+    );
+    it(
         "function-parameters-jsdoc",
         assertValidSchema("function-parameters-jsdoc", "NamedParameters<typeof myFunction>", "basic")
     );
@@ -23,6 +27,10 @@ describe("valid-data-other", () => {
     it(
         "function-parameters-required",
         assertValidSchema("function-parameters-required", "NamedParameters<typeof myFunction>")
+    );
+    it(
+        "function-parameters-variable-assignment",
+        assertValidSchema("function-parameters-variable-assignment", "NamedParameters<typeof myFunction>")
     );
 
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
