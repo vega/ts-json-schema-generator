@@ -1,0 +1,9 @@
+{
+  "plugins": [
+    "npm",
+    "conventional-commits",
+    "first-time-contributor",
+    "released"
+  ],
+  "onlyPublishWithReleaseLabel": true
+}

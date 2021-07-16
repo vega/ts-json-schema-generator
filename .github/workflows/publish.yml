@@ -1,18 +1,21 @@
 name: Publish
 
-on: workflow_dispatch
+on: [push]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
 
     name: Make a release and publish to NPM
-
     steps:
       - uses: actions/checkout@v2.3.4
         with:
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Prepare repository with tags
+        run: git fetch --unshallow --tags
 
       - uses: actions/setup-node@v2.2.0
         with:
@@ -21,7 +24,8 @@ jobs:
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
 
-      - run: yarn semantic-release
+      - name: Create release
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn run release
