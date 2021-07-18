@@ -1,4 +1,4 @@
-import { runInNewContext } from "vm";
+import json5 from "json5";
 import ts from "typescript";
 import { AnnotationsReader } from "../AnnotationsReader";
 import { Annotations } from "../Type/AnnotatedType";
@@ -97,7 +97,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     }
     private parseJson(value: string): any {
         try {
-            return runInNewContext(`(${value})`);
+            return json5.parse(value);
         } catch (e) {
             return undefined;
         }
