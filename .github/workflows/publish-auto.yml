@@ -1,11 +1,14 @@
 name: Publish Auto
 
 on: [push]
+  branches-ignore:
+    # No canary deploys for branches opened by dependabot
+    - 'dependabot/**'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') && github.actor!= 'depbot'"
 
     name: Make a release and publish to NPM
     steps:
