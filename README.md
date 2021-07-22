@@ -270,4 +270,7 @@ And connect via the debugger protocol.
 
 ## Publish
 
-To publish a new version, run the workflow at https://github.com/vega/ts-json-schema-generator/actions?query=workflow%3APublish.
+Publishing is handled by a 2-branch [pre-release process](https://intuit.github.io/auto/docs/generated/shipit#next-branch-default), configured in `publish-auto.yml`. All changes should be based off the default `next` branch, and are published automatically.
+
+- PRs made into the default branch are auto-deployed to the `next` pre-release tag on NPM. The result can be installed with `npm install ts-json-schema-generator@next`
+- To release a new stable version, open a PR from `next` into `stable` using this [compare link](https://github.com/vega/ts-json-schema-generator/compare/stable...next).
