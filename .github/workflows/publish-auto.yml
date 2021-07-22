@@ -1,9 +1,10 @@
 name: Publish Auto
 
-on: [push]
-  branches-ignore:
-    # No canary deploys for branches opened by dependabot
-    - 'dependabot/**'
+on:
+  push:
+    branches-ignore:
+      # No canary deploys for branches opened by dependabot
+      - 'dependabot/**'
 
 jobs:
   publish:
