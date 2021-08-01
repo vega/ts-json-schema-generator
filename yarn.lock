@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@auto-it/bot-list@10.29.3":
-  version "10.29.3"
-  resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.29.3.tgz#cd4e1fa003a0f07496ea0b944d6b0ade75248e1b"
-  integrity sha512-A0sFwq0teyW+mkYiu8RQLR1DMiTdDsj9+Q8jQsKa+IiWjgOKcr/A1Qqwce6p60u1zGG/JGrlCHpqxu52U7cgMw==
-
 "@auto-it/bot-list@10.30.0":
   version "10.30.0"
   resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.30.0.tgz#3b639873155722ef707624149bb28c6c89a5ceef"
@@ -26,51 +21,6 @@
     fp-ts "^2.5.3"
     io-ts "^2.1.2"
     tslib "2.1.0"
-
-"@auto-it/core@10.29.3":
-  version "10.29.3"
-  resolved "https://registry.yarnpkg.com/@auto-it/core/-/core-10.29.3.tgz#4ebe8f650a38e6a480a7856275e30a2b50b96dd7"
-  integrity sha512-4sl0nKJrc2j0wT/9sWVWCHXm8wmxde777ankESsI2TC08eNqwad/wcDXQPE6LGs4E6V0m7V51xfhU40qZHU3Rw==
-  dependencies:
-    "@auto-it/bot-list" "10.29.3"
-    "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
-    "@octokit/plugin-enterprise-compatibility" "^1.2.2"
-    "@octokit/plugin-retry" "^3.0.1"
-    "@octokit/plugin-throttling" "^3.2.0"
-    "@octokit/rest" "^18.0.0"
-    await-to-js "^3.0.0"
-    chalk "^4.0.0"
-    cosmiconfig "7.0.0"
-    deepmerge "^4.0.0"
-    dotenv "^8.0.0"
-    endent "^2.0.1"
-    enquirer "^2.3.4"
-    env-ci "^5.0.1"
-    fast-glob "^3.1.1"
-    fp-ts "^2.5.3"
-    fromentries "^1.2.0"
-    gitlog "^4.0.3"
-    https-proxy-agent "^5.0.0"
-    import-cwd "^3.0.0"
-    import-from "^3.0.0"
-    io-ts "^2.1.2"
-    lodash.chunk "^4.2.0"
-    log-symbols "^4.0.0"
-    node-fetch "2.6.1"
-    parse-author "^2.0.0"
-    parse-github-url "1.0.2"
-    pretty-ms "^7.0.0"
-    requireg "^0.2.2"
-    semver "^7.0.0"
-    signale "^1.4.0"
-    tapable "^2.2.0"
-    terminal-link "^2.1.1"
-    tinycolor2 "^1.4.1"
-    ts-node "^9.1.1"
-    tslib "2.1.0"
-    type-fest "^0.21.1"
-    typescript-memoize "^1.0.0-alpha.3"
-    url-join "^4.0.0"
 
 "@auto-it/core@10.30.0":
   version "10.30.0"
@@ -1653,9 +1603,9 @@
   integrity sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
 
 "@types/node@*", "@types/node@^16.0.0":
-  version "16.4.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.4.2.tgz#0a95d7fd950cb1eaca0ce11031d72e8f680b775a"
-  integrity sha512-vxyhOzFCm+jC/T5KugbVsYy1DbQM0h3NCFUrVbu0+pYa/nr+heeucpqxpa8j4pUmIGLPYzboY9zIdOF0niFAjQ==
+  version "16.4.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.4.9.tgz#04eb3da65d08ea377f5e682bf0d22dc1f5e7f19e"
+  integrity sha512-HXhRf581nCItzn8yevv4LYt+bJ5cBbDBAJExbDPMeU/2n5/j0ZemGpayahFBP4xL7RseaCLASLD9i9AYyDe7Nw==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
