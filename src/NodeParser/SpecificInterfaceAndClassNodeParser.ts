@@ -1,3 +1,4 @@
+import { JSONSchema7TypeName } from "json-schema";
 import * as ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
@@ -9,12 +10,12 @@ import { getKey } from "../Utils/nodeKey";
 export interface InterfaceTarget {
     name: string;
     moduleName?: string;
-    definitionType?: string;
+    definitionType?: JSONSchema7TypeName;
     multiple?: boolean;
 }
 
 export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private interfaceTargets: InterfaceTarget[]) {}
+    public constructor(private typeChecker: ts.TypeChecker, private interfaceTargets: InterfaceTarget[]) { }
 
     public supportsNode(node: ts.ClassDeclaration | ts.InterfaceDeclaration): boolean {
         return (
@@ -27,7 +28,7 @@ export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
         const interfaceTarget = this.getSpecificTarget(node)!;
         return new SpecificObjectType(
             `specificobject-${getKey(node, context)}`,
-            interfaceTarget.definitionType || interfaceTarget.name,
+            interfaceTarget.definitionType || (interfaceTarget.name as JSONSchema7TypeName),
             !!interfaceTarget.multiple
         );
     }
@@ -50,7 +51,7 @@ export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
                 return heritageClause.types.find((type) => {
                     const typeSymbol = this.typeChecker.getSymbolAtLocation(type.expression);
 
-                    if (typeSymbol && typeSymbol.declarations.length > 0) {
+                    if (typeSymbol && typeSymbol.declarations?.length > 0) {
                         const declaration = typeSymbol.declarations[0];
 
                         if (ts.isClassDeclaration(declaration) || ts.isInterfaceDeclaration(declaration)) {

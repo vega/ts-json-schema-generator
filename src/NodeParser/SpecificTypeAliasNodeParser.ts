@@ -1,3 +1,4 @@
+import { JSONSchema7TypeName } from "json-schema";
 import * as ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
@@ -9,7 +10,7 @@ import { getKey } from "../Utils/nodeKey";
 export interface TypeTarget {
     name: string;
     moduleName?: string;
-    definitionType?: string;
+    definitionType?: JSONSchema7TypeName;
     multiple?: boolean;
 }
 
@@ -24,7 +25,7 @@ export class SpecificTypeAliasNodeParser implements SubNodeParser {
         const typeTarget = this.getSpecificTarget(node)!;
         return new SpecificObjectType(
             `specificobject-${getKey(node, context)}`,
-            typeTarget.definitionType || typeTarget.name,
+            typeTarget.definitionType || (typeTarget.name as JSONSchema7TypeName),
             !!typeTarget.multiple
         );
     }

@@ -1,7 +1,8 @@
+import { JSONSchema7TypeName } from "json-schema";
 import { BaseType } from "./BaseType";
 
 export class SpecificObjectType extends BaseType {
-    public constructor(private id: string, private definitionType: string, private multiple: boolean) {
+    public constructor(private id: string, private definitionType: JSONSchema7TypeName, private multiple: boolean) {
         super();
     }
 
@@ -9,7 +10,7 @@ export class SpecificObjectType extends BaseType {
         return this.id;
     }
 
-    public getDefinitionType(): string {
+    public getDefinitionType(): JSONSchema7TypeName {
         return this.definitionType;
     }
 
