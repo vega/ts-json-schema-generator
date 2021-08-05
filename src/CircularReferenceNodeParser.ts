@@ -4,6 +4,7 @@ import { SubNodeParser } from "./SubNodeParser";
 import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 import { getKey } from "./Utils/nodeKey";
+import { UnknownType } from "./Type/UnknownType";
 
 export class CircularReferenceNodeParser implements SubNodeParser {
     private circular = new Map<string, BaseType>();
@@ -20,6 +21,9 @@ export class CircularReferenceNodeParser implements SubNodeParser {
         }
 
         const reference = new ReferenceType();
+
+        // temporary set type to unknown in case of type access during recursion
+        reference.setType(new UnknownType());
         this.circular.set(key, reference);
         const type = this.childNodeParser.createType(node, context, reference);
         if (type) {

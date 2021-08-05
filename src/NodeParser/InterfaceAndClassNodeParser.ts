@@ -15,7 +15,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
         private readonly additionalProperties: boolean
-    ) {}
+    ) { }
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
@@ -114,26 +114,44 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         let hasRequiredNever = false;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
+            .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
             .reduce((members, member) => {
                 if (ts.isConstructorDeclaration(member)) {
                     const params = member.parameters.filter((param) =>
                         ts.isParameterPropertyDeclaration(param, param.parent)
                     ) as ts.ParameterPropertyDeclaration[];
-                    members.push(...params);
+                    members.push(
+                        ...params.map(
+                            (p) =>
+                                new ObjectProperty(
+                                    p.getText(),
+                                    this.childNodeParser.createType(p.type!, context),
+                                    !p.questionToken
+                                )
+                        )
+                    );
                 } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                    members.push(member);
+                    if (member.type) {
+                        members.push(
+                            new ObjectProperty(
+                                member.name.getText(),
+                                this.childNodeParser.createType(member.type!, context),
+                                !member.questionToken
+                            )
+                        );
+                    }
+                } else if (ts.isMethodSignature(member) || ts.isMethodDeclaration(member)) {
+                    // TODO remove this branch?  Because it is only for emitting function types
+                    members.push(
+                        new ObjectProperty(
+                            member.name.getText(),
+                            this.childNodeParser.createType(member, context),
+                            !member.questionToken
+                        )
+                    );
                 }
                 return members;
-            }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
-            .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
-            .map(
-                (member) =>
-                    new ObjectProperty(
-                        this.getPropertyName(member.name),
-                        this.childNodeParser.createType(member.type!, context),
-                        !member.questionToken
-                    )
-            )
+            }, [] as ObjectProperty[])
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() === undefined) {
                     hasRequiredNever = true;

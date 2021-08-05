@@ -54,7 +54,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "deprecated",
     ]);
 
-    public constructor(private extraTags?: Set<string>) {}
+    public constructor(private extraTags?: Set<string>) { }
 
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);

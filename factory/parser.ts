@@ -1,4 +1,5 @@
 import ts from "typescript";
+import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
@@ -9,16 +10,13 @@ import { MutableParser } from "../src/MutableParser";
 import { NodeParser } from "../src/NodeParser";
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
 import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser";
-import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
-import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
 import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
-import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { FunctionParser } from "../src/NodeParser/FunctionParser";
 import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
@@ -30,7 +28,6 @@ import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
 import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
-import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
 import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser";
 import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser";
 import { ParameterParser } from "../src/NodeParser/ParameterParser";
@@ -52,7 +49,17 @@ import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
-import { TopRefNodeParser } from "../src/TopRefNodeParser";
+import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
+import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
+import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
+import { TypeParameterParser } from "../src/NodeParser/TypeParameterParser";
+import { SourceFileNodeParser } from "../src/NodeParser/SourceFileNodeParser";
+import { VariableDeclarationNodeParser } from "../src/NodeParser/VariableDeclarationNodeParser";
+import { ImportTypeNodeParser } from "../src/NodeParser/ImportTypeNodeParser";
+import { ExportSpecifierNodeParser } from "../src/NodeParser/ExportSpecifierNodeParser";
+import { ThisTypeNodeParser } from "../src/NodeParser/ThisTypeNodeParser";
+import { SpecificInterfaceAndClassNodeParser } from "../src/NodeParser/SpecificInterfaceAndClassNodeParser";
+import { SpecificTypeAliasNodeParser } from "../src/NodeParser/SpecificTypeAliasNodeParser";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -64,9 +71,6 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
 
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
         return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose, mergedConfig.jsDoc);
-    }
-    function withTopRef(nodeParser: NodeParser): NodeParser {
-        return new TopRefNodeParser(chainNodeParser, mergedConfig.type, mergedConfig.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         const extraTags = new Set(mergedConfig.extraTags);
@@ -87,6 +91,9 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
     }
 
     chainNodeParser
+        .addNodeParser(new SpecificInterfaceAndClassNodeParser(typeChecker, mergedConfig.specificInterfaceTarget))
+        .addNodeParser(new SpecificTypeAliasNodeParser(typeChecker, mergedConfig.specificTypeTarget))
+
         .addNodeParser(new HiddenNodeParser(typeChecker))
         .addNodeParser(new StringTypeNodeParser())
         .addNodeParser(new SymbolTypeNodeParser())
@@ -122,6 +129,12 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
+        .addNodeParser(new TypeParameterParser(chainNodeParser))
+        .addNodeParser(new SourceFileNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new VariableDeclarationNodeParser(chainNodeParser))
+        .addNodeParser(new ImportTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ExportSpecifierNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ThisTypeNodeParser(typeChecker, chainNodeParser))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
@@ -157,5 +170,5 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));
 
-    return withTopRef(chainNodeParser);
+    return chainNodeParser;
 }

@@ -1,3 +1,5 @@
+import { JSONSchema7TypeName } from "json-schema";
+
 export interface Config {
     path?: string;
     type?: string;
@@ -12,6 +14,34 @@ export interface Config {
     encodeRefs?: boolean;
     extraTags?: string[];
     additionalProperties?: boolean;
+    /**
+     * @example:
+     * [
+     *  { name: "ReactElement", moduleName: "React", definitionType: "UI.Element" },
+     *  { name: "HTMLElement" },
+     *  { name: "Date" }
+     * ]
+     *
+     */
+    specificInterfaceTarget?: {
+        name: string;
+        moduleName?: string;
+        definitionType?: JSONSchema7TypeName;
+        multiple?: boolean;
+    }[];
+    /**
+     * @example:
+     * [
+     *  { name: "ReactNode", moduleName: "React", definitionType: "UI.Element", multiple: true }
+     * ]
+     *
+     */
+    specificTypeTarget?: {
+        name: string;
+        moduleName?: string;
+        definitionType?: JSONSchema7TypeName;
+        multiple?: boolean;
+    }[];
 }
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig"> = {
@@ -24,4 +54,6 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     encodeRefs: true,
     extraTags: [],
     additionalProperties: false,
+    specificInterfaceTarget: [],
+    specificTypeTarget: [],
 };

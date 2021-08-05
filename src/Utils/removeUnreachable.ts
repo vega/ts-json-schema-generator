@@ -18,7 +18,11 @@ function addReachable(
             return;
         }
         reachable.add(typeName);
-        addReachable(definitions[typeName], definitions, reachable);
+        if (definitions[typeName]) {
+            addReachable(definitions[typeName], definitions, reachable);
+        } else {
+            throw new Error(`Definition name "${typeName}" not found`);
+        }
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
             addReachable(def, definitions, reachable);

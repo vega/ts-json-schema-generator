@@ -27,6 +27,7 @@ import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
+import { SpecificObjectTypeFormatter } from "../src/TypeFormatter/SpecificObjectTypeFormatter";
 
 export type FormatterAugmentor = (
     formatter: MutableTypeFormatter,
@@ -57,6 +58,7 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())
+        .addTypeFormatter(new SpecificObjectTypeFormatter())
 
         .addTypeFormatter(new ReferenceTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))
         .addTypeFormatter(new DefinitionTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))

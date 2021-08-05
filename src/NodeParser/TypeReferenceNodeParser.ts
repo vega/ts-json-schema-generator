@@ -6,13 +6,13 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { StringType } from "../Type/StringType";
 
-const invlidTypes: { [index: number]: boolean } = {
+const invalidTypes: { [index: number]: boolean } = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
     [ts.SyntaxKind.VariableDeclaration]: true,
 };
 
 export class TypeReferenceNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) { }
 
     public supportsNode(node: ts.TypeReferenceNode): boolean {
         return node.kind === ts.SyntaxKind.TypeReference;
@@ -22,12 +22,28 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
-            return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
-                this.createSubContext(node, context)
-            );
+            if (aliasedSymbol.declarations) {
+                return this.childNodeParser.createType(
+                    aliasedSymbol.declarations.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            } else if (typeSymbol.declarations) {
+                return this.childNodeParser.createType(
+                    typeSymbol.declarations.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            }
+
+            return undefined;
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
-            return context.getArgument(typeSymbol.name);
+            const argument = context.getArgument(typeSymbol.name);
+            if (!argument) {
+                return this.childNodeParser.createType(
+                    typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
+                    this.createSubContext(node, context)
+                );
+            }
+            return argument;
         } else if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
             const type = this.createSubContext(node, context).getArguments()[0];
             if (type === undefined) {
@@ -40,7 +56,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return new AnnotatedType(new StringType(), { format: "regex" }, false);
         } else {
             return this.childNodeParser.createType(
-                typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                 this.createSubContext(node, context)
             );
         }

@@ -9,7 +9,7 @@ import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
 
 export class TypeofNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) { }
 
     public supportsNode(node: ts.TypeQueryNode): boolean {
         return node.kind === ts.SyntaxKind.TypeQuery;
@@ -21,22 +21,26 @@ export class TypeofNodeParser implements SubNodeParser {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
         }
 
-        const valueDec = symbol.valueDeclaration!;
-        if (ts.isEnumDeclaration(valueDec)) {
-            return this.createObjectFromEnum(valueDec, context, reference);
-        } else if (ts.isVariableDeclaration(valueDec) || ts.isPropertySignature(valueDec)) {
-            if (valueDec.type) {
-                return this.childNodeParser.createType(valueDec.type, context);
-            } else if (valueDec.initializer) {
+        const valueDec = symbol.valueDeclaration;
+        if (valueDec) {
+            if (ts.isEnumDeclaration(valueDec)) {
+                return this.createObjectFromEnum(valueDec, context, reference);
+            } else if (ts.isVariableDeclaration(valueDec) || ts.isPropertySignature(valueDec)) {
+                if (valueDec.type) {
+                    return this.childNodeParser.createType(valueDec.type, context);
+                } else if (valueDec.initializer) {
+                    return this.childNodeParser.createType(valueDec.initializer, context);
+                }
+            } else if (ts.isClassDeclaration(valueDec)) {
+                return this.childNodeParser.createType(valueDec, context);
+            } else if (ts.isPropertyAssignment(valueDec)) {
                 return this.childNodeParser.createType(valueDec.initializer, context);
             }
-        } else if (ts.isClassDeclaration(valueDec)) {
-            return this.childNodeParser.createType(valueDec, context);
-        } else if (ts.isPropertyAssignment(valueDec)) {
-            return this.childNodeParser.createType(valueDec.initializer, context);
+
+            throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
         }
 
-        throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
+        return undefined;
     }
 
     private createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {

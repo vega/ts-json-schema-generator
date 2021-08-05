@@ -10,6 +10,7 @@ export class LiteralTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: LiteralType): Definition {
         return {
+            // TODO Remove this?  Redundant because of `const`
             type: typeName(type.getValue()),
             const: type.getValue(),
         };
