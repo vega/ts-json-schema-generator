@@ -1,4 +1,4 @@
-import { JSONSchema7Definition } from "../Schema/JSONSchema7";
+import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { intersectionOfArrays } from "./intersectionOfArrays";
 
