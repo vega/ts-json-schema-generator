@@ -4,7 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 
 export class ImportTypeNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) { }
 
     public supportsNode(node: ts.ImportTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ImportType;
@@ -20,7 +20,7 @@ export class ImportTypeNodeParser implements SubNodeParser {
                 return exportSymbolItem.getName() === importQualifier;
             });
 
-            if (exportSymbol && exportSymbol.declarations.length) {
+            if (exportSymbol && exportSymbol.declarations?.length) {
                 return this.childNodeParser.createType(
                     exportSymbol.declarations[0],
                     this.createSubContext(node, context)

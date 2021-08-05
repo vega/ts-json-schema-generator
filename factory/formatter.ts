@@ -9,8 +9,6 @@ import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
 import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
-import { PromiseTypeFormatter } from "../src/TypeFormatter/PromiseTypeFormatter";
-import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter";
 import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
 import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter";
 import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter";
@@ -27,7 +25,6 @@ import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormat
 import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
 import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
-import { UIComponentTypeFormatter } from "../src/TypeFormatter/UIComponentTypeFormatter";
 import { SpecificObjectTypeFormatter } from "../src/TypeFormatter/SpecificObjectTypeFormatter";
 
 export function createFormatter(config: Config): TypeFormatter {
@@ -49,9 +46,6 @@ export function createFormatter(config: Config): TypeFormatter {
 
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())
-        .addTypeFormatter(new PromiseTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new FunctionTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new UIComponentTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new SpecificObjectTypeFormatter())
 
         .addTypeFormatter(new ReferenceTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))
