@@ -1,3 +1,3 @@
-import { JSONSchemaX } from "./JSONSchemaX";
+import { JSONSchema7 } from "./JSONSchema7";
 
-export type Schema = JSONSchemaX;
+export type Schema = JSONSchema7;

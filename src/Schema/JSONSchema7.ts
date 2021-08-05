@@ -1,11 +1,13 @@
 import { JSONSchema7, JSONSchema7Type, JSONSchema7TypeName, JSONSchema7Version } from "json-schema";
 
-export type JSONSchemaXType = JSONSchema7Type;
-export type JSONSchemaXTypeName = JSONSchema7TypeName | "function" | "promise" | "UI.Component" | string;
+export { JSONSchema7Type };
+export { JSONSchema7TypeName };
 
-export type JSONSchemaXDefinition = JSONSchemaX | boolean;
+export type JSONSchema7Definition = JSONSchema7 | boolean;
 
-export interface JSONSchemaX {
+export { JSONSchema7 };
+
+interface JSONSchemaX {
     $id?: string;
     $ref?: string;
     $schema?: JSONSchema7Version;
@@ -14,9 +16,9 @@ export interface JSONSchemaX {
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-6.1
      */
-    type?: JSONSchemaXTypeName | JSONSchemaXTypeName[];
-    enum?: JSONSchemaXType[];
-    const?: JSONSchemaXType;
+    type?: JSONSchema7TypeName | JSONSchema7TypeName[];
+    enum?: JSONSchema7Type[];
+    const?: JSONSchema7Type;
 
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-6.2
@@ -37,8 +39,8 @@ export interface JSONSchemaX {
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-6.4
      */
-    items?: JSONSchemaXDefinition | JSONSchemaXDefinition[];
-    additionalItems?: JSONSchemaXDefinition;
+    items?: JSONSchema7Definition | JSONSchema7Definition[];
+    additionalItems?: JSONSchema7Definition;
     maxItems?: number;
     minItems?: number;
     uniqueItems?: boolean;
@@ -51,31 +53,31 @@ export interface JSONSchemaX {
     minProperties?: number;
     required?: string[];
     properties?: {
-        [key: string]: JSONSchemaXDefinition;
+        [key: string]: JSONSchema7Definition;
     };
     patternProperties?: {
-        [key: string]: JSONSchemaXDefinition;
+        [key: string]: JSONSchema7Definition;
     };
-    additionalProperties?: JSONSchemaXDefinition;
+    additionalProperties?: JSONSchema7Definition;
     dependencies?: {
-        [key: string]: JSONSchemaXDefinition | string[];
+        [key: string]: JSONSchema7Definition | string[];
     };
-    propertyNames?: JSONSchemaXDefinition;
+    propertyNames?: JSONSchema7Definition;
 
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-6.6
      */
-    if?: JSONSchemaXDefinition;
-    then?: JSONSchemaXDefinition;
-    else?: JSONSchemaXDefinition;
+    if?: JSONSchema7Definition;
+    then?: JSONSchema7Definition;
+    else?: JSONSchema7Definition;
 
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-6.7
      */
-    allOf?: JSONSchemaXDefinition[];
-    anyOf?: JSONSchemaXDefinition[];
-    oneOf?: JSONSchemaXDefinition[];
-    not?: JSONSchemaXDefinition;
+    allOf?: JSONSchema7Definition[];
+    anyOf?: JSONSchema7Definition[];
+    oneOf?: JSONSchema7Definition[];
+    not?: JSONSchema7Definition;
 
     /**
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-7
@@ -92,7 +94,7 @@ export interface JSONSchemaX {
      * @see https://tools.ietf.org/html/draft-handrews-json-schema-validation-01#section-9
      */
     definitions?: {
-        [key: string]: JSONSchemaXDefinition;
+        [key: string]: JSONSchema7Definition;
     };
 
     /**
@@ -100,17 +102,17 @@ export interface JSONSchemaX {
      */
     title?: string;
     description?: string;
-    default?: JSONSchemaXType;
+    default?: JSONSchema7Type;
     readOnly?: boolean;
     writeOnly?: boolean;
-    examples?: JSONSchemaXType;
+    examples?: JSONSchema7Type;
 
     /**
      * custom function signature
      */
     arguments?: {
-        [key: string]: JSONSchemaX;
+        [key: string]: JSONSchema7;
     };
-    return?: JSONSchemaX;
-    props?: JSONSchemaX;
+    return?: JSONSchema7;
+    props?: JSONSchema7;
 }
