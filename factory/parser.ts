@@ -53,8 +53,6 @@ import { VariableDeclarationNodeParser } from "../src/NodeParser/VariableDeclara
 import { ImportTypeNodeParser } from "../src/NodeParser/ImportTypeNodeParser";
 import { ExportSpecifierNodeParser } from "../src/NodeParser/ExportSpecifierNodeParser";
 import { ThisTypeNodeParser } from "../src/NodeParser/ThisTypeNodeParser";
-import { ReactFunctionComponentNodeParser } from "../src/NodeParser/ReactFunctionComponentNodeParser";
-import { ReactComponentNodeParser } from "../src/NodeParser/ReactComponentNodeParser";
 import { SpecificInterfaceAndClassNodeParser } from "../src/NodeParser/SpecificInterfaceAndClassNodeParser";
 import { SpecificTypeAliasNodeParser } from "../src/NodeParser/SpecificTypeAliasNodeParser";
 
