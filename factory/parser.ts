@@ -99,8 +99,7 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
-        .addNodeParser(withCircular(withExpose(new ReactFunctionComponentNodeParser())))
-        .addNodeParser(new FunctionNodeParser(chainNodeParser))
+        .addNodeParser(new FunctionNodeParser())
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
@@ -123,7 +122,6 @@ export function createParser(program: ts.Program, config: Config): NodeParser {
         .addNodeParser(new ImportTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExportSpecifierNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ThisTypeNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(withCircular(withExpose(new ReactComponentNodeParser(typeChecker, chainNodeParser))))
 
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
