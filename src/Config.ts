@@ -1,3 +1,5 @@
+import { JSONSchema7TypeName } from "json-schema";
+
 export interface Config {
     path?: string;
     type?: string;
@@ -23,7 +25,7 @@ export interface Config {
     specificInterfaceTarget?: {
         name: string;
         moduleName?: string;
-        definitionType?: string;
+        definitionType?: JSONSchema7TypeName;
         multiple?: boolean;
     }[];
     /**
@@ -36,7 +38,7 @@ export interface Config {
     specificTypeTarget?: {
         name: string;
         moduleName?: string;
-        definitionType?: string;
+        definitionType?: JSONSchema7TypeName;
         multiple?: boolean;
     }[];
 }

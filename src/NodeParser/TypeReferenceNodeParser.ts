@@ -2,7 +2,6 @@ import * as ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ArrayType } from "../Type/ArrayType";
-import { PromiseType } from "../Type/PromiseType";
 import { BaseType } from "../Type/BaseType";
 
 const invalidTypes: { [index: number]: boolean } = {
@@ -11,7 +10,7 @@ const invalidTypes: { [index: number]: boolean } = {
 };
 
 export class TypeReferenceNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) { }
 
     public supportsNode(node: ts.TypeReferenceNode): boolean {
         return node.kind === ts.SyntaxKind.TypeReference;
@@ -49,9 +48,6 @@ export class TypeReferenceNodeParser implements SubNodeParser {
                 return undefined;
             }
             return new ArrayType(type);
-        } else if (typeSymbol.name === "Promise") {
-            const typeArgument = node.typeArguments?.[0];
-            return new PromiseType(typeArgument ? this.childNodeParser.createType(typeArgument, context) : undefined);
         } else {
             return this.childNodeParser.createType(
                 typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],

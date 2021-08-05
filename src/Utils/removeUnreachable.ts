@@ -52,23 +52,6 @@ function addReachable(definition: Definition | boolean, definitions: StringMap<D
         } else if (items) {
             addReachable(items, definitions, reachable);
         }
-    } else if (definition.type === "promise") {
-        if (definition.return) {
-            addReachable(definition.return, definitions, reachable);
-        }
-    } else if (definition.type === "function") {
-        for (const arg in definition.arguments || {}) {
-            const argDefinition = definition.arguments![arg];
-            addReachable(argDefinition, definitions, reachable);
-        }
-
-        if (definition.return) {
-            addReachable(definition.return, definitions, reachable);
-        }
-    } else if (definition.type === "UI.Component") {
-        if (definition.props) {
-            addReachable(definition.props, definitions, reachable);
-        }
     }
 }
 

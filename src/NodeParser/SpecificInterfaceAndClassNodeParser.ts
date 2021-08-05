@@ -51,8 +51,8 @@ export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
                 return heritageClause.types.find((type) => {
                     const typeSymbol = this.typeChecker.getSymbolAtLocation(type.expression);
 
-                    if (typeSymbol && typeSymbol.declarations?.length > 0) {
-                        const declaration = typeSymbol.declarations[0];
+                    if (typeSymbol && typeSymbol.declarations && typeSymbol.declarations.length > 0) {
+                        const declaration = typeSymbol.declarations?.[0];
 
                         if (ts.isClassDeclaration(declaration) || ts.isInterfaceDeclaration(declaration)) {
                             interfaceTarget = this.getSpecificTarget(declaration);
