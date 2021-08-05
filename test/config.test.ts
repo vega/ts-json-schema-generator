@@ -112,7 +112,7 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
 
 // Just like DefinitionFormatter but adds { $comment: "overriden" }
 export class ExampleDefinitionOverrideFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(private childTypeFormatter: TypeFormatter) { }
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;
     }
