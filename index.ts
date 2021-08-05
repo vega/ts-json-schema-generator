@@ -71,7 +71,6 @@ export * from "./src/NodeParser";
 export * from "./src/SubNodeParser";
 export * from "./src/ChainNodeParser";
 export * from "./src/ExposeNodeParser";
-export * from "./src/TopRefNodeParser";
 export * from "./src/CircularReferenceNodeParser";
 export * from "./src/NodeParser/AnyTypeNodeParser";
 export * from "./src/NodeParser/UnknownTypeNodeParser";
