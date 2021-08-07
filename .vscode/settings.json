@@ -1,16 +1,21 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "search.exclude": {
-    "dist": true,
-    "bin": true
-  },
-  "files.trimTrailingWhitespace": true,
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "files.insertFinalNewline": true,
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
-  "editor.tabSize": 4,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
+    "search.exclude": {
+        "dist": true,
+        "bin": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "files.insertFinalNewline": true,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    // "editor.codeActionsOnSave": {
+    //     "source.fixAll.eslint": true
+    // }
 }
