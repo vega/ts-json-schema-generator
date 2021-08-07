@@ -16,7 +16,7 @@ export class SchemaGenerator {
         protected readonly nodeParser: NodeParser,
         protected readonly typeFormatter: TypeFormatter,
         protected readonly config?: Config
-    ) { }
+    ) {}
 
     public createSchema(fullName?: string): Schema {
         return this.createSchemaFromNodes();

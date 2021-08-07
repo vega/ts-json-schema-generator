@@ -35,10 +35,6 @@ describe("invalid-data", () => {
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
     it(
         "no-function-name",
-        assertSchema(
-            "function-parameters-declaration-missing-name",
-            "*",
-            `Unknown node "export default function () { }`
-        )
+        assertSchema("function-parameters-declaration-missing-name", "*", `Unknown node "export default function () {}`)
     );
 });

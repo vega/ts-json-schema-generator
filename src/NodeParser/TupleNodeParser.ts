@@ -5,7 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { TupleType } from "../Type/TupleType";
 
 export class TupleNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) { }
+    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TupleTypeNode): boolean {
         return node.kind === ts.SyntaxKind.TupleType;

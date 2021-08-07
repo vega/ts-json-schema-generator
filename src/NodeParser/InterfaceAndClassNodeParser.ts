@@ -15,7 +15,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         private typeChecker: ts.TypeChecker,
         private childNodeParser: NodeParser,
         private readonly additionalProperties: boolean
-    ) { }
+    ) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
         return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;

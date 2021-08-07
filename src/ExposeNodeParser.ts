@@ -15,7 +15,7 @@ export class ExposeNodeParser implements SubNodeParser {
         private subNodeParser: SubNodeParser,
         private expose: "all" | "none" | "export",
         private jsDoc: "none" | "extended" | "basic"
-    ) { }
+    ) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.subNodeParser.supportsNode(node);

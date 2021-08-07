@@ -8,3 +8,5 @@ https://github.com/paztis/ts-json-schema-generator/compare/8682879526455f8984927
 
 My changes since merge-base
 https://github.com/cspotcode/ts-json-schema-generator/compare/8682879526455f898492707bf5c82face7e46570...prepare-paztis-for-merge
+
+merging into merge-paztis branch

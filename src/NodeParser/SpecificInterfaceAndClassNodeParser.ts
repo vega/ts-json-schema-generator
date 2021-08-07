@@ -15,7 +15,7 @@ export interface InterfaceTarget {
 }
 
 export class SpecificInterfaceAndClassNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private interfaceTargets: InterfaceTarget[]) { }
+    public constructor(private typeChecker: ts.TypeChecker, private interfaceTargets: InterfaceTarget[]) {}
 
     public supportsNode(node: ts.ClassDeclaration | ts.InterfaceDeclaration): boolean {
         return (
