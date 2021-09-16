@@ -142,6 +142,13 @@ export class SchemaGenerator {
     }
     protected inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
         switch (node.kind) {
+            case ts.SyntaxKind.VariableDeclaration: {
+                const variableDeclarationNode = node as ts.VariableDeclaration;
+                if (variableDeclarationNode.initializer?.kind === ts.SyntaxKind.ArrowFunction) {
+                    this.inspectNode(variableDeclarationNode.initializer, typeChecker, allTypes);
+                }
+                return;
+            }
             case ts.SyntaxKind.InterfaceDeclaration:
             case ts.SyntaxKind.ClassDeclaration:
             case ts.SyntaxKind.EnumDeclaration:
