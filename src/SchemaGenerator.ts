@@ -144,7 +144,10 @@ export class SchemaGenerator {
         switch (node.kind) {
             case ts.SyntaxKind.VariableDeclaration: {
                 const variableDeclarationNode = node as ts.VariableDeclaration;
-                if (variableDeclarationNode.initializer?.kind === ts.SyntaxKind.ArrowFunction) {
+                if (
+                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.ArrowFunction ||
+                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.FunctionExpression
+                ) {
                     this.inspectNode(variableDeclarationNode.initializer, typeChecker, allTypes);
                 }
                 return;
@@ -162,6 +165,7 @@ export class SchemaGenerator {
                 }
                 return;
             case ts.SyntaxKind.FunctionDeclaration:
+            case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.ArrowFunction:
                 allTypes.set(`NamedParameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
                 return;
