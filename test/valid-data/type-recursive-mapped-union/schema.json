@@ -1,0 +1,98 @@
+{
+    "$ref": "#/definitions/SerializedParent",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+      "SerializedParent": {
+        "additionalProperties": false,
+        "description": "Comment on serialized parent",
+        "properties": {
+          "composed_single": {
+            "items": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "a": {
+                      "description": "Some comment on property a",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "a"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "b": {
+                      "description": "Some comment on property b",
+                      "type": "string"
+                    },
+                    "y": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "y"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "composed_with_intersection": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "a": {
+                    "description": "Some comment on property a",
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "a",
+                  "model"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "b": {
+                    "description": "Some comment on property b",
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "y": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "model",
+                  "y"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "prop": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "prop",
+          "composed_single",
+          "composed_with_intersection"
+        ],
+        "type": "object"
+      }
+    }
+  }

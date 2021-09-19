@@ -96,4 +96,5 @@ describe("valid-data-type", () => {
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
 
     it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
+    it("type-recursive-mapped-union", assertValidSchema("type-recursive-mapped-union", "SerializedParent"));
 });
