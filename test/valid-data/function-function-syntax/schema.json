@@ -1,0 +1,10 @@
+{
+  "$ref": "#/definitions/NamedParameters%3Ctypeof%20myFunction%3E",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "NamedParameters<typeof myFunction>": {
+      "additionalProperties": false,
+      "type": "object"
+    }
+  }
+}
