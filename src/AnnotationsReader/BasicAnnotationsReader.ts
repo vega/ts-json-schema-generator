@@ -79,11 +79,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     }
 
     private parseJsDocTag(jsDocTag: ts.JSDocTagInfo): any {
-        if (!jsDocTag.text) {
-            return undefined;
-        }
-
-        const text = jsDocTag.text?.map((part) => part.text).join("");
+        const text = (jsDocTag.text ?? []).map((part) => part.text).join("");
         if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
