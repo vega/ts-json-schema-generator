@@ -70,6 +70,8 @@ describe("valid-data-other", () => {
         ])
     );
 
+    it("annotation-empty", assertValidSchema("annotation-empty", "MyObject", "basic", ["customEmptyAnnotation"]));
+
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));
 
     it("undefined-alias", assertValidSchema("undefined-alias", "MyType"));
