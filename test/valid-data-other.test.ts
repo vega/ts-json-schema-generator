@@ -32,6 +32,7 @@ describe("valid-data-other", () => {
         "function-parameters-variable-assignment",
         assertValidSchema("function-parameters-variable-assignment", "NamedParameters<typeof myFunction>")
     );
+    it("function-function-syntax", assertValidSchema("function-function-syntax", "NamedParameters<typeof myFunction>"));
 
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));
@@ -67,6 +68,12 @@ describe("valid-data-other", () => {
             "customMultilineProperty",
             "customUnquotedProperty",
         ])
+    );
+
+    it("annotation-empty-basic", assertValidSchema("annotation-empty", "MyObject", "basic", ["customEmptyAnnotation"]));
+    it(
+        "annotation-empty-extended",
+        assertValidSchema("annotation-empty", "MyObject", "extended", ["customEmptyAnnotation"])
     );
 
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));

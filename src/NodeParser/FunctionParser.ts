@@ -14,13 +14,16 @@ import { DefinitionType } from "../Type/DefinitionType";
 export class FunctionParser implements SubNodeParser {
     constructor(private childNodeParser: NodeParser) {}
 
-    public supportsNode(node: ts.ArrowFunction | ts.FunctionDeclaration): boolean {
+    public supportsNode(node: ts.ArrowFunction | ts.FunctionDeclaration | ts.FunctionExpression): boolean {
         if (node.kind === ts.SyntaxKind.FunctionDeclaration) {
             // Functions needs a name for us to include it in the json schema
             return Boolean(node.name);
         }
         // We can figure out the name of arrow functions if their parent is a variable declaration
-        return node.kind === ts.SyntaxKind.ArrowFunction && ts.isVariableDeclaration(node.parent);
+        return (
+            (node.kind === ts.SyntaxKind.ArrowFunction || node.kind === ts.SyntaxKind.FunctionExpression) &&
+            ts.isVariableDeclaration(node.parent)
+        );
     }
     public createType(node: ts.FunctionDeclaration | ts.ArrowFunction, context: Context): DefinitionType {
         const parameterTypes = node.parameters.map((parameter) => {
@@ -42,7 +45,7 @@ export class FunctionParser implements SubNodeParser {
     }
 
     public getTypeName(node: ts.FunctionDeclaration | ts.ArrowFunction, context: Context): string {
-        if (ts.isArrowFunction(node)) {
+        if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) {
             const parent = node.parent;
             if (ts.isVariableDeclaration(parent)) {
                 return `NamedParameters<typeof ${parent.name.getText()}>`;

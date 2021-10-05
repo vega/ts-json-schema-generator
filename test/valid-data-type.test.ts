@@ -78,6 +78,7 @@ describe("valid-data-type", () => {
     it("type-mapped-enum", assertValidSchema("type-mapped-enum", "MyObject"));
     it("type-mapped-enum-optional", assertValidSchema("type-mapped-enum-optional", "MyObject"));
     it("type-mapped-enum-null", assertValidSchema("type-mapped-enum-null", "MyObject"));
+    it("type-mapped-enum-number", assertValidSchema("type-mapped-enum-number", "MyObject"));
     it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject", "extended"));
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject", "extended"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
@@ -96,4 +97,5 @@ describe("valid-data-type", () => {
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
 
     it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
+    it("ignore-export", assertValidSchema("ignore-export", "*"));
 });

@@ -63,10 +63,11 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         }
 
         const jsDocTag = jsDocTags.find((tag) => tag.name === "asType");
-        if (!jsDocTag || !jsDocTag.text) {
+        if (!jsDocTag) {
             return undefined;
         }
 
-        return { type: jsDocTag.text[0].text };
+        const text = (jsDocTag.text ?? []).map((part) => part.text).join("");
+        return { type: text };
     }
 }
