@@ -103,7 +103,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     private getValues(node: ts.MappedTypeNode, keyListType: EnumType, context: Context): ObjectProperty[] {
         return keyListType
             .getValues()
-            .filter((value: EnumValue) => !!value)
+            .filter((value: EnumValue) => value != null)
             .map((value: EnumValue) => {
                 const type = this.childNodeParser.createType(
                     node.type!,
