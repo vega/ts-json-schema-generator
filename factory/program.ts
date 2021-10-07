@@ -19,13 +19,7 @@ function loadTsConfigFile(configFile: string) {
             throw new LogicError(`Invalid parsed config file "${configFile}"`);
         }
 
-        const parseResult = ts.parseJsonConfigFileContent(
-            config.config,
-            ts.sys,
-            path.dirname(configFile),
-            {},
-            configFile
-        );
+        const parseResult = ts.parseJsonConfigFileContent(config.config, ts.sys, process.cwd(), {}, configFile);
         parseResult.options.noEmit = true;
         delete parseResult.options.out;
         delete parseResult.options.outDir;
