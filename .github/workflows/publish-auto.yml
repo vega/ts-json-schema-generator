@@ -4,7 +4,7 @@ on:
   push:
     branches-ignore:
       # No canary deploys for branches opened by dependabot
-      - 'dependabot/**'
+      - "dependabot/**"
 
 jobs:
   publish:
@@ -18,15 +18,11 @@ jobs:
       - name: Prepare repository
         run: git fetch --unshallow --tags
 
-      - uses: actions/setup-node@v2.4.1
-        with:
-          node-version: 14
-
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
 
       - name: Create release
         env:
-            GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn run release
