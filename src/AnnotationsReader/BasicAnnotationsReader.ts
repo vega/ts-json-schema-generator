@@ -83,7 +83,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
-            return this.parseJson(text);
+            return this.parseJson(text) ?? text;
         } else if (this.extraTags?.has(jsDocTag.name)) {
             return this.parseJson(text) ?? text;
         } else {
