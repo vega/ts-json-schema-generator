@@ -30,7 +30,12 @@ export class IntersectionNodeParser implements SubNodeParser {
 
 function derefAndFlattenUnions(type: BaseType): BaseType[] {
     const derefed = derefType(type);
-    return derefed instanceof UnionType ? derefed.getTypes().flatMap(derefAndFlattenUnions) : [type];
+    return derefed instanceof UnionType
+        ? derefed.getTypes().reduce((result: BaseType[], derefedType: BaseType) => {
+              result.push(...derefAndFlattenUnions(derefedType));
+              return result;
+          }, [])
+        : [type];
 }
 
 /**
