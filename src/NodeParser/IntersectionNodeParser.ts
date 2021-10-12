@@ -28,6 +28,11 @@ export class IntersectionNodeParser implements SubNodeParser {
     }
 }
 
+function derefAndFlattenUnions(type: BaseType): BaseType[] {
+    const derefed = derefType(type);
+    return derefed instanceof UnionType ? derefed.getTypes().flatMap(derefAndFlattenUnions) : [type];
+}
+
 /**
  * Translates the given intersection type into a union type if necessary so `A & (B | C)` becomes
  * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
@@ -39,10 +44,7 @@ export function translate(types: BaseType[]): BaseType | undefined {
         return types[0];
     }
 
-    const unions = types.map((type) => {
-        const derefed = derefType(type);
-        return derefed instanceof UnionType ? derefed.getTypes() : [type];
-    });
+    const unions = types.map(derefAndFlattenUnions);
     const result: BaseType[] = [];
     function process(i: number, t: BaseType[] = []) {
         for (const type of unions[i]) {
