@@ -75,6 +75,14 @@ describe("valid-data-other", () => {
         "annotation-empty-extended",
         assertValidSchema("annotation-empty", "MyObject", "extended", ["customEmptyAnnotation"])
     );
+    it(
+        "annotation-deprecated-empty-basic",
+        assertValidSchema("annotation-deprecated-empty", "MyObject", "basic", ["customEmptyAnnotation"])
+    );
+    it(
+        "annotation-deprecated-empty-extended",
+        assertValidSchema("annotation-deprecated-empty", "MyObject", "extended", ["customEmptyAnnotation"])
+    );
 
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));
 
