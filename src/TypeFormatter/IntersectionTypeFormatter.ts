@@ -17,9 +17,6 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: IntersectionType): Definition {
         const types = type.getTypes();
 
-        // FIXME: when we have union types as children, we have to translate.
-        // See https://github.com/vega/ts-json-schema-generator/issues/62
-
         return types.length > 1
             ? types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
                   type: "object",
