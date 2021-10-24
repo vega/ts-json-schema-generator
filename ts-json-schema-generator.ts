@@ -1,11 +1,12 @@
 import { Command, Option } from "commander";
-import { writeFile } from "fs";
+import { mkdir, writeFile } from "fs";
 import stringify from "json-stable-stringify";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 import * as pkg from "./package.json";
+import { dirname } from "path";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
@@ -64,8 +65,12 @@ try {
 
     if (args.out) {
         // write to file
-        writeFile(args.out, schemaString, (err) => {
-            if (err) throw err;
+        const outPath = dirname(args.out);
+        mkdir(outPath, { recursive: true }, (dirErr) => {
+            if (dirErr) throw dirErr;
+            writeFile(args.out, schemaString, (fileErr) => {
+                if (fileErr) throw fileErr;
+            });
         });
     } else {
         // write to stdout
