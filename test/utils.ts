@@ -1,7 +1,7 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
-import stringify from "json-stable-stringify";
+import stringify from "safe-stable-stringify";
 import { resolve } from "path";
 import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
@@ -45,7 +45,7 @@ export function assertValidSchema(
         const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(schemaFile, stringify(schema, { space: 2 }) + "\n", "utf8");
+            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
         }
 
         const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));

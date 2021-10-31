@@ -46,9 +46,8 @@
   "dependencies": {
     "@types/json-schema": "^7.0.9",
     "commander": "^8.2.0",
-    "fast-json-stable-stringify": "^2.1.0",
     "glob": "^7.2.0",
-    "json-stable-stringify": "^1.0.1",
+    "safe-stable-stringify": "^2.2.0",
     "json5": "^2.2.0",
     "typescript": "~4.4.3"
   },
@@ -60,7 +59,6 @@
     "@babel/preset-typescript": "^7.15.0",
     "@types/glob": "^7.1.4",
     "@types/jest": "^27.0.2",
-    "@types/json-stable-stringify": "^1.0.33",
     "@types/node": "^16.10.3",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
