@@ -1,3 +1,65 @@
+# v0.97.0 (Thu Nov 04 2021)
+
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Josh Kelley ([@joshkel](https://github.com/joshkel))
+
+:heart: Skip Hendriks ([@SkipHendriks](https://github.com/SkipHendriks))
+
+:heart: Mohamed Akram ([@mohd-akram](https://github.com/mohd-akram))
+
+:heart: Ruben Bridgewater ([@BridgeAR](https://github.com/BridgeAR))
+
+#### 🚀 Enhancement
+
+- feat: Add directory creation to --out [#1000](https://github.com/vega/ts-json-schema-generator/pull/1000) ([@SkipHendriks](https://github.com/SkipHendriks))
+- feat: improve handling of unique symbols [#989](https://github.com/vega/ts-json-schema-generator/pull/989) ([@joshkel](https://github.com/joshkel))
+- feat: handle intersections of aliased unions [#985](https://github.com/vega/ts-json-schema-generator/pull/985) ([@joshkel](https://github.com/joshkel))
+
+#### 🐛 Bug Fix
+
+- chore: replace stable stringify packages with safe-stable-stringify [#1009](https://github.com/vega/ts-json-schema-generator/pull/1009) ([@BridgeAR](https://github.com/BridgeAR))
+- fix: pass absolute path of config to ts [#1010](https://github.com/vega/ts-json-schema-generator/pull/1010) ([@mohd-akram](https://github.com/mohd-akram))
+- fix: json tags that are not json do not default to text [#984](https://github.com/vega/ts-json-schema-generator/pull/984) ([@stevenlandis-rl](https://github.com/stevenlandis-rl))
+- fix: remove sourceRoot [#986](https://github.com/vega/ts-json-schema-generator/pull/986) ([@joshkel](https://github.com/joshkel))
+- chore(release): use bot email for making auto commits [#983](https://github.com/vega/ts-json-schema-generator/pull/983) ([@hydrosquall](https://github.com/hydrosquall))
+- ci: add caching [#982](https://github.com/vega/ts-json-schema-generator/pull/982) ([@domoritz](https://github.com/domoritz))
+- chore: upgrade deps, fix workflow merge [#978](https://github.com/vega/ts-json-schema-generator/pull/978) ([@domoritz](https://github.com/domoritz))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump @babel/preset-typescript from 7.15.0 to 7.16.0 [#1003](https://github.com/vega/ts-json-schema-generator/pull/1003) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/preset-env from 7.15.8 to 7.16.0 [#1006](https://github.com/vega/ts-json-schema-generator/pull/1006) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @auto-it/first-time-contributor from 10.32.1 to 10.32.2 [#1002](https://github.com/vega/ts-json-schema-generator/pull/1002) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump auto from 10.32.1 to 10.32.2 [#1004](https://github.com/vega/ts-json-schema-generator/pull/1004) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.4 to 16.11.6 [#1005](https://github.com/vega/ts-json-schema-generator/pull/1005) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @auto-it/conventional-commits from 10.32.1 to 10.32.2 [#1007](https://github.com/vega/ts-json-schema-generator/pull/1007) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/core from 7.15.8 to 7.16.0 [#1008](https://github.com/vega/ts-json-schema-generator/pull/1008) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/glob from 7.1.4 to 7.2.0 [#995](https://github.com/vega/ts-json-schema-generator/pull/995) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.2.5 to 27.3.1 [#996](https://github.com/vega/ts-json-schema-generator/pull/996) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.11.1 to 16.11.4 [#997](https://github.com/vega/ts-json-schema-generator/pull/997) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump commander from 8.2.0 to 8.3.0 [#998](https://github.com/vega/ts-json-schema-generator/pull/998) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-node from 10.3.0 to 10.4.0 [#999](https://github.com/vega/ts-json-schema-generator/pull/999) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ts-node from 10.2.1 to 10.3.0 [#991](https://github.com/vega/ts-json-schema-generator/pull/991) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump typescript from 4.4.3 to 4.4.4 [#990](https://github.com/vega/ts-json-schema-generator/pull/990) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 16.10.3 to 16.11.1 [#992](https://github.com/vega/ts-json-schema-generator/pull/992) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest from 27.2.4 to 27.2.5 [#981](https://github.com/vega/ts-json-schema-generator/pull/981) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 8
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- [@stevenlandis-rl](https://github.com/stevenlandis-rl)
+- Cameron Yick ([@hydrosquall](https://github.com/hydrosquall))
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Josh Kelley ([@joshkel](https://github.com/joshkel))
+- Mohamed Akram ([@mohd-akram](https://github.com/mohd-akram))
+- Ruben Bridgewater ([@BridgeAR](https://github.com/BridgeAR))
+- Skip Hendriks ([@SkipHendriks](https://github.com/SkipHendriks))
+
+---
+
 # v0.96.0 (Tue Oct 05 2021)
 
 :tada: This release contains work from new contributors! :tada:
