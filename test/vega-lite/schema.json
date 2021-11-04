@@ -496,7 +496,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -597,7 +598,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -634,7 +636,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -645,7 +648,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [
@@ -3341,7 +3345,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -3431,7 +3436,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -3453,7 +3459,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -3464,7 +3471,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [
@@ -12765,6 +12773,7 @@
           "anyOf": [
             {
               "description": "The offset of the legend label.",
+              "minimum": "0\n\n__Default value:__ `4`.",
               "type": "number"
             },
             {
@@ -13585,6 +13594,7 @@
           "anyOf": [
             {
               "description": "The offset of the legend label.",
+              "minimum": "0\n\n__Default value:__ `4`.",
               "type": "number"
             },
             {
@@ -14523,7 +14533,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -14613,7 +14624,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -14650,7 +14662,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -14661,7 +14674,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [
@@ -15648,7 +15662,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -15738,7 +15753,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -15760,7 +15776,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -15771,7 +15788,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [
@@ -16481,7 +16499,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -16582,7 +16601,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -16619,7 +16639,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -16630,7 +16651,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "radius2Offset": {
           "anyOf": [
@@ -17882,7 +17904,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -17972,7 +17995,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -17994,7 +18018,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -18005,7 +18030,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "radius2Offset": {
           "anyOf": [
@@ -20090,7 +20116,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -20180,7 +20207,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -20202,7 +20230,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -20213,7 +20242,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [
@@ -26762,7 +26792,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`."
+          "description": "The inner radius in pixels of arc marks. `innerRadius` is an alias for `radius2`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "interpolate": {
           "anyOf": [
@@ -26852,7 +26883,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`."
+          "description": "The outer radius in pixels of arc marks. `outerRadius` is an alias for `radius`.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "padAngle": {
           "anyOf": [
@@ -26874,7 +26906,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties."
+          "description": "For arc mark, the primary (outer) radius in pixels.\n\nFor text marks, polar coordinate radial offset, in pixels, of the text from the origin determined by the `x` and `y` properties.",
+          "minimum": "0\n\n__Default value:__ `min(plot_width, plot_height)/2`"
         },
         "radius2": {
           "anyOf": [
@@ -26885,7 +26918,8 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The secondary (inner) radius in pixels of arc marks."
+          "description": "The secondary (inner) radius in pixels of arc marks.",
+          "minimum": "0\n__Default value:__ `0`"
         },
         "shape": {
           "anyOf": [

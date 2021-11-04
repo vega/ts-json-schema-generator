@@ -22,7 +22,7 @@ function loadTsConfigFile(configFile: string) {
         const parseResult = ts.parseJsonConfigFileContent(
             config.config,
             ts.sys,
-            path.dirname(configFile),
+            path.resolve(path.dirname(configFile)),
             {},
             configFile
         );

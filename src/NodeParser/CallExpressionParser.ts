@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { UnionType } from "../Type/UnionType";
 import { LiteralType } from "../Type/LiteralType";
+import { SymbolType } from "../Type/SymbolType";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
@@ -20,6 +21,11 @@ export class CallExpressionParser implements SubNodeParser {
             return new TupleType([
                 new UnionType((type as any).typeArguments[0].types.map((t: any) => new LiteralType(t.value))),
             ]);
+        }
+
+        // A call expression like Symbol("entity") that resulted in a `unique symbol`
+        if (type.flags === ts.TypeFlags.UniqueESSymbol) {
+            return new SymbolType();
         }
 
         const symbol = type.symbol || type.aliasSymbol;

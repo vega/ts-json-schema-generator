@@ -75,6 +75,14 @@ describe("valid-data-other", () => {
         "annotation-empty-extended",
         assertValidSchema("annotation-empty", "MyObject", "extended", ["customEmptyAnnotation"])
     );
+    it(
+        "annotation-deprecated-empty-basic",
+        assertValidSchema("annotation-deprecated-empty", "MyObject", "basic", ["customEmptyAnnotation"])
+    );
+    it(
+        "annotation-deprecated-empty-extended",
+        assertValidSchema("annotation-deprecated-empty", "MyObject", "extended", ["customEmptyAnnotation"])
+    );
 
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));
 
@@ -90,6 +98,7 @@ describe("valid-data-other", () => {
     it("keyof-typeof-enum", assertValidSchema("keyof-typeof-enum", "MyObject"));
 
     it("symbol", assertValidSchema("symbol", "MyObject"));
+    it("unique-symbol", assertValidSchema("unique-symbol", "MyObject"));
 
     it("array-min-items-1", assertValidSchema("array-min-items-1", "MyType"));
     it("array-min-items-2", assertValidSchema("array-min-items-2", "MyType"));
