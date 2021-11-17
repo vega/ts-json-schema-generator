@@ -21,16 +21,20 @@ export class ExposeNodeParser implements SubNodeParser {
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
         const baseType = this.subNodeParser.createType(node, context, reference);
+        const sourceFileName = node.getSourceFile().fileName;
 
         if (baseType === undefined) {
             return undefined;
         }
 
         if (!this.isExportNode(node)) {
+            baseType.sourceFileName = sourceFileName;
             return baseType;
         }
 
-        return new DefinitionType(this.getDefinitionName(node, context), baseType);
+        const defBaseType = new DefinitionType(this.getDefinitionName(node, context), baseType);
+        defBaseType.sourceFileName = sourceFileName;
+        return defBaseType;
     }
 
     private isExportNode(node: ts.Node): boolean {

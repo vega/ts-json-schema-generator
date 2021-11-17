@@ -1,4 +1,11 @@
 export abstract class BaseType {
+    /**
+     * sourcecode fileName for DefinitionType. used at TopRefNodeParser
+     * and ExposeNodeParser. so that, you can override DefinitionFormatter
+     * to custome your self DefinitionType name by fileName.
+     */
+    sourceFileName?: string;
+
     public abstract getId(): string;
 
     /**
