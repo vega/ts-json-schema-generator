@@ -26,7 +26,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Create release
-        run: npm run release
+        run: yarn release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
