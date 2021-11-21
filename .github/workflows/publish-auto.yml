@@ -17,7 +17,8 @@ jobs:
 
       - uses: actions/setup-node@v2.4.1
         with:
-          cache: "yarn"
+          registry-url: "https://registry.npmjs.org"
+          node-version: "16"
 
       - name: Prepare repository
         run: git fetch --unshallow --tags
@@ -26,7 +27,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Create release
-        run: yarn release
+        run: npm run release
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
