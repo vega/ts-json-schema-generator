@@ -49,7 +49,7 @@
     "glob": "^7.2.0",
     "safe-stable-stringify": "^2.2.0",
     "json5": "^2.2.0",
-    "typescript": "~4.4.3"
+    "typescript": "~4.5.2"
   },
   "devDependencies": {
     "@auto-it/conventional-commits": "^10.32.1",
