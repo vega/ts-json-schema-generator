@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "A": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
         "a": {
           "type": "string"
@@ -11,10 +11,10 @@
       "required": [
         "a"
       ],
-      "additionalProperties": false
+      "type": "object"
     },
     "B": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
         "b": {
           "type": "string"
@@ -23,7 +23,7 @@
       "required": [
         "b"
       ],
-      "additionalProperties": false
+      "type": "object"
     }
   }
 }

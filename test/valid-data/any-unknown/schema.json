@@ -5,10 +5,8 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
-        "value1": {
-        },
-        "value2": {
-        }
+        "value1": {},
+        "value2": {}
       },
       "required": [
         "value1",
