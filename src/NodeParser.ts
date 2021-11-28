@@ -40,10 +40,8 @@ export class Context {
 
     public getArgument(parameterName: string): BaseType | undefined {
         const index: number = this.parameters.indexOf(parameterName);
-        if (index < 0 || !this.arguments[index]) {
-            if (this.defaultArgument.has(parameterName)) {
-                return this.defaultArgument.get(parameterName)!;
-            }
+        if ((index < 0 || !this.arguments[index]) && this.defaultArgument.has(parameterName)) {
+            return this.defaultArgument.get(parameterName)!;
         }
 
         return this.arguments[index];

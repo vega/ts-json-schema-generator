@@ -5,8 +5,7 @@
     "MyType": {
       "anyOf": [
         {
-          "not": {
-          }
+          "not": {}
         },
         {
           "type": "string"
