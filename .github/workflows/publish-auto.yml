@@ -19,9 +19,8 @@ jobs:
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "16"
-
-      - name: Prepare repository
-        run: git fetch --unshallow --tags
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
