@@ -43,6 +43,10 @@ describe("valid-data-type", () => {
         "type-intersection-recursive-interface",
         assertValidSchema("type-intersection-recursive-interface", "Intersection")
     );
+    it(
+        "type-intersection-union-recursive-interface",
+        assertValidSchema("type-intersection-union-recursive-interface", "Intersection")
+    );
     it("type-intersection-union", assertValidSchema("type-intersection-union", "MyObject"));
     it("type-intersection-union-enum", assertValidSchema("type-intersection-union-enum", "MyObject"));
     it("type-intersection-union-primitive", assertValidSchema("type-intersection-union", "MyObject"));
