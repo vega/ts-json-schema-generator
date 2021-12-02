@@ -19,13 +19,10 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
     public getChildren(type: ReferenceType): BaseType[] {
         const referredType = type.getType();
         if (referredType instanceof DefinitionType) {
-            const definedType = referredType.getType();
-            // Exposes a referred AliasType as a DefinitionType to ensure its
-            // inclusion in the type definitions.
+            // Exposes a referred DefinitionType if it wraps an AliasType
+            // to ensure its inclusion in the type definitions.
             // Fixes: https://github.com/vega/ts-json-schema-generator/issues/1046
-            return definedType instanceof AliasType
-                ? this.childTypeFormatter.getChildren(new DefinitionType(type.getName(), definedType))
-                : [];
+            return referredType.getType() instanceof AliasType ? this.childTypeFormatter.getChildren(referredType) : [];
         }
 
         // this means that the referred interface is private
