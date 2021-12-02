@@ -18,7 +18,11 @@ function addReachable(
             return;
         }
         reachable.add(typeName);
-        addReachable(definitions[typeName], definitions, reachable);
+        const refDefinition = definitions[typeName];
+        if (!refDefinition) {
+            throw new Error(`Encountered a reference to a missing definition: "${definition.$ref}". This is a bug.`);
+        }
+        addReachable(refDefinition, definitions, reachable);
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
             addReachable(def, definitions, reachable);
