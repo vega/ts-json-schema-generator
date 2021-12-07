@@ -1,7 +1,16 @@
 import { BaseType } from "./BaseType";
 
 export class DefinitionType extends BaseType {
-    public constructor(private name: string | undefined, private type: BaseType) {
+    public constructor(
+        private name: string | undefined,
+        private type: BaseType,
+        /**
+         * Source Code fileName for DefinitionType. Used at TopRefNodeParser
+         * and ExposeNodeParser. So that, You can override DefinitionFormatter
+         * to custome your self DefinitionType name by fileName.
+         */
+        private sourceFileName?: string
+    ) {
         super();
     }
 
@@ -15,5 +24,13 @@ export class DefinitionType extends BaseType {
 
     public getType(): BaseType {
         return this.type;
+    }
+
+    public setSourceFileName(fileName: string) {
+        this.sourceFileName = fileName;
+    }
+
+    public getSourceFileName() {
+        return this.sourceFileName;
     }
 }

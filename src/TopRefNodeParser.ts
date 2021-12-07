@@ -2,6 +2,7 @@ import ts from "typescript";
 import { Context, NodeParser } from "./NodeParser";
 import { BaseType } from "./Type/BaseType";
 import { DefinitionType } from "./Type/DefinitionType";
+import { setSourceFileNameIfDefinitionType } from "./Utils/setSourceFileNameIfDefinitionType";
 
 export class TopRefNodeParser implements NodeParser {
     public constructor(
@@ -12,17 +13,18 @@ export class TopRefNodeParser implements NodeParser {
 
     public createType(node: ts.Node, context: Context): BaseType | undefined {
         const baseType = this.childNodeParser.createType(node, context);
+        const sourceFileName = node.getSourceFile().fileName;
 
         if (baseType === undefined) {
             return undefined;
         }
 
         if (this.topRef && !(baseType instanceof DefinitionType)) {
-            return new DefinitionType(this.fullName, baseType);
+            return new DefinitionType(this.fullName, baseType, sourceFileName);
         } else if (!this.topRef && baseType instanceof DefinitionType) {
-            return baseType.getType();
+            return setSourceFileNameIfDefinitionType(baseType.getType(), sourceFileName)
         } else {
-            return baseType;
+            return setSourceFileNameIfDefinitionType(baseType, sourceFileName);
         }
     }
 }
