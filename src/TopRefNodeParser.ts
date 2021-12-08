@@ -22,7 +22,7 @@ export class TopRefNodeParser implements NodeParser {
         if (this.topRef && !(baseType instanceof DefinitionType)) {
             return new DefinitionType(this.fullName, baseType, sourceFileName);
         } else if (!this.topRef && baseType instanceof DefinitionType) {
-            return setSourceFileNameIfDefinitionType(baseType.getType(), sourceFileName)
+            return setSourceFileNameIfDefinitionType(baseType.getType(), sourceFileName);
         } else {
             return setSourceFileNameIfDefinitionType(baseType, sourceFileName);
         }
