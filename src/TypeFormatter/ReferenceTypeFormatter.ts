@@ -1,6 +1,5 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
@@ -19,10 +18,11 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
     public getChildren(type: ReferenceType): BaseType[] {
         const referredType = type.getType();
         if (referredType instanceof DefinitionType) {
-            // Exposes a referred DefinitionType if it wraps an AliasType
-            // to ensure its inclusion in the type definitions.
-            // Fixes: https://github.com/vega/ts-json-schema-generator/issues/1046
-            return referredType.getType() instanceof AliasType ? this.childTypeFormatter.getChildren(referredType) : [];
+            // We probably already have the definitions for the children created so we could return `[]`.
+            // There are cases where we may not have (in particular intersections of unions with recursion).
+            // To make sure we create the necessary definitions, we return the children of the referred type here.
+            // Because we cache definitions, this should not incur any performance impact.
+            return this.childTypeFormatter.getChildren(referredType);
         }
 
         // this means that the referred interface is private
