@@ -11,6 +11,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         "format",
         "pattern",
+        "id",
 
         // New since draft-07:
         "$comment",
@@ -70,7 +71,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         const annotations = jsDocTags.reduce((result: Annotations, jsDocTag) => {
             const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
-                result[jsDocTag.name] = value;
+                result["$" + jsDocTag.name] = value;
             }
 
             return result;
