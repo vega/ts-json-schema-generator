@@ -59,6 +59,7 @@ describe("valid-data-type", () => {
     it("type-typeof", assertValidSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertValidSchema("type-typeof-value", "MyType"));
     it("type-typeof-object-property", assertValidSchema("type-typeof-object-property", "MyType"));
+    it("type-typeof-class-static-property", assertValidSchema("type-typeof-class-static-property", "MyType"));
     it("type-typeof-enum", assertValidSchema("type-typeof-enum", "MyObject"));
     it("type-typeof-class", assertValidSchema("type-typeof-class", "MyObject"));
     it("type-keys", assertValidSchema("type-typeof-keys", "MyType"));
