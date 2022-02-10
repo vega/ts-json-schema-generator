@@ -35,6 +35,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Link
+        run: npm link
+
       - name: Test coverage
         run: yarn jest test/ --collectCoverage=true
 
