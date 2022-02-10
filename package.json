@@ -83,7 +83,7 @@
     "watch": "tsc -w",
     "lint": "eslint \"{src,test,factory}/**/*.ts\"",
     "format": "yarn lint --fix",
-    "test": "jest test/ --verbose",
+    "test": "npm link && jest test/ --verbose",
     "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
     "test:coverage": "yarn jest test/ --collectCoverage=true",
     "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
