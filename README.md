@@ -241,6 +241,9 @@ fs.writeFile(output_path, schemaString, (err) => {
 
     true: Additional properties are allowed
     false (default): Additional properties are not allowed
+
+--minify
+    Minify generated schema (default: false)
 ```
 
 ## Current state
