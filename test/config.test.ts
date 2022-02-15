@@ -55,6 +55,7 @@ function assertSchema(
         const validator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
+            allowUnionTypes: true,
         });
 
         addFormats(validator);
