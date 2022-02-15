@@ -5,7 +5,7 @@ import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
-    private static requiresDollar = ["id", "comment"];
+    private static requiresDollar = new Set<string>(["id", "comment"]);
     private static textTags = new Set<string>([
         "title",
         "description",
@@ -72,7 +72,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         const annotations = jsDocTags.reduce((result: Annotations, jsDocTag) => {
             const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
-                if (BasicAnnotationsReader.requiresDollar.includes(jsDocTag.name)) {
+                if (BasicAnnotationsReader.requiresDollar.has(jsDocTag.name)) {
                     result["$" + jsDocTag.name] = value;
                 } else {
                     result[jsDocTag.name] = value;
