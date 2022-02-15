@@ -10,7 +10,7 @@ import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
-const validator = new Ajv({ allowUnionTypes: true });
+const validator = new Ajv();
 addFormats(validator);
 
 const basePath = "test/valid-data";
@@ -56,7 +56,7 @@ export function assertValidSchema(
 
         let localValidator = validator;
         if (extraTags) {
-            localValidator = new Ajv({ strict: false, allowUnionTypes: true });
+            localValidator = new Ajv({ strict: false });
             addFormats(localValidator);
         }
 
