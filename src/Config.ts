@@ -1,6 +1,7 @@
 export interface Config {
     path?: string;
     type?: string;
+    minify?: boolean;
     schemaId?: string;
     tsconfig?: string;
     expose?: "all" | "none" | "export";
@@ -22,6 +23,7 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     strictTuples: false,
     skipTypeCheck: false,
     encodeRefs: true,
+    minify: false,
     extraTags: [],
     additionalProperties: false,
 };
