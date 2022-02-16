@@ -43,6 +43,10 @@ describe("valid-data-type", () => {
         "type-intersection-recursive-interface",
         assertValidSchema("type-intersection-recursive-interface", "Intersection")
     );
+    it(
+        "type-intersection-union-recursive-interface",
+        assertValidSchema("type-intersection-union-recursive-interface", "Intersection")
+    );
     it("type-intersection-union", assertValidSchema("type-intersection-union", "MyObject"));
     it("type-intersection-union-enum", assertValidSchema("type-intersection-union-enum", "MyObject"));
     it("type-intersection-union-primitive", assertValidSchema("type-intersection-union", "MyObject"));
@@ -55,6 +59,7 @@ describe("valid-data-type", () => {
     it("type-typeof", assertValidSchema("type-typeof", "MyType"));
     it("type-typeof-value", assertValidSchema("type-typeof-value", "MyType"));
     it("type-typeof-object-property", assertValidSchema("type-typeof-object-property", "MyType"));
+    it("type-typeof-class-static-property", assertValidSchema("type-typeof-class-static-property", "MyType"));
     it("type-typeof-enum", assertValidSchema("type-typeof-enum", "MyObject"));
     it("type-typeof-class", assertValidSchema("type-typeof-class", "MyObject"));
     it("type-keys", assertValidSchema("type-typeof-keys", "MyType"));

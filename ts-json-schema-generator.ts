@@ -1,5 +1,5 @@
 import { Command, Option } from "commander";
-import stringify from "safe-stable-stringify";
+import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
@@ -21,6 +21,7 @@ const args = new Command()
             .choices(["none", "basic", "extended"])
             .default("extended")
     )
+    .option("--minify", "Minify generated schema", false)
     .option("--unstable", "Do not sort properties")
     .option("--strict-tuples", "Do not allow additional items on tuples")
     .option("--no-top-ref", "Do not create a top-level $ref definition")
@@ -44,6 +45,7 @@ const args = new Command()
 
 const config: Config = {
     ...DEFAULT_CONFIG,
+    minify: args.minify,
     path: args.path,
     tsconfig: args.tsconfig,
     type: args.type,
@@ -61,7 +63,9 @@ const config: Config = {
 
 try {
     const schema = createGenerator(config).createSchema(args.type);
-    const schemaString = config.sortProps ? stringify(schema, null, 2) : JSON.stringify(schema, null, 2);
+
+    const stringify = config.sortProps ? stableStringify : JSON.stringify;
+    const schemaString = config.minify ? stringify(schema) : stringify(schema, null, 2);
 
     if (args.out) {
         // write to file

@@ -5,15 +5,17 @@ import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
+    private static requiresDollar = new Set<string>(["id", "comment"]);
     private static textTags = new Set<string>([
         "title",
         "description",
+        "id",
 
         "format",
         "pattern",
 
         // New since draft-07:
-        "$comment",
+        "comment",
         "contentMediaType",
         "contentEncoding",
     ]);
@@ -70,11 +72,15 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         const annotations = jsDocTags.reduce((result: Annotations, jsDocTag) => {
             const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
-                result[jsDocTag.name] = value;
+                if (BasicAnnotationsReader.requiresDollar.has(jsDocTag.name)) {
+                    result["$" + jsDocTag.name] = value;
+                } else {
+                    result[jsDocTag.name] = value;
+                }
             }
-
             return result;
         }, {});
+
         return Object.keys(annotations).length ? annotations : undefined;
     }
 

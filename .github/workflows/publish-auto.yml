@@ -14,13 +14,14 @@ jobs:
     name: Make a release and publish to NPM
     steps:
       - uses: actions/checkout@v2
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
 
-      - uses: actions/setup-node@v2.5.0
+      - uses: actions/setup-node@v2.5.1
         with:
           registry-url: "https://registry.npmjs.org"
           node-version: "16"
-          # Fetch all history for all tags and branches
-          fetch-depth: 0
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile

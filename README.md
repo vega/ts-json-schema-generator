@@ -33,6 +33,7 @@ Note that different platforms (e.g. Windows) may use different path separators s
 const tsj = require("ts-json-schema-generator");
 const fs = require("fs");
 
+/** @type {import('ts-json-schema-generator/dist/src/Config').Config} */
 const config = {
     path: "path/to/source/file",
     tsconfig: "path/to/tsconfig.json",
@@ -240,6 +241,9 @@ fs.writeFile(output_path, schemaString, (err) => {
 
     true: Additional properties are allowed
     false (default): Additional properties are not allowed
+
+--minify
+    Minify generated schema (default: false)
 ```
 
 ## Current state
