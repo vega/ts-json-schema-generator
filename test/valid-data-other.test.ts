@@ -59,31 +59,6 @@ describe("valid-data-other", () => {
     it("generic-prefixed-number", assertValidSchema("generic-prefixed-number", "MyObject"));
     it("generic-void", assertValidSchema("generic-void", "MyObject"));
 
-    it(
-        "annotation-custom",
-        assertValidSchema("annotation-custom", "MyObject", "basic", [
-            "customNumberProperty",
-            "customStringProperty",
-            "customComplexProperty",
-            "customMultilineProperty",
-            "customUnquotedProperty",
-        ])
-    );
-
-    it("annotation-empty-basic", assertValidSchema("annotation-empty", "MyObject", "basic", ["customEmptyAnnotation"]));
-    it(
-        "annotation-empty-extended",
-        assertValidSchema("annotation-empty", "MyObject", "extended", ["customEmptyAnnotation"])
-    );
-    it(
-        "annotation-deprecated-empty-basic",
-        assertValidSchema("annotation-deprecated-empty", "MyObject", "basic", ["customEmptyAnnotation"])
-    );
-    it(
-        "annotation-deprecated-empty-extended",
-        assertValidSchema("annotation-deprecated-empty", "MyObject", "extended", ["customEmptyAnnotation"])
-    );
-
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));
 
     it("undefined-alias", assertValidSchema("undefined-alias", "MyType"));
