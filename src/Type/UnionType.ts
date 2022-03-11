@@ -1,5 +1,6 @@
 import { BaseType } from "./BaseType";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
+import { NeverType } from "./NeverType";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
@@ -10,7 +11,7 @@ export class UnionType extends BaseType {
             types.reduce((flatTypes, type) => {
                 if (type instanceof UnionType) {
                     flatTypes.push(...type.getTypes());
-                } else if (type !== undefined) {
+                } else if (type !== undefined && !(type instanceof NeverType)) {
                     flatTypes.push(type);
                 }
                 return flatTypes;

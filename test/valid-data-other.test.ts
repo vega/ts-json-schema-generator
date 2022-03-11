@@ -65,6 +65,9 @@ describe("valid-data-other", () => {
     it("undefined-union", assertValidSchema("undefined-union", "MyType"));
     it("undefined-property", assertValidSchema("undefined-property", "MyType"));
 
+    it("never", assertValidSchema("never", "BasicNever"));
+    it("never-record", assertValidSchema("never-record", "Mapped"));
+
     it("any-unknown", assertValidSchema("any-unknown", "MyObject"));
 
     it("multiple-roots1", assertValidSchema("multiple-roots1"));
