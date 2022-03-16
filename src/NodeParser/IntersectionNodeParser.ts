@@ -10,7 +10,7 @@ import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
 import { UndefinedType } from "../Type/UndefinedType";
 
 export class IntersectionNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.IntersectionTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IntersectionType;

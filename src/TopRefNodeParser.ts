@@ -5,9 +5,9 @@ import { DefinitionType } from "./Type/DefinitionType";
 
 export class TopRefNodeParser implements NodeParser {
     public constructor(
-        private childNodeParser: NodeParser,
-        private fullName: string | undefined,
-        private topRef: boolean
+        protected childNodeParser: NodeParser,
+        protected fullName: string | undefined,
+        protected topRef: boolean
     ) {}
 
     public createType(node: ts.Node, context: Context): BaseType | undefined {

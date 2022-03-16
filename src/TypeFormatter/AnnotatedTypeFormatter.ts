@@ -44,7 +44,7 @@ export function makeNullable(def: Definition): Definition {
 }
 
 export class AnnotatedTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: AnnotatedType): boolean {
         return type instanceof AnnotatedType;

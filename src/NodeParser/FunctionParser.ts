@@ -12,7 +12,7 @@ import { DefinitionType } from "../Type/DefinitionType";
  * TODO: Parse `ReturnType` of the function?
  */
 export class FunctionParser implements SubNodeParser {
-    constructor(private childNodeParser: NodeParser) {}
+    constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ArrowFunction | ts.FunctionDeclaration | ts.FunctionExpression): boolean {
         if (node.kind === ts.SyntaxKind.FunctionDeclaration) {

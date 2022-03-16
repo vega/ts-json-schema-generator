@@ -5,7 +5,7 @@ import { RestType } from "../Type/RestType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class RestTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: RestType): boolean {
         return type instanceof RestType;

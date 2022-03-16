@@ -9,7 +9,7 @@ import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
 
 export class TypeofNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TypeQueryNode): boolean {
         return node.kind === ts.SyntaxKind.TypeQuery;
@@ -43,7 +43,7 @@ export class TypeofNodeParser implements SubNodeParser {
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
     }
 
-    private createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {
+    protected createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {
         const id = `typeof-enum-${getKey(node, context)}`;
         if (reference) {
             reference.setId(id);

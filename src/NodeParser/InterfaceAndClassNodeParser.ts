@@ -12,9 +12,9 @@ import { notUndefined } from "../Utils/notUndefined";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
-        private childNodeParser: NodeParser,
-        private readonly additionalProperties: boolean
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser,
+        protected readonly additionalProperties: boolean
     ) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
@@ -74,7 +74,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
      * @param node - The interface or class to check.
      * @return The array item type if node is an array, null otherwise.
      */
-    private getArrayItemType(node: ts.InterfaceDeclaration | ts.ClassDeclaration): ts.TypeNode | null {
+    protected getArrayItemType(node: ts.InterfaceDeclaration | ts.ClassDeclaration): ts.TypeNode | null {
         if (node.heritageClauses && node.heritageClauses.length === 1) {
             const clause = node.heritageClauses[0];
             if (clause.types.length === 1) {
@@ -91,7 +91,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return null;
     }
 
-    private getBaseTypes(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType[] {
+    protected getBaseTypes(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType[] {
         if (!node.heritageClauses) {
             return [];
         }
@@ -107,7 +107,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         );
     }
 
-    private getProperties(
+    protected getProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context
     ): ObjectProperty[] | undefined {
@@ -148,7 +148,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return properties;
     }
 
-    private getAdditionalProperties(
+    protected getAdditionalProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context
     ): BaseType | boolean {
@@ -160,12 +160,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
     }
 
-    private getTypeId(node: ts.Node, context: Context): string {
+    protected getTypeId(node: ts.Node, context: Context): string {
         const nodeType = ts.isInterfaceDeclaration(node) ? "interface" : "class";
         return `${nodeType}-${getKey(node, context)}`;
     }
 
-    private getPropertyName(propertyName: PropertyName): string {
+    protected getPropertyName(propertyName: PropertyName): string {
         if (propertyName.kind === ts.SyntaxKind.ComputedPropertyName) {
             const symbol = this.typeChecker.getSymbolAtLocation(propertyName);
             if (symbol) {

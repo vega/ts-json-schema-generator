@@ -32,13 +32,13 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         return [];
     }
 
-    private isLiteralUnion(type: UnionType): boolean {
+    protected isLiteralUnion(type: UnionType): boolean {
         return type.getTypes().every((item) => item instanceof LiteralType || item instanceof NullType);
     }
-    private getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
+    protected getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
         return value instanceof LiteralType ? value.getValue() : null;
     }
-    private getLiteralType(value: LiteralType | NullType): RawTypeName {
+    protected getLiteralType(value: LiteralType | NullType): RawTypeName {
         return value instanceof LiteralType ? typeName(value.getValue()) : "null";
     }
 }

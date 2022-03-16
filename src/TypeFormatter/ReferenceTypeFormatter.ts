@@ -6,7 +6,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter, private encodeRefs: boolean) {}
+    public constructor(protected childTypeFormatter: TypeFormatter, protected encodeRefs: boolean) {}
 
     public supportsType(type: ReferenceType): boolean {
         return type instanceof ReferenceType;
@@ -25,7 +25,7 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
             return this.childTypeFormatter.getChildren(referredType);
         }
 
-        // this means that the referred interface is private
+        // this means that the referred interface is protected
         // so we have to expose it in the schema definitions
         return this.childTypeFormatter.getChildren(new DefinitionType(type.getName(), type.getType()));
     }

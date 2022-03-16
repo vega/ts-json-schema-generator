@@ -11,7 +11,7 @@ import { derefType } from "../Utils/derefType";
 import { getTypeKeys } from "../Utils/typeKeys";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.TypeOperatorNode): boolean {
         return node.kind === ts.SyntaxKind.TypeOperator;

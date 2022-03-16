@@ -8,7 +8,7 @@ import { LiteralType } from "../Type/LiteralType";
 import { SymbolType } from "../Type/SymbolType";
 
 export class CallExpressionParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.CallExpression): boolean {
         return node.kind === ts.SyntaxKind.CallExpression;
@@ -34,7 +34,7 @@ export class CallExpressionParser implements SubNodeParser {
         return this.childNodeParser.createType(decl, subContext)!;
     }
 
-    private createSubContext(node: ts.CallExpression, parentContext: Context): Context {
+    protected createSubContext(node: ts.CallExpression, parentContext: Context): Context {
         const subContext = new Context(node);
 
         for (const arg of node.arguments) {

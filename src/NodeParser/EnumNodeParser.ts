@@ -7,7 +7,7 @@ import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
 export class EnumNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker) {}
+    public constructor(protected typeChecker: ts.TypeChecker) {}
 
     public supportsNode(node: ts.EnumDeclaration | ts.EnumMember): boolean {
         return node.kind === ts.SyntaxKind.EnumDeclaration || node.kind === ts.SyntaxKind.EnumMember;
@@ -23,7 +23,7 @@ export class EnumNodeParser implements SubNodeParser {
         );
     }
 
-    private getMemberValue(member: ts.EnumMember, index: number): EnumValue {
+    protected getMemberValue(member: ts.EnumMember, index: number): EnumValue {
         const constantValue = this.typeChecker.getConstantValue(member);
         if (constantValue !== undefined) {
             return constantValue;
@@ -38,7 +38,7 @@ export class EnumNodeParser implements SubNodeParser {
             return this.parseInitializer(initializer);
         }
     }
-    private parseInitializer(initializer: ts.Node): EnumValue {
+    protected parseInitializer(initializer: ts.Node): EnumValue {
         if (initializer.kind === ts.SyntaxKind.TrueKeyword) {
             return true;
         } else if (initializer.kind === ts.SyntaxKind.FalseKeyword) {

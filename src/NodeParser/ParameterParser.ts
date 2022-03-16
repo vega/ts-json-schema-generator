@@ -5,7 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 
 export class ParameterParser implements SubNodeParser {
-    constructor(private childNodeParser: NodeParser) {}
+    constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ParameterDeclaration): boolean {
         return node.kind === ts.SyntaxKind.Parameter;

@@ -6,7 +6,7 @@ import { notUndefined } from "../Utils/notUndefined";
 import { TupleType } from "../Type/TupleType";
 
 export class ArrayLiteralExpressionNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ArrayLiteralExpression): boolean {
         return node.kind === ts.SyntaxKind.ArrayLiteralExpression;
