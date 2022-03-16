@@ -5,7 +5,7 @@ import { SubTypeFormatter } from "./SubTypeFormatter";
 import { BaseType } from "./Type/BaseType";
 
 export class ChainTypeFormatter implements SubTypeFormatter, MutableTypeFormatter {
-    public constructor(private typeFormatters: SubTypeFormatter[]) {}
+    public constructor(protected typeFormatters: SubTypeFormatter[]) {}
 
     public addTypeFormatter(typeFormatter: SubTypeFormatter): this {
         this.typeFormatters.push(typeFormatter);
@@ -22,7 +22,7 @@ export class ChainTypeFormatter implements SubTypeFormatter, MutableTypeFormatte
         return this.getTypeFormatter(type).getChildren(type);
     }
 
-    private getTypeFormatter(type: BaseType): SubTypeFormatter {
+    protected getTypeFormatter(type: BaseType): SubTypeFormatter {
         for (const typeFormatter of this.typeFormatters) {
             if (typeFormatter.supportsType(type)) {
                 return typeFormatter;

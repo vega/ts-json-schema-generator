@@ -5,7 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 
 export class AsExpressionNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.AsExpression): boolean {
         return node.kind === ts.SyntaxKind.AsExpression;

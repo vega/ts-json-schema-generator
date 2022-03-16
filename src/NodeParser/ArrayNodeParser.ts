@@ -5,7 +5,7 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 
 export class ArrayNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ArrayTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ArrayType;

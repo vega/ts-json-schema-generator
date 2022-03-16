@@ -4,7 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 
 export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ExpressionWithTypeArguments): boolean {
         return node.kind === ts.SyntaxKind.ExpressionWithTypeArguments;
@@ -24,7 +24,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         }
     }
 
-    private createSubContext(node: ts.ExpressionWithTypeArguments, parentContext: Context): Context {
+    protected createSubContext(node: ts.ExpressionWithTypeArguments, parentContext: Context): Context {
         const subContext = new Context(node);
         if (node.typeArguments?.length) {
             node.typeArguments.forEach((typeArg) => {

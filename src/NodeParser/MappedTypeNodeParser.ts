@@ -19,7 +19,7 @@ import { notUndefined } from "../Utils/notUndefined";
 import { SymbolType } from "../Type/SymbolType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
+    public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
 
     public supportsNode(node: ts.MappedTypeNode): boolean {
         return node.kind === ts.SyntaxKind.MappedType;
@@ -67,7 +67,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
     }
 
-    private getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
+    protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
             .getTypes()
             .filter((type) => type instanceof LiteralType)
@@ -100,7 +100,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             }, []);
     }
 
-    private getValues(node: ts.MappedTypeNode, keyListType: EnumType, context: Context): ObjectProperty[] {
+    protected getValues(node: ts.MappedTypeNode, keyListType: EnumType, context: Context): ObjectProperty[] {
         return keyListType
             .getValues()
             .filter((value: EnumValue) => value != null)
@@ -119,7 +119,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             .filter(notUndefined);
     }
 
-    private getAdditionalProperties(
+    protected getAdditionalProperties(
         node: ts.MappedTypeNode,
         keyListType: UnionType,
         context: Context
@@ -135,7 +135,11 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
     }
 
-    private createSubContext(node: ts.MappedTypeNode, key: LiteralType | StringType, parentContext: Context): Context {
+    protected createSubContext(
+        node: ts.MappedTypeNode,
+        key: LiteralType | StringType,
+        parentContext: Context
+    ): Context {
         const subContext = new Context(node);
 
         parentContext.getParameters().forEach((parentParameter) => {

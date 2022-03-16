@@ -7,7 +7,7 @@ import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: UnionType): boolean {
         return type instanceof UnionType;

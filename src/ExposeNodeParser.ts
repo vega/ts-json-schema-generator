@@ -9,10 +9,10 @@ import { symbolAtNode } from "./Utils/symbolAtNode";
 
 export class ExposeNodeParser implements SubNodeParser {
     public constructor(
-        private typeChecker: ts.TypeChecker,
-        private subNodeParser: SubNodeParser,
-        private expose: "all" | "none" | "export",
-        private jsDoc: "none" | "extended" | "basic"
+        protected typeChecker: ts.TypeChecker,
+        protected subNodeParser: SubNodeParser,
+        protected expose: "all" | "none" | "export",
+        protected jsDoc: "none" | "extended" | "basic"
     ) {}
 
     public supportsNode(node: ts.Node): boolean {
@@ -33,7 +33,7 @@ export class ExposeNodeParser implements SubNodeParser {
         return new DefinitionType(this.getDefinitionName(node, context), baseType);
     }
 
-    private isExportNode(node: ts.Node): boolean {
+    protected isExportNode(node: ts.Node): boolean {
         if (this.expose === "all") {
             return node.kind !== ts.SyntaxKind.TypeLiteral;
         } else if (this.expose === "none") {
@@ -46,7 +46,7 @@ export class ExposeNodeParser implements SubNodeParser {
         return localSymbol ? "exportSymbol" in localSymbol : false;
     }
 
-    private getDefinitionName(node: ts.Node, context: Context): string {
+    protected getDefinitionName(node: ts.Node, context: Context): string {
         const symbol = symbolAtNode(node)!;
         const fullName = this.typeChecker.getFullyQualifiedName(symbol).replace(/^".*"\./, "");
         const argumentIds = context.getArguments().map((arg) => arg?.getName());

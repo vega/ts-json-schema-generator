@@ -12,7 +12,7 @@ import { derefType } from "../Utils/derefType";
 import { getTypeByKey } from "../Utils/typeKeys";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.IndexedAccessTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IndexedAccessType;

@@ -7,7 +7,7 @@ import { narrowType } from "../Utils/narrowType";
 import { UnionType } from "../Type/UnionType";
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker, private childNodeParser: NodeParser) {}
+    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ConditionalTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ConditionalType;
@@ -57,7 +57,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * @param node - The type node for which to return the type parameter name.
      * @return The type parameter name or null if specified type node is not a type parameter.
      */
-    private getTypeParameterName(node: ts.TypeNode): string | null {
+    protected getTypeParameterName(node: ts.TypeNode): string | null {
         if (ts.isTypeReferenceNode(node)) {
             const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
             if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
@@ -76,7 +76,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * @param narrowedCheckType      - The narrowed down check type to use for the type parameter in sub parsers.
      * @return The created sub context.
      */
-    private createSubContext(
+    protected createSubContext(
         node: ts.ConditionalTypeNode,
         checkTypeParameterName: string,
         narrowedCheckType: BaseType,

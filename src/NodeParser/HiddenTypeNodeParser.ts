@@ -5,7 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { isNodeHidden } from "../Utils/isHidden";
 
 export class HiddenNodeParser implements SubNodeParser {
-    public constructor(private typeChecker: ts.TypeChecker) {}
+    public constructor(protected typeChecker: ts.TypeChecker) {}
 
     public supportsNode(node: ts.KeywordTypeNode): boolean {
         return isNodeHidden(node);
