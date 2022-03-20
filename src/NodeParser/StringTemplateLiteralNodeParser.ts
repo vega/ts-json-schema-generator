@@ -20,16 +20,13 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
             return new LiteralType(node.text);
         }
         const prefix = node.head.text;
-        const matrix: string[][] = [[prefix]];
-
-        for (const span of node.templateSpans) {
-            const suffix = span.literal.text;
-
-            const type = this.childNodeParser.createType(span.type, context);
-            const literals = [...extractLiterals(type)];
-
-            matrix.push(literals.map((value) => value + suffix));
-        }
+        const matrix: string[][] = [[prefix]].concat(
+            node.templateSpans.map((span) => {
+                const suffix = span.literal.text;
+                const type = this.childNodeParser.createType(span.type, context);
+                return [...extractLiterals(type)].map((value) => value + suffix);
+            })
+        );
 
         const expandedLiterals = expand(matrix);
 
@@ -44,8 +41,9 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
 }
 
 function expand(matrix: string[][]): string[] {
-    if (!matrix.length) return [];
-    if (matrix.length === 1) return matrix[0];
+    if (matrix.length === 1) {
+        return matrix[0];
+    }
     const head = matrix[0];
     const nested = expand(matrix.slice(1));
     const combined = head.map((prefix) => nested.map((suffix) => prefix + suffix));
