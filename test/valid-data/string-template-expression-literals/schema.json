@@ -1,0 +1,32 @@
+{
+    "$ref": "#/definitions/MyObject",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyObject": {
+            "additionalProperties": false,
+            "properties": {
+                "_foo": {
+                    "enum": [
+                        "__ok_id",
+                        "__fail_id",
+                        "__abort_id"
+                    ],
+                    "type": "string"
+                },
+                "foo": {
+                    "enum": [
+                        "ok",
+                        "fail",
+                        "abort"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "foo",
+                "_foo"
+            ],
+            "type": "object"
+        }
+    }
+}
