@@ -20,11 +20,16 @@
                         "abort"
                     ],
                     "type": "string"
+                },
+                "ok": {
+                    "const": "id_ok",
+                    "type": "string"
                 }
             },
             "required": [
                 "foo",
-                "_foo"
+                "_foo",
+                "ok"
             ],
             "type": "object"
         }
