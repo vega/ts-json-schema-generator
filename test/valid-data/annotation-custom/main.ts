@@ -1,4 +1,5 @@
 /**
+ * @customBooleanProperty false
  * @customNumberProperty 14
  * @customStringProperty "string-value"
  * @customComplexProperty { "a": 1, "b": 2 }

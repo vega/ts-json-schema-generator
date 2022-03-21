@@ -1,0 +1,21 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "deprecated": true,
+      "deprecationMessage": "Use `NewMyObject` instead.",
+      "properties": {
+        "one": {
+          "type": "string"
+        },
+        "two": {
+          "deprecated": true,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

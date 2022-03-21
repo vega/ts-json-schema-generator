@@ -4,6 +4,7 @@ describe("valid-data-annotations", () => {
     it(
         "annotation-custom",
         assertValidSchema("annotation-custom", "MyObject", "basic", [
+            "customBooleanProperty",
             "customNumberProperty",
             "customStringProperty",
             "customComplexProperty",
@@ -18,15 +19,19 @@ describe("valid-data-annotations", () => {
         assertValidSchema("annotation-empty", "MyObject", "extended", ["customEmptyAnnotation"])
     );
     it(
-        "annotation-deprecated-empty-basic",
-        assertValidSchema("annotation-deprecated-empty", "MyObject", "basic", ["customEmptyAnnotation"])
+        "annotation-deprecated-basic",
+        assertValidSchema("annotation-deprecated", "MyObject", "basic", ["deprecationMessage"])
     );
     it(
-        "annotation-deprecated-empty-extended",
-        assertValidSchema("annotation-deprecated-empty", "MyObject", "extended", ["customEmptyAnnotation"])
+        "annotation-deprecated-extended",
+        assertValidSchema("annotation-deprecated", "MyObject", "extended", ["deprecationMessage"])
     );
 
     it("annotation-comment", assertValidSchema("annotation-comment", "MyObject", "extended"));
 
     it("annotation-id", assertValidSchema("annotation-id", "MyObject", "extended", [], "Test"));
+
+    it("annotation-readOnly", assertValidSchema("annotation-readOnly", "MyObject", "basic"));
+
+    it("annotation-writeOnly", assertValidSchema("annotation-writeOnly", "MyObject", "basic"));
 });

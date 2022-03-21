@@ -4,6 +4,7 @@
   "definitions": {
     "MyObject": {
       "additionalProperties": false,
+      "customBooleanProperty": false,
       "customComplexProperty": {
         "a": 1,
         "b": 2
