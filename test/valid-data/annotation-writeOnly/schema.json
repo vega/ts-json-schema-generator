@@ -4,7 +4,15 @@
   "definitions": {
     "MyObject": {
       "additionalProperties": false,
-      "deprecated": "",
+      "properties": {
+        "one": {
+          "type": "string"
+        },
+        "two": {
+          "type": "number",
+          "writeOnly": true
+        }
+      },
       "type": "object"
     }
   }

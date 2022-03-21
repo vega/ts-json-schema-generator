@@ -4,7 +4,15 @@
   "definitions": {
     "MyObject": {
       "additionalProperties": false,
-      "customEmptyAnnotation": true,
+      "properties": {
+        "one": {
+          "type": "string"
+        },
+        "two": {
+          "readOnly": true,
+          "type": "number"
+        }
+      },
       "type": "object"
     }
   }

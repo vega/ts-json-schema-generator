@@ -85,7 +85,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     }
 
     private parseJsDocTag(jsDocTag: ts.JSDocTagInfo): any {
-        const text = (jsDocTag.text ?? []).map((part) => part.text).join("");
+        // Tags without explicit value (e.g. `@deprecated`) default to `true`.
+        const text = jsDocTag.text ? jsDocTag.text.map((part) => part.text).join("") : "true";
+
         if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
@@ -97,6 +99,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
             return undefined;
         }
     }
+
     private parseJson(value: string): any {
         try {
             return json5.parse(value);

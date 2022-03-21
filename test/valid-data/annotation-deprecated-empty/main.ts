@@ -1,4 +1,0 @@
-/**
- * @deprecated
- */
-export interface MyObject {}
