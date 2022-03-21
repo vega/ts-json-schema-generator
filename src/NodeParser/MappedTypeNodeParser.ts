@@ -10,13 +10,14 @@ import { LiteralType } from "../Type/LiteralType";
 import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
+import { SymbolType } from "../Type/SymbolType";
 import { UnionType } from "../Type/UnionType";
+import assert from "../Utils/assert";
 import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
+import { notUndefined } from "../Utils/notUndefined";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
-import { notUndefined } from "../Utils/notUndefined";
-import { SymbolType } from "../Type/SymbolType";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
@@ -67,11 +68,23 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
     }
 
+    protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): LiteralType {
+        if (!node.nameType) {
+            return rawKey;
+        }
+        const key = derefType(
+            this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context))
+        );
+        assert(key instanceof LiteralType, "Must resolve to Literal");
+        return key;
+    }
+
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
             .getTypes()
             .filter((type) => type instanceof LiteralType)
             .reduce((result: ObjectProperty[], key: LiteralType) => {
+                const namedKey = this.mapKey(node, key, context);
                 const propertyType = this.childNodeParser.createType(
                     node.type!,
                     this.createSubContext(node, key, context)
@@ -90,7 +103,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
 
                 const objectProperty = new ObjectProperty(
-                    key.getValue().toString(),
+                    namedKey.getValue().toString(),
                     preserveAnnotation(propertyType, newType),
                     !node.questionToken && !hasUndefined
                 );
