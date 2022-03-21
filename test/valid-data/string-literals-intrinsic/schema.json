@@ -1,0 +1,64 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "result": {
+          "enum": [
+            "ok",
+            "fail",
+            "ABORT",
+            "Success"
+          ],
+          "type": "string"
+        },
+        "resultCapitalize": {
+          "enum": [
+            "Ok",
+            "Fail",
+            "ABORT",
+            "Success"
+          ],
+          "type": "string"
+        },
+        "resultLower": {
+          "enum": [
+            "ok",
+            "fail",
+            "abort",
+            "success"
+          ],
+          "type": "string"
+        },
+        "resultUncapitalize": {
+          "enum": [
+            "ok",
+            "fail",
+            "aBORT",
+            "success"
+          ],
+          "type": "string"
+        },
+        "resultUpper": {
+          "enum": [
+            "OK",
+            "FAIL",
+            "ABORT",
+            "SUCCESS"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "result",
+        "resultUpper",
+        "resultLower",
+        "resultCapitalize",
+        "resultUncapitalize"
+      ],
+      "type": "object"
+    }
+  }
+}
