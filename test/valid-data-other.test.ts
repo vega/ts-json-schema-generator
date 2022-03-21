@@ -36,6 +36,7 @@ describe("valid-data-other", () => {
 
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));
+    it("string-literals-intrinsic", assertValidSchema("string-literals-intrinsic", "MyObject"));
     it("string-literals-null", assertValidSchema("string-literals-null", "MyObject"));
     it("string-template-literals", assertValidSchema("string-template-literals", "MyObject"));
     it("string-template-expression-literals", assertValidSchema("string-template-expression-literals", "MyObject"));

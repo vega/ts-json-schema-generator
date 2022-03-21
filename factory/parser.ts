@@ -24,6 +24,7 @@ import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
 import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
+import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
 import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
@@ -104,6 +105,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
         .addNodeParser(new StringTemplateLiteralNodeParser(chainNodeParser))
+        .addNodeParser(new IntrinsicNodeParser())
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
