@@ -24,6 +24,7 @@ import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
 import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
+import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
 import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
@@ -39,6 +40,7 @@ import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryEx
 import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser";
 import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
+import { StringTemplateLiteralNodeParser } from "../src/NodeParser/StringTemplateLiteralNodeParser";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
 import { SymbolTypeNodeParser } from "../src/NodeParser/SymbolTypeNodeParser";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
@@ -102,6 +104,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new FunctionParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
+        .addNodeParser(new StringTemplateLiteralNodeParser(chainNodeParser))
+        .addNodeParser(new IntrinsicNodeParser())
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())

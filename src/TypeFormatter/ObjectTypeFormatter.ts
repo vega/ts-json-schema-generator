@@ -15,7 +15,7 @@ import { StringMap } from "../Utils/StringMap";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: ObjectType): boolean {
         return type instanceof ObjectType;
@@ -58,7 +58,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return uniqueArray(children);
     }
 
-    private getObjectDefinition(type: ObjectType): Definition {
+    protected getObjectDefinition(type: ObjectType): Definition {
         const objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
@@ -95,7 +95,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         };
     }
 
-    private prepareObjectProperty(property: ObjectProperty): ObjectProperty {
+    protected prepareObjectProperty(property: ObjectProperty): ObjectProperty {
         const propertyType = property.getType();
         const propType = derefType(propertyType);
 

@@ -24,10 +24,10 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
         return [];
     }
 
-    private isPrimitiveUnion(type: UnionType): boolean {
+    protected isPrimitiveUnion(type: UnionType): boolean {
         return type.getTypes().every((item) => item instanceof PrimitiveType);
     }
-    private getPrimitiveType(item: BaseType): RawTypeName {
+    protected getPrimitiveType(item: BaseType): RawTypeName {
         if (item instanceof StringType) {
             return "string";
         } else if (item instanceof NumberType) {

@@ -9,7 +9,7 @@ import { notUndefined } from "../Utils/notUndefined";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class TupleTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: TupleType): boolean {
         return type instanceof TupleType;

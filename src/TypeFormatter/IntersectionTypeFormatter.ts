@@ -7,7 +7,7 @@ import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class IntersectionTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter) {}
 
     public supportsType(type: IntersectionType): boolean {
         return type instanceof IntersectionType;

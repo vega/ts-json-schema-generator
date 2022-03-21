@@ -5,7 +5,7 @@ import { BaseType } from "../Type/BaseType";
 import { OptionalType } from "../Type/OptionalType";
 
 export class OptionalTypeNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
     public supportsNode(node: ts.OptionalTypeNode): boolean {
         return node.kind === ts.SyntaxKind.OptionalType;
     }

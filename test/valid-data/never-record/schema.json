@@ -1,0 +1,12 @@
+{
+  "$ref": "#/definitions/Mapped",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Mapped": {
+      "additionalProperties": {
+        "not": {}
+      },
+      "type": "object"
+    }
+  }
+}

@@ -14,6 +14,10 @@ indent_size = 4
 indent_style = space
 indent_size = 4
 
+[test/**/schema.json]
+indent_style = space
+indent_size = 2
+
 [{package.json,azure-pipelines.yml}]
 indent_style = space
 indent_size = 2

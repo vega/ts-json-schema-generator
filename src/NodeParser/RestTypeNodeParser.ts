@@ -6,7 +6,7 @@ import { BaseType } from "../Type/BaseType";
 import { RestType } from "../Type/RestType";
 
 export class RestTypeNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
     public supportsNode(node: ts.RestTypeNode): boolean {
         return node.kind === ts.SyntaxKind.RestType;
     }

@@ -8,7 +8,7 @@ import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser, private readonly additionalProperties: boolean) {}
+    public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
@@ -29,7 +29,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
     }
 
-    private getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
+    protected getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
 
         const properties = node.members
@@ -56,7 +56,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         return properties;
     }
 
-    private getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | boolean {
+    protected getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | boolean {
         const indexSignature = node.members.find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
             return this.additionalProperties;
@@ -65,7 +65,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
     }
 
-    private getTypeId(node: ts.Node, context: Context): string {
+    protected getTypeId(node: ts.Node, context: Context): string {
         return `structure-${getKey(node, context)}`;
     }
 }

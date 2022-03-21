@@ -11,7 +11,7 @@ import { DefinitionType } from "../Type/DefinitionType";
 import { UnionType } from "../Type/UnionType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: SubNodeParser, private annotationsReader: AnnotationsReader) {}
+    public constructor(protected childNodeParser: SubNodeParser, protected annotationsReader: AnnotationsReader) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);
@@ -63,13 +63,13 @@ export class AnnotatedNodeParser implements SubNodeParser {
         return !annotations && !nullable ? baseType : new AnnotatedType(baseType, annotations || {}, nullable);
     }
 
-    private getNullable(annotatedNode: ts.Node) {
+    protected getNullable(annotatedNode: ts.Node) {
         return this.annotationsReader instanceof ExtendedAnnotationsReader
             ? this.annotationsReader.isNullable(annotatedNode)
             : false;
     }
 
-    private getAnnotatedNode(node: ts.Node): ts.Node {
+    protected getAnnotatedNode(node: ts.Node): ts.Node {
         if (!node.parent) {
             return node;
         } else if (node.parent.kind === ts.SyntaxKind.PropertySignature) {

@@ -4,7 +4,7 @@
   "definitions": {
     "MyObject": {
       "additionalProperties": false,
-      "customEmptyAnnotation": "",
+      "customEmptyAnnotation": true,
       "type": "object"
     }
   }

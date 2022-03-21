@@ -5,6 +5,33 @@
     "version": "0.2.0",
     "configurations": [
         {
+            //
+            // Helps with debugging parsing.
+            // - Set break points in the code
+            // - Open the file you want to parse: test/**/main.ts
+            // - F5 to run the debugger.
+            "name": "Debug Test Case",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "node",
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register"
+            ],
+            "args": [
+                "ts-json-schema-generator.ts",
+                "-p",
+                "${file}"
+            ],
+            "cwd": "${workspaceFolder}",
+            "internalConsoleOptions": "openOnSessionStart",
+            "skipFiles": [
+                "<node_internals>/**",
+                "node_modules/**"
+            ]
+        },
+        {
             "type": "node",
             "request": "attach",
             "name": "Attach",

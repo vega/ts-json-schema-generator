@@ -6,7 +6,7 @@ import { TypeFormatter } from "../TypeFormatter";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class DefinitionTypeFormatter implements SubTypeFormatter {
-    public constructor(private childTypeFormatter: TypeFormatter, private encodeRefs: boolean) {}
+    public constructor(protected childTypeFormatter: TypeFormatter, protected encodeRefs: boolean) {}
 
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;

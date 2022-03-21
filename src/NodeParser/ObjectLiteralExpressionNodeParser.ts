@@ -7,7 +7,7 @@ import { getKey } from "../Utils/nodeKey";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 
 export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
-    public constructor(private childNodeParser: NodeParser) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.ObjectLiteralExpression): boolean {
         return node.kind === ts.SyntaxKind.ObjectLiteralExpression;
