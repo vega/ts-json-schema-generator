@@ -1,11 +1,10 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError";
-import { UnknownNodeError } from "../Error/UnknownNodeError";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { UnionType } from "../Type/UnionType";
+import assert from "../Utils/assert";
 import { extractLiterals } from "../Utils/extractLiterals";
 
 export const intrinsicMethods: Record<string, ((v: string) => string) | undefined> = {
@@ -22,9 +21,7 @@ export class IntrinsicNodeParser implements SubNodeParser {
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType | undefined {
         const methodName = getParentName(node);
         const method = intrinsicMethods[methodName];
-        if (!method) {
-            throw new LogicError(`Unknown intrinsic method: ${methodName}`);
-        }
+        assert(method, `Unknown intrinsic method: ${methodName}`);
         const literals = extractLiterals(context.getArguments()[0])
             .map(method)
             .map((literal) => new LiteralType(literal));
@@ -37,8 +34,6 @@ export class IntrinsicNodeParser implements SubNodeParser {
 
 function getParentName(node: ts.KeywordTypeNode): string {
     const parent = node.parent;
-    if (!ts.isTypeAliasDeclaration(parent)) {
-        throw new UnknownNodeError(parent, node);
-    }
+    assert(ts.isTypeAliasDeclaration(parent), "Only intrinsics part of a TypeAliasDeclaration are supported.");
     return parent.name.text;
 }

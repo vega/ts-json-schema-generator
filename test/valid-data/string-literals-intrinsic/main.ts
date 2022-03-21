@@ -1,4 +1,5 @@
-type Result = "ok" | "fail" | "ABORT" | "Success";
+type Abort = "abort";
+type Result = "ok" | "fail" | Uppercase<Abort> | "Success";
 type ResultUpper = Uppercase<Result>;
 type ResultLower = Lowercase<ResultUpper>;
 type ResultCapitalize = Capitalize<Result>;
