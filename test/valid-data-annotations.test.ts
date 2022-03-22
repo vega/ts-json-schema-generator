@@ -26,6 +26,10 @@ describe("valid-data-annotations", () => {
         "annotation-deprecated-extended",
         assertValidSchema("annotation-deprecated", "MyObject", "extended", ["deprecationMessage"])
     );
+    it(
+        "annotation-description-override",
+        assertValidSchema("annotation-description-override", "MyObject", "extended", ["markdownDescription"])
+    );
 
     it("annotation-comment", assertValidSchema("annotation-comment", "MyObject", "extended"));
 

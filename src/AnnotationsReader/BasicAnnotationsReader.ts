@@ -85,10 +85,12 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     }
 
     private parseJsDocTag(jsDocTag: ts.JSDocTagInfo): any {
-        // Tags without explicit value (e.g. `@deprecated`) default to `true`.
-        const text = jsDocTag.text?.map((part) => part.text).join("") || "true";
+        const isTextTag = BasicAnnotationsReader.textTags.has(jsDocTag.name);
+        // Non-text tags without explicit value (e.g. `@deprecated`) default to `true`.
+        const defaultText = isTextTag ? "" : "true";
+        const text = jsDocTag.text?.map((part) => part.text).join("") || defaultText;
 
-        if (BasicAnnotationsReader.textTags.has(jsDocTag.name)) {
+        if (isTextTag) {
             return text;
         } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
             return this.parseJson(text) ?? text;

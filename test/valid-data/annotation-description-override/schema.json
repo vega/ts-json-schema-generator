@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "$comment": "Top level comment",
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "description": "",
+          "markdownDescription": "Use this **field** for:\n- show markdown\n- show `code`\n- show **bold**",
+          "type": "string"
+        },
+        "name": {
+          "description": "Product name.",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}
