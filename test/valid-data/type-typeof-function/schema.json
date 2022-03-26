@@ -1,0 +1,560 @@
+{
+  "$ref": "#/definitions/Test",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "KeyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "passphrase": {
+          "type": "string"
+        },
+        "pem": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "pem"
+      ],
+      "type": "object"
+    },
+    "LookupFunction": {
+      "properties": {
+        "isFunction": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "PxfObject": {
+      "additionalProperties": false,
+      "properties": {
+        "buf": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            }
+          ]
+        },
+        "passphrase": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "buf"
+      ],
+      "type": "object"
+    },
+    "SecureContext": {
+      "additionalProperties": false,
+      "properties": {
+        "context": {}
+      },
+      "required": [
+        "context"
+      ],
+      "type": "object"
+    },
+    "SecureVersion": {
+      "enum": [
+        "TLSv1.3",
+        "TLSv1.2",
+        "TLSv1.1",
+        "TLSv1"
+      ],
+      "type": "string"
+    },
+    "Test": {
+      "additionalProperties": false,
+      "properties": {
+        "ALPNProtocols": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "items": {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "properties": {
+                  "BYTES_PER_ELEMENT": {
+                    "type": "number"
+                  },
+                  "buffer": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "byteLength": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "byteLength"
+                    ],
+                    "type": "object"
+                  },
+                  "byteLength": {
+                    "type": "number"
+                  },
+                  "byteOffset": {
+                    "type": "number"
+                  },
+                  "length": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "BYTES_PER_ELEMENT",
+                  "buffer",
+                  "byteLength",
+                  "byteOffset",
+                  "length"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "properties": {
+                "BYTES_PER_ELEMENT": {
+                  "type": "number"
+                },
+                "buffer": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "byteLength": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "byteLength"
+                  ],
+                  "type": "object"
+                },
+                "byteLength": {
+                  "type": "number"
+                },
+                "byteOffset": {
+                  "type": "number"
+                },
+                "length": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "BYTES_PER_ELEMENT",
+                "buffer",
+                "byteLength",
+                "byteOffset",
+                "length"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "SNICallback": {
+          "properties": {
+            "isFunction": {
+              "const": true,
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "ca": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/global.Buffer"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "cert": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/global.Buffer"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "checkServerIdentity": {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "stack": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "message"
+          ],
+          "type": "object"
+        },
+        "ciphers": {
+          "type": "string"
+        },
+        "clientCertEngine": {
+          "type": "string"
+        },
+        "crl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/global.Buffer"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "dhparam": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            }
+          ]
+        },
+        "ecdhCurve": {
+          "type": "string"
+        },
+        "enableTrace": {
+          "type": "boolean"
+        },
+        "honorCipherOrder": {
+          "type": "boolean"
+        },
+        "host": {
+          "type": "string"
+        },
+        "key": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/global.Buffer"
+                  },
+                  {
+                    "$ref": "#/definitions/KeyObject"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "lookup": {
+          "$ref": "#/definitions/LookupFunction"
+        },
+        "maxVersion": {
+          "$ref": "#/definitions/SecureVersion"
+        },
+        "minDHSize": {
+          "type": "number"
+        },
+        "minVersion": {
+          "$ref": "#/definitions/SecureVersion"
+        },
+        "passphrase": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "pfx": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "$ref": "#/definitions/global.Buffer"
+            },
+            {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "$ref": "#/definitions/global.Buffer"
+                  },
+                  {
+                    "$ref": "#/definitions/PxfObject"
+                  }
+                ]
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "port": {
+          "type": "number"
+        },
+        "privateKeyEngine": {
+          "type": "string"
+        },
+        "privateKeyIdentifier": {
+          "type": "string"
+        },
+        "rejectUnauthorized": {
+          "type": "boolean"
+        },
+        "requestCert": {
+          "type": "boolean"
+        },
+        "secureContext": {
+          "$ref": "#/definitions/SecureContext"
+        },
+        "secureOptions": {
+          "type": "number"
+        },
+        "secureProtocol": {
+          "type": "string"
+        },
+        "servername": {
+          "type": "string"
+        },
+        "session": {
+          "$ref": "#/definitions/global.Buffer"
+        },
+        "sessionIdContext": {
+          "type": "string"
+        },
+        "sessionTimeout": {
+          "type": "number"
+        },
+        "sigalgs": {
+          "type": "string"
+        },
+        "socket": {
+          "$ref": "#/definitions/internal.Duplex"
+        },
+        "ticketKeys": {
+          "$ref": "#/definitions/global.Buffer"
+        },
+        "timeout": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "global.Buffer": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "properties": {
+        "BYTES_PER_ELEMENT": {
+          "type": "number"
+        },
+        "buffer": {
+          "additionalProperties": false,
+          "properties": {
+            "byteLength": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "byteLength"
+          ],
+          "type": "object"
+        },
+        "byteLength": {
+          "type": "number"
+        },
+        "byteOffset": {
+          "type": "number"
+        },
+        "length": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "BYTES_PER_ELEMENT",
+        "buffer",
+        "byteLength",
+        "byteOffset",
+        "length"
+      ],
+      "type": "object"
+    },
+    "global.BufferEncoding": {
+      "enum": [
+        "ascii",
+        "utf8",
+        "utf-8",
+        "utf16le",
+        "ucs2",
+        "ucs-2",
+        "base64",
+        "base64url",
+        "latin1",
+        "binary",
+        "hex"
+      ],
+      "type": "string"
+    },
+    "internal.Duplex": {
+      "additionalProperties": false,
+      "properties": {
+        "allowHalfOpen": {
+          "type": "boolean"
+        },
+        "destroyed": {
+          "type": "boolean"
+        },
+        "readable": {
+          "type": "boolean"
+        },
+        "readableAborted": {
+          "type": "boolean"
+        },
+        "readableDidRead": {
+          "type": "boolean"
+        },
+        "readableEncoding": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/global.BufferEncoding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "readableEnded": {
+          "type": "boolean"
+        },
+        "readableFlowing": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "readableHighWaterMark": {
+          "type": "number"
+        },
+        "readableLength": {
+          "type": "number"
+        },
+        "readableObjectMode": {
+          "type": "boolean"
+        },
+        "writable": {
+          "type": "boolean"
+        },
+        "writableCorked": {
+          "type": "number"
+        },
+        "writableEnded": {
+          "type": "boolean"
+        },
+        "writableFinished": {
+          "type": "boolean"
+        },
+        "writableHighWaterMark": {
+          "type": "number"
+        },
+        "writableLength": {
+          "type": "number"
+        },
+        "writableObjectMode": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "allowHalfOpen",
+        "destroyed",
+        "readable",
+        "readableAborted",
+        "readableDidRead",
+        "readableEncoding",
+        "readableEnded",
+        "readableFlowing",
+        "readableHighWaterMark",
+        "readableLength",
+        "readableObjectMode",
+        "writable",
+        "writableCorked",
+        "writableEnded",
+        "writableFinished",
+        "writableHighWaterMark",
+        "writableLength",
+        "writableObjectMode"
+      ],
+      "type": "object"
+    }
+  }
+}

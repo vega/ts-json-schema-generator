@@ -28,6 +28,7 @@ import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter"
 import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 import { NeverTypeFormatter } from "../src/TypeFormatter/NeverTypeFormatter";
+import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter";
 
 export type FormatterAugmentor = (
     formatter: MutableTypeFormatter,
@@ -74,7 +75,8 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
+        .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new FunctionTypeFormatter());
 
     return circularReferenceTypeFormatter;
 }
