@@ -33,6 +33,8 @@ describe("valid-data-annotations", () => {
 
     it("annotation-comment", assertValidSchema("annotation-comment", "MyObject", "extended"));
 
+    it("annotation-example", assertValidSchema("annotation-example", "MyObject", "extended"));
+
     it("annotation-id", assertValidSchema("annotation-id", "MyObject", "extended", [], "Test"));
 
     it("annotation-readOnly", assertValidSchema("annotation-readOnly", "MyObject", "basic"));
