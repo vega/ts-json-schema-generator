@@ -4,11 +4,11 @@
  *     "nested": "hello"
  * }
  *
- * @example Another example
+ * @example An invalid example
  * {
  *     "nested": "world"
  * }
- * @example Last example
+ * @example Another invalid example
  * ```ts
  * {
  *     "nested": "world"

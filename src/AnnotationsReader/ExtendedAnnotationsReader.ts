@@ -89,7 +89,6 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
 
         const examples: unknown[] = [];
         for (const example of jsDocTags.filter((tag) => tag.name === "example")) {
-            console.log(JSON.stringify(example.text));
             const text = (example.text ?? []).map((part) => part.text).join("");
             try {
                 examples.push(json5.parse(text));
