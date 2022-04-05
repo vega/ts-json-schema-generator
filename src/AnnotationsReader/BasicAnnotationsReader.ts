@@ -5,7 +5,7 @@ import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
-    private static requiresDollar = new Set<string>(["id", "comment"]);
+    private static requiresDollar = new Set<string>(["id", "comment", "ref"]);
     private static textTags = new Set<string>([
         "title",
         "description",
@@ -13,6 +13,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         "format",
         "pattern",
+        "ref",
 
         // New since draft-07:
         "comment",
@@ -56,7 +57,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "deprecated",
     ]);
 
-    public constructor(private extraTags?: Set<string>) {}
+    public constructor(private extraTags?: Set<string>) { }
 
     public getAnnotations(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);

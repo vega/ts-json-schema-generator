@@ -2,6 +2,8 @@ import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
+const DEFINITION_OFFSET = "#/definitions/".length;
+
 function addReachable(
     definition: Definition | JSONSchema7Definition,
     definitions: StringMap<Definition>,
@@ -12,9 +14,9 @@ function addReachable(
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.slice(14));
-        if (reachable.has(typeName)) {
-            // we've already processed this definition
+        const typeName = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
+        if (reachable.has(typeName) || !isLocalRef(definition.$ref)) {
+            // we've already processed this definition, or this definition refers to an external schema
             return;
         }
         reachable.add(typeName);
@@ -78,4 +80,8 @@ export function removeUnreachable(
     }
 
     return out;
+}
+
+function isLocalRef(ref: string) {
+    return ref.charAt(0) === "#";
 }
