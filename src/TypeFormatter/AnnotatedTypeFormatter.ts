@@ -50,15 +50,9 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         return type instanceof AnnotatedType;
     }
     public getDefinition(type: AnnotatedType): Definition {
-        const annotations = type.getAnnotations();
-
-        if ("$ref" in annotations) {
-            return annotations;
-        }
-
         const def: Definition = {
             ...this.childTypeFormatter.getDefinition(type.getType()),
-            ...annotations,
+            ...type.getAnnotations(),
         };
 
         if ("$ref" in def && "type" in def) {
