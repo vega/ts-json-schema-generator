@@ -7,10 +7,13 @@
       "properties": {
         "nested": {
           "$ref": "http://json-schema.org/draft-07/schema#"
+        },
+        "myObject": {
+          "$ref": "http://json-schema.org/draft-07/schema#"
         }
       },
       "required": [
-        "nested"
+        "nested", "myObject"
       ],
       "type": "object"
     }
