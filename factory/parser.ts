@@ -27,6 +27,7 @@ import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser
 import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
+import { NamedTupleMemberNodeParser } from "../src/NodeParser/NamedTupleMemberNodeParser";
 import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
@@ -130,6 +131,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new NamedTupleMemberNodeParser(chainNodeParser))
         .addNodeParser(new OptionalTypeNodeParser(chainNodeParser))
         .addNodeParser(new RestTypeNodeParser(chainNodeParser))
 
