@@ -1,7 +1,9 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { IntersectionType } from "../Type/IntersectionType";
+import { TupleType } from "../Type/TupleType";
 import { TypeFormatter } from "../TypeFormatter";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
 import { uniqueArray } from "../Utils/uniqueArray";
@@ -16,12 +18,38 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: IntersectionType): Definition {
         const types = type.getTypes();
 
-        return types.length > 1
-            ? types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
-                  type: "object",
-                  additionalProperties: false,
-              } as Definition)
-            : this.childTypeFormatter.getDefinition(types[0]);
+        if (types.length <= 1) {
+            return this.childTypeFormatter.getDefinition(types[0]);
+        }
+
+        const requirements: Definition[] = [];
+        const otherTypes: BaseType[] = [];
+
+        types.forEach((t) => {
+            if (t instanceof ArrayType || t instanceof TupleType) {
+                /**
+                 * Arrays are not easily mergeable
+                 * So it's just easier to append their defs
+                 */
+                requirements.push(this.childTypeFormatter.getDefinition(t));
+            } else {
+                otherTypes.push(t);
+            }
+        });
+
+        if (otherTypes.length) {
+            /**
+             * There are non array (mergeable requirements)
+             */
+            requirements.push(
+                otherTypes.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
+                    type: "object",
+                    additionalProperties: false,
+                })
+            );
+        }
+
+        return requirements.length === 1 ? requirements[0] : { allOf: requirements };
     }
 
     public getChildren(type: IntersectionType): BaseType[] {

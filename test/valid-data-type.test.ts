@@ -36,6 +36,7 @@ describe("valid-data-type", () => {
     it("type-union", assertValidSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertValidSchema("type-union-tagged", "Shape"));
     it("type-intersection", assertValidSchema("type-intersection", "MyObject"));
+    it("type-intersection-with-arrays", assertValidSchema("type-intersection-with-arrays", "*"));
     it("type-intersection-conflict", assertValidSchema("type-intersection-conflict", "MyObject"));
     it("type-intersection-partial-conflict", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it("type-intersection-partial-conflict-ref", assertValidSchema("type-intersection-partial-conflict", "MyType"));
