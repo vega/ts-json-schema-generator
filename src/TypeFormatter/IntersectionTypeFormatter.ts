@@ -22,8 +22,8 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
             return this.childTypeFormatter.getDefinition(types[0]);
         }
 
-        const requirements: Definition[] = [];
-        const otherTypes: BaseType[] = [];
+        const dependencies: Definition[] = [];
+        const nonArrayLikeTypes: BaseType[] = [];
 
         types.forEach((t) => {
             if (t instanceof ArrayType || t instanceof TupleType) {
@@ -31,25 +31,25 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
                  * Arrays are not easily mergeable
                  * So it's just easier to append their defs
                  */
-                requirements.push(this.childTypeFormatter.getDefinition(t));
+                dependencies.push(this.childTypeFormatter.getDefinition(t));
             } else {
-                otherTypes.push(t);
+                nonArrayLikeTypes.push(t);
             }
         });
 
-        if (otherTypes.length) {
+        if (nonArrayLikeTypes.length) {
             /**
              * There are non array (mergeable requirements)
              */
-            requirements.push(
-                otherTypes.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
+            dependencies.push(
+                nonArrayLikeTypes.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
                     type: "object",
                     additionalProperties: false,
                 })
             );
         }
 
-        return requirements.length === 1 ? requirements[0] : { allOf: requirements };
+        return dependencies.length === 1 ? dependencies[0] : { allOf: dependencies };
     }
 
     public getChildren(type: IntersectionType): BaseType[] {
