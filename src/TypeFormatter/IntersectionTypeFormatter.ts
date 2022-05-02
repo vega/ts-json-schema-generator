@@ -18,10 +18,6 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: IntersectionType): Definition {
         const types = type.getTypes();
 
-        if (types.length <= 1) {
-            return this.childTypeFormatter.getDefinition(types[0]);
-        }
-
         const dependencies: Definition[] = [];
         const nonArrayLikeTypes: BaseType[] = [];
 
