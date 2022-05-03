@@ -60,7 +60,7 @@ function getTsConfig(config: Config) {
 }
 
 export function createProgram(config: Config): ts.Program {
-    const rootNamesFromPath = config.path ? glob.sync(path.resolve(normalize(config.path))) : [];
+    const rootNamesFromPath = config.path ? glob.sync(normalize(path.resolve(config.path))) : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
 
