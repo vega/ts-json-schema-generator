@@ -16,27 +16,21 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
     }
 
     public getDefinition(type: IntersectionType): Definition {
-        const types = type.getTypes();
-
         const dependencies: Definition[] = [];
         const nonArrayLikeTypes: BaseType[] = [];
 
-        types.forEach((t) => {
+        for (const t of type.getTypes()) {
+            // Filter out Array like definitions that cannot be
+            // easily mergeable into a single json-schema object
             if (t instanceof ArrayType || t instanceof TupleType) {
-                /**
-                 * Arrays are not easily mergeable
-                 * So it's just easier to append their defs
-                 */
                 dependencies.push(this.childTypeFormatter.getDefinition(t));
             } else {
                 nonArrayLikeTypes.push(t);
             }
-        });
+        }
 
         if (nonArrayLikeTypes.length) {
-            /**
-             * There are non array (mergeable requirements)
-             */
+            // There are non array (mergeable requirements)
             dependencies.push(
                 nonArrayLikeTypes.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
                     type: "object",
