@@ -7,6 +7,7 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
+import { NeverType } from "../Type/NeverType";
 import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
@@ -58,6 +59,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return type === undefined ? undefined : new ArrayType(type);
         } else if (keyListType instanceof EnumType) {
             return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
+        } else if (keyListType instanceof NeverType) {
+            return new ObjectType(id, [], [], false);
+        } else if (keyListType === undefined) {
+            return new ObjectType(id, [], [], false);
         } else {
             throw new LogicError(
                 // eslint-disable-next-line max-len
