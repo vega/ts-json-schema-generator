@@ -108,6 +108,8 @@ export function isAssignableTo(
 
     // Infer type can become anything
     if (target instanceof InferType) {
+	console.log("Reached infer")
+        target.setType(source);
         return true;
     }
 
@@ -261,7 +263,7 @@ export function isAssignableTo(
     return false;
 }
 
-export function infer(
+export function resolveInfer(
     target: BaseType | undefined,
     source: BaseType | undefined,
     insideTypes: Set<BaseType> = new Set()
@@ -290,22 +292,22 @@ export function infer(
 
     // Check for simple type equality
     if (source.getId() === target.getId()) {
-        return source;
+        return target;
     }
 
     /** Don't check types when already inside them. This solves circular dependencies. */
     if (insideTypes.has(source) || insideTypes.has(target)) {
-        return source;
+        return target;
     }
 
     // Assigning from or to any-type is always possible
     if (source instanceof AnyType || target instanceof AnyType) {
-        return source;
+        return target;
     }
 
     // assigning to unknown type is always possible
     if (target instanceof UnknownType) {
-        return source;
+        return target;
     }
 
     // 'null', or 'undefined' can be assigned to the void
@@ -328,9 +330,9 @@ export function infer(
     if (target instanceof ArrayType) {
         const targetItemType = target.getItem();
         if (source instanceof ArrayType) {
-            return infer(targetItemType, source.getItem(), insideTypes);
+            return new ArrayType(resolveInfer(targetItemType, source.getItem(), insideTypes)!);
         } else if (source instanceof TupleType) {
-            return infer(targetItemType, new UnionType(source.getTypes()), insideTypes);
+            return new ArrayType(resolveInfer(targetItemType, new UnionType(source.getTypes()), insideTypes)!);
         } else {
             throw Error("Incompatible types during infer.");
         }
@@ -343,8 +345,9 @@ export function infer(
             return source;
         }
 
-	// FIXME: Not sure what to do here.
-        return target.getTypes().find((type) => isAssignableTo(type, source, insideTypes));
+        // TODO: Check this statement again.
+        // return target.getTypes().find((type) => isAssignableTo(type, source, insideTypes));
+        return new UnionType(target.getTypes().map((type) => resolveInfer(type, source, insideTypes)));
     }
 
     // When target is an intersection type then source can be assigned to it if it matches all sub types. Object
@@ -360,86 +363,126 @@ export function infer(
 
     if (target instanceof ObjectType) {
         // primitives are not assignable to `object`
-        if (
-            target.getNonPrimitive() &&
-            (source instanceof NumberType || source instanceof StringType || source instanceof BooleanType)
-        ) {
-            return false;
-        }
+        // if (
+        //     target.getNonPrimitive() &&
+        //     (source instanceof NumberType || source instanceof StringType || source instanceof BooleanType)
+        // ) {
+        //     return false;
+        // }
 
         const targetMembers = getObjectProperties(target);
         if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it
-            return undefined;
+            return target;
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
 
             // Check if target has properties in common with source
-            const inCommon = targetMembers.some((targetMember) =>
-                sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName())
-            );
+            // const inCommon = targetMembers.some((targetMember) =>
+            //     sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName())
+            // );
 
-            return (
-                targetMembers.every((targetMember) => {
-                    // Make sure that every required property in target type is present
-                    const sourceMember = sourceMembers.find((member) => targetMember.getName() === member.getName());
-                    return sourceMember == null ? inCommon && !targetMember.isRequired() : true;
-                }) &&
-                sourceMembers.every((sourceMember) => {
+            // NOTE: Assume equality of member keys.
+            return new ObjectType(
+                target.getId(),
+                target.getBaseTypes(),
+                sourceMembers.map((sourceMember) => {
                     const targetMember = targetMembers.find((member) => member.getName() === sourceMember.getName());
-                    if (targetMember == null) {
-                        return true;
+
+                    if (targetMember === undefined) {
+                        throw Error("Unequal source and target objects.");
                     }
-                    return isAssignableTo(
-                        targetMember.getType(),
-                        sourceMember.getType(),
-                        new Set(insideTypes).add(source!).add(target!)
+
+                    return new ObjectProperty(
+                        targetMember.getName(),
+                        resolveInfer(targetMember.getType(), sourceMember.getType(), insideTypes),
+                        targetMember.isRequired()
                     );
-                })
+                }),
+                target.getAdditionalProperties()
             );
+
+            // return (
+            //     targetMembers.every((targetMember) => {
+            //         // Make sure that every required property in target type is present
+            //         const sourceMember = sourceMembers.find((member) => targetMember.getName() === member.getName());
+            //         return sourceMember == null ? inCommon && !targetMember.isRequired() : true;
+            //     }) &&
+            //     sourceMembers.every((sourceMember) => {
+            //         const targetMember = targetMembers.find((member) => member.getName() === sourceMember.getName());
+            //         if (targetMember == null) {
+            //             return true;
+            //         }
+            //         return isAssignableTo(
+            //             targetMember.getType(),
+            //             sourceMember.getType(),
+            //             new Set(insideTypes).add(source!).add(target!)
+            //         );
+            //     })
+            // );
         }
 
-        const isArrayLikeType = source instanceof ArrayType || source instanceof TupleType;
-        if (isArrayLikeType) {
-            const lengthPropType = targetMembers
-                .find((prop) => prop.getName() === "length" && prop.isRequired())
-                ?.getType();
+        // TODO: Handle this.
+        // const isArrayLikeType = source instanceof ArrayType || source instanceof TupleType;
+        // if (isArrayLikeType) {
+        //     const lengthPropType = targetMembers
+        //         .find((prop) => prop.getName() === "length" && prop.isRequired())
+        //         ?.getType();
 
-            if (source instanceof ArrayType) {
-                return lengthPropType instanceof NumberType;
-            }
+        //     if (source instanceof ArrayType) {
+        //         return lengthPropType instanceof NumberType;
+        //     }
 
-            if (source instanceof TupleType) {
-                if (lengthPropType instanceof LiteralType) {
-                    const types = source.getTypes();
-                    const lengthPropValue = lengthPropType.getValue();
-                    return types.length === lengthPropValue;
-                }
-            }
-        }
+        //     if (source instanceof TupleType) {
+        //         if (lengthPropType instanceof LiteralType) {
+        //             const types = source.getTypes();
+        //             const lengthPropValue = lengthPropType.getValue();
+        //             return types.length === lengthPropValue;
+        //         }
+        //     }
+        // }
     }
 
     // Check if tuple types are compatible
     if (target instanceof TupleType) {
         if (source instanceof TupleType) {
             const sourceMembers = source.getTypes();
-            return target.getTypes().every((targetMember, i) => {
-                const sourceMember = sourceMembers[i];
-                if (targetMember instanceof OptionalType) {
-                    if (sourceMember) {
-                        return (
-                            isAssignableTo(targetMember, sourceMember, insideTypes) ||
-                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes)
-                        );
+            return new TupleType(
+                target.getTypes().map((type, idx) => {
+                    const sourceMember = sourceMembers[idx];
+                    if (type instanceof OptionalType) {
+                        if (sourceMember) {
+                            const ret = resolveInfer(type, sourceMember, insideTypes);
+                            if (ret !== undefined) {
+                                return ret;
+                            } else {
+                                return resolveInfer(type.getType(), sourceMember, insideTypes);
+                            }
+                        } else {
+                            return resolveInfer(type, sourceMember, insideTypes);
+                        }
                     } else {
-                        return true;
+                        return resolveInfer(type, sourceMember, insideTypes);
                     }
-                } else {
-                    return isAssignableTo(targetMember, sourceMember, insideTypes);
-                }
-            });
+                })
+            );
+            // return target.getTypes().every((targetMember, i) => {
+            //     const sourceMember = sourceMembers[i];
+            //     if (targetMember instanceof OptionalType) {
+            //         if (sourceMember) {
+            //             return (
+            //                 isAssignableTo(targetMember, sourceMember, insideTypes) ||
+            //                 isAssignableTo(targetMember.getType(), sourceMember, insideTypes)
+            //             );
+            //         } else {
+            //             return true;
+            //         }
+            //     } else {
+            //         return isAssignableTo(targetMember, sourceMember, insideTypes);
+            //     }
+            // });
         }
     }
 
-    return false;
+    return undefined;
 }

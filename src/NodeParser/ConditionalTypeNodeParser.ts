@@ -2,7 +2,7 @@ import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { isAssignableTo } from "../Utils/isAssignableTo";
+import { isAssignableTo, resolveInfer } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
 import { UnionType } from "../Type/UnionType";
 
@@ -18,9 +18,9 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
 
-        console.log(checkType);
-        console.log(extendsType);
-        console.log(checkTypeParameterName);
+        // console.log(checkTye);
+        // console.log(extendsType);
+        // console.log(checkTypeParameterName);
 
         // If check-type is not a type parameter then condition is very simple, no type narrowing needed
         if (checkTypeParameterName == null) {
@@ -31,6 +31,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         // Narrow down check type for both condition branches
         const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type));
         console.log(trueCheckType);
+        // console.log(node.trueType);
         const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
         // console.log(falseCheckType);
 
@@ -38,6 +39,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const results: BaseType[] = [];
         if (trueCheckType !== undefined) {
             console.log("TRUE");
+            // console.log(resolveInfer(extendsType, checkType, new Set()));
             const result = this.childNodeParser.createType(
                 node.trueType,
                 this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
