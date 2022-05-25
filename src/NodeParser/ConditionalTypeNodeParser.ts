@@ -18,6 +18,10 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
 
+        console.log(checkType);
+        console.log(extendsType);
+        console.log(checkTypeParameterName);
+
         // If check-type is not a type parameter then condition is very simple, no type narrowing needed
         if (checkTypeParameterName == null) {
             const result = isAssignableTo(extendsType, checkType);
@@ -26,11 +30,14 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         // Narrow down check type for both condition branches
         const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type));
+        console.log(trueCheckType);
         const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
+        // console.log(falseCheckType);
 
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
         if (trueCheckType !== undefined) {
+            console.log("TRUE");
             const result = this.childNodeParser.createType(
                 node.trueType,
                 this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
@@ -40,6 +47,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
             }
         }
         if (falseCheckType !== undefined) {
+            console.log("FALSE");
             const result = this.childNodeParser.createType(
                 node.falseType,
                 this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
