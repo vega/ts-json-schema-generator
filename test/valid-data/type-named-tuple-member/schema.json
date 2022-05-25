@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyNamedUniformTuple": {
+      "items": [
+        {
+          "title": "first",
+          "type": "string"
+        },
+        {
+          "title": "second",
+          "type": "string"
+        }
+      ],
+      "minItems": 2,
+      "maxItems": 2,
+      "type": "array"
+    },
+    "MyNamedTuple": {
+      "items": [
+        {
+          "title": "first",
+          "type": "string"
+        },
+        {
+          "title": "second",
+          "type": "number"
+        }
+      ],
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array"
+    },
+    "MyNamedUniformTupleWithRest": {
+      "additionalItems": {
+        "title": "third",
+        "type": "number"
+      },
+      "items": [
+        {
+          "title": "first",
+          "type": "number"
+        },
+        {
+          "title": "second",
+          "type": "number"
+        }
+      ],
+      "minItems": 2,
+      "type": "array"
+    },
+    "MyNamedTupleWithRest": {
+      "additionalItems": {
+        "title": "third",
+        "type": "string"
+      },
+      "items": [
+        {
+          "title": "first",
+          "type": "string"
+        },
+        {
+          "title": "second",
+          "type": "number"
+        }
+      ],
+      "minItems": 2,
+      "type": "array"
+    },
+    "MyNamedNestedArrayWithinTuple": {
+      "items": [
+        {
+          "title": "first",
+          "type": "string"
+        },
+        {
+          "title": "second",
+          "type": "number"
+        },
+        {
+          "items": {
+            "type": "string"
+          },
+          "title": "third",
+          "type": "array"
+        }
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    },
+    "MyNamedNestedArrayWithinTupleWithRest": {
+      "additionalItems": {
+        "title": "third",
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "items": [
+        {
+          "title": "first",
+          "type": "string"
+        },
+        {
+          "title": "second",
+          "type": "number"
+        }
+      ],
+      "minItems": 2,
+      "type": "array"
+    },
+    "MyNamedTupleWithOnlyRest": {
+      "items": {
+        "title": "first",
+        "type": "number"
+      },
+      "minItems": 0,
+      "type": "array"
+    }
+  }
+}

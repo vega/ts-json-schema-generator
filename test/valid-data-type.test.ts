@@ -27,6 +27,7 @@ describe("valid-data-type", () => {
     it("type-aliases-tuple-optional-items", assertValidSchema("type-aliases-tuple-optional-items", "MyTuple"));
     it("type-aliases-tuple-rest", assertValidSchema("type-aliases-tuple-rest", "MyTuple"));
     it("type-aliases-tuple-only-rest", assertValidSchema("type-aliases-tuple-only-rest", "MyTuple"));
+    it("type-named-tuple-member", assertValidSchema("type-named-tuple-member", "*"));
 
     it("type-maps", assertValidSchema("type-maps", "MyObject"));
     it("type-primitives", assertValidSchema("type-primitives", "MyObject"));
