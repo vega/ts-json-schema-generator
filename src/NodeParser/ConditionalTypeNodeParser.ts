@@ -108,17 +108,19 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
     ): Context {
         const subContext = new Context(node);
 
-        // Set new narrowed type for check type parameter
-        subContext.pushParameter(checkTypeParameterName);
-        subContext.pushArgument(narrowedCheckType);
-
+        // Newly inferred types take precedence over check and parent types.
         inferMap.forEach((value, key) => {
             subContext.pushParameter(key);
             subContext.pushArgument(value);
         });
 
+        // Set new narrowed type for check type parameter
+        if (!(checkTypeParameterName in inferMap)) {
+            subContext.pushParameter(checkTypeParameterName);
+            subContext.pushArgument(narrowedCheckType);
+        }
+
         // Copy all other type parameters from parent context
-        // TODO: Check whether this is correct
         parentContext.getParameters().forEach((parentParameter) => {
             if (parentParameter !== checkTypeParameterName && !(parentParameter in inferMap)) {
                 subContext.pushParameter(parentParameter);
