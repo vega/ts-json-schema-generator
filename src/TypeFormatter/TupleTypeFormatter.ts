@@ -1,5 +1,6 @@
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
+import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { OptionalType } from "../Type/OptionalType";
 import { RestType } from "../Type/RestType";
@@ -23,6 +24,15 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         const restType = subTypes.find((t): t is RestType => t instanceof RestType);
         const firstItemType = requiredElements.length > 0 ? requiredElements[0] : optionalElements[0]?.getType();
 
+        function uniformRestType(type: RestType): boolean {
+            const inner = type.getType();
+            return (
+                (inner instanceof ArrayType && inner.getItem().getId() === firstItemType.getId()) ||
+                (inner instanceof TupleType &&
+                    inner.getTypes().every((tuple_type) => tuple_type?.getId() === firstItemType.getId()))
+            );
+        }
+
         // Check whether the tuple is of any of the following forms:
         //   [A, A, A]
         //   [A, A, A?]
@@ -32,7 +42,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             firstItemType &&
             requiredElements.every((item) => item.getId() === firstItemType.getId()) &&
             optionalElements.every((item) => item.getType().getId() === firstItemType.getId()) &&
-            (!restType || restType.getType().getItem().getId() === firstItemType.getId());
+            (!restType || uniformRestType(restType));
 
         // If so, generate a simple array with minItems (and possibly maxItems) instead.
         if (isUniformArray) {
