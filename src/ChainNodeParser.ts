@@ -40,7 +40,6 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
     protected getNodeParser(node: ts.Node, context: Context): SubNodeParser {
         for (const nodeParser of this.nodeParsers) {
             if (nodeParser.supportsNode(node)) {
-                console.log(nodeParser.constructor.name);
                 return nodeParser;
             }
         }

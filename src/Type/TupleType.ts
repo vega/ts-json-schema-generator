@@ -7,9 +7,6 @@ export class TupleType extends BaseType {
     public constructor(types: Array<BaseType | undefined>) {
         super();
 
-        // console.log(`Tuple type length: ${types.length}`);
-        // console.log(types)
-
         let resolved_types: Array<BaseType | undefined> = [];
 
         types.forEach((type) => {
@@ -24,9 +21,6 @@ export class TupleType extends BaseType {
                 resolved_types.push(type);
             }
         });
-
-        // console.log("Resolved types")
-        // console.log(resolved_types)
 
         this.types = resolved_types;
     }
