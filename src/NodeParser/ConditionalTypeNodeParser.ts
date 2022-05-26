@@ -2,7 +2,7 @@ import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { isAssignableTo, resolveInfer } from "../Utils/isAssignableTo";
+import { isAssignableTo } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
 import { UnionType } from "../Type/UnionType";
 
@@ -33,11 +33,11 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         // Narrow down check type for both condition branches
         let inferMap = new Map();
-        const trueCheckType = narrowType(checkType, (type) => resolveInfer(extendsType, type, new Set(), inferMap));
+        const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type, new Set(), inferMap));
         // console.log(`trueCheckType: ${trueCheckType}`);
         // console.log(trueCheckType);
         // console.log(node.trueType);
-        const falseCheckType = narrowType(checkType, (type) => !resolveInfer(extendsType, type, new Set(), new Map()));
+        const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type, new Set(), new Map()));
         // console.log(`falseCheckType: ${falseCheckType}`);
         // console.log(falseCheckType);
 
