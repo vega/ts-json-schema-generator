@@ -18,8 +18,11 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
 
-        // console.log(checkTye);
+        // console.log("checkType");
+        // console.log(checkType);
+        // console.log("extendsType");
         // console.log(extendsType);
+        // console.log("checkTypeParameterName");
         // console.log(checkTypeParameterName);
 
         // If check-type is not a type parameter then condition is very simple, no type narrowing needed
@@ -29,27 +32,37 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         }
 
         // Narrow down check type for both condition branches
-        const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type));
-        console.log(trueCheckType);
+        let inferMap = new Map();
+        const trueCheckType = narrowType(checkType, (type) => resolveInfer(extendsType, type, new Set(), inferMap));
+        // console.log(`trueCheckType: ${trueCheckType}`);
+        // console.log(trueCheckType);
         // console.log(node.trueType);
-        const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
+        const falseCheckType = narrowType(checkType, (type) => !resolveInfer(extendsType, type, new Set(), new Map()));
+        // console.log(`falseCheckType: ${falseCheckType}`);
         // console.log(falseCheckType);
 
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
         if (trueCheckType !== undefined) {
-            console.log("TRUE");
+            // console.log("TRUE");
             // console.log(resolveInfer(extendsType, checkType, new Set()));
+            // console.log(node.trueType);
             const result = this.childNodeParser.createType(
                 node.trueType,
-                this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
+                this.createSubContext(node, checkTypeParameterName, trueCheckType, context, inferMap)
             );
+            // console.log(result);
             if (result) {
                 results.push(result);
             }
         }
         if (falseCheckType !== undefined) {
-            console.log("FALSE");
+            // console.log("FALSE");
+            // console.log(context.getParameters());
+            // if (context.getParameters().length == 1) {
+            //     console.log(context.getArgument("T"));
+            //     console.log(inferMap)
+            // }
             const result = this.childNodeParser.createType(
                 node.falseType,
                 this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
@@ -90,7 +103,8 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         node: ts.ConditionalTypeNode,
         checkTypeParameterName: string,
         narrowedCheckType: BaseType,
-        parentContext: Context
+        parentContext: Context,
+        inferMap: Map<string, BaseType> = new Map()
     ): Context {
         const subContext = new Context(node);
 
@@ -98,9 +112,15 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         subContext.pushParameter(checkTypeParameterName);
         subContext.pushArgument(narrowedCheckType);
 
+        inferMap.forEach((value, key) => {
+            subContext.pushParameter(key);
+            subContext.pushArgument(value);
+        });
+
         // Copy all other type parameters from parent context
+        // TODO: Check whether this is correct
         parentContext.getParameters().forEach((parentParameter) => {
-            if (parentParameter !== checkTypeParameterName) {
+            if (parentParameter !== checkTypeParameterName && !(parentParameter in inferMap)) {
                 subContext.pushParameter(parentParameter);
                 subContext.pushArgument(parentContext.getArgument(parentParameter));
             }

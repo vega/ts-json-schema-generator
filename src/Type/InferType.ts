@@ -1,9 +1,12 @@
 import { BaseType } from "./BaseType";
 
 export class InferType extends BaseType {
-    private type: BaseType | null;
-    private id: string | null;
-    private name: string | null;
+    // private id: string | null;
+    // private name: string | null;
+
+    constructor(private id: string) {
+        super();
+    }
 
     public getId(): string {
         if (this.id == null) {
@@ -12,31 +15,28 @@ export class InferType extends BaseType {
         return this.id;
     }
 
-    public setId(id: string) {
-        this.id = id;
-    }
+    // public setId(id: string) {
+    //     this.id = id;
+    // }
 
     public getName(): string {
-        if (this.name == null) {
-            throw new Error("Infer type name not set yet.");
-        }
-        return this.name;
+        return this.getId();
     }
 
-    public setName(name: string) {
-        this.name = name;
-    }
+    // public setName(name: string) {
+    //     this.name = name;
+    // }
 
-    public getType(): BaseType {
-        if (this.type == null) {
-            throw new Error("Infer type not set yet.");
-        }
-        return this.type;
-    }
+    // public getType(): BaseType {
+    //     if (this.type == null) {
+    //         throw new Error("Infer type not set yet.");
+    //     }
+    //     return this.type;
+    // }
 
-    public setType(type: BaseType): void {
-        this.type = type;
-        this.setId(type.getId());
-        this.setName(type.getName());
-    }
+    // public setType(type: BaseType): void {
+    //     this.type = type;
+    //     this.setId(type.getId());
+    //     this.setName(type.getName());
+    // }
 }
