@@ -82,14 +82,15 @@ function getPrimitiveType(value: LiteralValue) {
  *
  * @param source      - The source type.
  * @param target      - The target type.
+ * @param inferMap    - Optional parameter that keeps track of the inferred types.
  * @param insideTypes - Optional parameter used internally to solve circular dependencies.
  * @return True if source type is assignable to target type.
  */
 export function isAssignableTo(
     target: BaseType | undefined,
     source: BaseType | undefined,
-    insideTypes: Set<BaseType> = new Set(),
-    inferMap: Map<string, BaseType> = new Map()
+    inferMap: Map<string, BaseType> = new Map(),
+    insideTypes: Set<BaseType> = new Set()
 ): boolean {
     // Dereference source and target
     source = derefType(source);
@@ -146,22 +147,22 @@ export function isAssignableTo(
 
     // Union and enum type is assignable to target when all types in the union/enum are assignable to it
     if (source instanceof UnionType || source instanceof EnumType) {
-        return source.getTypes().every((type) => isAssignableTo(target, type, insideTypes, inferMap));
+        return source.getTypes().every((type) => isAssignableTo(target, type, inferMap, insideTypes));
     }
 
     // When source is an intersection type then it can be assigned to target if any of the sub types matches. Object
     // types within the intersection must be combined first
     if (source instanceof IntersectionType) {
-        return combineIntersectingTypes(source).some((type) => isAssignableTo(target, type, insideTypes, inferMap));
+        return combineIntersectingTypes(source).some((type) => isAssignableTo(target, type, inferMap, insideTypes));
     }
 
     // For arrays check if item types are assignable
     if (target instanceof ArrayType) {
         const targetItemType = target.getItem();
         if (source instanceof ArrayType) {
-            return isAssignableTo(targetItemType, source.getItem(), insideTypes, inferMap);
+            return isAssignableTo(targetItemType, source.getItem(), inferMap, insideTypes);
         } else if (source instanceof TupleType) {
-            return isAssignableTo(targetItemType, new UnionType(source.getTypes()), insideTypes, inferMap);
+            return isAssignableTo(targetItemType, new UnionType(source.getTypes()), inferMap, insideTypes);
             // return source.getTypes().every((type) => resolveInfer(targetItemType, type, insideTypes, context));
         } else {
             return false;
@@ -170,18 +171,18 @@ export function isAssignableTo(
 
     // When target is a union or enum type then check if source type can be assigned to any variant
     if (target instanceof UnionType || target instanceof EnumType) {
-        return target.getTypes().some((type) => isAssignableTo(type, source, insideTypes, inferMap));
+        return target.getTypes().some((type) => isAssignableTo(type, source, inferMap, insideTypes));
     }
 
     // When target is an intersection type then source can be assigned to it if it matches all sub types. Object
     // types within the intersection must be combined first
     if (target instanceof IntersectionType) {
-        return combineIntersectingTypes(target).every((type) => isAssignableTo(type, source, insideTypes, inferMap));
+        return combineIntersectingTypes(target).every((type) => isAssignableTo(type, source, inferMap, insideTypes));
     }
 
     // Check literal types
     if (source instanceof LiteralType) {
-        return isAssignableTo(target, getPrimitiveType(source.getValue()), undefined, inferMap);
+        return isAssignableTo(target, getPrimitiveType(source.getValue()), inferMap);
     }
 
     if (target instanceof ObjectType) {
@@ -199,8 +200,8 @@ export function isAssignableTo(
             return !isAssignableTo(
                 new UnionType([new UndefinedType(), new NullType()]).normalize(),
                 source,
+                inferMap,
                 insideTypes,
-                inferMap
             );
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
@@ -224,8 +225,8 @@ export function isAssignableTo(
                     return isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
+                        inferMap,
                         new Set(insideTypes).add(source!).add(target!),
-                        inferMap
                     );
                 })
             );
@@ -273,8 +274,8 @@ export function isAssignableTo(
                             return isAssignableTo(
                                 targetMember.getType(),
                                 new TupleType(remaining),
+                                inferMap,
                                 insideTypes,
-                                inferMap
                             );
                         } else if (sourceMembers.length > i + 1) {
                             return false;
@@ -282,7 +283,7 @@ export function isAssignableTo(
                     } else if (sourceMembers.length == i) {
                         // NOTE: No source members remaining
                         if (targetMember instanceof RestType) {
-                            return isAssignableTo(targetMember.getType(), new TupleType([]), insideTypes, inferMap);
+                            return isAssignableTo(targetMember.getType(), new TupleType([]), inferMap, insideTypes);
                         } else if (targetMember instanceof OptionalType) {
                             return true;
                         }
@@ -294,14 +295,14 @@ export function isAssignableTo(
                 if (targetMember instanceof OptionalType) {
                     if (sourceMember) {
                         return (
-                            isAssignableTo(targetMember, sourceMember, insideTypes, inferMap) ||
-                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes, inferMap)
+                            isAssignableTo(targetMember, sourceMember, inferMap, insideTypes) ||
+                            isAssignableTo(targetMember.getType(), sourceMember, inferMap, insideTypes)
                         );
                     } else {
                         return true;
                     }
                 } else {
-                    return isAssignableTo(targetMember, sourceMember, insideTypes, inferMap);
+                    return isAssignableTo(targetMember, sourceMember, inferMap, insideTypes);
                 }
             });
         }
