@@ -1,5 +1,28 @@
+import { derefType } from "../Utils/derefType";
+import { ArrayType } from "./ArrayType";
 import { BaseType } from "./BaseType";
+import { InferType } from "./InferType";
 import { RestType } from "./RestType";
+
+function normalize(types: Readonly<Array<BaseType | undefined>>): Array<BaseType | undefined> {
+    let normalized: Array<BaseType | undefined> = [];
+
+    for (const type of types) {
+        if (type instanceof RestType) {
+            const inner_type = derefType(type.getType()) as ArrayType | InferType | TupleType;
+            if (inner_type instanceof InferType) {
+                throw new Error("Found inferred rest type when normalizing tuple types.");
+            }
+            normalized = [
+                ...normalized,
+                ...(inner_type instanceof ArrayType ? [type] : normalize(inner_type.getTypes())),
+            ];
+        } else {
+            normalized.push(type);
+        }
+    }
+    return normalized;
+}
 
 export class TupleType extends BaseType {
     private types: Readonly<Array<BaseType | undefined>>;
@@ -31,5 +54,9 @@ export class TupleType extends BaseType {
 
     public getTypes(): Readonly<Array<BaseType | undefined>> {
         return this.types;
+    }
+
+    public getNormalizedTypes(): Array<BaseType | undefined> {
+        return normalize(this.types);
     }
 }

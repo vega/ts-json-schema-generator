@@ -162,7 +162,7 @@ export function isAssignableTo(
         if (source instanceof ArrayType) {
             return isAssignableTo(targetItemType, source.getItem(), inferMap, insideTypes);
         } else if (source instanceof TupleType) {
-            return source.getTypes().every((type) => isAssignableTo(targetItemType, type, inferMap, insideTypes));
+            return isAssignableTo(targetItemType, new UnionType(source.getNormalizedTypes()), inferMap, insideTypes);
         } else {
             return false;
         }
@@ -257,13 +257,14 @@ export function isAssignableTo(
             const sourceMembers = source.getTypes();
             const targetMembers = target.getTypes();
 
-            // TODO: Currently, the final element of the target tuple may be a rest type. However, since TypeScript 4.0, a tuple may contain multiple rest types at arbitrary locations.
+            // TODO: Currently, the final element of the target tuple may be a
+            // rest type. However, since TypeScript 4.0, a tuple may contain
+            // multiple rest types at arbitrary locations.
             return targetMembers.every((targetMember, i) => {
                 const numTarget = targetMembers.length;
                 const numSource = sourceMembers.length;
 
                 if (i == numTarget - 1) {
-                  // numTarget == numSource + 1: the rest type is empty
                     if (numTarget <= numSource + 1) {
                         if (targetMember instanceof RestType) {
                             let remaining: Array<BaseType | undefined> = [];
@@ -297,8 +298,14 @@ export function isAssignableTo(
                         return true;
                     }
                 } else {
-                    // TODO: Should this situation always result in false? If so, move it to the InferType clause at the start of this function.
-                    if (!sourceMember && targetMember instanceof InferType) {
+                    // FIXME: This clause is necessary because of the ambiguous
+                    // definition of `undefined`. This function assumes that when
+                    // source=undefined it may always be assigned, as
+                    // `undefined` should refer to `never`. However in this
+                    // case, source may be undefined because numTarget >
+                    // numSource, and this function should return false
+                    // instead.
+                    if (sourceMember === undefined) {
                         return false;
                     }
                     return isAssignableTo(targetMember, sourceMember, inferMap, insideTypes);

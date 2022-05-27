@@ -17,10 +17,11 @@ export class TupleTypeFormatter implements SubTypeFormatter {
     }
 
     public getDefinition(type: TupleType): Definition {
-        const subTypes = type.getTypes().filter(notUndefined);
+        const subTypes = type.getNormalizedTypes().filter(notUndefined);
 
         const requiredElements = subTypes.filter((t) => !(t instanceof OptionalType) && !(t instanceof RestType));
         const optionalElements = subTypes.filter((t): t is OptionalType => t instanceof OptionalType);
+        // NOTE: A maximum of one rest type is assumed.
         const restType = subTypes.find((t): t is RestType => t instanceof RestType);
         const firstItemType = requiredElements.length > 0 ? requiredElements[0] : optionalElements[0]?.getType();
 
@@ -29,7 +30,13 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             return (
                 (inner instanceof ArrayType && inner.getItem().getId() === firstItemType.getId()) ||
                 (inner instanceof TupleType &&
-                    inner.getTypes().every((tuple_type) => tuple_type?.getId() === firstItemType.getId()))
+                    inner.getTypes().every((tuple_type) => {
+                        if (tuple_type instanceof RestType) {
+                            return uniformRestType(tuple_type);
+                        } else {
+                            return tuple_type?.getId() === firstItemType.getId();
+                        }
+                    }))
             );
         }
 
