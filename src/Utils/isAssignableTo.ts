@@ -162,8 +162,7 @@ export function isAssignableTo(
         if (source instanceof ArrayType) {
             return isAssignableTo(targetItemType, source.getItem(), inferMap, insideTypes);
         } else if (source instanceof TupleType) {
-            return isAssignableTo(targetItemType, new UnionType(source.getTypes()), inferMap, insideTypes);
-            // return source.getTypes().every((type) => resolveInfer(targetItemType, type, insideTypes, context));
+            return source.getTypes().every((type) => isAssignableTo(targetItemType, type, inferMap, insideTypes));
         } else {
             return false;
         }
@@ -201,7 +200,7 @@ export function isAssignableTo(
                 new UnionType([new UndefinedType(), new NullType()]).normalize(),
                 source,
                 inferMap,
-                insideTypes,
+                insideTypes
             );
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
@@ -226,7 +225,7 @@ export function isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
                         inferMap,
-                        new Set(insideTypes).add(source!).add(target!),
+                        new Set(insideTypes).add(source!).add(target!)
                     );
                 })
             );
@@ -258,36 +257,32 @@ export function isAssignableTo(
             const sourceMembers = source.getTypes();
             const targetMembers = target.getTypes();
 
-            if (targetMembers.length > sourceMembers.length + 1) {
-                return false;
-            }
-
+            // TODO: Currently, the final element of the target tuple may be a rest type. However, since TypeScript 4.0, a tuple may contain multiple rest types at arbitrary locations.
             return targetMembers.every((targetMember, i) => {
-                if (targetMembers.length == i + 1) {
-                    if (sourceMembers.length > i) {
-                        // NOTE: More than one source member remaining
+                const numTarget = targetMembers.length;
+                const numSource = sourceMembers.length;
+
+                if (i == numTarget - 1) {
+                  // numTarget == numSource + 1: the rest type is empty
+                    if (numTarget <= numSource + 1) {
                         if (targetMember instanceof RestType) {
                             let remaining: Array<BaseType | undefined> = [];
-                            for (let j = i; j < sourceMembers.length; j++) {
+                            for (let j = i; j < numSource; j++) {
                                 remaining.push(sourceMembers[j]);
                             }
                             return isAssignableTo(
                                 targetMember.getType(),
                                 new TupleType(remaining),
                                 inferMap,
-                                insideTypes,
+                                insideTypes
                             );
-                        } else if (sourceMembers.length > i + 1) {
+                        }
+                        // The type cannot be assigned if more than one source
+                        // member is remaining and the final target type is not
+                        // a rest type.
+                        else if (numTarget < numSource) {
                             return false;
                         }
-                    } else if (sourceMembers.length == i) {
-                        // NOTE: No source members remaining
-                        if (targetMember instanceof RestType) {
-                            return isAssignableTo(targetMember.getType(), new TupleType([]), inferMap, insideTypes);
-                        } else if (targetMember instanceof OptionalType) {
-                            return true;
-                        }
-                        return false;
                     }
                 }
 
@@ -302,6 +297,9 @@ export function isAssignableTo(
                         return true;
                     }
                 } else {
+                    if (!sourceMember && targetMember instanceof InferType) {
+                        return false;
+                    }
                     return isAssignableTo(targetMember, sourceMember, inferMap, insideTypes);
                 }
             });
