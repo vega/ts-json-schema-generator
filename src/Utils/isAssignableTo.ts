@@ -297,6 +297,7 @@ export function isAssignableTo(
                         return true;
                     }
                 } else {
+                    // TODO: Should this situation always result in false? If so, move it to the InferType clause at the start of this function.
                     if (!sourceMember && targetMember instanceof InferType) {
                         return false;
                     }
