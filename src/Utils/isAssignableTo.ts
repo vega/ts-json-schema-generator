@@ -108,8 +108,8 @@ export function isAssignableTo(
 
     // Infer type can become anything
     if (target instanceof InferType) {
-        let infer = inferMap.get(target.getName());
         const key = target.getName();
+        const infer = inferMap.get(key);
 
         if (infer === undefined) {
             inferMap.set(key, source);
@@ -262,7 +262,7 @@ export function isAssignableTo(
                 if (i == numTarget - 1) {
                     if (numTarget <= numSource + 1) {
                         if (targetMember instanceof RestType) {
-                            let remaining: Array<BaseType | undefined> = [];
+                            const remaining: Array<BaseType | undefined> = [];
                             for (let j = i; j < numSource; j++) {
                                 remaining.push(sourceMembers[j]);
                             }

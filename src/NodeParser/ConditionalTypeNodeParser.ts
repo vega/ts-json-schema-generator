@@ -25,7 +25,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         }
 
         // Narrow down check type for both condition branches
-        let inferMap = new Map();
+        const inferMap = new Map();
         const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type, inferMap));
         const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
 

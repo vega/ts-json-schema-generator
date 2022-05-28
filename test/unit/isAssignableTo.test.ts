@@ -319,10 +319,7 @@ describe("isAssignableTo", () => {
             )
         ).toBe(true);
         expect(
-            isAssignableTo(
-                new TupleType([new StringType(), new InferType("T")]),
-                new TupleType([new StringType()])
-            )
+            isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()]))
         ).toBe(false);
         expect(
             isAssignableTo(
