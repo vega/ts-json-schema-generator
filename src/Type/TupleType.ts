@@ -10,12 +10,9 @@ function normalize(types: Readonly<Array<BaseType | undefined>>): Array<BaseType
     for (const type of types) {
         if (type instanceof RestType) {
             const inner_type = derefType(type.getType()) as ArrayType | InferType | TupleType;
-            if (inner_type instanceof InferType) {
-                throw new Error("Found inferred rest type when normalizing tuple types.");
-            }
             normalized = [
                 ...normalized,
-                ...(inner_type instanceof ArrayType ? [type] : normalize(inner_type.getTypes())),
+                ...(inner_type instanceof TupleType ? normalize(inner_type.getTypes()) : [type]),
             ];
         } else {
             normalized.push(type);
@@ -27,25 +24,10 @@ function normalize(types: Readonly<Array<BaseType | undefined>>): Array<BaseType
 export class TupleType extends BaseType {
     private types: Readonly<Array<BaseType | undefined>>;
 
-    public constructor(types: Array<BaseType | undefined>) {
+    public constructor(types: Readonly<Array<BaseType | undefined>>) {
         super();
 
-        let resolved_types: Array<BaseType | undefined> = [];
-
-        types.forEach((type) => {
-            if (type instanceof RestType) {
-                const inner_type = type.getType();
-                if (inner_type instanceof TupleType) {
-                    resolved_types = resolved_types.concat(inner_type.getTypes());
-                } else {
-                    resolved_types.push(type);
-                }
-            } else {
-                resolved_types.push(type);
-            }
-        });
-
-        this.types = resolved_types;
+        this.types = normalize(types);
     }
 
     public getId(): string {
@@ -54,9 +36,5 @@ export class TupleType extends BaseType {
 
     public getTypes(): Readonly<Array<BaseType | undefined>> {
         return this.types;
-    }
-
-    public getNormalizedTypes(): Array<BaseType | undefined> {
-        return normalize(this.types);
     }
 }

@@ -162,7 +162,7 @@ export function isAssignableTo(
         if (source instanceof ArrayType) {
             return isAssignableTo(targetItemType, source.getItem(), inferMap, insideTypes);
         } else if (source instanceof TupleType) {
-            return isAssignableTo(targetItemType, new UnionType(source.getNormalizedTypes()), inferMap, insideTypes);
+            return isAssignableTo(targetItemType, new UnionType(source.getTypes()), inferMap, insideTypes);
         } else {
             return false;
         }

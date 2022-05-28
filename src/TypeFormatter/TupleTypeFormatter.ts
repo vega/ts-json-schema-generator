@@ -17,7 +17,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
     }
 
     public getDefinition(type: TupleType): Definition {
-        const subTypes = type.getNormalizedTypes().filter(notUndefined);
+        const subTypes = type.getTypes().filter(notUndefined);
 
         const requiredElements = subTypes.filter((t) => !(t instanceof OptionalType) && !(t instanceof RestType));
         const optionalElements = subTypes.filter((t): t is OptionalType => t instanceof OptionalType);
