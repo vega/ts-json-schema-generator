@@ -54,9 +54,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 if (constraintType instanceof AnnotatedType) {
                     annotations = constraintType.getAnnotations();
                 } else if (constraintType instanceof DefinitionType) {
-                    const type = constraintType.getType();
-                    if (type instanceof AnnotatedType) {
-                        annotations = type.getAnnotations();
+                    const childType = constraintType.getType();
+                    if (childType instanceof AnnotatedType) {
+                        annotations = childType.getAnnotations();
                     }
                 }
 
