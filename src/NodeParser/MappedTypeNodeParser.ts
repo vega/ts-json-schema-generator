@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { DefinitionType } from "../Type/DefinitionType";
 import { EnumType, EnumValue } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { NeverType } from "../Type/NeverType";
@@ -47,8 +48,18 @@ export class MappedTypeNodeParser implements SubNodeParser {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
             const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
-            if (resultType && constraintType instanceof AnnotatedType) {
-                const annotations = constraintType.getAnnotations();
+            if (resultType) {
+                let annotations;
+
+                if (constraintType instanceof AnnotatedType) {
+                    annotations = constraintType.getAnnotations();
+                } else if (constraintType instanceof DefinitionType) {
+                    const type = constraintType.getType();
+                    if (type instanceof AnnotatedType) {
+                        annotations = type.getAnnotations();
+                    }
+                }
+
                 if (annotations) {
                     return new AnnotatedType(resultType, { propertyNames: annotations }, false);
                 }
