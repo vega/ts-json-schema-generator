@@ -1,5 +1,6 @@
 import * as glob from "glob";
 import * as path from "path";
+import * as fs from "fs";
 import ts from "typescript";
 import normalize from "normalize-path";
 
@@ -8,6 +9,7 @@ import { DiagnosticError } from "../src/Error/DiagnosticError";
 import { LogicError } from "../src/Error/LogicError";
 import { NoRootNamesError } from "../src/Error/NoRootNamesError";
 import { NoTSConfigError } from "../src/Error/NoTSConfigError";
+import { NotChangedError } from "../src/Error/NotChangedError";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -59,13 +61,31 @@ function getTsConfig(config: Config) {
     };
 }
 
-export function createProgram(config: Config): ts.Program {
+function isUpToDate(out: string, sources: string[]) {
+    try {
+        const { mtime } = fs.statSync(out);
+        for (const file of sources) {
+            if (fs.statSync(file).mtime > mtime) {
+                return false;
+            }
+        }
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+
+export function createProgram(config: Config, out?: string): ts.Program {
     const rootNamesFromPath = config.path ? glob.sync(normalize(path.resolve(config.path))) : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
 
     if (!rootNames.length) {
         throw new NoRootNamesError();
+    }
+
+    if (out && isUpToDate(out, rootNames)) {
+        throw new NotChangedError();
     }
 
     const program: ts.Program = ts.createProgram(rootNames, tsconfig.options);

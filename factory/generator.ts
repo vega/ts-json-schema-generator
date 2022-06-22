@@ -4,8 +4,8 @@ import { createFormatter } from "./formatter";
 import { createParser } from "./parser";
 import { createProgram } from "./program";
 
-export function createGenerator(config: Config): SchemaGenerator {
-    const program = createProgram(config);
+export function createGenerator(config: Config, out?: string): SchemaGenerator {
+    const program = createProgram(config, out);
     const parser = createParser(program, config);
     const formatter = createFormatter(config);
 
