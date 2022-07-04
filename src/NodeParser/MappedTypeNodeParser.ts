@@ -43,7 +43,18 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
-        } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
+        } else if (
+            keyListType instanceof StringType ||
+            keyListType instanceof NumberType ||
+            keyListType instanceof SymbolType
+        ) {
+            if (constraintType?.getId() === "number") {
+                const type = this.childNodeParser.createType(
+                    node.type!,
+                    this.createSubContext(node, keyListType, context)
+                );
+                return type === undefined ? undefined : new ArrayType(type);
+            }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
             const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
@@ -54,9 +65,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
             }
             return resultType;
-        } else if (keyListType instanceof NumberType) {
-            const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
-            return type === undefined ? undefined : new ArrayType(type);
         } else if (keyListType instanceof EnumType) {
             return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
         } else if (keyListType instanceof NeverType) {
