@@ -1,40 +1,40 @@
 {
-    "$ref": "#/definitions/Intersection",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-      "Container": {
-        "additionalProperties": false,
-        "properties": {
-          "children": {
-            "items": {
-              "$ref": "#/definitions/Container"
-            },
-            "type": "array"
-          }
-        },
-        "required": [
-          "children"
-        ],
-        "type": "object"
-      },
-      "Intersection": {
-        "additionalProperties": false,
-        "properties": {
-          "children": {
-            "items": {
-              "$ref": "#/definitions/Container"
-            },
-            "type": "array"
+  "$ref": "#/definitions/Intersection",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Container": {
+      "additionalProperties": false,
+      "properties": {
+        "children": {
+          "items": {
+            "$ref": "#/definitions/Container"
           },
-          "x": {
-            "type": "number"
-          }
+          "type": "array"
+        }
+      },
+      "required": [
+        "children"
+      ],
+      "type": "object"
+    },
+    "Intersection": {
+      "additionalProperties": false,
+      "properties": {
+        "children": {
+          "items": {
+            "$ref": "#/definitions/Container"
+          },
+          "type": "array"
         },
-        "required": [
-          "children",
-          "x"
-        ],
-        "type": "object"
-      }
+        "x": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "children",
+        "x"
+      ],
+      "type": "object"
     }
   }
+}

@@ -1,25 +1,25 @@
 {
-   "$id": "Test",
-   "$schema": "http://json-schema.org/draft-07/schema#",
-   "$ref": "#/definitions/MyObject",
-   "definitions": {
-     "MyNestedObject": {
-       "$id": "#MyNestedObject",
-       "additionalProperties": false,
-       "type": "object"
-     },
-     "MyObject": {
-       "$id": "#MyObject",
-       "additionalProperties": false,
-       "properties":  {
-         "nested":  {
-           "$ref": "#/definitions/MyNestedObject"
-         }
-       },
-       "required":  [
-         "nested"
-       ],
-       "type": "object"
-     }
-   }
- }
+  "$id": "Test",
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyNestedObject": {
+      "$id": "#MyNestedObject",
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "MyObject": {
+      "$id": "#MyObject",
+      "additionalProperties": false,
+      "properties": {
+        "nested": {
+          "$ref": "#/definitions/MyNestedObject"
+        }
+      },
+      "required": [
+        "nested"
+      ],
+      "type": "object"
+    }
+  }
+}
