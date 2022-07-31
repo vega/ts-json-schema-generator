@@ -7,6 +7,7 @@ import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
+import { UnknownType } from "../Type/UnknownType";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
@@ -38,6 +39,14 @@ export class TypeofNodeParser implements SubNodeParser {
             return this.childNodeParser.createType(valueDec, context);
         } else if (ts.isPropertyAssignment(valueDec)) {
             return this.childNodeParser.createType(valueDec.initializer, context);
+        } else if (valueDec.kind === ts.SyntaxKind.FunctionDeclaration) {
+            // Silently ignoring Function as JSON Schema does not define them
+            // see https://github.com/vega/ts-json-schema-generator/issues/98
+            return new UnknownType(
+                `Function:(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}): ${(<
+                    ts.FunctionDeclaration
+                >valueDec).type?.getFullText()}`
+            );
         }
 
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
