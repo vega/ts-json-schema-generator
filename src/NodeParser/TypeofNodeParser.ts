@@ -43,7 +43,7 @@ export class TypeofNodeParser implements SubNodeParser {
             // Silently ignoring Function as JSON Schema does not define them
             // see https://github.com/vega/ts-json-schema-generator/issues/98
             return new UnknownType(
-                `Function:(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}): ${(<
+                `(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}) -> ${(<
                     ts.FunctionDeclaration
                 >valueDec).type?.getFullText()}`
             );
