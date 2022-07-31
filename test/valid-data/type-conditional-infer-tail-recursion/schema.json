@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "items": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "a"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "b": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "b"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "c": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "c"
+          ],
+          "type": "object"
+        }
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    }
+  }
+}

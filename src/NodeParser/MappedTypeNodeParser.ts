@@ -87,7 +87,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
             .getTypes()
-            .filter((type) => type instanceof LiteralType)
+            .filter((type): type is LiteralType => type instanceof LiteralType)
             .reduce((result: ObjectProperty[], key: LiteralType) => {
                 const namedKey = this.mapKey(node, key, context);
                 const propertyType = this.childNodeParser.createType(

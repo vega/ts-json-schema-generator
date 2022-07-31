@@ -113,6 +113,17 @@ describe("valid-data-type", () => {
     it("type-conditional-omit", assertValidSchema("type-conditional-omit", "MyObject"));
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
 
+    it("type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));
+    it("type-conditional-infer-nested", assertValidSchema("type-conditional-infer-nested", "MyType"));
+    it("type-conditional-infer-recursive", assertValidSchema("type-conditional-infer-recursive", "MyType"));
+    it("type-conditional-infer-rest", assertValidSchema("type-conditional-infer-rest", "MyType"));
+    it("type-conditional-infer-tail-recursion", assertValidSchema("type-conditional-infer-tail-recursion", "MyType"));
+    it("type-conditional-infer-tuple-xor", assertValidSchema("type-conditional-infer-tuple-xor", "MyType"));
+
+    it("type-tuple-nested-rest", assertValidSchema("type-tuple-nested-rest", "MyType"));
+    it("type-tuple-nested-rest-to-union", assertValidSchema("type-tuple-nested-rest-to-union", "MyType"));
+    it("type-tuple-nested-rest-uniform", assertValidSchema("type-tuple-nested-rest-uniform", "MyType"));
+
     it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
     it("ignore-export", assertValidSchema("ignore-export", "*"));
 });

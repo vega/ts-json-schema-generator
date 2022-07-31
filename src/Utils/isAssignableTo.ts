@@ -16,6 +16,8 @@ import { LiteralType, LiteralValue } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
 import { NumberType } from "../Type/NumberType";
 import { BooleanType } from "../Type/BooleanType";
+import { InferType } from "../Type/InferType";
+import { RestType } from "../Type/RestType";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -80,12 +82,14 @@ function getPrimitiveType(value: LiteralValue) {
  *
  * @param source      - The source type.
  * @param target      - The target type.
+ * @param inferMap    - Optional parameter that keeps track of the inferred types.
  * @param insideTypes - Optional parameter used internally to solve circular dependencies.
  * @return True if source type is assignable to target type.
  */
 export function isAssignableTo(
     target: BaseType | undefined,
     source: BaseType | undefined,
+    inferMap: Map<string, BaseType> = new Map(),
     insideTypes: Set<BaseType> = new Set()
 ): boolean {
     // Dereference source and target
@@ -100,6 +104,20 @@ export function isAssignableTo(
     // Nothing can be assigned to undefined (e.g. never-type)
     if (target === undefined) {
         return false;
+    }
+
+    // Infer type can become anything
+    if (target instanceof InferType) {
+        const key = target.getName();
+        const infer = inferMap.get(key);
+
+        if (infer === undefined) {
+            inferMap.set(key, source);
+        } else {
+            inferMap.set(key, new UnionType([infer, source]));
+        }
+
+        return true;
     }
 
     // Check for simple type equality
@@ -129,22 +147,22 @@ export function isAssignableTo(
 
     // Union and enum type is assignable to target when all types in the union/enum are assignable to it
     if (source instanceof UnionType || source instanceof EnumType) {
-        return source.getTypes().every((type) => isAssignableTo(target, type, insideTypes));
+        return source.getTypes().every((type) => isAssignableTo(target, type, inferMap, insideTypes));
     }
 
     // When source is an intersection type then it can be assigned to target if any of the sub types matches. Object
     // types within the intersection must be combined first
     if (source instanceof IntersectionType) {
-        return combineIntersectingTypes(source).some((type) => isAssignableTo(target, type, insideTypes));
+        return combineIntersectingTypes(source).some((type) => isAssignableTo(target, type, inferMap, insideTypes));
     }
 
     // For arrays check if item types are assignable
     if (target instanceof ArrayType) {
         const targetItemType = target.getItem();
         if (source instanceof ArrayType) {
-            return isAssignableTo(targetItemType, source.getItem(), insideTypes);
+            return isAssignableTo(targetItemType, source.getItem(), inferMap, insideTypes);
         } else if (source instanceof TupleType) {
-            return source.getTypes().every((type) => isAssignableTo(targetItemType, type, insideTypes));
+            return isAssignableTo(targetItemType, new UnionType(source.getTypes()), inferMap, insideTypes);
         } else {
             return false;
         }
@@ -152,18 +170,18 @@ export function isAssignableTo(
 
     // When target is a union or enum type then check if source type can be assigned to any variant
     if (target instanceof UnionType || target instanceof EnumType) {
-        return target.getTypes().some((type) => isAssignableTo(type, source, insideTypes));
+        return target.getTypes().some((type) => isAssignableTo(type, source, inferMap, insideTypes));
     }
 
     // When target is an intersection type then source can be assigned to it if it matches all sub types. Object
     // types within the intersection must be combined first
     if (target instanceof IntersectionType) {
-        return combineIntersectingTypes(target).every((type) => isAssignableTo(type, source, insideTypes));
+        return combineIntersectingTypes(target).every((type) => isAssignableTo(type, source, inferMap, insideTypes));
     }
 
     // Check literal types
     if (source instanceof LiteralType) {
-        return isAssignableTo(target, getPrimitiveType(source.getValue()));
+        return isAssignableTo(target, getPrimitiveType(source.getValue()), inferMap);
     }
 
     if (target instanceof ObjectType) {
@@ -178,7 +196,7 @@ export function isAssignableTo(
         const targetMembers = getObjectProperties(target);
         if (targetMembers.length === 0) {
             // When target object is empty then anything except null and undefined can be assigned to it
-            return !isAssignableTo(new UnionType([new UndefinedType(), new NullType()]), source, insideTypes);
+            return !isAssignableTo(new UnionType([new UndefinedType(), new NullType()]), source, inferMap, insideTypes);
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
 
@@ -201,6 +219,7 @@ export function isAssignableTo(
                     return isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
+                        inferMap,
                         new Set(insideTypes).add(source!).add(target!)
                     );
                 })
@@ -231,19 +250,60 @@ export function isAssignableTo(
     if (target instanceof TupleType) {
         if (source instanceof TupleType) {
             const sourceMembers = source.getTypes();
-            return target.getTypes().every((targetMember, i) => {
+            const targetMembers = target.getTypes();
+
+            // TODO: Currently, the final element of the target tuple may be a
+            // rest type. However, since TypeScript 4.0, a tuple may contain
+            // multiple rest types at arbitrary locations.
+            return targetMembers.every((targetMember, i) => {
+                const numTarget = targetMembers.length;
+                const numSource = sourceMembers.length;
+
+                if (i == numTarget - 1) {
+                    if (numTarget <= numSource + 1) {
+                        if (targetMember instanceof RestType) {
+                            const remaining: Array<BaseType | undefined> = [];
+                            for (let j = i; j < numSource; j++) {
+                                remaining.push(sourceMembers[j]);
+                            }
+                            return isAssignableTo(
+                                targetMember.getType(),
+                                new TupleType(remaining),
+                                inferMap,
+                                insideTypes
+                            );
+                        }
+                        // The type cannot be assigned if more than one source
+                        // member is remaining and the final target type is not
+                        // a rest type.
+                        else if (numTarget < numSource) {
+                            return false;
+                        }
+                    }
+                }
+
                 const sourceMember = sourceMembers[i];
                 if (targetMember instanceof OptionalType) {
                     if (sourceMember) {
                         return (
-                            isAssignableTo(targetMember, sourceMember, insideTypes) ||
-                            isAssignableTo(targetMember.getType(), sourceMember, insideTypes)
+                            isAssignableTo(targetMember, sourceMember, inferMap, insideTypes) ||
+                            isAssignableTo(targetMember.getType(), sourceMember, inferMap, insideTypes)
                         );
                     } else {
                         return true;
                     }
                 } else {
-                    return isAssignableTo(targetMember, sourceMember, insideTypes);
+                    // FIXME: This clause is necessary because of the ambiguous
+                    // definition of `undefined`. This function assumes that when
+                    // source=undefined it may always be assigned, as
+                    // `undefined` should refer to `never`. However in this
+                    // case, source may be undefined because numTarget >
+                    // numSource, and this function should return false
+                    // instead.
+                    if (sourceMember === undefined) {
+                        return false;
+                    }
+                    return isAssignableTo(targetMember, sourceMember, inferMap, insideTypes);
                 }
             });
         }
