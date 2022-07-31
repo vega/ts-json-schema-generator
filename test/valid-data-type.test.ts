@@ -64,6 +64,7 @@ describe("valid-data-type", () => {
     it("type-typeof-class-static-property", assertValidSchema("type-typeof-class-static-property", "MyType"));
     it("type-typeof-enum", assertValidSchema("type-typeof-enum", "MyObject"));
     it("type-typeof-class", assertValidSchema("type-typeof-class", "MyObject"));
+    it("type-typeof-function", assertValidSchema("type-typeof-function", "*"));
     it("type-keys", assertValidSchema("type-typeof-keys", "MyType"));
 
     it("type-indexed-access-tuple-1", assertValidSchema("type-indexed-access-tuple-1", "MyType"));
@@ -97,6 +98,8 @@ describe("valid-data-type", () => {
     it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject", "extended"));
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject", "extended"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
+    it("type-mapped-never", assertValidSchema("type-mapped-never", "MyObject"));
+    it("type-mapped-empty-exclude", assertValidSchema("type-mapped-empty-exclude", "MyObject"));
     it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "ExchangeRate", "extended"));
 
     it("type-conditional-simple", assertValidSchema("type-conditional-simple", "MyObject"));
@@ -110,6 +113,17 @@ describe("valid-data-type", () => {
     it("type-conditional-narrowing", assertValidSchema("type-conditional-narrowing", "MyObject"));
     it("type-conditional-omit", assertValidSchema("type-conditional-omit", "MyObject"));
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
+
+    it("type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));
+    it("type-conditional-infer-nested", assertValidSchema("type-conditional-infer-nested", "MyType"));
+    it("type-conditional-infer-recursive", assertValidSchema("type-conditional-infer-recursive", "MyType"));
+    it("type-conditional-infer-rest", assertValidSchema("type-conditional-infer-rest", "MyType"));
+    it("type-conditional-infer-tail-recursion", assertValidSchema("type-conditional-infer-tail-recursion", "MyType"));
+    it("type-conditional-infer-tuple-xor", assertValidSchema("type-conditional-infer-tuple-xor", "MyType"));
+
+    it("type-tuple-nested-rest", assertValidSchema("type-tuple-nested-rest", "MyType"));
+    it("type-tuple-nested-rest-to-union", assertValidSchema("type-tuple-nested-rest-to-union", "MyType"));
+    it("type-tuple-nested-rest-uniform", assertValidSchema("type-tuple-nested-rest-uniform", "MyType"));
 
     it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
     it("ignore-export", assertValidSchema("ignore-export", "*"));

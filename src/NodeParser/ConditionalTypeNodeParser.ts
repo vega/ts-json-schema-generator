@@ -6,6 +6,10 @@ import { isAssignableTo } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
 import { UnionType } from "../Type/UnionType";
 
+class CheckType {
+    constructor(public parameterName: string, public type: BaseType | undefined) {}
+}
+
 export class ConditionalTypeNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
 
@@ -18,14 +22,19 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
 
+        const inferMap = new Map();
+
         // If check-type is not a type parameter then condition is very simple, no type narrowing needed
         if (checkTypeParameterName == null) {
-            const result = isAssignableTo(extendsType, checkType);
-            return this.childNodeParser.createType(result ? node.trueType : node.falseType, context);
+            const result = isAssignableTo(extendsType, checkType, inferMap);
+            return this.childNodeParser.createType(
+                result ? node.trueType : node.falseType,
+                this.createSubContext(node, context, undefined, result ? inferMap : new Map())
+            );
         }
 
         // Narrow down check type for both condition branches
-        const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type));
+        const trueCheckType = narrowType(checkType, (type) => isAssignableTo(extendsType, type, inferMap));
         const falseCheckType = narrowType(checkType, (type) => !isAssignableTo(extendsType, type));
 
         // Follow the relevant branches and return the results from them
@@ -33,7 +42,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         if (trueCheckType !== undefined) {
             const result = this.childNodeParser.createType(
                 node.trueType,
-                this.createSubContext(node, checkTypeParameterName, trueCheckType, context)
+                this.createSubContext(node, context, new CheckType(checkTypeParameterName, trueCheckType), inferMap)
             );
             if (result) {
                 results.push(result);
@@ -42,7 +51,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         if (falseCheckType !== undefined) {
             const result = this.childNodeParser.createType(
                 node.falseType,
-                this.createSubContext(node, checkTypeParameterName, falseCheckType, context)
+                this.createSubContext(node, context, new CheckType(checkTypeParameterName, falseCheckType))
             );
             if (result) {
                 results.push(result);
@@ -72,25 +81,36 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
      * the check-type is a type parameter which is then narrowed down by the extends-type.
      *
      * @param node                   - The reference node for the new context.
-     * @param checkTypeParameterName - The type parameter name of the check-type.
-     * @param narrowedCheckType      - The narrowed down check type to use for the type parameter in sub parsers.
+     * @param checkType              - An object containing the type parameter name of the check-type, and the narrowed
+     *                                 down check type to use for the type parameter in sub parsers.
+     * @param inferMap               - A map that links parameter names to their inferred types.
      * @return The created sub context.
      */
     protected createSubContext(
         node: ts.ConditionalTypeNode,
-        checkTypeParameterName: string,
-        narrowedCheckType: BaseType,
-        parentContext: Context
+        parentContext: Context,
+        checkType?: CheckType,
+        inferMap: Map<string, BaseType> = new Map()
     ): Context {
         const subContext = new Context(node);
 
-        // Set new narrowed type for check type parameter
-        subContext.pushParameter(checkTypeParameterName);
-        subContext.pushArgument(narrowedCheckType);
+        // Newly inferred types take precedence over check and parent types.
+        inferMap.forEach((value, key) => {
+            subContext.pushParameter(key);
+            subContext.pushArgument(value);
+        });
+
+        if (checkType !== undefined) {
+            // Set new narrowed type for check type parameter
+            if (!(checkType.parameterName in inferMap)) {
+                subContext.pushParameter(checkType.parameterName);
+                subContext.pushArgument(checkType.type);
+            }
+        }
 
         // Copy all other type parameters from parent context
         parentContext.getParameters().forEach((parentParameter) => {
-            if (parentParameter !== checkTypeParameterName) {
+            if (parentParameter !== checkType?.parameterName && !(parentParameter in inferMap)) {
                 subContext.pushParameter(parentParameter);
                 subContext.pushArgument(parentContext.getArgument(parentParameter));
             }

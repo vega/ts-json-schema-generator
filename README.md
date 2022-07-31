@@ -137,7 +137,8 @@ Similar to custom formatting, extending the built-in parsing works practically t
 ```ts
 // my-constructor-parser.ts
 import { Context, StringType, ReferenceType, BaseType, SubNodeParser } from "ts-json-schema-generator";
-import ts from "typescript";
+// use typescript exported by TJS to avoid version conflict
+import ts from "ts-json-schema-generator";
 
 export class MyConstructorParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {

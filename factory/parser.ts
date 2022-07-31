@@ -22,6 +22,7 @@ import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { FunctionParser } from "../src/NodeParser/FunctionParser";
 import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
+import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser";
 import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
@@ -121,8 +122,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
 
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
-
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new InferTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))

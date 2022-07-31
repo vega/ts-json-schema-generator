@@ -4,6 +4,7 @@ import { AnyType } from "../../src/Type/AnyType";
 import { ArrayType } from "../../src/Type/ArrayType";
 import { BooleanType } from "../../src/Type/BooleanType";
 import { DefinitionType } from "../../src/Type/DefinitionType";
+import { InferType } from "../../src/Type/InferType";
 import { IntersectionType } from "../../src/Type/IntersectionType";
 import { LiteralType } from "../../src/Type/LiteralType";
 import { NullType } from "../../src/Type/NullType";
@@ -11,6 +12,7 @@ import { NumberType } from "../../src/Type/NumberType";
 import { ObjectProperty, ObjectType } from "../../src/Type/ObjectType";
 import { OptionalType } from "../../src/Type/OptionalType";
 import { ReferenceType } from "../../src/Type/ReferenceType";
+import { RestType } from "../../src/Type/RestType";
 import { StringType } from "../../src/Type/StringType";
 import { TupleType } from "../../src/Type/TupleType";
 import { UndefinedType } from "../../src/Type/UndefinedType";
@@ -302,6 +304,33 @@ describe("isAssignableTo", () => {
             isAssignableTo(
                 new TupleType([new StringType(), new OptionalType(new StringType())]),
                 new TupleType([new StringType(), new StringType()])
+            )
+        ).toBe(true);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new InferType("T")]),
+                new TupleType([new StringType(), new NumberType(), new StringType()])
+            )
+        ).toBe(false);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new InferType("T")]),
+                new TupleType([new StringType(), new NumberType()])
+            )
+        ).toBe(true);
+        expect(
+            isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()]))
+        ).toBe(false);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new RestType(new InferType("T"))]),
+                new TupleType([new StringType()])
+            )
+        ).toBe(true);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new RestType(new InferType("T"))]),
+                new TupleType([new StringType(), new NumberType(), new StringType()])
             )
         ).toBe(true);
     });

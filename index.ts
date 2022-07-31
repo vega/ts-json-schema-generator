@@ -158,3 +158,6 @@ export * from "./src/NodeParser/VoidTypeNodeParser";
 export * from "./src/SchemaGenerator";
 
 export * from "./factory";
+
+import ts from "typescript";
+export { ts };

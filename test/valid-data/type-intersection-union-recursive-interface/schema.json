@@ -1,76 +1,76 @@
 {
-    "$ref": "#/definitions/Intersection",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-      "Container": {
-        "additionalProperties": false,
-        "properties": {
-          "child": {
-            "$ref": "#/definitions/Union"
-          }
-        },
-        "required": [
-          "child"
-        ],
-        "type": "object"
+  "$ref": "#/definitions/Intersection",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Container": {
+      "additionalProperties": false,
+      "properties": {
+        "child": {
+          "$ref": "#/definitions/Union"
+        }
       },
-      "Intersection": {
-        "anyOf": [
-          {
-            "additionalProperties": false,
-            "properties": {
-              "child": {
-                "$ref": "#/definitions/Union"
-              },
-              "x": {
-                "type": "number"
-              }
+      "required": [
+        "child"
+      ],
+      "type": "object"
+    },
+    "Intersection": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "child": {
+              "$ref": "#/definitions/Union"
             },
-            "required": [
-              "child",
-              "x"
-            ],
-            "type": "object"
+            "x": {
+              "type": "number"
+            }
           },
-          {
-            "additionalProperties": false,
-            "properties": {
-              "x": {
-                "type": "number"
-              },
-              "y": {
-                "type": "number"
-              }
-            },
-            "required": [
-              "x",
-              "y"
-            ],
-            "type": "object"
-          }
-        ]
-      },
-      "Silly": {
-        "additionalProperties": false,
-        "properties": {
-          "y": {
-            "type": "number"
-          }
+          "required": [
+            "child",
+            "x"
+          ],
+          "type": "object"
         },
-        "required": [
-          "y"
-        ],
-        "type": "object"
-      },
-      "Union": {
-        "anyOf": [
-          {
-            "$ref": "#/definitions/Container"
+        {
+          "additionalProperties": false,
+          "properties": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            }
           },
-          {
-            "$ref": "#/definitions/Silly"
-          }
-        ]
-      }
+          "required": [
+            "x",
+            "y"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "Silly": {
+      "additionalProperties": false,
+      "properties": {
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "y"
+      ],
+      "type": "object"
+    },
+    "Union": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Container"
+        },
+        {
+          "$ref": "#/definitions/Silly"
+        }
+      ]
     }
   }
+}
