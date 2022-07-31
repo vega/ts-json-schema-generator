@@ -6,7 +6,7 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { StringType } from "../Type/StringType";
 
-const invlidTypes: { [index: number]: boolean } = {
+const invalidTypes: { [index: number]: boolean } = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
     [ts.SyntaxKind.VariableDeclaration]: true,
 };
@@ -23,7 +23,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                 this.createSubContext(node, context)
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
@@ -40,7 +40,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return new AnnotatedType(new StringType(), { format: "regex" }, false);
         } else {
             return this.childNodeParser.createType(
-                typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0],
+                typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                 this.createSubContext(node, context)
             );
         }
