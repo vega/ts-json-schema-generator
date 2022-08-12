@@ -15,13 +15,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          # Fetch all history for all tags and branches
           fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
@@ -29,6 +30,4 @@ jobs:
       - name: Create release
         run: npm run release
         env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
