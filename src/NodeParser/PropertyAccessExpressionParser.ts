@@ -1,4 +1,4 @@
-import * as ts from "typescript";
+import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
@@ -10,7 +10,7 @@ export class PropertyAccessExpressionParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.PropertyAccessExpression;
     }
 
-    public createType(node: ts.PropertyAccessExpression, context: Context): BaseType | undefined {
+    public createType(node: ts.PropertyAccessExpression, context: Context): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
         return this.childNodeParser.createType(type.symbol.declarations![0], context);
     }

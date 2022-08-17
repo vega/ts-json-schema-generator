@@ -6,16 +6,16 @@ import { getKey } from "./Utils/nodeKey";
 
 export class Context {
     private cacheKey: string | null = null;
-    private arguments: (BaseType | undefined)[] = [];
+    private arguments: BaseType[] = [];
     private parameters: string[] = [];
     private reference?: ts.Node;
-    private defaultArgument = new Map<string, BaseType | undefined>();
+    private defaultArgument = new Map<string, BaseType>();
 
     public constructor(reference?: ts.Node) {
         this.reference = reference;
     }
 
-    public pushArgument(argumentType: BaseType | undefined): void {
+    public pushArgument(argumentType: BaseType): void {
         this.arguments.push(argumentType);
         this.cacheKey = null;
     }
@@ -24,7 +24,7 @@ export class Context {
         this.parameters.push(parameterName);
     }
 
-    public setDefault(parameterName: string, argumentType: BaseType | undefined): void {
+    public setDefault(parameterName: string, argumentType: BaseType): void {
         this.defaultArgument.set(parameterName, argumentType);
     }
 
@@ -38,8 +38,9 @@ export class Context {
         return this.cacheKey;
     }
 
-    public getArgument(parameterName: string): BaseType | undefined {
+    public getArgument(parameterName: string): BaseType {
         const index: number = this.parameters.indexOf(parameterName);
+
         if ((index < 0 || !this.arguments[index]) && this.defaultArgument.has(parameterName)) {
             return this.defaultArgument.get(parameterName)!;
         }
@@ -50,7 +51,7 @@ export class Context {
     public getParameters(): readonly string[] {
         return this.parameters;
     }
-    public getArguments(): readonly (BaseType | undefined)[] {
+    public getArguments(): readonly BaseType[] {
         return this.arguments;
     }
 
@@ -60,5 +61,5 @@ export class Context {
 }
 
 export interface NodeParser {
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined;
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType;
 }

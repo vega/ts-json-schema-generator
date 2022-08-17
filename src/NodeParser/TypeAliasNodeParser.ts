@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
+import { NeverType } from "../Type/NeverType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 
@@ -13,11 +14,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeAliasDeclaration;
     }
 
-    public createType(
-        node: ts.TypeAliasDeclaration,
-        context: Context,
-        reference?: ReferenceType
-    ): BaseType | undefined {
+    public createType(node: ts.TypeAliasDeclaration, context: Context, reference?: ReferenceType): BaseType {
         if (node.typeParameters?.length) {
             for (const typeParam of node.typeParameters) {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -38,8 +35,8 @@ export class TypeAliasNodeParser implements SubNodeParser {
         }
 
         const type = this.childNodeParser.createType(node.type, context);
-        if (type === undefined) {
-            return undefined;
+        if (type instanceof NeverType) {
+            return new NeverType();
         }
         return new AliasType(id, type);
     }

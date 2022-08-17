@@ -2,8 +2,10 @@ import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
+import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { derefType } from "../Utils/derefType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
@@ -13,7 +15,10 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
-        const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
+        const definitions = type
+            .getTypes()
+            .filter((item) => !(derefType(item) instanceof NeverType))
+            .map((item) => this.childTypeFormatter.getDefinition(item));
 
         // TODO: why is this not covered by LiteralUnionTypeFormatter?
         // special case for string literals | string -> string

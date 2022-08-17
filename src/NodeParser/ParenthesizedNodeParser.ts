@@ -9,11 +9,7 @@ export class ParenthesizedNodeParser implements SubNodeParser {
     public supportsNode(node: ts.ParenthesizedTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ParenthesizedType;
     }
-    public createType(node: ts.ParenthesizedTypeNode, context: Context): BaseType | undefined {
-        const type = this.childNodeParser.createType(node.type, context);
-        if (!type) {
-            return undefined;
-        }
-        return type;
+    public createType(node: ts.ParenthesizedTypeNode, context: Context): BaseType {
+        return this.childNodeParser.createType(node.type, context);
     }
 }

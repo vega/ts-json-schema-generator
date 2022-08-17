@@ -4,8 +4,8 @@ import { BaseType } from "./Type/BaseType";
 import { uniqueArray } from "./Utils/uniqueArray";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
-    protected definition = new Map<BaseType, Definition>();
-    protected children = new Map<BaseType, BaseType[]>();
+    protected definition: Map<BaseType, Definition> = new Map();
+    protected children: Map<BaseType, BaseType[]> = new Map();
 
     public constructor(protected childTypeFormatter: SubTypeFormatter) {}
 

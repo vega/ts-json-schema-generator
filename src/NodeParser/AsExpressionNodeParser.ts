@@ -10,7 +10,7 @@ export class AsExpressionNodeParser implements SubNodeParser {
     public supportsNode(node: ts.AsExpression): boolean {
         return node.kind === ts.SyntaxKind.AsExpression;
     }
-    public createType(node: ts.AsExpression, context: Context): BaseType | undefined {
+    public createType(node: ts.AsExpression, context: Context): BaseType {
         // only implement `as const` for now where we just ignore the as expression
         return this.childNodeParser.createType(node.expression, context);
     }

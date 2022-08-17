@@ -6,7 +6,7 @@ import { OptionalType } from "../Type/OptionalType";
 import { RestType } from "../Type/RestType";
 import { TupleType } from "../Type/TupleType";
 import { TypeFormatter } from "../TypeFormatter";
-import { notUndefined } from "../Utils/notUndefined";
+import { notNever } from "../Utils/notNever";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 function uniformRestType(type: RestType, check_type: BaseType): boolean {
@@ -32,7 +32,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
     }
 
     public getDefinition(type: TupleType): Definition {
-        const subTypes = type.getTypes().filter(notUndefined);
+        const subTypes = type.getTypes().filter(notNever);
 
         const requiredElements = subTypes.filter((t) => !(t instanceof OptionalType) && !(t instanceof RestType));
         const optionalElements = subTypes.filter((t): t is OptionalType => t instanceof OptionalType);
@@ -83,7 +83,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         return uniqueArray(
             type
                 .getTypes()
-                .filter(notUndefined)
+                .filter(notNever)
                 .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
         );
     }

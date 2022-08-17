@@ -16,7 +16,6 @@ import { UnionType } from "../Type/UnionType";
 import assert from "../Utils/assert";
 import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
-import { notUndefined } from "../Utils/notUndefined";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 
@@ -27,7 +26,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.MappedType;
     }
 
-    public createType(node: ts.MappedTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.MappedTypeNode, context: Context): BaseType {
         const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
         const keyListType = derefType(constraintType);
         const id = `indexed-type-${getKey(node, context)}`;
@@ -53,11 +52,12 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     node.type!,
                     this.createSubContext(node, keyListType, context)
                 );
-                return type === undefined ? undefined : new ArrayType(type);
+                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
             }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
-            const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
+            // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
+            const resultType = new ObjectType(id, [], [], type);
             if (resultType && constraintType instanceof AnnotatedType) {
                 const annotations = constraintType.getAnnotations();
                 if (annotations) {
@@ -68,8 +68,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof EnumType) {
             return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
         } else if (keyListType instanceof NeverType) {
-            return new ObjectType(id, [], [], false);
-        } else if (keyListType === undefined) {
             return new ObjectType(id, [], [], false);
         } else {
             throw new LogicError(
@@ -103,10 +101,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     this.createSubContext(node, key, context)
                 );
 
-                if (propertyType === undefined) {
-                    return result;
-                }
-
                 let newType = derefAnnotatedType(propertyType);
                 let hasUndefined = false;
                 if (newType instanceof UnionType) {
@@ -136,13 +130,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     this.createSubContext(node, new LiteralType(value!), context)
                 );
 
-                if (type === undefined) {
-                    return undefined;
-                }
-
                 return new ObjectProperty(value!.toString(), type, !node.questionToken);
-            })
-            .filter(notUndefined);
+            });
     }
 
     protected getAdditionalProperties(

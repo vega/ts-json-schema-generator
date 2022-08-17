@@ -4,6 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { NeverType } from "../Type/NeverType";
 import { StringType } from "../Type/StringType";
 
 const invalidTypes: { [index: number]: boolean } = {
@@ -18,7 +19,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeReference;
     }
 
-    public createType(node: ts.TypeReferenceNode, context: Context): BaseType | undefined {
+    public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
@@ -30,8 +31,8 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return context.getArgument(typeSymbol.name);
         } else if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
             const type = this.createSubContext(node, context).getArguments()[0];
-            if (type === undefined) {
-                return undefined;
+            if (type === undefined || type instanceof NeverType) {
+                return new NeverType();
             }
             return new ArrayType(type);
         } else if (typeSymbol.name === "Date") {

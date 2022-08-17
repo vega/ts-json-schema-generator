@@ -11,11 +11,8 @@ export class ArrayNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ArrayType;
     }
 
-    public createType(node: ts.ArrayTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.ArrayTypeNode, context: Context): BaseType {
         const type = this.childNodeParser.createType(node.elementType, context);
-        if (type === undefined) {
-            return undefined;
-        }
         return new ArrayType(type);
     }
 }

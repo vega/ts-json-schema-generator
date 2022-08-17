@@ -16,7 +16,7 @@ export class TypeofNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeQuery;
     }
 
-    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType | undefined {
+    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType {
         let symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
         if (symbol.flags & ts.SymbolFlags.Alias) {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
@@ -59,7 +59,7 @@ export class TypeofNodeParser implements SubNodeParser {
             reference.setName(id);
         }
 
-        let type: BaseType | null | undefined = null;
+        let type: BaseType | null = null;
         const properties = node.members.map((member) => {
             const name = member.name.getText();
             if (member.initializer) {
