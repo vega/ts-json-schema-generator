@@ -2,6 +2,7 @@ import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { NeverType } from "../Type/NeverType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
@@ -13,7 +14,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
     }
-    public createType(node: ts.TypeLiteralNode, context: Context, reference?: ReferenceType): BaseType | undefined {
+    public createType(node: ts.TypeLiteralNode, context: Context, reference?: ReferenceType): BaseType {
         const id = this.getTypeId(node, context);
         if (reference) {
             reference.setId(id);
@@ -23,7 +24,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = this.getProperties(node, context);
 
         if (properties === undefined) {
-            return undefined;
+            return new NeverType();
         }
 
         return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
@@ -43,10 +44,10 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 return objectProperty;
             })
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() === undefined) {
+                if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return prop.getType() !== undefined;
+                return !(prop.getType() instanceof NeverType);
             });
 
         if (hasRequiredNever) {

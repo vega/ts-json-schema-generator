@@ -8,6 +8,7 @@ import { UnionType } from "../Type/UnionType";
 import { derefType } from "../Utils/derefType";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
 import { UndefinedType } from "../Type/UndefinedType";
+import { NeverType } from "../Type/NeverType";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
@@ -16,12 +17,12 @@ export class IntersectionNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.IntersectionType;
     }
 
-    public createType(node: ts.IntersectionTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.IntersectionTypeNode, context: Context): BaseType {
         const types = node.types.map((subnode) => this.childNodeParser.createType(subnode, context));
 
-        // if any type is undefined (never), an intersection type should be undefined (never)
-        if (types.filter((t) => t === undefined).length) {
-            return undefined;
+        // if any type is never, the intersection type resolves to never
+        if (types.filter((t) => t instanceof NeverType).length) {
+            return new NeverType();
         }
 
         return translate(types as BaseType[]);
@@ -42,7 +43,7 @@ function derefAndFlattenUnions(type: BaseType): BaseType[] {
  * Translates the given intersection type into a union type if necessary so `A & (B | C)` becomes
  * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
  */
-export function translate(types: BaseType[]): BaseType | undefined {
+export function translate(types: BaseType[]): BaseType {
     types = uniqueTypeArray(types as BaseType[]);
 
     if (types.length == 1) {
@@ -85,5 +86,5 @@ export function translate(types: BaseType[]): BaseType | undefined {
         return new UnionType(result);
     }
 
-    return undefined;
+    throw new Error("Could not translate intersection to union.");
 }

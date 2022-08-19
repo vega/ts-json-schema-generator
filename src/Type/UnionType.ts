@@ -1,17 +1,18 @@
 import { BaseType } from "./BaseType";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
 import { NeverType } from "./NeverType";
+import { derefType } from "../Utils/derefType";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
 
-    public constructor(types: readonly (BaseType | undefined)[]) {
+    public constructor(types: readonly BaseType[]) {
         super();
         this.types = uniqueTypeArray(
             types.reduce((flatTypes, type) => {
                 if (type instanceof UnionType) {
                     flatTypes.push(...type.getTypes());
-                } else if (type !== undefined && !(type instanceof NeverType)) {
+                } else if (!(type instanceof NeverType)) {
                     flatTypes.push(type);
                 }
                 return flatTypes;
@@ -31,13 +32,20 @@ export class UnionType extends BaseType {
         return this.types;
     }
 
-    public normalize(): BaseType | undefined {
+    public normalize(): BaseType {
         if (this.types.length === 0) {
-            return undefined;
+            return new NeverType();
         } else if (this.types.length === 1) {
             return this.types[0];
         } else {
-            return this;
+            const union = new UnionType(this.types.filter((type) => !(derefType(type) instanceof NeverType)));
+
+            if (union.getTypes().length > 1) {
+                return union;
+            } else {
+                return union.normalize();
+            }
+            // return this;
         }
     }
 }

@@ -11,7 +11,7 @@ export class InferTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.InferType;
     }
 
-    public createType(node: ts.InferTypeNode, _context: Context): BaseType | undefined {
+    public createType(node: ts.InferTypeNode, _context: Context): BaseType {
         return new InferType(node.typeParameter.name.escapedText.toString());
     }
 }

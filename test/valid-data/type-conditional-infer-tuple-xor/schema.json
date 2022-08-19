@@ -7,12 +7,6 @@
         {
           "additionalProperties": false,
           "properties": {
-            "a": {
-              "not": {}
-            },
-            "b": {
-              "not": {}
-            },
             "c": {
               "type": "boolean"
             }
@@ -25,14 +19,8 @@
         {
           "additionalProperties": false,
           "properties": {
-            "a": {
-              "not": {}
-            },
             "b": {
               "type": "number"
-            },
-            "c": {
-              "not": {}
             }
           },
           "required": [
@@ -45,12 +33,6 @@
           "properties": {
             "a": {
               "type": "string"
-            },
-            "b": {
-              "not": {}
-            },
-            "c": {
-              "not": {}
             }
           },
           "required": [

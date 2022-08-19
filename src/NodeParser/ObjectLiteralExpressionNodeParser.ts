@@ -13,21 +13,16 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ObjectLiteralExpression;
     }
 
-    public createType(node: ts.ObjectLiteralExpression, context: Context): BaseType | undefined {
-        if (node.properties) {
-            const properties = node.properties.map(
-                (t) =>
-                    new ObjectProperty(
-                        t.name!.getText(),
-                        this.childNodeParser.createType((t as any).initializer, context),
-                        !(t as any).questionToken
-                    )
-            );
+    public createType(node: ts.ObjectLiteralExpression, context: Context): BaseType {
+        const properties = node.properties.map(
+            (t) =>
+                new ObjectProperty(
+                    t.name!.getText(),
+                    this.childNodeParser.createType((t as any).initializer, context),
+                    !(t as any).questionToken
+                )
+        );
 
-            return new ObjectType(`object-${getKey(node, context)}`, [], properties, false);
-        }
-
-        // TODO: implement this?
-        return undefined;
+        return new ObjectType(`object-${getKey(node, context)}`, [], properties, false);
     }
 }

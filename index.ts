@@ -22,7 +22,7 @@ export * from "./src/Utils/isHidden";
 export * from "./src/Utils/modifiers";
 export * from "./src/Utils/narrowType";
 export * from "./src/Utils/nodeKey";
-export * from "./src/Utils/notUndefined";
+export * from "./src/Utils/notNever";
 export * from "./src/Utils/preserveAnnotation";
 export * from "./src/Utils/removeUndefined";
 export * from "./src/Utils/removeUnreachable";

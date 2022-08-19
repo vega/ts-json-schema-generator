@@ -5,9 +5,10 @@ import { BaseType } from "../Type/BaseType";
 import { isAssignableTo } from "../Utils/isAssignableTo";
 import { narrowType } from "../Utils/narrowType";
 import { UnionType } from "../Type/UnionType";
+import { NeverType } from "../Type/NeverType";
 
 class CheckType {
-    constructor(public parameterName: string, public type: BaseType | undefined) {}
+    constructor(public parameterName: string, public type: BaseType) {}
 }
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
@@ -17,7 +18,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ConditionalType;
     }
 
-    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
         const checkType = this.childNodeParser.createType(node.checkType, context);
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
@@ -39,7 +40,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
 
         // Follow the relevant branches and return the results from them
         const results: BaseType[] = [];
-        if (trueCheckType !== undefined) {
+        if (!(trueCheckType instanceof NeverType)) {
             const result = this.childNodeParser.createType(
                 node.trueType,
                 this.createSubContext(node, context, new CheckType(checkTypeParameterName, trueCheckType), inferMap)
@@ -48,7 +49,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
                 results.push(result);
             }
         }
-        if (falseCheckType !== undefined) {
+        if (!(falseCheckType instanceof NeverType)) {
             const result = this.childNodeParser.createType(
                 node.falseType,
                 this.createSubContext(node, context, new CheckType(checkTypeParameterName, falseCheckType))

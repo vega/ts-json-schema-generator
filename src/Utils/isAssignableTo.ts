@@ -18,6 +18,7 @@ import { NumberType } from "../Type/NumberType";
 import { BooleanType } from "../Type/BooleanType";
 import { InferType } from "../Type/InferType";
 import { RestType } from "../Type/RestType";
+import { NeverType } from "../Type/NeverType";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -87,8 +88,8 @@ function getPrimitiveType(value: LiteralValue) {
  * @return True if source type is assignable to target type.
  */
 export function isAssignableTo(
-    target: BaseType | undefined,
-    source: BaseType | undefined,
+    target: BaseType,
+    source: BaseType,
     inferMap: Map<string, BaseType> = new Map(),
     insideTypes: Set<BaseType> = new Set()
 ): boolean {
@@ -97,12 +98,12 @@ export function isAssignableTo(
     target = derefType(target);
 
     // Type "never" can be assigned to anything
-    if (source === undefined) {
+    if (source instanceof NeverType) {
         return true;
     }
 
-    // Nothing can be assigned to undefined (e.g. never-type)
-    if (target === undefined) {
+    // Nothing can be assigned to "never"
+    if (target instanceof NeverType) {
         return false;
     }
 
@@ -262,7 +263,7 @@ export function isAssignableTo(
                 if (i == numTarget - 1) {
                     if (numTarget <= numSource + 1) {
                         if (targetMember instanceof RestType) {
-                            const remaining: Array<BaseType | undefined> = [];
+                            const remaining: Array<BaseType> = [];
                             for (let j = i; j < numSource; j++) {
                                 remaining.push(sourceMembers[j]);
                             }
@@ -293,13 +294,6 @@ export function isAssignableTo(
                         return true;
                     }
                 } else {
-                    // FIXME: This clause is necessary because of the ambiguous
-                    // definition of `undefined`. This function assumes that when
-                    // source=undefined it may always be assigned, as
-                    // `undefined` should refer to `never`. However in this
-                    // case, source may be undefined because numTarget >
-                    // numSource, and this function should return false
-                    // instead.
                     if (sourceMember === undefined) {
                         return false;
                     }

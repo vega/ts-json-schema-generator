@@ -4,8 +4,8 @@ import { BaseType } from "./BaseType";
 import { InferType } from "./InferType";
 import { RestType } from "./RestType";
 
-function normalize(types: Readonly<Array<BaseType | undefined>>): Array<BaseType | undefined> {
-    let normalized: Array<BaseType | undefined> = [];
+function normalize(types: Readonly<Array<BaseType>>): Array<BaseType> {
+    let normalized: Array<BaseType> = [];
 
     for (const type of types) {
         if (type instanceof RestType) {
@@ -22,9 +22,9 @@ function normalize(types: Readonly<Array<BaseType | undefined>>): Array<BaseType
 }
 
 export class TupleType extends BaseType {
-    private types: Readonly<Array<BaseType | undefined>>;
+    private types: Readonly<Array<BaseType>>;
 
-    public constructor(types: Readonly<Array<BaseType | undefined>>) {
+    public constructor(types: Readonly<Array<BaseType>>) {
         super();
 
         this.types = normalize(types);
@@ -34,7 +34,7 @@ export class TupleType extends BaseType {
         return `[${this.types.map((item) => item?.getId() ?? "never").join(",")}]`;
     }
 
-    public getTypes(): Readonly<Array<BaseType | undefined>> {
+    public getTypes(): Readonly<Array<BaseType>> {
         return this.types;
     }
 }

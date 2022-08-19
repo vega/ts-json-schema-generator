@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { UnionType } from "../Type/UnionType";
 
-function* _extractLiterals(type: BaseType | undefined): Iterable<string> {
+function* _extractLiterals(type: BaseType): Iterable<string> {
     if (!type) {
         return;
     }
@@ -26,6 +26,6 @@ function* _extractLiterals(type: BaseType | undefined): Iterable<string> {
     throw new UnknownTypeError(type);
 }
 
-export function extractLiterals(type: BaseType | undefined): string[] {
+export function extractLiterals(type: BaseType): string[] {
     return [..._extractLiterals(type)];
 }
