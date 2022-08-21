@@ -5730,9 +5730,9 @@ vega-label@~1.2.0:
     vega-util "^1.15.2"
 
 vega-lite@^5.4.0:
-  version "5.4.0"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.4.0.tgz#d09331e2a1c87843d5865de0fa7704919796ab56"
-  integrity sha512-e/P5iOtBE62WEWZhKP7sLcBd92YS9prfUQafelxoOeloooSSrkUwM/ZDmN5Q5ffByEZTiKfODtnwD6/xKDYUmw==
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.5.0.tgz#07345713d538cd63278748ec119c261722be66ff"
+  integrity sha512-MQBJt/iaUegvhRTS/hZVWfMOSF5ai4awlR2qtwTgHd84bErf9v7GtaZ9ArhJqXCb+FizvZ2jatmoYCzovgAhkg==
   dependencies:
     "@types/clone" "~2.1.1"
     array-flat-polyfill "^1.0.1"
