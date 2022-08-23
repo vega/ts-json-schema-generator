@@ -1,18 +1,22 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/Beta",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Beta": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
+        "alphaKeyofProp": {
+          "type": [
+            "number",
+            "null",
+            "string"
+          ]
+        },
         "alphaNumberDefaultProp": {
           "type": "number"
         },
         "alphaNumberWithoutDefaultProp": {
           "type": "number"
-        },
-        "stringProp": {
-          "type": "string"
         },
         "alphaStringProp": {
           "type": "string"
@@ -24,12 +28,8 @@
             "string"
           ]
         },
-        "alphaKeyofProp": {
-          "type": [
-            "number",
-            "null",
-            "string"
-          ]
+        "stringProp": {
+          "type": "string"
         }
       },
       "required": [
@@ -40,7 +40,7 @@
         "alphaUnionProp",
         "alphaKeyofProp"
       ],
-      "additionalProperties": false
+      "type": "object"
     }
   }
 }
