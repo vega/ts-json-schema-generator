@@ -17,6 +17,9 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
+        // FIXME: Filtering never types from union types is wrong. However,
+        // disabling this line will result in regressions of tests using the
+        // `hidden` tag.
         const definitions = type
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
@@ -28,12 +31,19 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 return definitions[0];
             }
 
-            let kindTypes = type.getTypes().map((type) => getTypeByKey(type, new LiteralType(discriminator)));
+            let kindTypes = type
+                .getTypes()
+                .filter((item) => !(derefType(item) instanceof NeverType))
+                .map((type) => getTypeByKey(type, new LiteralType(discriminator)));
 
             const undefinedIndex = kindTypes.findIndex((type) => type === undefined);
 
             if (undefinedIndex != -1) {
-                throw new Error(`Cannot apply discriminator keyword ${discriminator}. To type ${type}.`);
+                throw new Error(
+                    `Cannot find discriminator keyword "${discriminator}" in type ${JSON.stringify(
+                        type.getTypes()[undefinedIndex]
+                    )}.`
+                );
             }
 
             const kindDefinitions = kindTypes.map((type) => this.childTypeFormatter.getDefinition(type as BaseType));
