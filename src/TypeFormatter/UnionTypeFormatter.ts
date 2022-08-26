@@ -2,10 +2,12 @@ import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
+import { LiteralType } from "../Type/LiteralType";
 import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
 import { derefType } from "../Utils/derefType";
+import { getTypeByKey } from "../Utils/typeKeys";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
@@ -19,6 +21,36 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
             .map((item) => this.childTypeFormatter.getDefinition(item));
+
+        const discriminator = type.getDiscriminator();
+        if (discriminator !== undefined) {
+            if (definitions.length === 1) {
+                return definitions[0];
+            }
+
+            let kindTypes = type.getTypes().map((type) => getTypeByKey(type, new LiteralType(discriminator)));
+
+            const undefinedIndex = kindTypes.findIndex((type) => type === undefined);
+
+            if (undefinedIndex != -1) {
+                throw new Error(`Cannot apply discriminator keyword ${discriminator}. To type ${type}.`);
+            }
+
+            const kindDefinitions = kindTypes.map((type) => this.childTypeFormatter.getDefinition(type as BaseType));
+
+            let allOf = [];
+
+            for (let i = 0; i < definitions.length; i++) {
+                allOf.push({
+                    if: {
+                        properties: { [discriminator]: kindDefinitions[i] },
+                    },
+                    then: definitions[i],
+                });
+            }
+
+            return { allOf };
+        }
 
         // TODO: why is this not covered by LiteralUnionTypeFormatter?
         // special case for string literals | string -> string
