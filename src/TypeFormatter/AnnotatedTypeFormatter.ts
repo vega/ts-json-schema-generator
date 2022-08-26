@@ -52,7 +52,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         return type instanceof AnnotatedType;
     }
     public getDefinition(type: AnnotatedType): Definition {
-        let annotations = type.getAnnotations();
+        const annotations = type.getAnnotations();
 
         if ("discriminator" in annotations) {
             const derefed = derefType(type.getType());

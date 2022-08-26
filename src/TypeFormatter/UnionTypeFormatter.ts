@@ -31,12 +31,12 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 return definitions[0];
             }
 
-            let kindTypes = type
+            const kindTypes = type
                 .getTypes()
                 .filter((item) => !(derefType(item) instanceof NeverType))
-                .map((type) => getTypeByKey(type, new LiteralType(discriminator)));
+                .map((item) => getTypeByKey(item, new LiteralType(discriminator)));
 
-            const undefinedIndex = kindTypes.findIndex((type) => type === undefined);
+            const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
 
             if (undefinedIndex != -1) {
                 throw new Error(
@@ -46,9 +46,9 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 );
             }
 
-            const kindDefinitions = kindTypes.map((type) => this.childTypeFormatter.getDefinition(type as BaseType));
+            const kindDefinitions = kindTypes.map((item) => this.childTypeFormatter.getDefinition(item as BaseType));
 
-            let allOf = [];
+            const allOf = [];
 
             for (let i = 0; i < definitions.length; i++) {
                 allOf.push({
