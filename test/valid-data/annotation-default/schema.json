@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyNestedObject": {
+      "default": {},
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "arrayField": {
+          "default": [
+            {
+              "anyField": null,
+              "numberField2": 10,
+              "stringField2": "yes"
+            }
+          ],
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "anyField": {},
+              "numberField2": {
+                "type": "number"
+              },
+              "stringField2": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "numberField2",
+              "stringField2"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "booleanField": {
+          "default": true,
+          "type": "boolean"
+        },
+        "nestedField": {
+          "$ref": "#/definitions/MyNestedObject",
+          "default": {
+            "extra": {
+              "field": "value"
+            }
+          }
+        },
+        "nullField": {
+          "default": null,
+          "type": "null"
+        },
+        "numberField": {
+          "default": 10,
+          "type": "number"
+        },
+        "stringField": {
+          "default": "hello",
+          "type": "string"
+        }
+      },
+      "required": [
+        "nestedField",
+        "numberField",
+        "stringField",
+        "nullField",
+        "arrayField"
+      ],
+      "type": "object"
+    }
+  }
+}
