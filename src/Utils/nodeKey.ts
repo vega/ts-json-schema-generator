@@ -32,15 +32,19 @@ export function hash(a: unknown): string | number {
 
 export function getKey(node: Node, context: Context): string {
     const ids: (number | string)[] = [];
+
     while (node) {
-        const file = node
-            .getSourceFile()
-            .fileName.substr(process.cwd().length + 1)
-            .replace(/\//g, "_");
+        const source = node.getSourceFile();
+        const file = !source
+            ? // TODO: Use better filename for unknown files
+              "unresolved"
+            : source.fileName.substring(process.cwd().length + 1).replace(/\//g, "_");
+
         ids.push(hash(file), node.pos, node.end);
 
         node = node.parent;
     }
+
     const id = ids.join("-");
 
     const argumentIds = context.getArguments().map((arg) => arg?.getId());
