@@ -23,9 +23,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
         let typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
 
-        // CHANGED HERE
-        //
-        // @ts-expect-error - Handle promise type
+        // @ts-expect-error - Unwraps promise type with recursion
         if ((typeSymbol?.name || node.typeName.escapedText) === "Promise") {
             return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
         }
