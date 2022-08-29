@@ -34,7 +34,7 @@ export class SchemaGenerator {
         const definitions: StringMap<Definition> = {};
         rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
 
-        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions, this.config);
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),

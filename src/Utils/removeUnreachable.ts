@@ -1,21 +1,23 @@
 import { JSONSchema7Definition } from "json-schema";
+import { Config } from "../..";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
-const DEFINITION_OFFSET = "#/definitions/".length;
+export const DEFINITION = "#/definitions/";
 
 function addReachable(
     definition: Definition | JSONSchema7Definition,
     definitions: StringMap<Definition>,
-    reachable: Set<string>
+    reachable: Set<string>,
+    config?: Config
 ) {
     if (typeof definition === "boolean") {
         return;
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
-        if (reachable.has(typeName) || !isLocalRef(definition.$ref)) {
+        const typeName = decodeURIComponent(definition.$ref.replace(DEFINITION, ""));
+        if (reachable.has(typeName) || (config?.useDefinitions && !isLocalRef(definition.$ref))) {
             // we've already processed this definition, or this definition refers to an external schema
             return;
         }
@@ -63,7 +65,8 @@ function addReachable(
 
 export function removeUnreachable(
     rootTypeDefinition: Definition | undefined,
-    definitions: StringMap<Definition>
+    definitions: StringMap<Definition>,
+    config?: Config
 ): StringMap<Definition> {
     if (!rootTypeDefinition) {
         return definitions;
@@ -71,7 +74,7 @@ export function removeUnreachable(
 
     const reachable = new Set<string>();
 
-    addReachable(rootTypeDefinition, definitions, reachable);
+    addReachable(rootTypeDefinition, definitions, reachable, config);
 
     const out: StringMap<Definition> = {};
 

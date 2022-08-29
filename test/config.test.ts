@@ -3,10 +3,10 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
-import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
+import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
@@ -51,6 +51,11 @@ function assertSchema(
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
+
+        /// false useDefinitions emits "invalid" json schemas.
+        if (config.useDefinitions === false) {
+            return;
+        }
 
         const validator = new Ajv({
             // skip full check if we are not encoding refs
@@ -144,6 +149,17 @@ export class ExampleNullParser implements SubNodeParser {
 }
 
 describe("config", () => {
+    it(
+        "use-definitions",
+        assertSchema("use-definitions", {
+            type: "MyObject",
+            expose: "all",
+            encodeRefs: false,
+            jsDoc: "none",
+            useDefinitions: false,
+        })
+    );
+
     it(
         "expose-all-topref-true",
         assertSchema("expose-all-topref-true", {

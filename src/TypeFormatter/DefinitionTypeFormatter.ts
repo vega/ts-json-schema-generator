@@ -3,6 +3,7 @@ import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { DEFINITION } from "../Utils/removeUnreachable";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class DefinitionTypeFormatter implements SubTypeFormatter {
@@ -19,7 +20,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: DefinitionType): Definition {
         const ref = type.getName();
         return {
-            $ref: `${this.useDefinitions ? "#/definitions/" : ""}${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
+            $ref: `${this.useDefinitions ? DEFINITION : ""}${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
         };
     }
 

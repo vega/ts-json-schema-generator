@@ -4,16 +4,23 @@ import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
+import { DEFINITION } from "../Utils/removeUnreachable";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
-    public constructor(protected childTypeFormatter: TypeFormatter, protected encodeRefs: boolean) {}
+    public constructor(
+        protected childTypeFormatter: TypeFormatter,
+        protected encodeRefs: boolean,
+        protected useDefinitions: boolean
+    ) {}
 
     public supportsType(type: ReferenceType): boolean {
         return type instanceof ReferenceType;
     }
     public getDefinition(type: ReferenceType): Definition {
         const ref = type.getName();
-        return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
+        return {
+            $ref: `${this.useDefinitions ? DEFINITION : ""}${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
+        };
     }
     public getChildren(type: ReferenceType): BaseType[] {
         const referredType = type.getType();
