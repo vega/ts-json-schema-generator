@@ -60,7 +60,13 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
         .addTypeFormatter(new LiteralTypeFormatter())
         .addTypeFormatter(new EnumTypeFormatter())
 
-        .addTypeFormatter(new ReferenceTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))
+        .addTypeFormatter(
+            new ReferenceTypeFormatter(
+                circularReferenceTypeFormatter,
+                config.encodeRefs ?? true,
+                config.useDefinitions ?? true
+            )
+        )
         .addTypeFormatter(
             new DefinitionTypeFormatter(
                 circularReferenceTypeFormatter,
