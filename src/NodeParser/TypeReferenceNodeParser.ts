@@ -8,7 +8,7 @@ import { ArrayType } from "../Type/ArrayType";
 import type { BaseType } from "../Type/BaseType";
 import { StringType } from "../Type/StringType";
 
-const invlidTypes: { [index: number]: boolean } = {
+const invalidTypes: Record<number, boolean> = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
     [ts.SyntaxKind.VariableDeclaration]: true,
 };
@@ -21,24 +21,22 @@ export class TypeReferenceNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
-        let typeSymbol = this.typeChecker.getSymbolAtLocation(node.typeName)!;
-
-        // @ts-expect-error - Unwraps promise type with recursion
-        if ((typeSymbol?.name || node.typeName.escapedText) === "Promise") {
-            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
-        }
-
-        if (!typeSymbol) {
+        const typeSymbol =
+            this.typeChecker.getSymbolAtLocation(node.typeName) ||
             //@ts-expect-error - If the node doesn't have a valid source file, typeSymbol gets undefined
-            // but we may have a typeName with a valid symbol
-            typeSymbol = node.typeName.symbol;
+            // but we may have a typeName with a valid symbol.
+            (node.typeName.symbol as ts.Symbol);
+
+        // Wraps promise type to avoid resolving to a empty Object type.
+        if (typeSymbol.name === "Promise") {
+            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 
             return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0]!,
+                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0]!,
 
                 this.createSubContext(node, context)
             );
@@ -63,19 +61,20 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         return this.childNodeParser.createType(
-            typeSymbol.declarations!.filter((n: ts.Declaration) => !invlidTypes[n.kind])[0]!,
+            typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0]!,
             this.createSubContext(node, context)
         );
     }
 
-    private createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {
+    protected createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {
         const subContext = new Context(node);
-        if (node.typeArguments && node.typeArguments.length) {
+
+        if (node.typeArguments?.length) {
             for (const typeArg of node.typeArguments) {
-                const type = this.childNodeParser.createType(typeArg, parentContext);
-                subContext.pushArgument(type);
+                subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
             }
         }
+
         return subContext;
     }
 }
