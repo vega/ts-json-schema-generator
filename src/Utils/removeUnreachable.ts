@@ -4,6 +4,7 @@ import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
 export const DEFINITION = "#/definitions/";
+const DEFINITION_OFFSET = DEFINITION.length;
 
 function addReachable(
     definition: Definition | JSONSchema7Definition,
@@ -16,16 +17,25 @@ function addReachable(
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.replace(DEFINITION, ""));
-        if (reachable.has(typeName) || (config?.useDefinitions && !isLocalRef(definition.$ref))) {
+        const useDefinitions = config?.useDefinitions ?? true;
+
+        const typeName = decodeURIComponent(
+            useDefinitions ? definition.$ref.slice(DEFINITION_OFFSET) : definition.$ref
+        );
+
+        if (reachable.has(typeName) || (useDefinitions && !isLocalRef(definition.$ref))) {
             // we've already processed this definition, or this definition refers to an external schema
             return;
         }
+
         reachable.add(typeName);
+
         const refDefinition = definitions[typeName];
+
         if (!refDefinition) {
             throw new Error(`Encountered a reference to a missing definition: "${definition.$ref}". This is a bug.`);
         }
+
         addReachable(refDefinition, definitions, reachable);
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
