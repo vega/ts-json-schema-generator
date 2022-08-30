@@ -36,7 +36,7 @@ export function getKey(node: Node, context: Context): string {
     while (node) {
         const source = node.getSourceFile();
         const file = !source
-            ? // TODO: Use better filename for unknown files
+            ? // TODO: Use better filename for unknown files (See #1386)
               "unresolved"
             : source.fileName.substring(process.cwd().length + 1).replace(/\//g, "_");
 
