@@ -1,4 +1,5 @@
 import { assertValidSchema } from "./utils";
+import * as annotationDefaultSamples from "./valid-data/annotation-default/samples";
 
 describe("valid-data-annotations", () => {
     it(
@@ -32,6 +33,34 @@ describe("valid-data-annotations", () => {
     );
 
     it("annotation-comment", assertValidSchema("annotation-comment", "MyObject", "extended"));
+
+    it("annotation-default", function () {
+        // Without actually using the defaults.
+        assertValidSchema("annotation-default", "MyObject", "extended", [], undefined, {
+            validSamples: annotationDefaultSamples.validSamples,
+            invalidSamples: annotationDefaultSamples.invalidSamplesUnlessDefaults,
+        })();
+
+        // Having AJV use the defaults.
+
+        // Since AJV will mutate, make
+        // shallow copies.
+        const validWithDefaults = annotationDefaultSamples.invalidSamplesUnlessDefaults.map((sample) => ({
+            ...sample,
+        }));
+
+        assertValidSchema("annotation-default", "MyObject", "extended", [], undefined, {
+            validSamples: validWithDefaults,
+            ajvOptions: { useDefaults: true },
+        })();
+
+        // The previously-invalid samples
+        // should now match the expected
+        // structure when all defaults are applied.
+        validWithDefaults.forEach((sample) => {
+            expect(sample).toEqual(annotationDefaultSamples.expectedAfterDefaults);
+        });
+    });
 
     it("annotation-example", assertValidSchema("annotation-example", "MyObject", "extended"));
 
