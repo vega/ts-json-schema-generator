@@ -17,9 +17,6 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
-        // FIXME: Filtering never types from union types is wrong. However,
-        // disabling this line will result in regressions of tests using the
-        // `hidden` tag.
         const definitions = type
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
@@ -27,10 +24,6 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const discriminator = type.getDiscriminator();
         if (discriminator !== undefined) {
-            if (definitions.length === 1) {
-                return definitions[0];
-            }
-
             const kindTypes = type
                 .getTypes()
                 .filter((item) => !(derefType(item) instanceof NeverType))
