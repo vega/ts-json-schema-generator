@@ -19,6 +19,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "comment",
         "contentMediaType",
         "contentEncoding",
+
+        // Custom tag for if-then-else support.
+        "discriminator",
     ]);
     private static jsonTags = new Set<string>([
         "minimum",

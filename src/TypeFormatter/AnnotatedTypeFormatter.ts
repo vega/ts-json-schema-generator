@@ -2,7 +2,9 @@ import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { BaseType } from "../Type/BaseType";
+import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { derefType } from "../Utils/derefType";
 
 export function makeNullable(def: Definition): Definition {
     const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
@@ -50,6 +52,22 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         return type instanceof AnnotatedType;
     }
     public getDefinition(type: AnnotatedType): Definition {
+        const annotations = type.getAnnotations();
+
+        if ("discriminator" in annotations) {
+            const derefed = derefType(type.getType());
+            if (derefed instanceof UnionType) {
+                derefed.setDiscriminator(annotations.discriminator);
+                delete annotations.discriminator;
+            } else {
+                throw new Error(
+                    `Cannot assign discriminator tag to type: ${JSON.stringify(
+                        derefed
+                    )}. This tag can only be assigned to union types.`
+                );
+            }
+        }
+
         const def: Definition = {
             ...this.childTypeFormatter.getDefinition(type.getType()),
             ...type.getAnnotations(),
