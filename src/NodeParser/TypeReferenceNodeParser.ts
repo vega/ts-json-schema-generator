@@ -22,7 +22,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
     public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
         const typeSymbol =
-            this.typeChecker.getSymbolAtLocation(node.typeName) ||
+            this.typeChecker.getSymbolAtLocation(node.typeName) ??
             // When the node doesn't have a valid source file, its position is -1, so we can't
             // search for a symbol based on its location. In that case, the ts.factory defines a symbol
             // property on the node itself.
