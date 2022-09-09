@@ -64,6 +64,8 @@ function addReachable(
         } else if (items) {
             addReachable(items, definitions, reachable, useDefinitions);
         }
+    } else if (definition.then) {
+        addReachable(definition.then, definitions, reachable);
     }
 }
 

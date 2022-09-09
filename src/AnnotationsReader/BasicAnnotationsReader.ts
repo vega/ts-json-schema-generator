@@ -19,6 +19,9 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         "comment",
         "contentMediaType",
         "contentEncoding",
+
+        // Custom tag for if-then-else support.
+        "discriminator",
     ]);
     private static jsonTags = new Set<string>([
         "minimum",
@@ -93,10 +96,13 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         if (isTextTag) {
             return text;
-        } else if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
-            return this.parseJson(text) ?? text;
+        }
+        let parsed = this.parseJson(text);
+        parsed = parsed === undefined ? text : parsed;
+        if (BasicAnnotationsReader.jsonTags.has(jsDocTag.name)) {
+            return parsed;
         } else if (this.extraTags?.has(jsDocTag.name)) {
-            return this.parseJson(text) ?? text;
+            return parsed;
         } else {
             // Unknown jsDoc tag.
             return undefined;

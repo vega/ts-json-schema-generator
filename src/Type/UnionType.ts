@@ -5,6 +5,7 @@ import { derefType } from "../Utils/derefType";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
+    private discriminator?: string = undefined;
 
     public constructor(types: readonly BaseType[]) {
         super();
@@ -18,6 +19,14 @@ export class UnionType extends BaseType {
                 return flatTypes;
             }, [] as BaseType[])
         );
+    }
+
+    public setDiscriminator(discriminator: string) {
+        this.discriminator = discriminator;
+    }
+
+    public getDiscriminator() {
+        return this.discriminator;
     }
 
     public getId(): string {

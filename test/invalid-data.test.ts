@@ -13,7 +13,7 @@ function assertSchema(name: string, type: string, message: string) {
             type: type,
             expose: "export",
             topRef: true,
-            jsDoc: "none",
+            jsDoc: "basic",
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
@@ -33,6 +33,28 @@ describe("invalid-data", () => {
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
+    it(
+        "missing-discriminator",
+        assertSchema(
+            "missing-discriminator",
+            "MyType",
+            'Cannot find discriminator keyword "type" in type ' +
+                '{"name":"B","type":{"id":"interface-1119825560-40-63-1119825560-0-124",' +
+                '"baseTypes":[],"properties":[],"additionalProperties":false,"nonPrimitive":false}}.'
+        )
+    );
+    it(
+        "non-union-discriminator",
+        assertSchema(
+            "non-union-discriminator",
+            "MyType",
+            "Cannot assign discriminator tag to type: " +
+                '{"id":"interface-2103469249-0-76-2103469249-0-77","baseTypes":[],' +
+                '"properties":[{"name":"name","type":{},"required":true}],' +
+                '"additionalProperties":false,"nonPrimitive":false}. ' +
+                "This tag can only be assigned to union types."
+        )
+    );
     it(
         "no-function-name",
         assertSchema(
