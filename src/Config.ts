@@ -13,8 +13,6 @@ export interface Config {
     encodeRefs?: boolean;
     extraTags?: string[];
     additionalProperties?: boolean;
-    /** If we should include the `#/definitions/` prefix for references  */
-    useDefinitions?: boolean;
 }
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig"> = {
@@ -28,5 +26,4 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     minify: false,
     extraTags: [],
     additionalProperties: false,
-    useDefinitions: true,
 };

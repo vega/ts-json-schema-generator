@@ -52,11 +52,6 @@ function assertSchema(
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
 
-        /// false useDefinitions emits "invalid" json schemas.
-        if (config.useDefinitions === false) {
-            return;
-        }
-
         const validator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
@@ -149,17 +144,6 @@ export class ExampleNullParser implements SubNodeParser {
 }
 
 describe("config", () => {
-    it(
-        "use-definitions",
-        assertSchema("use-definitions", {
-            type: "MyObject",
-            expose: "all",
-            encodeRefs: false,
-            jsDoc: "none",
-            useDefinitions: false,
-        })
-    );
-
     it(
         "expose-all-topref-true",
         assertSchema("expose-all-topref-true", {

@@ -2,67 +2,61 @@ import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
-export const DEFINITION = "#/definitions/";
+const DEFINITION_OFFSET = "#/definitions/".length;
 
 function addReachable(
     definition: Definition | JSONSchema7Definition,
     definitions: StringMap<Definition>,
-    reachable: Set<string>,
-    useDefinitions: boolean
+    reachable: Set<string>
 ) {
     if (typeof definition === "boolean") {
         return;
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.replace(DEFINITION, ""));
-
-        if (reachable.has(typeName) || (useDefinitions && !isLocalRef(definition.$ref))) {
+        const typeName = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
+        if (reachable.has(typeName) || !isLocalRef(definition.$ref)) {
             // we've already processed this definition, or this definition refers to an external schema
             return;
         }
-
         reachable.add(typeName);
-
         const refDefinition = definitions[typeName];
-
         if (!refDefinition) {
             throw new Error(`Encountered a reference to a missing definition: "${definition.$ref}". This is a bug.`);
         }
-
-        addReachable(refDefinition, definitions, reachable, useDefinitions);
+        addReachable(refDefinition, definitions, reachable);
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
-            addReachable(def, definitions, reachable, useDefinitions);
+            addReachable(def, definitions, reachable);
         }
     } else if (definition.allOf) {
         for (const def of definition.allOf) {
-            addReachable(def, definitions, reachable, useDefinitions);
+            addReachable(def, definitions, reachable);
         }
     } else if (definition.oneOf) {
         for (const def of definition.oneOf) {
-            addReachable(def, definitions, reachable, useDefinitions);
+            addReachable(def, definitions, reachable);
         }
     } else if (definition.not) {
-        addReachable(definition.not, definitions, reachable, useDefinitions);
+        addReachable(definition.not, definitions, reachable);
     } else if (definition.type === "object") {
         for (const prop in definition.properties || {}) {
             const propDefinition = definition.properties![prop];
-            addReachable(propDefinition, definitions, reachable, useDefinitions);
+            addReachable(propDefinition, definitions, reachable);
         }
 
         const additionalProperties = definition.additionalProperties;
         if (additionalProperties) {
-            addReachable(additionalProperties, definitions, reachable, useDefinitions);
+            addReachable(additionalProperties, definitions, reachable);
         }
     } else if (definition.type === "array") {
         const items = definition.items;
         if (Array.isArray(items)) {
             for (const item of items) {
-                addReachable(item, definitions, reachable, useDefinitions);
+                addReachable(item, definitions, reachable);
             }
         } else if (items) {
-            addReachable(items, definitions, reachable, useDefinitions);
+            addReachable(items, definitions, reachable);
         }
     } else if (definition.then) {
         addReachable(definition.then, definitions, reachable);
@@ -71,8 +65,7 @@ function addReachable(
 
 export function removeUnreachable(
     rootTypeDefinition: Definition | undefined,
-    definitions: StringMap<Definition>,
-    useDefinitions: boolean
+    definitions: StringMap<Definition>
 ): StringMap<Definition> {
     if (!rootTypeDefinition) {
         return definitions;
@@ -80,7 +73,7 @@ export function removeUnreachable(
 
     const reachable = new Set<string>();
 
-    addReachable(rootTypeDefinition, definitions, reachable, useDefinitions);
+    addReachable(rootTypeDefinition, definitions, reachable);
 
     const out: StringMap<Definition> = {};
 

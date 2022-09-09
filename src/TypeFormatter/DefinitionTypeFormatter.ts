@@ -7,11 +7,7 @@ import { DEFINITION } from "../Utils/removeUnreachable";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class DefinitionTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        protected childTypeFormatter: TypeFormatter,
-        protected encodeRefs: boolean,
-        protected useDefinitions: boolean
-    ) {}
+    public constructor(protected childTypeFormatter: TypeFormatter, protected encodeRefs: boolean) {}
 
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;
@@ -20,7 +16,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: DefinitionType): Definition {
         const ref = type.getName();
         return {
-            $ref: `${this.useDefinitions ? DEFINITION : ""}${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
+            $ref: `${DEFINITION}${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
         };
     }
 
