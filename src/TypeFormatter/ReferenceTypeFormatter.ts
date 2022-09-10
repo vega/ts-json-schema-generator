@@ -13,9 +13,7 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: ReferenceType): Definition {
         const ref = type.getName();
-        return {
-            $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
-        };
+        return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
     }
     public getChildren(type: ReferenceType): BaseType[] {
         const referredType = type.getType();

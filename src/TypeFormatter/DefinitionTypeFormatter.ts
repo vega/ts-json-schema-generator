@@ -11,14 +11,10 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;
     }
-
     public getDefinition(type: DefinitionType): Definition {
         const ref = type.getName();
-        return {
-            $ref: `#/references/${this.encodeRefs ? encodeURIComponent(ref) : ref}`,
-        };
+        return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
     }
-
     public getChildren(type: DefinitionType): BaseType[] {
         return uniqueArray([type, ...this.childTypeFormatter.getChildren(type.getType())]);
     }
