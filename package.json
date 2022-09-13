@@ -53,8 +53,8 @@
     "typescript": "~4.8.3"
   },
   "devDependencies": {
-    "@auto-it/conventional-commits": "^10.37.5",
-    "@auto-it/first-time-contributor": "^10.37.5",
+    "@auto-it/conventional-commits": "^10.37.6",
+    "@auto-it/first-time-contributor": "^10.37.6",
     "@babel/core": "^7.19.0",
     "@babel/preset-env": "^7.19.0",
     "@babel/preset-typescript": "^7.18.6",
@@ -66,7 +66,7 @@
     "@typescript-eslint/parser": "^5.37.0",
     "ajv": "^8.11.0",
     "ajv-formats": "^2.1.1",
-    "auto": "^10.37.5",
+    "auto": "^10.37.6",
     "chai": "^4.3.6",
     "cross-env": "^7.0.3",
     "eslint": "^8.23.1",
