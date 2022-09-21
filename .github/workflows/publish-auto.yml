@@ -22,7 +22,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Node dependencies
         run: yarn --frozen-lockfile
@@ -30,5 +30,6 @@ jobs:
       - name: Create release
         run: npm run release
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
