@@ -22,11 +22,13 @@ import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { FunctionParser } from "../src/NodeParser/FunctionParser";
 import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
+import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser";
 import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
 import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
 import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
+import { NamedTupleMemberNodeParser } from "../src/NodeParser/NamedTupleMemberNodeParser";
 import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
 import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
 import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
@@ -120,8 +122,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
 
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
-
-        .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
+        .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new InferTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
@@ -130,6 +132,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new UnionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IntersectionNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TupleNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new NamedTupleMemberNodeParser(chainNodeParser))
         .addNodeParser(new OptionalTypeNodeParser(chainNodeParser))
         .addNodeParser(new RestTypeNodeParser(chainNodeParser))
 

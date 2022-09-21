@@ -1,5 +1,6 @@
 import { BaseType } from "../Type/BaseType";
 import { EnumType } from "../Type/EnumType";
+import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 import { derefType } from "./derefType";
 
@@ -16,11 +17,11 @@ import { derefType } from "./derefType";
  * @return The narrowed down type.
  */
 export function narrowType(
-    type: BaseType | undefined,
+    type: BaseType,
     // TODO: remove the next line
     // eslint-disable-next-line no-shadow
-    predicate: (type: BaseType | undefined) => boolean
-): BaseType | undefined {
+    predicate: (type: BaseType) => boolean
+): BaseType {
     const derefed = derefType(type);
     if (derefed instanceof UnionType || derefed instanceof EnumType) {
         let changed = false;
@@ -30,7 +31,7 @@ export function narrowType(
 
             // Recursively narrow down all types within the union
             const narrowed = narrowType(derefedSub, predicate);
-            if (narrowed !== undefined) {
+            if (!(narrowed instanceof NeverType)) {
                 if (narrowed === derefedSub) {
                     types.push(sub);
                 } else {
@@ -46,7 +47,7 @@ export function narrowType(
         // keep definitions
         if (changed) {
             if (types.length === 0) {
-                return undefined;
+                return new NeverType();
             } else if (types.length === 1) {
                 return types[0];
             } else {
@@ -55,5 +56,5 @@ export function narrowType(
         }
         return type;
     }
-    return predicate(derefed) ? type : undefined;
+    return predicate(derefed) ? type : new NeverType();
 }

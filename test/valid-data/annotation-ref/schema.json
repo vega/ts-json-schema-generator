@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "myObject": {
+          "$ref": "http://json-schema.org/draft-07/schema#",
+          "description": "MyObject description",
+          "title": "MyObject title"
+        },
+        "nested": {
+          "$ref": "http://json-schema.org/draft-07/schema#",
+          "description": "Nested description",
+          "title": "Nested title"
+        }
+      },
+      "required": [
+        "nested",
+        "myObject"
+      ],
+      "type": "object"
+    }
+  }
+}

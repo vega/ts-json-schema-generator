@@ -7,6 +7,7 @@ import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
 import { EnumType, EnumValue } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
+import { NeverType } from "../Type/NeverType";
 import { NumberType } from "../Type/NumberType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
@@ -15,7 +16,6 @@ import { UnionType } from "../Type/UnionType";
 import assert from "../Utils/assert";
 import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
-import { notUndefined } from "../Utils/notUndefined";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 
@@ -26,7 +26,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.MappedType;
     }
 
-    public createType(node: ts.MappedTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.MappedTypeNode, context: Context): BaseType {
         const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
         const keyListType = derefType(constraintType);
         const id = `indexed-type-${getKey(node, context)}`;
@@ -42,10 +42,22 @@ export class MappedTypeNodeParser implements SubNodeParser {
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
-        } else if (keyListType instanceof StringType || keyListType instanceof SymbolType) {
+        } else if (
+            keyListType instanceof StringType ||
+            keyListType instanceof NumberType ||
+            keyListType instanceof SymbolType
+        ) {
+            if (constraintType?.getId() === "number") {
+                const type = this.childNodeParser.createType(
+                    node.type!,
+                    this.createSubContext(node, keyListType, context)
+                );
+                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
+            }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
-            const resultType = type === undefined ? undefined : new ObjectType(id, [], [], type);
+            // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
+            const resultType = new ObjectType(id, [], [], type);
             if (resultType && constraintType instanceof AnnotatedType) {
                 const annotations = constraintType.getAnnotations();
                 if (annotations) {
@@ -53,11 +65,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
             }
             return resultType;
-        } else if (keyListType instanceof NumberType) {
-            const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
-            return type === undefined ? undefined : new ArrayType(type);
         } else if (keyListType instanceof EnumType) {
             return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
+        } else if (keyListType instanceof NeverType) {
+            return new ObjectType(id, [], [], false);
         } else {
             throw new LogicError(
                 // eslint-disable-next-line max-len
@@ -82,17 +93,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
             .getTypes()
-            .filter((type) => type instanceof LiteralType)
+            .filter((type): type is LiteralType => type instanceof LiteralType)
             .reduce((result: ObjectProperty[], key: LiteralType) => {
                 const namedKey = this.mapKey(node, key, context);
                 const propertyType = this.childNodeParser.createType(
                     node.type!,
                     this.createSubContext(node, key, context)
                 );
-
-                if (propertyType === undefined) {
-                    return result;
-                }
 
                 let newType = derefAnnotatedType(propertyType);
                 let hasUndefined = false;
@@ -123,13 +130,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     this.createSubContext(node, new LiteralType(value!), context)
                 );
 
-                if (type === undefined) {
-                    return undefined;
-                }
-
                 return new ObjectProperty(value!.toString(), type, !node.questionToken);
-            })
-            .filter(notUndefined);
+            });
     }
 
     protected getAdditionalProperties(

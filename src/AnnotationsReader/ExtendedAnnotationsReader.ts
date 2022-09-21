@@ -1,3 +1,4 @@
+import json5 from "json5";
 import ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
@@ -12,6 +13,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         const annotations: Annotations = {
             ...this.getDescriptionAnnotation(node),
             ...this.getTypeAnnotation(node),
+            ...this.getExampleAnnotation(node),
             ...super.getAnnotations(node),
         };
         return Object.keys(annotations).length ? annotations : undefined;
@@ -69,5 +71,38 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
 
         const text = (jsDocTag.text ?? []).map((part) => part.text).join("");
         return { type: text };
+    }
+    /**
+     * Attempts to gather examples from the @-example jsdoc tag.
+     * See https://tsdoc.org/pages/tags/example/
+     */
+    private getExampleAnnotation(node: ts.Node): Annotations | undefined {
+        const symbol = symbolAtNode(node);
+        if (!symbol) {
+            return undefined;
+        }
+
+        const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
+        if (!jsDocTags || !jsDocTags.length) {
+            return undefined;
+        }
+
+        const examples: unknown[] = [];
+        for (const example of jsDocTags.filter((tag) => tag.name === "example")) {
+            const text = (example.text ?? []).map((part) => part.text).join("");
+            try {
+                examples.push(json5.parse(text));
+            } catch (e) {
+                // ignore examples which don't parse to valid JSON
+                // This could be improved to support a broader range of usages,
+                // such as if the example has a title (as explained in the tsdoc spec).
+            }
+        }
+
+        if (examples.length === 0) {
+            return undefined;
+        }
+
+        return { examples };
     }
 }

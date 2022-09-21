@@ -18,7 +18,7 @@ export class IntrinsicNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IntrinsicKeyword;
     }
-    public createType(node: ts.KeywordTypeNode, context: Context): BaseType | undefined {
+    public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
         const methodName = getParentName(node);
         const method = intrinsicMethods[methodName];
         assert(method, `Unknown intrinsic method: ${methodName}`);

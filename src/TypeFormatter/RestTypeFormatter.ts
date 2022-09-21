@@ -7,12 +7,21 @@ import { TypeFormatter } from "../TypeFormatter";
 export class RestTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: RestType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof RestType;
     }
+
     public getDefinition(type: RestType): Definition {
-        return this.childTypeFormatter.getDefinition(type.getType());
+        const definition = this.childTypeFormatter.getDefinition(type.getType());
+        const title = type.getTitle();
+
+        if (title !== null && typeof definition.items === "object") {
+            return { ...definition, items: { ...definition.items, title } };
+        }
+
+        return definition;
     }
+
     public getChildren(type: RestType): BaseType[] {
         return this.childTypeFormatter.getChildren(type.getType());
     }

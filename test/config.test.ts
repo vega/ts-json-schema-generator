@@ -129,7 +129,7 @@ export class ExampleConstructorParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.ConstructorType;
     }
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         return new StringType();
     }
 }
@@ -138,7 +138,7 @@ export class ExampleNullParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.NullKeyword;
     }
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         return new StringType();
     }
 }

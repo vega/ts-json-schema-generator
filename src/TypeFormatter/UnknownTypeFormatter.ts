@@ -8,7 +8,9 @@ export class UnknownTypeFormatter implements SubTypeFormatter {
         return type instanceof UnknownType;
     }
     public getDefinition(type: UnknownType): Definition {
-        return {};
+        return {
+            $comment: type.getComment(),
+        };
     }
     public getChildren(type: UnknownType): BaseType[] {
         return [];
