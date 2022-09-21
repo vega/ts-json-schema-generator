@@ -2,8 +2,7 @@
     "plugins": [
         "npm",
         "conventional-commits",
-        "first-time-contributor",
-        "released"
+        "first-time-contributor"
     ],
     "baseBranch": "stable",
     "prereleaseBranches": [
