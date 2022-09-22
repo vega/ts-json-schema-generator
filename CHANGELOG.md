@@ -1,3 +1,16 @@
+# v1.1.1 (Thu Sep 22 2022)
+
+#### 🐛 Bug Fix
+
+- fix: Hidden should not cause `additionalProperties` to be `true`. [#1417](https://github.com/vega/ts-json-schema-generator/pull/1417) ([@Jason3S](https://github.com/Jason3S))
+
+#### Authors: 2
+
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Jason Dent ([@Jason3S](https://github.com/Jason3S))
+
+---
+
 # v1.1.0 (Wed Sep 21 2022)
 
 :tada: This release contains work from new contributors! :tada:
