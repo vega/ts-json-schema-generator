@@ -2,7 +2,7 @@ import ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { NeverType } from "../Type/NeverType";
+import { HiddenType } from "../Type/HiddenType";
 import { isNodeHidden } from "../Utils/isHidden";
 
 export class HiddenNodeParser implements SubNodeParser {
@@ -13,6 +13,6 @@ export class HiddenNodeParser implements SubNodeParser {
     }
 
     public createType(_node: ts.KeywordTypeNode, _context: Context): BaseType {
-        return new NeverType();
+        return new HiddenType();
     }
 }

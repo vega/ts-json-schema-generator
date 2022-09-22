@@ -269,8 +269,18 @@ describe("config", () => {
 
     it(
         "jsdoc-hidden-types",
-        assertSchema("jsdoc-hidden", {
-            type: "MyObject",
+        assertSchema("jsdoc-hidden-types", {
+            type: "MyType",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
+
+    it(
+        "jsdoc-hidden-types-intersection",
+        assertSchema("jsdoc-hidden-types-intersection", {
+            type: "MyType",
             expose: "export",
             topRef: true,
             jsDoc: "extended",
