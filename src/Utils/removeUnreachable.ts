@@ -39,7 +39,7 @@ function addReachable(
         }
     } else if (definition.not) {
         addReachable(definition.not, definitions, reachable);
-    } else if (definition.type === "object") {
+    } else if (definition.type?.includes("object")) {
         for (const prop in definition.properties || {}) {
             const propDefinition = definition.properties![prop];
             addReachable(propDefinition, definitions, reachable);
@@ -49,7 +49,7 @@ function addReachable(
         if (additionalProperties) {
             addReachable(additionalProperties, definitions, reachable);
         }
-    } else if (definition.type === "array") {
+    } else if (definition.type?.includes("array")) {
         const items = definition.items;
         if (Array.isArray(items)) {
             for (const item of items) {

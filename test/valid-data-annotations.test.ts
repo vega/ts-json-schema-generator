@@ -73,4 +73,6 @@ describe("valid-data-annotations", () => {
     it("annotation-writeOnly", assertValidSchema("annotation-writeOnly", "MyObject", "basic"));
 
     it("annotation-union-if-then", assertValidSchema("annotation-union-if-then", "Animal", "basic"));
+
+    it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", "MyObject", "extended"));
 });
