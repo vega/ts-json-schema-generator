@@ -1,3 +1,26 @@
+# v1.1.2 (Wed Sep 28 2022)
+
+:tada: This release contains work from a new contributor! :tada:
+
+Thank you, Moyo George ([@ThatOneAwkwardGuy](https://github.com/ThatOneAwkwardGuy)), for all your work!
+
+#### 🐛 Bug Fix
+
+- fix: Definition Not Created When Properties Are Nullable [#1420](https://github.com/vega/ts-json-schema-generator/pull/1420) ([@ThatOneAwkwardGuy](https://github.com/ThatOneAwkwardGuy))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump eslint from 8.23.1 to 8.24.0 [#1421](https://github.com/vega/ts-json-schema-generator/pull/1421) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 18.7.18 to 18.7.20 [#1422](https://github.com/vega/ts-json-schema-generator/pull/1422) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Moyo George ([@ThatOneAwkwardGuy](https://github.com/ThatOneAwkwardGuy))
+
+---
+
 # v1.1.1 (Thu Sep 22 2022)
 
 #### 🐛 Bug Fix
