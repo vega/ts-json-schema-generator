@@ -43,7 +43,10 @@
           "type": "boolean"
         }
       },
-      "required": ["animal_type", "can_fly"],
+      "required": [
+        "animal_type",
+        "can_fly"
+      ],
       "type": "object"
     },
     "Fish": {
@@ -54,11 +57,17 @@
           "type": "string"
         },
         "found_in": {
-          "enum": ["ocean", "river"],
+          "enum": [
+            "ocean",
+            "river"
+          ],
           "type": "string"
         }
       },
-      "required": ["animal_type", "found_in"],
+      "required": [
+        "animal_type",
+        "found_in"
+      ],
       "type": "object"
     }
   }
