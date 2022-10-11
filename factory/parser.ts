@@ -157,7 +157,13 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(
             withCircular(
                 withExpose(
-                    withJsDoc(new TypeLiteralNodeParser(withJsDoc(chainNodeParser), mergedConfig.additionalProperties))
+                    withJsDoc(
+                        new TypeLiteralNodeParser(
+                            typeChecker,
+                            withJsDoc(chainNodeParser),
+                            mergedConfig.additionalProperties
+                        )
+                    )
                 )
             )
         )
