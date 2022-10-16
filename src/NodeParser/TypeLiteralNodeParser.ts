@@ -9,7 +9,11 @@ import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
-    public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser,
+        protected readonly additionalProperties: boolean
+    ) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
         return node.kind === ts.SyntaxKind.TypeLiteral;
@@ -36,16 +40,12 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = node.members
             .filter(ts.isPropertySignature)
             .filter((propertyNode) => !isNodeHidden(propertyNode))
-            .map((propertyNode) => {
-                const type = this.childNodeParser.createType(propertyNode.type!, context);
-
-                // The following avoids errors when propertySymbol is undefined
-                const name = (propertyNode as any).symbol?.getName() || (propertyNode.name as any).escapedText;
-
-                const objectProperty = new ObjectProperty(name, type, !propertyNode.questionToken);
-
-                return objectProperty;
-            })
+            .map((propertyNode) => new ObjectProperty(
+                    this.getPropertyName(propertyNode.name),
+                    this.childNodeParser.createType(propertyNode.type!, context),
+                    !propertyNode.questionToken
+                )
+            )
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;
@@ -71,5 +71,15 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
     protected getTypeId(node: ts.Node, context: Context): string {
         return `structure-${getKey(node, context)}`;
+    }
+
+    protected getPropertyName(propertyName: ts.PropertyName): string {
+        if (propertyName.kind === ts.SyntaxKind.ComputedPropertyName) {
+            const symbol = this.typeChecker.getSymbolAtLocation(propertyName);
+            if (symbol) {
+                return symbol.getName();
+            }
+        }
+        return propertyName.getText();
     }
 }
