@@ -13,7 +13,7 @@ describe("sourceless-nodes", () => {
         const program = ts.createProgram([SOURCE], {});
         const parser = createParser(program, {});
 
-        // Finds the typescript function declaration node
+        // Finds the Typescript function declaration node
         const source = program.getSourceFile(SOURCE);
         const fn = source!.statements[0] as ts.FunctionDeclaration;
 
