@@ -37,8 +37,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 
             return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0]!,
-
+                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
                 this.createSubContext(node, context)
             );
         }
@@ -62,7 +61,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         return this.childNodeParser.createType(
-            typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0]!,
+            typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
             this.createSubContext(node, context)
         );
     }
