@@ -31,7 +31,8 @@ export class AnnotatedNodeParser implements SubNodeParser {
         const baseType = this.childNodeParser.createType(node, context, reference);
 
         // Don't return annotations for lib types such as Exclude.
-        if (node.getSourceFile().fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
+        // Sourceless nodes may not have a fileName, just ignore them.
+        if (node.getSourceFile()?.fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
             let specialCase = false;
 
             // Special case for Exclude<T, U>: use the annotation of T.

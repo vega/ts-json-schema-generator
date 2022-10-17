@@ -40,16 +40,14 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = node.members
             .filter(ts.isPropertySignature)
             .filter((propertyNode) => !isNodeHidden(propertyNode))
-            .map((propertyNode) => {
-                const type = this.childNodeParser.createType(propertyNode.type!, context);
-                const objectProperty = new ObjectProperty(
-                    this.getPropertyName(propertyNode.name),
-                    type,
-                    !propertyNode.questionToken
-                );
-
-                return objectProperty;
-            })
+            .map(
+                (propertyNode) =>
+                    new ObjectProperty(
+                        this.getPropertyName(propertyNode.name),
+                        this.childNodeParser.createType(propertyNode.type!, context),
+                        !propertyNode.questionToken
+                    )
+            )
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;
@@ -80,10 +78,19 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     protected getPropertyName(propertyName: ts.PropertyName): string {
         if (propertyName.kind === ts.SyntaxKind.ComputedPropertyName) {
             const symbol = this.typeChecker.getSymbolAtLocation(propertyName);
+
             if (symbol) {
                 return symbol.getName();
             }
         }
-        return propertyName.getText();
+
+        try {
+            return propertyName.getText();
+        } catch {
+            // When propertyName was programmatically created, it doesn't have a source file.
+            // Then, getText() will throw an error. But, for programmatically created nodes,`
+            // `escapedText` is available.
+            return (propertyName as ts.Identifier).escapedText as string;
+        }
     }
 }
