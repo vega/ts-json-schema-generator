@@ -65,7 +65,8 @@ try {
     const schema = createGenerator(config).createSchema(args.type);
 
     const stringify = config.sortProps ? stableStringify : JSON.stringify;
-    const schemaString = config.minify ? stringify(schema) : stringify(schema, null, 2);
+    // need as string since TS can't figure out that the string | undefined case doesn't happen
+    const schemaString = (config.minify ? stringify(schema) : stringify(schema, null, 2)) as string;
 
     if (args.out) {
         // write to file

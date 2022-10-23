@@ -2,7 +2,7 @@ import stringify from "safe-stable-stringify";
 import { Node } from "typescript";
 import { Context } from "../NodeParser";
 
-export function hash(a: unknown): string | number {
+export function hash(a: string | boolean | number | (string | boolean | number)[] | object): string | number {
     if (typeof a === "number") {
         return a;
     }
