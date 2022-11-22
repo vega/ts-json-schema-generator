@@ -60,6 +60,10 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return new AnnotatedType(new StringType(), { format: "regex" }, false);
         }
 
+        if (typeSymbol.name === "URL") {
+            return new AnnotatedType(new StringType(), { format: "uri" }, false);
+        }
+
         return this.childNodeParser.createType(
             typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
             this.createSubContext(node, context)

@@ -252,7 +252,7 @@ fs.writeFile(output_path, schemaString, (err) => {
 -   `interface` types
 -   `enum` types
 -   `union`, `tuple`, `type[]` types
--   `Date`, `RegExp` types
+-   `Date`, `RegExp`, `URL` types
 -   `string`, `boolean`, `number` types
 -   `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
 -   type aliases
