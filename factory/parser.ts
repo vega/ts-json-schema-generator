@@ -58,7 +58,15 @@ import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
-export type ParserAugmentor = (parser: MutableParser) => void;
+
+export interface IParserAugmentorContext {
+    withExpose(nodeParser: SubNodeParser): SubNodeParser;
+    withTopRef(nodeParser: NodeParser): NodeParser;
+    withJsDoc(nodeParser: SubNodeParser): SubNodeParser;
+    withCircular(nodeParser: SubNodeParser): SubNodeParser
+}
+
+export type ParserAugmentor = (parser: MutableParser, context: IParserAugmentorContext) => void;
 
 export function createParser(program: ts.Program, config: Config, augmentor?: ParserAugmentor): NodeParser {
     const typeChecker = program.getTypeChecker();
@@ -87,7 +95,12 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
     }
 
     if (augmentor) {
-        augmentor(chainNodeParser);
+        augmentor(chainNodeParser, {
+            withExpose,
+            withTopRef,
+            withJsDoc,
+            withCircular,
+        });
     }
 
     chainNodeParser
