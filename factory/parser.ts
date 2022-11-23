@@ -58,12 +58,13 @@ import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
-
 export interface IParserAugmentorContext {
     withExpose(nodeParser: SubNodeParser): SubNodeParser;
     withTopRef(nodeParser: NodeParser): NodeParser;
     withJsDoc(nodeParser: SubNodeParser): SubNodeParser;
-    withCircular(nodeParser: SubNodeParser): SubNodeParser
+    withCircular(nodeParser: SubNodeParser): SubNodeParser;
+    mergedConfig: Config;
+    typeChecker: ts.TypeChecker;
 }
 
 export type ParserAugmentor = (parser: MutableParser, context: IParserAugmentorContext) => void;
@@ -100,6 +101,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
             withTopRef,
             withJsDoc,
             withCircular,
+            mergedConfig,
+            typeChecker,
         });
     }
 
