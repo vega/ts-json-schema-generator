@@ -25,6 +25,14 @@ npm install --save ts-json-schema-generator
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
 
+### Define a CLI command as a npm script for shortcut usage
+
+Example: `"gen":"./node_modules/.bin/ts-json-schema-generator --path 'my/project/**/*.ts' -o json.schema"` or `"gen": "ts-json-schema-generator --path 'my/project/**/*.ts' -o json.schema"`.
+
+### Use single quotation marks with `*` on `--path` to look for multiple files
+
+This example without quotations `"ts-json-schema-generator --path my/project/**/*.ts -o json.schema.` will only use the first found file in that path. Regardless the path argument is defined in npm script or it is appended in shell command, it would happen.
+
 ## Programmatic Usage
 
 ```js
