@@ -18,12 +18,22 @@ This project is made possible by a [community of contributors](https://github.co
 
 ## CLI Usage
 
+Run the schema generator with npx:
+
+```bash
+npx ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Name'
+```
+
+Or install the package and then run it
+
 ```bash
 npm install --save ts-json-schema-generator
 ./node_modules/.bin/ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Name'
 ```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
+
+Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
 
 ## Programmatic Usage
 
