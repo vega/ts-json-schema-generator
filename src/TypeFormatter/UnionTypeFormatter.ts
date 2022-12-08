@@ -1,4 +1,4 @@
-import { JSONSchema7 } from "json-schema";
+import {JSONSchema7, JSONSchema7Array, JSONSchema7Object} from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
@@ -54,7 +54,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
             const kindValues = kindDefinitions
                 .map((item) => item.const)
-                .filter((item): item is string => typeof item === "string");
+                .filter((item): item is string | number | boolean | null => item !== undefined);
 
             const properties = {
                 [discriminator]: {
