@@ -52,7 +52,17 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 });
             }
 
-            return { allOf };
+            const kindValues = kindDefinitions
+                .map((item) => item.const)
+                .filter((item): item is string => typeof item === "string");
+
+            const properties = {
+                [discriminator]: {
+                    enum: kindValues,
+                },
+            };
+
+            return { type: "object", properties, required: [discriminator], allOf };
         }
 
         // TODO: why is this not covered by LiteralUnionTypeFormatter?
