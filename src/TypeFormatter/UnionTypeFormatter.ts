@@ -1,4 +1,4 @@
-import {JSONSchema7, JSONSchema7Array, JSONSchema7Object} from "json-schema";
+import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
