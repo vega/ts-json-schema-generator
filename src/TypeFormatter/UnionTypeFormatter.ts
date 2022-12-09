@@ -56,6 +56,15 @@ export class UnionTypeFormatter implements SubTypeFormatter {
                 .map((item) => item.const)
                 .filter((item): item is string | number | boolean | null => item !== undefined);
 
+            const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
+            if (duplicates.length > 0) {
+                throw new Error(
+                    `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(
+                        type.getName()
+                    )}.`
+                );
+            }
+
             const properties = {
                 [discriminator]: {
                     enum: kindValues,
