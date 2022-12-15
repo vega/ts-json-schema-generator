@@ -33,6 +33,10 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
         }
 
+        if (!typeSymbol.declarations) {
+            return new AnyType();
+        }
+
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 
