@@ -69,7 +69,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         return this.childNodeParser.createType(
-            typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
+            typeSymbol.declarations.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
             this.createSubContext(node, context)
         );
     }
