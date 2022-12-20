@@ -83,6 +83,7 @@ describe("valid-data-type", () => {
     it("type-mapped-index", assertValidSchema("type-mapped-index", "MyObject"));
     it("type-mapped-index-as", assertValidSchema("type-mapped-index-as", "MyObject"));
     it("type-mapped-index-as-template", assertValidSchema("type-mapped-index-as-template", "MyObject"));
+    it("type-mapped-index-as-with-conditional", assertValidSchema("type-mapped-index-as-with-conditional", "MyObject"));
     it("type-mapped-literal", assertValidSchema("type-mapped-literal", "MyObject"));
     it("type-mapped-generic", assertValidSchema("type-mapped-generic", "MyObject"));
     it("type-mapped-native", assertValidSchema("type-mapped-native", "MyObject"));
