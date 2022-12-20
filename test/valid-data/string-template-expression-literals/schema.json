@@ -24,6 +24,9 @@
         "ok": {
           "const": "id_ok",
           "type": "string"
+        },
+        "num": {
+          "type": "string"
         }
       },
       "required": [
