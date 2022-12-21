@@ -1,7 +1,7 @@
 import ts from "typescript";
+import { UnknownTypeError } from "../Error/UnknownTypeError";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
-import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
@@ -20,35 +20,33 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
         if (node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral) {
             return new LiteralType(node.text);
         }
-        if (
-            node.templateSpans
-                .map((span) => this.childNodeParser.createType(span.type, context))
-                .some(
-                    (type) =>
-                        !(type instanceof LiteralType) && !(type instanceof UnionType) && !(type instanceof AliasType)
-                )
-        ) {
-            return new StringType();
+
+        try {
+            const prefix = node.head.text;
+            const matrix: string[][] = [[prefix]].concat(
+                node.templateSpans.map((span) => {
+                    const suffix = span.literal.text;
+                    const type = this.childNodeParser.createType(span.type, context);
+                    return extractLiterals(type).map((value) => value + suffix);
+                })
+            );
+
+            const expandedLiterals = expand(matrix);
+
+            const expandedTypes = expandedLiterals.map((literal) => new LiteralType(literal));
+
+            if (expandedTypes.length === 1) {
+                return expandedTypes[0];
+            }
+
+            return new UnionType(expandedTypes);
+        } catch (error) {
+            if (error instanceof UnknownTypeError) {
+                return new StringType();
+            }
+
+            throw error;
         }
-
-        const prefix = node.head.text;
-        const matrix: string[][] = [[prefix]].concat(
-            node.templateSpans.map((span) => {
-                const suffix = span.literal.text;
-                const type = this.childNodeParser.createType(span.type, context);
-                return extractLiterals(type).map((value) => value + suffix);
-            })
-        );
-
-        const expandedLiterals = expand(matrix);
-
-        const expandedTypes = expandedLiterals.map((literal) => new LiteralType(literal));
-
-        if (expandedTypes.length === 1) {
-            return expandedTypes[0];
-        }
-
-        return new UnionType(expandedTypes);
     }
 }
 
