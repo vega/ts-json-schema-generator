@@ -3,7 +3,6 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
-import { NumberType } from "../Type/NumberType";
 import { StringType } from "../Type/StringType";
 import { UnionType } from "../Type/UnionType";
 import { extractLiterals } from "../Utils/extractLiterals";
@@ -23,7 +22,7 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
         if (
             node.templateSpans
                 .map((span) => this.childNodeParser.createType(span.type, context))
-                .some((type) => type instanceof NumberType)
+                .some((type) => !(type instanceof LiteralType))
         ) {
             return new StringType();
         }
