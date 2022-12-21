@@ -1,3 +1,4 @@
+import { ConstructorType } from "../src/Type/ConstructorType";
 import { FunctionType } from "../src/Type/FunctionType";
 import { assertMissingFormatterFor, assertValidSchema } from "./utils";
 
@@ -126,6 +127,8 @@ describe("valid-data-type", () => {
     it("type-conditional-infer-rest", assertValidSchema("type-conditional-infer-rest", "MyType"));
     it("type-conditional-infer-tail-recursion", assertValidSchema("type-conditional-infer-tail-recursion", "MyType"));
     it("type-conditional-infer-tuple-xor", assertValidSchema("type-conditional-infer-tuple-xor", "MyType"));
+
+    it("type-constructor", assertMissingFormatterFor(new ConstructorType(), "type-constructor", "MyType"));
 
     it("type-tuple-nested-rest", assertValidSchema("type-tuple-nested-rest", "MyType"));
     it("type-tuple-nested-rest-to-union", assertValidSchema("type-tuple-nested-rest-to-union", "MyType"));
