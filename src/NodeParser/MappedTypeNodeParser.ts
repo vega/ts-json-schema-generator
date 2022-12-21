@@ -13,7 +13,6 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { SymbolType } from "../Type/SymbolType";
 import { UnionType } from "../Type/UnionType";
-import assert from "../Utils/assert";
 import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
