@@ -29,7 +29,7 @@
           "type": "string"
         },
         "bool": {
-          "enum": ["true", "false"],
+          "enum": ["true!", "false!"],
           "type": "string"
         }
       },
