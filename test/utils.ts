@@ -8,7 +8,9 @@ import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
+import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { BaseType } from "../src/Type/BaseType";
 
 const validator = new Ajv();
 addFormats(validator);
@@ -109,6 +111,16 @@ export function assertValidSchema(
                 }
                 expect(isValid).toBe(true);
             }
+        }
+    };
+}
+
+export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
+    return (): void => {
+        try {
+            assertValidSchema(relativePath, type)();
+        } catch (error) {
+            expect(error).toEqual(new UnknownTypeError(missingType));
         }
     };
 }

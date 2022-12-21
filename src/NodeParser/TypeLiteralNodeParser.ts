@@ -1,7 +1,8 @@
-import ts from "typescript";
+import ts, { isPropertySignature, MethodSignature, PropertySignature } from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { FunctionType } from "../Type/FunctionType";
 import { NeverType } from "../Type/NeverType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
@@ -38,13 +39,18 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         let hasRequiredNever = false;
 
         const properties = node.members
-            .filter(ts.isPropertySignature)
+            .filter(
+                (element): element is PropertySignature | MethodSignature =>
+                    ts.isPropertySignature(element) || ts.isMethodSignature(element)
+            )
             .filter((propertyNode) => !isNodeHidden(propertyNode))
             .map(
                 (propertyNode) =>
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
-                        this.childNodeParser.createType(propertyNode.type!, context),
+                        isPropertySignature(propertyNode)
+                            ? this.childNodeParser.createType(propertyNode.type!, context)
+                            : new FunctionType(),
                         !propertyNode.questionToken
                     )
             )

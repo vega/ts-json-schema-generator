@@ -1,4 +1,5 @@
-import { assertValidSchema } from "./utils";
+import { FunctionType } from "../src/Type/FunctionType";
+import { assertMissingFormatterFor, assertValidSchema } from "./utils";
 
 describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
@@ -75,6 +76,10 @@ describe("valid-data-type", () => {
     it("type-indexed-access-object-1", assertValidSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertValidSchema("type-indexed-access-object-2", "MyType"));
     it("type-indexed-access-keyof", assertValidSchema("type-indexed-access-keyof", "MyType"));
+    it(
+        "type-indexed-access-method-signature",
+        assertMissingFormatterFor(new FunctionType(), "type-indexed-access-method-signature", "MyType")
+    );
     it("type-indexed-circular-access", assertValidSchema("type-indexed-circular-access", "*"));
     it("type-keyof-tuple", assertValidSchema("type-keyof-tuple", "MyType"));
     it("type-keyof-object", assertValidSchema("type-keyof-object", "MyType"));
