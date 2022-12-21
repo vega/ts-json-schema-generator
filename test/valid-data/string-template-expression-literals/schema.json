@@ -29,13 +29,15 @@
           "type": "string"
         },
         "bool": {
-          "type": "boolean"
+          "type": "string"
         }
       },
       "required": [
         "foo",
         "_foo",
-        "ok"
+        "ok",
+        "num",
+        "bool"
       ],
       "type": "object"
     }
