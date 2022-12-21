@@ -1,6 +1,7 @@
 import ts from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
+import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
 import { LiteralType } from "../Type/LiteralType";
 import { StringType } from "../Type/StringType";
@@ -22,7 +23,10 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
         if (
             node.templateSpans
                 .map((span) => this.childNodeParser.createType(span.type, context))
-                .some((type) => !(type instanceof LiteralType))
+                .some(
+                    (type) =>
+                        !(type instanceof LiteralType) && !(type instanceof UnionType) && !(type instanceof AliasType)
+                )
         ) {
             return new StringType();
         }
