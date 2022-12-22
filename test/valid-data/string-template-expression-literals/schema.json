@@ -24,12 +24,21 @@
         "ok": {
           "const": "id_ok",
           "type": "string"
+        },
+        "num": {
+          "type": "string"
+        },
+        "bool": {
+          "enum": ["true!", "false!"],
+          "type": "string"
         }
       },
       "required": [
         "foo",
         "_foo",
-        "ok"
+        "ok",
+        "num",
+        "bool"
       ],
       "type": "object"
     }
