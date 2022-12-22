@@ -119,12 +119,27 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
                 return members;
             }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
-            .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
+            .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
+            .reduce((entries, member) => {
+                let memberType: ts.Node | undefined = member.type;
+
+                // Use the type checker if the member has no explicit type
+                // Ignore members without an initializer. They have no useful type.
+                if (memberType === undefined && member.initializer !== undefined) {
+                    const type = this.typeChecker.getTypeAtLocation(member);
+                    memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
+                }
+
+                if (memberType !== undefined) {
+                    return [...entries, { member, memberType }];
+                }
+                return entries;
+            }, [])
             .map(
-                (member) =>
+                ({ member, memberType }) =>
                     new ObjectProperty(
                         this.getPropertyName(member.name),
-                        this.childNodeParser.createType(member.type!, context),
+                        this.childNodeParser.createType(memberType, context),
                         !member.questionToken
                     )
             )

@@ -16,6 +16,7 @@ import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodePa
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
 import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
+import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
@@ -112,6 +113,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
         .addNodeParser(new FunctionNodeParser())
+        .addNodeParser(new ConstructorNodeParser())
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
@@ -157,7 +159,13 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(
             withCircular(
                 withExpose(
-                    withJsDoc(new TypeLiteralNodeParser(withJsDoc(chainNodeParser), mergedConfig.additionalProperties))
+                    withJsDoc(
+                        new TypeLiteralNodeParser(
+                            typeChecker,
+                            withJsDoc(chainNodeParser),
+                            mergedConfig.additionalProperties
+                        )
+                    )
                 )
             )
         )

@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/MyType",
+  "definitions": {
+    "MyType": {
+      "type": "object",
+      "properties": {
+        "localKey": {
+          "type": "string"
+        },
+        "localEnumKey": {
+          "type": "string"
+        },
+        "exportedKey": {
+          "type": "string"
+        },
+        "exportedEnumKey": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "localKey",
+        "localEnumKey",
+        "exportedKey",
+        "exportedEnumKey"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

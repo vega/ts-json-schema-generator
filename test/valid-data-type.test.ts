@@ -1,4 +1,6 @@
-import { assertValidSchema } from "./utils";
+import { ConstructorType } from "../src/Type/ConstructorType";
+import { FunctionType } from "../src/Type/FunctionType";
+import { assertMissingFormatterFor, assertValidSchema } from "./utils";
 
 describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
@@ -34,6 +36,7 @@ describe("valid-data-type", () => {
     it("type-date", assertValidSchema("type-date", "MyObject"));
     it("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", "basic"));
     it("type-regexp", assertValidSchema("type-regexp", "MyObject"));
+    it("type-uri", assertValidSchema("type-uri", "MyObject"));
     it("type-union", assertValidSchema("type-union", "TypeUnion"));
     it("type-union-tagged", assertValidSchema("type-union-tagged", "Shape"));
     it("type-intersection", assertValidSchema("type-intersection", "MyObject"));
@@ -74,6 +77,10 @@ describe("valid-data-type", () => {
     it("type-indexed-access-object-1", assertValidSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertValidSchema("type-indexed-access-object-2", "MyType"));
     it("type-indexed-access-keyof", assertValidSchema("type-indexed-access-keyof", "MyType"));
+    it(
+        "type-indexed-access-method-signature",
+        assertMissingFormatterFor(new FunctionType(), "type-indexed-access-method-signature", "MyType")
+    );
     it("type-indexed-circular-access", assertValidSchema("type-indexed-circular-access", "*"));
     it("type-keyof-tuple", assertValidSchema("type-keyof-tuple", "MyType"));
     it("type-keyof-object", assertValidSchema("type-keyof-object", "MyType"));
@@ -82,6 +89,7 @@ describe("valid-data-type", () => {
     it("type-mapped-index", assertValidSchema("type-mapped-index", "MyObject"));
     it("type-mapped-index-as", assertValidSchema("type-mapped-index-as", "MyObject"));
     it("type-mapped-index-as-template", assertValidSchema("type-mapped-index-as-template", "MyObject"));
+    it("type-mapped-index-as-with-conditional", assertValidSchema("type-mapped-index-as-with-conditional", "MyObject"));
     it("type-mapped-literal", assertValidSchema("type-mapped-literal", "MyObject"));
     it("type-mapped-generic", assertValidSchema("type-mapped-generic", "MyObject"));
     it("type-mapped-native", assertValidSchema("type-mapped-native", "MyObject"));
@@ -120,6 +128,8 @@ describe("valid-data-type", () => {
     it("type-conditional-infer-rest", assertValidSchema("type-conditional-infer-rest", "MyType"));
     it("type-conditional-infer-tail-recursion", assertValidSchema("type-conditional-infer-tail-recursion", "MyType"));
     it("type-conditional-infer-tuple-xor", assertValidSchema("type-conditional-infer-tuple-xor", "MyType"));
+
+    it("type-constructor", assertMissingFormatterFor(new ConstructorType(), "type-constructor", "MyType"));
 
     it("type-tuple-nested-rest", assertValidSchema("type-tuple-nested-rest", "MyType"));
     it("type-tuple-nested-rest-to-union", assertValidSchema("type-tuple-nested-rest-to-union", "MyType"));

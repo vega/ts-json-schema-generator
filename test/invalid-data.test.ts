@@ -56,6 +56,10 @@ describe("invalid-data", () => {
         )
     );
     it(
+        "duplicate-discriminator",
+        assertSchema("duplicate-discriminator", "MyType", 'Duplicate discriminator values: A in type "(A|B)".')
+    );
+    it(
         "no-function-name",
         assertSchema(
             "function-parameters-declaration-missing-name",

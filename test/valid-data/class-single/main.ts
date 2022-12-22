@@ -3,7 +3,8 @@ export class MyObject {
     public static staticProp: number;
 
     public propA: number;
-    public propB: number;
+    // Test that types can be inferred
+    public propB = 42;
 
     // Properties without type must be ignored
     public noType;
@@ -17,8 +18,14 @@ export class MyObject {
     readonly readonlyProp: string;
 
     // Constructors must be ignored
-    public constructor(protected a: number, private b: number, c: number, public propC: number,
-        public propD?: string) {
+    public constructor(
+        protected a: number,
+        private b: number,
+        c: number,
+        // Test that types can be inferred
+        public propC = 42,
+        public propD?: string
+    ) {
         this.privateProp = false;
     }
 

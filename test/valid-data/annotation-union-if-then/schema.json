@@ -30,7 +30,19 @@
             "$ref": "#/definitions/Fish"
           }
         }
-      ]
+      ],
+      "properties": {
+        "animal_type": {
+          "enum": [
+            "bird",
+            "fish"
+          ]
+        }
+      },
+      "required": [
+        "animal_type"
+      ],
+      "type": "object"
     },
     "Bird": {
       "additionalProperties": false,

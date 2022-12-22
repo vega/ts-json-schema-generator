@@ -13,7 +13,6 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { StringType } from "../Type/StringType";
 import { SymbolType } from "../Type/SymbolType";
 import { UnionType } from "../Type/UnionType";
-import assert from "../Utils/assert";
 import { derefAnnotatedType, derefType } from "../Utils/derefType";
 import { getKey } from "../Utils/nodeKey";
 import { preserveAnnotation } from "../Utils/preserveAnnotation";
@@ -79,14 +78,14 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
     }
 
-    protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): LiteralType {
+    protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType {
         if (!node.nameType) {
             return rawKey;
         }
         const key = derefType(
             this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context))
         );
-        assert(key instanceof LiteralType, "Must resolve to Literal");
+
         return key;
     }
 
@@ -94,8 +93,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return keyListType
             .getTypes()
             .filter((type): type is LiteralType => type instanceof LiteralType)
-            .reduce((result: ObjectProperty[], key: LiteralType) => {
-                const namedKey = this.mapKey(node, key, context);
+            .map((type) => [type, this.mapKey(node, type, context)])
+            .filter((value): value is [LiteralType, LiteralType] => value[1] instanceof LiteralType)
+            .reduce((result: ObjectProperty[], [key, mappedKey]: [LiteralType, LiteralType]) => {
                 const propertyType = this.childNodeParser.createType(
                     node.type!,
                     this.createSubContext(node, key, context)
@@ -110,7 +110,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
 
                 const objectProperty = new ObjectProperty(
-                    namedKey.getValue().toString(),
+                    mappedKey.getValue().toString(),
                     preserveAnnotation(propertyType, newType),
                     !node.questionToken && !hasUndefined
                 );
