@@ -45,7 +45,7 @@
   },
   "dependencies": {
     "@types/json-schema": "^7.0.11",
-    "commander": "^9.4.1",
+    "commander": "^10.0.0",
     "glob": "^8.0.3",
     "json5": "^2.2.1",
     "normalize-path": "^3.0.0",
