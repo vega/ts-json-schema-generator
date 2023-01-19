@@ -1,14 +1,16 @@
-import Ajv from "ajv";
+import Ajv, { Options as AjvOptions } from "ajv";
 import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
-import stringify from "safe-stable-stringify";
 import { resolve } from "path";
+import stringify from "safe-stable-stringify";
 import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { Config } from "../src/Config";
+import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { BaseType } from "../src/Type/BaseType";
 
 const validator = new Ajv();
 addFormats(validator);
@@ -25,7 +27,29 @@ export function assertValidSchema(
     type?: string,
     jsDoc: Config["jsDoc"] = "none",
     extraTags?: Config["extraTags"],
-    schemaId?: Config["schemaId"]
+    schemaId?: Config["schemaId"],
+    options?: {
+        /**
+         * Array of sample data
+         * that should
+         * successfully validate.
+         */
+        validSamples?: any[];
+        /**
+         * Array of sample data
+         * that should
+         * fail to validate.
+         */
+        invalidSamples?: any[];
+        /**
+         * Options to pass to Ajv
+         * when creating the Ajv
+         * instance.
+         *
+         * @default {strict:false}
+         */
+        ajvOptions?: AjvOptions;
+    }
 ) {
     return (): void => {
         const config: Config = {
@@ -56,12 +80,47 @@ export function assertValidSchema(
 
         let localValidator = validator;
         if (extraTags) {
-            localValidator = new Ajv({ strict: false });
+            localValidator = new Ajv(options?.ajvOptions || { strict: false });
             addFormats(localValidator);
         }
 
         localValidator.validateSchema(actual);
         expect(localValidator.errors).toBeNull();
-        localValidator.compile(actual); // Will find MissingRef errors
+
+        // Compile in all cases to detect MissingRef errors
+        const validate = localValidator.compile(actual);
+
+        // Use the compiled validator if there
+        // are any samples.
+        if (options?.invalidSamples) {
+            for (const sample of options.invalidSamples) {
+                const isValid = validate(sample);
+                if (isValid) {
+                    console.log("Unexpectedly Valid:", sample);
+                }
+                expect(isValid).toBe(false);
+            }
+        }
+        if (options?.validSamples) {
+            for (const sample of options.validSamples) {
+                const isValid = validate(sample);
+                if (!isValid) {
+                    console.log("Unexpectedly Invalid:", sample);
+
+                    console.log("AJV Errors:", validate.errors);
+                }
+                expect(isValid).toBe(true);
+            }
+        }
+    };
+}
+
+export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
+    return (): void => {
+        try {
+            assertValidSchema(relativePath, type)();
+        } catch (error) {
+            expect(error).toEqual(new UnknownTypeError(missingType));
+        }
     };
 }

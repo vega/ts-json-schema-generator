@@ -2,8 +2,12 @@ import { JSONSchema7 } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { SubTypeFormatter } from "../SubTypeFormatter";
 import { BaseType } from "../Type/BaseType";
+import { LiteralType } from "../Type/LiteralType";
+import { NeverType } from "../Type/NeverType";
 import { UnionType } from "../Type/UnionType";
 import { TypeFormatter } from "../TypeFormatter";
+import { derefType } from "../Utils/derefType";
+import { getTypeByKey } from "../Utils/typeKeys";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
@@ -13,7 +17,62 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType;
     }
     public getDefinition(type: UnionType): Definition {
-        const definitions = type.getTypes().map((item) => this.childTypeFormatter.getDefinition(item));
+        const definitions = type
+            .getTypes()
+            .filter((item) => !(derefType(item) instanceof NeverType))
+            .map((item) => this.childTypeFormatter.getDefinition(item));
+
+        const discriminator = type.getDiscriminator();
+        if (discriminator !== undefined) {
+            const kindTypes = type
+                .getTypes()
+                .filter((item) => !(derefType(item) instanceof NeverType))
+                .map((item) => getTypeByKey(item, new LiteralType(discriminator)));
+
+            const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
+
+            if (undefinedIndex != -1) {
+                throw new Error(
+                    `Cannot find discriminator keyword "${discriminator}" in type ${JSON.stringify(
+                        type.getTypes()[undefinedIndex]
+                    )}.`
+                );
+            }
+
+            const kindDefinitions = kindTypes.map((item) => this.childTypeFormatter.getDefinition(item as BaseType));
+
+            const allOf = [];
+
+            for (let i = 0; i < definitions.length; i++) {
+                allOf.push({
+                    if: {
+                        properties: { [discriminator]: kindDefinitions[i] },
+                    },
+                    then: definitions[i],
+                });
+            }
+
+            const kindValues = kindDefinitions
+                .map((item) => item.const)
+                .filter((item): item is string | number | boolean | null => item !== undefined);
+
+            const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
+            if (duplicates.length > 0) {
+                throw new Error(
+                    `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(
+                        type.getName()
+                    )}.`
+                );
+            }
+
+            const properties = {
+                [discriminator]: {
+                    enum: kindValues,
+                },
+            };
+
+            return { type: "object", properties, required: [discriminator], allOf };
+        }
 
         // TODO: why is this not covered by LiteralUnionTypeFormatter?
         // special case for string literals | string -> string
@@ -51,7 +110,9 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         // Flatten anyOf inside anyOf unless the anyOf has an annotation
         for (const def of definitions) {
-            if (Object.keys(def) === ["anyOf"]) {
+            const keys = Object.keys(def);
+
+            if (keys.length === 1 && keys[0] === "anyOf") {
                 flattenedDefinitions.push(...(def.anyOf as any));
             } else {
                 flattenedDefinitions.push(def);

@@ -2,6 +2,7 @@ import ts from "typescript";
 import { Context } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
+import { HiddenType } from "../Type/HiddenType";
 import { isNodeHidden } from "../Utils/isHidden";
 
 export class HiddenNodeParser implements SubNodeParser {
@@ -11,7 +12,7 @@ export class HiddenNodeParser implements SubNodeParser {
         return isNodeHidden(node);
     }
 
-    public createType(node: ts.KeywordTypeNode, context: Context): BaseType | undefined {
-        return undefined;
+    public createType(_node: ts.KeywordTypeNode, _context: Context): BaseType {
+        return new HiddenType();
     }
 }

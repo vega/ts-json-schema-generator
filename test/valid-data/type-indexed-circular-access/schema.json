@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/Beta",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Beta": {
+      "additionalProperties": false,
+      "properties": {
+        "alphaKeyofProp": {
+          "type": [
+            "number",
+            "null",
+            "string"
+          ]
+        },
+        "alphaNumberDefaultProp": {
+          "type": "number"
+        },
+        "alphaNumberWithoutDefaultProp": {
+          "type": "number"
+        },
+        "alphaStringProp": {
+          "type": "string"
+        },
+        "alphaUnionProp": {
+          "type": [
+            "number",
+            "null",
+            "string"
+          ]
+        },
+        "stringProp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "stringProp",
+        "alphaStringProp",
+        "alphaNumberDefaultProp",
+        "alphaNumberWithoutDefaultProp",
+        "alphaUnionProp",
+        "alphaKeyofProp"
+      ],
+      "type": "object"
+    }
+  }
+}

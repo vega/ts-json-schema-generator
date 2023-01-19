@@ -9,7 +9,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public supportsNode(node: ts.ExpressionWithTypeArguments): boolean {
         return node.kind === ts.SyntaxKind.ExpressionWithTypeArguments;
     }
-    public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType | undefined {
+    public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);

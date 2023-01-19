@@ -16,12 +16,14 @@ import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodePa
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
 import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
+import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
 import { FunctionParser } from "../src/NodeParser/FunctionParser";
 import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
+import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser";
 import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
 import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
 import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
@@ -111,6 +113,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
         .addNodeParser(new FunctionNodeParser())
+        .addNodeParser(new ConstructorNodeParser())
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
@@ -121,8 +124,8 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
 
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
-
-        .addNodeParser(new IndexedAccessTypeNodeParser(chainNodeParser))
+        .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new InferTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
@@ -156,7 +159,13 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(
             withCircular(
                 withExpose(
-                    withJsDoc(new TypeLiteralNodeParser(withJsDoc(chainNodeParser), mergedConfig.additionalProperties))
+                    withJsDoc(
+                        new TypeLiteralNodeParser(
+                            typeChecker,
+                            withJsDoc(chainNodeParser),
+                            mergedConfig.additionalProperties
+                        )
+                    )
                 )
             )
         )

@@ -3,10 +3,10 @@ import addFormats from "ajv-formats";
 import { readFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
-import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
+import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
@@ -129,7 +129,7 @@ export class ExampleConstructorParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.ConstructorType;
     }
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         return new StringType();
     }
 }
@@ -138,7 +138,7 @@ export class ExampleNullParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.NullKeyword;
     }
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         return new StringType();
     }
 }
@@ -269,8 +269,18 @@ describe("config", () => {
 
     it(
         "jsdoc-hidden-types",
-        assertSchema("jsdoc-hidden", {
-            type: "MyObject",
+        assertSchema("jsdoc-hidden-types", {
+            type: "MyType",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
+
+    it(
+        "jsdoc-hidden-types-intersection",
+        assertSchema("jsdoc-hidden-types-intersection", {
+            type: "MyType",
             expose: "export",
             topRef: true,
             jsDoc: "extended",

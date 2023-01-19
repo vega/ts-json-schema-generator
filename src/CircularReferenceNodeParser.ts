@@ -6,14 +6,14 @@ import { ReferenceType } from "./Type/ReferenceType";
 import { getKey } from "./Utils/nodeKey";
 
 export class CircularReferenceNodeParser implements SubNodeParser {
-    protected circular = new Map<string, BaseType>();
+    protected circular: Map<string, BaseType> = new Map();
 
     public constructor(protected childNodeParser: SubNodeParser) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);
     }
-    public createType(node: ts.Node, context: Context): BaseType | undefined {
+    public createType(node: ts.Node, context: Context): BaseType {
         const key = getKey(node, context);
         if (this.circular.has(key)) {
             return this.circular.get(key)!;

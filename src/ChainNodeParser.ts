@@ -7,7 +7,7 @@ import { BaseType } from "./Type/BaseType";
 import { ReferenceType } from "./Type/ReferenceType";
 
 export class ChainNodeParser implements SubNodeParser, MutableParser {
-    protected readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType | undefined>>();
+    protected readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType>>();
 
     public constructor(protected typeChecker: ts.TypeChecker, protected nodeParsers: SubNodeParser[]) {}
 
@@ -20,10 +20,10 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
         return this.nodeParsers.some((nodeParser) => nodeParser.supportsNode(node));
     }
 
-    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         let typeCache = this.typeCaches.get(node);
         if (typeCache == null) {
-            typeCache = new Map<string, BaseType | undefined>();
+            typeCache = new Map<string, BaseType>();
             this.typeCaches.set(node, typeCache);
         }
         const contextCacheKey = context.getCacheKey();

@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { DefinitionType } from "../Type/DefinitionType";
 import { ReferenceType } from "../Type/ReferenceType";
 
-export function derefType(type: BaseType | undefined): BaseType | undefined {
+export function derefType(type: BaseType): BaseType {
     if (
         type instanceof ReferenceType ||
         type instanceof DefinitionType ||

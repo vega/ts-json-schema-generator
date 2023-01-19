@@ -4,13 +4,16 @@ import { AnyType } from "../../src/Type/AnyType";
 import { ArrayType } from "../../src/Type/ArrayType";
 import { BooleanType } from "../../src/Type/BooleanType";
 import { DefinitionType } from "../../src/Type/DefinitionType";
+import { InferType } from "../../src/Type/InferType";
 import { IntersectionType } from "../../src/Type/IntersectionType";
 import { LiteralType } from "../../src/Type/LiteralType";
+import { NeverType } from "../../src/Type/NeverType";
 import { NullType } from "../../src/Type/NullType";
 import { NumberType } from "../../src/Type/NumberType";
 import { ObjectProperty, ObjectType } from "../../src/Type/ObjectType";
 import { OptionalType } from "../../src/Type/OptionalType";
 import { ReferenceType } from "../../src/Type/ReferenceType";
+import { RestType } from "../../src/Type/RestType";
 import { StringType } from "../../src/Type/StringType";
 import { TupleType } from "../../src/Type/TupleType";
 import { UndefinedType } from "../../src/Type/UndefinedType";
@@ -105,7 +108,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new ArrayType(new NumberType()), new AnyType())).toBe(true);
         expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new AnyType())).toBe(true);
         expect(isAssignableTo(new LiteralType("literal"), new AnyType())).toBe(true);
-        expect(isAssignableTo(undefined, new AnyType())).toBe(false);
+        expect(isAssignableTo(new NeverType(), new AnyType())).toBe(false);
         expect(isAssignableTo(new NullType(), new AnyType())).toBe(true);
         expect(
             isAssignableTo(
@@ -121,31 +124,31 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new UndefinedType(), new AnyType())).toBe(true);
     });
     it("lets type 'never' to be assigned to anything", () => {
-        expect(isAssignableTo(new AnyType(), undefined)).toBe(true);
-        expect(isAssignableTo(new ArrayType(new NumberType()), undefined)).toBe(true);
-        expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), undefined)).toBe(true);
-        expect(isAssignableTo(new LiteralType("literal"), undefined)).toBe(true);
-        expect(isAssignableTo(undefined, undefined)).toBe(true);
-        expect(isAssignableTo(new NullType(), undefined)).toBe(true);
+        expect(isAssignableTo(new AnyType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new ArrayType(new NumberType()), new NeverType())).toBe(true);
+        expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new NeverType())).toBe(true);
+        expect(isAssignableTo(new LiteralType("literal"), new NeverType())).toBe(true);
+        expect(isAssignableTo(new NeverType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new NullType(), new NeverType())).toBe(true);
         expect(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
-                undefined
+                new NeverType()
             )
         ).toBe(true);
-        expect(isAssignableTo(new BooleanType(), undefined)).toBe(true);
-        expect(isAssignableTo(new NumberType(), undefined)).toBe(true);
-        expect(isAssignableTo(new BooleanType(), undefined)).toBe(true);
-        expect(isAssignableTo(new StringType(), undefined)).toBe(true);
-        expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), undefined)).toBe(true);
-        expect(isAssignableTo(new UndefinedType(), undefined)).toBe(true);
+        expect(isAssignableTo(new BooleanType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new NumberType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new BooleanType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new StringType(), new NeverType())).toBe(true);
+        expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new NeverType())).toBe(true);
+        expect(isAssignableTo(new UndefinedType(), new NeverType())).toBe(true);
     });
     it("lets anything to be assigned to type 'any'", () => {
         expect(isAssignableTo(new AnyType(), new AnyType())).toBe(true);
         expect(isAssignableTo(new AnyType(), new ArrayType(new NumberType()))).toBe(true);
         expect(isAssignableTo(new AnyType(), new IntersectionType([new StringType(), new NullType()]))).toBe(true);
         expect(isAssignableTo(new AnyType(), new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(new AnyType(), undefined)).toBe(true);
+        expect(isAssignableTo(new AnyType(), new NeverType())).toBe(true);
         expect(isAssignableTo(new AnyType(), new NullType())).toBe(true);
         expect(
             isAssignableTo(
@@ -165,7 +168,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new UnknownType(), new ArrayType(new NumberType()))).toBe(true);
         expect(isAssignableTo(new UnknownType(), new IntersectionType([new StringType(), new NullType()]))).toBe(true);
         expect(isAssignableTo(new UnknownType(), new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(new UnknownType(), undefined)).toBe(true);
+        expect(isAssignableTo(new UnknownType(), new NeverType())).toBe(true);
         expect(isAssignableTo(new UnknownType(), new NullType())).toBe(true);
         expect(
             isAssignableTo(
@@ -185,7 +188,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new ArrayType(new NumberType()), new UnknownType())).toBe(false);
         expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new UnknownType())).toBe(false);
         expect(isAssignableTo(new LiteralType("literal"), new UnknownType())).toBe(false);
-        expect(isAssignableTo(undefined, new UnknownType())).toBe(false);
+        expect(isAssignableTo(new NeverType(), new UnknownType())).toBe(false);
         expect(isAssignableTo(new NullType(), new UnknownType())).toBe(false);
         expect(isAssignableTo(new UnknownType(), new UnknownType())).toBe(true);
         expect(
@@ -204,7 +207,7 @@ describe("isAssignableTo", () => {
 
     it("lets 'any', 'never', 'null', and 'undefined' be assigned to type 'void'", () => {
         expect(isAssignableTo(new VoidType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), undefined)).toBe(true);
+        expect(isAssignableTo(new VoidType(), new NeverType())).toBe(true);
         expect(isAssignableTo(new VoidType(), new NullType())).toBe(true);
         expect(isAssignableTo(new VoidType(), new UndefinedType())).toBe(true);
         expect(isAssignableTo(new VoidType(), new UnknownType())).toBe(false);
@@ -304,6 +307,33 @@ describe("isAssignableTo", () => {
                 new TupleType([new StringType(), new StringType()])
             )
         ).toBe(true);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new InferType("T")]),
+                new TupleType([new StringType(), new NumberType(), new StringType()])
+            )
+        ).toBe(false);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new InferType("T")]),
+                new TupleType([new StringType(), new NumberType()])
+            )
+        ).toBe(true);
+        expect(
+            isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()]))
+        ).toBe(false);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new RestType(new InferType("T"))]),
+                new TupleType([new StringType()])
+            )
+        ).toBe(true);
+        expect(
+            isAssignableTo(
+                new TupleType([new StringType(), new RestType(new InferType("T"))]),
+                new TupleType([new StringType(), new NumberType(), new StringType()])
+            )
+        ).toBe(true);
     });
     it("lets anything except null and undefined to be assigned to empty object type", () => {
         const empty = new ObjectType("empty", [], [], false);
@@ -311,7 +341,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(empty, new ArrayType(new NumberType()))).toBe(true);
         expect(isAssignableTo(empty, new IntersectionType([new StringType(), new NullType()]))).toBe(true);
         expect(isAssignableTo(empty, new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(empty, undefined)).toBe(true);
+        expect(isAssignableTo(empty, new NeverType())).toBe(true);
         expect(isAssignableTo(empty, new NullType())).toBe(false);
         expect(
             isAssignableTo(empty, new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true))

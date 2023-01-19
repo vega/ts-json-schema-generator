@@ -1,8 +1,10 @@
 import { ArrayType } from "./ArrayType";
 import { BaseType } from "./BaseType";
+import { InferType } from "./InferType";
+import { TupleType } from "./TupleType";
 
 export class RestType extends BaseType {
-    public constructor(private item: ArrayType, private title: string | null = null) {
+    public constructor(private item: ArrayType | InferType | TupleType, private title: string | null = null) {
         super();
     }
 
@@ -14,7 +16,7 @@ export class RestType extends BaseType {
         return this.title;
     }
 
-    public getType(): ArrayType {
+    public getType(): ArrayType | InferType | TupleType {
         return this.item;
     }
 }

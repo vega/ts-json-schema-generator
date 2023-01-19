@@ -3,12 +3,12 @@ import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { NeverType } from "../Type/NeverType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
-import { notUndefined } from "../Utils/notUndefined";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -25,7 +25,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context,
         reference?: ReferenceType
-    ): BaseType | undefined {
+    ): BaseType {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -47,7 +47,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         const properties = this.getProperties(node, context);
 
         if (properties === undefined) {
-            return undefined;
+            return new NeverType();
         }
 
         const additionalProperties = this.getAdditionalProperties(node, context);
@@ -56,11 +56,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         if (properties.length === 0 && additionalProperties === false) {
             const arrayItemType = this.getArrayItemType(node);
             if (arrayItemType) {
-                const type = this.childNodeParser.createType(arrayItemType, context);
-                if (type === undefined) {
-                    return undefined;
-                }
-                return new ArrayType(type);
+                return new ArrayType(this.childNodeParser.createType(arrayItemType, context));
             }
         }
 
@@ -99,9 +95,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.heritageClauses.reduce(
             (result: BaseType[], baseType) => [
                 ...result,
-                ...baseType.types
-                    .map((expression) => this.childNodeParser.createType(expression, context))
-                    .filter(notUndefined),
+                ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
             ],
             []
         );
@@ -125,20 +119,35 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
                 return members;
             }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
-            .filter((member) => isPublic(member) && !isStatic(member) && member.type && !isNodeHidden(member))
+            .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
+            .reduce((entries, member) => {
+                let memberType: ts.Node | undefined = member.type;
+
+                // Use the type checker if the member has no explicit type
+                // Ignore members without an initializer. They have no useful type.
+                if (memberType === undefined && member.initializer !== undefined) {
+                    const type = this.typeChecker.getTypeAtLocation(member);
+                    memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
+                }
+
+                if (memberType !== undefined) {
+                    return [...entries, { member, memberType }];
+                }
+                return entries;
+            }, [])
             .map(
-                (member) =>
+                ({ member, memberType }) =>
                     new ObjectProperty(
                         this.getPropertyName(member.name),
-                        this.childNodeParser.createType(member.type!, context),
+                        this.childNodeParser.createType(memberType, context),
                         !member.questionToken
                     )
             )
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() === undefined) {
+                if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return prop.getType() !== undefined;
+                return !(prop.getType() instanceof NeverType);
             });
 
         if (hasRequiredNever) {

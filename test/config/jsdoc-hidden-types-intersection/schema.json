@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Intersection": {
+      "additionalProperties": false,
+      "properties": {
+        "visible": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "visible"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "additionalProperties": false,
+      "properties": {
+        "intersection": {
+          "$ref": "#/definitions/Intersection"
+        },
+        "visible": {
+          "$ref": "#/definitions/Visible"
+        }
+      },
+      "required": [
+        "visible",
+        "intersection"
+      ],
+      "type": "object"
+    },
+    "Visible": {
+      "additionalProperties": false,
+      "properties": {
+        "visible": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "visible"
+      ],
+      "type": "object"
+    }
+  }
+}
