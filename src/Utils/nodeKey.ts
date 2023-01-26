@@ -36,10 +36,9 @@ export function getKey(node: Node, context: Context): string {
     while (node) {
         const source = node.getSourceFile();
 
-        // When the node has no source file, we use a random number as id.
-        // to prevent collisions with other sourceless nodes.
-        // As sourceless nodes does not have any kind of reference to them,
-        // Math.random is the best we can do to differentiate them.
+        // When the node has no source file, we need to prevent collisions  with other sourceless nodes.
+        // As they does not have any kind of reference to their parents, Math.random is the best we can
+        // do to make them unique
         if (!source) {
             ids.push(Math.random());
         } else {
