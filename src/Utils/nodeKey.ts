@@ -49,9 +49,12 @@ export function getKey(node: Node, context: Context): string {
         node = node.parent;
     }
 
-    const id = ids.join("-");
+    let id = ids.join("-");
+    const args = context.getArguments();
 
-    const argumentIds = context.getArguments().map((arg) => arg?.getId());
+    if (args.length) {
+        id += `<${args.map((arg) => arg.getId()).join(",")}>`;
+    }
 
-    return argumentIds.length ? `${id}<${argumentIds.join(",")}>` : id;
+    return id;
 }
