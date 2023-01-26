@@ -35,12 +35,17 @@ export function getKey(node: Node, context: Context): string {
 
     while (node) {
         const source = node.getSourceFile();
-        const file = !source
-            ? // TODO: Use better filename for unknown files (See #1386)
-              "unresolved"
-            : source.fileName.substring(process.cwd().length + 1).replace(/\//g, "_");
 
-        ids.push(hash(file), node.pos, node.end);
+        // When the node has no source file, we use a random number as id.
+        // to prevent collisions with other sourceless nodes.
+        // As sourceless nodes does not have any kind of reference to them,
+        // Math.random is the best we can do to differentiate them.
+        if (!source) {
+            ids.push(Math.random());
+        } else {
+            const filename = source.fileName.substring(process.cwd().length + 1).replace(/\//g, "_");
+            ids.push(hash(filename), node.pos, node.end);
+        }
 
         node = node.parent;
     }
