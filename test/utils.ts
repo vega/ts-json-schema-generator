@@ -12,7 +12,7 @@ import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { BaseType } from "../src/Type/BaseType";
 
-const validator = new Ajv();
+const validator = new Ajv({ discriminator: true });
 addFormats(validator);
 
 const basePath = "test/valid-data";

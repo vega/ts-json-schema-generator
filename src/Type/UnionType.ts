@@ -3,9 +3,12 @@ import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
 import { NeverType } from "./NeverType";
 import { derefType } from "../Utils/derefType";
 
+type DiscriminatorType = "json-schema" | "open-api";
+
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
     private discriminator?: string = undefined;
+    private discriminatorType?: DiscriminatorType = undefined;
 
     public constructor(types: readonly BaseType[]) {
         super();
@@ -21,12 +24,17 @@ export class UnionType extends BaseType {
         );
     }
 
-    public setDiscriminator(discriminator: string) {
+    public setDiscriminator(discriminator: string, type: DiscriminatorType) {
         this.discriminator = discriminator;
+        this.discriminatorType = type;
     }
 
     public getDiscriminator() {
         return this.discriminator;
+    }
+
+    public getDiscriminatorType() {
+        return this.discriminatorType;
     }
 
     public getId(): string {
