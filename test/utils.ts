@@ -7,7 +7,7 @@ import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config } from "../src/Config";
+import { Config, DEFAULT_CONFIG } from "../src/Config";
 import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { BaseType } from "../src/Type/BaseType";
@@ -24,10 +24,7 @@ export function createGenerator(config: Config): SchemaGenerator {
 
 export function assertValidSchema(
     relativePath: string,
-    type?: string,
-    jsDoc: Config["jsDoc"] = "none",
-    extraTags?: Config["extraTags"],
-    schemaId?: Config["schemaId"],
+    config_?: Config,
     options?: {
         /**
          * Array of sample data
@@ -49,25 +46,18 @@ export function assertValidSchema(
          * @default {strict:false}
          */
         ajvOptions?: AjvOptions;
-    },
-    discriminatorType?: Config["discriminatorType"]
+    }
 ) {
     return (): void => {
         const config: Config = {
+            ...DEFAULT_CONFIG,
             path: `${basePath}/${relativePath}/*.ts`,
-            type,
-            jsDoc,
-            extraTags,
-            discriminatorType,
             skipTypeCheck: !!process.env.FAST_TEST,
+            ...config_,
         };
 
-        if (schemaId) {
-            config.schemaId = schemaId;
-        }
-
         const generator = createGenerator(config);
-        const schema = generator.createSchema(type);
+        const schema = generator.createSchema(config.type);
         const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
@@ -81,7 +71,7 @@ export function assertValidSchema(
         expect(actual).toEqual(expected);
 
         let localValidator = validator;
-        if (extraTags) {
+        if (config.extraTags) {
             localValidator = new Ajv(options?.ajvOptions || { strict: false });
             addFormats(localValidator);
         }
@@ -120,7 +110,7 @@ export function assertValidSchema(
 export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
     return (): void => {
         try {
-            assertValidSchema(relativePath, type)();
+            assertValidSchema(relativePath, { type })();
         } catch (error) {
             expect(error).toEqual(new UnknownTypeError(missingType));
         }
