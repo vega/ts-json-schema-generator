@@ -75,7 +75,7 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
 
         .addTypeFormatter(new ArrayTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new TupleTypeFormatter(circularReferenceTypeFormatter))
-        .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter))
+        .addTypeFormatter(new UnionTypeFormatter(circularReferenceTypeFormatter, config.discriminatorType))
         .addTypeFormatter(new IntersectionTypeFormatter(circularReferenceTypeFormatter));
 
     return circularReferenceTypeFormatter;

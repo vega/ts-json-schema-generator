@@ -12,7 +12,7 @@ import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { BaseType } from "../src/Type/BaseType";
 
-const validator = new Ajv();
+const validator = new Ajv({ discriminator: true });
 addFormats(validator);
 
 const basePath = "test/valid-data";
@@ -49,7 +49,8 @@ export function assertValidSchema(
          * @default {strict:false}
          */
         ajvOptions?: AjvOptions;
-    }
+    },
+    discriminatorType?: Config["discriminatorType"]
 ) {
     return (): void => {
         const config: Config = {
@@ -57,6 +58,7 @@ export function assertValidSchema(
             type,
             jsDoc,
             extraTags,
+            discriminatorType,
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
