@@ -10,8 +10,10 @@ import { derefType } from "../Utils/derefType";
 import { getTypeByKey } from "../Utils/typeKeys";
 import { uniqueArray } from "../Utils/uniqueArray";
 
+type DiscriminatorType = "json-schema" | "open-api";
+
 export class UnionTypeFormatter implements SubTypeFormatter {
-    public constructor(protected childTypeFormatter: TypeFormatter) {}
+    public constructor(protected childTypeFormatter: TypeFormatter, private discriminatorType?: DiscriminatorType) {}
 
     public supportsType(type: UnionType): boolean {
         return type instanceof UnionType;
@@ -85,9 +87,11 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         } as JSONSchema7;
     }
     public getDefinition(type: UnionType): Definition {
-        const discriminatorType = type.getDiscriminatorType();
-        if (discriminatorType === "json-schema") return this.getJsonSchemaDiscriminatorDefinition(type);
-        if (discriminatorType === "open-api") return this.getOpenApiDiscriminatorDefinition(type);
+        const discriminator = type.getDiscriminator();
+        if (discriminator !== undefined) {
+            if (this.discriminatorType === "open-api") return this.getOpenApiDiscriminatorDefinition(type);
+            return this.getJsonSchemaDiscriminatorDefinition(type);
+        }
 
         const definitions = this.getTypeDefinitions(type);
 

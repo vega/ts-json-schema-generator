@@ -13,6 +13,7 @@ export interface Config {
     encodeRefs?: boolean;
     extraTags?: string[];
     additionalProperties?: boolean;
+    discriminatorType?: "json-schema" | "open-api";
 }
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig"> = {
@@ -26,4 +27,5 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     minify: false,
     extraTags: [],
     additionalProperties: false,
+    discriminatorType: "json-schema",
 };

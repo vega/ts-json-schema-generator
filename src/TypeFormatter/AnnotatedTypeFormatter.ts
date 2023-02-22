@@ -54,14 +54,11 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
     public getDefinition(type: AnnotatedType): Definition {
         const annotations = type.getAnnotations();
 
-        if ("discriminator" in annotations || "discriminatorOpenApi" in annotations) {
+        if ("discriminator" in annotations) {
             const derefed = derefType(type.getType());
             if (derefed instanceof UnionType) {
-                const discriminator = annotations.discriminator ?? annotations.discriminatorOpenApi;
-                const discriminatorType = annotations.discriminator ? "json-schema" : "open-api";
-                derefed.setDiscriminator(discriminator, discriminatorType);
+                derefed.setDiscriminator(annotations.discriminator);
                 delete annotations.discriminator;
-                delete annotations.discriminatorOpenApi;
             } else {
                 throw new Error(
                     `Cannot assign discriminator tag to type: ${JSON.stringify(

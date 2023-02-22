@@ -9,6 +9,6 @@ export type Bird = {
 };
 
 /**
- * @discriminatorOpenApi animal_type
+ * @discriminator animal_type
  */
 export type Animal = Bird | Fish;

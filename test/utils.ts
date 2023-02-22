@@ -49,7 +49,8 @@ export function assertValidSchema(
          * @default {strict:false}
          */
         ajvOptions?: AjvOptions;
-    }
+    },
+    discriminatorType?: Config["discriminatorType"]
 ) {
     return (): void => {
         const config: Config = {
@@ -57,6 +58,7 @@ export function assertValidSchema(
             type,
             jsDoc,
             extraTags,
+            discriminatorType,
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 

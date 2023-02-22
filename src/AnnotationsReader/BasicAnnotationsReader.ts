@@ -22,11 +22,6 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         // Custom tag for if-then-else support.
         "discriminator",
-
-        // OpenAPI Discriminator
-        // https://swagger.io/docs/specification/data-models/inheritance-and-polymorphism/
-        // https://ajv.js.org/json-schema.html#discriminator
-        "discriminatorOpenApi"
     ]);
     private static jsonTags = new Set<string>([
         "minimum",

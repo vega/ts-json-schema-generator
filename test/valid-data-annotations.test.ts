@@ -76,5 +76,8 @@ describe("valid-data-annotations", () => {
 
     it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", "MyObject", "extended"));
 
-    it("discriminator", assertValidSchema("discriminator", "Animal", "basic"));
+    it(
+        "discriminator",
+        assertValidSchema("discriminator", "Animal", "basic", undefined, undefined, undefined, "open-api")
+    );
 });
