@@ -4,8 +4,7 @@ import * as annotationDefaultSamples from "./valid-data/annotation-default/sampl
 describe("valid-data-annotations", () => {
     it(
         "annotation-custom",
-        assertValidSchema("annotation-custom", {
-            type: "MyObject",
+        assertValidSchema("annotation-custom", "MyObject", {
             jsDoc: "basic",
             extraTags: [
                 "customBooleanProperty",
@@ -20,55 +19,33 @@ describe("valid-data-annotations", () => {
 
     it(
         "annotation-empty-basic",
-        assertValidSchema("annotation-empty", {
-            type: "MyObject",
-            jsDoc: "basic",
-            extraTags: ["customEmptyAnnotation"],
-        })
+        assertValidSchema("annotation-empty", "MyObject", { jsDoc: "basic", extraTags: ["customEmptyAnnotation"] })
     );
     it(
         "annotation-empty-extended",
-        assertValidSchema("annotation-empty", {
-            type: "MyObject",
-            extraTags: ["customEmptyAnnotation"],
-        })
+        assertValidSchema("annotation-empty", "MyObject", { extraTags: ["customEmptyAnnotation"] })
     );
     it(
         "annotation-deprecated-basic",
-        assertValidSchema("annotation-deprecated", {
-            type: "MyObject",
-            jsDoc: "basic",
-            extraTags: ["deprecationMessage"],
-        })
+        assertValidSchema("annotation-deprecated", "MyObject", { jsDoc: "basic", extraTags: ["deprecationMessage"] })
     );
     it(
         "annotation-deprecated-extended",
-        assertValidSchema("annotation-deprecated", {
-            type: "MyObject",
-            extraTags: ["deprecationMessage"],
-        })
+        assertValidSchema("annotation-deprecated", "MyObject", { extraTags: ["deprecationMessage"] })
     );
     it(
         "annotation-description-override",
-        assertValidSchema("annotation-description-override", {
-            type: "MyObject",
-            jsDoc: "extended",
-            extraTags: ["markdownDescription"],
-        })
+        assertValidSchema("annotation-description-override", "MyObject", { extraTags: ["markdownDescription"] })
     );
 
-    it("annotation-comment", assertValidSchema("annotation-comment", { type: "MyObject" }));
+    it("annotation-comment", assertValidSchema("annotation-comment", "MyObject"));
 
     it("annotation-default", function () {
         // Without actually using the defaults.
-        assertValidSchema(
-            "annotation-default",
-            { type: "MyObject" },
-            {
-                validSamples: annotationDefaultSamples.validSamples,
-                invalidSamples: annotationDefaultSamples.invalidSamplesUnlessDefaults,
-            }
-        )();
+        assertValidSchema("annotation-default", "MyObject", undefined, {
+            validSamples: annotationDefaultSamples.validSamples,
+            invalidSamples: annotationDefaultSamples.invalidSamplesUnlessDefaults,
+        })();
 
         // Having AJV use the defaults.
 
@@ -78,14 +55,10 @@ describe("valid-data-annotations", () => {
             ...sample,
         }));
 
-        assertValidSchema(
-            "annotation-default",
-            { type: "MyObject" },
-            {
-                validSamples: validWithDefaults,
-                ajvOptions: { useDefaults: true },
-            }
-        )();
+        assertValidSchema("annotation-default", "MyObject", undefined, {
+            validSamples: validWithDefaults,
+            ajvOptions: { useDefaults: true },
+        })();
 
         // The previously-invalid samples
         // should now match the expected
@@ -95,19 +68,22 @@ describe("valid-data-annotations", () => {
         });
     });
 
-    it("annotation-example", assertValidSchema("annotation-example", { type: "MyObject" }));
+    it("annotation-example", assertValidSchema("annotation-example", "MyObject"));
 
-    it("annotation-id", assertValidSchema("annotation-id", { type: "MyObject", schemaId: "Test" }));
+    it("annotation-id", assertValidSchema("annotation-id", "MyObject", { schemaId: "Test" }));
 
-    it("annotation-readOnly", assertValidSchema("annotation-readOnly", { type: "MyObject", jsDoc: "basic" }));
+    it("annotation-readOnly", assertValidSchema("annotation-readOnly", "MyObject", { jsDoc: "basic" }));
 
-    it("annotation-ref", assertValidSchema("annotation-ref", { type: "MyObject" }));
+    it("annotation-ref", assertValidSchema("annotation-ref", "MyObject"));
 
-    it("annotation-writeOnly", assertValidSchema("annotation-writeOnly", { type: "MyObject", jsDoc: "basic" }));
+    it("annotation-writeOnly", assertValidSchema("annotation-writeOnly", "MyObject", { jsDoc: "basic" }));
 
-    it("annotation-union-if-then", assertValidSchema("annotation-union-if-then", { type: "Animal", jsDoc: "basic" }));
+    it("annotation-union-if-then", assertValidSchema("annotation-union-if-then", "Animal", { jsDoc: "basic" }));
 
-    it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", { type: "MyObject" }));
+    it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", "MyObject"));
 
-    it("discriminator", assertValidSchema("discriminator", { type: "Animal", discriminatorType: "open-api" }));
+    it(
+        "discriminator",
+        assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" })
+    );
 });

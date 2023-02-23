@@ -2,38 +2,38 @@ import { assertValidSchema } from "./utils";
 
 describe("valid-data-struct", () => {
     // TODO: generics recursive
-    it("simple-object", assertValidSchema("simple-object", { type: "SimpleObject" }));
+    it("simple-object", assertValidSchema("simple-object", "SimpleObject"));
 
-    it("object-function-expression", assertValidSchema("object-function-expression", { type: "MyType" }));
-    it("object-literal-expression", assertValidSchema("object-literal-expression", { type: "MyType" }));
+    it("object-function-expression", assertValidSchema("object-function-expression", "MyType"));
+    it("object-literal-expression", assertValidSchema("object-literal-expression", "MyType"));
 
-    it("literal-object-type", assertValidSchema("literal-object-type", { type: "MyType" }));
+    it("literal-object-type", assertValidSchema("literal-object-type", "MyType"));
     it(
         "literal-object-type-with-computed-props",
-        assertValidSchema("literal-object-type-with-computed-props", { type: "MyType" })
+        assertValidSchema("literal-object-type-with-computed-props", "MyType")
     );
-    it("literal-array-type", assertValidSchema("literal-array-type", { type: "MyType" }));
-    it("literal-index-type", assertValidSchema("literal-index-type", { type: "MyType" }));
+    it("literal-array-type", assertValidSchema("literal-array-type", "MyType"));
+    it("literal-index-type", assertValidSchema("literal-index-type", "MyType"));
 
-    it("interface-single", assertValidSchema("interface-single", { type: "MyObject" }));
-    it("interface-multi", assertValidSchema("interface-multi", { type: "MyObject" }));
-    it("interface-recursion", assertValidSchema("interface-recursion", { type: "MyObject" }));
-    it("interface-extra-props", assertValidSchema("interface-extra-props", { type: "MyObject" }));
-    it("interface-extended-extra-props", assertValidSchema("interface-extended-extra-props", { type: "MyObject" }));
-    it("interface-array", assertValidSchema("interface-array", { type: "TagArray" }));
-    it("interface-property-dash", assertValidSchema("interface-property-dash", { type: "MyObject" }));
-    it("interface-computed-property-name", assertValidSchema("interface-computed-property-name", { type: "MyObject" }));
+    it("interface-single", assertValidSchema("interface-single", "MyObject"));
+    it("interface-multi", assertValidSchema("interface-multi", "MyObject"));
+    it("interface-recursion", assertValidSchema("interface-recursion", "MyObject"));
+    it("interface-extra-props", assertValidSchema("interface-extra-props", "MyObject"));
+    it("interface-extended-extra-props", assertValidSchema("interface-extended-extra-props", "MyObject"));
+    it("interface-array", assertValidSchema("interface-array", "TagArray"));
+    it("interface-property-dash", assertValidSchema("interface-property-dash", "MyObject"));
+    it("interface-computed-property-name", assertValidSchema("interface-computed-property-name", "MyObject"));
 
-    it("class-single", assertValidSchema("class-single", { type: "MyObject" }));
-    it("class-multi", assertValidSchema("class-multi", { type: "MyObject" }));
-    it("class-recursion", assertValidSchema("class-recursion", { type: "MyObject" }));
-    it("class-extra-props", assertValidSchema("class-extra-props", { type: "MyObject" }));
-    it("class-inheritance", assertValidSchema("class-inheritance", { type: "MyObject" }));
-    it("class-generics", assertValidSchema("class-generics", { type: "MyObject" }));
-    it("class-jsdoc", assertValidSchema("class-jsdoc", { type: "MyObject" }));
+    it("class-single", assertValidSchema("class-single", "MyObject"));
+    it("class-multi", assertValidSchema("class-multi", "MyObject"));
+    it("class-recursion", assertValidSchema("class-recursion", "MyObject"));
+    it("class-extra-props", assertValidSchema("class-extra-props", "MyObject"));
+    it("class-inheritance", assertValidSchema("class-inheritance", "MyObject"));
+    it("class-generics", assertValidSchema("class-generics", "MyObject"));
+    it("class-jsdoc", assertValidSchema("class-jsdoc", "MyObject"));
 
-    it("structure-private", assertValidSchema("structure-private", { type: "MyObject" }));
-    it("structure-anonymous", assertValidSchema("structure-anonymous", { type: "MyObject" }));
-    it("structure-recursion", assertValidSchema("structure-recursion", { type: "MyObject" }));
-    it("structure-extra-props", assertValidSchema("structure-extra-props", { type: "MyObject" }));
+    it("structure-private", assertValidSchema("structure-private", "MyObject"));
+    it("structure-anonymous", assertValidSchema("structure-anonymous", "MyObject"));
+    it("structure-recursion", assertValidSchema("structure-recursion", "MyObject"));
+    it("structure-extra-props", assertValidSchema("structure-extra-props", "MyObject"));
 });

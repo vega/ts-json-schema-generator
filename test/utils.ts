@@ -24,7 +24,8 @@ export function createGenerator(config: Config): SchemaGenerator {
 
 export function assertValidSchema(
     relativePath: string,
-    config_?: Config,
+    type?: Config["type"],
+    config_?: Omit<Config, "type">,
     options?: {
         /**
          * Array of sample data
@@ -53,6 +54,7 @@ export function assertValidSchema(
             ...DEFAULT_CONFIG,
             path: `${basePath}/${relativePath}/*.ts`,
             skipTypeCheck: !!process.env.FAST_TEST,
+            type,
             ...config_,
         };
 
@@ -110,7 +112,7 @@ export function assertValidSchema(
 export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
     return (): void => {
         try {
-            assertValidSchema(relativePath, { type })();
+            assertValidSchema(relativePath, type)();
         } catch (error) {
             expect(error).toEqual(new UnknownTypeError(missingType));
         }
