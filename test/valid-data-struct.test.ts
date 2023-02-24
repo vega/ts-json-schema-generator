@@ -30,7 +30,7 @@ describe("valid-data-struct", () => {
     it("class-extra-props", assertValidSchema("class-extra-props", "MyObject"));
     it("class-inheritance", assertValidSchema("class-inheritance", "MyObject"));
     it("class-generics", assertValidSchema("class-generics", "MyObject"));
-    it("class-jsdoc", assertValidSchema("class-jsdoc", "MyObject", "extended"));
+    it("class-jsdoc", assertValidSchema("class-jsdoc", "MyObject"));
 
     it("structure-private", assertValidSchema("structure-private", "MyObject"));
     it("structure-anonymous", assertValidSchema("structure-anonymous", "MyObject"));

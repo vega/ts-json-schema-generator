@@ -6,7 +6,7 @@ describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
     it(
         "type-aliases-primitive-with-id",
-        assertValidSchema("type-aliases-primitive-with-id", "MyString", "none", undefined, "testId")
+        assertValidSchema("type-aliases-primitive-with-id", "MyString", { jsDoc: "none", schemaId: "testId" })
     );
     it("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
     it("type-aliases-mixed", assertValidSchema("type-aliases-mixed", "MyObject"));
@@ -34,7 +34,7 @@ describe("valid-data-type", () => {
     it("type-maps", assertValidSchema("type-maps", "MyObject"));
     it("type-primitives", assertValidSchema("type-primitives", "MyObject"));
     it("type-date", assertValidSchema("type-date", "MyObject"));
-    it("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", "basic"));
+    it("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", { jsDoc: "basic" }));
     it("type-regexp", assertValidSchema("type-regexp", "MyObject"));
     it("type-uri", assertValidSchema("type-uri", "MyObject"));
     it("type-union", assertValidSchema("type-union", "TypeUnion"));
@@ -103,12 +103,12 @@ describe("valid-data-type", () => {
     it("type-mapped-enum-optional", assertValidSchema("type-mapped-enum-optional", "MyObject"));
     it("type-mapped-enum-null", assertValidSchema("type-mapped-enum-null", "MyObject"));
     it("type-mapped-enum-number", assertValidSchema("type-mapped-enum-number", "MyObject"));
-    it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject", "extended"));
-    it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject", "extended"));
+    it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject"));
+    it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
     it("type-mapped-never", assertValidSchema("type-mapped-never", "MyObject"));
     it("type-mapped-empty-exclude", assertValidSchema("type-mapped-empty-exclude", "MyObject"));
-    it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "*", "extended"));
+    it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "*"));
 
     it("type-conditional-simple", assertValidSchema("type-conditional-simple", "MyObject"));
     it("type-conditional-inheritance", assertValidSchema("type-conditional-inheritance", "MyObject"));
@@ -120,7 +120,7 @@ describe("valid-data-type", () => {
     it("type-conditional-exclude-narrowing", assertValidSchema("type-conditional-exclude-narrowing", "MyObject"));
     it("type-conditional-narrowing", assertValidSchema("type-conditional-narrowing", "MyObject"));
     it("type-conditional-omit", assertValidSchema("type-conditional-omit", "MyObject"));
-    it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject", "extended"));
+    it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject"));
 
     it("type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));
     it("type-conditional-infer-nested", assertValidSchema("type-conditional-infer-nested", "MyType"));
