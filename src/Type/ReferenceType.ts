@@ -36,6 +36,10 @@ export class ReferenceType extends BaseType {
         return this.type;
     }
 
+    public hasType(): boolean {
+        return this.type != null;
+    }
+
     public setType(type: BaseType): void {
         this.type = type;
         this.setId(type.getId());
