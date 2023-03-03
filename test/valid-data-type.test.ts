@@ -82,6 +82,7 @@ describe("valid-data-type", () => {
         assertMissingFormatterFor(new FunctionType(), "type-indexed-access-method-signature", "MyType")
     );
     it("type-indexed-circular-access", assertValidSchema("type-indexed-circular-access", "*"));
+    it("type-indexed-circular", assertValidSchema("type-indexed-circular", "MyType"));
     it("type-keyof-tuple", assertValidSchema("type-keyof-tuple", "MyType"));
     it("type-keyof-object", assertValidSchema("type-keyof-object", "MyType"));
     it("type-keyof-object-function", assertValidSchema("type-keyof-object-function", "MyType"));

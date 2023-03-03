@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "GeometryCollection": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "GeometryCollection",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "$ref": "#/definitions/GeometryCollection"
+    }
+  }
+}
