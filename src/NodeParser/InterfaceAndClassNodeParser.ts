@@ -125,7 +125,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
 
                 // Use the type checker if the member has no explicit type
                 // Ignore members without an initializer. They have no useful type.
-                if (memberType === undefined && member.initializer !== undefined) {
+                if (memberType === undefined && (member as ts.PropertyDeclaration)?.initializer !== undefined) {
                     const type = this.typeChecker.getTypeAtLocation(member);
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
                 }
