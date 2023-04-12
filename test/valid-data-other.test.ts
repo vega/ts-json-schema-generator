@@ -7,6 +7,7 @@ describe("valid-data-other", () => {
     it("enums-compute", assertValidSchema("enums-compute", "Enum"));
     it("enums-mixed", assertValidSchema("enums-mixed", "Enum"));
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
+    it("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
 
     it(
         "function-parameters-default-value",
