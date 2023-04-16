@@ -10,11 +10,6 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@auto-it/bot-list@10.43.0":
-  version "10.43.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.43.0.tgz#1a054a5ba0de3d68657a2f453de2ceffb3ea0ccc"
-  integrity sha512-rQshCAEjtRhF8oFL9VNxBm6nWibd+YVSnMfxPhg6v4Mbs0xBIoF3Nzu7aTEjOkSl9+YIaRWnVV70bALAFgI0MQ==
-
 "@auto-it/bot-list@10.44.0":
   version "10.44.0"
   resolved "https://registry.yarnpkg.com/@auto-it/bot-list/-/bot-list-10.44.0.tgz#c3c94f9e5cfb259e46ed6814b3cc614710bd7aad"
@@ -34,52 +29,6 @@
     fp-ts "^2.5.3"
     io-ts "^2.1.2"
     tslib "2.1.0"
-
-"@auto-it/core@10.43.0":
-  version "10.43.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/core/-/core-10.43.0.tgz#05bb8f9544273ab4b3ce4b6cff12115ec644031c"
-  integrity sha512-aAhEodT0y2gS1ueKl2iCMc5VDK9jZMnuspGDaR8SBKcsP7o8R6hxKtxGc2cAAoNOPewcBpe72Yy8768FLoUhAQ==
-  dependencies:
-    "@auto-it/bot-list" "10.43.0"
-    "@endemolshinegroup/cosmiconfig-typescript-loader" "^3.0.2"
-    "@octokit/core" "^3.5.1"
-    "@octokit/plugin-enterprise-compatibility" "1.3.0"
-    "@octokit/plugin-retry" "^3.0.9"
-    "@octokit/plugin-throttling" "^3.6.2"
-    "@octokit/rest" "^18.12.0"
-    await-to-js "^3.0.0"
-    chalk "^4.0.0"
-    cosmiconfig "7.0.0"
-    deepmerge "^4.0.0"
-    dotenv "^8.0.0"
-    endent "^2.1.0"
-    enquirer "^2.3.4"
-    env-ci "^5.0.1"
-    fast-glob "^3.1.1"
-    fp-ts "^2.5.3"
-    fromentries "^1.2.0"
-    gitlog "^4.0.3"
-    https-proxy-agent "^5.0.0"
-    import-cwd "^3.0.0"
-    import-from "^3.0.0"
-    io-ts "^2.1.2"
-    lodash.chunk "^4.2.0"
-    log-symbols "^4.0.0"
-    node-fetch "2.6.7"
-    parse-author "^2.0.0"
-    parse-github-url "1.0.2"
-    pretty-ms "^7.0.0"
-    requireg "^0.2.2"
-    semver "^7.0.0"
-    signale "^1.4.0"
-    tapable "^2.2.0"
-    terminal-link "^2.1.1"
-    tinycolor2 "^1.4.1"
-    ts-node "^10.9.1"
-    tslib "2.1.0"
-    type-fest "^0.21.1"
-    typescript-memoize "^1.0.0-alpha.3"
-    url-join "^4.0.0"
 
 "@auto-it/core@10.44.0":
   version "10.44.0"
@@ -128,12 +77,12 @@
     url-join "^4.0.0"
 
 "@auto-it/first-time-contributor@^10.43.0":
-  version "10.43.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/first-time-contributor/-/first-time-contributor-10.43.0.tgz#fbfaaff0088505e2d5e1cceb74886937157f54cb"
-  integrity sha512-pGOkcB/GWc+KpcxFnuiAct07UWt4+j5eaUbOzD/0Dm0PltlDVoEkcis4+/sxEsVVvfTCJUGXAUwB8wg5VrIGqw==
+  version "10.44.0"
+  resolved "https://registry.yarnpkg.com/@auto-it/first-time-contributor/-/first-time-contributor-10.44.0.tgz#371d1460eeb8359260583f7daae7fc6008d47543"
+  integrity sha512-bu9ExvCl0btTKJtJaLVZeCqHAhUguycic0Yo9PrNitQRnH/c5pF21gsPvQnn2kHq8CrX/kMwHthPr5E+5MPBTQ==
   dependencies:
-    "@auto-it/bot-list" "10.43.0"
-    "@auto-it/core" "10.43.0"
+    "@auto-it/bot-list" "10.44.0"
+    "@auto-it/core" "10.44.0"
     array.prototype.flatmap "^1.2.2"
     endent "^2.1.0"
     tslib "2.1.0"
