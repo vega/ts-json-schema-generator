@@ -60,7 +60,7 @@
     "@babel/preset-typescript": "^7.21.0",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.0",
-    "@types/node": "^18.15.3",
+    "@types/node": "^20.1.0",
     "@types/normalize-path": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
