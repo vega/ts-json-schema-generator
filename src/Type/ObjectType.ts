@@ -2,7 +2,12 @@ import { BaseType } from "./BaseType";
 import { strip } from "../Utils/String";
 
 export class ObjectProperty {
-    public constructor(private name: string, private type: BaseType, private required: boolean) {}
+    public constructor(
+        private name: string,
+        private type: BaseType,
+        private required: boolean,
+        private dependentRequired?: string
+    ) {}
 
     public getName(): string {
         return strip(this.name);
@@ -13,6 +18,9 @@ export class ObjectProperty {
     public isRequired(): boolean {
         return this.required;
     }
+    public getDependentRequired(): string | undefined {
+        return this.dependentRequired;
+    }
 }
 
 export class ObjectType extends BaseType {
@@ -22,8 +30,7 @@ export class ObjectType extends BaseType {
         private properties: readonly ObjectProperty[],
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
-        private nonPrimitive: boolean = false,
-        private dependentMap: Record<string, string[]> = {}
+        private nonPrimitive: boolean = false
     ) {
         super();
     }
@@ -37,9 +44,6 @@ export class ObjectType extends BaseType {
     }
     public getProperties(): readonly ObjectProperty[] {
         return this.properties;
-    }
-    public getDependentMap(): Record<string, string[]> {
-        return this.dependentMap;
     }
     public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;

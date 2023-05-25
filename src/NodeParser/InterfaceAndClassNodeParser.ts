@@ -45,13 +45,11 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             reference.setName(id);
         }
 
-        const _properties = this.getProperties(node, context);
+        const properties = this.getProperties(node, context);
 
-        if (_properties === undefined) {
+        if (properties === undefined) {
             return new NeverType();
         }
-
-        const { dependentMap, properties } = _properties;
 
         const additionalProperties = this.getAdditionalProperties(node, context);
 
@@ -63,14 +61,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(
-            id,
-            this.getBaseTypes(node, context),
-            properties,
-            additionalProperties,
-            undefined,
-            dependentMap
-        );
+        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties, undefined);
     }
 
     /**
@@ -114,9 +105,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     protected getProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context
-    ): { properties: ObjectProperty[]; dependentMap: Record<string, string[]> } | undefined {
+    ): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
-        const dependentMap = {} as Record<string, string[]>;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce((members, member) => {
@@ -141,26 +131,21 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
                 }
 
-                const name = this.getPropertyName(member.name);
-                const jsDocTag = getJsDocTagText(member, "dependentRequired");
-                if (jsDocTag) {
-                    const _dependentRequired = dependentMap[name] ?? [];
-                    _dependentRequired.push(jsDocTag);
-                    dependentMap[name] = _dependentRequired;
-                }
                 if (memberType !== undefined) {
                     return [...entries, { member, memberType }];
                 }
                 return entries;
             }, [])
-            .map(
-                ({ member, memberType }) =>
-                    new ObjectProperty(
-                        this.getPropertyName(member.name),
-                        this.childNodeParser.createType(memberType, context),
-                        !member.questionToken
-                    )
-            )
+            .map(({ member, memberType }) => {
+                const name = this.getPropertyName(member.name);
+                const dependentRequired = getJsDocTagText(member, "dependentRequired");
+                return new ObjectProperty(
+                    name,
+                    this.childNodeParser.createType(memberType, context),
+                    !member.questionToken,
+                    dependentRequired
+                );
+            })
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;
@@ -172,10 +157,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             return undefined;
         }
 
-        return {
-            properties,
-            dependentMap,
-        };
+        return properties;
     }
 
     protected getAdditionalProperties(
