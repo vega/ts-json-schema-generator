@@ -60,6 +60,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
     }
 
     protected getObjectDefinition(type: ObjectType): Definition {
+        const dependentRequired = type.getDependentMap();
         let objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
@@ -94,6 +95,9 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                               ? this.childTypeFormatter.getDefinition(additionalProperties)
                               : additionalProperties,
                   }),
+            // it seem JSON Schema7 does not support dependentMap
+            // but dependencies can be used instead
+            dependencies: dependentRequired,
         };
     }
 

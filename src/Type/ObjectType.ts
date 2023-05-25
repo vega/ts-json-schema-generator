@@ -22,7 +22,8 @@ export class ObjectType extends BaseType {
         private properties: readonly ObjectProperty[],
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
-        private nonPrimitive: boolean = false
+        private nonPrimitive: boolean = false,
+        private dependentMap: Record<string, string[]> = {}
     ) {
         super();
     }
@@ -36,6 +37,9 @@ export class ObjectType extends BaseType {
     }
     public getProperties(): readonly ObjectProperty[] {
         return this.properties;
+    }
+    public getDependentMap(): Record<string, string[]> {
+        return this.dependentMap;
     }
     public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;

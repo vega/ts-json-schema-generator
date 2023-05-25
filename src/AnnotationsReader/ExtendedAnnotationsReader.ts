@@ -3,6 +3,7 @@ import ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
+import { getJsDocTagText } from "../Utils/getJsDoc";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
     public constructor(private typeChecker: ts.TypeChecker, extraTags?: Set<string>) {
@@ -54,22 +55,10 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
-        const symbol = symbolAtNode(node);
-        if (!symbol) {
+        const text = getJsDocTagText(node, "asType");
+        if (!text) {
             return undefined;
         }
-
-        const jsDocTags: ts.JSDocTagInfo[] = symbol.getJsDocTags();
-        if (!jsDocTags || !jsDocTags.length) {
-            return undefined;
-        }
-
-        const jsDocTag = jsDocTags.find((tag) => tag.name === "asType");
-        if (!jsDocTag) {
-            return undefined;
-        }
-
-        const text = (jsDocTag.text ?? []).map((part) => part.text).join("");
         return { type: text };
     }
     /**

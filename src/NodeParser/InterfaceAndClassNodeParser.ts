@@ -9,6 +9,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
+import { getJsDocTagText } from "../Utils/getJsDoc";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -44,11 +45,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             reference.setName(id);
         }
 
-        const properties = this.getProperties(node, context);
+        const _properties = this.getProperties(node, context);
 
-        if (properties === undefined) {
+        if (_properties === undefined) {
             return new NeverType();
         }
+
+        const { dependentMap, properties } = _properties;
 
         const additionalProperties = this.getAdditionalProperties(node, context);
 
@@ -60,7 +63,14 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
+        return new ObjectType(
+            id,
+            this.getBaseTypes(node, context),
+            properties,
+            additionalProperties,
+            undefined,
+            dependentMap
+        );
     }
 
     /**
@@ -104,8 +114,9 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     protected getProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context
-    ): ObjectProperty[] | undefined {
+    ): { properties: ObjectProperty[]; dependentMap: Record<string, string[]> } | undefined {
         let hasRequiredNever = false;
+        const dependentMap = {} as Record<string, string[]>;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
             .reduce((members, member) => {
@@ -130,6 +141,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
                 }
 
+                const name = this.getPropertyName(member.name);
+                const jsDocTag = getJsDocTagText(member, "dependentRequired");
+                if (jsDocTag) {
+                    const _dependentRequired = dependentMap[name] ?? [];
+                    _dependentRequired.push(jsDocTag);
+                    dependentMap[name] = _dependentRequired;
+                }
                 if (memberType !== undefined) {
                     return [...entries, { member, memberType }];
                 }
@@ -154,7 +172,10 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             return undefined;
         }
 
-        return properties;
+        return {
+            properties,
+            dependentMap,
+        };
     }
 
     protected getAdditionalProperties(

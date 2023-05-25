@@ -248,6 +248,15 @@ describe("config", () => {
         })
     );
     it(
+        "jsdoc-dependentRequired",
+        assertSchema("jsdoc-dependentRequired", {
+            type: "Billing",
+            expose: "export",
+            topRef: true,
+            jsDoc: "extended",
+        })
+    );
+    it(
         "jsdoc-description-only",
         assertSchema("jsdoc-description-only", {
             type: "MyObject",
