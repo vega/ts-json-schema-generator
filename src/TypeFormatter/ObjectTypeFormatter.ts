@@ -108,7 +108,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                   }),
             // it seems that JSON Schema7 does not support dependentMap property
             // but dependencies can be used instead
-            dependencies: dependentRequiredMap,
+            ...(Object.keys(dependentRequiredMap).length > 0 ? { dependencies: dependentRequiredMap } : {}),
         };
     }
 
