@@ -57,7 +57,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         }
 
         const kindValues = kindDefinitions
-            .map((item) => item.const)
+            .flatMap((item) => item.const ?? item.enum)
             .filter((item): item is string | number | boolean | null => item !== undefined);
 
         const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
