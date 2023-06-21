@@ -2,12 +2,12 @@ import { BaseType } from "./BaseType";
 import { strip } from "../Utils/String";
 
 export class ObjectProperty {
-    public constructor(private name: string, private type: BaseType | undefined, private required: boolean) {}
+    public constructor(private name: string, private type: BaseType, private required: boolean) {}
 
     public getName(): string {
         return strip(this.name);
     }
-    public getType(): BaseType | undefined {
+    public getType(): BaseType {
         return this.type;
     }
     public isRequired(): boolean {

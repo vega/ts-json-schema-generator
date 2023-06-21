@@ -2,6 +2,8 @@ import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
 
+const DEFINITION_OFFSET = "#/definitions/".length;
+
 function addReachable(
     definition: Definition | JSONSchema7Definition,
     definitions: StringMap<Definition>,
@@ -12,9 +14,9 @@ function addReachable(
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.slice(14));
-        if (reachable.has(typeName)) {
-            // we've already processed this definition
+        const typeName = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
+        if (reachable.has(typeName) || !isLocalRef(definition.$ref)) {
+            // we've already processed this definition, or this definition refers to an external schema
             return;
         }
         reachable.add(typeName);
@@ -37,7 +39,7 @@ function addReachable(
         }
     } else if (definition.not) {
         addReachable(definition.not, definitions, reachable);
-    } else if (definition.type === "object") {
+    } else if (definition.type?.includes("object")) {
         for (const prop in definition.properties || {}) {
             const propDefinition = definition.properties![prop];
             addReachable(propDefinition, definitions, reachable);
@@ -47,7 +49,7 @@ function addReachable(
         if (additionalProperties) {
             addReachable(additionalProperties, definitions, reachable);
         }
-    } else if (definition.type === "array") {
+    } else if (definition.type?.includes("array")) {
         const items = definition.items;
         if (Array.isArray(items)) {
             for (const item of items) {
@@ -56,6 +58,8 @@ function addReachable(
         } else if (items) {
             addReachable(items, definitions, reachable);
         }
+    } else if (definition.then) {
+        addReachable(definition.then, definitions, reachable);
     }
 }
 
@@ -78,4 +82,8 @@ export function removeUnreachable(
     }
 
     return out;
+}
+
+function isLocalRef(ref: string) {
+    return ref.charAt(0) === "#";
 }

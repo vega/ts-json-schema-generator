@@ -7,7 +7,7 @@ import ts from "typescript";
  * @param modifier - The modifier to look for.
  * @return True if node has the modifier, false if not.
  */
-export function hasModifier(node: ts.Node, modifier: ts.SyntaxKind): boolean {
+export function hasModifier(node: ts.HasModifiers, modifier: ts.SyntaxKind): boolean {
     const nodeModifiers = node.modifiers;
     if (nodeModifiers == null) {
         return false;
@@ -22,7 +22,7 @@ export function hasModifier(node: ts.Node, modifier: ts.SyntaxKind): boolean {
  * @param node - The node to check.
  * @return True if node is public, false if not.
  */
-export function isPublic(node: ts.Node): boolean {
+export function isPublic(node: ts.HasModifiers): boolean {
     return !(hasModifier(node, ts.SyntaxKind.PrivateKeyword) || hasModifier(node, ts.SyntaxKind.ProtectedKeyword));
 }
 
@@ -32,6 +32,6 @@ export function isPublic(node: ts.Node): boolean {
  * @param node - The node to check.
  * @return True if node is static, false if not.
  */
-export function isStatic(node: ts.Node): boolean {
+export function isStatic(node: ts.HasModifiers): boolean {
     return hasModifier(node, ts.SyntaxKind.StaticKeyword);
 }

@@ -9,6 +9,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { removeUndefined } from "../Utils/removeUndefined";
 import { DefinitionType } from "../Type/DefinitionType";
 import { UnionType } from "../Type/UnionType";
+import { AnyType } from "../Type/AnyType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: SubNodeParser, protected annotationsReader: AnnotationsReader) {}
@@ -17,18 +18,21 @@ export class AnnotatedNodeParser implements SubNodeParser {
         return this.childNodeParser.supportsNode(node);
     }
 
-    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
-        const baseType = this.childNodeParser.createType(node, context, reference);
-
-        if (baseType === undefined) {
-            return undefined;
-        }
-
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         const annotatedNode = this.getAnnotatedNode(node);
         let annotations = this.annotationsReader.getAnnotations(annotatedNode);
+        const nullable = this.getNullable(annotatedNode);
+
+        // Short-circuit parsing the underlying type if an explicit ref annotation was passed.
+        if (annotations && "$ref" in annotations) {
+            return new AnnotatedType(new AnyType(), annotations, nullable);
+        }
+
+        const baseType = this.childNodeParser.createType(node, context, reference);
 
         // Don't return annotations for lib types such as Exclude.
-        if (node.getSourceFile().fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
+        // Sourceless nodes may not have a fileName, just ignore them.
+        if (node.getSourceFile()?.fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
             let specialCase = false;
 
             // Special case for Exclude<T, U>: use the annotation of T.
@@ -57,8 +61,6 @@ export class AnnotatedNodeParser implements SubNodeParser {
                 return baseType;
             }
         }
-
-        const nullable = this.getNullable(annotatedNode);
 
         return !annotations && !nullable ? baseType : new AnnotatedType(baseType, annotations || {}, nullable);
     }

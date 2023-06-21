@@ -7,6 +7,7 @@ import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
+import { UnknownType } from "../Type/UnknownType";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
@@ -15,7 +16,7 @@ export class TypeofNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeQuery;
     }
 
-    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType | undefined {
+    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType {
         let symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
         if (symbol.flags & ts.SymbolFlags.Alias) {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
@@ -29,15 +30,24 @@ export class TypeofNodeParser implements SubNodeParser {
             ts.isPropertySignature(valueDec) ||
             ts.isPropertyDeclaration(valueDec)
         ) {
+            let initializer: ts.Expression | undefined;
             if (valueDec.type) {
                 return this.childNodeParser.createType(valueDec.type, context);
-            } else if (valueDec.initializer) {
-                return this.childNodeParser.createType(valueDec.initializer, context);
+            } else if ((initializer = (valueDec as ts.VariableDeclaration | ts.PropertyDeclaration)?.initializer)) {
+                return this.childNodeParser.createType(initializer, context);
             }
         } else if (ts.isClassDeclaration(valueDec)) {
             return this.childNodeParser.createType(valueDec, context);
         } else if (ts.isPropertyAssignment(valueDec)) {
             return this.childNodeParser.createType(valueDec.initializer, context);
+        } else if (valueDec.kind === ts.SyntaxKind.FunctionDeclaration) {
+            // Silently ignoring Function as JSON Schema does not define them
+            // see https://github.com/vega/ts-json-schema-generator/issues/98
+            return new UnknownType(
+                `(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}) -> ${(<
+                    ts.FunctionDeclaration
+                >valueDec).type?.getFullText()}`
+            );
         }
 
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);
@@ -50,7 +60,7 @@ export class TypeofNodeParser implements SubNodeParser {
             reference.setName(id);
         }
 
-        let type: BaseType | null | undefined = null;
+        let type: BaseType | null = null;
         const properties = node.members.map((member) => {
             const name = member.name.getText();
             if (member.initializer) {

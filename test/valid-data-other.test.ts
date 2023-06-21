@@ -7,6 +7,7 @@ describe("valid-data-other", () => {
     it("enums-compute", assertValidSchema("enums-compute", "Enum"));
     it("enums-mixed", assertValidSchema("enums-mixed", "Enum"));
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
+    it("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
 
     it(
         "function-parameters-default-value",
@@ -18,7 +19,7 @@ describe("valid-data-other", () => {
     );
     it(
         "function-parameters-jsdoc",
-        assertValidSchema("function-parameters-jsdoc", "NamedParameters<typeof myFunction>", "basic")
+        assertValidSchema("function-parameters-jsdoc", "NamedParameters<typeof myFunction>", { jsDoc: "basic" })
     );
     it(
         "function-parameters-optional",
@@ -47,7 +48,7 @@ describe("valid-data-other", () => {
 
     it("import-simple", assertValidSchema("import-simple", "MyObject"));
     it("import-exposed", assertValidSchema("import-exposed", "MyObject"));
-    it("import-internal", assertValidSchema("import-internal", "MyObject", "basic"));
+    it("import-internal", assertValidSchema("import-internal", "MyObject", { jsDoc: "basic" }));
     it("import-anonymous", assertValidSchema("import-anonymous", "MyObject"));
 
     it("generic-simple", assertValidSchema("generic-simple", "MyObject"));

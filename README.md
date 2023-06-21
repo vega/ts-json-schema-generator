@@ -14,9 +14,17 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 ## Contributors
 
-This project is made possible by a [community of contributors](https://github.com/vega/ts-json-schema-generator/graphs/contributors). We welcome contributions of any kind (issues, code, documentation, examples, tests,...). Please read our [code of conduct](https://github.com/vega/vega/blob/master/CODE_OF_CONDUCT.md).
+This project is made possible by a [community of contributors](https://github.com/vega/ts-json-schema-generator/graphs/contributors). We welcome contributions of any kind (issues, code, documentation, examples, tests,...). Please read our [code of conduct](https://vega.github.io/vega/about/code-of-conduct).
 
 ## CLI Usage
+
+Run the schema generator with npx:
+
+```bash
+npx ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Name'
+```
+
+Or install the package and then run it
 
 ```bash
 npm install --save ts-json-schema-generator
@@ -24,6 +32,8 @@ npm install --save ts-json-schema-generator
 ```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
+
+Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
 
 ## Programmatic Usage
 
@@ -137,7 +147,8 @@ Similar to custom formatting, extending the built-in parsing works practically t
 ```ts
 // my-constructor-parser.ts
 import { Context, StringType, ReferenceType, BaseType, SubNodeParser } from "ts-json-schema-generator";
-import ts from "typescript";
+// use typescript exported by TJS to avoid version conflict
+import ts from "ts-json-schema-generator";
 
 export class MyConstructorParser implements SubNodeParser {
     supportsNode(node: ts.Node): boolean {
@@ -251,7 +262,7 @@ fs.writeFile(output_path, schemaString, (err) => {
 -   `interface` types
 -   `enum` types
 -   `union`, `tuple`, `type[]` types
--   `Date`, `RegExp` types
+-   `Date`, `RegExp`, `URL` types
 -   `string`, `boolean`, `number` types
 -   `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
 -   type aliases

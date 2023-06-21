@@ -2,7 +2,7 @@ import stringify from "safe-stable-stringify";
 import { Node } from "typescript";
 import { Context } from "../NodeParser";
 
-export function hash(a: unknown): string | number {
+export function hash(a: string | boolean | number | (string | boolean | number)[] | object): string | number {
     if (typeof a === "number") {
         return a;
     }
@@ -32,18 +32,25 @@ export function hash(a: unknown): string | number {
 
 export function getKey(node: Node, context: Context): string {
     const ids: (number | string)[] = [];
+
     while (node) {
-        const file = node
-            .getSourceFile()
-            .fileName.substr(process.cwd().length + 1)
-            .replace(/\//g, "_");
-        ids.push(hash(file), node.pos, node.end);
+        const source = node.getSourceFile();
+
+        // When the node has no source file, we need to prevent collisions  with other sourceless nodes.
+        // As they does not have any kind of reference to their parents, Math.random is the best we can
+        // do to make them unique
+        if (!source) {
+            ids.push(Math.random());
+        } else {
+            const filename = source.fileName.substring(process.cwd().length + 1).replace(/\//g, "_");
+            ids.push(hash(filename), node.pos, node.end);
+        }
 
         node = node.parent;
     }
+
     const id = ids.join("-");
+    const args = context.getArguments();
 
-    const argumentIds = context.getArguments().map((arg) => arg?.getId());
-
-    return argumentIds.length ? `${id}<${argumentIds.join(",")}>` : id;
+    return args.length ? `${id}<${args.map((arg) => arg.getId()).join(",")}>` : id;
 }

@@ -1,16 +1,18 @@
-import Ajv from "ajv";
+import Ajv, { Options as AjvOptions } from "ajv";
 import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
-import stringify from "safe-stable-stringify";
 import { resolve } from "path";
+import stringify from "safe-stable-stringify";
 import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config } from "../src/Config";
+import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
+import { BaseType } from "../src/Type/BaseType";
 
-const validator = new Ajv();
+const validator = new Ajv({ discriminator: true });
 addFormats(validator);
 
 const basePath = "test/valid-data";
@@ -22,26 +24,42 @@ export function createGenerator(config: Config): SchemaGenerator {
 
 export function assertValidSchema(
     relativePath: string,
-    type?: string,
-    jsDoc: Config["jsDoc"] = "none",
-    extraTags?: Config["extraTags"],
-    schemaId?: Config["schemaId"]
+    type?: Config["type"],
+    config_?: Omit<Config, "type">,
+    options?: {
+        /**
+         * Array of sample data
+         * that should
+         * successfully validate.
+         */
+        validSamples?: any[];
+        /**
+         * Array of sample data
+         * that should
+         * fail to validate.
+         */
+        invalidSamples?: any[];
+        /**
+         * Options to pass to Ajv
+         * when creating the Ajv
+         * instance.
+         *
+         * @default {strict:false}
+         */
+        ajvOptions?: AjvOptions;
+    }
 ) {
     return (): void => {
         const config: Config = {
+            ...DEFAULT_CONFIG,
             path: `${basePath}/${relativePath}/*.ts`,
-            type,
-            jsDoc,
-            extraTags,
             skipTypeCheck: !!process.env.FAST_TEST,
+            type,
+            ...config_,
         };
 
-        if (schemaId) {
-            config.schemaId = schemaId;
-        }
-
         const generator = createGenerator(config);
-        const schema = generator.createSchema(type);
+        const schema = generator.createSchema(config.type);
         const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
@@ -55,13 +73,48 @@ export function assertValidSchema(
         expect(actual).toEqual(expected);
 
         let localValidator = validator;
-        if (extraTags) {
-            localValidator = new Ajv({ strict: false });
+        if (config.extraTags) {
+            localValidator = new Ajv(options?.ajvOptions || { strict: false });
             addFormats(localValidator);
         }
 
         localValidator.validateSchema(actual);
         expect(localValidator.errors).toBeNull();
-        localValidator.compile(actual); // Will find MissingRef errors
+
+        // Compile in all cases to detect MissingRef errors
+        const validate = localValidator.compile(actual);
+
+        // Use the compiled validator if there
+        // are any samples.
+        if (options?.invalidSamples) {
+            for (const sample of options.invalidSamples) {
+                const isValid = validate(sample);
+                if (isValid) {
+                    console.log("Unexpectedly Valid:", sample);
+                }
+                expect(isValid).toBe(false);
+            }
+        }
+        if (options?.validSamples) {
+            for (const sample of options.validSamples) {
+                const isValid = validate(sample);
+                if (!isValid) {
+                    console.log("Unexpectedly Invalid:", sample);
+
+                    console.log("AJV Errors:", validate.errors);
+                }
+                expect(isValid).toBe(true);
+            }
+        }
+    };
+}
+
+export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
+    return (): void => {
+        try {
+            assertValidSchema(relativePath, type)();
+        } catch (error) {
+            expect(error).toEqual(new UnknownTypeError(missingType));
+        }
     };
 }

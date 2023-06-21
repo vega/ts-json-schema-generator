@@ -1,10 +1,12 @@
 import { UnknownTypeError } from "../Error/UnknownTypeError";
 import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
+import { BooleanType } from "../Type/BooleanType";
+import { EnumType } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { UnionType } from "../Type/UnionType";
 
-function* _extractLiterals(type: BaseType | undefined): Iterable<string> {
+function* _extractLiterals(type: BaseType): Iterable<string> {
     if (!type) {
         return;
     }
@@ -12,7 +14,7 @@ function* _extractLiterals(type: BaseType | undefined): Iterable<string> {
         yield type.getValue().toString();
         return;
     }
-    if (type instanceof UnionType) {
+    if (type instanceof UnionType || type instanceof EnumType) {
         for (const t of type.getTypes()) {
             yield* _extractLiterals(t);
         }
@@ -22,10 +24,14 @@ function* _extractLiterals(type: BaseType | undefined): Iterable<string> {
         yield* _extractLiterals(type.getType());
         return;
     }
+    if (type instanceof BooleanType) {
+        yield* _extractLiterals(new UnionType([new LiteralType("true"), new LiteralType("false")]));
+        return;
+    }
 
     throw new UnknownTypeError(type);
 }
 
-export function extractLiterals(type: BaseType | undefined): string[] {
+export function extractLiterals(type: BaseType): string[] {
     return [..._extractLiterals(type)];
 }

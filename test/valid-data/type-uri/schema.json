@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "format": "uri",
+          "type": "string"
+        },
+        "urlAlias": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "url",
+        "urlAlias"
+      ],
+      "type": "object"
+    }
+  }
+}
