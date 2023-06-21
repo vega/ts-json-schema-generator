@@ -9,7 +9,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
-import { getJsDocTagText } from "../Utils/getJsDoc";
+import { getJsDocTagTexts } from "../Utils/getJsDoc";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -138,7 +138,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }, [])
             .map(({ member, memberType }) => {
                 const name = this.getPropertyName(member.name);
-                const dependentRequired = getJsDocTagText(member, "dependentRequired");
+                const dependentRequired = getJsDocTagTexts(member, "dependentRequired");
                 return new ObjectProperty(
                     name,
                     this.childNodeParser.createType(memberType, context),

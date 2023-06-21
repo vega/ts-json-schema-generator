@@ -6,7 +6,8 @@
       "additionalProperties": false,
       "dependencies": {
         "billing_address": [
-          "credit_card"
+          "credit_card",
+          "name"
         ],
         "credit_card": [
           "billing_address"

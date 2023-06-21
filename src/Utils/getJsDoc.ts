@@ -2,6 +2,14 @@ import ts from "typescript";
 import { symbolAtNode } from "./symbolAtNode";
 
 export function getJsDocTagText(node: ts.Node, tagName: string): string | undefined {
+    const tags = getJsDocTagTexts(node, tagName);
+    if (tags) {
+        return tags[0];
+    }
+    return undefined;
+}
+
+export function getJsDocTagTexts(node: ts.Node, tagName: string): string[] | undefined {
     const symbol = symbolAtNode(node);
     if (!symbol) {
         return undefined;
@@ -12,10 +20,10 @@ export function getJsDocTagText(node: ts.Node, tagName: string): string | undefi
         return undefined;
     }
 
-    const jsDocTag = jsDocTags.find((tag) => tag.name === tagName);
-    if (!jsDocTag) {
+    const jsDocTag = jsDocTags.filter((tag) => tag.name === tagName);
+    if (jsDocTag.length === 0) {
         return undefined;
     }
 
-    return (jsDocTag.text ?? []).map((part) => part.text).join("");
+    return jsDocTag.map((v) => (v.text ?? []).map((part) => part.text).join(""));
 }

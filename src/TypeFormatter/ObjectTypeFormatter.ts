@@ -84,7 +84,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             const requiredArray = result[property.getName()] || [];
             const dependentRequired = property.getDependentRequired();
             if (dependentRequired) {
-                requiredArray.push(dependentRequired);
+                requiredArray.push(...dependentRequired);
             }
             if (requiredArray.length > 0) {
                 result[property.getName()] = requiredArray;

@@ -6,7 +6,7 @@ export class ObjectProperty {
         private name: string,
         private type: BaseType,
         private required: boolean,
-        private dependentRequired?: string
+        private dependentRequired?: string[]
     ) {}
 
     public getName(): string {
@@ -18,7 +18,7 @@ export class ObjectProperty {
     public isRequired(): boolean {
         return this.required;
     }
-    public getDependentRequired(): string | undefined {
+    public getDependentRequired(): string[] | undefined {
         return this.dependentRequired;
     }
 }
