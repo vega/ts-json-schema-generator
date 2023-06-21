@@ -103,7 +103,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        if (examples.length === 1) {
+        else if (examples.length === 1) {
             return { example: examples[0] };
         }
 
