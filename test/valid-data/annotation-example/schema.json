@@ -6,9 +6,9 @@
       "type": "string"
     },
     "MyObject": {
-      "examples": [
-        { "nested": "hello" }
-      ],
+      "example": {
+        "nested": "hello"
+      },
       "additionalProperties": false,
       "properties": {
         "nested": {
