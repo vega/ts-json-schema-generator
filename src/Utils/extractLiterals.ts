@@ -2,6 +2,7 @@ import { UnknownTypeError } from "../Error/UnknownTypeError";
 import { AliasType } from "../Type/AliasType";
 import { BaseType } from "../Type/BaseType";
 import { BooleanType } from "../Type/BooleanType";
+import { DefinitionType } from "../Type/DefinitionType";
 import { EnumType } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { UnionType } from "../Type/UnionType";
@@ -20,7 +21,7 @@ function* _extractLiterals(type: BaseType): Iterable<string> {
         }
         return;
     }
-    if (type instanceof AliasType) {
+    if (type instanceof AliasType || type instanceof DefinitionType) {
         yield* _extractLiterals(type.getType());
         return;
     }
