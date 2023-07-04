@@ -6,6 +6,7 @@ import { DefinitionType } from "./Type/DefinitionType";
 import { ReferenceType } from "./Type/ReferenceType";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
 import { symbolAtNode } from "./Utils/symbolAtNode";
+import { setSourceFileNameIfDefinitionType } from "./Utils/setSourceFileNameIfDefinitionType";
 
 export class ExposeNodeParser implements SubNodeParser {
     public constructor(
@@ -21,12 +22,13 @@ export class ExposeNodeParser implements SubNodeParser {
 
     public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
         const baseType = this.subNodeParser.createType(node, context, reference);
+        const sourceFileName = node.getSourceFile().fileName;
 
         if (!this.isExportNode(node)) {
-            return baseType;
+            return setSourceFileNameIfDefinitionType(baseType, sourceFileName);
         }
 
-        return new DefinitionType(this.getDefinitionName(node, context), baseType);
+        return new DefinitionType(this.getDefinitionName(node, context), baseType, sourceFileName);
     }
 
     protected isExportNode(node: ts.Node): boolean {
