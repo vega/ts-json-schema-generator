@@ -7,7 +7,10 @@ export type EnumValue = string | boolean | number | null;
 export class EnumType extends BaseType {
     private types: BaseType[];
 
-    public constructor(private id: string, private values: readonly EnumValue[]) {
+    public constructor(
+        private id: string,
+        private values: readonly EnumValue[]
+    ) {
         super();
         this.types = values.map((value) => (value == null ? new NullType() : new LiteralType(value)));
     }

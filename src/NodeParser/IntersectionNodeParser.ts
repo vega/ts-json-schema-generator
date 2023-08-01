@@ -11,7 +11,10 @@ import { UndefinedType } from "../Type/UndefinedType";
 import { NeverType } from "../Type/NeverType";
 
 export class IntersectionNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.IntersectionTypeNode): boolean {
         return node.kind === ts.SyntaxKind.IntersectionType;

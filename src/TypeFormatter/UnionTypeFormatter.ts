@@ -13,7 +13,10 @@ import { uniqueArray } from "../Utils/uniqueArray";
 type DiscriminatorType = "json-schema" | "open-api";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
-    public constructor(protected childTypeFormatter: TypeFormatter, private discriminatorType?: DiscriminatorType) {}
+    public constructor(
+        protected childTypeFormatter: TypeFormatter,
+        private discriminatorType?: DiscriminatorType
+    ) {}
 
     public supportsType(type: UnionType): boolean {
         return type instanceof UnionType;

@@ -10,7 +10,10 @@ import { LiteralType } from "../Type/LiteralType";
 import { UnknownType } from "../Type/UnknownType";
 
 export class TypeofNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.TypeQueryNode): boolean {
         return node.kind === ts.SyntaxKind.TypeQuery;

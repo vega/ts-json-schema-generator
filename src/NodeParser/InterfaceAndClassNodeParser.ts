@@ -108,17 +108,20 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         let hasRequiredNever = false;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
-            .reduce((members, member) => {
-                if (ts.isConstructorDeclaration(member)) {
-                    const params = member.parameters.filter((param) =>
-                        ts.isParameterPropertyDeclaration(param, param.parent)
-                    ) as ts.ParameterPropertyDeclaration[];
-                    members.push(...params);
-                } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                    members.push(member);
-                }
-                return members;
-            }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
+            .reduce(
+                (members, member) => {
+                    if (ts.isConstructorDeclaration(member)) {
+                        const params = member.parameters.filter((param) =>
+                            ts.isParameterPropertyDeclaration(param, param.parent)
+                        ) as ts.ParameterPropertyDeclaration[];
+                        members.push(...params);
+                    } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
+                        members.push(member);
+                    }
+                    return members;
+                },
+                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[]
+            )
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
             .reduce((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
