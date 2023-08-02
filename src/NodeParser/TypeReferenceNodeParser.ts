@@ -36,17 +36,14 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 
-            const declaration = aliasedSymbol.declarations?.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0]
+            const declaration = aliasedSymbol.declarations?.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0];
 
-            if(!declaration){
+            if (!declaration) {
                 // NB: fallback that happens in bun
-                return new AnyType()
+                return new AnyType();
             }
 
-            return this.childNodeParser.createType(
-                declaration,
-                this.createSubContext(node, context)
-            );
+            return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
