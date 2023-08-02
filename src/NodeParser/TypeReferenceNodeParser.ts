@@ -39,7 +39,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             const declaration = aliasedSymbol.declarations?.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0];
 
             if (!declaration) {
-                // NB: fallback that happens in bun
+                // fallback for bun.sh
                 return new AnyType();
             }
 
