@@ -58,6 +58,7 @@ import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -104,6 +105,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
         .addNodeParser(new AsExpressionNodeParser(chainNodeParser))
+        .addNodeParser(new SatisfiesNodeParser(chainNodeParser))
         .addNodeParser(new FunctionParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
