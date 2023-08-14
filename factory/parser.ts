@@ -58,6 +58,7 @@ import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
+import { BaseType } from "../src/Type/BaseType";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -83,8 +84,11 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
             return nodeParser;
         }
     }
+
+    const circular: Map<string, BaseType> = new Map();
+
     function withCircular(nodeParser: SubNodeParser): SubNodeParser {
-        return new CircularReferenceNodeParser(nodeParser);
+        return new CircularReferenceNodeParser(nodeParser, circular);
     }
 
     if (augmentor) {
