@@ -10,7 +10,10 @@ import { LiteralType } from "../Type/LiteralType";
 import { UnknownType } from "../Type/UnknownType";
 
 export class TypeofNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.TypeQueryNode): boolean {
         return node.kind === ts.SyntaxKind.TypeQuery;
@@ -30,10 +33,11 @@ export class TypeofNodeParser implements SubNodeParser {
             ts.isPropertySignature(valueDec) ||
             ts.isPropertyDeclaration(valueDec)
         ) {
+            let initializer: ts.Expression | undefined;
             if (valueDec.type) {
                 return this.childNodeParser.createType(valueDec.type, context);
-            } else if (valueDec.initializer) {
-                return this.childNodeParser.createType(valueDec.initializer, context);
+            } else if ((initializer = (valueDec as ts.VariableDeclaration | ts.PropertyDeclaration)?.initializer)) {
+                return this.childNodeParser.createType(initializer, context);
             }
         } else if (ts.isClassDeclaration(valueDec)) {
             return this.childNodeParser.createType(valueDec, context);

@@ -1,5 +1,4 @@
 {
-  "$ref": "#/definitions/ExchangeRate",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "ExchangeRate": {
@@ -10,6 +9,22 @@
       "propertyNames": {
         "description": "Currency",
         "pattern": "^[A-Z]{3,3}$"
+      },
+      "type": "object"
+    },
+    "Size": {
+      "description": "Size",
+      "pattern": "^S|M|L$",
+      "type": "string"
+    },
+    "SizeChart": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "description": "Size chart",
+      "propertyNames": {
+        "description": "Size",
+        "pattern": "^S|M|L$"
       },
       "type": "object"
     }

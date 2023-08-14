@@ -12,7 +12,10 @@ import { UnionType } from "../Type/UnionType";
 import { AnyType } from "../Type/AnyType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
-    public constructor(protected childNodeParser: SubNodeParser, protected annotationsReader: AnnotationsReader) {}
+    public constructor(
+        protected childNodeParser: SubNodeParser,
+        protected annotationsReader: AnnotationsReader
+    ) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);

@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { AnnotatedType } from "../Type/AnnotatedType";
 import { ArrayType } from "../Type/ArrayType";
 import { BaseType } from "../Type/BaseType";
+import { DefinitionType } from "../Type/DefinitionType";
 import { EnumType, EnumValue } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { NeverType } from "../Type/NeverType";
@@ -19,7 +20,10 @@ import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 
 export class MappedTypeNodeParser implements SubNodeParser {
-    public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
+    public constructor(
+        protected childNodeParser: NodeParser,
+        protected readonly additionalProperties: boolean
+    ) {}
 
     public supportsNode(node: ts.MappedTypeNode): boolean {
         return node.kind === ts.SyntaxKind.MappedType;
@@ -57,8 +61,17 @@ export class MappedTypeNodeParser implements SubNodeParser {
             const type = this.childNodeParser.createType(node.type!, context);
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
             const resultType = new ObjectType(id, [], [], type);
-            if (resultType && constraintType instanceof AnnotatedType) {
-                const annotations = constraintType.getAnnotations();
+            if (resultType) {
+                let annotations;
+
+                if (constraintType instanceof AnnotatedType) {
+                    annotations = constraintType.getAnnotations();
+                } else if (constraintType instanceof DefinitionType) {
+                    const childType = constraintType.getType();
+                    if (childType instanceof AnnotatedType) {
+                        annotations = childType.getAnnotations();
+                    }
+                }
                 if (annotations) {
                     return new AnnotatedType(resultType, { propertyNames: annotations }, false);
                 }

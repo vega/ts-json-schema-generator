@@ -13,6 +13,13 @@
           ],
           "type": "string"
         },
+        "bool": {
+          "enum": [
+            "true!",
+            "false!"
+          ],
+          "type": "string"
+        },
         "foo": {
           "enum": [
             "ok",
@@ -21,15 +28,11 @@
           ],
           "type": "string"
         },
-        "ok": {
-          "const": "id_ok",
-          "type": "string"
-        },
         "num": {
           "type": "string"
         },
-        "bool": {
-          "enum": ["true!", "false!"],
+        "ok": {
+          "const": "id_ok",
           "type": "string"
         }
       },

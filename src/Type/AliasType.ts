@@ -1,7 +1,10 @@
 import { BaseType } from "./BaseType";
 
 export class AliasType extends BaseType {
-    public constructor(private id: string, private type: BaseType) {
+    public constructor(
+        private id: string,
+        private type: BaseType
+    ) {
         super();
     }
 

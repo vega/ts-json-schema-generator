@@ -1,0 +1,61 @@
+{
+  "$ref": "#/definitions/Animal",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Animal": {
+      "discriminator": {
+        "propertyName": "animal_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Bird"
+        },
+        {
+          "$ref": "#/definitions/Fish"
+        }
+      ],
+      "required": [
+        "animal_type"
+      ],
+      "type": "object"
+    },
+    "Bird": {
+      "additionalProperties": false,
+      "properties": {
+        "animal_type": {
+          "const": "bird",
+          "type": "string"
+        },
+        "can_fly": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "animal_type",
+        "can_fly"
+      ],
+      "type": "object"
+    },
+    "Fish": {
+      "additionalProperties": false,
+      "properties": {
+        "animal_type": {
+          "const": "fish",
+          "type": "string"
+        },
+        "found_in": {
+          "enum": [
+            "ocean",
+            "river"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "animal_type",
+        "found_in"
+      ],
+      "type": "object"
+    }
+  }
+}
