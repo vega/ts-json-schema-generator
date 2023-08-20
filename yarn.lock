@@ -144,13 +144,13 @@
     tslib "2.1.0"
     url-join "^4.0.0"
 
-"@auto-it/npm@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/npm/-/npm-11.0.0.tgz#d703e3d8d1783c2aff1b98ed07166edc8ddc9664"
-  integrity sha512-SkrLjbk8l7K/DkxW6OGGTi1rQR44IxY8uppgha5R3IoQ9rt4gca7IUeVY1a7Jc0/RhaXHa1NtzSq8ozRCYiDCQ==
+"@auto-it/npm@11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@auto-it/npm/-/npm-11.0.1.tgz#033b0429b2dd99bae1ace4fe877172d01a7a72b3"
+  integrity sha512-1m6SP+8eKW32HZDq1fQKZOUGIMtEwjlRLSA5E6WtIWRlxmROMwNvZsXSGqinWiaGaGp3khlf6F26/0sgiMeaOQ==
   dependencies:
-    "@auto-it/core" "11.0.0"
-    "@auto-it/package-json-utils" "11.0.0"
+    "@auto-it/core" "11.0.1"
+    "@auto-it/package-json-utils" "11.0.1"
     await-to-js "^3.0.0"
     endent "^2.1.0"
     env-ci "^5.0.1"
@@ -164,32 +164,32 @@
     url-join "^4.0.0"
     user-home "^2.0.0"
 
-"@auto-it/package-json-utils@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/package-json-utils/-/package-json-utils-11.0.0.tgz#728e62c058eddfba91f8320d008cd68d311d90ab"
-  integrity sha512-rRLP7kuYHxu3mF/I1eqDTY6cpyignThSKitrHIQ1Ngg+Neih6QyRUpIox+OBIzNylvm6s3YkgALNUB3YUjn/zQ==
+"@auto-it/package-json-utils@11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@auto-it/package-json-utils/-/package-json-utils-11.0.1.tgz#5cff889b0af7cdc825c3522deec7f238c54234b6"
+  integrity sha512-G9ZkL5WbZwLiNq+e2QkMEk3WpBAf0Nn380PnJIQo56A/0XdACDpvXkhS97w9dUU8SDfS7kF6Rz/LsYTVgU0qzg==
   dependencies:
     parse-author "^2.0.0"
     parse-github-url "1.0.2"
 
-"@auto-it/released@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/released/-/released-11.0.0.tgz#c47492e80edec15ad79f594d50cbc426e87b66db"
-  integrity sha512-ebPGlrTiZAWyG0DKgnWOc8Wev1n3H/339KLIiRUYIF3yOfjacZ47BoEGxLm06lsxk9hw3whToRVK5+40feeyOg==
+"@auto-it/released@11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@auto-it/released/-/released-11.0.1.tgz#34bf5bf12a0a22ddd9263a4b94f19c17eafb32c5"
+  integrity sha512-hZAAAZy+4Q7dTSeNjXS4te9JESFxjiqbV41vf1XPRQoeXXnK/8+HzLIfNwM0oXh+YoHzqcj8DrnoNVcqI0Cc3Q==
   dependencies:
-    "@auto-it/bot-list" "11.0.0"
-    "@auto-it/core" "11.0.0"
+    "@auto-it/bot-list" "11.0.1"
+    "@auto-it/core" "11.0.1"
     deepmerge "^4.0.0"
     fp-ts "^2.5.3"
     io-ts "^2.1.2"
     tslib "2.1.0"
 
-"@auto-it/version-file@11.0.0":
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/@auto-it/version-file/-/version-file-11.0.0.tgz#1dfd82406dcab6beddbdfdeb02cfeda79cb5aeb5"
-  integrity sha512-FL11Ag5ZUgs9F2OMsT8FtZyryqOWzssJXyCcsloevhzUI8LOe8kJ0D0V7ZIlVWkl5hSs2mAkvM0UzMljGjdMtw==
+"@auto-it/version-file@11.0.1":
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/@auto-it/version-file/-/version-file-11.0.1.tgz#d72bf940ae14c23db86ec901c24d3ec93d4178f2"
+  integrity sha512-ZxpivVGMCKsxS1by9kXCiFNXOQBkC/7yUuDbaX8N0C2PkotbkHOTLzsONRRWfbdP9EjxhD8RrPGweHR5t9AQCg==
   dependencies:
-    "@auto-it/core" "11.0.0"
+    "@auto-it/core" "11.0.1"
     fp-ts "^2.5.3"
     io-ts "^2.1.2"
     semver "^7.0.0"
@@ -2166,14 +2166,14 @@ author-regex@^1.0.0:
   integrity sha512-KbWgR8wOYRAPekEmMXrYYdc7BRyhn2Ftk7KWfMUnQ43hFdojWEFRxhhRUm3/OFEdPa1r0KAvTTg9YQK57xTe0g==
 
 auto@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/auto/-/auto-11.0.0.tgz#131fed6b8ab46074883eb71a4971cc94aeeced78"
-  integrity sha512-FotRmysZdr8wuTa2HHJcL2MC+Oth+fisqJIBlTLJT+H/dxw2MMNVuI37oB5GkbZavmQHdu5m6AWkRCzyXh2Xgw==
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/auto/-/auto-11.0.1.tgz#d1923517deab32e99f18734a410421c202f10bdf"
+  integrity sha512-pSkPlv6RHp5j28jUwrIPKYNZUVitj6LOUCmqtB2IAk6D8kTdTgFet9ljQUpeyz10p6Z2DYyzdyVc3i9EDb3EyA==
   dependencies:
-    "@auto-it/core" "11.0.0"
-    "@auto-it/npm" "11.0.0"
-    "@auto-it/released" "11.0.0"
-    "@auto-it/version-file" "11.0.0"
+    "@auto-it/core" "11.0.1"
+    "@auto-it/npm" "11.0.1"
+    "@auto-it/released" "11.0.1"
+    "@auto-it/version-file" "11.0.1"
     await-to-js "^3.0.0"
     chalk "^4.0.0"
     command-line-application "^0.10.1"
