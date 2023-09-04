@@ -36,7 +36,7 @@ const args = new Command()
     )
     .option(
         "--additional-properties",
-        "Allow additional properties for objects with no index signature (default: false)",
+        "Allow additional properties for objects with no index signature",
         false
     )
     .version(pkg.version)
