@@ -21,6 +21,11 @@ const args = new Command()
             .choices(["none", "basic", "extended"])
             .default("extended")
     )
+    .addOption(
+        new Option("--markdown-description", "Generate `markdownDescription` in addition to `description`.").implies({
+            jsDoc: "extended",
+        })
+    )
     .option("--minify", "Minify generated schema", false)
     .option("--unstable", "Do not sort properties")
     .option("--strict-tuples", "Do not allow additional items on tuples")
@@ -53,6 +58,7 @@ const config: Config = {
     expose: args.expose,
     topRef: args.topRef,
     jsDoc: args.jsDoc,
+    markdownDescription: args.markdownDescription,
     sortProps: !args.unstable,
     strictTuples: args.strictTuples,
     skipTypeCheck: !args.typeCheck,
