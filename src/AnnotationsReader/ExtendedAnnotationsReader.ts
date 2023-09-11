@@ -24,7 +24,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader implements
         return Object.keys(annotations).length ? annotations : undefined;
     }
 
-    getAnnotationsFromType(type: BaseType): Annotations | undefined {
+    getTypeAnnotations(type: BaseType): Annotations | undefined {
         if (type instanceof ObjectType) {
             return this.getObjectTypeAnnotations(type);
         }

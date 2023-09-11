@@ -4,5 +4,5 @@ import type { BaseType } from "../Type/BaseType";
 
 export interface AnnotationsReader {
     getAnnotations(node: ts.Node): Annotations | undefined;
-    getAnnotationsFromType?(type: BaseType): Annotations | undefined;
+    getTypeAnnotations?(type: BaseType): Annotations | undefined;
 }

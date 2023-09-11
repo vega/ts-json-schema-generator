@@ -12,10 +12,7 @@ import { UnionType } from "../Type/UnionType";
 import { AnyType } from "../Type/AnyType";
 
 export class AnnotatedNodeParser implements SubNodeParser {
-    public constructor(
-        protected childNodeParser: SubNodeParser,
-        protected annotationsReader: AnnotationsReader
-    ) {}
+    public constructor(protected childNodeParser: SubNodeParser, protected annotationsReader: AnnotationsReader) {}
 
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);
@@ -32,8 +29,8 @@ export class AnnotatedNodeParser implements SubNodeParser {
         }
 
         const baseType = this.childNodeParser.createType(node, context, reference);
-        if (typeof this.annotationsReader.getAnnotationsFromType === "function") {
-            const typeAnnotations = this.annotationsReader.getAnnotationsFromType(baseType);
+        if (typeof this.annotationsReader.getTypeAnnotations === "function") {
+            const typeAnnotations = this.annotationsReader.getTypeAnnotations(baseType);
             if (typeAnnotations) {
                 annotations = { ...annotations, ...typeAnnotations };
             }
