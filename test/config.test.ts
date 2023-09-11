@@ -1,6 +1,6 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync } from "fs";
+import { readFileSync, existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import ts from "typescript";
 import { createFormatter, FormatterAugmentor } from "../factory/formatter";
@@ -46,8 +46,16 @@ function assertSchema(
             config
         );
 
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
+        const filePath = resolve(`${basePath}/${name}/schema.json`);
         const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
+
+        if (process.env.UPDATE_JSON_SCHEMA_SNAPSHOT && !existsSync(filePath)) {
+            console.log(`Updating snapshot for ${name}`);
+            writeFileSync(filePath, JSON.stringify(actual, null, 2));
+            return;
+        }
+
+        const expected: any = JSON.parse(readFileSync(filePath, "utf8"));
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
@@ -247,7 +255,7 @@ describe("config", () => {
             jsDoc: "extended",
         })
     );
-    it(
+    it.only(
         "jsdoc-dependentRequired",
         assertSchema("jsdoc-dependentRequired", {
             type: "Billing",

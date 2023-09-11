@@ -29,6 +29,12 @@ export class AnnotatedNodeParser implements SubNodeParser {
         }
 
         const baseType = this.childNodeParser.createType(node, context, reference);
+        if (typeof this.annotationsReader.getAnnotationsFromType === "function") {
+            const typeAnnotations = this.annotationsReader.getAnnotationsFromType(baseType);
+            if (typeAnnotations) {
+                annotations = { ...annotations, ...typeAnnotations };
+            }
+        }
 
         // Don't return annotations for lib types such as Exclude.
         // Sourceless nodes may not have a fileName, just ignore them.

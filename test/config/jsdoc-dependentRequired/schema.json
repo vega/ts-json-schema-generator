@@ -1,35 +1,26 @@
 {
-  "$ref": "#/definitions/Billing",
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/Billing",
   "definitions": {
     "Billing": {
-      "additionalProperties": false,
-      "dependencies": {
-        "billing_address": [
-          "credit_card",
-          "name"
-        ],
-        "credit_card": [
-          "billing_address"
-        ]
-      },
+      "type": "object",
       "properties": {
-        "billing_address": {
+        "name": {
           "type": "string"
         },
         "credit_card": {
           "type": "string"
         },
-        "name": {
+        "billing_address": {
           "type": "string"
         }
       },
-      "required": [
-        "name",
-        "credit_card",
-        "billing_address"
-      ],
-      "type": "object"
+      "required": ["name", "credit_card", "billing_address"],
+      "additionalProperties": false,
+      "dependencies": {
+        "credit_card": ["billing_address"],
+        "billing_address": ["credit_card", "name"]
+      }
     }
   }
 }

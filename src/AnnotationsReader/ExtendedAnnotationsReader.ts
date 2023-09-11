@@ -3,9 +3,13 @@ import ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
-import { getJsDocTagText } from "../Utils/getJsDoc";
+import { getJsDocTagText, getJsDocTagTexts } from "../Utils/getJsDoc";
+import { AnnotationsReader } from "../Interfaces/AnnotationsReader";
+import { BaseType } from "../Type/BaseType";
+import { ObjectType } from "../Type/ObjectType";
+import { StringMap } from "../Utils/StringMap";
 
-export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
+export class ExtendedAnnotationsReader extends BasicAnnotationsReader implements AnnotationsReader {
     public constructor(private typeChecker: ts.TypeChecker, extraTags?: Set<string>) {
         super(extraTags);
     }
@@ -18,6 +22,35 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             ...super.getAnnotations(node),
         };
         return Object.keys(annotations).length ? annotations : undefined;
+    }
+
+    getAnnotationsFromType(type: BaseType): Annotations | undefined {
+        if (type instanceof ObjectType) {
+            return this.getObjectTypeAnnotations(type);
+        }
+
+        return undefined;
+    }
+
+    getObjectTypeAnnotations(type: ObjectType): Annotations | undefined {
+        const properties = type.getProperties();
+        const dependentRequiredMap = properties.reduce((result: StringMap<string[]>, property) => {
+            const requiredArray = result[property.getName()] || [];
+            const dependentRequired = property.getDependentRequired();
+            if (dependentRequired) {
+                requiredArray.push(...dependentRequired);
+            }
+            if (requiredArray.length > 0) {
+                result[property.getName()] = requiredArray;
+            }
+            return result;
+        }, {});
+        if (Object.keys(dependentRequiredMap).length > 0) {
+            // it seems that JSON Schema7 does not support dependentMap property
+            // but dependencies can be used instead
+            return { dependencies: dependentRequiredMap };
+        }
+        return undefined;
     }
 
     public isNullable(node: ts.Node): boolean {
