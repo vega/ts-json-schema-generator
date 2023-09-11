@@ -49,10 +49,9 @@ function assertSchema(
         const filePath = resolve(`${basePath}/${name}/schema.json`);
         const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
 
-        if (process.env.UPDATE_JSON_SCHEMA_SNAPSHOT && !existsSync(filePath)) {
+        if (process.env.UPDATE_SCHEMA && !existsSync(filePath)) {
             console.log(`Updating snapshot for ${name}`);
             writeFileSync(filePath, JSON.stringify(actual, null, 2));
-            return;
         }
 
         const expected: any = JSON.parse(readFileSync(filePath, "utf8"));
@@ -255,7 +254,7 @@ describe("config", () => {
             jsDoc: "extended",
         })
     );
-    it.only(
+    it(
         "jsdoc-dependentRequired",
         assertSchema("jsdoc-dependentRequired", {
             type: "Billing",
