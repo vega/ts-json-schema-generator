@@ -4,7 +4,10 @@ import { InferType } from "./InferType";
 import { TupleType } from "./TupleType";
 
 export class RestType extends BaseType {
-    public constructor(private item: ArrayType | InferType | TupleType, private title: string | null = null) {
+    public constructor(
+        private item: ArrayType | InferType | TupleType,
+        private title: string | null = null
+    ) {
         super();
     }
 

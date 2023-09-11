@@ -1,7 +1,10 @@
 import { BaseType } from "./BaseType";
 
 export class DefinitionType extends BaseType {
-    public constructor(private name: string | undefined, private type: BaseType) {
+    public constructor(
+        private name: string | undefined,
+        private type: BaseType
+    ) {
         super();
     }
 

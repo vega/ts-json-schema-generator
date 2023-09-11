@@ -13,7 +13,10 @@ import { uniqueArray } from "../Utils/uniqueArray";
 type DiscriminatorType = "json-schema" | "open-api";
 
 export class UnionTypeFormatter implements SubTypeFormatter {
-    public constructor(protected childTypeFormatter: TypeFormatter, private discriminatorType?: DiscriminatorType) {}
+    public constructor(
+        protected childTypeFormatter: TypeFormatter,
+        private discriminatorType?: DiscriminatorType
+    ) {}
 
     public supportsType(type: UnionType): boolean {
         return type instanceof UnionType;
@@ -57,7 +60,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         }
 
         const kindValues = kindDefinitions
-            .map((item) => item.const)
+            .flatMap((item) => item.const ?? item.enum)
             .filter((item): item is string | number | boolean | null => item !== undefined);
 
         const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);

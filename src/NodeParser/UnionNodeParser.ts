@@ -7,7 +7,10 @@ import { notNever } from "../Utils/notNever";
 import { NeverType } from "../Type/NeverType";
 
 export class UnionNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.UnionTypeNode): boolean {
         return node.kind === ts.SyntaxKind.UnionType;

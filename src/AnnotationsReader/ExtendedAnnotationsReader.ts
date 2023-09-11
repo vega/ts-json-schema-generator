@@ -3,7 +3,7 @@ import ts from "typescript";
 import { Annotations } from "../Type/AnnotatedType";
 import { symbolAtNode } from "../Utils/symbolAtNode";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
-import { getJsDocTagText, getJsDocTagTexts } from "../Utils/getJsDoc";
+import { getJsDocTagText } from "../Utils/getJsDoc";
 import { AnnotationsReader } from "../Interfaces/AnnotationsReader";
 import { BaseType } from "../Type/BaseType";
 import { ObjectType } from "../Type/ObjectType";

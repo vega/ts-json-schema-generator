@@ -20,7 +20,10 @@ import { preserveAnnotation } from "../Utils/preserveAnnotation";
 import { removeUndefined } from "../Utils/removeUndefined";
 
 export class MappedTypeNodeParser implements SubNodeParser {
-    public constructor(protected childNodeParser: NodeParser, protected readonly additionalProperties: boolean) {}
+    public constructor(
+        protected childNodeParser: NodeParser,
+        protected readonly additionalProperties: boolean
+    ) {}
 
     public supportsNode(node: ts.MappedTypeNode): boolean {
         return node.kind === ts.SyntaxKind.MappedType;

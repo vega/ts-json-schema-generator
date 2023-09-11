@@ -137,5 +137,7 @@ describe("valid-data-type", () => {
     it("type-tuple-nested-rest-uniform", assertValidSchema("type-tuple-nested-rest-uniform", "MyType"));
 
     it("type-recursive-deep-exclude", assertValidSchema("type-recursive-deep-exclude", "MyType"));
+    it("type-satisfies", assertValidSchema("type-satisfies", "MyType"));
+
     it("ignore-export", assertValidSchema("ignore-export", "*"));
 });

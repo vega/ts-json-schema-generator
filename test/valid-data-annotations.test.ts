@@ -80,6 +80,8 @@ describe("valid-data-annotations", () => {
 
     it("annotation-union-if-then", assertValidSchema("annotation-union-if-then", "Animal", { jsDoc: "basic" }));
 
+    it("annotation-union-if-then-enum", assertValidSchema("annotation-union-if-then-enum", "AB", { jsDoc: "basic" }));
+
     it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", "MyObject"));
 
     it(

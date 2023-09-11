@@ -9,7 +9,10 @@ import { ReferenceType } from "./Type/ReferenceType";
 export class ChainNodeParser implements SubNodeParser, MutableParser {
     protected readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType>>();
 
-    public constructor(protected typeChecker: ts.TypeChecker, protected nodeParsers: SubNodeParser[]) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected nodeParsers: SubNodeParser[]
+    ) {}
 
     public addNodeParser(nodeParser: SubNodeParser): this {
         this.nodeParsers.push(nodeParser);
