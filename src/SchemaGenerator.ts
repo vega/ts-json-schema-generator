@@ -12,6 +12,12 @@ import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
 
+export interface TypeMap {
+    sourceFile: ts.SourceFile;
+    typeNames: string[];
+    exports: string[];
+}
+
 export class SchemaGenerator {
     public constructor(
         protected readonly program: ts.Program,
@@ -20,21 +26,27 @@ export class SchemaGenerator {
         protected readonly config?: Config
     ) {}
 
-    public createSchema(fullName?: string): Schema {
+    public createSchema(fullName?: string, typeMapResult?: TypeMap[]): Schema {
         const rootNodes = this.getRootNodes(fullName);
-        return this.createSchemaFromNodes(rootNodes);
+        return this.createSchemaFromNodes(rootNodes, typeMapResult);
     }
 
-    public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
+    public createSchemaFromNodes(rootNodes: ts.Node[], typeMapResult?: TypeMap[]): Schema {
         const rootTypes = rootNodes.map((rootNode) => {
             return this.nodeParser.createType(rootNode, new Context());
         });
 
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+        const typeMaps = rootTypes.map((rootType, i) => ({
+            sourceFile: rootNodes[i].getSourceFile(),
+            typeNames: this.appendRootChildDefinitions(rootType, definitions),
+            exports: [],
+        }));
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+
+        typeMapResult?.splice(0, Infinity, ...this.mergedTypeMaps(typeMaps, reachableDefinitions));
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -42,6 +54,36 @@ export class SchemaGenerator {
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+    }
+
+    protected mergedTypeMaps(typeMaps: TypeMap[], reachableDefinitions: StringMap<Definition>): TypeMap[] {
+        const mergedTypeMaps: Record<string, TypeMap> = {};
+
+        for (const typeMap of typeMaps) {
+            const mergedTypeMap = (mergedTypeMaps[typeMap.sourceFile.fileName] ??= {
+                sourceFile: typeMap.sourceFile,
+                typeNames: [],
+                exports: [],
+            });
+
+            const typeNames = typeMap.typeNames.filter(
+                (tn) => !!reachableDefinitions[tn] && !tn.startsWith("NamedParameters<typeof ")
+            );
+
+            const exports = typeNames
+                .map((name) => name.replace(/[<.].*/g, ""))
+                .filter((type) => symbolAtNode(typeMap.sourceFile)?.exports?.has(ts.escapeLeadingUnderscores(type)));
+
+            mergedTypeMap.typeNames.push(...typeNames);
+            mergedTypeMap.exports.push(...exports);
+        }
+
+        return Object.values(mergedTypeMaps).filter((typeMap) => {
+            typeMap.exports = [...new Set(typeMap.exports).values()];
+            typeMap.typeNames = [...new Set(typeMap.typeNames).values()];
+
+            return typeMap.exports.length || typeMap.typeNames.length;
+        });
     }
 
     protected getRootNodes(fullName: string | undefined): ts.Node[] {
@@ -79,7 +121,7 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
+    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): string[] {
         const seen = new Set<string>();
 
         const children = this.typeFormatter
@@ -107,13 +149,16 @@ export class SchemaGenerator {
             ids.set(name, childId);
         }
 
+        const names: string[] = [];
         children.reduce((definitions, child) => {
             const name = child.getName();
             if (!(name in definitions)) {
                 definitions[name] = this.typeFormatter.getDefinition(child.getType());
+                names.push(name);
             }
             return definitions;
         }, childDefinitions);
+        return names;
     }
     protected partitionFiles(): {
         projectFiles: ts.SourceFile[];
