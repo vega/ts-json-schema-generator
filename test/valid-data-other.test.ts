@@ -94,7 +94,7 @@ describe("valid-data-other", () => {
     it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
     it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
 
-    it.only(
+    it(
         "object-required",
         assertValidSchema("object-required", "MyObject", undefined, {
             ...objectRequiredSamples,
