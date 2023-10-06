@@ -1,6 +1,5 @@
 import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
-import { isExternalModule } from "typescript";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
@@ -96,16 +95,13 @@ try {
 
 function writeTypeMapFile(typeMaps: TypeMap[], typeMapeFile: string) {
     const typeMapDir = dirname(typeMapeFile);
-    const typesSeen = new Set<string>();
     let code = "";
 
     typeMaps.forEach((typeMap) => {
-        const fileName = relative(typeMapDir, typeMap.sourceFile.fileName);
-        const imported = typeMap.exports.filter((type) => !typesSeen.has(type));
-        imported.forEach((type) => typesSeen.add(type));
+        const fileName = relative(typeMapDir, typeMap.fileName);
 
-        if (isExternalModule(typeMap.sourceFile)) {
-            code += `import type { ${imported.join(", ")} } from "./${fileName}";\n`;
+        if (typeMap.exports) {
+            code += `import type { ${typeMap.exports.join(", ")} } from "./${fileName}";\n`;
         } else {
             code += `import "./${fileName}";\n`;
         }
