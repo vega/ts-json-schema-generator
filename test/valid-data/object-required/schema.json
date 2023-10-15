@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "definitions": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "every element in `keys` must also be a key in `definitions`",
+          "required": {
+            "$data": "1/keys"
+          },
+          "type": "object"
+        },
+        "id": {
+          "type": "string"
+        },
+        "keys": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "keys",
+        "definitions"
+      ],
+      "type": "object"
+    }
+  }
+}
