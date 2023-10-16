@@ -1,4 +1,5 @@
 import { assertValidSchema } from "./utils";
+import * as objectRequiredSamples from "./valid-data/object-required/samples";
 
 describe("valid-data-other", () => {
     it("enums-string", assertValidSchema("enums-string", "Enum"));
@@ -92,4 +93,12 @@ describe("valid-data-other", () => {
     it("array-min-max-items-optional", assertValidSchema("array-min-max-items-optional", "MyType"));
     it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
     it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
+
+    it(
+        "object-required",
+        assertValidSchema("object-required", "MyObject", undefined, {
+            ...objectRequiredSamples,
+            ajvOptions: { $data: true },
+        })
+    );
 });

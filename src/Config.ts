@@ -7,6 +7,7 @@ export interface Config {
     expose?: "all" | "none" | "export";
     topRef?: boolean;
     jsDoc?: "none" | "extended" | "basic";
+    markdownDescription?: boolean;
     sortProps?: boolean;
     strictTuples?: boolean;
     skipTypeCheck?: boolean;
@@ -20,6 +21,7 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     expose: "export",
     topRef: true,
     jsDoc: "extended",
+    markdownDescription: false,
     sortProps: true,
     strictTuples: false,
     skipTypeCheck: false,

@@ -77,7 +77,10 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         const extraTags = new Set(mergedConfig.extraTags);
         if (mergedConfig.jsDoc === "extended") {
-            return new AnnotatedNodeParser(nodeParser, new ExtendedAnnotationsReader(typeChecker, extraTags));
+            return new AnnotatedNodeParser(
+                nodeParser,
+                new ExtendedAnnotationsReader(typeChecker, extraTags, mergedConfig.markdownDescription)
+            );
         } else if (mergedConfig.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
         } else {

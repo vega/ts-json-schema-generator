@@ -50,7 +50,7 @@
     "json5": "^2.2.3",
     "normalize-path": "^3.0.0",
     "safe-stable-stringify": "^2.4.3",
-    "typescript": "~5.1.6"
+    "typescript": "~5.2.2"
   },
   "devDependencies": {
     "@auto-it/conventional-commits": "^11.0.0",
@@ -92,5 +92,6 @@
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
     "run": "ts-node-transpile-only ts-json-schema-generator.ts",
     "release": "yarn build && auto shipit"
-  }
+  },
+  "packageManager": "yarn@1.22.19"
 }
