@@ -55,6 +55,7 @@ function assertSchema(
         const validator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
+            keywords: config.markdownDescription ? ["markdownDescription"] : undefined,
         });
 
         addFormats(validator);
@@ -317,7 +318,17 @@ describe("config", () => {
             skipTypeCheck: true,
         })
     );
-
+    it(
+        "markdown-description",
+        assertSchema("markdown-description", {
+            type: "MyObject",
+            expose: "export",
+            topRef: false,
+            jsDoc: "extended",
+            sortProps: true,
+            markdownDescription: true,
+        })
+    );
     it(
         "tsconfig-support",
         assertSchema(

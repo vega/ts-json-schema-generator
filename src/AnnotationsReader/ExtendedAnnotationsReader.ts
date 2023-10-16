@@ -7,7 +7,8 @@ import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
     public constructor(
         private typeChecker: ts.TypeChecker,
-        extraTags?: Set<string>
+        extraTags?: Set<string>,
+        private markdownDescription?: boolean
     ) {
         super(extraTags);
     }
@@ -48,13 +49,15 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        return {
-            description: comments
-                .map((comment) => comment.text.replace(/\r/g, "").replace(/(?<=[^\n])\n(?=[^\n*-])/g, " "))
-                .join(" ")
-                // strip newlines
-                .replace(/^\s+|\s+$/g, ""),
-        };
+        const markdownDescription = comments
+            .map((comment) => comment.text)
+            .join(" ")
+            .replace(/\r/g, "")
+            .trim();
+
+        const description = markdownDescription.replace(/(?<=[^\n])\n(?=[^\n*-])/g, " ").trim();
+
+        return this.markdownDescription ? { description, markdownDescription } : { description };
     }
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
