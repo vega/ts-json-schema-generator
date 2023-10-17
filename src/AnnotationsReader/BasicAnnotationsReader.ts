@@ -49,6 +49,8 @@ export class BasicAnnotationsReader implements AnnotationsReader {
 
         "default",
 
+        "required",
+
         // New since draft-07:
         "if",
         "then",
