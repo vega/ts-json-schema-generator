@@ -1869,9 +1869,9 @@
   integrity sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==
 
 "@types/normalize-path@^3.0.0":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/normalize-path/-/normalize-path-3.0.1.tgz#fdbdbc4e9e06ef7fdef6ee45f9839f639f4a0c0a"
-  integrity sha512-zELDXIlrZySwjFjU6HMUfvt0GqQPKSwBOyWgae9Tcsc/hFCkvYavZDXruVHyVasN2pCxnluh2S4rA0iuer7Z2g==
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/normalize-path/-/normalize-path-3.0.2.tgz#aea8cd8b0ab39b8a86041843842825d8a01524c5"
+  integrity sha512-DO++toKYPaFn0Z8hQ7Tx+3iT9t77IJo/nDiqTXilgEP+kPNIYdpS9kh3fXuc53ugqwp9pxC1PVjCpV1tQDyqMA==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
