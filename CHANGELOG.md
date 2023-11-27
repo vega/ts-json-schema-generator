@@ -1,3 +1,43 @@
+# v1.4.1 (Mon Nov 27 2023)
+
+:tada: This release contains work from a new contributor! :tada:
+
+Thank you, Michael Hoffmann ([@mghoffmann](https://github.com/mghoffmann)), for all your work!
+
+#### 🐛 Bug Fix
+
+- fix: Removed "(default: false)" from the --additional-properties option be… [#1766](https://github.com/vega/ts-json-schema-generator/pull/1766) ([@mghoffmann](https://github.com/mghoffmann))
+
+#### 🔩 Dependency Updates
+
+- chore(deps): bump typescript from 5.2.2 to 5.3.2 [#1821](https://github.com/vega/ts-json-schema-generator/pull/1821) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @types/json-schema from 7.0.14 to 7.0.15 [#1822](https://github.com/vega/ts-json-schema-generator/pull/1822) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/parser from 6.11.0 to 6.12.0 [#1823](https://github.com/vega/ts-json-schema-generator/pull/1823) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/normalize-path from 3.0.1 to 3.0.2 [#1816](https://github.com/vega/ts-json-schema-generator/pull/1816) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/parser from 6.9.0 to 6.11.0 [#1815](https://github.com/vega/ts-json-schema-generator/pull/1815) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/eslint-plugin from 6.10.0 to 6.11.0 [#1817](https://github.com/vega/ts-json-schema-generator/pull/1817) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/preset-typescript from 7.23.2 to 7.23.3 [#1812](https://github.com/vega/ts-json-schema-generator/pull/1812) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/eslint-plugin from 6.9.1 to 6.10.0 [#1813](https://github.com/vega/ts-json-schema-generator/pull/1813) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 20.8.9 to 20.9.0 [#1814](https://github.com/vega/ts-json-schema-generator/pull/1814) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @types/json-schema from 7.0.13 to 7.0.14 [#1808](https://github.com/vega/ts-json-schema-generator/pull/1808) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump jest and @types/jest [#1810](https://github.com/vega/ts-json-schema-generator/pull/1810) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/eslint-plugin from 6.7.5 to 6.9.1 [#1809](https://github.com/vega/ts-json-schema-generator/pull/1809) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript-eslint/parser from 6.7.2 to 6.9.0 [#1806](https://github.com/vega/ts-json-schema-generator/pull/1806) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 20.6.4 to 20.8.9 [#1805](https://github.com/vega/ts-json-schema-generator/pull/1805) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 8.51.0 to 8.52.0 [#1807](https://github.com/vega/ts-json-schema-generator/pull/1807) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump actions/setup-node from 3 to 4 [#1804](https://github.com/vega/ts-json-schema-generator/pull/1804) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump commander from 11.0.0 to 11.1.0 [#1803](https://github.com/vega/ts-json-schema-generator/pull/1803) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/preset-typescript from 7.22.15 to 7.23.2 [#1802](https://github.com/vega/ts-json-schema-generator/pull/1802) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/normalize-path from 3.0.0 to 3.0.1 [#1801](https://github.com/vega/ts-json-schema-generator/pull/1801) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump @babel/traverse from 7.23.0 to 7.23.2 [#1800](https://github.com/vega/ts-json-schema-generator/pull/1800) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Michael Hoffmann ([@mghoffmann](https://github.com/mghoffmann))
+
+---
+
 # v1.4.0 (Mon Oct 16 2023)
 
 :tada: This release contains work from a new contributor! :tada:
