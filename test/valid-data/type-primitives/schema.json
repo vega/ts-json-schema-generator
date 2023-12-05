@@ -25,12 +25,16 @@
         },
         "string": {
           "type": "string"
+        },
+        "bigint": {
+          "type": "number"
         }
       },
       "required": [
         "boolean",
         "number",
         "string",
+        "bigint",
         "integer",
         "double",
         "decimal",
