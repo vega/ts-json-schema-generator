@@ -8,6 +8,7 @@ export interface MyObject {
     boolean: boolean;
     number: number;
     string: string;
+    bigint: bigint;
 
     integer: integer;
     double: double;
