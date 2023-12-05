@@ -1,3 +1,27 @@
+# v1.5.0 (Tue Dec 05 2023)
+
+:tada: This release contains work from a new contributor! :tada:
+
+Thank you, Marcus Jøsendal ([@marcus-josendal](https://github.com/marcus-josendal)), for all your work!
+
+#### 🚀 Enhancement
+
+- feat: bigint support [#1828](https://github.com/vega/ts-json-schema-generator/pull/1828) ([@marcus-josendal](https://github.com/marcus-josendal))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump @typescript-eslint/parser from 6.12.0 to 6.13.1 [#1826](https://github.com/vega/ts-json-schema-generator/pull/1826) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 20.9.0 to 20.10.2 [#1825](https://github.com/vega/ts-json-schema-generator/pull/1825) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/preset-env from 7.23.2 to 7.23.5 [#1827](https://github.com/vega/ts-json-schema-generator/pull/1827) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Marcus Jøsendal ([@marcus-josendal](https://github.com/marcus-josendal))
+
+---
+
 # v1.4.1 (Mon Nov 27 2023)
 
 :tada: This release contains work from a new contributor! :tada:
