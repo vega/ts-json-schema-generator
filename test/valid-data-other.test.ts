@@ -63,6 +63,7 @@ describe("valid-data-other", () => {
     it("generic-anonymous", assertValidSchema("generic-anonymous", "MyObject"));
     it("generic-recursive", assertValidSchema("generic-recursive", "MyObject"));
     it("generic-hell", assertValidSchema("generic-hell", "MyObject"));
+    it("generic-default-conditional", assertValidSchema("generic-default-conditional", "MyObject"));
     it("generic-default", assertValidSchema("generic-default", "MyObject"));
     it("generic-nested", assertValidSchema("generic-nested", "MyObject"));
     it("generic-prefixed-number", assertValidSchema("generic-prefixed-number", "MyObject"));
