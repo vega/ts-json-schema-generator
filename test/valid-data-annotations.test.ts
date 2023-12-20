@@ -86,6 +86,6 @@ describe("valid-data-annotations", () => {
 
     it(
         "discriminator",
-        assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" })
+        assertValidSchema("discriminator", "*", { jsDoc: "basic", discriminatorType: "open-api" })
     );
 });
