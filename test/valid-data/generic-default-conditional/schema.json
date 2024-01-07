@@ -6,8 +6,8 @@
       "additionalProperties": false,
       "properties": {
         "foo": {
-          "type": "string",
-          "const": "baz"
+          "const": "baz",
+          "type": "string"
         }
       },
       "required": [
