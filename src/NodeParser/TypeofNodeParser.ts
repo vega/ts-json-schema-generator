@@ -8,6 +8,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
 import { UnknownType } from "../Type/UnknownType";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(
@@ -78,6 +79,6 @@ export class TypeofNodeParser implements SubNodeParser {
             return new ObjectProperty(name, type, true);
         });
 
-        return new ObjectType(id, [], properties, false);
+        return new ObjectType(id, [], properties, false, false, nodeFilename(node));
     }
 }

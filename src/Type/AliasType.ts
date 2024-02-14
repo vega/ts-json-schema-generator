@@ -3,9 +3,10 @@ import { BaseType } from "./BaseType";
 export class AliasType extends BaseType {
     public constructor(
         private id: string,
-        private type: BaseType
+        private type: BaseType,
+        srcFileName?: string,
     ) {
-        super();
+        super(srcFileName);
     }
 
     public getId(): string {

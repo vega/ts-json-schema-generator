@@ -27,4 +27,8 @@ export class AnnotatedType extends BaseType {
     public isNullable(): boolean {
         return this.nullable;
     }
+
+    public getSrcFileName(): string | null {
+        return this.type.getSrcFileName();
+    }
 }

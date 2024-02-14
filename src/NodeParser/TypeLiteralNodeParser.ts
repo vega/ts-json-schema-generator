@@ -8,6 +8,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { getKey } from "../Utils/nodeKey";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
@@ -32,7 +33,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
+        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context), false, nodeFilename(node));
     }
 
     protected getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {

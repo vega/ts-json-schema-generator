@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
 import { DefinitionType } from "../Type/DefinitionType";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 /**
  * This function parser supports both `FunctionDeclaration` & `ArrowFunction` nodes.
@@ -39,7 +40,9 @@ export class FunctionParser implements SubNodeParser {
 
                 return new ObjectProperty(node.parameters[index].name.getText(), parameterType, required);
             }),
-            false
+            false,
+            false,
+            nodeFilename(node),
         );
         return new DefinitionType(this.getTypeName(node, context), namedArguments);
     }

@@ -6,6 +6,7 @@ import { BaseType } from "../Type/BaseType";
 import { NeverType } from "../Type/NeverType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 export class TypeAliasNodeParser implements SubNodeParser {
     public constructor(
@@ -41,7 +42,7 @@ export class TypeAliasNodeParser implements SubNodeParser {
         if (type instanceof NeverType) {
             return new NeverType();
         }
-        return new AliasType(id, type);
+        return new AliasType(id, type, nodeFilename(node));
     }
 
     protected getTypeId(node: ts.TypeAliasDeclaration, context: Context): string {

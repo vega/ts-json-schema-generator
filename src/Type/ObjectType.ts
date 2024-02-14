@@ -26,9 +26,10 @@ export class ObjectType extends BaseType {
         private properties: readonly ObjectProperty[],
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
-        private nonPrimitive: boolean = false
+        private nonPrimitive: boolean = false,
+        srcFileName?: string,
     ) {
-        super();
+        super(srcFileName);
     }
 
     public getId(): string {
