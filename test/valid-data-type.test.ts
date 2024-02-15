@@ -140,4 +140,6 @@ describe("valid-data-type", () => {
     it("type-satisfies", assertValidSchema("type-satisfies", "MyType"));
 
     it("ignore-export", assertValidSchema("ignore-export", "*"));
+
+    it("type-duplicated-name", assertValidSchema("type-duplicated-name", "MyType"));
 });

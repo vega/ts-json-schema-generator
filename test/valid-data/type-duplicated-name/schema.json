@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "1-A": {
+      "type": "number"
+    },
+    "2-A": {
+      "type": "string"
+    },
+    "MyType": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/1-A"
+        },
+        {
+          "$ref": "#/definitions/2-A"
+        }
+      ]
+    }
+  }
+}

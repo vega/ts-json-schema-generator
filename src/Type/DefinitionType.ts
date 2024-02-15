@@ -9,7 +9,7 @@ export class DefinitionType extends BaseType {
     }
 
     public getId(): string {
-        return `def-${this.type.getId()}`;
+        return this.type.getId();
     }
 
     public getName(): string {

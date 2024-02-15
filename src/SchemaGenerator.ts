@@ -11,6 +11,9 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
 import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
+import { unambiguousName } from "./Utils/unambiguousName";
+import { resolveIdRefs } from "./Utils/resolveIdRefs";
+import { JSONSchema7 } from "json-schema";
 
 export class SchemaGenerator {
     public constructor(
@@ -31,17 +34,26 @@ export class SchemaGenerator {
         });
 
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
+
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+        // Definitions will be referred to by their ID.
+        // This "ID → name" map will be used to resolve object
+        // names before delivering the final schema to caller.
+        const idToNameMap = new Map<string, string>();
+
+        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions, idToNameMap));
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
-        return {
+        const schema = {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+
+        // Finally, replace all IDs by their actual names.
+        return resolveIdRefs(schema, idToNameMap, this.config?.encodeRefs ?? true) as JSONSchema7;
     }
 
     protected getRootNodes(fullName: string | undefined): ts.Node[] {
@@ -79,7 +91,7 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
+    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>, idToNameMap: Map<string, string>): void {
         const seen = new Set<string>();
 
         const children = this.typeFormatter
@@ -93,25 +105,29 @@ export class SchemaGenerator {
                 return false;
             });
 
-        const ids = new Map<string, string>();
+        // identify duplicated definitions. ie: definitions with distinct
+        // origins but sharing the same name
+        const duplicates: StringMap<Set<DefinitionType>> = {};
         for (const child of children) {
             const name = child.getName();
-            const previousId = ids.get(name);
-            // remove def prefix from ids to avoid false alarms
-            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
-            const childId = child.getId().replace(/def-/g, "");
-
-            if (previousId && childId !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
-            }
-            ids.set(name, childId);
+            duplicates[name] ??= new Set<DefinitionType>();
+            duplicates[name].add(child);
         }
 
+        // for duplicated definitions, lift the name ambiguity by renaming them.
         children.reduce((definitions, child) => {
-            const name = child.getName();
-            if (!(name in definitions)) {
-                definitions[name] = this.typeFormatter.getDefinition(child.getType());
+            const id = child.getId();
+            if (!(id in definitions)) {
+                const name = unambiguousName(child, child === rootType, [...duplicates[child.getName()]]);
+
+                // associate the schema to its ID, allowing steps like removeUnreachable to work
+                definitions[id] = this.typeFormatter.getDefinition(child.getType());
+
+                // this ID → name map will be used in the final step, to resolve object
+                // names before delivering the final schema to caller
+                idToNameMap.set(id, name);
             }
+
             return definitions;
         }, childDefinitions);
     }

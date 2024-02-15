@@ -118,7 +118,7 @@ export class ExampleDefinitionOverrideFormatter implements SubTypeFormatter {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
-        const ref = type.getName();
+        const ref = type.getId();
         return { $ref: `#/definitions/${ref}`, $comment: "overriden" };
     }
     public getChildren(type: DefinitionType): BaseType[] {
