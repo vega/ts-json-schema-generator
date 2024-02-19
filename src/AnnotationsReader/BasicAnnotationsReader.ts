@@ -78,10 +78,15 @@ export class BasicAnnotationsReader implements AnnotationsReader {
         const annotations = jsDocTags.reduce((result: Annotations, jsDocTag) => {
             const value = this.parseJsDocTag(jsDocTag);
             if (value !== undefined) {
-                if (BasicAnnotationsReader.requiresDollar.has(jsDocTag.name)) {
-                    result["$" + jsDocTag.name] = value;
+                const tagName = BasicAnnotationsReader.requiresDollar.has(jsDocTag.name) ? "$" + jsDocTag.name : jsDocTag.name;
+
+                if (result[tagName]) {
+                    if (!Array.isArray(result[tagName])) {
+                        result[tagName] = [result[tagName]];
+                    }
+                    result[tagName].push(value);
                 } else {
-                    result[jsDocTag.name] = value;
+                    result[tagName] = value;
                 }
             }
             return result;
