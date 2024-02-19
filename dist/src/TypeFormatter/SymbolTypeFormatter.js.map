@@ -1,0 +1,1 @@
+{"version":3,"file":"SymbolTypeFormatter.js","sourceRoot":"","sources":["../../../src/TypeFormatter/SymbolTypeFormatter.ts"],"names":[],"mappings":";;;AAEA,mDAAgD;AAGhD,MAAa,mBAAmB;IACrB,YAAY,CAAC,IAAgB;QAChC,OAAO,IAAI,YAAY,uBAAU,CAAC;IACtC,CAAC;IACM,aAAa,CAAC,IAAgB;QACjC,OAAO,EAAE,CAAC;IACd,CAAC;IACM,WAAW,CAAC,IAAgB;QAC/B,OAAO,EAAE,CAAC;IACd,CAAC;CACJ;AAVD,kDAUC"}

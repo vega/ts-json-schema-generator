@@ -1,0 +1,32 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const utils_1 = require("./utils");
+describe("valid-data-struct", () => {
+    it("simple-object", (0, utils_1.assertValidSchema)("simple-object", "SimpleObject"));
+    it("object-function-expression", (0, utils_1.assertValidSchema)("object-function-expression", "MyType"));
+    it("object-literal-expression", (0, utils_1.assertValidSchema)("object-literal-expression", "MyType"));
+    it("literal-object-type", (0, utils_1.assertValidSchema)("literal-object-type", "MyType"));
+    it("literal-object-type-with-computed-props", (0, utils_1.assertValidSchema)("literal-object-type-with-computed-props", "MyType"));
+    it("literal-array-type", (0, utils_1.assertValidSchema)("literal-array-type", "MyType"));
+    it("literal-index-type", (0, utils_1.assertValidSchema)("literal-index-type", "MyType"));
+    it("interface-single", (0, utils_1.assertValidSchema)("interface-single", "MyObject"));
+    it("interface-multi", (0, utils_1.assertValidSchema)("interface-multi", "MyObject"));
+    it("interface-recursion", (0, utils_1.assertValidSchema)("interface-recursion", "MyObject"));
+    it("interface-extra-props", (0, utils_1.assertValidSchema)("interface-extra-props", "MyObject"));
+    it("interface-extended-extra-props", (0, utils_1.assertValidSchema)("interface-extended-extra-props", "MyObject"));
+    it("interface-array", (0, utils_1.assertValidSchema)("interface-array", "TagArray"));
+    it("interface-property-dash", (0, utils_1.assertValidSchema)("interface-property-dash", "MyObject"));
+    it("interface-computed-property-name", (0, utils_1.assertValidSchema)("interface-computed-property-name", "MyObject"));
+    it("class-single", (0, utils_1.assertValidSchema)("class-single", "MyObject"));
+    it("class-multi", (0, utils_1.assertValidSchema)("class-multi", "MyObject"));
+    it("class-recursion", (0, utils_1.assertValidSchema)("class-recursion", "MyObject"));
+    it("class-extra-props", (0, utils_1.assertValidSchema)("class-extra-props", "MyObject"));
+    it("class-inheritance", (0, utils_1.assertValidSchema)("class-inheritance", "MyObject"));
+    it("class-generics", (0, utils_1.assertValidSchema)("class-generics", "MyObject"));
+    it("class-jsdoc", (0, utils_1.assertValidSchema)("class-jsdoc", "MyObject"));
+    it("structure-private", (0, utils_1.assertValidSchema)("structure-private", "MyObject"));
+    it("structure-anonymous", (0, utils_1.assertValidSchema)("structure-anonymous", "MyObject"));
+    it("structure-recursion", (0, utils_1.assertValidSchema)("structure-recursion", "MyObject"));
+    it("structure-extra-props", (0, utils_1.assertValidSchema)("structure-extra-props", "MyObject"));
+});
+//# sourceMappingURL=valid-data-struct.test.js.map

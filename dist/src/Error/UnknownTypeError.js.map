@@ -1,0 +1,1 @@
+{"version":3,"file":"UnknownTypeError.js","sourceRoot":"","sources":["../../../src/Error/UnknownTypeError.ts"],"names":[],"mappings":";;;AACA,2CAAwC;AAExC,MAAa,gBAAiB,SAAQ,qBAAS;IAC3C,YAA2B,IAAc;QACrC,KAAK,CAAC,iBAAiB,IAAI,CAAC,KAAK,EAAE,GAAG,CAAC,CAAC;QADjB,SAAI,GAAJ,IAAI,CAAU;IAEzC,CAAC;IAEM,OAAO;QACV,OAAO,IAAI,CAAC,IAAI,CAAC;IACrB,CAAC;CACJ;AARD,4CAQC"}

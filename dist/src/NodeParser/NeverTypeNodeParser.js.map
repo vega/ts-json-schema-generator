@@ -1,0 +1,1 @@
+{"version":3,"file":"NeverTypeNodeParser.js","sourceRoot":"","sources":["../../../src/NodeParser/NeverTypeNodeParser.ts"],"names":[],"mappings":";;;;;;AAAA,4DAA4B;AAI5B,iDAA8C;AAE9C,MAAa,mBAAmB;IACrB,YAAY,CAAC,IAAwB;QACxC,OAAO,IAAI,CAAC,IAAI,KAAK,oBAAE,CAAC,UAAU,CAAC,YAAY,CAAC;IACpD,CAAC;IACM,UAAU,CAAC,KAAyB,EAAE,QAAiB;QAC1D,OAAO,IAAI,qBAAS,EAAE,CAAC;IAC3B,CAAC;CACJ;AAPD,kDAOC"}

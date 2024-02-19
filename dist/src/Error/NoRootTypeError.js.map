@@ -1,0 +1,1 @@
+{"version":3,"file":"NoRootTypeError.js","sourceRoot":"","sources":["../../../src/Error/NoRootTypeError.ts"],"names":[],"mappings":";;;AAAA,2CAAwC;AAExC,MAAa,eAAgB,SAAQ,qBAAS;IAC1C,YAA2B,IAAY;QACnC,KAAK,CAAC,iBAAiB,IAAI,SAAS,CAAC,CAAC;QADf,SAAI,GAAJ,IAAI,CAAQ;IAEvC,CAAC;IAEM,OAAO;QACV,OAAO,IAAI,CAAC,IAAI,CAAC;IACrB,CAAC;CACJ;AARD,0CAQC"}

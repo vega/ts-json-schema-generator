@@ -1,0 +1,1 @@
+{"version":3,"file":"preserveAnnotation.js","sourceRoot":"","sources":["../../../src/Utils/preserveAnnotation.ts"],"names":[],"mappings":";;;AACA,yDAAsD;AAQtD,SAAgB,kBAAkB,CAAC,YAAsB,EAAE,OAAiB;IACxE,IAAI,YAAY,YAAY,6BAAa,EAAE,CAAC;QACxC,OAAO,IAAI,6BAAa,CAAC,OAAO,EAAE,YAAY,CAAC,cAAc,EAAE,EAAE,YAAY,CAAC,UAAU,EAAE,CAAC,CAAC;IAChG,CAAC;IACD,OAAO,OAAO,CAAC;AACnB,CAAC;AALD,gDAKC"}

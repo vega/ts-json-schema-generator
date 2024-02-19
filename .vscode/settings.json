@@ -11,7 +11,7 @@
   "editor.tabSize": 4,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "jest.autoRun": "off"
 }
