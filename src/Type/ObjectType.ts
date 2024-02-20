@@ -27,7 +27,7 @@ export class ObjectType extends BaseType {
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
         private nonPrimitive: boolean = false,
-        srcFileName?: string,
+        srcFileName?: string
     ) {
         super(srcFileName);
     }

@@ -44,11 +44,18 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 this.getProperties(node, keyListType, context),
                 this.getAdditionalProperties(node, keyListType, context),
                 false,
-                srcFileName,
+                srcFileName
             );
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
-            return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false, false, srcFileName);
+            return new ObjectType(
+                id,
+                [],
+                this.getProperties(node, new UnionType([keyListType]), context),
+                false,
+                false,
+                srcFileName
+            );
         } else if (
             keyListType instanceof StringType ||
             keyListType instanceof NumberType ||

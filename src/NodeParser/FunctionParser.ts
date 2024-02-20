@@ -42,7 +42,7 @@ export class FunctionParser implements SubNodeParser {
             }),
             false,
             false,
-            nodeFilename(node),
+            nodeFilename(node)
         );
         return new DefinitionType(this.getTypeName(node, context), namedArguments);
     }

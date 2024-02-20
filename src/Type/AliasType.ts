@@ -4,7 +4,7 @@ export class AliasType extends BaseType {
     public constructor(
         private id: string,
         private type: BaseType,
-        srcFileName?: string,
+        srcFileName?: string
     ) {
         super(srcFileName);
     }

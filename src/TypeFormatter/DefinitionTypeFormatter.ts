@@ -9,7 +9,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
     public constructor(
         protected childTypeFormatter: TypeFormatter,
         protected encodeRefs: boolean
-    ) { }
+    ) {}
 
     public supportsType(type: DefinitionType): boolean {
         return type instanceof DefinitionType;

@@ -38,8 +38,10 @@ describe("invalid-data", () => {
             "missing-discriminator",
             "MyType",
             'Cannot find discriminator keyword "type" in type ' +
-            '{"srcFileName":null,"name":"B","type":{"srcFileName":"test/invalid-data/missing-discriminator/main.ts","id":"interface-1119825560-40-63-1119825560-0-124",' +
-            '"baseTypes":[],"properties":[],"additionalProperties":false,"nonPrimitive":false}}.'
+                '{"srcFileName":null,"name":"B","type":{"srcFileName":' +
+                '"test/invalid-data/missing-discriminator/main.ts",' +
+                '"id":"interface-1119825560-40-63-1119825560-0-124",' +
+                '"baseTypes":[],"properties":[],"additionalProperties":false,"nonPrimitive":false}}.'
         )
     );
     it(
@@ -48,10 +50,11 @@ describe("invalid-data", () => {
             "non-union-discriminator",
             "MyType",
             "Cannot assign discriminator tag to type: " +
-            '{"srcFileName":"test/invalid-data/non-union-discriminator/main.ts","id":"interface-2103469249-0-76-2103469249-0-77","baseTypes":[],' +
-            '"properties":[{"name":"name","type":{"srcFileName":null},"required":true}],' +
-            '"additionalProperties":false,"nonPrimitive":false}. ' +
-            "This tag can only be assigned to union types."
+                '{"srcFileName":"test/invalid-data/non-union-discriminator/main.ts",' +
+                '"id":"interface-2103469249-0-76-2103469249-0-77","baseTypes":[],' +
+                '"properties":[{"name":"name","type":{"srcFileName":null},"required":true}],' +
+                '"additionalProperties":false,"nonPrimitive":false}. ' +
+                "This tag can only be assigned to union types."
         )
     );
     it(

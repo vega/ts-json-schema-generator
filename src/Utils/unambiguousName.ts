@@ -4,9 +4,9 @@ import { DefinitionType } from "../Type/DefinitionType";
  * Identifies the longest prefix common to all inputs and returns it.
  */
 function longestCommonPrefix(inputs: string[]): string {
-    let prefix = inputs.reduce((acc, str) => str.length < acc.length ? str : acc);
+    let prefix = inputs.reduce((acc, str) => (str.length < acc.length ? str : acc));
 
-    for (let str of inputs) {
+    for (const str of inputs) {
         while (str.slice(0, prefix.length) != prefix) {
             prefix = prefix.slice(0, -1);
         }
@@ -34,7 +34,7 @@ export function unambiguousName(child: DefinitionType, isRoot: boolean, peers: D
 
     // filter peers to keep only those who have file names.
     // Intermediate Types - AnnotationTypes, UnionTypes, do not have file names
-    const sourcedPeers = peers.filter(peer => peer.getType().getSrcFileName());
+    const sourcedPeers = peers.filter((peer) => peer.getType().getSrcFileName());
     if (sourcedPeers.length === 1) {
         return sourcedPeers[0].getName();
     }
@@ -54,8 +54,8 @@ export function unambiguousName(child: DefinitionType, isRoot: boolean, peers: D
 
     const uniquePath = srcPaths[pathIndex]
         .substring(commonPrefixLength) // remove the common prefix
-        .replace(/\//g, "__")          // replace "/" by double underscores
-        .replace(/\.[^.]+$/, "");      // strip the extension
+        .replace(/\//g, "__") // replace "/" by double underscores
+        .replace(/\.[^.]+$/, ""); // strip the extension
 
     return `${uniquePath}-${child.getName()}`;
 }

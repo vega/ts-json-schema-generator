@@ -91,7 +91,11 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>, idToNameMap: Map<string, string>): void {
+    protected appendRootChildDefinitions(
+        rootType: BaseType,
+        childDefinitions: StringMap<Definition>,
+        idToNameMap: Map<string, string>
+    ): void {
         const seen = new Set<string>();
 
         const children = this.typeFormatter

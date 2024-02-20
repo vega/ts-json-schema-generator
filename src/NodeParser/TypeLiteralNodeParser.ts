@@ -33,7 +33,14 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context), false, nodeFilename(node));
+        return new ObjectType(
+            id,
+            [],
+            properties,
+            this.getAdditionalProperties(node, context),
+            false,
+            nodeFilename(node)
+        );
     }
 
     protected getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
