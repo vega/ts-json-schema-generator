@@ -55,6 +55,7 @@ describe("valid-data-other", () => {
     it("import-exposed", assertValidSchema("import-exposed", "MyObject"));
     it("import-internal", assertValidSchema("import-internal", "MyObject", { jsDoc: "basic" }));
     it("import-anonymous", assertValidSchema("import-anonymous", "MyObject"));
+    it.only("import-identifier", assertValidSchema("import-identifier", "MyObject"));
 
     it("generic-simple", assertValidSchema("generic-simple", "MyObject"));
     it("generic-arrays", assertValidSchema("generic-arrays", "MyObject"));
