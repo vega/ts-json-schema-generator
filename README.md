@@ -50,11 +50,11 @@ const config = {
     type: "*", // Or <type-name> if you want to generate schema for that one type only
 };
 
-const output_path = "path/to/output/file";
+const outputPath = "path/to/output/file";
 
 const schema = tsj.createGenerator(config).createSchema(config.type);
 const schemaString = JSON.stringify(schema, null, 2);
-fs.writeFile(output_path, schemaString, (err) => {
+fs.writeFile(outputPath, schemaString, (err) => {
     if (err) throw err;
 });
 ```
@@ -131,9 +131,10 @@ const program = createProgram(config);
 const parser = createParser(program, config);
 const generator = new SchemaGenerator(program, parser, formatter, config);
 const schema = generator.createSchema(config.type);
+const outputPath = "path/to/output/file";
 
 const schemaString = JSON.stringify(schema, null, 2);
-fs.writeFile(output_path, schemaString, (err) => {
+fs.writeFile(outputPath, schemaString, (err) => {
     if (err) throw err;
 });
 ```
@@ -183,9 +184,10 @@ const parser = createParser(program, config, (prs) => {
 const formatter = createFormatter(config);
 const generator = new SchemaGenerator(program, parser, formatter, config);
 const schema = generator.createSchema(config.type);
+const outputPath = "path/to/output/file";
 
 const schemaString = JSON.stringify(schema, null, 2);
-fs.writeFile(output_path, schemaString, (err) => {
+fs.writeFile(outputPath, schemaString, (err) => {
     if (err) throw err;
 });
 ```
