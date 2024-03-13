@@ -7,11 +7,9 @@
     },
     "MyObject": {
       "additionalProperties": false,
-      "examples": [
-        {
-          "nested": "hello"
-        }
-      ],
+      "example": {
+        "nested": "hello"
+      },
       "properties": {
         "nested": {
           "$ref": "#/definitions/MyNestedObject",

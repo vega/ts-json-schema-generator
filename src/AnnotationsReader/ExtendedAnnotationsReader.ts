@@ -109,6 +109,10 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
+        else if (examples.length === 1) {
+            return { example: examples[0] };
+        }
+
         return { examples };
     }
 }
