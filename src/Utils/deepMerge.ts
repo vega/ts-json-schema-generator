@@ -15,7 +15,7 @@ export function deepMerge(
     a: { [key: string]: JSONSchema7Definition },
     b: { [key: string]: JSONSchema7Definition }
 ): { [x: string]: JSONSchema7Definition } {
-    const output = { ...a, ...b };
+    const output = { ...structuredClone(a), ...structuredClone(b) };
 
     for (const key in a) {
         if (b.hasOwnProperty(key)) {
