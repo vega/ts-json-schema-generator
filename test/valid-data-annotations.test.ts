@@ -84,8 +84,5 @@ describe("valid-data-annotations", () => {
 
     it("annotation-nullable-definition", assertValidSchema("annotation-nullable-definition", "MyObject"));
 
-    it(
-        "discriminator",
-        assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" })
-    );
+    it("discriminator", assertValidSchema("discriminator", "*", { jsDoc: "basic", discriminatorType: "open-api" }));
 });
