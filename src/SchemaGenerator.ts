@@ -167,6 +167,25 @@ export class SchemaGenerator {
             case ts.SyntaxKind.ArrowFunction:
                 allTypes.set(`NamedParameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
                 return;
+            case ts.SyntaxKind.ExportSpecifier: {
+                const exportSpecifierNode = node as ts.ExportSpecifier;
+                const symbol = typeChecker.getExportSpecifierLocalTargetSymbol(exportSpecifierNode);
+                if (symbol?.declarations?.length === 1) {
+                    const declaration = symbol.declarations[0];
+                    if (declaration.kind === ts.SyntaxKind.ImportSpecifier) {
+                        // Handling the `Foo` in `export { Foo };`
+                        const importSpecifierNode = declaration as ts.ImportSpecifier;
+                        const type = typeChecker.getTypeAtLocation(importSpecifierNode);
+                        if (type.symbol?.declarations?.length === 1) {
+                            this.inspectNode(type.symbol.declarations[0], typeChecker, allTypes);
+                        }
+                    } else {
+                        // Handling the `Bar` in `export { Bar } from './bar';`
+                        this.inspectNode(declaration, typeChecker, allTypes);
+                    }
+                }
+                return;
+            }
             default:
                 ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
                 return;

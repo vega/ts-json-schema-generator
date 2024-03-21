@@ -102,4 +102,5 @@ describe("valid-data-other", () => {
             ajvOptions: { $data: true },
         })
     );
+    it("re-export-with-asterisk", assertValidSchema("re-export-with-asterisk", "*", undefined, { mainTsOnly: true }));
 });
