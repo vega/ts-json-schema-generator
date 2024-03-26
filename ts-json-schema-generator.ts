@@ -3,9 +3,10 @@ import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator";
 import { Config, DEFAULT_CONFIG } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
+import { TypeMap } from "./src/SchemaGenerator";
 import { formatError } from "./src/Utils/formatError";
 import * as pkg from "./package.json";
-import { dirname } from "path";
+import { dirname, relative } from "path";
 import { mkdirSync, writeFileSync } from "fs";
 
 const args = new Command()
@@ -33,6 +34,7 @@ const args = new Command()
     .option("--no-type-check", "Skip type checks to improve performance")
     .option("--no-ref-encode", "Do not encode references")
     .option("-o, --out <file>", "Set the output file (default: stdout)")
+    .option("-m, --typemap <file>", "Generate a TypeScript type map file")
     .option(
         "--validation-keywords [value]",
         "Provide additional validation keywords to include",
@@ -68,7 +70,8 @@ const config: Config = {
 };
 
 try {
-    const schema = createGenerator(config).createSchema(args.type);
+    const typeMaps: TypeMap[] = [];
+    const schema = createGenerator(config).createSchema(args.type, typeMaps);
 
     const stringify = config.sortProps ? stableStringify : JSON.stringify;
     // need as string since TS can't figure out that the string | undefined case doesn't happen
@@ -83,6 +86,10 @@ try {
         // write to stdout
         process.stdout.write(`${schemaString}\n`);
     }
+
+    if (args.typemap) {
+        writeTypeMapFile(typeMaps, args.typemap);
+    }
 } catch (error) {
     if (error instanceof BaseError) {
         process.stderr.write(formatError(error));
@@ -90,4 +97,32 @@ try {
     } else {
         throw error;
     }
+}
+
+function writeTypeMapFile(typeMaps: TypeMap[], typeMapeFile: string) {
+    const typeMapDir = dirname(typeMapeFile);
+    let code = "";
+
+    typeMaps.forEach((typeMap) => {
+        const fileName = relative(typeMapDir, typeMap.fileName);
+
+        if (typeMap.exports) {
+            code += `import type { ${typeMap.exports.join(", ")} } from "./${fileName}";\n`;
+        } else {
+            code += `import "./${fileName}";\n`;
+        }
+    });
+
+    code += "\nexport default interface Definitions {\n";
+
+    typeMaps.forEach((typeMap) =>
+        typeMap.typeNames.forEach((typeName) => {
+            code += `    [\`${typeName}\`]: ${typeName};\n`;
+        })
+    );
+
+    code += `}\n`;
+
+    mkdirSync(typeMapDir, { recursive: true });
+    writeFileSync(typeMapeFile, code);
 }
