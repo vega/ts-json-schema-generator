@@ -9,6 +9,7 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { isNodeHidden } from "../Utils/isHidden";
 import { isPublic, isStatic } from "../Utils/modifiers";
 import { getKey } from "../Utils/nodeKey";
+import { getJsDocTagTexts } from "../Utils/getJsDoc";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -138,14 +139,16 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
                 return entries;
             }, [])
-            .map(
-                ({ member, memberType }) =>
-                    new ObjectProperty(
-                        this.getPropertyName(member.name),
-                        this.childNodeParser.createType(memberType, context),
-                        !member.questionToken
-                    )
-            )
+            .map(({ member, memberType }) => {
+                const name = this.getPropertyName(member.name);
+                const dependentRequired = getJsDocTagTexts(member, "dependentRequired");
+                return new ObjectProperty(
+                    name,
+                    this.childNodeParser.createType(memberType, context),
+                    !member.questionToken,
+                    dependentRequired
+                );
+            })
             .filter((prop) => {
                 if (prop.isRequired() && prop.getType() instanceof NeverType) {
                     hasRequiredNever = true;

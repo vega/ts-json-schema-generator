@@ -5,7 +5,8 @@ export class ObjectProperty {
     public constructor(
         private name: string,
         private type: BaseType,
-        private required: boolean
+        private required: boolean,
+        private dependentRequired?: string[]
     ) {}
 
     public getName(): string {
@@ -16,6 +17,9 @@ export class ObjectProperty {
     }
     public isRequired(): boolean {
         return this.required;
+    }
+    public getDependentRequired(): string[] | undefined {
+        return this.dependentRequired;
     }
 }
 
