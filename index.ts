@@ -21,6 +21,7 @@ export * from "./src/Utils/isAssignableTo";
 export * from "./src/Utils/isHidden";
 export * from "./src/Utils/modifiers";
 export * from "./src/Utils/narrowType";
+export * from "./src/Utils/nodeFilename";
 export * from "./src/Utils/nodeKey";
 export * from "./src/Utils/notNever";
 export * from "./src/Utils/preserveAnnotation";

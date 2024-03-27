@@ -9,7 +9,7 @@ export class DefinitionType extends BaseType {
     }
 
     public getId(): string {
-        return `def-${this.type.getId()}`;
+        return this.type.getId();
     }
 
     public getName(): string {
@@ -18,5 +18,9 @@ export class DefinitionType extends BaseType {
 
     public getType(): BaseType {
         return this.type;
+    }
+
+    public getSrcFileName(): string | null {
+        return this.type.getSrcFileName();
     }
 }

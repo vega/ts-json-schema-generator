@@ -4,6 +4,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { ObjectType } from "../Type/ObjectType";
 import { getKey } from "../Utils/nodeKey";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 export class ObjectTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {
@@ -11,6 +12,6 @@ export class ObjectTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
-        return new ObjectType(`object-${getKey(node, context)}`, [], [], true, true);
+        return new ObjectType(`object-${getKey(node, context)}`, [], [], true, true, nodeFilename(node));
     }
 }

@@ -1,6 +1,7 @@
 import { JSONSchema7Definition } from "json-schema";
 import { Definition } from "../Schema/Definition";
 import { StringMap } from "./StringMap";
+import { isLocalRef } from "./isLocalRef";
 
 const DEFINITION_OFFSET = "#/definitions/".length;
 
@@ -14,13 +15,13 @@ function addReachable(
     }
 
     if (definition.$ref) {
-        const typeName = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
-        if (reachable.has(typeName) || !isLocalRef(definition.$ref)) {
+        const typeId = decodeURIComponent(definition.$ref.slice(DEFINITION_OFFSET));
+        if (reachable.has(typeId) || !isLocalRef(definition.$ref)) {
             // we've already processed this definition, or this definition refers to an external schema
             return;
         }
-        reachable.add(typeName);
-        const refDefinition = definitions[typeName];
+        reachable.add(typeId);
+        const refDefinition = definitions[typeId];
         if (!refDefinition) {
             throw new Error(`Encountered a reference to a missing definition: "${definition.$ref}". This is a bug.`);
         }
@@ -82,8 +83,4 @@ export function removeUnreachable(
     }
 
     return out;
-}
-
-function isLocalRef(ref: string) {
-    return ref.charAt(0) === "#";
 }

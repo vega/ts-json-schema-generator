@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
 import { getKey } from "../Utils/nodeKey";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
+import { nodeFilename } from "../Utils/nodeFilename";
 
 export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -23,6 +24,6 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
                 )
         );
 
-        return new ObjectType(`object-${getKey(node, context)}`, [], properties, false);
+        return new ObjectType(`object-${getKey(node, context)}`, [], properties, false, false, nodeFilename(node));
     }
 }
