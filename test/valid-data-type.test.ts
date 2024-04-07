@@ -148,4 +148,6 @@ describe("valid-data-type", () => {
     it("type-satisfies", assertValidSchema("type-satisfies", "MyType"));
 
     it("ignore-export", assertValidSchema("ignore-export", "*"));
+
+    it("lowercase", assertValidSchema("lowercase", "MyType"));
 });

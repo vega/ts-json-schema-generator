@@ -6,31 +6,35 @@ import { DefinitionType } from "../Type/DefinitionType";
 import { EnumType } from "../Type/EnumType";
 import { LiteralType } from "../Type/LiteralType";
 import { UnionType } from "../Type/UnionType";
+import { derefAnnotatedType } from "./derefType";
 
 function* _extractLiterals(type: BaseType): Iterable<string> {
     if (!type) {
         return;
     }
-    if (type instanceof LiteralType) {
-        yield type.getValue().toString();
+
+    const dereffedType = derefAnnotatedType(type);
+
+    if (dereffedType instanceof LiteralType) {
+        yield dereffedType.getValue().toString();
         return;
     }
-    if (type instanceof UnionType || type instanceof EnumType) {
-        for (const t of type.getTypes()) {
+    if (dereffedType instanceof UnionType || dereffedType instanceof EnumType) {
+        for (const t of dereffedType.getTypes()) {
             yield* _extractLiterals(t);
         }
         return;
     }
-    if (type instanceof AliasType || type instanceof DefinitionType) {
-        yield* _extractLiterals(type.getType());
+    if (dereffedType instanceof AliasType || dereffedType instanceof DefinitionType) {
+        yield* _extractLiterals(dereffedType.getType());
         return;
     }
-    if (type instanceof BooleanType) {
+    if (dereffedType instanceof BooleanType) {
         yield* _extractLiterals(new UnionType([new LiteralType("true"), new LiteralType("false")]));
         return;
     }
 
-    throw new UnknownTypeError(type);
+    throw new UnknownTypeError(dereffedType);
 }
 
 export function extractLiterals(type: BaseType): string[] {
