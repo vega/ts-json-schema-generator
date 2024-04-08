@@ -10,6 +10,7 @@ import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
 import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
+import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter";
 import { HiddenTypeFormatter } from "../src/TypeFormatter/HiddenTypeFormatter";
 import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
 import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter";
@@ -69,6 +70,8 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
 
         .addTypeFormatter(new PrimitiveUnionTypeFormatter())
         .addTypeFormatter(new LiteralUnionTypeFormatter())
+
+        .addTypeFormatter(new FunctionTypeFormatter())
 
         .addTypeFormatter(new OptionalTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new RestTypeFormatter(circularReferenceTypeFormatter))
