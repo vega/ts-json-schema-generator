@@ -5,6 +5,9 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
+        "bigint": {
+          "type": "number"
+        },
         "boolean": {
           "type": "boolean"
         },
@@ -25,9 +28,6 @@
         },
         "string": {
           "type": "string"
-        },
-        "bigint": {
-          "type": "number"
         }
       },
       "required": [

@@ -45,6 +45,14 @@ describe("valid-data-type", () => {
     it("type-intersection-partial-conflict", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it("type-intersection-partial-conflict-ref", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it(
+        "type-intersection-partial-conflict-union",
+        assertValidSchema("type-intersection-partial-conflict-union", "MyType")
+    );
+    it(
+        "type-intersection-partial-conflict-union-alias",
+        assertValidSchema("type-intersection-partial-conflict-union-alias", "MyType")
+    );
+    it(
         "type-intersection-recursive-interface",
         assertValidSchema("type-intersection-recursive-interface", "Intersection")
     );
@@ -140,4 +148,6 @@ describe("valid-data-type", () => {
     it("type-satisfies", assertValidSchema("type-satisfies", "MyType"));
 
     it("ignore-export", assertValidSchema("ignore-export", "*"));
+
+    it("lowercase", assertValidSchema("lowercase", "MyType"));
 });

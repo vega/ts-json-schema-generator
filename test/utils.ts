@@ -47,12 +47,13 @@ export function assertValidSchema(
          * @default {strict:false}
          */
         ajvOptions?: AjvOptions;
+        mainTsOnly?: boolean;
     }
 ) {
     return (): void => {
         const config: Config = {
             ...DEFAULT_CONFIG,
-            path: `${basePath}/${relativePath}/*.ts`,
+            path: `${basePath}/${relativePath}/${options?.mainTsOnly ? "main" : "*"}.ts`,
             skipTypeCheck: !!process.env.FAST_TEST,
             type,
             ...config_,
