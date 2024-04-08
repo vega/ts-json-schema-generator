@@ -7,7 +7,6 @@ import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
-import { UnknownType } from "../Type/UnknownType";
 import { NeverType } from "../Type/NeverType";
 import { FunctionType } from "../Type/FunctionType";
 
