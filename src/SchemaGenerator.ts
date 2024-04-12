@@ -12,29 +12,37 @@ import { removeUnreachable } from "./Utils/removeUnreachable";
 import { Config } from "./Config";
 import { hasJsDocTag } from "./Utils/hasJsDocTag";
 
+export interface TypeMap {
+    fileName: string;
+    typeNames: string[];
+    exports?: string[];
+}
+
 export class SchemaGenerator {
     public constructor(
         protected readonly program: ts.Program,
         protected readonly nodeParser: NodeParser,
         protected readonly typeFormatter: TypeFormatter,
         protected readonly config?: Config
-    ) {}
+    ) { }
 
-    public createSchema(fullName?: string): Schema {
+    public createSchema(fullName?: string, typeMapResult?: TypeMap[]): Schema {
         const rootNodes = this.getRootNodes(fullName);
-        return this.createSchemaFromNodes(rootNodes);
+        return this.createSchemaFromNodes(rootNodes, typeMapResult);
     }
 
-    public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
+    public createSchemaFromNodes(rootNodes: ts.Node[], typeMapResult?: TypeMap[]): Schema {
         const rootTypes = rootNodes.map((rootNode) => {
             return this.nodeParser.createType(rootNode, new Context());
         });
 
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+        const rootTypeNames = rootTypes.map((rootType) => this.appendRootChildDefinitions(rootType, definitions));
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+
+        typeMapResult?.splice(0, Infinity, ...this.createTypeMaps(rootNodes, rootTypeNames, reachableDefinitions));
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -42,6 +50,40 @@ export class SchemaGenerator {
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+    }
+
+    protected createTypeMaps(
+        rootNodes: ts.Node[],
+        rootTypeNames: string[][],
+        reachableDefinitions: StringMap<Definition>
+    ): TypeMap[] {
+        const typeMaps: Record<string, TypeMap> = {};
+        const typeSeen = new Set<string>();
+        const nameSeen = new Set<string>();
+
+        rootNodes.forEach((rootNode, i) => {
+            const sourceFile = rootNode.getSourceFile();
+            const fileName = sourceFile.fileName;
+            const typeMap = (typeMaps[fileName] ??= {
+                fileName,
+                typeNames: [],
+                exports: ts.isExternalModule(sourceFile) ? [] : undefined,
+            });
+
+            const typeNames = rootTypeNames[i].filter(
+                (typeName) => !!reachableDefinitions[typeName] && !typeName.startsWith("NamedParameters<typeof ")
+            );
+
+            const exports = typeNames
+                .map((typeName) => typeName.replace(/[<.].*/g, ""))
+                .filter((type) => symbolAtNode(sourceFile)?.exports?.has(ts.escapeLeadingUnderscores(type)))
+                .filter((type) => !typeSeen.has(type) && typeSeen.add(type));
+
+            typeMap.typeNames.push(...typeNames.filter((name) => !nameSeen.has(name) && nameSeen.add(name)));
+            typeMap.exports?.push(...exports);
+        });
+
+        return Object.values(typeMaps).filter((tm) => !tm.exports || tm.exports.length || tm.typeNames.length);
     }
 
     protected getRootNodes(fullName: string | undefined): ts.Node[] {
@@ -79,7 +121,7 @@ export class SchemaGenerator {
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
     }
-    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
+    protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): string[] {
         const seen = new Set<string>();
 
         const children = this.typeFormatter
@@ -107,13 +149,16 @@ export class SchemaGenerator {
             ids.set(name, childId);
         }
 
+        const names: string[] = [];
         children.reduce((definitions, child) => {
             const name = child.getName();
             if (!(name in definitions)) {
                 definitions[name] = this.typeFormatter.getDefinition(child.getType());
             }
+            names.push(name);
             return definitions;
         }, childDefinitions);
+        return names;
     }
     protected partitionFiles(): {
         projectFiles: ts.SourceFile[];
