@@ -1,3 +1,15 @@
+# v2.0.1 (Sat Apr 13 2024)
+
+#### 🐛 Bug Fix
+
+- fix: support partial config in createGenerator [#1919](https://github.com/vega/ts-json-schema-generator/pull/1919) ([@domoritz](https://github.com/domoritz))
+
+#### Authors: 1
+
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+
+---
+
 # v2.0.0 (Sat Apr 13 2024)
 
 #### 💥 Breaking Change
