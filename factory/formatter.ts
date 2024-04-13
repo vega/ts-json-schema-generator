@@ -1,6 +1,6 @@
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
-import { Config } from "../src/Config";
+import { CompletedConfig } from "../src/Config";
 import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
 import { TypeFormatter } from "../src/TypeFormatter";
 import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter";
@@ -8,8 +8,10 @@ import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormat
 import { AnyTypeFormatter } from "../src/TypeFormatter/AnyTypeFormatter";
 import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
 import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
+import { ConstructorTypeFormatter } from "../src/TypeFormatter/ConstructorTypeFormatter";
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
 import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
+import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter";
 import { HiddenTypeFormatter } from "../src/TypeFormatter/HiddenTypeFormatter";
 import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
 import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter";
@@ -35,7 +37,7 @@ export type FormatterAugmentor = (
     circularReferenceTypeFormatter: CircularReferenceTypeFormatter
 ) => void;
 
-export function createFormatter(config: Config, augmentor?: FormatterAugmentor): TypeFormatter {
+export function createFormatter(config: CompletedConfig, augmentor?: FormatterAugmentor): TypeFormatter {
     const chainTypeFormatter = new ChainTypeFormatter([]);
     const circularReferenceTypeFormatter = new CircularReferenceTypeFormatter(chainTypeFormatter);
 
@@ -69,6 +71,9 @@ export function createFormatter(config: Config, augmentor?: FormatterAugmentor):
 
         .addTypeFormatter(new PrimitiveUnionTypeFormatter())
         .addTypeFormatter(new LiteralUnionTypeFormatter())
+
+        .addTypeFormatter(new ConstructorTypeFormatter(circularReferenceTypeFormatter, config.functions))
+        .addTypeFormatter(new FunctionTypeFormatter(circularReferenceTypeFormatter, config.functions))
 
         .addTypeFormatter(new OptionalTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new RestTypeFormatter(circularReferenceTypeFormatter))

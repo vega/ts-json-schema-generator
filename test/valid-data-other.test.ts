@@ -10,31 +10,16 @@ describe("valid-data-other", () => {
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
     it("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
 
-    it(
-        "function-parameters-default-value",
-        assertValidSchema("function-parameters-default-value", "NamedParameters<typeof myFunction>")
-    );
-    it(
-        "function-parameters-declaration",
-        assertValidSchema("function-parameters-declaration", "NamedParameters<typeof myFunction>")
-    );
-    it(
-        "function-parameters-jsdoc",
-        assertValidSchema("function-parameters-jsdoc", "NamedParameters<typeof myFunction>", { jsDoc: "basic" })
-    );
-    it(
-        "function-parameters-optional",
-        assertValidSchema("function-parameters-optional", "NamedParameters<typeof myFunction>")
-    );
-    it(
-        "function-parameters-required",
-        assertValidSchema("function-parameters-required", "NamedParameters<typeof myFunction>")
-    );
+    it("function-parameters-default-value", assertValidSchema("function-parameters-default-value", "myFunction"));
+    it("function-parameters-declaration", assertValidSchema("function-parameters-declaration", "myFunction"));
+    it("function-parameters-jsdoc", assertValidSchema("function-parameters-jsdoc", "myFunction", { jsDoc: "basic" }));
+    it("function-parameters-optional", assertValidSchema("function-parameters-optional", "myFunction"));
+    it("function-parameters-required", assertValidSchema("function-parameters-required", "myFunction"));
     it(
         "function-parameters-variable-assignment",
-        assertValidSchema("function-parameters-variable-assignment", "NamedParameters<typeof myFunction>")
+        assertValidSchema("function-parameters-variable-assignment", "myFunction")
     );
-    it("function-function-syntax", assertValidSchema("function-function-syntax", "NamedParameters<typeof myFunction>"));
+    it("function-function-syntax", assertValidSchema("function-function-syntax", "myFunction"));
 
     it("string-literals", assertValidSchema("string-literals", "MyObject"));
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));

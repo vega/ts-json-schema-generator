@@ -4,7 +4,7 @@ import { SymbolType } from "../Type/SymbolType";
 import { BaseType } from "../Type/BaseType";
 
 export class SymbolTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: SymbolType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof SymbolType;
     }
     public getDefinition(type: SymbolType): Definition {

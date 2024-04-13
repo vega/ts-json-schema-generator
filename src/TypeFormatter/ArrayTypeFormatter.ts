@@ -7,7 +7,7 @@ import { TypeFormatter } from "../TypeFormatter";
 export class ArrayTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: ArrayType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof ArrayType;
     }
     public getDefinition(type: ArrayType): Definition {

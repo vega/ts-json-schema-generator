@@ -3,12 +3,13 @@ import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config } from "../src/Config";
+import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 
 function assertSchema(name: string, type: string, message: string) {
     return () => {
-        const config: Config = {
+        const config: CompletedConfig = {
+            ...DEFAULT_CONFIG,
             path: resolve(`test/invalid-data/${name}/*.ts`),
             type: type,
             expose: "export",
@@ -24,7 +25,7 @@ function assertSchema(name: string, type: string, message: string) {
             createFormatter(config)
         );
 
-        expect(() => generator.createSchema(type)).toThrowError(message);
+        expect(() => generator.createSchema(type)).toThrow(message);
     };
 }
 
@@ -58,13 +59,5 @@ describe("invalid-data", () => {
     it(
         "duplicate-discriminator",
         assertSchema("duplicate-discriminator", "MyType", 'Duplicate discriminator values: A in type "(A|B)".')
-    );
-    it(
-        "no-function-name",
-        assertSchema(
-            "function-parameters-declaration-missing-name",
-            "*",
-            `Unknown node "export default function () { }`
-        )
     );
 });

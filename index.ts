@@ -102,6 +102,7 @@ export * from "./src/TypeFormatter/UndefinedTypeFormatter";
 export * from "./src/TypeFormatter/UnionTypeFormatter";
 export * from "./src/TypeFormatter/UnknownTypeFormatter";
 export * from "./src/TypeFormatter/VoidTypeFormatter";
+export * from "./src/TypeFormatter/FunctionTypeFormatter";
 
 export * from "./src/NodeParser";
 export * from "./src/SubNodeParser";
@@ -121,7 +122,7 @@ export * from "./src/NodeParser/ConditionalTypeNodeParser";
 export * from "./src/NodeParser/EnumNodeParser";
 export * from "./src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 export * from "./src/NodeParser/FunctionNodeParser";
-export * from "./src/NodeParser/FunctionParser";
+export * from "./src/NodeParser/ConstructorNodeParser";
 export * from "./src/NodeParser/HiddenTypeNodeParser";
 export * from "./src/NodeParser/IndexedAccessTypeNodeParser";
 export * from "./src/NodeParser/InterfaceAndClassNodeParser";

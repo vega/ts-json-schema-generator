@@ -18,7 +18,7 @@ import { NeverType } from "../Type/NeverType";
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: ObjectType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof ObjectType;
     }
 
