@@ -51,12 +51,7 @@ export class TypeofNodeParser implements SubNodeParser {
         } else if (ts.isPropertyAssignment(valueDec)) {
             return this.childNodeParser.createType(valueDec.initializer, context);
         } else if (valueDec.kind === ts.SyntaxKind.FunctionDeclaration) {
-            // Silently ignoring Function as JSON Schema does not define them
-            return new FunctionType(
-                `(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}) ->${(<
-                    ts.FunctionDeclaration
-                >valueDec).type?.getFullText()}`
-            );
+            return new FunctionType(<ts.FunctionDeclaration>valueDec);
         }
 
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);

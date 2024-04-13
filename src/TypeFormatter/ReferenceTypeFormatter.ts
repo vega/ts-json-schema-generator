@@ -11,7 +11,7 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
         protected encodeRefs: boolean
     ) {}
 
-    public supportsType(type: ReferenceType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof ReferenceType;
     }
     public getDefinition(type: ReferenceType): Definition {

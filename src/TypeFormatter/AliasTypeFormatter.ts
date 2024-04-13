@@ -7,7 +7,7 @@ import { TypeFormatter } from "../TypeFormatter";
 export class AliasTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: AliasType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof AliasType;
     }
     public getDefinition(type: AliasType): Definition {

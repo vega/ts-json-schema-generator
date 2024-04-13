@@ -7,7 +7,7 @@ import { createFormatter, FormatterAugmentor } from "../factory/formatter";
 import { createParser, ParserAugmentor } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
-import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
 import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { SubTypeFormatter } from "../src/SubTypeFormatter";
@@ -27,7 +27,7 @@ function assertSchema(
     parserAugmentor?: ParserAugmentor
 ) {
     return () => {
-        const config: Config = {
+        const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             ...userConfig,
             skipTypeCheck: !!process.env.FAST_TEST,
@@ -68,7 +68,7 @@ function assertSchema(
 }
 
 export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: FunctionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof FunctionType;
     }
     public getDefinition(_type: FunctionType): Definition {
@@ -88,7 +88,7 @@ export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
 }
 
 export class ExampleEnumTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: EnumType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof EnumType;
     }
     public getDefinition(type: EnumType): Definition {
@@ -114,7 +114,7 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
 // Just like DefinitionFormatter but adds { $comment: "overriden" }
 export class ExampleDefinitionOverrideFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
-    public supportsType(type: DefinitionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
@@ -437,5 +437,21 @@ describe("config", () => {
             undefined,
             (parser) => parser.addNodeParser(new ExampleNullParser())
         )
+    );
+
+    it(
+        "functions-hide",
+        assertSchema("functions-hide", {
+            type: "MyType",
+            functions: "hide",
+        })
+    );
+
+    it(
+        "functions-comment",
+        assertSchema("functions-comment", {
+            type: "MyType",
+            functions: "comment",
+        })
     );
 });

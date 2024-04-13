@@ -6,7 +6,7 @@ import { typeName } from "../Utils/typeName";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class EnumTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: EnumType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof EnumType;
     }
     public getDefinition(type: EnumType): Definition {

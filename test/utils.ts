@@ -7,7 +7,7 @@ import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
 import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { BaseType } from "../src/Type/BaseType";
@@ -17,7 +17,7 @@ addFormats(validator);
 
 const basePath = "test/valid-data";
 
-export function createGenerator(config: Config): SchemaGenerator {
+export function createGenerator(config: CompletedConfig): SchemaGenerator {
     const program: ts.Program = createProgram(config);
     return new SchemaGenerator(program, createParser(program, config), createFormatter(config), config);
 }
@@ -51,7 +51,7 @@ export function assertValidSchema(
     }
 ) {
     return (): void => {
-        const config: Config = {
+        const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             path: `${basePath}/${relativePath}/${options?.mainTsOnly ? "main" : "*"}.ts`,
             skipTypeCheck: !!process.env.FAST_TEST,

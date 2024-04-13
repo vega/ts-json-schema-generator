@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { UnknownType } from "../Type/UnknownType";
 
 export class UnknownTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: UnknownType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof UnknownType;
     }
     public getDefinition(type: UnknownType): Definition {

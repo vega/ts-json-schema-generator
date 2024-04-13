@@ -15,7 +15,12 @@ export interface Config {
     extraTags?: string[];
     additionalProperties?: boolean;
     discriminatorType?: "json-schema" | "open-api";
+    functions?: FunctionOptions;
 }
+
+export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
+
+export type FunctionOptions = "fail" | "comment" | "hide";
 
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig"> = {
     expose: "export",
@@ -30,4 +35,5 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     extraTags: [],
     additionalProperties: false,
     discriminatorType: "json-schema",
+    functions: "comment",
 };

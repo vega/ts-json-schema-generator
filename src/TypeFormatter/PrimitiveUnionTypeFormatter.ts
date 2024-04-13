@@ -12,7 +12,7 @@ import { UnionType } from "../Type/UnionType";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: UnionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof UnionType && type.getTypes().length > 0 && this.isPrimitiveUnion(type);
     }
     public getDefinition(type: UnionType): Definition {

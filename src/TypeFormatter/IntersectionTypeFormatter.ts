@@ -11,7 +11,7 @@ import { uniqueArray } from "../Utils/uniqueArray";
 export class IntersectionTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: IntersectionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof IntersectionType;
     }
 

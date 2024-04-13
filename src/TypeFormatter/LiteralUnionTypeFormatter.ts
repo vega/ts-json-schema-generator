@@ -9,7 +9,7 @@ import { typeName } from "../Utils/typeName";
 import { uniqueArray } from "../Utils/uniqueArray";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: UnionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof UnionType && type.getTypes().length > 0 && this.isLiteralUnion(type);
     }
     public getDefinition(type: UnionType): Definition {

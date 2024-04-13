@@ -18,7 +18,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         private discriminatorType?: DiscriminatorType
     ) {}
 
-    public supportsType(type: UnionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof UnionType;
     }
     private getTypeDefinitions(type: UnionType) {

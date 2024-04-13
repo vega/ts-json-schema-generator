@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { StringType } from "../Type/StringType";
 
 export class StringTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: StringType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof StringType;
     }
     public getDefinition(type: StringType): Definition {

@@ -76,7 +76,7 @@ export class MyFunctionTypeFormatter implements SubTypeFormatter {
     // You can skip this line if you don't need childTypeFormatter
     public constructor(private childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: FunctionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof FunctionType;
     }
 

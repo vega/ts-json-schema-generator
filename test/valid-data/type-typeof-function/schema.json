@@ -17,7 +17,7 @@
       "additionalProperties": false,
       "properties": {
         "checkServerIdentity": {
-          "$comment": "(hostname: string) ->  Error | undefined"
+          "$comment": "(hostname: string) -> Error | undefined"
         },
         "otherProp": {
           "type": "string"
