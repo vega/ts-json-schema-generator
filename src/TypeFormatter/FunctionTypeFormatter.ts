@@ -34,6 +34,6 @@ export class FunctionTypeFormatter implements SubTypeFormatter {
 
     public getChildren(type: FunctionType): BaseType[] {
         const namedArgs = type.getNamedArguments();
-        return namedArgs ? [namedArgs] : [];
+        return namedArgs ? this.childTypeFormatter.getChildren(namedArgs) : [];
     }
 }

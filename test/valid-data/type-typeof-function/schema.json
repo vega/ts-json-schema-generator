@@ -17,7 +17,22 @@
       "type": "object"
     },
     "checkServerIdentity": {
-      "$comment": "(hostname: string) => Error | undefined"
+      "$comment": "(hostname: string) => Error | undefined",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "hostname": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "hostname"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
     }
   }
 }

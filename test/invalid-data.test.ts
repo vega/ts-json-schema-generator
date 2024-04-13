@@ -25,7 +25,7 @@ function assertSchema(name: string, type: string, message: string) {
             createFormatter(config)
         );
 
-        expect(() => generator.createSchema(type)).toThrowError(message);
+        expect(() => generator.createSchema(type)).toThrow(message);
     };
 }
 

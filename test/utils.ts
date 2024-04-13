@@ -8,9 +8,7 @@ import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
-import { UnknownTypeError } from "../src/Error/UnknownTypeError";
 import { SchemaGenerator } from "../src/SchemaGenerator";
-import { BaseType } from "../src/Type/BaseType";
 
 const validator = new Ajv({ discriminator: true });
 addFormats(validator);

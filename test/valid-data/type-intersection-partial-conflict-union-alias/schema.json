@@ -1,7 +1,33 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "A": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "const": "a",
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    },
+    "B": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "const": "b",
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    },
     "MyType": {
       "anyOf": [
         {
@@ -10,32 +36,6 @@
         {
           "$ref": "#/definitions/B"
         }
-      ]
-    },
-    "A": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "foo": {
-          "type": "string",
-          "const": "a"
-        }
-      },
-      "required": [
-        "foo"
-      ]
-    },
-    "B": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "foo": {
-          "type": "string",
-          "const": "b"
-        }
-      },
-      "required": [
-        "foo"
       ]
     }
   }

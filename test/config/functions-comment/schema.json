@@ -12,7 +12,22 @@
           "$comment": "new () => any"
         },
         "foo": {
-          "$comment": "(b: string) => number"
+          "$comment": "(b: string) => number",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "b": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "b"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"

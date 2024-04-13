@@ -1,10 +1,11 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import stringify from "safe-stable-stringify";
 import ts from "typescript";
-import { createFormatter, FormatterAugmentor } from "../factory/formatter";
-import { createParser, ParserAugmentor } from "../factory/parser";
+import { FormatterAugmentor, createFormatter } from "../factory/formatter";
+import { ParserAugmentor, createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
 import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
@@ -46,8 +47,15 @@ function assertSchema(
             config
         );
 
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
+        const schema = generator.createSchema(config.type);
+        const schemaFile = resolve(`${basePath}/${name}/schema.json`);
+
+        if (process.env.UPDATE_SCHEMA) {
+            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+        }
+
+        const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const actual: any = JSON.parse(JSON.stringify(schema));
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
@@ -365,7 +373,7 @@ describe("config", () => {
     it(
         "arrow-function-parameters",
         assertSchema("arrow-function-parameters", {
-            type: "NamedParameters<typeof myFunction>",
+            type: "myFunction",
             expose: "all",
         })
     );
