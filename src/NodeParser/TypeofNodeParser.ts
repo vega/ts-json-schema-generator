@@ -7,7 +7,8 @@ import { ObjectType, ObjectProperty } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 import { LiteralType } from "../Type/LiteralType";
-import { UnknownType } from "../Type/UnknownType";
+import { NeverType } from "../Type/NeverType";
+import { FunctionType } from "../Type/FunctionType";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(
@@ -25,8 +26,14 @@ export class TypeofNodeParser implements SubNodeParser {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
         }
 
-        const valueDec = symbol.valueDeclaration!;
-        if (ts.isEnumDeclaration(valueDec)) {
+        const valueDec = symbol.valueDeclaration;
+        if (!valueDec) {
+            if (symbol.name === "globalThis") {
+                // avoids crashes on globalThis but we really shoulodn't try to make a schema for globalThis
+                return new NeverType();
+            }
+            throw new LogicError(`No value declaration found for symbol "${symbol.name}"`);
+        } else if (ts.isEnumDeclaration(valueDec)) {
             return this.createObjectFromEnum(valueDec, context, reference);
         } else if (
             ts.isVariableDeclaration(valueDec) ||
@@ -44,13 +51,7 @@ export class TypeofNodeParser implements SubNodeParser {
         } else if (ts.isPropertyAssignment(valueDec)) {
             return this.childNodeParser.createType(valueDec.initializer, context);
         } else if (valueDec.kind === ts.SyntaxKind.FunctionDeclaration) {
-            // Silently ignoring Function as JSON Schema does not define them
-            // see https://github.com/vega/ts-json-schema-generator/issues/98
-            return new UnknownType(
-                `(${(<ts.FunctionDeclaration>valueDec).parameters.map((p) => p.getFullText()).join(",")}) -> ${(<
-                    ts.FunctionDeclaration
-                >valueDec).type?.getFullText()}`
-            );
+            return new FunctionType(<ts.FunctionDeclaration>valueDec);
         }
 
         throw new LogicError(`Invalid type query "${valueDec.getFullText()}" (ts.SyntaxKind = ${valueDec.kind})`);

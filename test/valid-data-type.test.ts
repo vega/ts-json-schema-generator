@@ -1,6 +1,4 @@
-import { ConstructorType } from "../src/Type/ConstructorType";
-import { FunctionType } from "../src/Type/FunctionType";
-import { assertMissingFormatterFor, assertValidSchema } from "./utils";
+import { assertValidSchema } from "./utils";
 
 describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
@@ -85,10 +83,6 @@ describe("valid-data-type", () => {
     it("type-indexed-access-object-1", assertValidSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertValidSchema("type-indexed-access-object-2", "MyType"));
     it("type-indexed-access-keyof", assertValidSchema("type-indexed-access-keyof", "MyType"));
-    it(
-        "type-indexed-access-method-signature",
-        assertMissingFormatterFor(new FunctionType(), "type-indexed-access-method-signature", "MyType")
-    );
     it("type-indexed-circular-access", assertValidSchema("type-indexed-circular-access", "*"));
     it("type-indexed-circular", assertValidSchema("type-indexed-circular", "MyType"));
     it("type-keyof-tuple", assertValidSchema("type-keyof-tuple", "MyType"));
@@ -137,8 +131,6 @@ describe("valid-data-type", () => {
     it("type-conditional-infer-rest", assertValidSchema("type-conditional-infer-rest", "MyType"));
     it("type-conditional-infer-tail-recursion", assertValidSchema("type-conditional-infer-tail-recursion", "MyType"));
     it("type-conditional-infer-tuple-xor", assertValidSchema("type-conditional-infer-tuple-xor", "MyType"));
-
-    it("type-constructor", assertMissingFormatterFor(new ConstructorType(), "type-constructor", "MyType"));
 
     it("type-tuple-nested-rest", assertValidSchema("type-tuple-nested-rest", "MyType"));
     it("type-tuple-nested-rest-to-union", assertValidSchema("type-tuple-nested-rest-to-union", "MyType"));

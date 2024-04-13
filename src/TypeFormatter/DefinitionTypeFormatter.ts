@@ -11,7 +11,7 @@ export class DefinitionTypeFormatter implements SubTypeFormatter {
         protected encodeRefs: boolean
     ) {}
 
-    public supportsType(type: DefinitionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {

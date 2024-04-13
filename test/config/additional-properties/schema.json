@@ -1,113 +1,113 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "ExportInterface": {
-            "type": "object",
-            "properties": {
-                "exportValue": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "exportValue"
-            ]
-        },
-        "ExportAlias": {
-            "$ref": "#/definitions/ExportInterface"
-        },
-        "MixedAlias": {
-            "type": "object",
-            "properties": {
-                "privateValue": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "privateValue"
-            ]
-        },
-        "PublicAnonymousTypeLiteral": {
-            "type": "object",
-            "properties": {
-                "publicValue": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "publicValue"
-            ]
-        },
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "exportInterface": {
-                    "$ref": "#/definitions/ExportInterface"
-                },
-                "exportAlias": {
-                    "$ref": "#/definitions/ExportAlias"
-                },
-                "privateInterface": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ]
-                },
-                "privateAlias": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ]
-                },
-                "mixedInterface": {
-                    "type": "object",
-                    "properties": {
-                        "mixedValue": {
-                            "$ref": "#/definitions/ExportAlias"
-                        }
-                    },
-                    "required": [
-                        "mixedValue"
-                    ]
-                },
-                "mixedAlias": {
-                    "$ref": "#/definitions/MixedAlias"
-                },
-                "publicAnonymousTypeLiteral": {
-                    "$ref": "#/definitions/PublicAnonymousTypeLiteral"
-                },
-                "privateAnonymousTypeLiteral": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ]
-                }
-            },
-            "required": [
-                "exportInterface",
-                "exportAlias",
-                "privateInterface",
-                "privateAlias",
-                "mixedInterface",
-                "mixedAlias",
-                "publicAnonymousTypeLiteral",
-                "privateAnonymousTypeLiteral"
-            ]
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ExportAlias": {
+      "$ref": "#/definitions/ExportInterface"
+    },
+    "ExportInterface": {
+      "properties": {
+        "exportValue": {
+          "type": "string"
         }
+      },
+      "required": [
+        "exportValue"
+      ],
+      "type": "object"
+    },
+    "MixedAlias": {
+      "properties": {
+        "privateValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "privateValue"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "properties": {
+        "exportAlias": {
+          "$ref": "#/definitions/ExportAlias"
+        },
+        "exportInterface": {
+          "$ref": "#/definitions/ExportInterface"
+        },
+        "mixedAlias": {
+          "$ref": "#/definitions/MixedAlias"
+        },
+        "mixedInterface": {
+          "properties": {
+            "mixedValue": {
+              "$ref": "#/definitions/ExportAlias"
+            }
+          },
+          "required": [
+            "mixedValue"
+          ],
+          "type": "object"
+        },
+        "privateAlias": {
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "privateAnonymousTypeLiteral": {
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "privateInterface": {
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "publicAnonymousTypeLiteral": {
+          "$ref": "#/definitions/PublicAnonymousTypeLiteral"
+        }
+      },
+      "required": [
+        "exportInterface",
+        "exportAlias",
+        "privateInterface",
+        "privateAlias",
+        "mixedInterface",
+        "mixedAlias",
+        "publicAnonymousTypeLiteral",
+        "privateAnonymousTypeLiteral"
+      ],
+      "type": "object"
+    },
+    "PublicAnonymousTypeLiteral": {
+      "properties": {
+        "publicValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "publicValue"
+      ],
+      "type": "object"
     }
+  }
 }

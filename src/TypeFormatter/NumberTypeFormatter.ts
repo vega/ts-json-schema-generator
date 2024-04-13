@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { NumberType } from "../Type/NumberType";
 
 export class NumberTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: NumberType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof NumberType;
     }
     public getDefinition(type: NumberType): Definition {

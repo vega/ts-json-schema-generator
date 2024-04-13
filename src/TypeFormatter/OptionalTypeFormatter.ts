@@ -7,7 +7,7 @@ import { TypeFormatter } from "../TypeFormatter";
 export class OptionalTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: OptionalType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof OptionalType;
     }
     public getDefinition(type: OptionalType): Definition {

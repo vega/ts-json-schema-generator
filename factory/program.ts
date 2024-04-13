@@ -3,7 +3,7 @@ import * as path from "path";
 import ts from "typescript";
 import normalize from "normalize-path";
 
-import { Config } from "../src/Config";
+import { CompletedConfig, Config } from "../src/Config";
 import { DiagnosticError } from "../src/Error/DiagnosticError";
 import { LogicError } from "../src/Error/LogicError";
 import { NoRootNamesError } from "../src/Error/NoRootNamesError";
@@ -59,7 +59,7 @@ function getTsConfig(config: Config) {
     };
 }
 
-export function createProgram(config: Config): ts.Program {
+export function createProgram(config: CompletedConfig): ts.Program {
     const rootNamesFromPath = config.path ? glob.sync(normalize(path.resolve(config.path))) : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;

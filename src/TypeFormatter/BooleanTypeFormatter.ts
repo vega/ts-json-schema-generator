@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { BooleanType } from "../Type/BooleanType";
 
 export class BooleanTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: BooleanType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof BooleanType;
     }
     public getDefinition(type: BooleanType): Definition {

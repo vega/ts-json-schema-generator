@@ -162,10 +162,11 @@ export class SchemaGenerator {
                     return;
                 }
                 return;
+            case ts.SyntaxKind.ConstructorType:
             case ts.SyntaxKind.FunctionDeclaration:
             case ts.SyntaxKind.FunctionExpression:
             case ts.SyntaxKind.ArrowFunction:
-                allTypes.set(`NamedParameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
+                allTypes.set(this.getFullName(node, typeChecker), node);
                 return;
             case ts.SyntaxKind.ExportSpecifier: {
                 const exportSpecifierNode = node as ts.ExportSpecifier;

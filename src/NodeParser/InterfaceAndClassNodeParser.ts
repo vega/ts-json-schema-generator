@@ -147,10 +147,11 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     )
             )
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() instanceof NeverType) {
+                const type = prop.getType();
+                if (prop.isRequired() && type instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return !(prop.getType() instanceof NeverType);
+                return !(type instanceof NeverType);
             });
 
         if (hasRequiredNever) {

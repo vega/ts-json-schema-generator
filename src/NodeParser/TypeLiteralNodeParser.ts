@@ -1,8 +1,7 @@
-import ts, { isPropertySignature, MethodSignature, PropertySignature } from "typescript";
+import ts, { MethodSignature, PropertySignature } from "typescript";
 import { Context, NodeParser } from "../NodeParser";
 import { SubNodeParser } from "../SubNodeParser";
 import { BaseType } from "../Type/BaseType";
-import { FunctionType } from "../Type/FunctionType";
 import { NeverType } from "../Type/NeverType";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType";
 import { ReferenceType } from "../Type/ReferenceType";
@@ -48,17 +47,16 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 (propertyNode) =>
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
-                        isPropertySignature(propertyNode)
-                            ? this.childNodeParser.createType(propertyNode.type!, context)
-                            : new FunctionType(),
+                        this.childNodeParser.createType(propertyNode.type!, context),
                         !propertyNode.questionToken
                     )
             )
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() instanceof NeverType) {
+                const type = prop.getType();
+                if (prop.isRequired() && type instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return !(prop.getType() instanceof NeverType);
+                return !(type instanceof NeverType);
             });
 
         if (hasRequiredNever) {

@@ -3,7 +3,7 @@ import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotation
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
 import { ChainNodeParser } from "../src/ChainNodeParser";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
-import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { CompletedConfig } from "../src/Config";
 import { ExposeNodeParser } from "../src/ExposeNodeParser";
 import { MutableParser } from "../src/MutableParser";
 import { NodeParser } from "../src/NodeParser";
@@ -20,7 +20,6 @@ import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
 import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
-import { FunctionParser } from "../src/NodeParser/FunctionParser";
 import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
 import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
 import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser";
@@ -62,26 +61,24 @@ import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
-export function createParser(program: ts.Program, config: Config, augmentor?: ParserAugmentor): NodeParser {
+export function createParser(program: ts.Program, config: CompletedConfig, augmentor?: ParserAugmentor): NodeParser {
     const typeChecker = program.getTypeChecker();
     const chainNodeParser = new ChainNodeParser(typeChecker, []);
 
-    const mergedConfig = { ...DEFAULT_CONFIG, ...config };
-
     function withExpose(nodeParser: SubNodeParser): SubNodeParser {
-        return new ExposeNodeParser(typeChecker, nodeParser, mergedConfig.expose, mergedConfig.jsDoc);
+        return new ExposeNodeParser(typeChecker, nodeParser, config.expose, config.jsDoc);
     }
     function withTopRef(nodeParser: NodeParser): NodeParser {
-        return new TopRefNodeParser(chainNodeParser, mergedConfig.type, mergedConfig.topRef);
+        return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
-        const extraTags = new Set(mergedConfig.extraTags);
-        if (mergedConfig.jsDoc === "extended") {
+        const extraTags = new Set(config.extraTags);
+        if (config.jsDoc === "extended") {
             return new AnnotatedNodeParser(
                 nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, extraTags, mergedConfig.markdownDescription)
+                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription)
             );
-        } else if (mergedConfig.jsDoc === "basic") {
+        } else if (config.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
         } else {
             return nodeParser;
@@ -109,7 +106,6 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new ObjectTypeNodeParser())
         .addNodeParser(new AsExpressionNodeParser(chainNodeParser))
         .addNodeParser(new SatisfiesNodeParser(chainNodeParser))
-        .addNodeParser(new FunctionParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
         .addNodeParser(new StringTemplateLiteralNodeParser(chainNodeParser))
@@ -117,8 +113,6 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
-        .addNodeParser(new FunctionNodeParser())
-        .addNodeParser(new ConstructorNodeParser())
         .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
@@ -132,7 +126,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new InferTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(new MappedTypeNodeParser(chainNodeParser, mergedConfig.additionalProperties))
+        .addNodeParser(new MappedTypeNodeParser(chainNodeParser, config.additionalProperties))
         .addNodeParser(new ConditionalTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeOperatorNodeParser(chainNodeParser))
 
@@ -155,7 +149,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
                         new InterfaceAndClassNodeParser(
                             typeChecker,
                             withJsDoc(chainNodeParser),
-                            mergedConfig.additionalProperties
+                            config.additionalProperties
                         )
                     )
                 )
@@ -165,17 +159,19 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
             withCircular(
                 withExpose(
                     withJsDoc(
-                        new TypeLiteralNodeParser(
-                            typeChecker,
-                            withJsDoc(chainNodeParser),
-                            mergedConfig.additionalProperties
-                        )
+                        new TypeLiteralNodeParser(typeChecker, withJsDoc(chainNodeParser), config.additionalProperties)
                     )
                 )
             )
         )
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));
+
+    if (config.functions !== "fail") {
+        chainNodeParser
+            .addNodeParser(new ConstructorNodeParser(chainNodeParser, config.functions))
+            .addNodeParser(new FunctionNodeParser(chainNodeParser, config.functions));
+    }
 
     return withTopRef(chainNodeParser);
 }

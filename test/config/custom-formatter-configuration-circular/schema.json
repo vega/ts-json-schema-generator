@@ -10,7 +10,9 @@
           "type": "string"
         }
       },
-      "required": ["exportValue"],
+      "required": [
+        "exportValue"
+      ],
       "type": "object"
     },
     "MyObject": {
@@ -21,7 +23,9 @@
           "$ref": "#/definitions/InnerInterface"
         }
       },
-      "required": ["inner"],
+      "required": [
+        "inner"
+      ],
       "type": "object"
     }
   }
