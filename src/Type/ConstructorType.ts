@@ -1,10 +1,14 @@
-import { ConstructorDeclaration } from "typescript";
+import ts from "typescript";
 import { BaseType } from "./BaseType";
+import { ObjectType } from "./ObjectType";
 
 export class ConstructorType extends BaseType {
     private comment: string;
 
-    constructor(node?: ConstructorDeclaration) {
+    constructor(
+        node?: ts.ConstructorTypeNode,
+        protected namedArguments?: ObjectType
+    ) {
         super();
 
         if (node) {
@@ -20,5 +24,9 @@ export class ConstructorType extends BaseType {
 
     public getComment(): string | undefined {
         return this.comment;
+    }
+
+    public getNamedArguments(): ObjectType | undefined {
+        return this.namedArguments;
     }
 }

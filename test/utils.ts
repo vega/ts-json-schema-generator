@@ -109,13 +109,3 @@ export function assertValidSchema(
         }
     };
 }
-
-export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
-    return (): void => {
-        try {
-            assertValidSchema(relativePath, type)();
-        } catch (error) {
-            expect(error).toEqual(new UnknownTypeError(missingType));
-        }
-    };
-}

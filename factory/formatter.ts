@@ -72,8 +72,8 @@ export function createFormatter(config: CompletedConfig, augmentor?: FormatterAu
         .addTypeFormatter(new PrimitiveUnionTypeFormatter())
         .addTypeFormatter(new LiteralUnionTypeFormatter())
 
-        .addTypeFormatter(new ConstructorTypeFormatter(config.functions))
-        .addTypeFormatter(new FunctionTypeFormatter(config.functions))
+        .addTypeFormatter(new ConstructorTypeFormatter(circularReferenceTypeFormatter, config.functions))
+        .addTypeFormatter(new FunctionTypeFormatter(circularReferenceTypeFormatter, config.functions))
 
         .addTypeFormatter(new OptionalTypeFormatter(circularReferenceTypeFormatter))
         .addTypeFormatter(new RestTypeFormatter(circularReferenceTypeFormatter))

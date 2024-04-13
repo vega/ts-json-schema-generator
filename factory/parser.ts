@@ -169,8 +169,8 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
 
     if (config.functions !== "fail") {
         chainNodeParser
-            .addNodeParser(new ConstructorNodeParser(config.functions))
-            .addNodeParser(new FunctionNodeParser(config.functions));
+            .addNodeParser(new ConstructorNodeParser(chainNodeParser, config.functions))
+            .addNodeParser(new FunctionNodeParser(chainNodeParser, config.functions));
     }
 
     return withTopRef(chainNodeParser);

@@ -1,10 +1,14 @@
-import { FunctionDeclaration } from "typescript";
+import ts from "typescript";
 import { BaseType } from "./BaseType";
+import { ObjectType } from "./ObjectType";
 
 export class FunctionType extends BaseType {
     private comment: string;
 
-    constructor(node?: FunctionDeclaration) {
+    constructor(
+        node?: ts.FunctionTypeNode | ts.FunctionExpression | ts.FunctionDeclaration | ts.ArrowFunction,
+        protected namedArguments?: ObjectType
+    ) {
         super();
 
         if (node) {
@@ -18,5 +22,9 @@ export class FunctionType extends BaseType {
 
     public getComment(): string | undefined {
         return this.comment;
+    }
+
+    public getNamedArguments(): ObjectType | undefined {
+        return this.namedArguments;
     }
 }
