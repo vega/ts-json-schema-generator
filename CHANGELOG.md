@@ -1,3 +1,19 @@
+# v2.0.0 (Sat Apr 13 2024)
+
+#### 💥 Breaking Change
+
+
+#### 🐛 Bug Fix
+
+- chore: update deps [#1916](https://github.com/vega/ts-json-schema-generator/pull/1916) ([@domoritz](https://github.com/domoritz))
+- feat!: improve support for function types [#1910](https://github.com/vega/ts-json-schema-generator/pull/1910) ([@domoritz](https://github.com/domoritz))
+
+#### Authors: 1
+
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+
+---
+
 # v1.5.1 (Mon Apr 08 2024)
 
 :tada: This release contains work from new contributors! :tada:
