@@ -1,7 +1,7 @@
 import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator";
-import { CompletedConfig, DEFAULT_CONFIG } from "./src/Config";
+import { Config } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 import * as pkg from "./package.json";
@@ -53,8 +53,7 @@ const args = new Command()
     .parse(process.argv)
     .opts();
 
-const config: CompletedConfig = {
-    ...DEFAULT_CONFIG,
+const config: Config = {
     minify: args.minify,
     path: args.path,
     tsconfig: args.tsconfig,
