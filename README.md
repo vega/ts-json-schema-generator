@@ -35,6 +35,31 @@ Note that different platforms (e.g. Windows) may use different path separators s
 
 Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
 
+### Options
+
+```
+  -p, --path <path>              Source file path
+  -t, --type <name>              Type name
+  -i, --id <name>                $id for generated schema
+  -f, --tsconfig <path>          Custom tsconfig.json path
+  -e, --expose <expose>          Type exposing (choices: "all", "none", "export", default: "export")
+  -j, --jsDoc <extended>         Read JsDoc annotations (choices: "none", "basic", "extended", default: "extended")
+  --markdown-description         Generate `markdownDescription` in addition to `description`.
+  --functions <functions>        How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.
+                                 (choices: "fail", "comment", "hide", default: "comment")
+  --minify                       Minify generated schema (default: false)
+  --unstable                     Do not sort properties
+  --strict-tuples                Do not allow additional items on tuples
+  --no-top-ref                   Do not create a top-level $ref definition
+  --no-type-check                Skip type checks to improve performance
+  --no-ref-encode                Do not encode references
+  -o, --out <file>               Set the output file (default: stdout)
+  --validation-keywords [value]  Provide additional validation keywords to include (default: [])
+  --additional-properties        Allow additional properties for objects with no index signature (default: false)
+  -V, --version                  output the version number
+  -h, --help                     display help for command
+```
+
 ## Programmatic Usage
 
 ```js
@@ -65,7 +90,7 @@ Run the schema generator via `node main.js`.
 
 Extending the built-in formatting is possible by creating a custom formatter and adding it to the main formatter:
 
-1. First we create a formatter, in this case for formatting function types:
+1. First we create a formatter, in this case for formatting function types (note that there is a built in one):
 
 ```ts
 // my-function-formatter.ts
@@ -192,73 +217,6 @@ fs.writeFile(outputPath, schemaString, (err) => {
 });
 ```
 
-## Options
-
-```
--p, --path 'index.ts'
-    The path to the TypeScript source file. If this is not provided, the type will be searched in the project specified in the `.tsconfig`.
-
--t, --type 'My.Type.Name'
-    The type the generated schema will represent. If omitted, the generated schema will contain all
-    types found in the files matching path. The same is true if '*' is specified.
-
--i, --id 'generatedSchemaId'
-    The `$id` of the generated schema. If omitted, there will be no `$id`.
-
--e, --expose <all|none|export>
-    all: Create shared $ref definitions for all types.
-    none: Do not create shared $ref definitions.
-    export (default): Create shared $ref definitions only for exported types (not tagged as `@internal`).
-
--f, --tsconfig 'my/project/tsconfig.json'
-    Use a custom tsconfig file for processing typescript (see https://www.typescriptlang.org/docs/handbook/tsconfig-json.html) instead of the default:
-    {
-        "compilerOptions": {
-            "noEmit": true,
-            "emitDecoratorMetadata": true,
-            "experimentalDecorators": true,
-            "target": "ES5",
-            "module": "CommonJS",
-            "strictNullChecks": false,
-        }
-    }
-
--j, --jsDoc <extended|none|basic>
-    none: Do not use JsDoc annotations.
-    basic: Read JsDoc annotations to provide schema properties.
-    extended (default): Also read @nullable, and @asType annotations.
-
---unstable
-    Do not sort properties.
-
---strict-tuples
-    Do not allow additional items on tuples.
-
---no-top-ref
-    Do not create a top-level $ref definition.
-
---no-type-check
-    Skip type checks for better performance.
-
---no-ref-encode
-    Do not encode references. According to the standard, references must be valid URIs but some tools do not support encoded references.
-
---validation-keywords
-    Provide additional validation keywords to include.
-
--o, --out
-    Specify the output file path. Without this option, the generator logs the response in the console.
-
---additional-properties <true|false>
-    Controls whether or not to allow additional properties for objects that have no index signature.
-
-    true: Additional properties are allowed
-    false (default): Additional properties are not allowed
-
---minify
-    Minify generated schema (default: false)
-```
-
 ## Current state
 
 -   `interface` types
@@ -272,6 +230,7 @@ fs.writeFile(outputPath, schemaString, (err) => {
 -   `typeof`
 -   `keyof`
 -   conditional types
+-   functions
 
 ## Run locally
 
