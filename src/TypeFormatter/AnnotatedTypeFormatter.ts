@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { BaseType } from "../Type/BaseType";
-import { UnionType } from "../Type/UnionType";
-import { TypeFormatter } from "../TypeFormatter";
-import { derefType } from "../Utils/derefType";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { derefType } from "../Utils/derefType.js";
 
 export function makeNullable(def: Definition): Definition {
     const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;

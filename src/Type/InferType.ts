@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class InferType extends BaseType {
     constructor(private id: string) {

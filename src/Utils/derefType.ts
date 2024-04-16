@@ -1,8 +1,8 @@
-import { AliasType } from "../Type/AliasType";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { BaseType } from "../Type/BaseType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { ReferenceType } from "../Type/ReferenceType";
+import { AliasType } from "../Type/AliasType.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
 
 /**
  * Dereference the type as far as possible.

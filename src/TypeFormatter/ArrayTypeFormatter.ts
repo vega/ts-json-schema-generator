@@ -1,8 +1,8 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { TypeFormatter } from "../TypeFormatter";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
 
 export class ArrayTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}

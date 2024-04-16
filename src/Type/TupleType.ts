@@ -1,8 +1,8 @@
-import { derefType } from "../Utils/derefType";
-import { ArrayType } from "./ArrayType";
-import { BaseType } from "./BaseType";
-import { InferType } from "./InferType";
-import { RestType } from "./RestType";
+import { derefType } from "../Utils/derefType.js";
+import { ArrayType } from "./ArrayType.js";
+import { BaseType } from "./BaseType.js";
+import { InferType } from "./InferType.js";
+import { RestType } from "./RestType.js";
 
 function normalize(types: Readonly<Array<BaseType>>): Array<BaseType> {
     let normalized: Array<BaseType> = [];

@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class UnknownType extends BaseType {
     constructor() {

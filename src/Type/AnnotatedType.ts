@@ -1,5 +1,5 @@
-import { BaseType } from "./BaseType";
-import { hash } from "../Utils/nodeKey";
+import { BaseType } from "./BaseType.js";
+import { hash } from "../Utils/nodeKey.js";
 
 export interface Annotations {
     [name: string]: any;

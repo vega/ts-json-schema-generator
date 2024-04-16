@@ -1,14 +1,14 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { ObjectType, ObjectProperty } from "../Type/ObjectType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { getKey } from "../Utils/nodeKey";
-import { LiteralType } from "../Type/LiteralType";
-import { NeverType } from "../Type/NeverType";
-import { FunctionType } from "../Type/FunctionType";
+import { LogicError } from "../Error/LogicError.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { ObjectType, ObjectProperty } from "../Type/ObjectType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { getKey } from "../Utils/nodeKey.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { FunctionType } from "../Type/FunctionType.js";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(

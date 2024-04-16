@@ -1,4 +1,4 @@
-import { deepMerge } from "../../src/Utils/deepMerge";
+import { deepMerge } from "../../src/Utils/deepMerge.js";
 
 describe("deepMerge", () => {
     it("merges booleans with enums", () => {

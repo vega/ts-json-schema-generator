@@ -1,19 +1,19 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AnyType } from "../Type/AnyType";
-import { SymbolType } from "../Type/SymbolType";
-import { BaseType } from "../Type/BaseType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { UndefinedType } from "../Type/UndefinedType";
-import { UnionType } from "../Type/UnionType";
-import { TypeFormatter } from "../TypeFormatter";
-import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
-import { derefType } from "../Utils/derefType";
-import { preserveAnnotation } from "../Utils/preserveAnnotation";
-import { removeUndefined } from "../Utils/removeUndefined";
-import { StringMap } from "../Utils/StringMap";
-import { uniqueArray } from "../Utils/uniqueArray";
-import { NeverType } from "../Type/NeverType";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AnyType } from "../Type/AnyType.js";
+import { SymbolType } from "../Type/SymbolType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition.js";
+import { derefType } from "../Utils/derefType.js";
+import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
+import { removeUndefined } from "../Utils/removeUndefined.js";
+import { StringMap } from "../Utils/StringMap.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
+import { NeverType } from "../Type/NeverType.js";
 
 export class ObjectTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
@@ -113,6 +113,6 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return property;
         }
 
-        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType!, newPropType), false);
+        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType, newPropType), false);
     }
 }

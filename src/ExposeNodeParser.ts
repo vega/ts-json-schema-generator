@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { Context } from "./NodeParser";
-import { SubNodeParser } from "./SubNodeParser";
-import { BaseType } from "./Type/BaseType";
-import { DefinitionType } from "./Type/DefinitionType";
-import { ReferenceType } from "./Type/ReferenceType";
-import { hasJsDocTag } from "./Utils/hasJsDocTag";
-import { symbolAtNode } from "./Utils/symbolAtNode";
+import { Context } from "./NodeParser.js";
+import { SubNodeParser } from "./SubNodeParser.js";
+import { BaseType } from "./Type/BaseType.js";
+import { DefinitionType } from "./Type/DefinitionType.js";
+import { ReferenceType } from "./Type/ReferenceType.js";
+import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
+import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class ExposeNodeParser implements SubNodeParser {
     public constructor(

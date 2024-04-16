@@ -1,12 +1,12 @@
 import ts from "typescript";
 
-import { Context, NodeParser } from "../NodeParser";
-import type { SubNodeParser } from "../SubNodeParser";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { AnyType } from "../Type/AnyType";
-import { ArrayType } from "../Type/ArrayType";
-import type { BaseType } from "../Type/BaseType";
-import { StringType } from "../Type/StringType";
+import { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AnyType } from "../Type/AnyType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { StringType } from "../Type/StringType.js";
 
 const invalidTypes: Record<number, boolean> = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
@@ -33,7 +33,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
         // Wraps promise type to avoid resolving to a empty Object type.
         if (typeSymbol.name === "Promise") {
-            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
+            return this.childNodeParser.createType(node.typeArguments![0], this.createSubContext(node, context));
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {

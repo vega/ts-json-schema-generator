@@ -1,4 +1,4 @@
-import { BaseError } from "./BaseError";
+import { BaseError } from "./BaseError.js";
 
 export class NoRootTypeError extends BaseError {
     public constructor(private type: string) {

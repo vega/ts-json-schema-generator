@@ -1,6 +1,6 @@
-import { BaseType } from "./BaseType";
-import { LiteralType } from "./LiteralType";
-import { NullType } from "./NullType";
+import { BaseType } from "./BaseType.js";
+import { LiteralType } from "./LiteralType.js";
+import { NullType } from "./NullType.js";
 
 export type EnumValue = string | boolean | number | null;
 

@@ -1,19 +1,19 @@
-import { translate } from "../NodeParser/IntersectionNodeParser";
-import { AnyType } from "../Type/AnyType";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { IntersectionType } from "../Type/IntersectionType";
-import { LiteralType } from "../Type/LiteralType";
-import { NumberType } from "../Type/NumberType";
-import { ObjectType } from "../Type/ObjectType";
-import { StringType } from "../Type/StringType";
-import { TupleType } from "../Type/TupleType";
-import { UndefinedType } from "../Type/UndefinedType";
-import { UnionType } from "../Type/UnionType";
-import { derefAnnotatedType, derefType } from "./derefType";
-import { preserveAnnotation } from "./preserveAnnotation";
-import { uniqueArray } from "./uniqueArray";
-import { uniqueTypeArray } from "./uniqueTypeArray";
+import { translate } from "../NodeParser/IntersectionNodeParser.js";
+import { AnyType } from "../Type/AnyType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { IntersectionType } from "../Type/IntersectionType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { ObjectType } from "../Type/ObjectType.js";
+import { StringType } from "../Type/StringType.js";
+import { TupleType } from "../Type/TupleType.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefAnnotatedType, derefType } from "./derefType.js";
+import { preserveAnnotation } from "./preserveAnnotation.js";
+import { uniqueArray } from "./uniqueArray.js";
+import { uniqueTypeArray } from "./uniqueTypeArray.js";
 
 function uniqueLiterals(types: LiteralType[]): LiteralType[] {
     const values = types.map((type) => type.getValue());

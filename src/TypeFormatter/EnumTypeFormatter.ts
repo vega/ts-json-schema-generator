@@ -1,9 +1,9 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { EnumType } from "../Type/EnumType";
-import { typeName } from "../Utils/typeName";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { EnumType } from "../Type/EnumType.js";
+import { typeName } from "../Utils/typeName.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class EnumTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {

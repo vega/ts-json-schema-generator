@@ -1,12 +1,12 @@
-import { UnknownTypeError } from "../Error/UnknownTypeError";
-import { AliasType } from "../Type/AliasType";
-import { BaseType } from "../Type/BaseType";
-import { BooleanType } from "../Type/BooleanType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { EnumType } from "../Type/EnumType";
-import { LiteralType } from "../Type/LiteralType";
-import { UnionType } from "../Type/UnionType";
-import { derefAnnotatedType } from "./derefType";
+import { UnknownTypeError } from "../Error/UnknownTypeError.js";
+import { AliasType } from "../Type/AliasType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { BooleanType } from "../Type/BooleanType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { EnumType } from "../Type/EnumType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefAnnotatedType } from "./derefType.js";
 
 function* _extractLiterals(type: BaseType): Iterable<string> {
     if (!type) {

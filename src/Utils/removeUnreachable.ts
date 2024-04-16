@@ -1,6 +1,6 @@
 import { JSONSchema7Definition } from "json-schema";
-import { Definition } from "../Schema/Definition";
-import { StringMap } from "./StringMap";
+import { Definition } from "../Schema/Definition.js";
+import { StringMap } from "./StringMap.js";
 
 const DEFINITION_OFFSET = "#/definitions/".length;
 

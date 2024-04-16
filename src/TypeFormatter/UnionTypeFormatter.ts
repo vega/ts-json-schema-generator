@@ -1,14 +1,14 @@
 import { JSONSchema7 } from "json-schema";
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { NeverType } from "../Type/NeverType";
-import { UnionType } from "../Type/UnionType";
-import { TypeFormatter } from "../TypeFormatter";
-import { derefType } from "../Utils/derefType";
-import { getTypeByKey } from "../Utils/typeKeys";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { derefType } from "../Utils/derefType.js";
+import { getTypeByKey } from "../Utils/typeKeys.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 type DiscriminatorType = "json-schema" | "open-api";
 

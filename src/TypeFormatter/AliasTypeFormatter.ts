@@ -1,8 +1,8 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AliasType } from "../Type/AliasType";
-import { BaseType } from "../Type/BaseType";
-import { TypeFormatter } from "../TypeFormatter";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AliasType } from "../Type/AliasType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
 
 export class AliasTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}

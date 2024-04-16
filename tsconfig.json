@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "Node16",
     "esModuleInterop": true,
     "isolatedModules": false,
     "experimentalDecorators": true,
@@ -25,6 +25,6 @@
     "incremental": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
-  "include": ["./src/**/*.ts", "./factory/**/*.ts", "./test/**.ts"],
+  "include": ["src/**/*.ts", "factory/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

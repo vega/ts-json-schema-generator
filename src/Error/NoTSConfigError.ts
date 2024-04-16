@@ -1,4 +1,4 @@
-import { BaseError } from "./BaseError";
+import { BaseError } from "./BaseError.js";
 
 export class NoTSConfigError extends BaseError {
     public get name(): string {

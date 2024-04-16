@@ -1,7 +1,7 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { UnknownType } from "../Type/UnknownType";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { UnknownType } from "../Type/UnknownType.js";
 
 export class UnknownTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {

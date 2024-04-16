@@ -1,10 +1,10 @@
 import path from "path";
 import ts from "typescript";
 import { createParser } from "../../../factory";
-import { Context } from "../../../src/NodeParser";
-import { DefinitionType } from "../../../src/Type/DefinitionType";
-import { ObjectType } from "../../../src/Type/ObjectType";
-import { DEFAULT_CONFIG } from "../../../src/Config";
+import { Context } from "../../../src/NodeParser.js";
+import { DefinitionType } from "../../../src/Type/DefinitionType.js";
+import { ObjectType } from "../../../src/Type/ObjectType.js";
+import { DEFAULT_CONFIG } from "../../../src/Config.js";
 
 const SOURCE = path.resolve(__dirname, "./source.ts");
 
