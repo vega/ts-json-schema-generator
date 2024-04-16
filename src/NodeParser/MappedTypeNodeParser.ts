@@ -83,7 +83,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return new ObjectType(id, [], [], false);
         } else {
             throw new LogicError(
-                // eslint-disable-next-line max-len
                 `Unexpected key type "${
                     constraintType ? constraintType.getId() : constraintType
                 }" for type "${node.getText()}" (expected "UnionType" or "StringType")`

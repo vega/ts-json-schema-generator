@@ -33,7 +33,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
         // Wraps promise type to avoid resolving to a empty Object type.
         if (typeSymbol.name === "Promise") {
-            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
+            return this.childNodeParser.createType(node.typeArguments![0], this.createSubContext(node, context));
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {

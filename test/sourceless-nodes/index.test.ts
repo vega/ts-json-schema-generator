@@ -7,7 +7,7 @@ import { NumberType } from "../../src/Type/NumberType";
 import { ObjectType } from "../../src/Type/ObjectType";
 import { DEFAULT_CONFIG } from "../../src/Config";
 
-const SOURCE = path.resolve(__dirname, "./source.ts");
+const SOURCE = path.resolve(__dirname, "./source/source.ts");
 
 describe("sourceless-nodes", () => {
     it("tests creating json schemas with ts.Nodes without valid source files", () => {

@@ -25,6 +25,6 @@
     "incremental": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
-  "include": ["./src/**/*.ts", "./factory/**/*.ts", "./test/**.ts"],
+  "include": ["src/**/*.ts", "factory/**/*.ts", "test/**/*.test.ts", "test/utils.ts"],
   "exclude": ["node_modules", "dist"]
 }

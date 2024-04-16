@@ -221,7 +221,7 @@ export function isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
                         inferMap,
-                        new Set(insideTypes).add(source!).add(target!)
+                        new Set(insideTypes).add(source).add(target)
                     );
                 })
             );

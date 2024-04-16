@@ -34,7 +34,7 @@ export class CallExpressionParser implements SubNodeParser {
         const symbol = type.symbol || type.aliasSymbol;
         const decl = symbol.valueDeclaration || symbol.declarations![0];
         const subContext = this.createSubContext(node, context);
-        return this.childNodeParser.createType(decl, subContext)!;
+        return this.childNodeParser.createType(decl, subContext);
     }
 
     protected createSubContext(node: ts.CallExpression, parentContext: Context): Context {

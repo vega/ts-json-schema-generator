@@ -5,11 +5,10 @@ export interface MyObject {
     /**
      * @comment Property comment
      */
-    nested: MyNestedObject
+    nested: MyNestedObject;
 }
 
 /**
  * @comment Nested object comment
  */
 export interface MyNestedObject {}
-

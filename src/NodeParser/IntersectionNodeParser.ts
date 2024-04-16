@@ -28,7 +28,7 @@ export class IntersectionNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return translate(types as BaseType[]);
+        return translate(types);
     }
 }
 
@@ -47,7 +47,7 @@ function derefAndFlattenUnions(type: BaseType): BaseType[] {
  * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
  */
 export function translate(types: BaseType[]): BaseType {
-    types = uniqueTypeArray(types as BaseType[]);
+    types = uniqueTypeArray(types);
 
     if (types.length == 1) {
         return types[0];
