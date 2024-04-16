@@ -77,7 +77,6 @@ export function assertValidSchema(
             addFormats(localValidator);
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         localValidator.validateSchema(actual);
         expect(localValidator.errors).toBeNull();
 

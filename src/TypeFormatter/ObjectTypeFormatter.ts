@@ -113,6 +113,6 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return property;
         }
 
-        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType!, newPropType), false);
+        return new ObjectProperty(property.getName(), preserveAnnotation(propertyType, newPropType), false);
     }
 }

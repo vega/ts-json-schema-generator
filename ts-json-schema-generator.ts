@@ -29,7 +29,7 @@ const args = new Command()
     .addOption(
         new Option(
             "--functions <functions>",
-            // eslint-disable-next-line max-len
+
             "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType."
         )
             .choices(["fail", "comment", "hide"])
