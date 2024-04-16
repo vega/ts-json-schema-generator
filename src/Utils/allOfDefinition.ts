@@ -33,7 +33,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
                         for (const prop of addProps.anyOf as Definition[]) {
                             if (prop.type) {
                                 additionalTypes = additionalTypes.concat(
-                                    Array.isArray(prop.type) ? prop.type : [prop.type]
+                                    Array.isArray(prop.type) ? prop.type : [prop.type],
                                 );
                             } else {
                                 additionalProps.push(prop);
@@ -41,7 +41,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
                         }
                     } else if (addProps.type) {
                         additionalTypes = additionalTypes.concat(
-                            Array.isArray(addProps.type) ? addProps.type : [addProps.type]
+                            Array.isArray(addProps.type) ? addProps.type : [addProps.type],
                         );
                     } else {
                         additionalProps.push(addProps);

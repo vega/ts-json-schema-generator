@@ -1,3 +1,3 @@
 export type MyType = keyof {
-    "key": () => number;
+    key: () => number;
 };

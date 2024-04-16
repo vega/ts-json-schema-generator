@@ -14,7 +14,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
         protected childNodeParser: NodeParser,
-        protected readonly additionalProperties: boolean
+        protected readonly additionalProperties: boolean,
     ) {}
 
     public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
@@ -24,7 +24,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     public createType(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context,
-        reference?: ReferenceType
+        reference?: ReferenceType,
     ): BaseType {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach((typeParam) => {
@@ -97,13 +97,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 ...result,
                 ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
             ],
-            []
+            [],
         );
     }
 
     protected getProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context
+        context: Context,
     ): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
 
@@ -112,7 +112,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 (members, member) => {
                     if (ts.isConstructorDeclaration(member)) {
                         const params = member.parameters.filter((param) =>
-                            ts.isParameterPropertyDeclaration(param, param.parent)
+                            ts.isParameterPropertyDeclaration(param, param.parent),
                         ) as ts.ParameterPropertyDeclaration[];
                         members.push(...params);
                     } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
@@ -120,7 +120,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     }
                     return members;
                 },
-                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[]
+                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[],
             )
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
             .reduce((entries, member) => {
@@ -143,8 +143,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     new ObjectProperty(
                         this.getPropertyName(member.name),
                         this.childNodeParser.createType(memberType, context),
-                        !member.questionToken
-                    )
+                        !member.questionToken,
+                    ),
             )
             .filter((prop) => {
                 const type = prop.getType();
@@ -163,7 +163,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
 
     protected getAdditionalProperties(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context
+        context: Context,
     ): BaseType | boolean {
         const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {

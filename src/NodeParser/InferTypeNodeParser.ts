@@ -7,7 +7,7 @@ import { InferType } from "../Type/InferType.js";
 export class InferTypeNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.InferTypeNode): boolean {

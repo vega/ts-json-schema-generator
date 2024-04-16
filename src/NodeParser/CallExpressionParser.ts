@@ -10,7 +10,7 @@ import { SymbolType } from "../Type/SymbolType.js";
 export class CallExpressionParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.CallExpression): boolean {

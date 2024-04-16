@@ -16,7 +16,7 @@ import { getTypeByKey } from "../Utils/typeKeys.js";
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {
@@ -36,7 +36,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                     ts.isPropertySignature(m) &&
                     Boolean(m.type) &&
                     ts.isIdentifier(m.name) &&
-                    m.name.text === indexType.getValue()
+                    m.name.text === indexType.getValue(),
             );
 
             return member && this.childNodeParser.createType(member.type, context);
@@ -62,7 +62,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const propertyTypes = indexTypes.map((type) => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
                 throw new LogicError(
-                    `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`
+                    `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
                 );
             }
 

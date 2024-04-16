@@ -18,7 +18,7 @@ export interface MyObject {
     /**
      * @title Nullable value
      */
-    nullableValue: number | string |null;
+    nullableValue: number | string | null;
     /**
      * @title Optional value
      */
@@ -55,12 +55,12 @@ export interface MyObject {
      * length: 42
      * ```
      */
-    description: InheritedExample['description'];
+    description: InheritedExample["description"];
 
     /**
      * @default ""
      */
-    inheritedDescription: InheritedExample['description'];
+    inheritedDescription: InheritedExample["description"];
 }
 
 /**

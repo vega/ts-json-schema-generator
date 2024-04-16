@@ -35,7 +35,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
                 nonArrayLikeTypes.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), {
                     type: "object",
                     additionalProperties: false,
-                })
+                }),
             );
         }
 
@@ -46,7 +46,7 @@ export class IntersectionTypeFormatter implements SubTypeFormatter {
         return uniqueArray(
             type
                 .getTypes()
-                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []),
         );
     }
 }

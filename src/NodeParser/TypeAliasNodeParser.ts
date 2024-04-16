@@ -10,7 +10,7 @@ import { getKey } from "../Utils/nodeKey.js";
 export class TypeAliasNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeAliasDeclaration): boolean {

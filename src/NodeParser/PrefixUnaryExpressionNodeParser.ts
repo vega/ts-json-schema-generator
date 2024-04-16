@@ -28,7 +28,7 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
             }
         } else {
             throw new Error(
-                `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`
+                `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`,
             );
         }
     }

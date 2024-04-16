@@ -84,7 +84,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             type
                 .getTypes()
                 .filter(notNever)
-                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []),
         );
     }
 }

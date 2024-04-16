@@ -4,7 +4,7 @@ describe("valid-data-type", () => {
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
     it(
         "type-aliases-primitive-with-id",
-        assertValidSchema("type-aliases-primitive-with-id", "MyString", { jsDoc: "none", schemaId: "testId" })
+        assertValidSchema("type-aliases-primitive-with-id", "MyString", { jsDoc: "none", schemaId: "testId" }),
     );
     it("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
     it("type-aliases-mixed", assertValidSchema("type-aliases-mixed", "MyObject"));
@@ -15,11 +15,11 @@ describe("valid-data-type", () => {
     it("type-aliases-recursive-export", assertValidSchema("type-aliases-recursive-export", "MyObject"));
     it(
         "type-aliases-recursive-generics-anonymous",
-        assertValidSchema("type-aliases-recursive-generics-anonymous", "MyAlias")
+        assertValidSchema("type-aliases-recursive-generics-anonymous", "MyAlias"),
     );
     it(
         "type-aliases-recursive-generics-export",
-        assertValidSchema("type-aliases-recursive-generics-export", "MyAlias")
+        assertValidSchema("type-aliases-recursive-generics-export", "MyAlias"),
     );
 
     it("type-aliases-tuple", assertValidSchema("type-aliases-tuple", "MyTuple"));
@@ -44,19 +44,19 @@ describe("valid-data-type", () => {
     it("type-intersection-partial-conflict-ref", assertValidSchema("type-intersection-partial-conflict", "MyType"));
     it(
         "type-intersection-partial-conflict-union",
-        assertValidSchema("type-intersection-partial-conflict-union", "MyType")
+        assertValidSchema("type-intersection-partial-conflict-union", "MyType"),
     );
     it(
         "type-intersection-partial-conflict-union-alias",
-        assertValidSchema("type-intersection-partial-conflict-union-alias", "MyType")
+        assertValidSchema("type-intersection-partial-conflict-union-alias", "MyType"),
     );
     it(
         "type-intersection-recursive-interface",
-        assertValidSchema("type-intersection-recursive-interface", "Intersection")
+        assertValidSchema("type-intersection-recursive-interface", "Intersection"),
     );
     it(
         "type-intersection-union-recursive-interface",
-        assertValidSchema("type-intersection-union-recursive-interface", "Intersection")
+        assertValidSchema("type-intersection-union-recursive-interface", "Intersection"),
     );
     it("type-intersection-union", assertValidSchema("type-intersection-union", "MyObject"));
     it("type-intersection-union-enum", assertValidSchema("type-intersection-union-enum", "MyObject"));

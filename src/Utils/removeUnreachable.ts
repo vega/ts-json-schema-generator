@@ -7,7 +7,7 @@ const DEFINITION_OFFSET = "#/definitions/".length;
 function addReachable(
     definition: Definition | JSONSchema7Definition,
     definitions: StringMap<Definition>,
-    reachable: Set<string>
+    reachable: Set<string>,
 ) {
     if (typeof definition === "boolean") {
         return;
@@ -65,7 +65,7 @@ function addReachable(
 
 export function removeUnreachable(
     rootTypeDefinition: Definition | undefined,
-    definitions: StringMap<Definition>
+    definitions: StringMap<Definition>,
 ): StringMap<Definition> {
     if (!rootTypeDefinition) {
         return definitions;

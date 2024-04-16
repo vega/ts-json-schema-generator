@@ -28,7 +28,7 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
                     const suffix = span.literal.text;
                     const type = this.childNodeParser.createType(span.type, context);
                     return extractLiterals(type).map((value) => value + suffix);
-                })
+                }),
             );
 
             const expandedLiterals = expand(matrix);

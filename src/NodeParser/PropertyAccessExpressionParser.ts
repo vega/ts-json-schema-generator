@@ -6,7 +6,7 @@ import { BaseType } from "../Type/BaseType.js";
 export class PropertyAccessExpressionParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.PropertyAccessExpression): boolean {

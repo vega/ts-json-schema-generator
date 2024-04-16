@@ -15,7 +15,7 @@ type DiscriminatorType = "json-schema" | "open-api";
 export class UnionTypeFormatter implements SubTypeFormatter {
     public constructor(
         protected childTypeFormatter: TypeFormatter,
-        private discriminatorType?: DiscriminatorType
+        private discriminatorType?: DiscriminatorType,
     ) {}
 
     public supportsType(type: BaseType): boolean {
@@ -41,8 +41,8 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         if (undefinedIndex != -1) {
             throw new Error(
                 `Cannot find discriminator keyword "${discriminator}" in type ${JSON.stringify(
-                    type.getTypes()[undefinedIndex]
-                )}.`
+                    type.getTypes()[undefinedIndex],
+                )}.`,
             );
         }
 
@@ -66,7 +66,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
         if (duplicates.length > 0) {
             throw new Error(
-                `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(type.getName())}.`
+                `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(type.getName())}.`,
             );
         }
 
@@ -153,7 +153,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         return uniqueArray(
             type
                 .getTypes()
-                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []),
         );
     }
 }

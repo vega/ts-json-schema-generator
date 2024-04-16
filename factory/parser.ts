@@ -76,7 +76,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         if (config.jsDoc === "extended") {
             return new AnnotatedNodeParser(
                 nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription)
+                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription),
             );
         } else if (config.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
@@ -149,20 +149,20 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
                         new InterfaceAndClassNodeParser(
                             typeChecker,
                             withJsDoc(chainNodeParser),
-                            config.additionalProperties
-                        )
-                    )
-                )
-            )
+                            config.additionalProperties,
+                        ),
+                    ),
+                ),
+            ),
         )
         .addNodeParser(
             withCircular(
                 withExpose(
                     withJsDoc(
-                        new TypeLiteralNodeParser(typeChecker, withJsDoc(chainNodeParser), config.additionalProperties)
-                    )
-                )
-            )
+                        new TypeLiteralNodeParser(typeChecker, withJsDoc(chainNodeParser), config.additionalProperties),
+                    ),
+                ),
+            ),
         )
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));

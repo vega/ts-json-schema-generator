@@ -8,7 +8,7 @@ import { TypeFormatter } from "../TypeFormatter.js";
 export class FunctionTypeFormatter implements SubTypeFormatter {
     constructor(
         protected childTypeFormatter: TypeFormatter,
-        protected functions: FunctionOptions
+        protected functions: FunctionOptions,
     ) {}
 
     public supportsType(type: BaseType): boolean {

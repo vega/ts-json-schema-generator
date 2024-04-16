@@ -34,7 +34,7 @@ import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter.js";
 
 export type FormatterAugmentor = (
     formatter: MutableTypeFormatter,
-    circularReferenceTypeFormatter: CircularReferenceTypeFormatter
+    circularReferenceTypeFormatter: CircularReferenceTypeFormatter,
 ) => void;
 
 export function createFormatter(config: CompletedConfig, augmentor?: FormatterAugmentor): TypeFormatter {

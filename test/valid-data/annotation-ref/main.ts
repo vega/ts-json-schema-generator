@@ -1,4 +1,3 @@
-
 export interface MyObject {
     /**
      * Nested description
@@ -6,7 +5,7 @@ export interface MyObject {
      * @title Nested title
      * @ref http://json-schema.org/draft-07/schema#
      */
-    nested: MyNestedObject
+    nested: MyNestedObject;
 
     /**
      * MyObject description

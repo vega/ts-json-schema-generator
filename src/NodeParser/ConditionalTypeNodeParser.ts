@@ -10,14 +10,14 @@ import { NeverType } from "../Type/NeverType.js";
 class CheckType {
     constructor(
         public parameterName: string,
-        public type: BaseType
+        public type: BaseType,
     ) {}
 }
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.ConditionalTypeNode): boolean {
@@ -36,7 +36,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
             const result = isAssignableTo(extendsType, checkType, inferMap);
             return this.childNodeParser.createType(
                 result ? node.trueType : node.falseType,
-                this.createSubContext(node, context, undefined, result ? inferMap : new Map())
+                this.createSubContext(node, context, undefined, result ? inferMap : new Map()),
             );
         }
 
@@ -49,7 +49,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         if (!(trueCheckType instanceof NeverType)) {
             const result = this.childNodeParser.createType(
                 node.trueType,
-                this.createSubContext(node, context, new CheckType(checkTypeParameterName, trueCheckType), inferMap)
+                this.createSubContext(node, context, new CheckType(checkTypeParameterName, trueCheckType), inferMap),
             );
             if (result) {
                 results.push(result);
@@ -58,7 +58,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         if (!(falseCheckType instanceof NeverType)) {
             const result = this.childNodeParser.createType(
                 node.falseType,
-                this.createSubContext(node, context, new CheckType(checkTypeParameterName, falseCheckType))
+                this.createSubContext(node, context, new CheckType(checkTypeParameterName, falseCheckType)),
             );
             if (result) {
                 results.push(result);
@@ -97,7 +97,7 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         node: ts.ConditionalTypeNode,
         parentContext: Context,
         checkType?: CheckType,
-        inferMap: Map<string, BaseType> = new Map()
+        inferMap: Map<string, BaseType> = new Map(),
     ): Context {
         const subContext = new Context(node);
 

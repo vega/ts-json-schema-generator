@@ -22,7 +22,7 @@ export interface MyObject {
      * @example
      *     "This string rocks"
      */
-    nested: MyNestedObject
+    nested: MyNestedObject;
 }
 
 /**

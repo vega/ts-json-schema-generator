@@ -11,7 +11,7 @@ import { getNamedArguments, getTypeName } from "./FunctionNodeParser.js";
 export class ConstructorNodeParser implements SubNodeParser {
     constructor(
         protected childNodeParser: NodeParser,
-        protected functions: FunctionOptions
+        protected functions: FunctionOptions,
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {

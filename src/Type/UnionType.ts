@@ -17,7 +17,7 @@ export class UnionType extends BaseType {
                     flatTypes.push(type);
                 }
                 return flatTypes;
-            }, [] as BaseType[])
+            }, [] as BaseType[]),
         );
     }
 

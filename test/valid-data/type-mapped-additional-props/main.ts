@@ -1,5 +1,5 @@
 export interface Test {
-    [ name: string ]: string;
+    [name: string]: string;
 }
 
 export type WithNumbers<T> = {

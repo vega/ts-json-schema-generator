@@ -22,14 +22,19 @@ export interface F extends D {
     f: boolean;
 }
 
-export type Map<T> =
-    T extends A ? "a" :
-    T extends B ? "b" :
-    T extends C ? "c" :
-    T extends F ? "f" :
-    T extends D ? "d" :
-    T extends E ? "e" :
-    "unknown";
+export type Map<T> = T extends A
+    ? "a"
+    : T extends B
+      ? "b"
+      : T extends C
+        ? "c"
+        : T extends F
+          ? "f"
+          : T extends D
+            ? "d"
+            : T extends E
+              ? "e"
+              : "unknown";
 
 export type MyObject = {
     a: Map<A>;

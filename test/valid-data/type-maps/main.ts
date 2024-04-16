@@ -5,7 +5,7 @@ export interface MyMap1 {
 }
 
 export interface MyMap2 {
-    [id: string]: (string | number);
+    [id: string]: string | number;
 }
 
 export interface MyObject {

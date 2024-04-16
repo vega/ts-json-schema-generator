@@ -8,7 +8,7 @@ import { uniqueArray } from "../Utils/uniqueArray.js";
 export class DefinitionTypeFormatter implements SubTypeFormatter {
     public constructor(
         protected childTypeFormatter: TypeFormatter,
-        protected encodeRefs: boolean
+        protected encodeRefs: boolean,
     ) {}
 
     public supportsType(type: BaseType): boolean {

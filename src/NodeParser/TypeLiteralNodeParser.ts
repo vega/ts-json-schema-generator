@@ -12,7 +12,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
         protected childNodeParser: NodeParser,
-        protected readonly additionalProperties: boolean
+        protected readonly additionalProperties: boolean,
     ) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
@@ -40,7 +40,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = node.members
             .filter(
                 (element): element is PropertySignature | MethodSignature =>
-                    ts.isPropertySignature(element) || ts.isMethodSignature(element)
+                    ts.isPropertySignature(element) || ts.isMethodSignature(element),
             )
             .filter((propertyNode) => !isNodeHidden(propertyNode))
             .map(
@@ -48,8 +48,8 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
                         this.childNodeParser.createType(propertyNode.type!, context),
-                        !propertyNode.questionToken
-                    )
+                        !propertyNode.questionToken,
+                    ),
             )
             .filter((prop) => {
                 const type = prop.getType();

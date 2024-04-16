@@ -1,9 +1,9 @@
 export enum A {
-  B,
-  C,
-  D,
+    B,
+    C,
+    D,
 }
 
 export interface MyObject {
-  code: A.B;
+    code: A.B;
 }

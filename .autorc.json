@@ -1,13 +1,6 @@
 {
-    "plugins": [
-        "npm",
-        "conventional-commits",
-        "first-time-contributor",
-        "released"
-    ],
-    "baseBranch": "stable",
-    "prereleaseBranches": [
-        "next"
-    ],
-    "author": "GitHub Actions Bot <vega-actions-bot@users.noreply.github.com>"
+  "plugins": ["npm", "conventional-commits", "first-time-contributor", "released"],
+  "baseBranch": "stable",
+  "prereleaseBranches": ["next"],
+  "author": "GitHub Actions Bot <vega-actions-bot@users.noreply.github.com>"
 }

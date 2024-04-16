@@ -13,7 +13,7 @@ import { NeverType } from "../Type/NeverType.js";
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.IntersectionTypeNode): boolean {

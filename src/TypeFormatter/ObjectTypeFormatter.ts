@@ -39,7 +39,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             .getBaseTypes()
             .reduce(
                 (result: BaseType[], baseType) => [...result, ...this.childTypeFormatter.getChildren(baseType)],
-                []
+                [],
             );
 
         const childrenOfAdditionalProps =
@@ -65,7 +65,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
 
         if (additionalProperties === false) {
             objectProperties = objectProperties.filter(
-                (property) => !(derefType(property.getType()) instanceof NeverType)
+                (property) => !(derefType(property.getType()) instanceof NeverType),
             );
         }
 

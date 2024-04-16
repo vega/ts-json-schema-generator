@@ -9,7 +9,7 @@ import { NeverType } from "../Type/NeverType.js";
 export class UnionNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.UnionTypeNode): boolean {

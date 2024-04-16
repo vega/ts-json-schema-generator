@@ -9,7 +9,7 @@ export class AnnotatedType extends BaseType {
     public constructor(
         private type: BaseType,
         private annotations: Annotations,
-        private nullable: boolean
+        private nullable: boolean,
     ) {
         super();
     }

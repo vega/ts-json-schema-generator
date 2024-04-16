@@ -1,13 +1,13 @@
 type Foo = {
-    foo: 'a' | 'b'
-}
+    foo: "a" | "b";
+};
 
 export type A = Foo & {
-    foo: 'a'
-}
+    foo: "a";
+};
 
 export type B = Foo & {
-    foo: 'b'
-}
+    foo: "b";
+};
 
-export type MyType = A | B
+export type MyType = A | B;

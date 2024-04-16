@@ -6,7 +6,7 @@ import { TupleType } from "./TupleType.js";
 export class RestType extends BaseType {
     public constructor(
         private item: ArrayType | InferType | TupleType,
-        private title: string | null = null
+        private title: string | null = null,
     ) {
         super();
     }

@@ -1,5 +1,5 @@
 enum Test {
-    A = null
+    A = null,
 }
 
 export type MyObject = {
