@@ -18,6 +18,7 @@ import { StringType } from "../src/Type/StringType.js";
 import { TypeFormatter } from "../src/TypeFormatter.js";
 import { uniqueArray } from "../src/Utils/uniqueArray.js";
 
+const basePath = "test/config";
 
 function assertSchema(
     name: string,
