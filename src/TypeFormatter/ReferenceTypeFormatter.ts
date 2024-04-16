@@ -6,9 +6,12 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { TypeFormatter } from "../TypeFormatter";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
-    public constructor(protected childTypeFormatter: TypeFormatter, protected encodeRefs: boolean) {}
+    public constructor(
+        protected childTypeFormatter: TypeFormatter,
+        protected encodeRefs: boolean
+    ) {}
 
-    public supportsType(type: ReferenceType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof ReferenceType;
     }
     public getDefinition(type: ReferenceType): Definition {

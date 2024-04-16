@@ -1,7 +1,7 @@
 import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator";
-import { Config, DEFAULT_CONFIG } from "./src/Config";
+import { Config } from "./src/Config";
 import { BaseError } from "./src/Error/BaseError";
 import { formatError } from "./src/Utils/formatError";
 import * as pkg from "./package.json";
@@ -21,6 +21,20 @@ const args = new Command()
             .choices(["none", "basic", "extended"])
             .default("extended")
     )
+    .addOption(
+        new Option("--markdown-description", "Generate `markdownDescription` in addition to `description`.").implies({
+            jsDoc: "extended",
+        })
+    )
+    .addOption(
+        new Option(
+            "--functions <functions>",
+            // eslint-disable-next-line max-len
+            "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType."
+        )
+            .choices(["fail", "comment", "hide"])
+            .default("comment")
+    )
     .option("--minify", "Minify generated schema", false)
     .option("--unstable", "Do not sort properties")
     .option("--strict-tuples", "Do not allow additional items on tuples")
@@ -34,17 +48,12 @@ const args = new Command()
         (value: string, list: string[]) => list.concat(value),
         []
     )
-    .option(
-        "--additional-properties",
-        "Allow additional properties for objects with no index signature (default: false)",
-        false
-    )
+    .option("--additional-properties", "Allow additional properties for objects with no index signature", false)
     .version(pkg.version)
     .parse(process.argv)
     .opts();
 
 const config: Config = {
-    ...DEFAULT_CONFIG,
     minify: args.minify,
     path: args.path,
     tsconfig: args.tsconfig,
@@ -53,12 +62,14 @@ const config: Config = {
     expose: args.expose,
     topRef: args.topRef,
     jsDoc: args.jsDoc,
+    markdownDescription: args.markdownDescription,
     sortProps: !args.unstable,
     strictTuples: args.strictTuples,
     skipTypeCheck: !args.typeCheck,
     encodeRefs: args.refEncode,
     extraTags: args.validationKeywords,
     additionalProperties: args.additionalProperties,
+    functions: args.functions,
 };
 
 try {

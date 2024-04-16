@@ -1,13 +1,14 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import stringify from "safe-stable-stringify";
 import ts from "typescript";
-import { createFormatter, FormatterAugmentor } from "../factory/formatter";
-import { createParser, ParserAugmentor } from "../factory/parser";
+import { FormatterAugmentor, createFormatter } from "../factory/formatter";
+import { ParserAugmentor, createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
-import { Config, DEFAULT_CONFIG } from "../src/Config";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
 import { Definition } from "../src/Schema/Definition";
 import { SchemaGenerator } from "../src/SchemaGenerator";
 import { SubTypeFormatter } from "../src/SubTypeFormatter";
@@ -27,7 +28,7 @@ function assertSchema(
     parserAugmentor?: ParserAugmentor
 ) {
     return () => {
-        const config: Config = {
+        const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             ...userConfig,
             skipTypeCheck: !!process.env.FAST_TEST,
@@ -46,8 +47,15 @@ function assertSchema(
             config
         );
 
-        const expected: any = JSON.parse(readFileSync(resolve(`${basePath}/${name}/schema.json`), "utf8"));
-        const actual: any = JSON.parse(JSON.stringify(generator.createSchema(config.type)));
+        const schema = generator.createSchema(config.type);
+        const schemaFile = resolve(`${basePath}/${name}/schema.json`);
+
+        if (process.env.UPDATE_SCHEMA) {
+            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+        }
+
+        const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const actual: any = JSON.parse(JSON.stringify(schema));
 
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
@@ -55,6 +63,7 @@ function assertSchema(
         const validator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
+            keywords: config.markdownDescription ? ["markdownDescription"] : undefined,
         });
 
         addFormats(validator);
@@ -67,7 +76,7 @@ function assertSchema(
 }
 
 export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: FunctionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof FunctionType;
     }
     public getDefinition(_type: FunctionType): Definition {
@@ -87,7 +96,7 @@ export class ExampleFunctionTypeFormatter implements SubTypeFormatter {
 }
 
 export class ExampleEnumTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: EnumType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof EnumType;
     }
     public getDefinition(type: EnumType): Definition {
@@ -113,7 +122,7 @@ export class ExampleEnumTypeFormatter implements SubTypeFormatter {
 // Just like DefinitionFormatter but adds { $comment: "overriden" }
 export class ExampleDefinitionOverrideFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
-    public supportsType(type: DefinitionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof DefinitionType;
     }
     public getDefinition(type: DefinitionType): Definition {
@@ -317,7 +326,17 @@ describe("config", () => {
             skipTypeCheck: true,
         })
     );
-
+    it(
+        "markdown-description",
+        assertSchema("markdown-description", {
+            type: "MyObject",
+            expose: "export",
+            topRef: false,
+            jsDoc: "extended",
+            sortProps: true,
+            markdownDescription: true,
+        })
+    );
     it(
         "tsconfig-support",
         assertSchema(
@@ -354,7 +373,7 @@ describe("config", () => {
     it(
         "arrow-function-parameters",
         assertSchema("arrow-function-parameters", {
-            type: "NamedParameters<typeof myFunction>",
+            type: "myFunction",
             expose: "all",
         })
     );
@@ -426,5 +445,21 @@ describe("config", () => {
             undefined,
             (parser) => parser.addNodeParser(new ExampleNullParser())
         )
+    );
+
+    it(
+        "functions-hide",
+        assertSchema("functions-hide", {
+            type: "MyType",
+            functions: "hide",
+        })
+    );
+
+    it(
+        "functions-comment",
+        assertSchema("functions-comment", {
+            type: "MyType",
+            functions: "comment",
+        })
     );
 });

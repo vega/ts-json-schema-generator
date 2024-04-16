@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "definitions": {
+    "MyExportString": {
+      "title": "My export string",
+      "type": "string"
+    },
+    "MyNonEmptyArray<number>": {
+      "items": {
+        "type": "number"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "description": "Some description here",
+  "properties": {
+    "description": {
+      "description": "Some more examples: ```yaml name: description length: 42 ```",
+      "markdownDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
+      "title": "description\n\nMore comments.",
+      "type": "string"
+    },
+    "exportString": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/MyExportString",
+          "markdownDescription": "Some ignored comment description"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": {
+        "length": 10
+      },
+      "description": "Export field description"
+    },
+    "inheritedDescription": {
+      "default": "",
+      "description": "We have a bit more text.\n\nUsage: It is possible to add markdown in the JSDoc comment.\n\n```ts // comment async function readFile(path: string): Promise<string>; ```\n\nIt is stored raw.",
+      "markdownDescription": "We have a bit more text.\n\nUsage: It is possible to add markdown in the JSDoc comment.\n\n```ts\n// comment\nasync function readFile(path: string): Promise<string>;\n```\n\nIt is stored raw.",
+      "title": "description\n\nMore comments.",
+      "type": "string"
+    },
+    "nullableValue": {
+      "title": "Nullable value",
+      "type": [
+        "number",
+        "string",
+        "null"
+      ]
+    },
+    "number": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "numberArray": {
+      "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E",
+      "title": "Non empty array"
+    },
+    "optionalValue": {
+      "title": "Optional value",
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "privateString": {
+      "default": "private",
+      "description": "Export field description",
+      "title": "My private string",
+      "type": "string"
+    },
+    "requiredValue": {
+      "title": "Required value",
+      "type": [
+        "number",
+        "string"
+      ]
+    },
+    "stringValue": {
+      "format": "date-time",
+      "minLength": 10,
+      "pattern": "/^\\d+$/",
+      "title": "String field title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "stringValue",
+    "requiredValue",
+    "nullableValue",
+    "exportString",
+    "privateString",
+    "numberArray",
+    "number",
+    "description",
+    "inheritedDescription"
+  ],
+  "title": "Some title here",
+  "type": "object"
+}

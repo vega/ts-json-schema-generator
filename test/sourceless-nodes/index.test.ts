@@ -5,13 +5,14 @@ import { Context } from "../../src/NodeParser";
 import { LiteralType } from "../../src/Type/LiteralType";
 import { NumberType } from "../../src/Type/NumberType";
 import { ObjectType } from "../../src/Type/ObjectType";
+import { DEFAULT_CONFIG } from "../../src/Config";
 
 const SOURCE = path.resolve(__dirname, "./source.ts");
 
 describe("sourceless-nodes", () => {
     it("tests creating json schemas with ts.Nodes without valid source files", () => {
         const program = ts.createProgram([SOURCE], {});
-        const parser = createParser(program, {});
+        const parser = createParser(program, DEFAULT_CONFIG);
 
         // Finds the Typescript function declaration node
         const source = program.getSourceFile(SOURCE);

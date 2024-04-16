@@ -8,11 +8,17 @@ import { UnionType } from "../Type/UnionType";
 import { NeverType } from "../Type/NeverType";
 
 class CheckType {
-    constructor(public parameterName: string, public type: BaseType) {}
+    constructor(
+        public parameterName: string,
+        public type: BaseType
+    ) {}
 }
 
 export class ConditionalTypeNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.ConditionalTypeNode): boolean {
         return node.kind === ts.SyntaxKind.ConditionalType;

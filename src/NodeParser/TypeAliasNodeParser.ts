@@ -8,7 +8,10 @@ import { ReferenceType } from "../Type/ReferenceType";
 import { getKey } from "../Utils/nodeKey";
 
 export class TypeAliasNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.TypeAliasDeclaration): boolean {
         return node.kind === ts.SyntaxKind.TypeAliasDeclaration;

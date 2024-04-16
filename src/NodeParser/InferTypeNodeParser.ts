@@ -5,7 +5,10 @@ import { BaseType } from "../Type/BaseType";
 import { InferType } from "../Type/InferType";
 
 export class InferTypeNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.InferTypeNode): boolean {
         return node.kind === ts.SyntaxKind.InferType;

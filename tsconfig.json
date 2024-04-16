@@ -20,7 +20,6 @@
     "noLib": false,
     "sourceMap": true,
     "pretty": true,
-    "watch": false,
     "typeRoots": ["node_modules/@types"],
     "outDir": "dist",
     "incremental": true

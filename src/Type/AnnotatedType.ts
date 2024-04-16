@@ -6,7 +6,11 @@ export interface Annotations {
 }
 
 export class AnnotatedType extends BaseType {
-    public constructor(private type: BaseType, private annotations: Annotations, private nullable: boolean) {
+    public constructor(
+        private type: BaseType,
+        private annotations: Annotations,
+        private nullable: boolean
+    ) {
         super();
     }
 

@@ -14,7 +14,10 @@ const invalidTypes: Record<number, boolean> = {
 };
 
 export class TypeReferenceNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker, protected childNodeParser: NodeParser) {}
+    public constructor(
+        protected typeChecker: ts.TypeChecker,
+        protected childNodeParser: NodeParser
+    ) {}
 
     public supportsNode(node: ts.TypeReferenceNode): boolean {
         return node.kind === ts.SyntaxKind.TypeReference;
@@ -31,10 +34,14 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 
-            return this.childNodeParser.createType(
-                aliasedSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
-                this.createSubContext(node, context)
-            );
+            const declaration = aliasedSymbol.declarations?.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0];
+
+            if (!declaration) {
+                // fallback for bun.sh
+                return new AnyType();
+            }
+
+            return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {

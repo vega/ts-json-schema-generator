@@ -4,13 +4,14 @@ import { createParser } from "../../../factory";
 import { Context } from "../../../src/NodeParser";
 import { DefinitionType } from "../../../src/Type/DefinitionType";
 import { ObjectType } from "../../../src/Type/ObjectType";
+import { DEFAULT_CONFIG } from "../../../src/Config";
 
 const SOURCE = path.resolve(__dirname, "./source.ts");
 
 describe("multiple sourceless nodes shouldn't conflict", () => {
     it("ensure all sourceless nodes have different ids", () => {
         const program = ts.createProgram([SOURCE], {});
-        const parser = createParser(program, {});
+        const parser = createParser(program, DEFAULT_CONFIG);
 
         // Finds the Typescript function declaration node
         const source = program.getSourceFile(SOURCE);

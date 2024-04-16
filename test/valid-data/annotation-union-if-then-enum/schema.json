@@ -1,0 +1,90 @@
+{
+  "$ref": "#/definitions/AB",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AB": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "a",
+                  "A"
+                ],
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "additionalProperties": false,
+            "properties": {
+              "a": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "a",
+                  "A"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "a"
+            ],
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "b",
+                  "B"
+                ],
+                "type": "string"
+              }
+            }
+          },
+          "then": {
+            "additionalProperties": false,
+            "properties": {
+              "b": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "b",
+                  "B"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind",
+              "b"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "a",
+            "A",
+            "b",
+            "B"
+          ]
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -7,27 +7,23 @@ import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { Config } from "../src/Config";
-import { UnknownTypeError } from "../src/Error/UnknownTypeError";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
 import { SchemaGenerator } from "../src/SchemaGenerator";
-import { BaseType } from "../src/Type/BaseType";
 
-const validator = new Ajv();
+const validator = new Ajv({ discriminator: true });
 addFormats(validator);
 
 const basePath = "test/valid-data";
 
-export function createGenerator(config: Config): SchemaGenerator {
+export function createGenerator(config: CompletedConfig): SchemaGenerator {
     const program: ts.Program = createProgram(config);
     return new SchemaGenerator(program, createParser(program, config), createFormatter(config), config);
 }
 
 export function assertValidSchema(
     relativePath: string,
-    type?: string,
-    jsDoc: Config["jsDoc"] = "none",
-    extraTags?: Config["extraTags"],
-    schemaId?: Config["schemaId"],
+    type?: Config["type"],
+    config_?: Omit<Config, "type">,
     options?: {
         /**
          * Array of sample data
@@ -49,23 +45,20 @@ export function assertValidSchema(
          * @default {strict:false}
          */
         ajvOptions?: AjvOptions;
+        mainTsOnly?: boolean;
     }
 ) {
     return (): void => {
-        const config: Config = {
-            path: `${basePath}/${relativePath}/*.ts`,
-            type,
-            jsDoc,
-            extraTags,
+        const config: CompletedConfig = {
+            ...DEFAULT_CONFIG,
+            path: `${basePath}/${relativePath}/${options?.mainTsOnly ? "main" : "*"}.ts`,
             skipTypeCheck: !!process.env.FAST_TEST,
+            type,
+            ...config_,
         };
 
-        if (schemaId) {
-            config.schemaId = schemaId;
-        }
-
         const generator = createGenerator(config);
-        const schema = generator.createSchema(type);
+        const schema = generator.createSchema(config.type);
         const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
@@ -79,7 +72,7 @@ export function assertValidSchema(
         expect(actual).toStrictEqual(expected);
 
         let localValidator = validator;
-        if (extraTags) {
+        if (config.extraTags) {
             localValidator = new Ajv(options?.ajvOptions || { strict: false });
             addFormats(localValidator);
         }
@@ -111,16 +104,6 @@ export function assertValidSchema(
                 }
                 expect(isValid).toBe(true);
             }
-        }
-    };
-}
-
-export function assertMissingFormatterFor(missingType: BaseType, relativePath: string, type?: string) {
-    return (): void => {
-        try {
-            assertValidSchema(relativePath, type)();
-        } catch (error) {
-            expect(error).toEqual(new UnknownTypeError(missingType));
         }
     };
 }

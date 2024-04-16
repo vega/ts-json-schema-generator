@@ -1,18 +1,24 @@
 {
-  "$ref": "#/definitions/NamedParameters%3Ctypeof%20myFunction%3E",
+  "$ref": "#/definitions/myFunction",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "NamedParameters<typeof myFunction>": {
-      "additionalProperties": false,
+    "myFunction": {
+      "$comment": "(\n    /**\n     * @description Inline parameter description\n     */\n    requiredString: string) =>undefined",
       "properties": {
-        "requiredString": {
-          "description": "Inline parameter description",
-          "type": "string"
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "requiredString": {
+              "description": "Inline parameter description",
+              "type": "string"
+            }
+          },
+          "required": [
+            "requiredString"
+          ],
+          "type": "object"
         }
       },
-      "required": [
-        "requiredString"
-      ],
       "type": "object"
     }
   }

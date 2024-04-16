@@ -108,24 +108,27 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         let hasRequiredNever = false;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
-            .reduce((members, member) => {
-                if (ts.isConstructorDeclaration(member)) {
-                    const params = member.parameters.filter((param) =>
-                        ts.isParameterPropertyDeclaration(param, param.parent)
-                    ) as ts.ParameterPropertyDeclaration[];
-                    members.push(...params);
-                } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                    members.push(member);
-                }
-                return members;
-            }, [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[])
+            .reduce(
+                (members, member) => {
+                    if (ts.isConstructorDeclaration(member)) {
+                        const params = member.parameters.filter((param) =>
+                            ts.isParameterPropertyDeclaration(param, param.parent)
+                        ) as ts.ParameterPropertyDeclaration[];
+                        members.push(...params);
+                    } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
+                        members.push(member);
+                    }
+                    return members;
+                },
+                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[]
+            )
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
             .reduce((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
 
                 // Use the type checker if the member has no explicit type
                 // Ignore members without an initializer. They have no useful type.
-                if (memberType === undefined && member.initializer !== undefined) {
+                if (memberType === undefined && (member as ts.PropertyDeclaration)?.initializer !== undefined) {
                     const type = this.typeChecker.getTypeAtLocation(member);
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
                 }
@@ -144,10 +147,11 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     )
             )
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() instanceof NeverType) {
+                const type = prop.getType();
+                if (prop.isRequired() && type instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return !(prop.getType() instanceof NeverType);
+                return !(type instanceof NeverType);
             });
 
         if (hasRequiredNever) {

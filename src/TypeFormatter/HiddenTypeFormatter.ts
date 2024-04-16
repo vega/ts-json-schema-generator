@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { HiddenType } from "../Type/HiddenType";
 
 export class HiddenTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: HiddenType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof HiddenType;
     }
     public getDefinition(type: HiddenType): Definition {

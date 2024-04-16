@@ -4,7 +4,7 @@ import { BaseType } from "../Type/BaseType";
 import { NullType } from "../Type/NullType";
 
 export class NullTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: NullType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof NullType;
     }
     public getDefinition(type: NullType): Definition {

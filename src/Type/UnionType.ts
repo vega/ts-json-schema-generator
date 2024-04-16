@@ -54,7 +54,6 @@ export class UnionType extends BaseType {
             } else {
                 return union.normalize();
             }
-            // return this;
         }
     }
 }

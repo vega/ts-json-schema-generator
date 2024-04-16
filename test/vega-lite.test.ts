@@ -1,21 +1,21 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { Config } from "../src/Config";
+import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config";
 import { createGenerator } from "./utils";
 import stringify from "safe-stable-stringify";
 
 describe("vega-lite", () => {
     it("schema", () => {
-        const type = "TopLevelSpec";
-        const config: Config = {
+        const config: CompletedConfig = {
+            ...DEFAULT_CONFIG,
             path: `node_modules/vega-lite/src/index.ts`,
-            type,
+            type: "TopLevelSpec",
             encodeRefs: false,
             skipTypeCheck: true,
         };
 
         const generator = createGenerator(config);
-        const schema = generator.createSchema(type);
+        const schema = generator.createSchema(config.type);
         const schemaFile = resolve("test/vega-lite/schema.json");
 
         if (process.env.UPDATE_SCHEMA) {

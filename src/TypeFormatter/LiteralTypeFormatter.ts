@@ -5,7 +5,7 @@ import { LiteralType } from "../Type/LiteralType";
 import { typeName } from "../Utils/typeName";
 
 export class LiteralTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: LiteralType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof LiteralType;
     }
     public getDefinition(type: LiteralType): Definition {
