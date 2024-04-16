@@ -7,8 +7,8 @@ import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
-import { SchemaGenerator } from "../src/SchemaGenerator";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config.js";
+import { SchemaGenerator } from "../src/SchemaGenerator.js";
 
 const validator = new Ajv({ discriminator: true });
 addFormats(validator);

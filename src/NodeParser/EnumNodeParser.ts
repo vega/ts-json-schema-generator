@@ -1,10 +1,10 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { EnumType, EnumValue } from "../Type/EnumType";
-import { isNodeHidden } from "../Utils/isHidden";
-import { getKey } from "../Utils/nodeKey";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { EnumType, EnumValue } from "../Type/EnumType.js";
+import { isNodeHidden } from "../Utils/isHidden.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class EnumNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker) {}

@@ -1,10 +1,10 @@
 import ts from "typescript";
-import { UnknownNodeError } from "./Error/UnknownNodeError";
-import { MutableParser } from "./MutableParser";
-import { Context } from "./NodeParser";
-import { SubNodeParser } from "./SubNodeParser";
-import { BaseType } from "./Type/BaseType";
-import { ReferenceType } from "./Type/ReferenceType";
+import { UnknownNodeError } from "./Error/UnknownNodeError.js";
+import { MutableParser } from "./MutableParser.js";
+import { Context } from "./NodeParser.js";
+import { SubNodeParser } from "./SubNodeParser.js";
+import { BaseType } from "./Type/BaseType.js";
+import { ReferenceType } from "./Type/ReferenceType.js";
 
 export class ChainNodeParser implements SubNodeParser, MutableParser {
     protected readonly typeCaches = new WeakMap<ts.Node, Map<string, BaseType>>();

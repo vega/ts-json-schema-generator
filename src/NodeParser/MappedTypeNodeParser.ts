@@ -1,23 +1,23 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { EnumType, EnumValue } from "../Type/EnumType";
-import { LiteralType } from "../Type/LiteralType";
-import { NeverType } from "../Type/NeverType";
-import { NumberType } from "../Type/NumberType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { StringType } from "../Type/StringType";
-import { SymbolType } from "../Type/SymbolType";
-import { UnionType } from "../Type/UnionType";
-import { derefAnnotatedType, derefType } from "../Utils/derefType";
-import { getKey } from "../Utils/nodeKey";
-import { preserveAnnotation } from "../Utils/preserveAnnotation";
-import { removeUndefined } from "../Utils/removeUndefined";
+import { LogicError } from "../Error/LogicError.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { EnumType, EnumValue } from "../Type/EnumType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { StringType } from "../Type/StringType.js";
+import { SymbolType } from "../Type/SymbolType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefAnnotatedType, derefType } from "../Utils/derefType.js";
+import { getKey } from "../Utils/nodeKey.js";
+import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
+import { removeUndefined } from "../Utils/removeUndefined.js";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(

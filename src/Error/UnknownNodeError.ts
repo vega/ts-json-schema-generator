@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { BaseError } from "./BaseError";
+import { BaseError } from "./BaseError.js";
 
 export class UnknownNodeError extends BaseError {
     public constructor(

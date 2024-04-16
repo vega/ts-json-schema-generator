@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition";
-import { RawTypeName } from "../Schema/RawType";
-import { BaseType } from "../Type/BaseType";
-import { TypeFormatter } from "../TypeFormatter";
-import { uniqueArray } from "./uniqueArray";
-import { deepMerge } from "./deepMerge";
-import { derefType } from "./derefType";
+import { Definition } from "../Schema/Definition.js";
+import { RawTypeName } from "../Schema/RawType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { uniqueArray } from "./uniqueArray.js";
+import { deepMerge } from "./deepMerge.js";
+import { derefType } from "./derefType.js";
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.

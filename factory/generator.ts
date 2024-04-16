@@ -1,8 +1,8 @@
-import { Config, DEFAULT_CONFIG } from "../src/Config";
-import { SchemaGenerator } from "../src/SchemaGenerator";
-import { createFormatter } from "./formatter";
-import { createParser } from "./parser";
-import { createProgram } from "./program";
+import { Config, DEFAULT_CONFIG } from "../src/Config.js";
+import { SchemaGenerator } from "../src/SchemaGenerator.js";
+import { createFormatter } from "./formatter.js";
+import { createParser } from "./parser.js";
+import { createProgram } from "./program.js";
 
 export function createGenerator(config: Config): SchemaGenerator {
     const completedConfig = { ...DEFAULT_CONFIG, ...config };

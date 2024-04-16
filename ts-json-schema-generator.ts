@@ -1,10 +1,10 @@
 import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
-import { createGenerator } from "./factory/generator";
-import { Config } from "./src/Config";
-import { BaseError } from "./src/Error/BaseError";
-import { formatError } from "./src/Utils/formatError";
-import * as pkg from "./package.json";
+import { createGenerator } from "./factory/generator.js";
+import { Config } from "./src/Config.js";
+import { BaseError } from "./src/Error/BaseError.js";
+import { formatError } from "./src/Utils/formatError.js";
+import pkg from "./package.json" assert { type: "json" };
 import { dirname } from "path";
 import { mkdirSync, writeFileSync } from "fs";
 

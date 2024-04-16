@@ -1,9 +1,9 @@
 import * as path from "path";
 import ts from "typescript";
 
-import { BaseError } from "../Error/BaseError";
-import { DiagnosticError } from "../Error/DiagnosticError";
-import { UnknownNodeError } from "../Error/UnknownNodeError";
+import { BaseError } from "../Error/BaseError.js";
+import { DiagnosticError } from "../Error/DiagnosticError.js";
+import { UnknownNodeError } from "../Error/UnknownNodeError.js";
 
 function getNodeLocation(node: ts.Node): [string, number, number] {
     const sourceFile = node.getSourceFile();

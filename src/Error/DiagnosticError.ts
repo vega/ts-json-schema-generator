@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { BaseError } from "./BaseError";
+import { BaseError } from "./BaseError.js";
 
 export class DiagnosticError extends BaseError {
     public constructor(private diagnostics: readonly ts.Diagnostic[]) {

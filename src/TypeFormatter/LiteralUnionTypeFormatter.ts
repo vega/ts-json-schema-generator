@@ -1,12 +1,12 @@
-import { Definition } from "../Schema/Definition";
-import { RawTypeName } from "../Schema/RawType";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { NullType } from "../Type/NullType";
-import { UnionType } from "../Type/UnionType";
-import { typeName } from "../Utils/typeName";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { Definition } from "../Schema/Definition.js";
+import { RawTypeName } from "../Schema/RawType.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NullType } from "../Type/NullType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { typeName } from "../Utils/typeName.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {

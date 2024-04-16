@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { NumberType } from "../Type/NumberType";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { NumberType } from "../Type/NumberType.js";
 
 export class NumberTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {

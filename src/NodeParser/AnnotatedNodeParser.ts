@@ -1,15 +1,15 @@
 import ts from "typescript";
-import { AnnotationsReader } from "../AnnotationsReader";
-import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { BaseType } from "../Type/BaseType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { removeUndefined } from "../Utils/removeUndefined";
-import { DefinitionType } from "../Type/DefinitionType";
-import { UnionType } from "../Type/UnionType";
-import { AnyType } from "../Type/AnyType";
+import { AnnotationsReader } from "../AnnotationsReader.js";
+import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader.js";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { removeUndefined } from "../Utils/removeUndefined.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { AnyType } from "../Type/AnyType.js";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(

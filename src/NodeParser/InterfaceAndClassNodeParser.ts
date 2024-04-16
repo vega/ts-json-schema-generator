@@ -1,14 +1,14 @@
 import ts, { PropertyName } from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { NeverType } from "../Type/NeverType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { isNodeHidden } from "../Utils/isHidden";
-import { isPublic, isStatic } from "../Utils/modifiers";
-import { getKey } from "../Utils/nodeKey";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { isNodeHidden } from "../Utils/isHidden.js";
+import { isPublic, isStatic } from "../Utils/modifiers.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(

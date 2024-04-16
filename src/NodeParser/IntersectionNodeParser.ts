@@ -1,14 +1,14 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { IntersectionType } from "../Type/IntersectionType";
-import { PrimitiveType } from "../Type/PrimitiveType";
-import { UnionType } from "../Type/UnionType";
-import { derefType } from "../Utils/derefType";
-import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
-import { UndefinedType } from "../Type/UndefinedType";
-import { NeverType } from "../Type/NeverType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { IntersectionType } from "../Type/IntersectionType.js";
+import { PrimitiveType } from "../Type/PrimitiveType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefType } from "../Utils/derefType.js";
+import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { NeverType } from "../Type/NeverType.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(

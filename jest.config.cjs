@@ -9,6 +9,9 @@ const config = {
     transform: {
         ".*": "babel-jest",
     },
+    moduleNameMapper: {
+        "^(\\.{1,2}/.*)\\.js$": "$1",
+    },
 };
 
 module.exports = config;

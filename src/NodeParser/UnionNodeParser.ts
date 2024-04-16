@@ -1,10 +1,10 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { UnionType } from "../Type/UnionType";
-import { BaseType } from "../Type/BaseType";
-import { notNever } from "../Utils/notNever";
-import { NeverType } from "../Type/NeverType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { UnionType } from "../Type/UnionType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { notNever } from "../Utils/notNever.js";
+import { NeverType } from "../Type/NeverType.js";
 
 export class UnionNodeParser implements SubNodeParser {
     public constructor(

@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { isAssignableTo } from "../Utils/isAssignableTo";
-import { narrowType } from "../Utils/narrowType";
-import { UnionType } from "../Type/UnionType";
-import { NeverType } from "../Type/NeverType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { isAssignableTo } from "../Utils/isAssignableTo.js";
+import { narrowType } from "../Utils/narrowType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { NeverType } from "../Type/NeverType.js";
 
 class CheckType {
     constructor(

@@ -1,13 +1,13 @@
 import ts from "typescript";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { FunctionType } from "../Type/FunctionType";
-import { FunctionOptions } from "../Config";
-import { NeverType } from "../Type/NeverType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { Context, NodeParser } from "../NodeParser";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { getKey } from "../Utils/nodeKey";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { FunctionType } from "../Type/FunctionType.js";
+import { FunctionOptions } from "../Config.js";
+import { NeverType } from "../Type/NeverType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class FunctionNodeParser implements SubNodeParser {
     constructor(

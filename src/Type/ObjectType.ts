@@ -1,5 +1,5 @@
-import { BaseType } from "./BaseType";
-import { strip } from "../Utils/String";
+import { BaseType } from "./BaseType.js";
+import { strip } from "../Utils/String.js";
 
 export class ObjectProperty {
     public constructor(

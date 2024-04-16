@@ -1,12 +1,12 @@
 import ts from "typescript";
-import { UnknownTypeError } from "../Error/UnknownTypeError";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { StringType } from "../Type/StringType";
-import { UnionType } from "../Type/UnionType";
-import { extractLiterals } from "../Utils/extractLiterals";
+import { UnknownTypeError } from "../Error/UnknownTypeError.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { StringType } from "../Type/StringType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { extractLiterals } from "../Utils/extractLiterals.js";
 
 export class StringTemplateLiteralNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { OptionalType } from "../Type/OptionalType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { OptionalType } from "../Type/OptionalType.js";
 
 export class OptionalTypeNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

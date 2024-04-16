@@ -1,11 +1,11 @@
-import { TupleType } from "../Type/TupleType";
+import { TupleType } from "../Type/TupleType.js";
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { UnionType } from "../Type/UnionType";
-import { LiteralType } from "../Type/LiteralType";
-import { SymbolType } from "../Type/SymbolType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { SymbolType } from "../Type/SymbolType.js";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(

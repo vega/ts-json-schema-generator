@@ -1,12 +1,12 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { IntersectionType } from "../Type/IntersectionType";
-import { TupleType } from "../Type/TupleType";
-import { TypeFormatter } from "../TypeFormatter";
-import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { IntersectionType } from "../Type/IntersectionType.js";
+import { TupleType } from "../Type/TupleType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class IntersectionTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}

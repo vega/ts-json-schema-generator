@@ -8,17 +8,16 @@ import { FormatterAugmentor, createFormatter } from "../factory/formatter";
 import { ParserAugmentor, createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
-import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
-import { Definition } from "../src/Schema/Definition";
-import { SchemaGenerator } from "../src/SchemaGenerator";
-import { SubTypeFormatter } from "../src/SubTypeFormatter";
-import { EnumType } from "../src/Type/EnumType";
-import { FunctionType } from "../src/Type/FunctionType";
-import { StringType } from "../src/Type/StringType";
-import { TypeFormatter } from "../src/TypeFormatter";
-import { uniqueArray } from "../src/Utils/uniqueArray";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config.js";
+import { Definition } from "../src/Schema/Definition.js";
+import { SchemaGenerator } from "../src/SchemaGenerator.js";
+import { SubTypeFormatter } from "../src/SubTypeFormatter.js";
+import { EnumType } from "../src/Type/EnumType.js";
+import { FunctionType } from "../src/Type/FunctionType.js";
+import { StringType } from "../src/Type/StringType.js";
+import { TypeFormatter } from "../src/TypeFormatter.js";
+import { uniqueArray } from "../src/Utils/uniqueArray.js";
 
-const basePath = "test/config";
 
 function assertSchema(
     name: string,

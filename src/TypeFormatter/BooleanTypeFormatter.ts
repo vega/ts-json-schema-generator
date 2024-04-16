@@ -1,7 +1,7 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { BooleanType } from "../Type/BooleanType";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { BooleanType } from "../Type/BooleanType.js";
 
 export class BooleanTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
