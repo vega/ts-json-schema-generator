@@ -7,7 +7,7 @@ export class TopRefNodeParser implements NodeParser {
     public constructor(
         protected childNodeParser: NodeParser,
         protected fullName: string | undefined,
-        protected topRef: boolean
+        protected topRef: boolean,
     ) {}
 
     public createType(node: ts.Node, context: Context): BaseType {

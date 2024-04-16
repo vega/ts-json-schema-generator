@@ -12,7 +12,7 @@ export class ExposeNodeParser implements SubNodeParser {
         protected typeChecker: ts.TypeChecker,
         protected subNodeParser: SubNodeParser,
         protected expose: "all" | "none" | "export",
-        protected jsDoc: "none" | "extended" | "basic"
+        protected jsDoc: "none" | "extended" | "basic",
     ) {}
 
     public supportsNode(node: ts.Node): boolean {

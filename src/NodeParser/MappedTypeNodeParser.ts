@@ -22,7 +22,7 @@ import { removeUndefined } from "../Utils/removeUndefined.js";
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
         protected childNodeParser: NodeParser,
-        protected readonly additionalProperties: boolean
+        protected readonly additionalProperties: boolean,
     ) {}
 
     public supportsNode(node: ts.MappedTypeNode): boolean {
@@ -40,7 +40,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 id,
                 [],
                 this.getProperties(node, keyListType, context),
-                this.getAdditionalProperties(node, keyListType, context)
+                this.getAdditionalProperties(node, keyListType, context),
             );
         } else if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
@@ -53,7 +53,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             if (constraintType?.getId() === "number") {
                 const type = this.childNodeParser.createType(
                     node.type!,
-                    this.createSubContext(node, keyListType, context)
+                    this.createSubContext(node, keyListType, context),
                 );
                 return type instanceof NeverType ? new NeverType() : new ArrayType(type);
             }
@@ -85,7 +85,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             throw new LogicError(
                 `Unexpected key type "${
                     constraintType ? constraintType.getId() : constraintType
-                }" for type "${node.getText()}" (expected "UnionType" or "StringType")`
+                }" for type "${node.getText()}" (expected "UnionType" or "StringType")`,
             );
         }
     }
@@ -95,7 +95,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return rawKey;
         }
         const key = derefType(
-            this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context))
+            this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context)),
         );
 
         return key;
@@ -110,7 +110,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             .reduce((result: ObjectProperty[], [key, mappedKey]: [LiteralType, LiteralType]) => {
                 const propertyType = this.childNodeParser.createType(
                     node.type!,
-                    this.createSubContext(node, key, context)
+                    this.createSubContext(node, key, context),
                 );
 
                 let newType = derefAnnotatedType(propertyType);
@@ -124,7 +124,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 const objectProperty = new ObjectProperty(
                     mappedKey.getValue().toString(),
                     preserveAnnotation(propertyType, newType),
-                    !node.questionToken && !hasUndefined
+                    !node.questionToken && !hasUndefined,
                 );
 
                 result.push(objectProperty);
@@ -139,7 +139,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             .map((value: EnumValue) => {
                 const type = this.childNodeParser.createType(
                     node.type!,
-                    this.createSubContext(node, new LiteralType(value!), context)
+                    this.createSubContext(node, new LiteralType(value!), context),
                 );
 
                 return new ObjectProperty(value!.toString(), type, !node.questionToken);
@@ -149,7 +149,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected getAdditionalProperties(
         node: ts.MappedTypeNode,
         keyListType: UnionType,
-        context: Context
+        context: Context,
     ): BaseType | boolean {
         const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
         if (key) {
@@ -165,7 +165,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected createSubContext(
         node: ts.MappedTypeNode,
         key: LiteralType | StringType,
-        parentContext: Context
+        parentContext: Context,
     ): Context {
         const subContext = new Context(node);
 

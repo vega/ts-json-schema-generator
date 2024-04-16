@@ -16,6 +16,6 @@ export class MyObject {
      */
     public constructor(
         public a: string,
-        public b: number
+        public b: number,
     ) {}
 }

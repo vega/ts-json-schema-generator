@@ -16,7 +16,7 @@ const invalidTypes: Record<number, boolean> = {
 export class TypeReferenceNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeReferenceNode): boolean {
@@ -73,7 +73,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
         return this.childNodeParser.createType(
             typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
-            this.createSubContext(node, context)
+            this.createSubContext(node, context),
         );
     }
 

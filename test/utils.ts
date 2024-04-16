@@ -46,7 +46,7 @@ export function assertValidSchema(
          */
         ajvOptions?: AjvOptions;
         mainTsOnly?: boolean;
-    }
+    },
 ) {
     return (): void => {
         const config: CompletedConfig = {

@@ -6,7 +6,7 @@ describe("deepMerge", () => {
             flag: { type: "boolean", const: true },
         });
         expect(
-            deepMerge({ flag: { type: "boolean", enum: [true] } }, { flag: { type: "boolean", enum: [true, false] } })
+            deepMerge({ flag: { type: "boolean", enum: [true] } }, { flag: { type: "boolean", enum: [true, false] } }),
         ).toEqual({ flag: { type: "boolean", const: true } });
     });
 
@@ -15,7 +15,7 @@ describe("deepMerge", () => {
             flag: { type: "boolean", const: false },
         });
         expect(
-            deepMerge({ flag: { type: "boolean", const: false } }, { flag: { type: "boolean", enum: [true, false] } })
+            deepMerge({ flag: { type: "boolean", const: false } }, { flag: { type: "boolean", enum: [true, false] } }),
         ).toEqual({ flag: { type: "boolean", const: false } });
     });
 
@@ -24,12 +24,12 @@ describe("deepMerge", () => {
             flag: { type: "number", enum: [1, 2] },
         });
         expect(
-            deepMerge({ flag: { type: "number", enum: [1, 2, 3] } }, { flag: { type: "number", enum: [1, 3] } })
+            deepMerge({ flag: { type: "number", enum: [1, 2, 3] } }, { flag: { type: "number", enum: [1, 3] } }),
         ).toEqual({
             flag: { type: "number", enum: [1, 3] },
         });
         expect(
-            deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", enum: [1, 3] } })
+            deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", enum: [1, 3] } }),
         ).toEqual({
             flag: { type: "number", const: 1 },
         });

@@ -10,7 +10,7 @@ describe("valid-data-struct", () => {
     it("literal-object-type", assertValidSchema("literal-object-type", "MyType"));
     it(
         "literal-object-type-with-computed-props",
-        assertValidSchema("literal-object-type-with-computed-props", "MyType")
+        assertValidSchema("literal-object-type-with-computed-props", "MyType"),
     );
     it("literal-array-type", assertValidSchema("literal-array-type", "MyType"));
     it("literal-index-type", assertValidSchema("literal-index-type", "MyType"));

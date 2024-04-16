@@ -62,8 +62,8 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
             } else {
                 throw new Error(
                     `Cannot assign discriminator tag to type: ${JSON.stringify(
-                        derefed
-                    )}. This tag can only be assigned to union types.`
+                        derefed,
+                    )}. This tag can only be assigned to union types.`,
                 );
             }
         }

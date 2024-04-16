@@ -25,7 +25,7 @@ function loadTsConfigFile(configFile: string) {
             ts.sys,
             path.resolve(path.dirname(configFile)),
             {},
-            configFile
+            configFile,
         );
         parseResult.options.noEmit = true;
         delete parseResult.options.out;

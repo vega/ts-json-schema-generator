@@ -17,7 +17,7 @@ export class SchemaGenerator {
         protected readonly program: ts.Program,
         protected readonly nodeParser: NodeParser,
         protected readonly typeFormatter: TypeFormatter,
-        protected readonly config?: Config
+        protected readonly config?: Config,
     ) {}
 
     public createSchema(fullName?: string): Schema {
@@ -132,7 +132,7 @@ export class SchemaGenerator {
     protected appendTypes(
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
-        types: Map<string, ts.Node>
+        types: Map<string, ts.Node>,
     ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);

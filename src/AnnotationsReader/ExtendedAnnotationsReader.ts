@@ -8,7 +8,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
     public constructor(
         private typeChecker: ts.TypeChecker,
         extraTags?: Set<string>,
-        private markdownDescription?: boolean
+        private markdownDescription?: boolean,
     ) {
         super(extraTags);
     }

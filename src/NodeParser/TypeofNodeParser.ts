@@ -13,7 +13,7 @@ import { FunctionType } from "../Type/FunctionType.js";
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeQueryNode): boolean {

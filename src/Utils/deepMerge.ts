@@ -13,7 +13,7 @@ import { intersectionOfArrays } from "./intersectionOfArrays.js";
  */
 export function deepMerge(
     a: { [key: string]: JSONSchema7Definition },
-    b: { [key: string]: JSONSchema7Definition }
+    b: { [key: string]: JSONSchema7Definition },
 ): { [x: string]: JSONSchema7Definition } {
     const output = { ...structuredClone(a), ...structuredClone(b) };
 

@@ -9,7 +9,7 @@ export const myFunction = (
      * @description Inline parameter description
      */
     optionalArgument?: string,
-    optionalArgumentWithDefault: number = 42
+    optionalArgumentWithDefault: number = 42,
 ) => {
     return "whatever";
 };

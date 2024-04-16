@@ -8,7 +8,7 @@ import { TypeFormatter } from "../TypeFormatter.js";
 export class ReferenceTypeFormatter implements SubTypeFormatter {
     public constructor(
         protected childTypeFormatter: TypeFormatter,
-        protected encodeRefs: boolean
+        protected encodeRefs: boolean,
     ) {}
 
     public supportsType(type: BaseType): boolean {

@@ -7,7 +7,7 @@ export class ConstructorType extends BaseType {
 
     constructor(
         node?: ts.ConstructorTypeNode,
-        protected namedArguments?: ObjectType
+        protected namedArguments?: ObjectType,
     ) {
         super();
 

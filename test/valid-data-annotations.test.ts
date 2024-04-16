@@ -14,28 +14,28 @@ describe("valid-data-annotations", () => {
                 "customMultilineProperty",
                 "customUnquotedProperty",
             ],
-        })
+        }),
     );
 
     it(
         "annotation-empty-basic",
-        assertValidSchema("annotation-empty", "MyObject", { jsDoc: "basic", extraTags: ["customEmptyAnnotation"] })
+        assertValidSchema("annotation-empty", "MyObject", { jsDoc: "basic", extraTags: ["customEmptyAnnotation"] }),
     );
     it(
         "annotation-empty-extended",
-        assertValidSchema("annotation-empty", "MyObject", { extraTags: ["customEmptyAnnotation"] })
+        assertValidSchema("annotation-empty", "MyObject", { extraTags: ["customEmptyAnnotation"] }),
     );
     it(
         "annotation-deprecated-basic",
-        assertValidSchema("annotation-deprecated", "MyObject", { jsDoc: "basic", extraTags: ["deprecationMessage"] })
+        assertValidSchema("annotation-deprecated", "MyObject", { jsDoc: "basic", extraTags: ["deprecationMessage"] }),
     );
     it(
         "annotation-deprecated-extended",
-        assertValidSchema("annotation-deprecated", "MyObject", { extraTags: ["deprecationMessage"] })
+        assertValidSchema("annotation-deprecated", "MyObject", { extraTags: ["deprecationMessage"] }),
     );
     it(
         "annotation-description-override",
-        assertValidSchema("annotation-description-override", "MyObject", { extraTags: ["markdownDescription"] })
+        assertValidSchema("annotation-description-override", "MyObject", { extraTags: ["markdownDescription"] }),
     );
 
     it("annotation-comment", assertValidSchema("annotation-comment", "MyObject"));
@@ -86,6 +86,6 @@ describe("valid-data-annotations", () => {
 
     it(
         "discriminator",
-        assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" })
+        assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" }),
     );
 });

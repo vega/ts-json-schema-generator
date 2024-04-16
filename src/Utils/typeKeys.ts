@@ -25,7 +25,7 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
 
     if (type instanceof IntersectionType || type instanceof UnionType) {
         return uniqueLiterals(
-            type.getTypes().reduce((result: LiteralType[], subType) => [...result, ...getTypeKeys(subType)], [])
+            type.getTypes().reduce((result: LiteralType[], subType) => [...result, ...getTypeKeys(subType)], []),
         );
     }
 
@@ -39,8 +39,8 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
                 .getBaseTypes()
                 .reduce(
                     (result: LiteralType[], parentType) => [...result, ...getTypeKeys(parentType)],
-                    objectProperties
-                )
+                    objectProperties,
+                ),
         );
     }
 

@@ -22,7 +22,7 @@ function assertSchema(name: string, type: string, message: string) {
         const generator: SchemaGenerator = new SchemaGenerator(
             program,
             createParser(program, config),
-            createFormatter(config)
+            createFormatter(config),
         );
 
         expect(() => generator.createSchema(type)).toThrow(message);
@@ -41,8 +41,8 @@ describe("invalid-data", () => {
             "MyType",
             'Cannot find discriminator keyword "type" in type ' +
                 '{"name":"B","type":{"id":"interface-1119825560-40-63-1119825560-0-124",' +
-                '"baseTypes":[],"properties":[],"additionalProperties":false,"nonPrimitive":false}}.'
-        )
+                '"baseTypes":[],"properties":[],"additionalProperties":false,"nonPrimitive":false}}.',
+        ),
     );
     it(
         "non-union-discriminator",
@@ -53,11 +53,11 @@ describe("invalid-data", () => {
                 '{"id":"interface-2103469249-0-76-2103469249-0-77","baseTypes":[],' +
                 '"properties":[{"name":"name","type":{},"required":true}],' +
                 '"additionalProperties":false,"nonPrimitive":false}. ' +
-                "This tag can only be assigned to union types."
-        )
+                "This tag can only be assigned to union types.",
+        ),
     );
     it(
         "duplicate-discriminator",
-        assertSchema("duplicate-discriminator", "MyType", 'Duplicate discriminator values: A in type "(A|B)".')
+        assertSchema("duplicate-discriminator", "MyType", 'Duplicate discriminator values: A in type "(A|B)".'),
     );
 });

@@ -91,7 +91,7 @@ export function isAssignableTo(
     target: BaseType,
     source: BaseType,
     inferMap: Map<string, BaseType> = new Map(),
-    insideTypes: Set<BaseType> = new Set()
+    insideTypes: Set<BaseType> = new Set(),
 ): boolean {
     // Dereference source and target
     source = derefType(source);
@@ -203,7 +203,7 @@ export function isAssignableTo(
 
             // Check if target has properties in common with source
             const inCommon = targetMembers.some((targetMember) =>
-                sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName())
+                sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName()),
             );
 
             return (
@@ -221,7 +221,7 @@ export function isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
                         inferMap,
-                        new Set(insideTypes).add(source).add(target)
+                        new Set(insideTypes).add(source).add(target),
                     );
                 })
             );
@@ -271,7 +271,7 @@ export function isAssignableTo(
                                 targetMember.getType(),
                                 new TupleType(remaining),
                                 inferMap,
-                                insideTypes
+                                insideTypes,
                             );
                         }
                         // The type cannot be assigned if more than one source

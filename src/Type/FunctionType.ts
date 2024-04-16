@@ -7,7 +7,7 @@ export class FunctionType extends BaseType {
 
     constructor(
         node?: ts.FunctionTypeNode | ts.FunctionExpression | ts.FunctionDeclaration | ts.ArrowFunction,
-        protected namedArguments?: ObjectType
+        protected namedArguments?: ObjectType,
     ) {
         super();
 

@@ -7,7 +7,7 @@ import { TupleType } from "../Type/TupleType.js";
 export class TupleNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TupleTypeNode): boolean {
@@ -18,7 +18,7 @@ export class TupleNodeParser implements SubNodeParser {
         return new TupleType(
             node.elements.map((item) => {
                 return this.childNodeParser.createType(item, context);
-            })
+            }),
         );
     }
 }

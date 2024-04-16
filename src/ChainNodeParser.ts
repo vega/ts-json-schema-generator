@@ -11,7 +11,7 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
 
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected nodeParsers: SubNodeParser[]
+        protected nodeParsers: SubNodeParser[],
     ) {}
 
     public addNodeParser(nodeParser: SubNodeParser): this {

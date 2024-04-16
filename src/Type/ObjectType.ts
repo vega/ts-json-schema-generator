@@ -5,7 +5,7 @@ export class ObjectProperty {
     public constructor(
         private name: string,
         private type: BaseType,
-        private required: boolean
+        private required: boolean,
     ) {}
 
     public getName(): string {
@@ -26,7 +26,7 @@ export class ObjectType extends BaseType {
         private properties: readonly ObjectProperty[],
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
-        private nonPrimitive: boolean = false
+        private nonPrimitive: boolean = false,
     ) {
         super();
     }
