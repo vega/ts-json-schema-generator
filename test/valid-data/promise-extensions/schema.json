@@ -1,0 +1,45 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"Original": {
+			"additionalProperties": false,
+			"properties": {
+				"a": {
+					"type": "string"
+				},
+				"b": {
+					"items": {
+						"type": "number"
+					},
+					"type": "array"
+				}
+			},
+			"required": ["a", "b"],
+			"type": "object"
+		},
+		"LikeAbstractClass": {
+			"$ref": "#/definitions/Original"
+		},
+		"LikeClass": {
+			"$ref": "#/definitions/Original"
+		},
+		"LikeInterface": {
+			"$ref": "#/definitions/Original"
+		},
+		"LikeType": {
+			"$ref": "#/definitions/Original"
+		},
+		"PromiseAlias": {
+			"$ref": "#/definitions/Original"
+		},
+		"PromiseClass": {
+			"$ref": "#/definitions/Original"
+		},
+		"PromiseInterface": {
+			"$ref": "#/definitions/Original"
+		},
+		"WithProperty": {
+			"$ref": "#/definitions/Original"
+		}
+	}
+}

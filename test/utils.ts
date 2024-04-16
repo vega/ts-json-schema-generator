@@ -76,7 +76,7 @@ export function assertValidSchema(
         const actual: any = JSON.parse(JSON.stringify(schema));
 
         expect(typeof actual).toBe("object");
-        expect(actual).toEqual(expected);
+        expect(actual).toStrictEqual(expected);
 
         let localValidator = validator;
         if (extraTags) {

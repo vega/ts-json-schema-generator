@@ -28,11 +28,6 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             // property on the node itself.
             (node.typeName as unknown as ts.Type).symbol;
 
-        // Wraps promise type to avoid resolving to a empty Object type.
-        if (typeSymbol.name === "Promise") {
-            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
-        }
-
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
 

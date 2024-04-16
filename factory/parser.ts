@@ -56,6 +56,7 @@ import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodePars
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
 import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
+import { PromiseNodeParser } from "../src/NodeParser/PromiseNodeParser";
 import { SubNodeParser } from "../src/SubNodeParser";
 import { TopRefNodeParser } from "../src/TopRefNodeParser";
 
@@ -122,6 +123,7 @@ export function createParser(program: ts.Program, config: Config, augmentor?: Pa
         .addNodeParser(new LiteralNodeParser(chainNodeParser))
         .addNodeParser(new ParenthesizedNodeParser(chainNodeParser))
 
+        .addNodeParser(new PromiseNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
