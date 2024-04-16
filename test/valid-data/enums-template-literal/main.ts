@@ -5,4 +5,4 @@ enum MyEnum {
 
 export type MyObject = {
     prop?: `${MyEnum}`;
-}
+};

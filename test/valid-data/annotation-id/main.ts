@@ -2,7 +2,7 @@
  * @id #MyObject
  */
 export interface MyObject {
-    nested: MyNestedObject
+    nested: MyNestedObject;
 }
 
 /**

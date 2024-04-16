@@ -3,7 +3,7 @@ type MyType2 = string | number[];
 type MyType3 = (string | number)[];
 
 type MyType4 = "s" | 1;
-type MyType5 = "s" | (1)[];
+type MyType5 = "s" | 1[];
 type MyType6 = ("s" | 1)[];
 
 export interface TypeUnion {

@@ -1,4 +1,4 @@
-export type String = string
+export type String = string;
 
 export const myFunction = (
     /**

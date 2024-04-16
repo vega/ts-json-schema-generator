@@ -17,7 +17,7 @@ export interface BaseAxis<N = NumberValue, S = StringValue> {
 }
 
 type OmitValueRef<T> = {
-    [P in keyof T]?: Exclude<Exclude<T[P], NumericValueRef>, StringValueRef>
+    [P in keyof T]?: Exclude<Exclude<T[P], NumericValueRef>, StringValueRef>;
 };
 
 export type BaseAxisNoSignals = OmitValueRef<BaseAxis>;

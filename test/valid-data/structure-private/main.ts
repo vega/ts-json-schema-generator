@@ -1,6 +1,6 @@
 interface MyPrivate {
     subfieldA: number;
-    subfieldB: (string | number);
+    subfieldB: string | number;
     subfieldC: {
         subsubfieldA: number[];
     };

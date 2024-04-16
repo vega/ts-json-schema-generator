@@ -1,1 +1,1 @@
-export function myFunction() { }
+export function myFunction() {}
