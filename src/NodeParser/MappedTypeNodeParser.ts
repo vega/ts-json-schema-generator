@@ -18,6 +18,7 @@ import { derefAnnotatedType, derefType } from "../Utils/derefType.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
+import { AliasType } from "../Type/AliasType.js";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -104,7 +105,38 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
             .getTypes()
+            .flatMap((type) => {
+                if (type instanceof LiteralType) {
+                    return type;
+                } else if (type instanceof AliasType) {
+                    const itemsToProcess = [type.getType()];
+                    const processedTypes = [];
+                    while (itemsToProcess.length > 0) {
+                        const currentType = itemsToProcess[0];
+                        if (currentType instanceof LiteralType) {
+                            processedTypes.push(currentType);
+                        } else if (currentType instanceof AliasType) {
+                            itemsToProcess.push(currentType.getType());
+                        } else if (currentType instanceof UnionType) {
+                            itemsToProcess.push(...currentType.getTypes());
+                        }
+                        itemsToProcess.shift();
+                    }
+                    return processedTypes;
+                }
+                return [];
+            })
             .filter((type): type is LiteralType => type instanceof LiteralType)
+            .reduce((acc: LiteralType[], curr: LiteralType) => {
+                if (
+                    acc.findIndex((val: LiteralType) => {
+                        return val.getId() === curr.getId();
+                    }) < 0
+                ) {
+                    acc.push(curr);
+                }
+                return acc;
+            }, [])
             .map((type) => [type, this.mapKey(node, type, context)])
             .filter((value): value is [LiteralType, LiteralType] => value[1] instanceof LiteralType)
             .reduce((result: ObjectProperty[], [key, mappedKey]: [LiteralType, LiteralType]) => {
