@@ -25,3 +25,11 @@ export function derefAnnotatedType(type: BaseType): BaseType {
 
     return type;
 }
+
+export function derefAliasedType(type: BaseType): BaseType {
+    if (type instanceof AliasType) {
+        return derefAliasedType(type.getType());
+    }
+
+    return type;
+}

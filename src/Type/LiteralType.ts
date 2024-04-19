@@ -14,4 +14,8 @@ export class LiteralType extends BaseType {
     public getValue(): LiteralValue {
         return this.value;
     }
+
+    public isString(): boolean {
+        return typeof this.value === "string";
+    }
 }

@@ -40,9 +40,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         if (undefinedIndex != -1) {
             throw new Error(
-                `Cannot find discriminator keyword "${discriminator}" in type ${JSON.stringify(
-                    type.getTypes()[undefinedIndex],
-                )}.`,
+                `Cannot find discriminator keyword "${discriminator}" in type ${type.getTypes()[undefinedIndex].getName()}.`,
             );
         }
 
