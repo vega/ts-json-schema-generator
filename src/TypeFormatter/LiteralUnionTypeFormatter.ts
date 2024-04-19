@@ -4,6 +4,7 @@ import { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
+import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { typeName } from "../Utils/typeName.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
@@ -13,27 +14,39 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType && type.getTypes().length > 0 && this.isLiteralUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
-        const values = uniqueArray(type.getTypes().map((item: LiteralType | NullType) => this.getLiteralValue(item)));
-        const types = uniqueArray(type.getTypes().map((item: LiteralType | NullType) => this.getLiteralType(item)));
+        let hasString = false;
+        const types = type.getTypes().filter((t) => {
+            const isString = t instanceof StringType;
+            hasString = hasString || isString;
+            return !isString;
+        });
 
-        if (types.length === 1) {
+        if (hasString) {
             return {
-                type: types[0],
-                enum: values,
-            };
-        } else {
-            return {
-                type: types,
-                enum: values,
+                type: "string",
             };
         }
+
+        const values = uniqueArray(
+            types.map((item: LiteralType | NullType | StringType) => this.getLiteralValue(item)),
+        );
+        const typeNames = uniqueArray(
+            types.map((item: LiteralType | NullType | StringType) => this.getLiteralType(item)),
+        );
+
+        return {
+            type: typeNames.length === 1 ? typeNames[0] : typeNames,
+            enum: values,
+        };
     }
     public getChildren(type: UnionType): BaseType[] {
         return [];
     }
 
     protected isLiteralUnion(type: UnionType): boolean {
-        return type.getTypes().every((item) => item instanceof LiteralType || item instanceof NullType);
+        return type
+            .getTypes()
+            .every((item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType);
     }
     protected getLiteralValue(value: LiteralType | NullType): string | number | boolean | null {
         return value instanceof LiteralType ? value.getValue() : null;
