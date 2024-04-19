@@ -9,6 +9,8 @@ import { derefType } from "../Utils/derefType.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { NeverType } from "../Type/NeverType.js";
+import { ObjectType } from "../Type/ObjectType.js";
+import { StringType } from "../Type/StringType.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -28,8 +30,18 @@ export class IntersectionNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
+        // handle autocomplete hacks like `string & {}`
+        if (types.length === 2 && types.some((t) => t instanceof StringType) && types.some((t) => isEmptyObject(t))) {
+            return new StringType(true);
+        }
+
         return translate(types);
     }
+}
+
+function isEmptyObject(x: BaseType) {
+    const t = derefType(x);
+    return t instanceof ObjectType && !t.getAdditionalProperties() && !t.getProperties().length;
 }
 
 function derefAndFlattenUnions(type: BaseType): BaseType[] {

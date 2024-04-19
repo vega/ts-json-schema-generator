@@ -15,13 +15,17 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: UnionType): Definition {
         let hasString = false;
+        let preserveLiterals = false;
         const types = type.getTypes().filter((t) => {
-            const isString = t instanceof StringType;
-            hasString = hasString || isString;
-            return !isString;
+            if (t instanceof StringType) {
+                hasString = true;
+                preserveLiterals = preserveLiterals || t.getPreserveLiterals();
+                return false;
+            }
+            return true;
         });
 
-        if (hasString) {
+        if (hasString && !preserveLiterals) {
             return {
                 type: "string",
             };
@@ -34,10 +38,23 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
             types.map((item: LiteralType | NullType | StringType) => this.getLiteralType(item)),
         );
 
-        return {
+        const ret = {
             type: typeNames.length === 1 ? typeNames[0] : typeNames,
             enum: values,
         };
+
+        if (preserveLiterals) {
+            return {
+                anyOf: [
+                    {
+                        type: "string",
+                    },
+                    ret,
+                ],
+            };
+        }
+
+        return ret;
     }
     public getChildren(type: UnionType): BaseType[] {
         return [];
