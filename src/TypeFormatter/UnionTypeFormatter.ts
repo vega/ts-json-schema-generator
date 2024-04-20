@@ -40,9 +40,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         if (undefinedIndex != -1) {
             throw new Error(
-                `Cannot find discriminator keyword "${discriminator}" in type ${JSON.stringify(
-                    type.getTypes()[undefinedIndex],
-                )}.`,
+                `Cannot find discriminator keyword "${discriminator}" in type ${type.getTypes()[undefinedIndex].getName()}.`,
             );
         }
 
@@ -97,38 +95,6 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         }
 
         const definitions = this.getTypeDefinitions(type);
-
-        // TODO: why is this not covered by LiteralUnionTypeFormatter?
-        // special case for string literals | string -> string
-        let stringType = true;
-        let oneNotEnum = false;
-        for (const def of definitions) {
-            if (def.type !== "string") {
-                stringType = false;
-                break;
-            }
-            if (def.enum === undefined) {
-                oneNotEnum = true;
-            }
-        }
-        if (stringType && oneNotEnum) {
-            const values = [];
-            for (const def of definitions) {
-                if (def.enum) {
-                    values.push(...def.enum);
-                } else if (def.const) {
-                    values.push(def.const);
-                } else {
-                    return {
-                        type: "string",
-                    };
-                }
-            }
-            return {
-                type: "string",
-                enum: values,
-            };
-        }
 
         const flattenedDefinitions: JSONSchema7[] = [];
 

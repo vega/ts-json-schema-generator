@@ -47,7 +47,7 @@ export function getTypeKeys(type: BaseType): LiteralType[] {
     return [];
 }
 
-export function getTypeByKey(type: BaseType, index: LiteralType | StringType): BaseType | undefined {
+export function getTypeByKey(type: BaseType, index: LiteralType | StringType | NumberType): BaseType | undefined {
     type = derefType(type);
 
     if (type instanceof IntersectionType || type instanceof UnionType) {

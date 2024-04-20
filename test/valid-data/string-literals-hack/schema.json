@@ -1,0 +1,114 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "literalWithNull": {
+          "enum": [
+            "foo",
+            "bar",
+            null
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "literalWithString": {
+          "type": "string"
+        },
+        "literalWithStringAndNull": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "literals": {
+          "enum": [
+            "foo",
+            "bar"
+          ],
+          "type": "string"
+        },
+        "stringWithNull": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "withHack": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "enum": [
+                "foo",
+                "bar"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "withHackNull": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "enum": [
+                "foo",
+                "bar",
+                null
+              ],
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          ]
+        },
+        "withHackRecord": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "enum": [
+                "foo",
+                "bar"
+              ],
+              "type": "string"
+            }
+          ]
+        },
+        "withRef": {
+          "enum": [
+            "foo",
+            "a",
+            "b"
+          ],
+          "type": "string"
+        },
+        "withRefWithString": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "literals",
+        "stringWithNull",
+        "literalWithNull",
+        "literalWithString",
+        "literalWithStringAndNull",
+        "withRef",
+        "withRefWithString",
+        "withHack",
+        "withHackRecord",
+        "withHackNull"
+      ],
+      "type": "object"
+    }
+  }
+}
