@@ -5,6 +5,13 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
+        "hackOnLiteral": {
+          "enum": [
+            "foo",
+            "bar"
+          ],
+          "type": "string"
+        },
         "literalWithNull": {
           "enum": [
             "foo",
@@ -106,7 +113,8 @@
         "withRefWithString",
         "withHack",
         "withHackRecord",
-        "withHackNull"
+        "withHackNull",
+        "hackOnLiteral"
       ],
       "type": "object"
     }

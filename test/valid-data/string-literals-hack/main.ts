@@ -11,4 +11,5 @@ export type MyObject = {
     withHack: "foo" | "bar" | (string & {});
     withHackRecord: "foo" | "bar" | (string & Record<never, never>);
     withHackNull: "foo" | "bar" | null | (string & Record<never, never>);
+    hackOnLiteral: ("foo" & Record<never, never>) | "bar";
 };

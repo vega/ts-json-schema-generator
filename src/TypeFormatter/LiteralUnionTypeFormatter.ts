@@ -83,7 +83,7 @@ function flattenTypes(type: UnionType): (StringType | LiteralType | NullType)[] 
         });
 }
 
-function isLiteralUnion(type: UnionType): boolean {
+export function isLiteralUnion(type: UnionType): boolean {
     return flattenTypes(type).every(
         (item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType,
     );
