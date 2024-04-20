@@ -1,15 +1,15 @@
-import { LogicError } from "../Error/LogicError";
-import { Definition } from "../Schema/Definition";
-import { RawTypeName } from "../Schema/RawType";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { BooleanType } from "../Type/BooleanType";
-import { NullType } from "../Type/NullType";
-import { NumberType } from "../Type/NumberType";
-import { PrimitiveType } from "../Type/PrimitiveType";
-import { StringType } from "../Type/StringType";
-import { UnionType } from "../Type/UnionType";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { LogicError } from "../Error/LogicError.js";
+import { Definition } from "../Schema/Definition.js";
+import { RawTypeName } from "../Schema/RawType.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { BooleanType } from "../Type/BooleanType.js";
+import { NullType } from "../Type/NullType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { PrimitiveType } from "../Type/PrimitiveType.js";
+import { StringType } from "../Type/StringType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {

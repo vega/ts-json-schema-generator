@@ -28,7 +28,7 @@ export interface MyObject {
     /**
      * @title Nullable value
      */
-    nullableValue: number | string |null;
+    nullableValue: number | string | null;
     /**
      * @title Optional value
      */

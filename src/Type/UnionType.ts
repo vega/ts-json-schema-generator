@@ -1,7 +1,7 @@
-import { BaseType } from "./BaseType";
-import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
-import { NeverType } from "./NeverType";
-import { derefType } from "../Utils/derefType";
+import { BaseType } from "./BaseType.js";
+import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
+import { NeverType } from "./NeverType.js";
+import { derefType } from "../Utils/derefType.js";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
@@ -17,7 +17,7 @@ export class UnionType extends BaseType {
                     flatTypes.push(type);
                 }
                 return flatTypes;
-            }, [] as BaseType[])
+            }, [] as BaseType[]),
         );
     }
 

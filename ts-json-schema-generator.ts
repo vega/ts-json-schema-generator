@@ -1,10 +1,10 @@
 import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
-import { createGenerator } from "./factory/generator";
-import { Config } from "./src/Config";
-import { BaseError } from "./src/Error/BaseError";
-import { formatError } from "./src/Utils/formatError";
-import * as pkg from "./package.json";
+import { createGenerator } from "./factory/generator.js";
+import { Config } from "./src/Config.js";
+import { BaseError } from "./src/Error/BaseError.js";
+import { formatError } from "./src/Utils/formatError.js";
+import pkg from "./package.json" assert { type: "json" };
 import { dirname } from "path";
 import { mkdirSync, writeFileSync } from "fs";
 
@@ -14,26 +14,26 @@ const args = new Command()
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .addOption(
-        new Option("-e, --expose <expose>", "Type exposing").choices(["all", "none", "export"]).default("export")
+        new Option("-e, --expose <expose>", "Type exposing").choices(["all", "none", "export"]).default("export"),
     )
     .addOption(
         new Option("-j, --jsDoc <extended>", "Read JsDoc annotations")
             .choices(["none", "basic", "extended"])
-            .default("extended")
+            .default("extended"),
     )
     .addOption(
         new Option("--markdown-description", "Generate `markdownDescription` in addition to `description`.").implies({
             jsDoc: "extended",
-        })
+        }),
     )
     .addOption(
         new Option(
             "--functions <functions>",
-            // eslint-disable-next-line max-len
-            "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType."
+
+            "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.",
         )
             .choices(["fail", "comment", "hide"])
-            .default("comment")
+            .default("comment"),
     )
     .option("--minify", "Minify generated schema", false)
     .option("--unstable", "Do not sort properties")
@@ -46,7 +46,7 @@ const args = new Command()
         "--validation-keywords [value]",
         "Provide additional validation keywords to include",
         (value: string, list: string[]) => list.concat(value),
-        []
+        [],
     )
     .option("--additional-properties", "Allow additional properties for objects with no index signature", false)
     .version(pkg.version)

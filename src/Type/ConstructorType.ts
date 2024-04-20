@@ -1,13 +1,13 @@
 import ts from "typescript";
-import { BaseType } from "./BaseType";
-import { ObjectType } from "./ObjectType";
+import { BaseType } from "./BaseType.js";
+import { ObjectType } from "./ObjectType.js";
 
 export class ConstructorType extends BaseType {
     private comment: string;
 
     constructor(
         node?: ts.ConstructorTypeNode,
-        protected namedArguments?: ObjectType
+        protected namedArguments?: ObjectType,
     ) {
         super();
 

@@ -1,9 +1,9 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class AliasType extends BaseType {
     public constructor(
         private id: string,
-        private type: BaseType
+        private type: BaseType,
     ) {
         super();
     }

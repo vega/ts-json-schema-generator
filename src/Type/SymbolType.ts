@@ -1,4 +1,4 @@
-import { PrimitiveType } from "./PrimitiveType";
+import { PrimitiveType } from "./PrimitiveType.js";
 
 export class SymbolType extends PrimitiveType {
     public getId(): string {

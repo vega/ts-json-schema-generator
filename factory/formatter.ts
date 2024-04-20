@@ -1,40 +1,40 @@
-import { ChainTypeFormatter } from "../src/ChainTypeFormatter";
-import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter";
-import { CompletedConfig } from "../src/Config";
-import { MutableTypeFormatter } from "../src/MutableTypeFormatter";
-import { TypeFormatter } from "../src/TypeFormatter";
-import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter";
-import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter";
-import { AnyTypeFormatter } from "../src/TypeFormatter/AnyTypeFormatter";
-import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter";
-import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter";
-import { ConstructorTypeFormatter } from "../src/TypeFormatter/ConstructorTypeFormatter";
-import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter";
-import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter";
-import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter";
-import { HiddenTypeFormatter } from "../src/TypeFormatter/HiddenTypeFormatter";
-import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter";
-import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter";
-import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter";
-import { NeverTypeFormatter } from "../src/TypeFormatter/NeverTypeFormatter";
-import { NullTypeFormatter } from "../src/TypeFormatter/NullTypeFormatter";
-import { NumberTypeFormatter } from "../src/TypeFormatter/NumberTypeFormatter";
-import { ObjectTypeFormatter } from "../src/TypeFormatter/ObjectTypeFormatter";
-import { OptionalTypeFormatter } from "../src/TypeFormatter/OptionalTypeFormatter";
-import { PrimitiveUnionTypeFormatter } from "../src/TypeFormatter/PrimitiveUnionTypeFormatter";
-import { ReferenceTypeFormatter } from "../src/TypeFormatter/ReferenceTypeFormatter";
-import { RestTypeFormatter } from "../src/TypeFormatter/RestTypeFormatter";
-import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter";
-import { SymbolTypeFormatter } from "../src/TypeFormatter/SymbolTypeFormatter";
-import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter";
-import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter";
-import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter";
-import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter";
-import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter";
+import { ChainTypeFormatter } from "../src/ChainTypeFormatter.js";
+import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter.js";
+import { CompletedConfig } from "../src/Config.js";
+import { MutableTypeFormatter } from "../src/MutableTypeFormatter.js";
+import { TypeFormatter } from "../src/TypeFormatter.js";
+import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter.js";
+import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter.js";
+import { AnyTypeFormatter } from "../src/TypeFormatter/AnyTypeFormatter.js";
+import { ArrayTypeFormatter } from "../src/TypeFormatter/ArrayTypeFormatter.js";
+import { BooleanTypeFormatter } from "../src/TypeFormatter/BooleanTypeFormatter.js";
+import { ConstructorTypeFormatter } from "../src/TypeFormatter/ConstructorTypeFormatter.js";
+import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter.js";
+import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter.js";
+import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter.js";
+import { HiddenTypeFormatter } from "../src/TypeFormatter/HiddenTypeFormatter.js";
+import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter.js";
+import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter.js";
+import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter.js";
+import { NeverTypeFormatter } from "../src/TypeFormatter/NeverTypeFormatter.js";
+import { NullTypeFormatter } from "../src/TypeFormatter/NullTypeFormatter.js";
+import { NumberTypeFormatter } from "../src/TypeFormatter/NumberTypeFormatter.js";
+import { ObjectTypeFormatter } from "../src/TypeFormatter/ObjectTypeFormatter.js";
+import { OptionalTypeFormatter } from "../src/TypeFormatter/OptionalTypeFormatter.js";
+import { PrimitiveUnionTypeFormatter } from "../src/TypeFormatter/PrimitiveUnionTypeFormatter.js";
+import { ReferenceTypeFormatter } from "../src/TypeFormatter/ReferenceTypeFormatter.js";
+import { RestTypeFormatter } from "../src/TypeFormatter/RestTypeFormatter.js";
+import { StringTypeFormatter } from "../src/TypeFormatter/StringTypeFormatter.js";
+import { SymbolTypeFormatter } from "../src/TypeFormatter/SymbolTypeFormatter.js";
+import { TupleTypeFormatter } from "../src/TypeFormatter/TupleTypeFormatter.js";
+import { UndefinedTypeFormatter } from "../src/TypeFormatter/UndefinedTypeFormatter.js";
+import { UnionTypeFormatter } from "../src/TypeFormatter/UnionTypeFormatter.js";
+import { UnknownTypeFormatter } from "../src/TypeFormatter/UnknownTypeFormatter.js";
+import { VoidTypeFormatter } from "../src/TypeFormatter/VoidTypeFormatter.js";
 
 export type FormatterAugmentor = (
     formatter: MutableTypeFormatter,
-    circularReferenceTypeFormatter: CircularReferenceTypeFormatter
+    circularReferenceTypeFormatter: CircularReferenceTypeFormatter,
 ) => void;
 
 export function createFormatter(config: CompletedConfig, augmentor?: FormatterAugmentor): TypeFormatter {

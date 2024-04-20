@@ -1,13 +1,13 @@
 import ts from "typescript";
-import { Context, NodeParser } from "./NodeParser";
-import { BaseType } from "./Type/BaseType";
-import { DefinitionType } from "./Type/DefinitionType";
+import { Context, NodeParser } from "./NodeParser.js";
+import { BaseType } from "./Type/BaseType.js";
+import { DefinitionType } from "./Type/DefinitionType.js";
 
 export class TopRefNodeParser implements NodeParser {
     public constructor(
         protected childNodeParser: NodeParser,
         protected fullName: string | undefined,
-        protected topRef: boolean
+        protected topRef: boolean,
     ) {}
 
     public createType(node: ts.Node, context: Context): BaseType {

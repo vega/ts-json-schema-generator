@@ -1,26 +1,26 @@
-import { AliasType } from "../../src/Type/AliasType";
-import { AnnotatedType } from "../../src/Type/AnnotatedType";
-import { AnyType } from "../../src/Type/AnyType";
-import { ArrayType } from "../../src/Type/ArrayType";
-import { BooleanType } from "../../src/Type/BooleanType";
-import { DefinitionType } from "../../src/Type/DefinitionType";
-import { InferType } from "../../src/Type/InferType";
-import { IntersectionType } from "../../src/Type/IntersectionType";
-import { LiteralType } from "../../src/Type/LiteralType";
-import { NeverType } from "../../src/Type/NeverType";
-import { NullType } from "../../src/Type/NullType";
-import { NumberType } from "../../src/Type/NumberType";
-import { ObjectProperty, ObjectType } from "../../src/Type/ObjectType";
-import { OptionalType } from "../../src/Type/OptionalType";
-import { ReferenceType } from "../../src/Type/ReferenceType";
-import { RestType } from "../../src/Type/RestType";
-import { StringType } from "../../src/Type/StringType";
-import { TupleType } from "../../src/Type/TupleType";
-import { UndefinedType } from "../../src/Type/UndefinedType";
-import { UnionType } from "../../src/Type/UnionType";
-import { UnknownType } from "../../src/Type/UnknownType";
-import { VoidType } from "../../src/Type/VoidType";
-import { isAssignableTo } from "../../src/Utils/isAssignableTo";
+import { AliasType } from "../../src/Type/AliasType.js";
+import { AnnotatedType } from "../../src/Type/AnnotatedType.js";
+import { AnyType } from "../../src/Type/AnyType.js";
+import { ArrayType } from "../../src/Type/ArrayType.js";
+import { BooleanType } from "../../src/Type/BooleanType.js";
+import { DefinitionType } from "../../src/Type/DefinitionType.js";
+import { InferType } from "../../src/Type/InferType.js";
+import { IntersectionType } from "../../src/Type/IntersectionType.js";
+import { LiteralType } from "../../src/Type/LiteralType.js";
+import { NeverType } from "../../src/Type/NeverType.js";
+import { NullType } from "../../src/Type/NullType.js";
+import { NumberType } from "../../src/Type/NumberType.js";
+import { ObjectProperty, ObjectType } from "../../src/Type/ObjectType.js";
+import { OptionalType } from "../../src/Type/OptionalType.js";
+import { ReferenceType } from "../../src/Type/ReferenceType.js";
+import { RestType } from "../../src/Type/RestType.js";
+import { StringType } from "../../src/Type/StringType.js";
+import { TupleType } from "../../src/Type/TupleType.js";
+import { UndefinedType } from "../../src/Type/UndefinedType.js";
+import { UnionType } from "../../src/Type/UnionType.js";
+import { UnknownType } from "../../src/Type/UnknownType.js";
+import { VoidType } from "../../src/Type/VoidType.js";
+import { isAssignableTo } from "../../src/Utils/isAssignableTo.js";
 
 describe("isAssignableTo", () => {
     it("returns true for same types", () => {
@@ -113,8 +113,8 @@ describe("isAssignableTo", () => {
         expect(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
-                new AnyType()
-            )
+                new AnyType(),
+            ),
         ).toBe(true);
         expect(isAssignableTo(new BooleanType(), new AnyType())).toBe(true);
         expect(isAssignableTo(new NumberType(), new AnyType())).toBe(true);
@@ -133,8 +133,8 @@ describe("isAssignableTo", () => {
         expect(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
-                new NeverType()
-            )
+                new NeverType(),
+            ),
         ).toBe(true);
         expect(isAssignableTo(new BooleanType(), new NeverType())).toBe(true);
         expect(isAssignableTo(new NumberType(), new NeverType())).toBe(true);
@@ -153,8 +153,8 @@ describe("isAssignableTo", () => {
         expect(
             isAssignableTo(
                 new AnyType(),
-                new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true)
-            )
+                new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
+            ),
         ).toBe(true);
         expect(isAssignableTo(new AnyType(), new BooleanType())).toBe(true);
         expect(isAssignableTo(new AnyType(), new NumberType())).toBe(true);
@@ -173,8 +173,8 @@ describe("isAssignableTo", () => {
         expect(
             isAssignableTo(
                 new UnknownType(),
-                new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true)
-            )
+                new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
+            ),
         ).toBe(true);
         expect(isAssignableTo(new UnknownType(), new BooleanType())).toBe(true);
         expect(isAssignableTo(new UnknownType(), new NumberType())).toBe(true);
@@ -194,8 +194,8 @@ describe("isAssignableTo", () => {
         expect(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], false),
-                new UnknownType()
-            )
+                new UnknownType(),
+            ),
         ).toBe(false);
         expect(isAssignableTo(new BooleanType(), new UnknownType())).toBe(false);
         expect(isAssignableTo(new NumberType(), new UnknownType())).toBe(false);
@@ -230,13 +230,13 @@ describe("isAssignableTo", () => {
     });
     it("lets tuple type to be assigned to array type if item types match", () => {
         expect(
-            isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new StringType()]))
+            isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new StringType()])),
         ).toBe(true);
         expect(
-            isAssignableTo(new ArrayType(new NumberType()), new TupleType([new StringType(), new StringType()]))
+            isAssignableTo(new ArrayType(new NumberType()), new TupleType([new StringType(), new StringType()])),
         ).toBe(false);
         expect(
-            isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new NumberType()]))
+            isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new NumberType()])),
         ).toBe(false);
     });
     it("lets array types to be assigned to array-like object", () => {
@@ -244,25 +244,25 @@ describe("isAssignableTo", () => {
             "fixedLengthArrayLike",
             [],
             [new ObjectProperty("length", new LiteralType(2), true)],
-            false
+            false,
         );
         const nonFixedLengthArrayLike = new ObjectType(
             "nonFixedLengthArrayLike",
             [],
             [new ObjectProperty("length", new NumberType(), true)],
-            false
+            false,
         );
         const optionalLengthArrayLike = new ObjectType(
             "optionalLengthArrayLike",
             [],
             [new ObjectProperty("length", new NumberType(), false)],
-            false
+            false,
         );
         const nonArrayLike = new ObjectType(
             "nonArrayLike",
             [],
             [new ObjectProperty("foo", new NumberType(), true)],
-            false
+            false,
         );
 
         const arrayType = new ArrayType(new StringType());
@@ -280,59 +280,59 @@ describe("isAssignableTo", () => {
     });
     it("lets only compatible tuple type to be assigned to tuple type", () => {
         expect(
-            isAssignableTo(new TupleType([new StringType(), new StringType()]), new ArrayType(new StringType()))
+            isAssignableTo(new TupleType([new StringType(), new StringType()]), new ArrayType(new StringType())),
         ).toBe(false);
         expect(isAssignableTo(new TupleType([new StringType(), new StringType()]), new StringType())).toBe(false);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new StringType()]),
-                new TupleType([new StringType(), new NumberType()])
-            )
+                new TupleType([new StringType(), new NumberType()]),
+            ),
         ).toBe(false);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new StringType()]),
-                new TupleType([new StringType(), new StringType()])
-            )
+                new TupleType([new StringType(), new StringType()]),
+            ),
         ).toBe(true);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new OptionalType(new StringType())]),
-                new TupleType([new StringType()])
-            )
+                new TupleType([new StringType()]),
+            ),
         ).toBe(true);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new OptionalType(new StringType())]),
-                new TupleType([new StringType(), new StringType()])
-            )
+                new TupleType([new StringType(), new StringType()]),
+            ),
         ).toBe(true);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new InferType("T")]),
-                new TupleType([new StringType(), new NumberType(), new StringType()])
-            )
+                new TupleType([new StringType(), new NumberType(), new StringType()]),
+            ),
         ).toBe(false);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new InferType("T")]),
-                new TupleType([new StringType(), new NumberType()])
-            )
+                new TupleType([new StringType(), new NumberType()]),
+            ),
         ).toBe(true);
         expect(
-            isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()]))
+            isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()])),
         ).toBe(false);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new RestType(new InferType("T"))]),
-                new TupleType([new StringType()])
-            )
+                new TupleType([new StringType()]),
+            ),
         ).toBe(true);
         expect(
             isAssignableTo(
                 new TupleType([new StringType(), new RestType(new InferType("T"))]),
-                new TupleType([new StringType(), new NumberType(), new StringType()])
-            )
+                new TupleType([new StringType(), new NumberType(), new StringType()]),
+            ),
         ).toBe(true);
     });
     it("lets anything except null and undefined to be assigned to empty object type", () => {
@@ -344,7 +344,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(empty, new NeverType())).toBe(true);
         expect(isAssignableTo(empty, new NullType())).toBe(false);
         expect(
-            isAssignableTo(empty, new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true))
+            isAssignableTo(empty, new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true)),
         ).toBe(true);
         expect(isAssignableTo(empty, new BooleanType())).toBe(true);
         expect(isAssignableTo(empty, new NumberType())).toBe(true);
@@ -370,7 +370,7 @@ describe("isAssignableTo", () => {
             "a",
             [],
             [new ObjectProperty("a", new StringType(), false), new ObjectProperty("b", new StringType(), false)],
-            false
+            false,
         );
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), false)], false);
         expect(isAssignableTo(typeB, typeA)).toBe(true);
@@ -394,7 +394,7 @@ describe("isAssignableTo", () => {
             "ab",
             [],
             [new ObjectProperty("a", new StringType(), true), new ObjectProperty("b", new StringType(), true)],
-            false
+            false,
         );
         const aAndB = new IntersectionType([a, b]);
         expect(isAssignableTo(a, aAndB)).toBe(true);
@@ -433,7 +433,7 @@ describe("isAssignableTo", () => {
             "interface-src/test.ts-0-53-src/test.ts-0-317",
             [],
             [new ObjectProperty("a", new StringType(), true)],
-            false
+            false,
         );
         const innerDefinition = new DefinitionType("NumericValueRef", objectType);
         const innerUnion = new UnionType([new NumberType(), innerDefinition]);

@@ -1,8 +1,8 @@
 import json5 from "json5";
 import ts from "typescript";
-import { AnnotationsReader } from "../AnnotationsReader";
-import { Annotations } from "../Type/AnnotatedType";
-import { symbolAtNode } from "../Utils/symbolAtNode";
+import { AnnotationsReader } from "../AnnotationsReader.js";
+import { Annotations } from "../Type/AnnotatedType.js";
+import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
     private static requiresDollar = new Set<string>(["id", "comment", "ref"]);

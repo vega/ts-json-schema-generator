@@ -1,8 +1,8 @@
-import { NodeParser } from "../NodeParser";
+import { NodeParser } from "../NodeParser.js";
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
 
 export class AsExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

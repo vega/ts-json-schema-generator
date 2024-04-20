@@ -8,15 +8,15 @@ import { FormatterAugmentor, createFormatter } from "../factory/formatter";
 import { ParserAugmentor, createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import { BaseType, Context, DefinitionType, ReferenceType, SubNodeParser } from "../index";
-import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config";
-import { Definition } from "../src/Schema/Definition";
-import { SchemaGenerator } from "../src/SchemaGenerator";
-import { SubTypeFormatter } from "../src/SubTypeFormatter";
-import { EnumType } from "../src/Type/EnumType";
-import { FunctionType } from "../src/Type/FunctionType";
-import { StringType } from "../src/Type/StringType";
-import { TypeFormatter } from "../src/TypeFormatter";
-import { uniqueArray } from "../src/Utils/uniqueArray";
+import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config.js";
+import { Definition } from "../src/Schema/Definition.js";
+import { SchemaGenerator } from "../src/SchemaGenerator.js";
+import { SubTypeFormatter } from "../src/SubTypeFormatter.js";
+import { EnumType } from "../src/Type/EnumType.js";
+import { FunctionType } from "../src/Type/FunctionType.js";
+import { StringType } from "../src/Type/StringType.js";
+import { TypeFormatter } from "../src/TypeFormatter.js";
+import { uniqueArray } from "../src/Utils/uniqueArray.js";
 
 const basePath = "test/config";
 
@@ -25,7 +25,7 @@ function assertSchema(
     userConfig: Config & { type: string },
     tsconfig?: boolean,
     formatterAugmentor?: FormatterAugmentor,
-    parserAugmentor?: ParserAugmentor
+    parserAugmentor?: ParserAugmentor,
 ) {
     return () => {
         const config: CompletedConfig = {
@@ -44,7 +44,7 @@ function assertSchema(
             program,
             createParser(program, config, parserAugmentor),
             createFormatter(config, formatterAugmentor),
-            config
+            config,
         );
 
         const schema = generator.createSchema(config.type);
@@ -160,7 +160,7 @@ describe("config", () => {
             expose: "all",
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
     it(
         "expose-all-topref-true-not-exported",
@@ -169,7 +169,7 @@ describe("config", () => {
             expose: "all",
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
 
     it(
@@ -179,7 +179,7 @@ describe("config", () => {
             expose: "all",
             topRef: false,
             jsDoc: "none",
-        })
+        }),
     );
     it(
         "expose-all-topref-false-not-exported",
@@ -188,7 +188,7 @@ describe("config", () => {
             expose: "all",
             topRef: false,
             jsDoc: "none",
-        })
+        }),
     );
 
     it(
@@ -198,7 +198,7 @@ describe("config", () => {
             expose: "none",
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
     it(
         "expose-none-topref-false",
@@ -207,7 +207,7 @@ describe("config", () => {
             expose: "none",
             topRef: false,
             jsDoc: "none",
-        })
+        }),
     );
 
     it(
@@ -217,7 +217,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
     it(
         "expose-export-topref-false",
@@ -226,7 +226,7 @@ describe("config", () => {
             expose: "export",
             topRef: false,
             jsDoc: "none",
-        })
+        }),
     );
 
     it(
@@ -236,7 +236,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
     it(
         "jsdoc-complex-basic",
@@ -245,7 +245,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "basic",
-        })
+        }),
     );
     it(
         "jsdoc-complex-extended",
@@ -254,7 +254,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
     it(
         "jsdoc-description-only",
@@ -263,7 +263,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
 
     it(
@@ -273,7 +273,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
 
     it(
@@ -283,7 +283,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
 
     it(
@@ -293,7 +293,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
 
     it(
@@ -303,7 +303,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
     it(
         "jsdoc-inheritance-exclude",
@@ -312,7 +312,7 @@ describe("config", () => {
             expose: "export",
             topRef: true,
             jsDoc: "extended",
-        })
+        }),
     );
 
     // ensure that skipping type checking doesn't alter the JSON schema output
@@ -324,7 +324,7 @@ describe("config", () => {
             topRef: true,
             jsDoc: "extended",
             skipTypeCheck: true,
-        })
+        }),
     );
     it(
         "markdown-description",
@@ -335,7 +335,7 @@ describe("config", () => {
             jsDoc: "extended",
             sortProps: true,
             markdownDescription: true,
-        })
+        }),
     );
     it(
         "tsconfig-support",
@@ -347,8 +347,8 @@ describe("config", () => {
                 topRef: false,
                 jsDoc: "none",
             },
-            true
-        )
+            true,
+        ),
     );
 
     it(
@@ -359,7 +359,7 @@ describe("config", () => {
             encodeRefs: false,
             topRef: true,
             jsDoc: "none",
-        })
+        }),
     );
 
     it(
@@ -367,7 +367,7 @@ describe("config", () => {
         assertSchema("additional-properties", {
             type: "MyObject",
             additionalProperties: true,
-        })
+        }),
     );
 
     it(
@@ -375,13 +375,13 @@ describe("config", () => {
         assertSchema("arrow-function-parameters", {
             type: "myFunction",
             expose: "all",
-        })
+        }),
     );
     it(
         "function-parameters-all",
         assertSchema("function-parameters-all", {
             type: "*",
-        })
+        }),
     );
 
     it(
@@ -392,8 +392,8 @@ describe("config", () => {
                 type: "MyObject",
             },
             false,
-            (formatter) => formatter.addTypeFormatter(new ExampleFunctionTypeFormatter())
-        )
+            (formatter) => formatter.addTypeFormatter(new ExampleFunctionTypeFormatter()),
+        ),
     );
 
     it(
@@ -404,8 +404,8 @@ describe("config", () => {
                 type: "MyObject",
             },
             false,
-            (formatter) => formatter.addTypeFormatter(new ExampleEnumTypeFormatter())
-        )
+            (formatter) => formatter.addTypeFormatter(new ExampleEnumTypeFormatter()),
+        ),
     );
 
     it(
@@ -417,8 +417,8 @@ describe("config", () => {
             },
             false,
             (formatter, circularReferenceTypeFormatter) =>
-                formatter.addTypeFormatter(new ExampleDefinitionOverrideFormatter(circularReferenceTypeFormatter))
-        )
+                formatter.addTypeFormatter(new ExampleDefinitionOverrideFormatter(circularReferenceTypeFormatter)),
+        ),
     );
 
     it(
@@ -430,8 +430,8 @@ describe("config", () => {
             },
             false,
             undefined,
-            (parser) => parser.addNodeParser(new ExampleConstructorParser())
-        )
+            (parser) => parser.addNodeParser(new ExampleConstructorParser()),
+        ),
     );
 
     it(
@@ -443,8 +443,8 @@ describe("config", () => {
             },
             false,
             undefined,
-            (parser) => parser.addNodeParser(new ExampleNullParser())
-        )
+            (parser) => parser.addNodeParser(new ExampleNullParser()),
+        ),
     );
 
     it(
@@ -452,7 +452,7 @@ describe("config", () => {
         assertSchema("functions-hide", {
             type: "MyType",
             functions: "hide",
-        })
+        }),
     );
 
     it(
@@ -460,6 +460,6 @@ describe("config", () => {
         assertSchema("functions-comment", {
             type: "MyType",
             functions: "comment",
-        })
+        }),
     );
 });

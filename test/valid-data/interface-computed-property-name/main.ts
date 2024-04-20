@@ -1,8 +1,8 @@
 import { key as importedKey, Keys } from "./module";
-const key = "localKey"
+const key = "localKey";
 
 enum LocalKeys {
-    Key = "localEnumKey"
+    Key = "localEnumKey",
 }
 
 export interface MyObject {

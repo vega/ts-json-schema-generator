@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../dist/ts-json-schema-generator');
+import("../dist/ts-json-schema-generator.js");

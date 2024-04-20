@@ -17,7 +17,7 @@ describe("valid-data-other", () => {
     it("function-parameters-required", assertValidSchema("function-parameters-required", "myFunction"));
     it(
         "function-parameters-variable-assignment",
-        assertValidSchema("function-parameters-variable-assignment", "myFunction")
+        assertValidSchema("function-parameters-variable-assignment", "myFunction"),
     );
     it("function-function-syntax", assertValidSchema("function-function-syntax", "myFunction"));
 
@@ -25,11 +25,12 @@ describe("valid-data-other", () => {
     it("string-literals-inline", assertValidSchema("string-literals-inline", "MyObject"));
     it("string-literals-intrinsic", assertValidSchema("string-literals-intrinsic", "MyObject"));
     it("string-literals-null", assertValidSchema("string-literals-null", "MyObject"));
+    it("string-literals-hack", assertValidSchema("string-literals-hack", "MyObject"));
     it("string-template-literals", assertValidSchema("string-template-literals", "MyObject"));
     it("string-template-expression-literals", assertValidSchema("string-template-expression-literals", "MyObject"));
     it(
         "string-template-expression-literals-import",
-        assertValidSchema("string-template-expression-literals-import", "MyObject")
+        assertValidSchema("string-template-expression-literals-import", "MyObject"),
     );
 
     it("namespace-deep-1", assertValidSchema("namespace-deep-1", "RootNamespace.Def"));
@@ -85,7 +86,7 @@ describe("valid-data-other", () => {
         assertValidSchema("object-required", "MyObject", undefined, {
             ...objectRequiredSamples,
             ajvOptions: { $data: true },
-        })
+        }),
     );
     it("re-export-with-asterisk", assertValidSchema("re-export-with-asterisk", "*", undefined, { mainTsOnly: true }));
 });

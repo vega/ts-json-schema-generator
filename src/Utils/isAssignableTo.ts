@@ -1,24 +1,24 @@
-import { AnyType } from "../Type/AnyType";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { EnumType } from "../Type/EnumType";
-import { IntersectionType } from "../Type/IntersectionType";
-import { NullType } from "../Type/NullType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { OptionalType } from "../Type/OptionalType";
-import { TupleType } from "../Type/TupleType";
-import { UndefinedType } from "../Type/UndefinedType";
-import { UnionType } from "../Type/UnionType";
-import { UnknownType } from "../Type/UnknownType";
-import { VoidType } from "../Type/VoidType";
-import { derefType } from "./derefType";
-import { LiteralType, LiteralValue } from "../Type/LiteralType";
-import { StringType } from "../Type/StringType";
-import { NumberType } from "../Type/NumberType";
-import { BooleanType } from "../Type/BooleanType";
-import { InferType } from "../Type/InferType";
-import { RestType } from "../Type/RestType";
-import { NeverType } from "../Type/NeverType";
+import { AnyType } from "../Type/AnyType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { EnumType } from "../Type/EnumType.js";
+import { IntersectionType } from "../Type/IntersectionType.js";
+import { NullType } from "../Type/NullType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { OptionalType } from "../Type/OptionalType.js";
+import { TupleType } from "../Type/TupleType.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { UnknownType } from "../Type/UnknownType.js";
+import { VoidType } from "../Type/VoidType.js";
+import { derefType } from "./derefType.js";
+import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
+import { StringType } from "../Type/StringType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { BooleanType } from "../Type/BooleanType.js";
+import { InferType } from "../Type/InferType.js";
+import { RestType } from "../Type/RestType.js";
+import { NeverType } from "../Type/NeverType.js";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -91,7 +91,7 @@ export function isAssignableTo(
     target: BaseType,
     source: BaseType,
     inferMap: Map<string, BaseType> = new Map(),
-    insideTypes: Set<BaseType> = new Set()
+    insideTypes: Set<BaseType> = new Set(),
 ): boolean {
     // Dereference source and target
     source = derefType(source);
@@ -203,7 +203,7 @@ export function isAssignableTo(
 
             // Check if target has properties in common with source
             const inCommon = targetMembers.some((targetMember) =>
-                sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName())
+                sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName()),
             );
 
             return (
@@ -221,7 +221,7 @@ export function isAssignableTo(
                         targetMember.getType(),
                         sourceMember.getType(),
                         inferMap,
-                        new Set(insideTypes).add(source!).add(target!)
+                        new Set(insideTypes).add(source).add(target),
                     );
                 })
             );
@@ -271,7 +271,7 @@ export function isAssignableTo(
                                 targetMember.getType(),
                                 new TupleType(remaining),
                                 inferMap,
-                                insideTypes
+                                insideTypes,
                             );
                         }
                         // The type cannot be assigned if more than one source

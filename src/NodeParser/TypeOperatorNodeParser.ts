@@ -1,14 +1,14 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { NumberType } from "../Type/NumberType";
-import { ObjectType } from "../Type/ObjectType";
-import { StringType } from "../Type/StringType";
-import { UnionType } from "../Type/UnionType";
-import { derefType } from "../Utils/derefType";
-import { getTypeKeys } from "../Utils/typeKeys";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { ObjectType } from "../Type/ObjectType.js";
+import { StringType } from "../Type/StringType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefType } from "../Utils/derefType.js";
+import { getTypeKeys } from "../Utils/typeKeys.js";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

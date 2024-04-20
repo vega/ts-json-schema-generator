@@ -1,9 +1,9 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { HiddenType } from "../Type/HiddenType";
-import { isNodeHidden } from "../Utils/isHidden";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { HiddenType } from "../Type/HiddenType.js";
+import { isNodeHidden } from "../Utils/isHidden.js";
 
 export class HiddenNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker) {}

@@ -1,16 +1,16 @@
-import { TupleType } from "../Type/TupleType";
+import { TupleType } from "../Type/TupleType.js";
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { UnionType } from "../Type/UnionType";
-import { LiteralType } from "../Type/LiteralType";
-import { SymbolType } from "../Type/SymbolType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { SymbolType } from "../Type/SymbolType.js";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.CallExpression): boolean {
@@ -34,7 +34,7 @@ export class CallExpressionParser implements SubNodeParser {
         const symbol = type.symbol || type.aliasSymbol;
         const decl = symbol.valueDeclaration || symbol.declarations![0];
         const subContext = this.createSubContext(node, context);
-        return this.childNodeParser.createType(decl, subContext)!;
+        return this.childNodeParser.createType(decl, subContext);
     }
 
     protected createSubContext(node: ts.CallExpression, parentContext: Context): Context {

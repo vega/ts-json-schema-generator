@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { UnionType } from "../Type/UnionType";
-import assert from "../Utils/assert";
-import { extractLiterals } from "../Utils/extractLiterals";
+import { Context } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { UnionType } from "../Type/UnionType.js";
+import assert from "../Utils/assert.js";
+import { extractLiterals } from "../Utils/extractLiterals.js";
 
 export const intrinsicMethods: Record<string, ((v: string) => string) | undefined> = {
     Uppercase: (v) => v.toUpperCase(),

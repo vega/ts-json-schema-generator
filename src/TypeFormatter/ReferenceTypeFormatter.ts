@@ -1,14 +1,14 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { TypeFormatter } from "../TypeFormatter";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
     public constructor(
         protected childTypeFormatter: TypeFormatter,
-        protected encodeRefs: boolean
+        protected encodeRefs: boolean,
     ) {}
 
     public supportsType(type: BaseType): boolean {

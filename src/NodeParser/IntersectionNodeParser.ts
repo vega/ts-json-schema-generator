@@ -1,19 +1,23 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { IntersectionType } from "../Type/IntersectionType";
-import { PrimitiveType } from "../Type/PrimitiveType";
-import { UnionType } from "../Type/UnionType";
-import { derefType } from "../Utils/derefType";
-import { uniqueTypeArray } from "../Utils/uniqueTypeArray";
-import { UndefinedType } from "../Type/UndefinedType";
-import { NeverType } from "../Type/NeverType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { IntersectionType } from "../Type/IntersectionType.js";
+import { PrimitiveType } from "../Type/PrimitiveType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefType } from "../Utils/derefType.js";
+import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { ObjectType } from "../Type/ObjectType.js";
+import { StringType } from "../Type/StringType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { isLiteralUnion } from "../TypeFormatter/LiteralUnionTypeFormatter.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.IntersectionTypeNode): boolean {
@@ -28,8 +32,24 @@ export class IntersectionNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return translate(types as BaseType[]);
+        // handle autocomplete hacks like `string & {}`
+        if (types.length === 2 && types.some((t) => isEmptyObject(t))) {
+            if (types.some((t) => t instanceof StringType)) {
+                return new StringType(true);
+            }
+            const nonObject = types.find((t) => !isEmptyObject(t));
+            if (nonObject instanceof LiteralType || (nonObject instanceof UnionType && isLiteralUnion(nonObject))) {
+                return nonObject;
+            }
+        }
+
+        return translate(types);
     }
+}
+
+function isEmptyObject(x: BaseType) {
+    const t = derefType(x);
+    return t instanceof ObjectType && !t.getAdditionalProperties() && !t.getProperties().length;
 }
 
 function derefAndFlattenUnions(type: BaseType): BaseType[] {
@@ -47,7 +67,7 @@ function derefAndFlattenUnions(type: BaseType): BaseType[] {
  * `(A & B) | (A & C)`. If no translation is needed then the original intersection type is returned.
  */
 export function translate(types: BaseType[]): BaseType {
-    types = uniqueTypeArray(types as BaseType[]);
+    types = uniqueTypeArray(types);
 
     if (types.length == 1) {
         return types[0];

@@ -1,2 +1,2 @@
 const arr: ["foo", "bar"] = ["foo", "bar"];
-export type MyType = typeof arr[1];
+export type MyType = (typeof arr)[1];

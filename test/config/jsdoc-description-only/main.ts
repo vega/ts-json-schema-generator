@@ -1,5 +1,4 @@
 /**
  * Some description here
  */
-export interface MyObject {
-}
+export interface MyObject {}
