@@ -6,7 +6,7 @@ import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { derefAliasedType } from "../Utils/derefType.js";
+import { derefAliasedType, isHiddenType } from "../Utils/derefType.js";
 import { typeName } from "../Utils/typeName.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 
@@ -71,6 +71,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
 function flattenTypes(type: UnionType): (StringType | LiteralType | NullType)[] {
     return type
         .getTypes()
+        .filter((t) => !isHiddenType(t))
         .map(derefAliasedType)
         .flatMap((t) => {
             if (t instanceof UnionType) {
