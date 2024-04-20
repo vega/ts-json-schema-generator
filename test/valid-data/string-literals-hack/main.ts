@@ -5,6 +5,7 @@ export type MyObject = {
     stringWithNull: string | null;
     literalWithNull: "foo" | "bar" | null;
     literalWithString: "foo" | "bar" | string;
+    literalWithStringAndNull: "foo" | "bar" | string | null;
     withRef: "foo" | Union;
     withRefWithString: Union | string;
     withHack: "foo" | "bar" | (string & {});

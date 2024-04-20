@@ -18,6 +18,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         let hasString = false;
         let preserveLiterals = false;
         let allStrings = true;
+        let hasNull = false;
 
         const flattenedTypes = flattenTypes(type);
 
@@ -27,9 +28,10 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
                 hasString = true;
                 preserveLiterals = preserveLiterals || t.getPreserveLiterals();
                 return false;
-            }
-
-            if (t instanceof LiteralType && !t.isString()) {
+            } else if (t instanceof NullType) {
+                hasNull = true;
+                return true;
+            } else if (t instanceof LiteralType && !t.isString()) {
                 allStrings = false;
             }
 
@@ -38,7 +40,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
 
         if (allStrings && hasString && !preserveLiterals) {
             return {
-                type: "string",
+                type: hasNull ? ["string", "null"] : "string",
             };
         }
 

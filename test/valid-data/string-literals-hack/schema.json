@@ -19,6 +19,12 @@
         "literalWithString": {
           "type": "string"
         },
+        "literalWithStringAndNull": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "literals": {
           "enum": [
             "foo",
@@ -95,6 +101,7 @@
         "stringWithNull",
         "literalWithNull",
         "literalWithString",
+        "literalWithStringAndNull",
         "withRef",
         "withRefWithString",
         "withHack",
