@@ -14,7 +14,7 @@ export class NamedTupleMemberNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.NamedTupleMember;
     }
 
-    public createType(node: ts.NamedTupleMember, context: Context, reference?: ReferenceType): BaseType {
+    public createType(node: ts.NamedTupleMember, context: Context, reference?: ReferenceType): BaseType | undefined {
         const baseType = this.childNodeParser.createType(node.type, context, reference);
 
         if (baseType instanceof ArrayType && node.getChildAt(0).kind === ts.SyntaxKind.DotDotDotToken) {

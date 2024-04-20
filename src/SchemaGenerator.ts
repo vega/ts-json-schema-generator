@@ -11,6 +11,7 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
 import { Config } from "./Config.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
+import { notUndefined } from "./Utils/notUndefined.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -26,9 +27,9 @@ export class SchemaGenerator {
     }
 
     public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
-        const rootTypes = rootNodes.map((rootNode) => {
-            return this.nodeParser.createType(rootNode, new Context());
-        });
+        const rootTypes = rootNodes
+            .map((rootNode) => this.nodeParser.createType(rootNode, new Context()))
+            .filter(notUndefined);
 
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};

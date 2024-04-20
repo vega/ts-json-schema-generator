@@ -24,10 +24,14 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ConditionalType;
     }
 
-    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType {
+    public createType(node: ts.ConditionalTypeNode, context: Context): BaseType | undefined {
         const checkType = this.childNodeParser.createType(node.checkType, context);
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
+
+        if (!checkType || !extendsType) {
+            return undefined;
+        }
 
         const inferMap = new Map();
 

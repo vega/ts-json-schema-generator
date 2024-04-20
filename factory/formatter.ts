@@ -12,7 +12,6 @@ import { ConstructorTypeFormatter } from "../src/TypeFormatter/ConstructorTypeFo
 import { DefinitionTypeFormatter } from "../src/TypeFormatter/DefinitionTypeFormatter.js";
 import { EnumTypeFormatter } from "../src/TypeFormatter/EnumTypeFormatter.js";
 import { FunctionTypeFormatter } from "../src/TypeFormatter/FunctionTypeFormatter.js";
-import { HiddenTypeFormatter } from "../src/TypeFormatter/HiddenTypeFormatter.js";
 import { IntersectionTypeFormatter } from "../src/TypeFormatter/IntersectionTypeFormatter.js";
 import { LiteralTypeFormatter } from "../src/TypeFormatter/LiteralTypeFormatter.js";
 import { LiteralUnionTypeFormatter } from "../src/TypeFormatter/LiteralUnionTypeFormatter.js";
@@ -58,7 +57,6 @@ export function createFormatter(config: CompletedConfig, augmentor?: FormatterAu
         .addTypeFormatter(new UndefinedTypeFormatter())
         .addTypeFormatter(new UnknownTypeFormatter())
         .addTypeFormatter(new VoidTypeFormatter())
-        .addTypeFormatter(new HiddenTypeFormatter())
         .addTypeFormatter(new NeverTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())

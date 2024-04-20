@@ -16,7 +16,7 @@ export class CallExpressionParser implements SubNodeParser {
     public supportsNode(node: ts.CallExpression): boolean {
         return node.kind === ts.SyntaxKind.CallExpression;
     }
-    public createType(node: ts.CallExpression, context: Context): BaseType {
+    public createType(node: ts.CallExpression, context: Context): BaseType | undefined {
         const type = this.typeChecker.getTypeAtLocation(node);
 
         // FIXME: remove special case
@@ -42,7 +42,7 @@ export class CallExpressionParser implements SubNodeParser {
 
         for (const arg of node.arguments) {
             const type = this.childNodeParser.createType(arg, parentContext);
-            subContext.pushArgument(type);
+            type && subContext.pushArgument(type);
         }
         return subContext;
     }

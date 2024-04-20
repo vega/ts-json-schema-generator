@@ -17,8 +17,9 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeOperator;
     }
 
-    public createType(node: ts.TypeOperatorNode, context: Context): BaseType {
+    public createType(node: ts.TypeOperatorNode, context: Context): BaseType | undefined {
         const type = this.childNodeParser.createType(node.type, context);
+        if (!type) return undefined;
         const derefed = derefType(type);
         // Remove readonly modifier from type
         if (node.operator === ts.SyntaxKind.ReadonlyKeyword && derefed) {

@@ -8,6 +8,7 @@ import { DefinitionType } from "../Type/DefinitionType.js";
 import { Context, NodeParser } from "../NodeParser.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class FunctionNodeParser implements SubNodeParser {
     constructor(
@@ -53,9 +54,9 @@ export function getNamedArguments(
         return undefined;
     }
 
-    const parameterTypes = node.parameters.map((parameter) => {
-        return childNodeParser.createType(parameter, context);
-    });
+    const parameterTypes = node.parameters
+        .map((parameter) => childNodeParser.createType(parameter, context))
+        .filter(notUndefined);
 
     return new ObjectType(
         `object-${getKey(node, context)}`,

@@ -9,8 +9,8 @@ export class OptionalTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.OptionalTypeNode): boolean {
         return node.kind === ts.SyntaxKind.OptionalType;
     }
-    public createType(node: ts.OptionalTypeNode, context: Context): BaseType {
+    public createType(node: ts.OptionalTypeNode, context: Context): BaseType | undefined {
         const type = this.childNodeParser.createType(node.type, context);
-        return new OptionalType(type);
+        return type && new OptionalType(type);
     }
 }

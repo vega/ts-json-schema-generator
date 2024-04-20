@@ -7,6 +7,7 @@ import { LiteralType } from "../Type/LiteralType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { extractLiterals } from "../Utils/extractLiterals.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class StringTemplateLiteralNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -24,11 +25,13 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
         try {
             const prefix = node.head.text;
             const matrix: string[][] = [[prefix]].concat(
-                node.templateSpans.map((span) => {
-                    const suffix = span.literal.text;
-                    const type = this.childNodeParser.createType(span.type, context);
-                    return extractLiterals(type).map((value) => value + suffix);
-                }),
+                node.templateSpans
+                    .map((span) => {
+                        const suffix = span.literal.text;
+                        const type = this.childNodeParser.createType(span.type, context);
+                        return type && extractLiterals(type).map((value) => value + suffix);
+                    })
+                    .filter(notUndefined),
             );
 
             const expandedLiterals = expand(matrix);

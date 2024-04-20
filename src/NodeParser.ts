@@ -61,5 +61,5 @@ export class Context {
 }
 
 export interface NodeParser {
-    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType;
+    createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined;
 }

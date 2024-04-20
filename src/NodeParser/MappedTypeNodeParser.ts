@@ -18,6 +18,7 @@ import { derefAnnotatedType, derefType } from "../Utils/derefType.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -29,8 +30,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.MappedType;
     }
 
-    public createType(node: ts.MappedTypeNode, context: Context): BaseType {
+    public createType(node: ts.MappedTypeNode, context: Context): BaseType | undefined {
         const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
+        if (!constraintType) return undefined;
         const keyListType = derefType(constraintType);
         const id = `indexed-type-${getKey(node, context)}`;
 
@@ -55,10 +57,11 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     node.type!,
                     this.createSubContext(node, keyListType, context),
                 );
-                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
+                return !type ? undefined : type instanceof NeverType ? new NeverType() : new ArrayType(type);
             }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, context);
+            if (!type) return undefined;
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
             const resultType = new ObjectType(id, [], [], type);
             if (resultType) {
@@ -90,13 +93,12 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
     }
 
-    protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType {
+    protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType | undefined {
         if (!node.nameType) {
             return rawKey;
         }
-        const key = derefType(
-            this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context)),
-        );
+        const type = this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context));
+        const key = type && derefType(type);
 
         return key;
     }
@@ -112,6 +114,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     node.type!,
                     this.createSubContext(node, key, context),
                 );
+                if (!propertyType) return result;
 
                 let newType = derefAnnotatedType(propertyType);
                 let hasUndefined = false;
@@ -142,8 +145,9 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     this.createSubContext(node, new LiteralType(value!), context),
                 );
 
-                return new ObjectProperty(value!.toString(), type, !node.questionToken);
-            });
+                return type && new ObjectProperty(value!.toString(), type, !node.questionToken);
+            })
+            .filter(notUndefined);
     }
 
     protected getAdditionalProperties(

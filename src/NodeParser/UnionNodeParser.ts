@@ -5,6 +5,7 @@ import { UnionType } from "../Type/UnionType.js";
 import { BaseType } from "../Type/BaseType.js";
 import { notNever } from "../Utils/notNever.js";
 import { NeverType } from "../Type/NeverType.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class UnionNodeParser implements SubNodeParser {
     public constructor(
@@ -21,7 +22,8 @@ export class UnionNodeParser implements SubNodeParser {
             .map((subnode) => {
                 return this.childNodeParser.createType(subnode, context);
             })
-            .filter(notNever);
+            .filter(notNever)
+            .filter(notUndefined);
 
         if (types.length === 1) {
             return types[0];

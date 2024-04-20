@@ -6,9 +6,9 @@ import { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { ReferenceType } from "../Type/ReferenceType.js";
-import { isNodeHidden } from "../Utils/isHidden.js";
 import { isPublic, isStatic } from "../Utils/modifiers.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -25,7 +25,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         node: ts.InterfaceDeclaration | ts.ClassDeclaration,
         context: Context,
         reference?: ReferenceType,
-    ): BaseType {
+    ): BaseType | undefined {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -33,7 +33,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
 
                 if (typeParam.default) {
                     const type = this.childNodeParser.createType(typeParam.default, context);
-                    context.setDefault(nameSymbol.name, type);
+                    type && context.setDefault(nameSymbol.name, type);
                 }
             });
         }
@@ -56,7 +56,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         if (properties.length === 0 && additionalProperties === false) {
             const arrayItemType = this.getArrayItemType(node);
             if (arrayItemType) {
-                return new ArrayType(this.childNodeParser.createType(arrayItemType, context));
+                const type = this.childNodeParser.createType(arrayItemType, context);
+                return type && new ArrayType(type);
             }
         }
 
@@ -95,7 +96,9 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.heritageClauses.reduce(
             (result: BaseType[], baseType) => [
                 ...result,
-                ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
+                ...baseType.types
+                    .map((expression) => this.childNodeParser.createType(expression, context))
+                    .filter(notUndefined),
             ],
             [],
         );
@@ -122,7 +125,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 },
                 [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[],
             )
-            .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
+            .filter((member) => isPublic(member) && !isStatic(member))
             .reduce((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
 
@@ -138,14 +141,13 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
                 return entries;
             }, [])
-            .map(
-                ({ member, memberType }) =>
-                    new ObjectProperty(
-                        this.getPropertyName(member.name),
-                        this.childNodeParser.createType(memberType, context),
-                        !member.questionToken,
-                    ),
-            )
+            .map(({ member, memberType }) => {
+                const type = this.childNodeParser.createType(memberType, context);
+                return type
+                    ? new ObjectProperty(this.getPropertyName(member.name), type, !member.questionToken)
+                    : undefined;
+            })
+            .filter(notUndefined)
             .filter((prop) => {
                 const type = prop.getType();
                 if (prop.isRequired() && type instanceof NeverType) {

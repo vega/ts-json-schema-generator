@@ -21,7 +21,7 @@ export class AnnotatedNodeParser implements SubNodeParser {
         return this.childNodeParser.supportsNode(node);
     }
 
-    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType {
+    public createType(node: ts.Node, context: Context, reference?: ReferenceType): BaseType | undefined {
         const annotatedNode = this.getAnnotatedNode(node);
         let annotations = this.annotationsReader.getAnnotations(annotatedNode);
         const nullable = this.getNullable(annotatedNode);
@@ -32,6 +32,10 @@ export class AnnotatedNodeParser implements SubNodeParser {
         }
 
         const baseType = this.childNodeParser.createType(node, context, reference);
+
+        if (!baseType) {
+            return undefined;
+        }
 
         // Don't return annotations for lib types such as Exclude.
         // Sourceless nodes may not have a fileName, just ignore them.
