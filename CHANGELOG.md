@@ -1,3 +1,21 @@
+# v2.1.0 (Sat Apr 20 2024)
+
+#### 🚀 Enhancement
+
+- feat: support autocomplete hack on literals or unions of literals [#1930](https://github.com/vega/ts-json-schema-generator/pull/1930) ([@domoritz](https://github.com/domoritz))
+- feat: improve literal union type handling [#1927](https://github.com/vega/ts-json-schema-generator/pull/1927) ([@domoritz](https://github.com/domoritz))
+- feat: update to eslint 9, switch to esm [#1922](https://github.com/vega/ts-json-schema-generator/pull/1922) ([@domoritz](https://github.com/domoritz))
+
+#### 🐛 Bug Fix
+
+- style: prettier [#1925](https://github.com/vega/ts-json-schema-generator/pull/1925) ([@domoritz](https://github.com/domoritz))
+
+#### Authors: 1
+
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+
+---
+
 # v2.0.1 (Sat Apr 13 2024)
 
 #### 🐛 Bug Fix
