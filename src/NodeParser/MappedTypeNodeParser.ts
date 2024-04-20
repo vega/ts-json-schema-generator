@@ -103,7 +103,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
         return keyListType
-            .getTypes()
+            .getFlattenedTypes(derefType)
             .filter((type): type is LiteralType => type instanceof LiteralType)
             .map((type) => [type, this.mapKey(node, type, context)])
             .filter((value): value is [LiteralType, LiteralType] => value[1] instanceof LiteralType)

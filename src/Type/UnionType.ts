@@ -1,7 +1,7 @@
 import { BaseType } from "./BaseType.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
 import { NeverType } from "./NeverType.js";
-import { derefType } from "../Utils/derefType.js";
+import { derefAliasedType, derefType, isHiddenType } from "../Utils/derefType.js";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
@@ -55,5 +55,20 @@ export class UnionType extends BaseType {
                 return union.normalize();
             }
         }
+    }
+
+    /**
+     * Get the types in this union as a flat list.
+     */
+    public getFlattenedTypes(deref: (type: BaseType) => BaseType = derefAliasedType): BaseType[] {
+        return this.getTypes()
+            .filter((t) => !isHiddenType(t))
+            .map(deref)
+            .flatMap((t) => {
+                if (t instanceof UnionType) {
+                    return t.getFlattenedTypes(deref);
+                }
+                return t;
+            });
     }
 }
