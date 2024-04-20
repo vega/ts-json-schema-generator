@@ -164,7 +164,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
 
     protected createSubContext(
         node: ts.MappedTypeNode,
-        key: LiteralType | StringType,
+        key: LiteralType | StringType | NumberType,
         parentContext: Context,
     ): Context {
         const subContext = new Context(node);
