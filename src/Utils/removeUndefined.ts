@@ -14,7 +14,7 @@ export function removeUndefined(propertyType: UnionType): { numRemoved: number; 
     for (const type of propertyType.getTypes()) {
         const newType = derefAnnotatedType(type);
         if (newType instanceof UndefinedType) {
-            numRemoved += 1;
+            numRemoved++;
         } else if (newType instanceof UnionType) {
             const result = removeUndefined(newType);
             numRemoved += result.numRemoved;
