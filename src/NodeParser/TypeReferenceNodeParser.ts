@@ -23,7 +23,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeReference;
     }
 
-    public createType(node: ts.TypeReferenceNode, context: Context): BaseType {
+    public createType(node: ts.TypeReferenceNode, context: Context): BaseType | undefined {
         const typeSymbol =
             this.typeChecker.getSymbolAtLocation(node.typeName) ??
             // When the node doesn't have a valid source file, its position is -1, so we can't
@@ -82,7 +82,8 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
         if (node.typeArguments?.length) {
             for (const typeArg of node.typeArguments) {
-                subContext.pushArgument(this.childNodeParser.createType(typeArg, parentContext));
+                const type = this.childNodeParser.createType(typeArg, parentContext);
+                type && subContext.pushArgument(type);
             }
         }
 

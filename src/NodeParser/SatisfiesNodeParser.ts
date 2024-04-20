@@ -9,7 +9,7 @@ export class SatisfiesNodeParser implements SubNodeParser {
     public supportsNode(node: ts.SatisfiesExpression): boolean {
         return node.kind === ts.SyntaxKind.SatisfiesExpression;
     }
-    public createType(node: ts.SatisfiesExpression, context: Context): BaseType {
+    public createType(node: ts.SatisfiesExpression, context: Context): BaseType | undefined {
         return this.childNodeParser.createType(node.expression, context);
     }
 }

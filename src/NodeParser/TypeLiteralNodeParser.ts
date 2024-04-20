@@ -5,8 +5,8 @@ import { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { ReferenceType } from "../Type/ReferenceType.js";
-import { isNodeHidden } from "../Utils/isHidden.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
@@ -42,15 +42,14 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                 (element): element is PropertySignature | MethodSignature =>
                     ts.isPropertySignature(element) || ts.isMethodSignature(element),
             )
-            .filter((propertyNode) => !isNodeHidden(propertyNode))
-            .map(
-                (propertyNode) =>
-                    new ObjectProperty(
-                        this.getPropertyName(propertyNode.name),
-                        this.childNodeParser.createType(propertyNode.type!, context),
-                        !propertyNode.questionToken,
-                    ),
-            )
+            .map((propertyNode) => {
+                const type = this.childNodeParser.createType(propertyNode.type!, context);
+                return (
+                    type &&
+                    new ObjectProperty(this.getPropertyName(propertyNode.name), type, !propertyNode.questionToken)
+                );
+            })
+            .filter(notUndefined)
             .filter((prop) => {
                 const type = prop.getType();
                 if (prop.isRequired() && type instanceof NeverType) {

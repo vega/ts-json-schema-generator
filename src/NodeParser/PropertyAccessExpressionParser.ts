@@ -13,7 +13,7 @@ export class PropertyAccessExpressionParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.PropertyAccessExpression;
     }
 
-    public createType(node: ts.PropertyAccessExpression, context: Context): BaseType {
+    public createType(node: ts.PropertyAccessExpression, context: Context): BaseType | undefined {
         const type = this.typeChecker.getTypeAtLocation(node);
         return this.childNodeParser.createType(type.symbol.declarations![0], context);
     }

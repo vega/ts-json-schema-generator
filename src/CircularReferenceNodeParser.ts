@@ -13,7 +13,7 @@ export class CircularReferenceNodeParser implements SubNodeParser {
     public supportsNode(node: ts.Node): boolean {
         return this.childNodeParser.supportsNode(node);
     }
-    public createType(node: ts.Node, context: Context): BaseType {
+    public createType(node: ts.Node, context: Context): BaseType | undefined {
         const key = getKey(node, context);
         if (this.circular.has(key)) {
             return this.circular.get(key)!;

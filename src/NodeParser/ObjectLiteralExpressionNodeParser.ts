@@ -5,6 +5,7 @@ import { SubNodeParser } from "../SubNodeParser.js";
 import { BaseType } from "../Type/BaseType.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -14,14 +15,12 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.ObjectLiteralExpression, context: Context): BaseType {
-        const properties = node.properties.map(
-            (t) =>
-                new ObjectProperty(
-                    t.name!.getText(),
-                    this.childNodeParser.createType((t as any).initializer, context),
-                    !(t as any).questionToken,
-                ),
-        );
+        const properties = node.properties
+            .map((t) => {
+                const type = this.childNodeParser.createType((t as any).initializer, context);
+                return type ? new ObjectProperty(t.name!.getText(), type, !(t as any).questionToken) : undefined;
+            })
+            .filter(notUndefined);
 
         return new ObjectType(`object-${getKey(node, context)}`, [], properties, false);
     }

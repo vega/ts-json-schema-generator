@@ -9,6 +9,7 @@ import { derefType } from "../Utils/derefType.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { NeverType } from "../Type/NeverType.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -24,11 +25,11 @@ export class IntersectionNodeParser implements SubNodeParser {
         const types = node.types.map((subnode) => this.childNodeParser.createType(subnode, context));
 
         // if any type is never, the intersection type resolves to never
-        if (types.filter((t) => t instanceof NeverType).length) {
+        if (types.some((t) => t instanceof NeverType)) {
             return new NeverType();
         }
 
-        return translate(types);
+        return translate(types.filter(notUndefined));
     }
 }
 

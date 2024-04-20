@@ -3,7 +3,6 @@ import { Context } from "../NodeParser.js";
 import { SubNodeParser } from "../SubNodeParser.js";
 import { BaseType } from "../Type/BaseType.js";
 import { EnumType, EnumValue } from "../Type/EnumType.js";
-import { isNodeHidden } from "../Utils/isHidden.js";
 import { getKey } from "../Utils/nodeKey.js";
 
 export class EnumNodeParser implements SubNodeParser {
@@ -17,9 +16,7 @@ export class EnumNodeParser implements SubNodeParser {
 
         return new EnumType(
             `enum-${getKey(node, context)}`,
-            members
-                .filter((member: ts.EnumMember) => !isNodeHidden(member))
-                .map((member, index) => this.getMemberValue(member, index)),
+            members.map((member, index) => this.getMemberValue(member, index)),
         );
     }
 

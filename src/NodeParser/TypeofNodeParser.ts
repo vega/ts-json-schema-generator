@@ -9,6 +9,7 @@ import { getKey } from "../Utils/nodeKey.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { FunctionType } from "../Type/FunctionType.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(
@@ -20,7 +21,7 @@ export class TypeofNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.TypeQuery;
     }
 
-    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType {
+    public createType(node: ts.TypeQueryNode, context: Context, reference?: ReferenceType): BaseType | undefined {
         let symbol = this.typeChecker.getSymbolAtLocation(node.exprName)!;
         if (symbol.flags & ts.SymbolFlags.Alias) {
             symbol = this.typeChecker.getAliasedSymbol(symbol);
@@ -64,20 +65,22 @@ export class TypeofNodeParser implements SubNodeParser {
             reference.setName(id);
         }
 
-        let type: BaseType | null = null;
-        const properties = node.members.map((member) => {
-            const name = member.name.getText();
-            if (member.initializer) {
-                type = this.childNodeParser.createType(member.initializer, context);
-            } else if (type === null) {
-                type = new LiteralType(0);
-            } else if (type instanceof LiteralType && typeof type.getValue() === "number") {
-                type = new LiteralType(+type.getValue() + 1);
-            } else {
-                throw new LogicError(`Enum initializer missing for "${name}"`);
-            }
-            return new ObjectProperty(name, type, true);
-        });
+        let type: BaseType | null | undefined = null;
+        const properties = node.members
+            .map((member) => {
+                const name = member.name.getText();
+                if (member.initializer) {
+                    type = this.childNodeParser.createType(member.initializer, context);
+                } else if (type === null) {
+                    type = new LiteralType(0);
+                } else if (type instanceof LiteralType && typeof type.getValue() === "number") {
+                    type = new LiteralType(+type.getValue() + 1);
+                } else {
+                    throw new LogicError(`Enum initializer missing for "${name}"`);
+                }
+                return type && new ObjectProperty(name, type, true);
+            })
+            .filter(notUndefined);
 
         return new ObjectType(id, [], properties, false);
     }

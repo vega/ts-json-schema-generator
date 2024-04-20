@@ -3,6 +3,7 @@ import { Context, NodeParser } from "../NodeParser.js";
 import { SubNodeParser } from "../SubNodeParser.js";
 import { BaseType } from "../Type/BaseType.js";
 import { TupleType } from "../Type/TupleType.js";
+import { notUndefined } from "../Utils/notUndefined.js";
 
 export class ArrayLiteralExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -12,7 +13,7 @@ export class ArrayLiteralExpressionNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.ArrayLiteralExpression, context: Context): BaseType {
-        const elements = node.elements.map((t) => this.childNodeParser.createType(t, context));
+        const elements = node.elements.map((t) => this.childNodeParser.createType(t, context)).filter(notUndefined);
         return new TupleType(elements);
     }
 }
