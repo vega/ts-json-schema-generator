@@ -2,6 +2,8 @@ import { BaseType } from "./BaseType.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
 import { NeverType } from "./NeverType.js";
 import { derefType } from "../Utils/derefType.js";
+import { LiteralType } from "./LiteralType.js";
+import { AliasType } from "./AliasType.js";
 
 export class UnionType extends BaseType {
     private readonly types: BaseType[];
@@ -39,6 +41,41 @@ export class UnionType extends BaseType {
 
     public getTypes(): BaseType[] {
         return this.types;
+    }
+
+    public getFlattenedTypes(): LiteralType[] {
+        return this.types
+            .flatMap((type) => {
+                if (type instanceof LiteralType) {
+                    return type;
+                } else if (type instanceof AliasType) {
+                    const itemsToProcess = [type.getType()];
+                    const processedTypes = [];
+                    while (itemsToProcess.length > 0) {
+                        const currentType = itemsToProcess[0];
+                        if (currentType instanceof LiteralType) {
+                            processedTypes.push(currentType);
+                        } else if (currentType instanceof AliasType) {
+                            itemsToProcess.push(currentType.getType());
+                        } else if (currentType instanceof UnionType) {
+                            itemsToProcess.push(...currentType.getTypes());
+                        }
+                        itemsToProcess.shift();
+                    }
+                    return processedTypes;
+                }
+                return [];
+            })
+            .reduce((acc: LiteralType[], curr: LiteralType) => {
+                if (
+                    acc.findIndex((val: LiteralType) => {
+                        return val.getId() === curr.getId();
+                    }) < 0
+                ) {
+                    acc.push(curr);
+                }
+                return acc;
+            }, []);
     }
 
     public normalize(): BaseType {
