@@ -11,6 +11,8 @@ import { UndefinedType } from "../Type/UndefinedType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { isLiteralUnion } from "../TypeFormatter/LiteralUnionTypeFormatter.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -31,8 +33,14 @@ export class IntersectionNodeParser implements SubNodeParser {
         }
 
         // handle autocomplete hacks like `string & {}`
-        if (types.length === 2 && types.some((t) => t instanceof StringType) && types.some((t) => isEmptyObject(t))) {
-            return new StringType(true);
+        if (types.length === 2 && types.some((t) => isEmptyObject(t))) {
+            if (types.some((t) => t instanceof StringType)) {
+                return new StringType(true);
+            }
+            const nonObject = types.find((t) => !isEmptyObject(t));
+            if (nonObject instanceof LiteralType || (nonObject instanceof UnionType && isLiteralUnion(nonObject))) {
+                return nonObject;
+            }
         }
 
         return translate(types);
