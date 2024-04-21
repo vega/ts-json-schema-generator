@@ -102,6 +102,7 @@ describe("valid-data-type", () => {
     it("type-mapped-additional-props", assertValidSchema("type-mapped-additional-props", "MyObject"));
     it("type-mapped-array", assertValidSchema("type-mapped-array", "MyObject"));
     it("type-mapped-union-intersection", assertValidSchema("type-mapped-union-intersection", "MyObject"));
+    it("type-mapped-union-union", assertValidSchema("type-mapped-union-union", "MyType"));
     it("type-mapped-enum", assertValidSchema("type-mapped-enum", "MyObject"));
     it("type-mapped-enum-optional", assertValidSchema("type-mapped-enum-optional", "MyObject"));
     it("type-mapped-enum-null", assertValidSchema("type-mapped-enum-null", "MyObject"));
