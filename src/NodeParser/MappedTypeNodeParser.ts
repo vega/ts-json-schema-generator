@@ -95,11 +95,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         if (!node.nameType) {
             return rawKey;
         }
-        const key = derefType(
-            this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context)),
-        );
-
-        return key;
+        return derefType(this.childNodeParser.createType(node.nameType, this.createSubContext(node, rawKey, context)));
     }
 
     protected getProperties(node: ts.MappedTypeNode, keyListType: UnionType, context: Context): ObjectProperty[] {
