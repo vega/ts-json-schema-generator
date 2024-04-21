@@ -6,7 +6,6 @@ import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { derefAliasedType, isHiddenType } from "../Utils/derefType.js";
 import { typeName } from "../Utils/typeName.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 
@@ -20,10 +19,10 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         let allStrings = true;
         let hasNull = false;
 
-        const flattenedTypes = flattenTypes(type);
+        const literals = type.getFlattenedTypes();
 
         // filter out String types since we need to be more careful about them
-        const types = flattenedTypes.filter((t) => {
+        const types = literals.filter((t) => {
             if (t instanceof StringType) {
                 hasString = true;
                 preserveLiterals = preserveLiterals || t.getPreserveLiterals();
@@ -70,23 +69,10 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     }
 }
 
-function flattenTypes(type: UnionType): (StringType | LiteralType | NullType)[] {
-    return type
-        .getTypes()
-        .filter((t) => !isHiddenType(t))
-        .map(derefAliasedType)
-        .flatMap((t) => {
-            if (t instanceof UnionType) {
-                return flattenTypes(t);
-            }
-            return t as StringType | LiteralType | NullType;
-        });
-}
-
 export function isLiteralUnion(type: UnionType): boolean {
-    return flattenTypes(type).every(
-        (item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType,
-    );
+    return type
+        .getFlattenedTypes()
+        .every((item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType);
 }
 
 function getLiteralValue(value: LiteralType | NullType): LiteralValue | null {
