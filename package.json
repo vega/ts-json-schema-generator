@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
-    "ts-json-schema-generator": "./bin/ts-json-schema-generator"
+    "ts-json-schema-generator": "./bin/ts-json-schema-generator.js"
   },
   "files": [
     "dist",
