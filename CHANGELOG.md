@@ -1,3 +1,20 @@
+# v2.1.1 (Tue Apr 23 2024)
+
+#### 🐛 Bug Fix
+
+- fix: union types of union types in Records [#1933](https://github.com/vega/ts-json-schema-generator/pull/1933) ([@domoritz](https://github.com/domoritz))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump eslint from 9.0.0 to 9.1.0 [#1935](https://github.com/vega/ts-json-schema-generator/pull/1935) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 2
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+
+---
+
 # v2.1.0 (Sat Apr 20 2024)
 
 #### 🚀 Enhancement
