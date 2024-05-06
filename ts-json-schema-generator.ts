@@ -4,7 +4,7 @@ import { createGenerator } from "./factory/generator.js";
 import { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
 import { formatError } from "./src/Utils/formatError.js";
-import pkg from "./package.json" assert { type: "json" };
+import pkg from "./package.json" with { type: "json" };
 import { dirname } from "path";
 import { mkdirSync, writeFileSync } from "fs";
 
