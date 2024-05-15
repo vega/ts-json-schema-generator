@@ -1,11 +1,10 @@
 import ts from "typescript";
-import type { Context, NodeParser } from "../NodeParser";
-import type { SubNodeParser } from "../SubNodeParser";
-import type { BaseType } from "../Type/BaseType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { AliasType } from "../Type/AliasType";
-import { getKey } from "../Utils/nodeKey";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import { AliasType } from "../Type/AliasType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 /**
  * Needs to be registered before 261, 260, 230, 262 node kinds

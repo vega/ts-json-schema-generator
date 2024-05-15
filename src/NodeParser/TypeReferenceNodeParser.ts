@@ -1,6 +1,5 @@
 import ts from "typescript";
-
-import { Context, NodeParser } from "../NodeParser.js";
+import { Context, type NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
 import { AnyType } from "../Type/AnyType.js";
