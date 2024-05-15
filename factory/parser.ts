@@ -1,12 +1,12 @@
-import ts from "typescript";
+import type ts from "typescript";
 import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader.js";
 import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader.js";
 import { ChainNodeParser } from "../src/ChainNodeParser.js";
 import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser.js";
-import { CompletedConfig } from "../src/Config.js";
+import type { CompletedConfig } from "../src/Config.js";
 import { ExposeNodeParser } from "../src/ExposeNodeParser.js";
-import { MutableParser } from "../src/MutableParser.js";
-import { NodeParser } from "../src/NodeParser.js";
+import type { MutableParser } from "../src/MutableParser.js";
+import type { NodeParser } from "../src/NodeParser.js";
 import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser.js";
 import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser.js";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser.js";
@@ -55,9 +55,10 @@ import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodePars
 import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser.js";
 import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser.js";
 import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser.js";
-import { SubNodeParser } from "../src/SubNodeParser.js";
+import type { SubNodeParser } from "../src/SubNodeParser.js";
 import { TopRefNodeParser } from "../src/TopRefNodeParser.js";
 import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser.js";
+import { PromiseNodeParser } from "../src/NodeParser/PromiseNodeParser.js";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
