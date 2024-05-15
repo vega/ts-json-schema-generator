@@ -24,7 +24,7 @@ export class MyObject {
         c: number,
         // Test that types can be inferred
         public propC = 42,
-        public propD?: string
+        public propD?: string,
     ) {
         this.privateProp = false;
     }

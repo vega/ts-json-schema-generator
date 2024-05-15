@@ -1,17 +1,18 @@
 // Place your settings in this file to overwrite default and user settings.
 {
   "search.exclude": {
-    "dist": true,
-    "bin": true
+    "dist": true
   },
   "files.trimTrailingWhitespace": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.insertFinalNewline": true,
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript"],
   "editor.tabSize": 4,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  "jest.autoRun": "off"
+  "eslint.experimental.useFlatConfig": true,
+  "jest.runMode": "on-demand",
+  "javascript.preferences.importModuleSpecifierEnding": "js"
 }

@@ -1,18 +1,18 @@
 import ts, { MethodSignature, PropertySignature } from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { NeverType } from "../Type/NeverType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { isNodeHidden } from "../Utils/isHidden";
-import { getKey } from "../Utils/nodeKey";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { isNodeHidden } from "../Utils/isHidden.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
         protected childNodeParser: NodeParser,
-        protected readonly additionalProperties: boolean
+        protected readonly additionalProperties: boolean,
     ) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
@@ -40,7 +40,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = node.members
             .filter(
                 (element): element is PropertySignature | MethodSignature =>
-                    ts.isPropertySignature(element) || ts.isMethodSignature(element)
+                    ts.isPropertySignature(element) || ts.isMethodSignature(element),
             )
             .filter((propertyNode) => !isNodeHidden(propertyNode))
             .map(
@@ -48,8 +48,8 @@ export class TypeLiteralNodeParser implements SubNodeParser {
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
                         this.childNodeParser.createType(propertyNode.type!, context),
-                        !propertyNode.questionToken
-                    )
+                        !propertyNode.questionToken,
+                    ),
             )
             .filter((prop) => {
                 const type = prop.getType();
@@ -72,7 +72,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return this.additionalProperties;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
+        return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {

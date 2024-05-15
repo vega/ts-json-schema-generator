@@ -1,7 +1,7 @@
-import { Definition } from "./Schema/Definition";
-import { SubTypeFormatter } from "./SubTypeFormatter";
-import { BaseType } from "./Type/BaseType";
-import { uniqueArray } from "./Utils/uniqueArray";
+import { Definition } from "./Schema/Definition.js";
+import { SubTypeFormatter } from "./SubTypeFormatter.js";
+import { BaseType } from "./Type/BaseType.js";
+import { uniqueArray } from "./Utils/uniqueArray.js";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
     protected definition: Map<BaseType, Definition> = new Map();

@@ -1,6 +1,6 @@
 import stringify from "safe-stable-stringify";
 import { Node } from "typescript";
-import { Context } from "../NodeParser";
+import { Context } from "../NodeParser.js";
 
 export function hash(a: string | boolean | number | (string | boolean | number)[] | object): string | number {
     if (typeof a === "number") {

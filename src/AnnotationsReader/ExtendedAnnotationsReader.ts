@@ -1,14 +1,14 @@
 import json5 from "json5";
 import ts from "typescript";
-import { Annotations } from "../Type/AnnotatedType";
-import { symbolAtNode } from "../Utils/symbolAtNode";
-import { BasicAnnotationsReader } from "./BasicAnnotationsReader";
+import { Annotations } from "../Type/AnnotatedType.js";
+import { symbolAtNode } from "../Utils/symbolAtNode.js";
+import { BasicAnnotationsReader } from "./BasicAnnotationsReader.js";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
     public constructor(
         private typeChecker: ts.TypeChecker,
         extraTags?: Set<string>,
-        private markdownDescription?: boolean
+        private markdownDescription?: boolean,
     ) {
         super(extraTags);
     }

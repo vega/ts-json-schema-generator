@@ -1,8 +1,8 @@
-import { BaseType } from "../Type/BaseType";
-import { EnumType } from "../Type/EnumType";
-import { NeverType } from "../Type/NeverType";
-import { UnionType } from "../Type/UnionType";
-import { derefType } from "./derefType";
+import { BaseType } from "../Type/BaseType.js";
+import { EnumType } from "../Type/EnumType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefType } from "./derefType.js";
 
 /**
  * Narrows the given type by passing all variants to the given predicate function. So when type is a union type then
@@ -20,7 +20,7 @@ export function narrowType(
     type: BaseType,
     // TODO: remove the next line
     // eslint-disable-next-line no-shadow
-    predicate: (type: BaseType) => boolean
+    predicate: (type: BaseType) => boolean,
 ): BaseType {
     const derefed = derefType(type);
     if (derefed instanceof UnionType || derefed instanceof EnumType) {

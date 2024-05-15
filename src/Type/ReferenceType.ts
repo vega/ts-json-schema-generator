@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class ReferenceType extends BaseType {
     private type: BaseType | null = null;

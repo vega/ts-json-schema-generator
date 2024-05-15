@@ -2,7 +2,7 @@ export const myFunction = (
     /**
      * @description Inline parameter description
      */
-    requiredString: string
+    requiredString: string,
 ) => {
     return "whatever";
 };

@@ -1,4 +1,4 @@
-import { RawType, RawTypeName } from "../Schema/RawType";
+import { RawType, RawTypeName } from "../Schema/RawType.js";
 
 export function typeName(value: RawType): RawTypeName {
     if (value === null) {

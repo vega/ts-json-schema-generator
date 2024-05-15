@@ -3,11 +3,11 @@ import * as path from "path";
 import ts from "typescript";
 import normalize from "normalize-path";
 
-import { CompletedConfig, Config } from "../src/Config";
-import { DiagnosticError } from "../src/Error/DiagnosticError";
-import { LogicError } from "../src/Error/LogicError";
-import { NoRootNamesError } from "../src/Error/NoRootNamesError";
-import { NoTSConfigError } from "../src/Error/NoTSConfigError";
+import { CompletedConfig, Config } from "../src/Config.js";
+import { DiagnosticError } from "../src/Error/DiagnosticError.js";
+import { LogicError } from "../src/Error/LogicError.js";
+import { NoRootNamesError } from "../src/Error/NoRootNamesError.js";
+import { NoTSConfigError } from "../src/Error/NoTSConfigError.js";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -25,7 +25,7 @@ function loadTsConfigFile(configFile: string) {
             ts.sys,
             path.resolve(path.dirname(configFile)),
             {},
-            configFile
+            configFile,
         );
         parseResult.options.noEmit = true;
         delete parseResult.options.out;

@@ -10,9 +10,7 @@ interface C {
     c: string;
 }
 
-type Map<T> =
-    T extends (A | B) ? "a or b" :
-    "unknown";
+type Map<T> = T extends A | B ? "a or b" : "unknown";
 
 export type MyObject = {
     a: Map<A>;

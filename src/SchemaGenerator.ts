@@ -1,23 +1,23 @@
 import ts from "typescript";
-import { NoRootTypeError } from "./Error/NoRootTypeError";
-import { Context, NodeParser } from "./NodeParser";
-import { Definition } from "./Schema/Definition";
-import { Schema } from "./Schema/Schema";
-import { BaseType } from "./Type/BaseType";
-import { DefinitionType } from "./Type/DefinitionType";
-import { TypeFormatter } from "./TypeFormatter";
-import { StringMap } from "./Utils/StringMap";
-import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
-import { removeUnreachable } from "./Utils/removeUnreachable";
-import { Config } from "./Config";
-import { hasJsDocTag } from "./Utils/hasJsDocTag";
+import { NoRootTypeError } from "./Error/NoRootTypeError.js";
+import { Context, NodeParser } from "./NodeParser.js";
+import { Definition } from "./Schema/Definition.js";
+import { Schema } from "./Schema/Schema.js";
+import { BaseType } from "./Type/BaseType.js";
+import { DefinitionType } from "./Type/DefinitionType.js";
+import { TypeFormatter } from "./TypeFormatter.js";
+import { StringMap } from "./Utils/StringMap.js";
+import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode.js";
+import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { Config } from "./Config.js";
+import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 
 export class SchemaGenerator {
     public constructor(
         protected readonly program: ts.Program,
         protected readonly nodeParser: NodeParser,
         protected readonly typeFormatter: TypeFormatter,
-        protected readonly config?: Config
+        protected readonly config?: Config,
     ) {}
 
     public createSchema(fullName?: string): Schema {
@@ -132,7 +132,7 @@ export class SchemaGenerator {
     protected appendTypes(
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
-        types: Map<string, ts.Node>
+        types: Map<string, ts.Node>,
     ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);

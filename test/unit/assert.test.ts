@@ -1,5 +1,5 @@
-import { LogicError } from "../../src/Error/LogicError";
-import assert from "../../src/Utils/assert";
+import { LogicError } from "../../src/Error/LogicError.js";
+import assert from "../../src/Utils/assert.js";
 
 describe("validate assert", () => {
     it.each`

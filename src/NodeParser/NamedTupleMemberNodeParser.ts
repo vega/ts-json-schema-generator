@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { RestType } from "../Type/RestType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { RestType } from "../Type/RestType.js";
 
 export class NamedTupleMemberNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

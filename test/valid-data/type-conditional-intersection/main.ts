@@ -12,13 +12,17 @@ interface D extends A, B {
     d: string;
 }
 
-type Map<T> =
-    T extends D ? "D" :
-    T extends A & B ? "a and b" :
-    T extends A ? "a" :
-    T extends B ? "b" :
-    T extends C ? "c" :
-    "unknown";
+type Map<T> = T extends D
+    ? "D"
+    : T extends A & B
+      ? "a and b"
+      : T extends A
+        ? "a"
+        : T extends B
+          ? "b"
+          : T extends C
+            ? "c"
+            : "unknown";
 
 export type MyObject = {
     a: Map<A>;

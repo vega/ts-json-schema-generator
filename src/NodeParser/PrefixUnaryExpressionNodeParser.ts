@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
 
 export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -28,7 +28,7 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
             }
         } else {
             throw new Error(
-                `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`
+                `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`,
             );
         }
     }

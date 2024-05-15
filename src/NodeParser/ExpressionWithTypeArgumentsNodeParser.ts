@@ -1,12 +1,12 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
 
 export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.ExpressionWithTypeArguments): boolean {
@@ -18,7 +18,7 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             return this.childNodeParser.createType(
                 aliasedSymbol.declarations![0],
-                this.createSubContext(node, context)
+                this.createSubContext(node, context),
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);

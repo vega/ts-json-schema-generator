@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config";
+import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config.js";
 import { createGenerator } from "./utils";
 import stringify from "safe-stable-stringify";
 

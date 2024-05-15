@@ -1,13 +1,13 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { OptionalType } from "../Type/OptionalType";
-import { RestType } from "../Type/RestType";
-import { TupleType } from "../Type/TupleType";
-import { TypeFormatter } from "../TypeFormatter";
-import { notNever } from "../Utils/notNever";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { Definition } from "../Schema/Definition.js";
+import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { OptionalType } from "../Type/OptionalType.js";
+import { RestType } from "../Type/RestType.js";
+import { TupleType } from "../Type/TupleType.js";
+import { TypeFormatter } from "../TypeFormatter.js";
+import { notNever } from "../Utils/notNever.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 function uniformRestType(type: RestType, check_type: BaseType): boolean {
     const inner = type.getType();
@@ -84,7 +84,7 @@ export class TupleTypeFormatter implements SubTypeFormatter {
             type
                 .getTypes()
                 .filter(notNever)
-                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], [])
+                .reduce((result: BaseType[], item) => [...result, ...this.childTypeFormatter.getChildren(item)], []),
         );
     }
 }

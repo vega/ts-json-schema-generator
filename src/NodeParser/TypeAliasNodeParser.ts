@@ -1,16 +1,16 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { AliasType } from "../Type/AliasType";
-import { BaseType } from "../Type/BaseType";
-import { NeverType } from "../Type/NeverType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { getKey } from "../Utils/nodeKey";
+import { Context, NodeParser } from "../NodeParser.js";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { AliasType } from "../Type/AliasType.js";
+import { BaseType } from "../Type/BaseType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class TypeAliasNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeAliasDeclaration): boolean {

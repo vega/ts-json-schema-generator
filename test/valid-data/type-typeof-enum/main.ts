@@ -1,14 +1,14 @@
 enum FromZero {
     a,
     b,
-    c
+    c,
 }
 
 enum SomeCustomInitializers {
     a = 10,
     b,
     c = 20,
-    d
+    d,
 }
 
 enum StringEnum {
@@ -20,7 +20,7 @@ enum MixedEnum {
     a,
     b = 10,
     c,
-    d = "foo"
+    d = "foo",
 }
 
 export type MyObject = {
@@ -28,4 +28,4 @@ export type MyObject = {
     someCustomInitializers: typeof SomeCustomInitializers;
     stringEnum: typeof StringEnum;
     mixedEnum: typeof MixedEnum;
-}
+};

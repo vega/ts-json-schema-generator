@@ -1,18 +1,18 @@
 import ts from "typescript";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { FunctionType } from "../Type/FunctionType";
-import { FunctionOptions } from "../Config";
-import { NeverType } from "../Type/NeverType";
-import { DefinitionType } from "../Type/DefinitionType";
-import { Context, NodeParser } from "../NodeParser";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { getKey } from "../Utils/nodeKey";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { FunctionType } from "../Type/FunctionType.js";
+import { FunctionOptions } from "../Config.js";
+import { NeverType } from "../Type/NeverType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class FunctionNodeParser implements SubNodeParser {
     constructor(
         protected childNodeParser: NodeParser,
-        protected functions: FunctionOptions
+        protected functions: FunctionOptions,
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {
@@ -26,7 +26,7 @@ export class FunctionNodeParser implements SubNodeParser {
 
     public createType(
         node: ts.FunctionTypeNode | ts.FunctionExpression | ts.FunctionDeclaration | ts.ArrowFunction,
-        context: Context
+        context: Context,
     ): BaseType {
         if (this.functions === "hide") {
             return new NeverType();
@@ -47,7 +47,7 @@ export function getNamedArguments(
         | ts.FunctionDeclaration
         | ts.ArrowFunction
         | ts.ConstructorTypeNode,
-    context: Context
+    context: Context,
 ) {
     if (node.parameters.length === 0) {
         return undefined;
@@ -66,7 +66,7 @@ export function getNamedArguments(
 
             return new ObjectProperty(node.parameters[index].name.getText(), parameterType, required);
         }),
-        false
+        false,
     );
 }
 
@@ -76,7 +76,7 @@ export function getTypeName(
         | ts.FunctionExpression
         | ts.FunctionDeclaration
         | ts.ArrowFunction
-        | ts.ConstructorTypeNode
+        | ts.ConstructorTypeNode,
 ): string | undefined {
     if (ts.isArrowFunction(node) || ts.isFunctionExpression(node) || ts.isFunctionTypeNode(node)) {
         const parent = node.parent;

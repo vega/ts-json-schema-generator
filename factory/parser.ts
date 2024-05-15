@@ -1,64 +1,63 @@
 import ts from "typescript";
-import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader";
-import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader";
-import { ChainNodeParser } from "../src/ChainNodeParser";
-import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser";
-import { CompletedConfig } from "../src/Config";
-import { ExposeNodeParser } from "../src/ExposeNodeParser";
-import { MutableParser } from "../src/MutableParser";
-import { NodeParser } from "../src/NodeParser";
-import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser";
-import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser";
-import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser";
-import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser";
-import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser";
-import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser";
-import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser";
-import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser";
-import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser";
-import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser";
-import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser";
-import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser";
-import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser";
-import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser";
-import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser";
-import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser";
-import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser";
-import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser";
-import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser";
-import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser";
-import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser";
-import { NamedTupleMemberNodeParser } from "../src/NodeParser/NamedTupleMemberNodeParser";
-import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser";
-import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser";
-import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser";
-import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser";
-import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser";
-import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser";
-import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser";
-import { ParameterParser } from "../src/NodeParser/ParameterParser";
-import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser";
-import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryExpressionNodeParser";
-import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser";
-import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser";
-import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser";
-import { StringTemplateLiteralNodeParser } from "../src/NodeParser/StringTemplateLiteralNodeParser";
-import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser";
-import { SymbolTypeNodeParser } from "../src/NodeParser/SymbolTypeNodeParser";
-import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser";
-import { TypeAliasNodeParser } from "../src/NodeParser/TypeAliasNodeParser";
-import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser";
-import { TypeofNodeParser } from "../src/NodeParser/TypeofNodeParser";
-import { TypeOperatorNodeParser } from "../src/NodeParser/TypeOperatorNodeParser";
-import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser";
-import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodeParser";
-import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser";
-import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser";
-import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser";
-import { PromiseNodeParser } from "../src/NodeParser/PromiseNodeParser";
-import { SubNodeParser } from "../src/SubNodeParser";
-import { TopRefNodeParser } from "../src/TopRefNodeParser";
-import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser";
+import { BasicAnnotationsReader } from "../src/AnnotationsReader/BasicAnnotationsReader.js";
+import { ExtendedAnnotationsReader } from "../src/AnnotationsReader/ExtendedAnnotationsReader.js";
+import { ChainNodeParser } from "../src/ChainNodeParser.js";
+import { CircularReferenceNodeParser } from "../src/CircularReferenceNodeParser.js";
+import { CompletedConfig } from "../src/Config.js";
+import { ExposeNodeParser } from "../src/ExposeNodeParser.js";
+import { MutableParser } from "../src/MutableParser.js";
+import { NodeParser } from "../src/NodeParser.js";
+import { AnnotatedNodeParser } from "../src/NodeParser/AnnotatedNodeParser.js";
+import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser.js";
+import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser.js";
+import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser.js";
+import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser.js";
+import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser.js";
+import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser.js";
+import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser.js";
+import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser.js";
+import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser.js";
+import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser.js";
+import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser.js";
+import { FunctionNodeParser } from "../src/NodeParser/FunctionNodeParser.js";
+import { HiddenNodeParser } from "../src/NodeParser/HiddenTypeNodeParser.js";
+import { IndexedAccessTypeNodeParser } from "../src/NodeParser/IndexedAccessTypeNodeParser.js";
+import { InferTypeNodeParser } from "../src/NodeParser/InferTypeNodeParser.js";
+import { InterfaceAndClassNodeParser } from "../src/NodeParser/InterfaceAndClassNodeParser.js";
+import { IntersectionNodeParser } from "../src/NodeParser/IntersectionNodeParser.js";
+import { IntrinsicNodeParser } from "../src/NodeParser/IntrinsicNodeParser.js";
+import { LiteralNodeParser } from "../src/NodeParser/LiteralNodeParser.js";
+import { MappedTypeNodeParser } from "../src/NodeParser/MappedTypeNodeParser.js";
+import { NamedTupleMemberNodeParser } from "../src/NodeParser/NamedTupleMemberNodeParser.js";
+import { NeverTypeNodeParser } from "../src/NodeParser/NeverTypeNodeParser.js";
+import { NullLiteralNodeParser } from "../src/NodeParser/NullLiteralNodeParser.js";
+import { NumberLiteralNodeParser } from "../src/NodeParser/NumberLiteralNodeParser.js";
+import { NumberTypeNodeParser } from "../src/NodeParser/NumberTypeNodeParser.js";
+import { ObjectLiteralExpressionNodeParser } from "../src/NodeParser/ObjectLiteralExpressionNodeParser.js";
+import { ObjectTypeNodeParser } from "../src/NodeParser/ObjectTypeNodeParser.js";
+import { OptionalTypeNodeParser } from "../src/NodeParser/OptionalTypeNodeParser.js";
+import { ParameterParser } from "../src/NodeParser/ParameterParser.js";
+import { ParenthesizedNodeParser } from "../src/NodeParser/ParenthesizedNodeParser.js";
+import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryExpressionNodeParser.js";
+import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser.js";
+import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser.js";
+import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser.js";
+import { StringTemplateLiteralNodeParser } from "../src/NodeParser/StringTemplateLiteralNodeParser.js";
+import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser.js";
+import { SymbolTypeNodeParser } from "../src/NodeParser/SymbolTypeNodeParser.js";
+import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser.js";
+import { TypeAliasNodeParser } from "../src/NodeParser/TypeAliasNodeParser.js";
+import { TypeLiteralNodeParser } from "../src/NodeParser/TypeLiteralNodeParser.js";
+import { TypeofNodeParser } from "../src/NodeParser/TypeofNodeParser.js";
+import { TypeOperatorNodeParser } from "../src/NodeParser/TypeOperatorNodeParser.js";
+import { TypeReferenceNodeParser } from "../src/NodeParser/TypeReferenceNodeParser.js";
+import { UndefinedTypeNodeParser } from "../src/NodeParser/UndefinedTypeNodeParser.js";
+import { UnionNodeParser } from "../src/NodeParser/UnionNodeParser.js";
+import { UnknownTypeNodeParser } from "../src/NodeParser/UnknownTypeNodeParser.js";
+import { VoidTypeNodeParser } from "../src/NodeParser/VoidTypeNodeParser.js";
+import { SubNodeParser } from "../src/SubNodeParser.js";
+import { TopRefNodeParser } from "../src/TopRefNodeParser.js";
+import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser.js";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -77,7 +76,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         if (config.jsDoc === "extended") {
             return new AnnotatedNodeParser(
                 nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription)
+                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription),
             );
         } else if (config.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
@@ -151,20 +150,20 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
                         new InterfaceAndClassNodeParser(
                             typeChecker,
                             withJsDoc(chainNodeParser),
-                            config.additionalProperties
-                        )
-                    )
-                )
-            )
+                            config.additionalProperties,
+                        ),
+                    ),
+                ),
+            ),
         )
         .addNodeParser(
             withCircular(
                 withExpose(
                     withJsDoc(
-                        new TypeLiteralNodeParser(typeChecker, withJsDoc(chainNodeParser), config.additionalProperties)
-                    )
-                )
-            )
+                        new TypeLiteralNodeParser(typeChecker, withJsDoc(chainNodeParser), config.additionalProperties),
+                    ),
+                ),
+            ),
         )
 
         .addNodeParser(new ArrayNodeParser(chainNodeParser));

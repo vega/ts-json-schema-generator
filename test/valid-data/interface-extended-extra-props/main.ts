@@ -1,7 +1,7 @@
 export interface MyObject extends StringMap {
-    param: string
+    param: string;
 }
 
 export interface StringMap {
-    [key: string]: any
+    [key: string]: any;
 }

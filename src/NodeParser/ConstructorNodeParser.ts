@@ -1,17 +1,17 @@
 import ts from "typescript";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { ConstructorType } from "../Type/ConstructorType";
-import { FunctionOptions } from "../Config";
-import { NeverType } from "../Type/NeverType";
-import { Context, NodeParser } from "../NodeParser";
-import { DefinitionType } from "../Type/DefinitionType";
-import { getNamedArguments, getTypeName } from "./FunctionNodeParser";
+import { SubNodeParser } from "../SubNodeParser.js";
+import { BaseType } from "../Type/BaseType.js";
+import { ConstructorType } from "../Type/ConstructorType.js";
+import { FunctionOptions } from "../Config.js";
+import { NeverType } from "../Type/NeverType.js";
+import { Context, NodeParser } from "../NodeParser.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
+import { getNamedArguments, getTypeName } from "./FunctionNodeParser.js";
 
 export class ConstructorNodeParser implements SubNodeParser {
     constructor(
         protected childNodeParser: NodeParser,
-        protected functions: FunctionOptions
+        protected functions: FunctionOptions,
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {

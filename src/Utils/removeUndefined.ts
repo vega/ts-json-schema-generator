@@ -1,8 +1,8 @@
-import { BaseType } from "../Type/BaseType";
-import { UndefinedType } from "../Type/UndefinedType";
-import { UnionType } from "../Type/UnionType";
-import { derefAnnotatedType } from "./derefType";
-import { preserveAnnotation } from "./preserveAnnotation";
+import { BaseType } from "../Type/BaseType.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { derefAnnotatedType } from "./derefType.js";
+import { preserveAnnotation } from "./preserveAnnotation.js";
 
 /**
  * Remove undefined types from union type. Returns the number of non-undefined properties.
@@ -14,7 +14,7 @@ export function removeUndefined(propertyType: UnionType): { numRemoved: number; 
     for (const type of propertyType.getTypes()) {
         const newType = derefAnnotatedType(type);
         if (newType instanceof UndefinedType) {
-            numRemoved += 1;
+            numRemoved++;
         } else if (newType instanceof UnionType) {
             const result = removeUndefined(newType);
             numRemoved += result.numRemoved;
