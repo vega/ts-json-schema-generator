@@ -12,7 +12,7 @@ import { getKey } from "../Utils/nodeKey.js";
 export class PromiseNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.Node): boolean {
@@ -42,7 +42,7 @@ export class PromiseNodeParser implements SubNodeParser {
 
     public createType(
         node: ts.InterfaceDeclaration | ts.ClassDeclaration | ts.ExpressionWithTypeArguments | ts.TypeAliasDeclaration,
-        context: Context
+        context: Context,
     ): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
 
@@ -53,7 +53,7 @@ export class PromiseNodeParser implements SubNodeParser {
 
         if (!awaitedNode) {
             throw new Error(
-                `Could not find awaited node for type ${node.pos === -1 ? "<unresolved>" : node.getText()}`
+                `Could not find awaited node for type ${node.pos === -1 ? "<unresolved>" : node.getText()}`,
             );
         }
 
@@ -72,7 +72,7 @@ export class PromiseNodeParser implements SubNodeParser {
     }
 
     private getNodeName(
-        node: ts.InterfaceDeclaration | ts.ClassDeclaration | ts.ExpressionWithTypeArguments | ts.TypeAliasDeclaration
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration | ts.ExpressionWithTypeArguments | ts.TypeAliasDeclaration,
     ) {
         if (ts.isExpressionWithTypeArguments(node)) {
             if (!ts.isHeritageClause(node.parent)) {
