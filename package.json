@@ -92,6 +92,5 @@
     "debug": "node -r ts-node/register --inspect-brk ts-json-schema-generator.ts",
     "run": "ts-node-transpile-only ts-json-schema-generator.ts",
     "release": "yarn build && auto shipit"
-  },
-  "packageManager": "yarn@1.22.19"
+  }
 }

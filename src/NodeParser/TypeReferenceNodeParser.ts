@@ -48,6 +48,16 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return context.getArgument(typeSymbol.name);
         }
 
+        // Wraps promise type to avoid resolving to a empty Object type.
+        if (typeSymbol.name === "Promise" || typeSymbol.name === "PromiseLike") {
+            // Promise without type resolves to Promise<any>
+            if (!node.typeArguments || node.typeArguments.length === 0) {
+                return new AnyType();
+            }
+
+            return this.childNodeParser.createType(node.typeArguments[0], this.createSubContext(node, context));
+        }
+
         if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
             const type = this.createSubContext(node, context).getArguments()[0];
 
