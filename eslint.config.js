@@ -6,7 +6,7 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 /** @type {import('@types/eslint').Linter.FlatConfig[]} */
 export default tseslint.config(
     {
-        ignores: ["dist", "cjs", "bin/ts-json-schema-generator.cjs"],
+        ignores: ["dist", "cjs"],
     },
     eslint.configs.recommended,
     {
