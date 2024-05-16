@@ -95,32 +95,4 @@ export class PromiseNodeParser implements SubNodeParser {
 
         return node.name?.getText();
     }
-
-    /**
-     * If specified node extends Promise or PromiseLike and nothing else then this method returns the
-     * array item type. In all other cases null is returned to indicate that the node is not a simple promise.
-     *
-     * @param node - The interface or class to check.
-     * @return The promise item type if node is an promise, null otherwise.
-     */
-    protected getPromiseItemType(node: ts.InterfaceDeclaration | ts.ClassDeclaration): ts.TypeNode | null {
-        if (node.heritageClauses && node.heritageClauses.length === 1) {
-            const clause = node.heritageClauses[0];
-
-            if (clause.types.length === 1) {
-                const type = clause.types[0];
-                const symbol = this.typeChecker.getSymbolAtLocation(type.expression);
-
-                if (symbol && (symbol.name === "Promise" || symbol.name === "PromiseLike")) {
-                    const typeArguments = type.typeArguments;
-
-                    if (typeArguments?.length === 1) {
-                        return typeArguments[0];
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
 }
