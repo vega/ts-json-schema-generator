@@ -48,7 +48,10 @@ export class PromiseNodeParser implements SubNodeParser {
         // In types like: A<T> = T, type C = A<1>, C has the same type as A<1> and 1,
         // the awaitedType is NOT the same reference as the type, so a assignability
         // check is needed
-        return !this.typeChecker.isTypeAssignableTo(type, awaitedType);
+        return (
+            !this.typeChecker.isTypeAssignableTo(type, awaitedType) &&
+            !this.typeChecker.isTypeAssignableTo(awaitedType, type)
+        );
     }
 
     public createType(
