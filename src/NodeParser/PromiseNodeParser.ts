@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
+import { Context, type NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
