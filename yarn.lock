@@ -1971,6 +1971,11 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.3.tgz#6209321eb2c1712a7e7466422b8cb1fc0d9dd5d8"
   integrity sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==
 
+"@types/ts-expose-internals@npm:ts-expose-internals@^5.4.5":
+  version "5.4.5"
+  resolved "https://registry.yarnpkg.com/ts-expose-internals/-/ts-expose-internals-5.4.5.tgz#94da2b665627135ad1281d98af3ccb08cb4c1950"
+  integrity sha512-0HfRwjgSIOyuDlHzkFedMWU4aHWq9pu4MUKHgH75U+L76wCAtK5WB0rc/dAIhulMRcPUlcKONeiiR5Sxy/7XcA==
+
 "@types/yargs-parser@*":
   version "21.0.3"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-21.0.3.tgz#815e30b786d2e8f0dcd85fd5bcf5e1a04d008f15"

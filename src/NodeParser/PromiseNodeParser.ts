@@ -1,5 +1,5 @@
 import ts from "typescript";
-import type { Context, NodeParser } from "../NodeParser.js";
+import { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -31,13 +31,24 @@ export class PromiseNodeParser implements SubNodeParser {
 
         const type = this.typeChecker.getTypeAtLocation(node);
 
-        // @ts-expect-error - Internal API of TypeScript
         const awaitedType = this.typeChecker.getAwaitedType(type);
+
+        // ignores non awaitable types
+        if (!awaitedType) {
+            return false;
+        }
 
         // If the awaited type differs from the original type, the type extends promise
         // Awaited<Promise<T>> -> T (Promise<T> !== T)
         // Awaited<Y> -> Y (Y === Y)
-        return awaitedType !== type && !this.typeChecker.isTypeAssignableTo(type, awaitedType);
+        if (awaitedType === type) {
+            return false;
+        }
+
+        // In types like: A<T> = T, type C = A<1>, C has the same type as A<1> and 1,
+        // the awaitedType is NOT the same reference as the type, so a assignability
+        // check is needed
+        return !this.typeChecker.isTypeAssignableTo(type, awaitedType);
     }
 
     public createType(
@@ -45,11 +56,8 @@ export class PromiseNodeParser implements SubNodeParser {
         context: Context,
     ): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
-
-        // @ts-expect-error - Internal API of TypeScript
-        const awaitedType = this.typeChecker.getAwaitedType(type);
-
-        const awaitedNode = this.typeChecker.typeToTypeNode(awaitedType, undefined, ts.NodeBuilderFlags.NoTruncation);
+        const awaitedType = this.typeChecker.getAwaitedType(type)!; // supportsNode ensures this
+        const awaitedNode = this.typeChecker.typeToTypeNode(awaitedType, undefined, ts.NodeBuilderFlags.IgnoreErrors);
 
         if (!awaitedNode) {
             throw new Error(
@@ -57,7 +65,7 @@ export class PromiseNodeParser implements SubNodeParser {
             );
         }
 
-        const baseNode = this.childNodeParser.createType(awaitedNode, context);
+        const baseNode = this.childNodeParser.createType(awaitedNode, new Context(node));
 
         const name = this.getNodeName(node);
 
