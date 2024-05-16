@@ -8,7 +8,7 @@ import { BaseError } from "./src/Error/BaseError.js";
 import { formatError } from "./src/Utils/formatError.js";
 
 // This constant gets replaced by the build script
-const pkgVersion = "0.0.0"; /* __VERSION__ */
+const pkgVersion = "0.0.0";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
