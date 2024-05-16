@@ -16,7 +16,15 @@ export class FunctionNodeParser implements SubNodeParser {
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {
-        return node.kind === ts.SyntaxKind.FunctionType;
+        return (
+            node.kind === ts.SyntaxKind.FunctionType ||
+            //@ts-ignore internals type bug
+            node.kind === ts.SyntaxKind.FunctionExpression ||
+            //@ts-ignore internals type bug
+            node.kind === ts.SyntaxKind.ArrowFunction ||
+            //@ts-ignore internals type bug
+            node.kind === ts.SyntaxKind.FunctionDeclaration
+        );
     }
 
     public createType(
