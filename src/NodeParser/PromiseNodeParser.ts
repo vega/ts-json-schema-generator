@@ -37,7 +37,7 @@ export class PromiseNodeParser implements SubNodeParser {
         // If the awaited type differs from the original type, the type extends promise
         // Awaited<Promise<T>> -> T (Promise<T> !== T)
         // Awaited<Y> -> Y (Y === Y)
-        return awaitedType !== type;
+        return awaitedType !== type && !this.typeChecker.isTypeAssignableTo(type, awaitedType);
     }
 
     public createType(

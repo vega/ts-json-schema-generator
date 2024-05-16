@@ -144,5 +144,5 @@ describe("valid-data-type", () => {
 
     it("lowercase", assertValidSchema("lowercase", "MyType"));
 
-    it.only("promise-extensions", assertValidSchema("promise-extensions", "*"));
+    it("promise-extensions", assertValidSchema("promise-extensions", "*"));
 });
