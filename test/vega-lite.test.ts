@@ -24,6 +24,6 @@ describe("vega-lite", () => {
 
         const vegaLiteSchema = JSON.parse(readFileSync(schemaFile, "utf8"));
 
-        expect(schema).toEqual(vegaLiteSchema);
+        expect(schema).toStrictEqual(vegaLiteSchema);
     });
 });
