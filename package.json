@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "Generate JSON schema from your Typescript sources",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "bin": {
@@ -92,6 +93,7 @@
     "build": "npm run build:cjs && npm run build:esm",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.json",
+    "postbuild": "node build/pkg-version.js",
     "watch": "tsc -w",
     "lint": "eslint",
     "format": "eslint --fix",
