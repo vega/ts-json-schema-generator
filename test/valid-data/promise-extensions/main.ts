@@ -16,6 +16,9 @@ export type AndPromise = Promise<A> & { a: string };
 
 export type AndLikePromise = PromiseLike<A> & { a: string };
 
+// Should not be present
+export default class extends Promise<A> {}
+
 export class LikeClass implements PromiseLike<A> {
     then<TResult1 = A, TResult2 = never>(
         onfulfilled?: ((value: A) => TResult1 | PromiseLike<TResult1>) | null | undefined,
