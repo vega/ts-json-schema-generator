@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "cjs",
+    "importHelpers": true
+  },
+  "files": ["ts-json-schema-generator.ts", "index.ts"],
+  "include": ["src/**/*.ts", "factory/**/*.ts"],
+  "exclude": ["node_modules", "dist", "cjs"]
+}
