@@ -20,9 +20,9 @@ export class FunctionNodeParser implements SubNodeParser {
             node.kind === ts.SyntaxKind.FunctionType ||
             // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.FunctionExpression ||
-            //@ts-expect-error internals type bug
+            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.ArrowFunction ||
-            //@ts-expect-error internals type bug
+            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.FunctionDeclaration
         );
     }
