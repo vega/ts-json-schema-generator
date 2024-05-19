@@ -64,7 +64,6 @@ function assertSchema(
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
             keywords: config.markdownDescription ? ["markdownDescription"] : undefined,
-            allowUnionTypes: true,
         });
 
         addFormats(validator);
