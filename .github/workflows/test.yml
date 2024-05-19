@@ -12,13 +12,19 @@ jobs:
   test:
     name: Test
 
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
+          node-version: 18.20.2
           cache: "yarn"
 
       - name: Install Node dependencies
