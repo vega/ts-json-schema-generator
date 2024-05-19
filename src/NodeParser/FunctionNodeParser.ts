@@ -18,7 +18,7 @@ export class FunctionNodeParser implements SubNodeParser {
     public supportsNode(node: ts.TypeNode): boolean {
         return (
             node.kind === ts.SyntaxKind.FunctionType ||
-            //@ts-expect-error internals type bug
+            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.FunctionExpression ||
             //@ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.ArrowFunction ||
