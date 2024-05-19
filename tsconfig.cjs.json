@@ -4,8 +4,7 @@
     "target": "ES2022",
     "module": "CommonJS",
     "moduleResolution": "Node",
-    "outDir": "cjs",
-    "importHelpers": true
+    "outDir": "cjs"
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
   "include": ["src/**/*.ts", "factory/**/*.ts"],
