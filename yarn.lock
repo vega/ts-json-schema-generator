@@ -6416,9 +6416,9 @@ vega-label@~1.2.1:
     vega-util "^1.15.2"
 
 vega-lite@^5.18.0:
-  version "5.18.0"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.18.0.tgz#345242f73f6edcff8fe848f401d7c2d45e18a107"
-  integrity sha512-P0p9/eoUUhz/lupRkwALn73P//Htp+XqwNLcuGVeQ3qlqPPg1/5/+JVNNANhSg5LSxiYE3LJzOQIpGsbjvdi+w==
+  version "5.18.1"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.18.1.tgz#70670f87091a54853f14184eaba7b61968d06e88"
+  integrity sha512-TcwEUqymDjLC+eWyXJzpOd7OnHvYH1SiVqjj9r22BSq5N0I6f0rodxtgQOoX3NJFpJp84E7V8o/jDVDjeo+zxA==
   dependencies:
     json-stringify-pretty-compact "~3.0.0"
     tslib "~2.6.2"
