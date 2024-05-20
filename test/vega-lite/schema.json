@@ -27149,6 +27149,8 @@
     },
     "SingleDefUnitChannel": {
       "enum": [
+        "text",
+        "shape",
         "x",
         "y",
         "xOffset",
@@ -27173,9 +27175,7 @@
         "strokeDash",
         "size",
         "angle",
-        "shape",
         "key",
-        "text",
         "href",
         "url",
         "description"
