@@ -231,6 +231,7 @@ fs.writeFile(outputPath, schemaString, (err) => {
 -   `keyof`
 -   conditional types
 -   functions
+-   `Promise<T>` unwraps to `T`
 
 ## Run locally
 
