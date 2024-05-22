@@ -10,7 +10,6 @@ import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
-import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -189,8 +188,8 @@ export class SchemaGenerator {
 
                 if (ts.isImportSpecifier(declaration)) {
                     // Handling the `Foo` in `import { Foo } from "./lib"; export { Foo };`
-                    const importSpecifierNode = declaration as ts.ImportSpecifier;
-                    const type = typeChecker.getTypeAtLocation(importSpecifierNode);
+                    const type = typeChecker.getTypeAtLocation(declaration);
+
                     if (type.symbol?.declarations?.length === 1) {
                         this.inspectNode(type.symbol.declarations[0], typeChecker, allTypes);
                     }
