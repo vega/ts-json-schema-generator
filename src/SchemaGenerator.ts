@@ -1,16 +1,16 @@
 import ts from "typescript";
+import type { Config } from "./Config.js";
 import { NoRootTypeError } from "./Error/NoRootTypeError.js";
-import { Context, NodeParser } from "./NodeParser.js";
-import { Definition } from "./Schema/Definition.js";
-import { Schema } from "./Schema/Schema.js";
-import { BaseType } from "./Type/BaseType.js";
+import { Context, type NodeParser } from "./NodeParser.js";
+import type { Definition } from "./Schema/Definition.js";
+import type { Schema } from "./Schema/Schema.js";
+import type { BaseType } from "./Type/BaseType.js";
 import { DefinitionType } from "./Type/DefinitionType.js";
-import { TypeFormatter } from "./TypeFormatter.js";
-import { StringMap } from "./Utils/StringMap.js";
-import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode.js";
-import { removeUnreachable } from "./Utils/removeUnreachable.js";
-import { Config } from "./Config.js";
+import type { TypeFormatter } from "./TypeFormatter.js";
+import type { StringMap } from "./Utils/StringMap.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
+import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -32,7 +32,10 @@ export class SchemaGenerator {
 
         const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
+
+        for (const rootType of rootTypes) {
+            this.appendRootChildDefinitions(rootType, definitions);
+        }
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
 
@@ -47,15 +50,15 @@ export class SchemaGenerator {
     protected getRootNodes(fullName: string | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
-        } else {
-            const rootFileNames = this.program.getRootFileNames();
-            const rootSourceFiles = this.program
-                .getSourceFiles()
-                .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
-            const rootNodes = new Map<string, ts.Node>();
-            this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
-            return [...rootNodes.values()];
         }
+
+        const rootFileNames = this.program.getRootFileNames();
+        const rootSourceFiles = this.program
+            .getSourceFiles()
+            .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
+        const rootNodes = new Map<string, ts.Node>();
+        this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
+        return [...rootNodes.values()];
     }
     protected findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
@@ -129,6 +132,7 @@ export class SchemaGenerator {
 
         return { projectFiles, externalFiles };
     }
+
     protected appendTypes(
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
@@ -138,119 +142,131 @@ export class SchemaGenerator {
             this.inspectNode(sourceFile, typeChecker, types);
         }
     }
+
     protected inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        switch (node.kind) {
-            case ts.SyntaxKind.VariableDeclaration: {
-                const variableDeclarationNode = node as ts.VariableDeclaration;
-                if (
-                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.ArrowFunction ||
-                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.FunctionExpression
-                ) {
-                    this.inspectNode(variableDeclarationNode.initializer, typeChecker, allTypes);
-                }
-                return;
+        if (ts.isVariableDeclaration(node)) {
+            if (
+                node.initializer?.kind === ts.SyntaxKind.ArrowFunction ||
+                node.initializer?.kind === ts.SyntaxKind.FunctionExpression
+            ) {
+                this.inspectNode(node.initializer, typeChecker, allTypes);
             }
-            case ts.SyntaxKind.InterfaceDeclaration:
-            case ts.SyntaxKind.ClassDeclaration:
-            case ts.SyntaxKind.EnumDeclaration:
-            case ts.SyntaxKind.TypeAliasDeclaration:
-                if (
-                    this.config?.expose === "all" ||
-                    (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
-                ) {
-                    allTypes.set(this.getFullName(node, typeChecker), node);
-                    return;
-                }
-                return;
-            case ts.SyntaxKind.ConstructorType:
-            case ts.SyntaxKind.FunctionDeclaration:
-            case ts.SyntaxKind.FunctionExpression:
-            case ts.SyntaxKind.ArrowFunction:
+
+            return;
+        }
+
+        if (
+            ts.isInterfaceDeclaration(node) ||
+            ts.isClassDeclaration(node) ||
+            ts.isEnumDeclaration(node) ||
+            ts.isTypeAliasDeclaration(node)
+        ) {
+            if (
+                this.config?.expose === "all" ||
+                (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
+            ) {
                 allTypes.set(this.getFullName(node, typeChecker), node);
                 return;
-            case ts.SyntaxKind.ExportSpecifier: {
-                const exportSpecifierNode = node as ts.ExportSpecifier;
-                const symbol = typeChecker.getExportSpecifierLocalTargetSymbol(exportSpecifierNode);
-                if (symbol?.declarations?.length === 1) {
-                    const declaration = symbol.declarations[0];
-                    if (declaration.kind === ts.SyntaxKind.ImportSpecifier) {
-                        // Handling the `Foo` in `import { Foo } from "./lib"; export { Foo };`
-                        const importSpecifierNode = declaration as ts.ImportSpecifier;
-                        const type = typeChecker.getTypeAtLocation(importSpecifierNode);
-                        if (type.symbol?.declarations?.length === 1) {
-                            this.inspectNode(type.symbol.declarations[0], typeChecker, allTypes);
-                        }
-                    } else {
-                        // Handling the `Bar` in `export { Bar } from './lib';`
-                        this.inspectNode(declaration, typeChecker, allTypes);
-                    }
-                }
-                return;
             }
-            case ts.SyntaxKind.ExportDeclaration: {
-                if (!ts.isExportDeclaration(node)) {
-                    return;
-                }
-
-                // export { variable } clauses
-                if (!node.moduleSpecifier) {
-                    return;
-                }
-
-                const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
-
-                // should never hit this (maybe type error in user's code)
-                if (!symbol || !symbol.declarations) {
-                    return;
-                }
-
-                // module augmentation can result in more than one source file
-                for (const source of symbol.declarations) {
-                    const sourceSymbol = typeChecker.getSymbolAtLocation(source);
-
-                    if (!sourceSymbol) {
-                        throw new Error(
-                            `Could not find symbol for SourceFile at ${(source as ts.SourceFile).fileName}`,
-                        );
-                    }
-
-                    const moduleExports = typeChecker.getExportsOfModule(sourceSymbol);
-
-                    for (const moduleExport of moduleExports) {
-                        const nodes =
-                            moduleExport.declarations ||
-                            (!!moduleExport.valueDeclaration && [moduleExport.valueDeclaration]);
-
-                        // should never hit this (maybe type error in user's code)
-                        if (!nodes) {
-                            return;
-                        }
-
-                        for (const subnodes of nodes) {
-                            this.inspectNode(subnodes, typeChecker, allTypes);
-                        }
-                    }
-                }
-
-                return;
-            }
-            default:
-                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
-                return;
+            return;
         }
+
+        if (
+            ts.isFunctionDeclaration(node) ||
+            ts.isFunctionExpression(node) ||
+            ts.isArrowFunction(node) ||
+            ts.isConstructorTypeNode(node)
+        ) {
+            allTypes.set(this.getFullName(node, typeChecker), node);
+            return;
+        }
+
+        if (ts.isExportSpecifier(node)) {
+            const symbol = typeChecker.getExportSpecifierLocalTargetSymbol(node);
+
+            if (symbol?.declarations?.length === 1) {
+                const declaration = symbol.declarations[0];
+
+                if (ts.isImportSpecifier(declaration)) {
+                    // Handling the `Foo` in `import { Foo } from "./lib"; export { Foo };`
+                    const importSpecifierNode = declaration as ts.ImportSpecifier;
+                    const type = typeChecker.getTypeAtLocation(importSpecifierNode);
+                    if (type.symbol?.declarations?.length === 1) {
+                        this.inspectNode(type.symbol.declarations[0], typeChecker, allTypes);
+                    }
+                } else {
+                    // Handling the `Bar` in `export { Bar } from './lib';`
+                    this.inspectNode(declaration, typeChecker, allTypes);
+                }
+            }
+
+            return;
+        }
+
+        if (ts.isExportDeclaration(node)) {
+            if (!ts.isExportDeclaration(node)) {
+                return;
+            }
+
+            // export { variable } clauses
+            if (!node.moduleSpecifier) {
+                return;
+            }
+
+            const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
+
+            // should never hit this (maybe type error in user's code)
+            if (!symbol || !symbol.declarations) {
+                return;
+            }
+
+            // module augmentation can result in more than one source file
+            for (const source of symbol.declarations) {
+                const sourceSymbol = typeChecker.getSymbolAtLocation(source);
+
+                if (!sourceSymbol) {
+                    return;
+                }
+
+                const moduleExports = typeChecker.getExportsOfModule(sourceSymbol);
+
+                for (const moduleExport of moduleExports) {
+                    const nodes =
+                        moduleExport.declarations ||
+                        (!!moduleExport.valueDeclaration && [moduleExport.valueDeclaration]);
+
+                    // should never hit this (maybe type error in user's code)
+                    if (!nodes) {
+                        return;
+                    }
+
+                    for (const subnodes of nodes) {
+                        this.inspectNode(subnodes, typeChecker, allTypes);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
     }
-    protected isExportType(node: ts.Node): boolean {
+
+    protected isExportType(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration | ts.EnumDeclaration | ts.TypeAliasDeclaration,
+    ): boolean {
         if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "internal")) {
             return false;
         }
-        const localSymbol = localSymbolAtNode(node);
-        return localSymbol ? "exportSymbol" in localSymbol : false;
+
+        return !!node.localSymbol?.exportSymbol;
     }
+
     protected isGenericType(node: ts.TypeAliasDeclaration): boolean {
         return !!(node.typeParameters && node.typeParameters.length > 0);
     }
-    protected getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
-        const symbol = symbolAtNode(node)!;
-        return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
+
+    protected getFullName(node: ts.Declaration, typeChecker: ts.TypeChecker): string {
+        return typeChecker.getFullyQualifiedName(node.symbol).replace(/".*"\./, "");
     }
 }
