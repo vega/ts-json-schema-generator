@@ -187,6 +187,53 @@ export class SchemaGenerator {
                 }
                 return;
             }
+            case ts.SyntaxKind.ExportDeclaration: {
+                if (!ts.isExportDeclaration(node)) {
+                    return;
+                }
+
+                // export { variable } clauses
+                if (!node.moduleSpecifier) {
+                    return;
+                }
+
+                const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
+
+                // should never hit this (maybe type error in user's code)
+                if (!symbol || !symbol.declarations) {
+                    return;
+                }
+
+                // module augmentation can result in more than one source file
+                for (const source of symbol.declarations) {
+                    const sourceSymbol = typeChecker.getSymbolAtLocation(source);
+
+                    if (!sourceSymbol) {
+                        throw new Error(
+                            `Could not find symbol for SourceFile at ${(source as ts.SourceFile).fileName}`,
+                        );
+                    }
+
+                    const moduleExports = typeChecker.getExportsOfModule(sourceSymbol);
+
+                    for (const moduleExport of moduleExports) {
+                        const nodes =
+                            moduleExport.declarations ||
+                            (!!moduleExport.valueDeclaration && [moduleExport.valueDeclaration]);
+
+                        // should never hit this (maybe type error in user's code)
+                        if (!nodes) {
+                            return;
+                        }
+
+                        for (const node of nodes) {
+                            this.inspectNode(node, typeChecker, allTypes);
+                        }
+                    }
+                }
+
+                return;
+            }
             default:
                 ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
                 return;
