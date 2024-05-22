@@ -226,8 +226,8 @@ export class SchemaGenerator {
                             return;
                         }
 
-                        for (const node of nodes) {
-                            this.inspectNode(node, typeChecker, allTypes);
+                        for (const subnodes of nodes) {
+                            this.inspectNode(subnodes, typeChecker, allTypes);
                         }
                     }
                 }
