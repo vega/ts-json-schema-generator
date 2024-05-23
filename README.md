@@ -8,19 +8,19 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 ---
 
--   [Inspiration](#inspiration)
--   [CLI Usage](#cli-usage)
-    -   [Options](#options)
--   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate`](#tjsg-generate)
--   [`tjsg help [COMMAND]`](#tjsg-help-command)
--   [Current state](#current-state)
--   [Contributors](#contributors)
--   [Programmatic Usage](#programmatic-usage)
-    -   [Custom formatting](#custom-formatting)
-    -   [Custom parsing](#custom-parsing)
--   [Run locally](#run-locally)
--   [Publish](#publish)
+- [Inspiration](#inspiration)
+- [CLI Usage](#cli-usage)
+  - [Options](#options)
+- [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+- [`tjsg generate [PATH]`](#tjsg-generate-path)
+- [`tjsg help [COMMAND]`](#tjsg-help-command)
+- [Current state](#current-state)
+- [Contributors](#contributors)
+- [Programmatic Usage](#programmatic-usage)
+  - [Custom formatting](#custom-formatting)
+  - [Custom parsing](#custom-parsing)
+- [Run locally](#run-locally)
+- [Publish](#publish)
 
 <br />
 
@@ -36,21 +36,18 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 ## CLI Usage
 
-<!-- usage -->
+Run the schema generator with npx:
 
-```sh-session
-$ npm install -g ts-json-schema-generator
-$ tjsg COMMAND
-running command...
-$ tjsg (--version|-v)
-ts-json-schema-generator/2.0.0 linux-x64 node-v20.13.1
-$ tjsg --help [COMMAND]
-USAGE
-  $ tjsg COMMAND
-...
+```console
+$ npx ts-json-schema-generator -t 'My.Type.Name' 'my/project/**/*.ts'
 ```
 
-<!-- usagestop -->
+Or install the package and then run it
+
+```bash
+$ npm install -D ts-json-schema-generator
+$ node_modules/.bin/ts-json-schema-generator -t 'My.Type.Name' 'my/project/**/*.ts'
+```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
 
@@ -62,9 +59,19 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 
 <!-- commands -->
 
--   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate [PATH]`](#tjsg-generate-path)
--   [`tjsg help [COMMAND]`](#tjsg-help-command)
+- [Inspiration](#inspiration)
+- [CLI Usage](#cli-usage)
+  - [Options](#options)
+- [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+- [`tjsg generate [PATH]`](#tjsg-generate-path)
+- [`tjsg help [COMMAND]`](#tjsg-help-command)
+- [Current state](#current-state)
+- [Contributors](#contributors)
+- [Programmatic Usage](#programmatic-usage)
+  - [Custom formatting](#custom-formatting)
+  - [Custom parsing](#custom-parsing)
+- [Run locally](#run-locally)
+- [Publish](#publish)
 
 ## `tjsg autocomplete [SHELL]`
 
