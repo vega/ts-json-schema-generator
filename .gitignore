@@ -1,6 +1,7 @@
 /*.ts
 coverage/
 dist/
+cjs/
 node_modules/
 !auto.config.ts
 /.idea/
