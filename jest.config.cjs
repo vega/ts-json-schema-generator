@@ -6,7 +6,6 @@ const config = {
     coverageDirectory: "./coverage/",
     collectCoverage: false,
     testEnvironment: "node",
-    maxWorkers: '50%', // speeds up tests
     transform: {
         ".*": "babel-jest",
     },
