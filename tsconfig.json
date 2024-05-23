@@ -22,9 +22,10 @@
     "pretty": true,
     "typeRoots": ["node_modules/@types"],
     "outDir": "dist",
-    "incremental": true
+    "incremental": true,
+    "importHelpers": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
   "include": ["src/**/*.ts", "factory/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "cjs"]
 }
