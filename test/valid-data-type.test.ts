@@ -145,4 +145,6 @@ describe("valid-data-type", () => {
     it("lowercase", assertValidSchema("lowercase", "MyType"));
 
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
+
+    it("export-star", assertValidSchema("export-star", "*", undefined, { mainTsOnly: true }));
 });
