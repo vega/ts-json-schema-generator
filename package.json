@@ -58,7 +58,7 @@
     "format": "eslint --fix",
     "lint": "eslint",
     "prepublishOnly": "yarn build",
-    "release": "yarn build && auto shipit",
+    "release": "yarn build && git diff && auto shipit",
     "run": "tsx ts-json-schema-generator.ts",
     "test": "jest test/ --verbose",
     "test:coverage": "yarn jest test/ --collectCoverage=true",
