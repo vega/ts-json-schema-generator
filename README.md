@@ -8,19 +8,19 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 ---
 
-- [Inspiration](#inspiration)
-- [CLI Usage](#cli-usage)
-  - [Options](#options)
-- [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
-- [`tjsg generate`](#tjsg-generate)
-- [`tjsg help [COMMAND]`](#tjsg-help-command)
-- [Current state](#current-state)
-- [Contributors](#contributors)
-- [Programmatic Usage](#programmatic-usage)
-  - [Custom formatting](#custom-formatting)
-  - [Custom parsing](#custom-parsing)
-- [Run locally](#run-locally)
-- [Publish](#publish)
+-   [Inspiration](#inspiration)
+-   [CLI Usage](#cli-usage)
+    -   [Options](#options)
+-   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+-   [`tjsg generate`](#tjsg-generate)
+-   [`tjsg help [COMMAND]`](#tjsg-help-command)
+-   [Current state](#current-state)
+-   [Contributors](#contributors)
+-   [Programmatic Usage](#programmatic-usage)
+    -   [Custom formatting](#custom-formatting)
+    -   [Custom parsing](#custom-parsing)
+-   [Run locally](#run-locally)
+-   [Publish](#publish)
 
 <br />
 
@@ -37,6 +37,7 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 ## CLI Usage
 
 <!-- usage -->
+
 ```sh-session
 $ npm install -g ts-json-schema-generator
 $ tjsg COMMAND
@@ -48,6 +49,7 @@ USAGE
   $ tjsg COMMAND
 ...
 ```
+
 <!-- usagestop -->
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
@@ -59,9 +61,10 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 ### Options
 
 <!-- commands -->
-* [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
-* [`tjsg generate [PATH]`](#tjsg-generate-path)
-* [`tjsg help [COMMAND]`](#tjsg-help-command)
+
+-   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+-   [`tjsg generate [PATH]`](#tjsg-generate-path)
+-   [`tjsg help [COMMAND]`](#tjsg-help-command)
 
 ## `tjsg autocomplete [SHELL]`
 
@@ -163,6 +166,7 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.22/src/commands/help.ts)_
+
 <!-- commandsstop -->
 
 <br />

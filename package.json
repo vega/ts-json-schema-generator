@@ -51,7 +51,7 @@
   ],
   "scripts": {
     "build": "npm run build:cjs && npm run build:esm",
-    "postbuild": "oclif manifest && oclif readme",
+    "postbuild": "oclif manifest && oclif readme && prettier --write README.md oclif.manifest.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.json",
     "debug": "tsx --inspect-brk ts-json-schema-generator.ts",

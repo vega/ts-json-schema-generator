@@ -32,9 +32,7 @@
           "type": "boolean"
         },
         "id": {
-          "aliases": [
-            "schema-id"
-          ],
+          "aliases": ["schema-id"],
           "char": "i",
           "description": "$id for generated schema",
           "name": "id",
@@ -43,9 +41,7 @@
           "type": "option"
         },
         "tsconfig": {
-          "aliases": [
-            "project"
-          ],
+          "aliases": ["project"],
           "char": "p",
           "description": "Your tsconfig.json to load entry files and compilation settings",
           "name": "tsconfig",
@@ -60,28 +56,18 @@
           "default": "export",
           "hasDynamicHelp": false,
           "multiple": false,
-          "options": [
-            "all",
-            "none",
-            "export"
-          ],
+          "options": ["all", "none", "export"],
           "type": "option"
         },
         "jsdoc": {
-          "aliases": [
-            "jsDoc"
-          ],
+          "aliases": ["jsDoc"],
           "char": "j",
           "description": "Read JsDoc annotations",
           "name": "jsdoc",
           "default": "extended",
           "hasDynamicHelp": false,
           "multiple": false,
-          "options": [
-            "none",
-            "basic",
-            "extended"
-          ],
+          "options": ["none", "basic", "extended"],
           "type": "option"
         },
         "markdown-description": {
@@ -126,11 +112,7 @@
           "default": "comment",
           "hasDynamicHelp": false,
           "multiple": false,
-          "options": [
-            "fail",
-            "comment",
-            "hide"
-          ],
+          "options": ["fail", "comment", "hide"],
           "type": "option"
         },
         "minify": {
@@ -148,9 +130,7 @@
           "type": "option"
         },
         "extra-tags": {
-          "aliases": [
-            "validation-keywords"
-          ],
+          "aliases": ["validation-keywords"],
           "description": "Provide additional validation keywords to include",
           "name": "extra-tags",
           "default": [],
@@ -164,10 +144,7 @@
           "default": "json-schema",
           "hasDynamicHelp": false,
           "multiple": false,
-          "options": [
-            "json-schema",
-            "open-api"
-          ],
+          "options": ["json-schema", "open-api"],
           "type": "option"
         }
       },
@@ -180,11 +157,7 @@
       "strict": true,
       "enableJsonFlag": false,
       "isESM": true,
-      "relativePath": [
-        "dist",
-        "commands",
-        "generate.js"
-      ]
+      "relativePath": ["dist", "commands", "generate.js"]
     }
   },
   "version": "2.0.0"
