@@ -22,14 +22,14 @@ function* _extractLiterals(type: BaseType): Iterable<string> {
 
     if (dereffedType instanceof UnionType || dereffedType instanceof EnumType) {
         for (const t of dereffedType.getTypes()) {
-            yield * _extractLiterals(t);
+            yield* _extractLiterals(t);
         }
 
         return;
     }
 
     if (dereffedType instanceof AliasType || dereffedType instanceof DefinitionType) {
-        yield * _extractLiterals(dereffedType.getType());
+        yield* _extractLiterals(dereffedType.getType());
         return;
     }
 

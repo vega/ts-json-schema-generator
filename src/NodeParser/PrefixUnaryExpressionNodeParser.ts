@@ -1,9 +1,9 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import { ExpectationFailedTJSGError } from "../Error/Errors.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
-import { ExpectationFailedTJSGError, LogicTJSGError } from "../Error/Errors.js";
 
 export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}

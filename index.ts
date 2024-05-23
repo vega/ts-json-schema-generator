@@ -156,5 +156,3 @@ export * from "./factory/index.js";
 
 import ts from "typescript";
 export { ts };
-
-let a: string = 1;
