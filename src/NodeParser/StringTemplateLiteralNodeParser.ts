@@ -1,12 +1,12 @@
 import ts from "typescript";
-import { UnknownTypeError } from "../Error/UnknownTypeError.js";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { extractLiterals } from "../Utils/extractLiterals.js";
+import { UnknownTypeTJSGError } from "../Error/Errors.js";
 
 export class StringTemplateLiteralNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -41,7 +41,7 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
 
             return new UnionType(expandedTypes);
         } catch (error) {
-            if (error instanceof UnknownTypeError) {
+            if (error instanceof UnknownTypeTJSGError) {
                 return new StringType();
             }
 

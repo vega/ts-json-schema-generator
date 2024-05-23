@@ -9,6 +9,7 @@ import { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
+import { TypeTJSGError } from "../Error/Errors.js";
 
 type DiscriminatorType = "json-schema" | "open-api";
 
@@ -27,10 +28,15 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             .filter((item) => !(derefType(item) instanceof NeverType))
             .map((item) => this.childTypeFormatter.getDefinition(item));
     }
+
     private getJsonSchemaDiscriminatorDefinition(type: UnionType): Definition {
         const definitions = this.getTypeDefinitions(type);
         const discriminator = type.getDiscriminator();
-        if (!discriminator) throw new Error("discriminator is undefined");
+
+        if (!discriminator) {
+            throw new TypeTJSGError("discriminator is undefined", type);
+        }
+
         const kindTypes = type
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
@@ -38,9 +44,10 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
 
-        if (undefinedIndex != -1) {
-            throw new Error(
+        if (undefinedIndex !== -1) {
+            throw new TypeTJSGError(
                 `Cannot find discriminator keyword "${discriminator}" in type ${type.getTypes()[undefinedIndex].getName()}.`,
+                type,
             );
         }
 
@@ -63,8 +70,9 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
         if (duplicates.length > 0) {
-            throw new Error(
+            throw new TypeTJSGError(
                 `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(type.getName())}.`,
+                type,
             );
         }
 
@@ -79,7 +87,11 @@ export class UnionTypeFormatter implements SubTypeFormatter {
     private getOpenApiDiscriminatorDefinition(type: UnionType): Definition {
         const oneOf = this.getTypeDefinitions(type);
         const discriminator = type.getDiscriminator();
-        if (!discriminator) throw new Error("discriminator is undefined");
+
+        if (!discriminator) {
+            throw new TypeTJSGError("discriminator is undefined", type);
+        }
+
         return {
             type: "object",
             discriminator: { propertyName: discriminator },

@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError.js";
+import { ExpectationFailedTJSGError } from "../Error/Errors.js";
 import { Context, NodeParser } from "../NodeParser.js";
 import { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
@@ -43,10 +43,14 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 this.getProperties(node, keyListType, context),
                 this.getAdditionalProperties(node, keyListType, context),
             );
-        } else if (keyListType instanceof LiteralType) {
+        }
+
+        if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
-        } else if (
+        }
+
+        if (
             keyListType instanceof StringType ||
             keyListType instanceof NumberType ||
             keyListType instanceof SymbolType
@@ -78,17 +82,22 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 }
             }
             return resultType;
-        } else if (keyListType instanceof EnumType) {
-            return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
-        } else if (keyListType instanceof NeverType) {
-            return new ObjectType(id, [], [], false);
-        } else {
-            throw new LogicError(
-                `Unexpected key type "${
-                    constraintType ? constraintType.getId() : constraintType
-                }" for type "${node.getText()}" (expected "UnionType" or "StringType")`,
-            );
         }
+
+        if (keyListType instanceof EnumType) {
+            return new ObjectType(id, [], this.getValues(node, keyListType, context), false);
+        }
+
+        if (keyListType instanceof NeverType) {
+            return new ObjectType(id, [], [], false);
+        }
+
+        throw new ExpectationFailedTJSGError(
+            `Unexpected key type "${
+                constraintType ? constraintType.getId() : constraintType
+            }" for this node. (expected "UnionType" or "StringType")`,
+            node,
+        );
     }
 
     protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType {
@@ -148,14 +157,15 @@ export class MappedTypeNodeParser implements SubNodeParser {
         context: Context,
     ): BaseType | boolean {
         const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
+
         if (key) {
             return (
                 this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
                 this.additionalProperties
             );
-        } else {
-            return this.additionalProperties;
         }
+
+        return this.additionalProperties;
     }
 
     protected createSubContext(
@@ -165,10 +175,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
     ): Context {
         const subContext = new Context(node);
 
-        parentContext.getParameters().forEach((parentParameter) => {
+        for (const parentParameter of parentContext.getParameters()) {
             subContext.pushParameter(parentParameter);
             subContext.pushArgument(parentContext.getArgument(parentParameter));
-        });
+        }
 
         subContext.pushParameter(node.typeParameter.name.text);
         subContext.pushArgument(key);

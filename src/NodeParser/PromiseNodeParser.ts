@@ -5,6 +5,7 @@ import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { ExpectationFailedTJSGError } from "../Error/Errors.js";
 
 /**
  * Needs to be registered before 261, 260, 230, 262 node kinds
@@ -63,9 +64,7 @@ export class PromiseNodeParser implements SubNodeParser {
         const awaitedNode = this.typeChecker.typeToTypeNode(awaitedType, undefined, ts.NodeBuilderFlags.IgnoreErrors);
 
         if (!awaitedNode) {
-            throw new Error(
-                `Could not find awaited node for type ${node.pos === -1 ? "<unresolved>" : node.getText()}`,
-            );
+            throw new ExpectationFailedTJSGError("Could not find awaited node", node);
         }
 
         const baseNode = this.childNodeParser.createType(awaitedNode, new Context(node));
@@ -87,7 +86,10 @@ export class PromiseNodeParser implements SubNodeParser {
     ) {
         if (ts.isExpressionWithTypeArguments(node)) {
             if (!ts.isHeritageClause(node.parent)) {
-                throw new Error("Expected ExpressionWithTypeArguments to have a HeritageClause parent");
+                throw new ExpectationFailedTJSGError(
+                    "Expected ExpressionWithTypeArguments to have a HeritageClause parent",
+                    node.parent,
+                );
             }
 
             return node.parent.parent.name?.getText();

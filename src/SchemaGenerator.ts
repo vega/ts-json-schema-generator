@@ -1,5 +1,4 @@
 import ts from "typescript";
-import { NoRootTypeError } from "./Error/NoRootTypeError.js";
 import { Context, NodeParser } from "./NodeParser.js";
 import { Definition } from "./Schema/Definition.js";
 import { Schema } from "./Schema/Schema.js";
@@ -11,6 +10,7 @@ import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
 import { Config } from "./Config.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
+import { MultipleDefinitionsTJSGError, RootlessTJSGError } from "./Error/Errors.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -74,7 +74,7 @@ export class SchemaGenerator {
             return allTypes.get(fullName)!;
         }
 
-        throw new NoRootTypeError(fullName);
+        throw new RootlessTJSGError(fullName);
     }
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
@@ -102,7 +102,11 @@ export class SchemaGenerator {
             const childId = child.getId().replace(/def-/g, "");
 
             if (previousId && childId !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
+                throw new MultipleDefinitionsTJSGError(
+                    name,
+                    child,
+                    children.find((c) => c.getId() === previousId),
+                );
             }
             ids.set(name, childId);
         }

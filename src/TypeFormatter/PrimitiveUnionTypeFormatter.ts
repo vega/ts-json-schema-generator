@@ -1,8 +1,8 @@
-import { LogicError } from "../Error/LogicError.js";
-import { Definition } from "../Schema/Definition.js";
-import { RawTypeName } from "../Schema/RawType.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
-import { BaseType } from "../Type/BaseType.js";
+import { TypeTJSGError } from "../Error/Errors.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawTypeName } from "../Schema/RawType.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { BooleanType } from "../Type/BooleanType.js";
 import { NullType } from "../Type/NullType.js";
 import { NumberType } from "../Type/NumberType.js";
@@ -27,17 +27,24 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     protected isPrimitiveUnion(type: UnionType): boolean {
         return type.getTypes().every((item) => item instanceof PrimitiveType);
     }
+
     protected getPrimitiveType(item: BaseType): RawTypeName {
         if (item instanceof StringType) {
             return "string";
-        } else if (item instanceof NumberType) {
+        }
+
+        if (item instanceof NumberType) {
             return "number";
-        } else if (item instanceof BooleanType) {
+        }
+
+        if (item instanceof BooleanType) {
             return "boolean";
-        } else if (item instanceof NullType) {
+        }
+
+        if (item instanceof NullType) {
             return "null";
         }
 
-        throw new LogicError("Unexpected code branch");
+        throw new TypeTJSGError("Unexpected code branch", item);
     }
 }

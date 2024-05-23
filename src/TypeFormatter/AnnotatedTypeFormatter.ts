@@ -1,3 +1,4 @@
+import { TypeTJSGError } from "../Error/Errors.js";
 import { Definition } from "../Schema/Definition.js";
 import { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
@@ -55,13 +56,14 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         const annotations = type.getAnnotations();
 
         if ("discriminator" in annotations) {
-            const derefed = derefType(type.getType());
-            if (derefed instanceof UnionType) {
-                derefed.setDiscriminator(annotations.discriminator);
+            const deref = derefType(type.getType());
+            if (deref instanceof UnionType) {
+                deref.setDiscriminator(annotations.discriminator);
                 delete annotations.discriminator;
             } else {
-                throw new Error(
-                    `Cannot assign discriminator tag to type: ${derefed.getName()}. This tag can only be assigned to union types.`,
+                throw new TypeTJSGError(
+                    `Cannot assign discriminator tag to type: ${deref.getName()}. This tag can only be assigned to union types.`,
+                    deref,
                 );
             }
         }

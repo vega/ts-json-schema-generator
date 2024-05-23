@@ -13,6 +13,7 @@ import { ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { isLiteralUnion } from "../TypeFormatter/LiteralUnionTypeFormatter.js";
+import { ExpectationFailedTJSGError, LogicTJSGError } from "../Error/Errors.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -69,12 +70,13 @@ function derefAndFlattenUnions(type: BaseType): BaseType[] {
 export function translate(types: BaseType[]): BaseType {
     types = uniqueTypeArray(types);
 
-    if (types.length == 1) {
+    if (types.length === 1) {
         return types[0];
     }
 
     const unions = types.map(derefAndFlattenUnions);
     const result: BaseType[] = [];
+
     function process(i: number, t: BaseType[] = []) {
         for (const type of unions[i]) {
             let currentTypes = [...t, type];
@@ -101,13 +103,16 @@ export function translate(types: BaseType[]): BaseType {
             }
         }
     }
+
     process(0);
 
     if (result.length === 1) {
         return result[0];
-    } else if (result.length > 1) {
+    }
+
+    if (result.length > 1) {
         return new UnionType(result);
     }
 
-    throw new Error("Could not translate intersection to union.");
+    throw new ExpectationFailedTJSGError("Could not translate intersection to union.");
 }

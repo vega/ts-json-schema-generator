@@ -1,44 +1,47 @@
 import * as glob from "glob";
-import * as path from "path";
-import ts from "typescript";
+import * as path from "node:path";
 import normalize from "normalize-path";
-
-import { CompletedConfig, Config } from "../src/Config.js";
-import { DiagnosticError } from "../src/Error/DiagnosticError.js";
-import { LogicError } from "../src/Error/LogicError.js";
-import { NoRootNamesError } from "../src/Error/NoRootNamesError.js";
-import { NoTSConfigError } from "../src/Error/NoTSConfigError.js";
+import ts from "typescript";
+import type { CompletedConfig, Config } from "../src/Config.js";
+import { BuildTJSGError } from "../src/Error/Errors.js";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
-    if (raw) {
-        const config = ts.parseConfigFileTextToJson(configFile, raw);
 
-        if (config.error) {
-            throw new DiagnosticError([config.error]);
-        } else if (!config.config) {
-            throw new LogicError(`Invalid parsed config file "${configFile}"`);
-        }
-
-        const parseResult = ts.parseJsonConfigFileContent(
-            config.config,
-            ts.sys,
-            path.resolve(path.dirname(configFile)),
-            {},
-            configFile,
-        );
-        parseResult.options.noEmit = true;
-        delete parseResult.options.out;
-        delete parseResult.options.outDir;
-        delete parseResult.options.outFile;
-        delete parseResult.options.declaration;
-        delete parseResult.options.declarationDir;
-        delete parseResult.options.declarationMap;
-
-        return parseResult;
-    } else {
-        throw new NoTSConfigError();
+    if (!raw) {
+        throw new BuildTJSGError({
+            messageText: `Cannot read config file "${configFile}"`,
+        });
     }
+
+    const config = ts.parseConfigFileTextToJson(configFile, raw);
+
+    if (config.error) {
+        throw new BuildTJSGError(config.error);
+    }
+
+    if (!config.config) {
+        throw new BuildTJSGError({
+            messageText: `Invalid parsed config file "${configFile}"`,
+        });
+    }
+
+    const parseResult = ts.parseJsonConfigFileContent(
+        config.config,
+        ts.sys,
+        path.resolve(path.dirname(configFile)),
+        {},
+        configFile,
+    );
+    parseResult.options.noEmit = true;
+    delete parseResult.options.out;
+    delete parseResult.options.outDir;
+    delete parseResult.options.outFile;
+    delete parseResult.options.declaration;
+    delete parseResult.options.declarationDir;
+    delete parseResult.options.declarationMap;
+
+    return parseResult;
 }
 
 function getTsConfig(config: Config) {
@@ -67,15 +70,21 @@ export function createProgram(config: CompletedConfig): ts.Program {
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
 
     if (!rootNames.length) {
-        throw new NoRootNamesError();
+        throw new BuildTJSGError({
+            messageText: "No input files",
+        });
     }
 
     const program: ts.Program = ts.createProgram(rootNames, tsconfig.options);
 
     if (!config.skipTypeCheck) {
         const diagnostics = ts.getPreEmitDiagnostics(program);
+
         if (diagnostics.length) {
-            throw new DiagnosticError(diagnostics);
+            throw new BuildTJSGError({
+                messageText: "Type check error",
+                relatedInformation: [...diagnostics],
+            });
         }
     }
 
