@@ -111,7 +111,7 @@ export default class Generate extends Command {
     };
 
     public async run(): Promise<void> {
-        const { flags } = await this.parse(Generate);
+        const { flags, args } = await this.parse(Generate);
 
         // If markdown-description is set, set jsdoc to extended
         if (flags["markdown-description"]) {
@@ -125,7 +125,7 @@ export default class Generate extends Command {
 
         const config: CompletedConfig = {
             minify: flags.minify,
-            path: flags.path,
+            path: args.path,
             type: flags.type,
             expose: flags.expose as CompletedConfig["expose"],
             jsDoc: flags.jsdoc as CompletedConfig["jsDoc"],
