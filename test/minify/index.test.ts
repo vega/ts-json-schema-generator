@@ -1,7 +1,7 @@
-import { execSync } from "child_process";
-import path from "path";
+import { execSync } from "node:child_process";
+import path from "node:path";
 
-const BIN = path.resolve(__dirname, "../../dist/ts-json-schema-generator.js");
+const BIN = path.resolve(__dirname, "../../bin/run.js");
 const SCHEMA_PATH = path.resolve(__dirname, "./schema.ts");
 
 const EXPECTED = {
@@ -22,7 +22,7 @@ const EXPECTED = {
 
 describe("Tests --minify output", () => {
     it("With minify", () => {
-        const stdout = execSync(`node ${BIN} -p ${SCHEMA_PATH} --minify`).toString().trimEnd();
+        const stdout = execSync(`node ${BIN} generate ${SCHEMA_PATH} --no-type-check --minify`).toString().trimEnd();
 
         // Only a newline at the end
         expect(stdout.split("\n").length).toBe(1);
@@ -35,7 +35,7 @@ describe("Tests --minify output", () => {
     });
 
     it("Without minify", () => {
-        const stdout = execSync(`node ${BIN} -p ${SCHEMA_PATH}`).toString().trimEnd();
+        const stdout = execSync(`node ${BIN} generate ${SCHEMA_PATH} --no-type-check`).toString().trimEnd();
 
         // There's more than one \n (formatting)
         expect(stdout.split("\n").length).toBeGreaterThan(2);

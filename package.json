@@ -37,8 +37,7 @@
   "types": "dist/index.d.ts",
   "bin": {
     "tjsg": "./bin/run.js",
-    "tjsg-dev": "./bin/dev.js",
-    "ts-json-schema-generator": "./bin/ts-json-schema-generator.js"
+    "tjsg-dev": "./bin/dev.js"
   },
   "files": [
     "dist",
@@ -46,20 +45,19 @@
     "src",
     "factory",
     "commands",
-    "index.*",
-    "ts-json-schema-generator.*"
+    "index.*"
   ],
   "scripts": {
     "build": "npm run build:cjs && npm run build:esm",
     "postbuild": "oclif manifest && oclif readme && prettier --write README.md oclif.manifest.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.json",
-    "debug": "tsx --inspect-brk ts-json-schema-generator.ts",
+    "debug": "tsx --inspect-brk bin/run.js",
     "format": "eslint --fix",
     "lint": "eslint",
     "prepublishOnly": "yarn build",
     "release": "yarn build && git diff && auto shipit",
-    "run": "tsx ts-json-schema-generator.ts",
+    "run": "tsx bin/run.js",
     "test": "jest test/ --verbose",
     "test:coverage": "yarn jest test/ --collectCoverage=true",
     "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
@@ -116,10 +114,6 @@
   },
   "oclif": {
     "bin": "tjsg",
-    "binAliases": [
-      "tjsg-dev",
-      "ts-json-schema-generator"
-    ],
     "dirname": "ts-json-schema-generator",
     "topicSeparator": " ",
     "additionalHelpFlags": [

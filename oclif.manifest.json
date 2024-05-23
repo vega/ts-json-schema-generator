@@ -4,16 +4,21 @@
       "aliases": [],
       "args": {
         "path": {
+          "default": "*",
           "description": "Source file path",
           "name": "path",
-          "required": false
+          "required": true
         }
       },
       "description": "Generate JSON schema from your Typescript sources",
       "examples": [
         {
-          "command": "<%= config.bin %> <%= command.id %> -f tsconfig.json -o schema.json src/types.ts ",
-          "description": "Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json."
+          "command": "<%= config.bin %> <%= command.id %> src/types.ts -p tsconfig.json",
+          "description": "Analyzes src/types.ts using tsconfig.json and pipes to stdout"
+        },
+        {
+          "command": "<%= config.bin %> <%= command.id %> src/types.ts -o schema.json",
+          "description": "Analyzes src/types.ts and writes the schema to schema.json"
         }
       ],
       "flags": {
@@ -45,6 +50,7 @@
           "char": "p",
           "description": "Your tsconfig.json to load entry files and compilation settings",
           "name": "tsconfig",
+          "default": "tsconfig.json",
           "hasDynamicHelp": false,
           "multiple": false,
           "type": "option"

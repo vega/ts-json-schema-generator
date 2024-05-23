@@ -46,7 +46,7 @@ Or install the package and then run it
 
 ```bash
 $ npm install -D ts-json-schema-generator
-$ node_modules/.bin/ts-json-schema-generator -t 'My.Type.Name' 'my/project/**/*.ts'
+$ node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
 ```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
@@ -60,7 +60,7 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 <!-- commands -->
 
 -   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate [PATH]`](#tjsg-generate-path)
+-   [`tjsg generate PATH`](#tjsg-generate-path)
 -   [`tjsg help [COMMAND]`](#tjsg-help-command)
 
 ## `tjsg autocomplete [SHELL]`
@@ -94,19 +94,19 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.0.18/src/commands/autocomplete/index.ts)_
 
-## `tjsg generate [PATH]`
+## `tjsg generate PATH`
 
 Generate JSON schema from your Typescript sources
 
 ```
 USAGE
-  $ tjsg generate [PATH] [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
+  $ tjsg generate PATH [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
     none|basic|extended] [--markdown-description] [--sort-props] [--strict-tuples] [--type-check] [--ref-encode]
     [--additional-properties] [--functions fail|comment|hide] [--minify] [-o <value>] [--extra-tags <value>]
     [--discriminator-type json-schema|open-api]
 
 ARGUMENTS
-  PATH  Source file path
+  PATH  [default: *] Source file path
 
 FLAGS
   -e, --expose=<option>              [default: export] Type exposing
@@ -115,7 +115,8 @@ FLAGS
   -j, --jsdoc=<option>               [default: extended] Read JsDoc annotations
                                      <options: none|basic|extended>
   -o, --out=<value>                  Set the output file (default: stdout)
-  -p, --tsconfig=<value>             Your tsconfig.json to load entry files and compilation settings
+  -p, --tsconfig=<value>             [default: tsconfig.json] Your tsconfig.json to load entry files and compilation
+                                     settings
   -t, --type=<value>                 Type name
       --additional-properties        Allow additional properties for objects with no index signature
       --discriminator-type=<option>  [default: json-schema] Type of discriminator to use
@@ -137,9 +138,13 @@ DESCRIPTION
   Generate JSON schema from your Typescript sources
 
 EXAMPLES
-  Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json.
+  Analyzes src/types.ts using tsconfig.json and pipes to stdout
 
-    $ tjsg generate -f tsconfig.json -o schema.json src/types.ts
+    $ tjsg generate src/types.ts -p tsconfig.json
+
+  Analyzes src/types.ts and writes the schema to schema.json
+
+    $ tjsg generate src/types.ts -o schema.json
 ```
 
 _See code: [src/commands/generate.ts](https://github.com/vega/ts-json-schema-generator/blob/v2.0.0/src/commands/generate.ts)_

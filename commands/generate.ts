@@ -11,14 +11,17 @@ export default class Generate extends Command {
 
     static override examples = [
         {
-            command: "<%= config.bin %> <%= command.id %> -f tsconfig.json -o schema.json src/types.ts ",
-            description: "Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json.",
+            command: "<%= config.bin %> <%= command.id %> src/types.ts -p tsconfig.json",
+            description: "Analyzes src/types.ts using tsconfig.json and pipes to stdout",
+        },
+        {
+            command: "<%= config.bin %> <%= command.id %> src/types.ts -o schema.json",
+            description: "Analyzes src/types.ts and writes the schema to schema.json",
         },
     ];
 
     static override args = {
         path: Args.file({
-            required: false,
             description: "Source file path",
         }),
     };
@@ -42,6 +45,7 @@ export default class Generate extends Command {
             char: "p", // Keep similar to tsc and other cli tools
             aliases: ["project"],
             description: "Your tsconfig.json to load entry files and compilation settings",
+            default: "tsconfig.json",
         }),
         expose: Flags.string({
             char: "e",
@@ -119,7 +123,11 @@ export default class Generate extends Command {
         }
 
         if (flags["type-check"] && !flags.tsconfig) {
-            this.warn("Cannot type check without a tsconfig file. Skipping type check.");
+            // When printing to stdout, we cannot output anything else than a JSON
+            if (flags.out) {
+                this.warn("Cannot type check without a tsconfig file. Skipping type check.");
+            }
+
             flags["type-check"] = false;
         }
 
@@ -160,7 +168,14 @@ export default class Generate extends Command {
                 // write to stdout
                 process.stdout.write(`${schemaString}\n`);
             }
+
+            // When printing to stdout, we cannot output anything else than a JSON
+            if (flags.out) {
+                this.log("Schema generated successfully");
+            }
         } catch (error) {
+            this.error("Could not generate schema", { exit: false });
+
             if (error instanceof BaseError) {
                 process.stderr.write(error.format());
                 process.exit(1);
