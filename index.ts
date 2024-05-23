@@ -1,20 +1,12 @@
 export * from "./src/Error/BaseError.js";
-export * from "./src/Error/DiagnosticError.js";
-export * from "./src/Error/LogicError.js";
-export * from "./src/Error/NoRootNamesError.js";
-export * from "./src/Error/NoRootTypeError.js";
-export * from "./src/Error/NoTSConfigError.js";
-export * from "./src/Error/UnknownNodeError.js";
-export * from "./src/Error/UnknownTypeError.js";
+export * from "./src/Error/Errors.js";
 
 export * from "./src/Config.js";
 
 export * from "./src/Utils/allOfDefinition.js";
-export * from "./src/Utils/assert.js";
 export * from "./src/Utils/deepMerge.js";
 export * from "./src/Utils/derefType.js";
 export * from "./src/Utils/extractLiterals.js";
-export * from "./src/Utils/formatError.js";
 export * from "./src/Utils/hasJsDocTag.js";
 export * from "./src/Utils/intersectionOfArrays.js";
 export * from "./src/Utils/isAssignableTo.js";

@@ -1,9 +1,9 @@
-import ts from "typescript";
-import { UnknownNodeError } from "./Error/UnknownNodeError.js";
-import { MutableParser } from "./MutableParser.js";
-import { Context } from "./NodeParser.js";
-import { SubNodeParser } from "./SubNodeParser.js";
-import { BaseType } from "./Type/BaseType.js";
+import type ts from "typescript";
+import { UnknownNodeError } from "./Error/Errors.js";
+import type { MutableParser } from "./MutableParser.js";
+import type { Context } from "./NodeParser.js";
+import type { SubNodeParser } from "./SubNodeParser.js";
+import type { BaseType } from "./Type/BaseType.js";
 import { ReferenceType } from "./Type/ReferenceType.js";
 
 export class ChainNodeParser implements SubNodeParser, MutableParser {
@@ -32,7 +32,7 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
         const contextCacheKey = context.getCacheKey();
         let type = typeCache.get(contextCacheKey);
         if (!type) {
-            type = this.getNodeParser(node, context).createType(node, context, reference);
+            type = this.getNodeParser(node).createType(node, context, reference);
             if (!(type instanceof ReferenceType)) {
                 typeCache.set(contextCacheKey, type);
             }
@@ -40,13 +40,13 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
         return type;
     }
 
-    protected getNodeParser(node: ts.Node, context: Context): SubNodeParser {
+    protected getNodeParser(node: ts.Node): SubNodeParser {
         for (const nodeParser of this.nodeParsers) {
             if (nodeParser.supportsNode(node)) {
                 return nodeParser;
             }
         }
 
-        throw new UnknownNodeError(node, context.getReference());
+        throw new UnknownNodeError(node);
     }
 }

@@ -1,6 +1,7 @@
-import { JSONSchema7Definition } from "json-schema";
-import { Definition } from "../Schema/Definition.js";
-import { StringMap } from "./StringMap.js";
+import type { JSONSchema7Definition } from "json-schema";
+import { DefinitionError } from "../Error/Errors.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { StringMap } from "./StringMap.js";
 
 const DEFINITION_OFFSET = "#/definitions/".length;
 
@@ -21,9 +22,11 @@ function addReachable(
         }
         reachable.add(typeName);
         const refDefinition = definitions[typeName];
+
         if (!refDefinition) {
-            throw new Error(`Encountered a reference to a missing definition: "${definition.$ref}". This is a bug.`);
+            throw new DefinitionError("Encountered a reference to a missing definition, this is a bug.", definition);
         }
+
         addReachable(refDefinition, definitions, reachable);
     } else if (definition.anyOf) {
         for (const def of definition.anyOf) {
