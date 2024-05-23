@@ -26,7 +26,7 @@ export class RootlessError extends BaseError {
     constructor(readonly fullName: string) {
         super({
             code: 102,
-            messageText: `No root type "${fullName}"`,
+            messageText: `No root type "${fullName}" found`,
         });
     }
 }
