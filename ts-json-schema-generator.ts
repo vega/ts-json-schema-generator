@@ -6,9 +6,9 @@ import { createGenerator } from "./factory/generator.js";
 import type { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
 import { formatError } from "./src/Utils/formatError.js";
+import fs from "node:fs";
 
-// This constant gets replaced by the build script
-const pkgVersion = "0.0.0";
+const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
@@ -51,7 +51,7 @@ const args = new Command()
         [],
     )
     .option("--additional-properties", "Allow additional properties for objects with no index signature", false)
-    .version(pkgVersion)
+    .version(pkg.version)
     .parse(process.argv)
     .opts();
 
