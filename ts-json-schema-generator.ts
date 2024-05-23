@@ -72,6 +72,11 @@ const config: Config = {
     functions: args.functions,
 };
 
+// is TTY process and ouput is not to STDOUT
+if ((process.env.TTY || process.stdout.isTTY) && args.out) {
+    console.warn("The ts-json-schema-generator cli is deprecated, please use `tjsg generate` instead.");
+}
+
 try {
     const schema = createGenerator(config).createSchema(args.type);
 

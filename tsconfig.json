@@ -26,6 +26,6 @@
     "importHelpers": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
-  "include": ["src/**/*.ts", "factory/**/*.ts"],
+  "include": ["src/**/*.ts", "factory/**/*.ts", "commands/**/*.ts"],
   "exclude": ["node_modules", "dist", "cjs"]
 }

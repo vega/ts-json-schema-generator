@@ -6,7 +6,7 @@
     "moduleResolution": "Node",
     "outDir": "cjs"
   },
-  "files": ["ts-json-schema-generator.ts", "index.ts"],
+  "files": ["index.ts"],
   "include": ["src/**/*.ts", "factory/**/*.ts"],
   "exclude": ["node_modules", "dist", "cjs"]
 }

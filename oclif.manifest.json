@@ -1,0 +1,169 @@
+{
+  "commands": {
+    "generate": {
+      "aliases": [],
+      "args": {},
+      "description": "Generate JSON schema from your Typescript sources",
+      "examples": [
+        {
+          "command": "<%= config.bin %> <%= command.id %> -p src/types.ts -f tsconfig.json -o schema.json",
+          "description": "Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json."
+        }
+      ],
+      "flags": {
+        "path": {
+          "char": "p",
+          "description": "Source file path",
+          "name": "path",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "type": {
+          "char": "t",
+          "description": "Type name",
+          "name": "type",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "id": {
+          "char": "i",
+          "description": "$id for generated schema",
+          "name": "id",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "tsconfig": {
+          "char": "f",
+          "description": "Custom tsconfig.json path",
+          "name": "tsconfig",
+          "default": "tsconfig.json",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "expose": {
+          "char": "e",
+          "description": "Type exposing",
+          "name": "expose",
+          "default": "export",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": [
+            "all",
+            "none",
+            "export"
+          ],
+          "type": "option"
+        },
+        "jsDoc": {
+          "char": "j",
+          "description": "Read JsDoc annotations",
+          "name": "jsDoc",
+          "default": "extended",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": [
+            "none",
+            "basic",
+            "extended"
+          ],
+          "type": "option"
+        },
+        "markdown-description": {
+          "description": "Generate `markdownDescription` in addition to `description`.",
+          "name": "markdown-description",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "functions": {
+          "description": "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.",
+          "name": "functions",
+          "default": "comment",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": [
+            "fail",
+            "comment",
+            "hide"
+          ],
+          "type": "option"
+        },
+        "minify": {
+          "description": "Minify generated schema",
+          "name": "minify",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "unstable": {
+          "description": "Do not sort properties",
+          "name": "unstable",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "strict-tuples": {
+          "description": "Do not allow additional items on tuples",
+          "name": "strict-tuples",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-top-ref": {
+          "description": "Do not create a top-level $ref definition",
+          "name": "no-top-ref",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-type-check": {
+          "description": "Skip type checks to improve performance",
+          "name": "no-type-check",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "no-ref-encode": {
+          "description": "Do not encode references",
+          "name": "no-ref-encode",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "out": {
+          "char": "o",
+          "description": "Set the output file (default: stdout)",
+          "name": "out",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "validation-keywords": {
+          "description": "Provide additional validation keywords to include",
+          "name": "validation-keywords",
+          "hasDynamicHelp": false,
+          "multiple": true,
+          "type": "option"
+        },
+        "additional-properties": {
+          "description": "Allow additional properties for objects with no index signature",
+          "name": "additional-properties",
+          "allowNo": false,
+          "type": "boolean"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "generate",
+      "pluginAlias": "ts-json-schema-generator",
+      "pluginName": "ts-json-schema-generator",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": true,
+      "relativePath": [
+        "dist",
+        "commands",
+        "generate.js"
+      ]
+    }
+  },
+  "version": "2.0.0"
+}
