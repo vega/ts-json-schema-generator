@@ -1,11 +1,11 @@
 import ts from "typescript";
+import { ExpectationFailedTJSGError } from "../Error/Errors.js";
 import { Context, type NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { getKey } from "../Utils/nodeKey.js";
-import { ExpectationFailedTJSGError } from "../Error/Errors.js";
 
 /**
  * Needs to be registered before 261, 260, 230, 262 node kinds
