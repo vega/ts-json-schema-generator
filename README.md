@@ -60,7 +60,7 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 <!-- commands -->
 
 -   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate PATH`](#tjsg-generate-path)
+-   [`tjsg generate [PATH]`](#tjsg-generate-path)
 -   [`tjsg help [COMMAND]`](#tjsg-help-command)
 
 ## `tjsg autocomplete [SHELL]`
@@ -94,19 +94,19 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.0.18/src/commands/autocomplete/index.ts)_
 
-## `tjsg generate PATH`
+## `tjsg generate [PATH]`
 
 Generate JSON schema from your Typescript sources
 
 ```
 USAGE
-  $ tjsg generate PATH [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
+  $ tjsg generate [PATH] [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
     none|basic|extended] [--markdown-description] [--sort-props] [--strict-tuples] [--type-check] [--ref-encode]
     [--additional-properties] [--functions fail|comment|hide] [--minify] [-o <value>] [--extra-tags <value>]
     [--discriminator-type json-schema|open-api]
 
 ARGUMENTS
-  PATH  [default: *] Source file path
+  PATH  Source file path
 
 FLAGS
   -e, --expose=<option>              [default: export] Type exposing

@@ -4,10 +4,8 @@
       "aliases": [],
       "args": {
         "path": {
-          "default": "*",
           "description": "Source file path",
-          "name": "path",
-          "required": true
+          "name": "path"
         }
       },
       "description": "Generate JSON schema from your Typescript sources",
