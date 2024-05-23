@@ -1,3 +1,56 @@
+# v2.2.0 (Thu May 23 2024)
+
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Tim ([@timothympace](https://github.com/timothympace))
+
+:heart: Rama Krishna Ghanta ([@ramaghanta](https://github.com/ramaghanta))
+
+:heart: Sampsa Kaskela ([@SampsaKaskela](https://github.com/SampsaKaskela))
+
+#### 🚀 Enhancement
+
+- feat: add back cjs output [#1964](https://github.com/vega/ts-json-schema-generator/pull/1964) ([@arthurfiorette](https://github.com/arthurfiorette) [@domoritz](https://github.com/domoritz))
+- feat: support `export *` statements [#1962](https://github.com/vega/ts-json-schema-generator/pull/1962) ([@arthurfiorette](https://github.com/arthurfiorette))
+- feat: Improved Promise handling to support packages like Prisma [#1924](https://github.com/vega/ts-json-schema-generator/pull/1924) ([@arthurfiorette](https://github.com/arthurfiorette))
+
+#### 🐛 Bug Fix
+
+- ci: update node version [#1961](https://github.com/vega/ts-json-schema-generator/pull/1961) ([@domoritz](https://github.com/domoritz))
+- bug: fix usage of * in type on Windows [#1942](https://github.com/vega/ts-json-schema-generator/pull/1942) ([@SampsaKaskela](https://github.com/SampsaKaskela) [@domoritz](https://github.com/domoritz))
+- removed import assertion [#1944](https://github.com/vega/ts-json-schema-generator/pull/1944) ([@ramaghanta](https://github.com/ramaghanta))
+- Provide more type saftey for vega-lite fixme [#1947](https://github.com/vega/ts-json-schema-generator/pull/1947) ([@timothympace](https://github.com/timothympace))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump vega-lite from 5.18.0 to 5.18.1 [#1960](https://github.com/vega/ts-json-schema-generator/pull/1960) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump commander from 12.0.0 to 12.1.0 [#1959](https://github.com/vega/ts-json-schema-generator/pull/1959) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @eslint/js from 9.2.0 to 9.3.0 [#1958](https://github.com/vega/ts-json-schema-generator/pull/1958) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump tsx from 4.9.1 to 4.10.5 [#1957](https://github.com/vega/ts-json-schema-generator/pull/1957) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump vega from 5.28.0 to 5.29.0 [#1955](https://github.com/vega/ts-json-schema-generator/pull/1955) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/core from 7.24.4 to 7.24.5 [#1953](https://github.com/vega/ts-json-schema-generator/pull/1953) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump chai from 5.1.0 to 5.1.1 [#1952](https://github.com/vega/ts-json-schema-generator/pull/1952) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/preset-env from 7.24.4 to 7.24.5 [#1954](https://github.com/vega/ts-json-schema-generator/pull/1954) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 7.7.1 to 7.8.0 [#1948](https://github.com/vega/ts-json-schema-generator/pull/1948) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ajv from 8.12.0 to 8.13.0 [#1950](https://github.com/vega/ts-json-schema-generator/pull/1950) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump tsx from 4.7.3 to 4.9.1 [#1951](https://github.com/vega/ts-json-schema-generator/pull/1951) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 9.1.1 to 9.2.0 [#1949](https://github.com/vega/ts-json-schema-generator/pull/1949) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump tsx from 4.7.2 to 4.7.3 [#1940](https://github.com/vega/ts-json-schema-generator/pull/1940) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 9.1.0 to 9.1.1 [#1939](https://github.com/vega/ts-json-schema-generator/pull/1939) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 6
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Arthur Fiorette ([@arthurfiorette](https://github.com/arthurfiorette))
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Rama Krishna Ghanta ([@ramaghanta](https://github.com/ramaghanta))
+- Sampsa Kaskela ([@SampsaKaskela](https://github.com/SampsaKaskela))
+- Tim ([@timothympace](https://github.com/timothympace))
+
+---
+
 # v2.1.1 (Tue Apr 23 2024)
 
 #### 🐛 Bug Fix
