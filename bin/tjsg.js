@@ -3,6 +3,6 @@
 import { execute } from "@oclif/core";
 
 await execute({
-    development: false,
+    development: !!process.env.TJSG_DEV,
     dir: import.meta.url,
 });

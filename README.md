@@ -44,7 +44,7 @@ $ npx ts-json-schema-generator -t 'My.Type.Name' 'my/project/**/*.ts'
 
 Or install the package and then run it
 
-```bash
+```console
 $ npm install -D ts-json-schema-generator
 $ node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
 ```
@@ -52,6 +52,12 @@ $ node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
 
 Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
+
+You can also run the CLI with `TSJG_DEV=1` to run the CLI in development mode and have more verbose output.
+
+```console
+$ TSJG_DEV=1 node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
+```
 
 <br />
 
