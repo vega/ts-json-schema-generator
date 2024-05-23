@@ -41,7 +41,7 @@ describe("sourceless-nodes", () => {
     });
 });
 
-// From github.com/arthurfiorette/kita/blob/main/packages/generator/src/util/type-resolver.ts
+// From https://github.com/kitajs/kitajs/blob/ebf23297de07887c78becff52120f941e69386ec/packages/parser/src/util/nodes.ts#L64
 function getReturnType(node: ts.SignatureDeclaration, typeChecker: ts.TypeChecker) {
     const signature = typeChecker.getSignatureFromDeclaration(node);
     const implicitType = typeChecker.getReturnTypeOfSignature(signature!);
