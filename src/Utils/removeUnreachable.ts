@@ -1,5 +1,5 @@
 import type { JSONSchema7Definition } from "json-schema";
-import { DefinitionTJSGError } from "../Error/Errors.js";
+import { DefinitionError } from "../Error/Errors.js";
 import type { Definition } from "../Schema/Definition.js";
 import type { StringMap } from "./StringMap.js";
 
@@ -24,10 +24,7 @@ function addReachable(
         const refDefinition = definitions[typeName];
 
         if (!refDefinition) {
-            throw new DefinitionTJSGError(
-                "Encountered a reference to a missing definition, this is a bug.",
-                definition,
-            );
+            throw new DefinitionError("Encountered a reference to a missing definition, this is a bug.", definition);
         }
 
         addReachable(refDefinition, definitions, reachable);

@@ -1,4 +1,4 @@
-import { ExpectationFailedTJSGError } from "../Error/Errors.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
 import type { RawType, RawTypeName } from "../Schema/RawType.js";
 
 export function typeName(value: RawType): RawTypeName {
@@ -20,5 +20,5 @@ export function typeName(value: RawType): RawTypeName {
         return "object";
     }
 
-    throw new ExpectationFailedTJSGError(`JavaScript type "typeof " can't be converted to JSON type name`);
+    throw new ExpectationFailedError(`JavaScript type "typeof " can't be converted to JSON type name`);
 }

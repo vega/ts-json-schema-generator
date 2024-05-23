@@ -4,7 +4,7 @@ import { dirname } from "node:path";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator.js";
 import type { Config } from "./src/Config.js";
-import { TJSGError } from "./src/Error/BaseError.js";
+import { BaseError } from "./src/Error/BaseError.js";
 
 const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 
@@ -89,10 +89,10 @@ try {
         process.stdout.write(`${schemaString}\n`);
     }
 } catch (error) {
-    if (error instanceof TJSGError) {
+    if (error instanceof BaseError) {
         process.stderr.write(error.format());
         process.exit(1);
-    } else {
-        throw error;
     }
+
+    throw error;
 }

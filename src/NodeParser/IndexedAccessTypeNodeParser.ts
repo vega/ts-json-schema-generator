@@ -11,7 +11,7 @@ import { TupleType } from "../Type/TupleType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
-import { LogicTJSGError } from "../Error/Errors.js";
+import { LogicError } from "../Error/Errors.js";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -61,7 +61,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [indexType];
         const propertyTypes = indexTypes.map((type) => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
-                throw new LogicTJSGError(
+                throw new LogicError(
                     node,
                     `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
                 );
@@ -78,13 +78,10 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                         return objectType;
                     }
 
-                    throw new LogicTJSGError(
-                        node,
-                        `Invalid index "${type.getValue()}" in type "${objectType.getId()}"`,
-                    );
+                    throw new LogicError(node, `Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
                 }
 
-                throw new LogicTJSGError(node, `No additional properties in type "${objectType.getId()}"`);
+                throw new LogicError(node, `No additional properties in type "${objectType.getId()}"`);
             }
 
             return propertyType;

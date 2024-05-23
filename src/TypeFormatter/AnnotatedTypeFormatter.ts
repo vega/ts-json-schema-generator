@@ -1,10 +1,10 @@
-import { TypeTJSGError } from "../Error/Errors.js";
-import { Definition } from "../Schema/Definition.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { JsonTypeError } from "../Error/Errors.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { TypeFormatter } from "../TypeFormatter.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 
 export function makeNullable(def: Definition): Definition {
@@ -61,7 +61,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
                 deref.setDiscriminator(annotations.discriminator);
                 delete annotations.discriminator;
             } else {
-                throw new TypeTJSGError(
+                throw new JsonTypeError(
                     `Cannot assign discriminator tag to type: ${deref.getName()}. This tag can only be assigned to union types.`,
                     deref,
                 );

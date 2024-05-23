@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { ExpectationFailedTJSGError } from "../Error/Errors.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
 import { Context, NodeParser } from "../NodeParser.js";
 import { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
@@ -92,7 +92,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return new ObjectType(id, [], [], false);
         }
 
-        throw new ExpectationFailedTJSGError(
+        throw new ExpectationFailedError(
             `Unexpected key type "${
                 constraintType ? constraintType.getId() : constraintType
             }" for this node. (expected "UnionType" or "StringType")`,

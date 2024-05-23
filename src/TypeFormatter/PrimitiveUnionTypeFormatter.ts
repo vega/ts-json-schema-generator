@@ -1,4 +1,4 @@
-import { TypeTJSGError } from "../Error/Errors.js";
+import { JsonTypeError } from "../Error/Errors.js";
 import type { Definition } from "../Schema/Definition.js";
 import type { RawTypeName } from "../Schema/RawType.js";
 import type { SubTypeFormatter } from "../SubTypeFormatter.js";
@@ -45,6 +45,6 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
             return "null";
         }
 
-        throw new TypeTJSGError("Unexpected code branch", item);
+        throw new JsonTypeError("Unexpected code branch", item);
     }
 }

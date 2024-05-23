@@ -8,7 +8,7 @@ import { getKey } from "../Utils/nodeKey.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { FunctionType } from "../Type/FunctionType.js";
-import { LogicTJSGError } from "../Error/Errors.js";
+import { LogicError } from "../Error/Errors.js";
 
 export class TypeofNodeParser implements SubNodeParser {
     public constructor(
@@ -33,7 +33,7 @@ export class TypeofNodeParser implements SubNodeParser {
                 return new NeverType();
             }
 
-            throw new LogicTJSGError(node, `No value declaration found for symbol "${symbol.name}"`);
+            throw new LogicError(node, `No value declaration found for symbol "${symbol.name}"`);
         }
 
         if (ts.isEnumDeclaration(valueDec)) {
@@ -67,10 +67,7 @@ export class TypeofNodeParser implements SubNodeParser {
             return new FunctionType(<ts.FunctionDeclaration>valueDec);
         }
 
-        throw new LogicTJSGError(
-            valueDec,
-            `Invalid type query for this declaration. (ts.SyntaxKind = ${valueDec.kind})`,
-        );
+        throw new LogicError(valueDec, `Invalid type query for this declaration. (ts.SyntaxKind = ${valueDec.kind})`);
     }
 
     protected createObjectFromEnum(node: ts.EnumDeclaration, context: Context, reference?: ReferenceType): ObjectType {
@@ -91,7 +88,7 @@ export class TypeofNodeParser implements SubNodeParser {
             } else if (type instanceof LiteralType && typeof type.getValue() === "number") {
                 type = new LiteralType(+type.getValue() + 1);
             } else {
-                throw new LogicTJSGError(member.name, `Enum initializer missing for "${name}"`);
+                throw new LogicError(member.name, `Enum initializer missing for "${name}"`);
             }
 
             return new ObjectProperty(name, type, true);

@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { ExpectationFailedTJSGError } from "../Error/Errors.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -27,10 +27,10 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
                     return new LiteralType(!operand.getValue());
             }
 
-            throw new ExpectationFailedTJSGError("Unsupported prefix unary operator", node);
+            throw new ExpectationFailedError("Unsupported prefix unary operator", node);
         }
 
-        throw new ExpectationFailedTJSGError(
+        throw new ExpectationFailedError(
             `Expected operand to be "LiteralType" but is "${operand ? operand.constructor.name : operand}"`,
             node,
         );

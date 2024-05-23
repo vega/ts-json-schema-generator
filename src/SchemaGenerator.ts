@@ -1,6 +1,6 @@
 import ts from "typescript";
 import type { Config } from "./Config.js";
-import { MultipleDefinitionsTJSGError, RootlessTJSGError } from "./Error/Errors.js";
+import { MultipleDefinitionsError, RootlessError } from "./Error/Errors.js";
 import { Context, type NodeParser } from "./NodeParser.js";
 import type { Definition } from "./Schema/Definition.js";
 import type { Schema } from "./Schema/Schema.js";
@@ -76,7 +76,7 @@ export class SchemaGenerator {
             return allTypes.get(fullName)!;
         }
 
-        throw new RootlessTJSGError(fullName);
+        throw new RootlessError(fullName);
     }
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
@@ -104,7 +104,7 @@ export class SchemaGenerator {
             const childId = child.getId().replace(/def-/g, "");
 
             if (previousId && childId !== previousId) {
-                throw new MultipleDefinitionsTJSGError(
+                throw new MultipleDefinitionsError(
                     name,
                     child,
                     children.find((c) => c.getId() === previousId),

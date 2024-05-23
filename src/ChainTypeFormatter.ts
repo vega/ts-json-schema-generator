@@ -1,4 +1,4 @@
-import { UnknownTypeTJSGError } from "./Error/Errors.js";
+import { UnknownTypeError } from "./Error/Errors.js";
 import type { MutableTypeFormatter } from "./MutableTypeFormatter.js";
 import type { Definition } from "./Schema/Definition.js";
 import type { SubTypeFormatter } from "./SubTypeFormatter.js";
@@ -29,6 +29,6 @@ export class ChainTypeFormatter implements SubTypeFormatter, MutableTypeFormatte
             }
         }
 
-        throw new UnknownTypeTJSGError(type);
+        throw new UnknownTypeError(type);
     }
 }

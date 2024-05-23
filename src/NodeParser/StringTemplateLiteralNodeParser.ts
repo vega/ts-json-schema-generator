@@ -6,7 +6,7 @@ import { LiteralType } from "../Type/LiteralType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { extractLiterals } from "../Utils/extractLiterals.js";
-import { UnknownTypeTJSGError } from "../Error/Errors.js";
+import { UnknownTypeError } from "../Error/Errors.js";
 
 export class StringTemplateLiteralNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -41,7 +41,7 @@ export class StringTemplateLiteralNodeParser implements SubNodeParser {
 
             return new UnionType(expandedTypes);
         } catch (error) {
-            if (error instanceof UnknownTypeTJSGError) {
+            if (error instanceof UnknownTypeError) {
                 return new StringType();
             }
 

@@ -17,12 +17,12 @@ const isTTY = process.env.TTY || process.stdout.isTTY;
 /**
  * Base error for ts-json-schema-generator
  */
-export abstract class TJSGError extends Error {
+export abstract class BaseError extends Error {
     readonly diagnostic: ts.Diagnostic;
 
     constructor(diagnostic: PartialDiagnostic) {
         super(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
-        this.diagnostic = TJSGError.createDiagnostic(diagnostic);
+        this.diagnostic = BaseError.createDiagnostic(diagnostic);
     }
 
     static createDiagnostic(diagnostic: PartialDiagnostic): ts.Diagnostic {
@@ -37,7 +37,8 @@ export abstract class TJSGError extends Error {
         }
 
         // @ts-expect-error - Differentiates from errors from the TypeScript compiler
-        diagnostic.code = `tjsg - ${diagnostic.code}`;
+        // error TSJ - 100: message
+        diagnostic.code = `J - ${diagnostic.code}`;
 
         return Object.assign(
             {

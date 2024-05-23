@@ -1,5 +1,5 @@
 import type ts from "typescript";
-import { UnknownNodeTJSGError } from "./Error/Errors.js";
+import { UnknownNodeError } from "./Error/Errors.js";
 import type { MutableParser } from "./MutableParser.js";
 import type { Context } from "./NodeParser.js";
 import type { SubNodeParser } from "./SubNodeParser.js";
@@ -47,6 +47,6 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
             }
         }
 
-        throw new UnknownNodeTJSGError(node);
+        throw new UnknownNodeError(node);
     }
 }

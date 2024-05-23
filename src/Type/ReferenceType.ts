@@ -1,4 +1,4 @@
-import { TypeTJSGError } from "../Error/Errors.js";
+import { JsonTypeError } from "../Error/Errors.js";
 import { BaseType } from "./BaseType.js";
 
 export class ReferenceType extends BaseType {
@@ -10,7 +10,7 @@ export class ReferenceType extends BaseType {
 
     public getId(): string {
         if (this.id == null) {
-            throw new TypeTJSGError("Reference type ID not set yet", this);
+            throw new JsonTypeError("Reference type ID not set yet", this);
         }
 
         return this.id;
@@ -22,7 +22,7 @@ export class ReferenceType extends BaseType {
 
     public getName(): string {
         if (this.name == null) {
-            throw new TypeTJSGError("Reference type name not set yet", this);
+            throw new JsonTypeError("Reference type name not set yet", this);
         }
 
         return this.name;
@@ -34,7 +34,7 @@ export class ReferenceType extends BaseType {
 
     public getType(): BaseType {
         if (this.type == null) {
-            throw new TypeTJSGError("Reference type not set yet", this);
+            throw new JsonTypeError("Reference type not set yet", this);
         }
 
         return this.type;

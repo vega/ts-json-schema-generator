@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { ExpectationFailedTJSGError } from "../Error/Errors.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -114,5 +114,5 @@ export function translate(types: BaseType[]): BaseType {
         return new UnionType(result);
     }
 
-    throw new ExpectationFailedTJSGError("Could not translate intersection to union.");
+    throw new ExpectationFailedError("Could not translate intersection to union.");
 }

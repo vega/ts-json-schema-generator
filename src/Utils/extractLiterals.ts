@@ -1,4 +1,4 @@
-import { UnknownTypeTJSGError } from "../Error/Errors.js";
+import { UnknownTypeError } from "../Error/Errors.js";
 import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { BooleanType } from "../Type/BooleanType.js";
@@ -38,7 +38,7 @@ function* _extractLiterals(type: BaseType): Iterable<string> {
         return;
     }
 
-    throw new UnknownTypeTJSGError(dereffedType);
+    throw new UnknownTypeError(dereffedType);
 }
 
 export function extractLiterals(type: BaseType): string[] {

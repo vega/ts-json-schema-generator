@@ -1,9 +1,9 @@
 import ts from "typescript";
-import { PartialDiagnostic, TJSGError } from "./BaseError.js";
+import { type PartialDiagnostic, BaseError } from "./BaseError.js";
 import type { BaseType } from "../Type/BaseType.js";
-import { JSONSchema7 } from "json-schema";
+import type { JSONSchema7 } from "json-schema";
 
-export class UnknownNodeTJSGError extends TJSGError {
+export class UnknownNodeError extends BaseError {
     constructor(readonly node: ts.Node) {
         super({
             code: 100,
@@ -13,7 +13,7 @@ export class UnknownNodeTJSGError extends TJSGError {
     }
 }
 
-export class UnknownTypeTJSGError extends TJSGError {
+export class UnknownTypeError extends BaseError {
     constructor(readonly type: BaseType) {
         super({
             code: 101,
@@ -22,7 +22,7 @@ export class UnknownTypeTJSGError extends TJSGError {
     }
 }
 
-export class RootlessTJSGError extends TJSGError {
+export class RootlessError extends BaseError {
     constructor(readonly fullName: string) {
         super({
             code: 102,
@@ -31,7 +31,7 @@ export class RootlessTJSGError extends TJSGError {
     }
 }
 
-export class MultipleDefinitionsTJSGError extends TJSGError {
+export class MultipleDefinitionsError extends BaseError {
     constructor(
         readonly name: string,
         readonly defA: BaseType,
@@ -44,7 +44,7 @@ export class MultipleDefinitionsTJSGError extends TJSGError {
     }
 }
 
-export class LogicTJSGError extends TJSGError {
+export class LogicError extends BaseError {
     constructor(
         readonly node: ts.Node,
         messageText: string,
@@ -57,7 +57,7 @@ export class LogicTJSGError extends TJSGError {
     }
 }
 
-export class ExpectationFailedTJSGError extends TJSGError {
+export class ExpectationFailedError extends BaseError {
     constructor(
         messageText: string,
         readonly node?: ts.Node,
@@ -70,7 +70,7 @@ export class ExpectationFailedTJSGError extends TJSGError {
     }
 }
 
-export class TypeTJSGError extends TJSGError {
+export class JsonTypeError extends BaseError {
     constructor(
         messageText: string,
         readonly type: BaseType,
@@ -82,7 +82,7 @@ export class TypeTJSGError extends TJSGError {
     }
 }
 
-export class DefinitionTJSGError extends TJSGError {
+export class DefinitionError extends BaseError {
     constructor(
         messageText: string,
         readonly definition: JSONSchema7,
@@ -93,7 +93,7 @@ export class DefinitionTJSGError extends TJSGError {
         });
     }
 }
-export class BuildTJSGError extends TJSGError {
+export class BuildError extends BaseError {
     constructor(diag: Omit<PartialDiagnostic, "code">) {
         super({
             code: 108,

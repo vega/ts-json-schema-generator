@@ -1,5 +1,5 @@
 import ts from "typescript";
-import { LogicTJSGError } from "../Error/Errors.js";
+import { LogicError } from "../Error/Errors.js";
 import type { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -23,7 +23,7 @@ export class IntrinsicNodeParser implements SubNodeParser {
         const method = intrinsicMethods[methodName];
 
         if (!method) {
-            throw new LogicTJSGError(node, `Unknown intrinsic method: ${methodName}`);
+            throw new LogicError(node, `Unknown intrinsic method: ${methodName}`);
         }
 
         const literals = extractLiterals(context.getArguments()[0])
@@ -40,7 +40,7 @@ function getParentName(node: ts.KeywordTypeNode): string {
     const parent = node.parent;
 
     if (!ts.isTypeAliasDeclaration(parent)) {
-        throw new LogicTJSGError(node, "Only intrinsics part of a TypeAliasDeclaration are supported.");
+        throw new LogicError(node, "Only intrinsics part of a TypeAliasDeclaration are supported.");
     }
 
     return parent.name.text;

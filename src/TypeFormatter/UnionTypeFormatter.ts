@@ -9,7 +9,7 @@ import { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
-import { TypeTJSGError } from "../Error/Errors.js";
+import { JsonTypeError } from "../Error/Errors.js";
 
 type DiscriminatorType = "json-schema" | "open-api";
 
@@ -34,7 +34,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         const discriminator = type.getDiscriminator();
 
         if (!discriminator) {
-            throw new TypeTJSGError("discriminator is undefined", type);
+            throw new JsonTypeError("discriminator is undefined", type);
         }
 
         const kindTypes = type
@@ -45,7 +45,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
 
         if (undefinedIndex !== -1) {
-            throw new TypeTJSGError(
+            throw new JsonTypeError(
                 `Cannot find discriminator keyword "${discriminator}" in type ${type.getTypes()[undefinedIndex].getName()}.`,
                 type,
             );
@@ -70,7 +70,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         const duplicates = kindValues.filter((item, index) => kindValues.indexOf(item) !== index);
         if (duplicates.length > 0) {
-            throw new TypeTJSGError(
+            throw new JsonTypeError(
                 `Duplicate discriminator values: ${duplicates.join(", ")} in type ${JSON.stringify(type.getName())}.`,
                 type,
             );
@@ -89,7 +89,7 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         const discriminator = type.getDiscriminator();
 
         if (!discriminator) {
-            throw new TypeTJSGError("discriminator is undefined", type);
+            throw new JsonTypeError("discriminator is undefined", type);
         }
 
         return {
