@@ -12,6 +12,8 @@ export type PartialDiagnostic = Omit<ts.Diagnostic, "category" | "file" | "start
     category?: ts.DiagnosticCategory;
 };
 
+const isTTY = process.env.TTY || process.stdout.isTTY;
+
 /**
  * Base error for ts-json-schema-generator
  */
@@ -49,7 +51,9 @@ export abstract class TJSGError extends Error {
     }
 
     format() {
-        return ts.formatDiagnosticsWithColorAndContext([this.diagnostic], {
+        const formatter = isTTY ? ts.formatDiagnosticsWithColorAndContext : ts.formatDiagnostics;
+
+        return formatter([this.diagnostic], {
             getCanonicalFileName: (fileName) => fileName,
             getCurrentDirectory: () => "",
             getNewLine: () => "\n",
