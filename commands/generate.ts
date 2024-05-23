@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import { dirname } from "node:path";
-import { Command, Flags } from "@oclif/core";
+import { Command, Flags, Args } from "@oclif/core";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "../factory/generator.js";
 import type { CompletedConfig, Config } from "../src/Config.js";
@@ -11,16 +11,19 @@ export default class Generate extends Command {
 
     static override examples = [
         {
-            command: "<%= config.bin %> <%= command.id %> -p src/types.ts -f tsconfig.json -o schema.json",
+            command: "<%= config.bin %> <%= command.id %> -f tsconfig.json -o schema.json src/types.ts ",
             description: "Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json.",
         },
     ];
 
-    static override flags = {
-        path: Flags.file({
-            char: "p",
+    static override args = {
+        path: Args.file({
+            required: false,
             description: "Source file path",
         }),
+    };
+
+    static override flags = {
         type: Flags.string({
             char: "t",
             description: "Type name",
@@ -36,7 +39,8 @@ export default class Generate extends Command {
             aliases: ["schema-id"],
         }),
         tsconfig: Flags.file({
-            char: "f",
+            char: "p", // Keep similar to tsc and other cli tools
+            aliases: ["project"],
             description: "Your tsconfig.json to load entry files and compilation settings",
         }),
         expose: Flags.string({

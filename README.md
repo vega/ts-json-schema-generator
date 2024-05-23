@@ -37,7 +37,6 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 ## CLI Usage
 
 <!-- usage -->
-
 ```sh-session
 $ npm install -g ts-json-schema-generator
 $ tjsg COMMAND
@@ -49,7 +48,6 @@ USAGE
   $ tjsg COMMAND
 ...
 ```
-
 <!-- usagestop -->
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
@@ -61,10 +59,9 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 ### Options
 
 <!-- commands -->
-
--   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate`](#tjsg-generate)
--   [`tjsg help [COMMAND]`](#tjsg-help-command)
+* [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+* [`tjsg generate [PATH]`](#tjsg-generate-path)
+* [`tjsg help [COMMAND]`](#tjsg-help-command)
 
 ## `tjsg autocomplete [SHELL]`
 
@@ -97,40 +94,44 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.0.18/src/commands/autocomplete/index.ts)_
 
-## `tjsg generate`
+## `tjsg generate [PATH]`
 
 Generate JSON schema from your Typescript sources
 
 ```
 USAGE
-  $ tjsg generate [-p <value>] [-t <value>] [-i <value>] [-f <value>] [-e all|none|export] [-j
-    none|basic|extended] [--markdown-description] [--functions fail|comment|hide] [--minify] [--unstable]
-    [--strict-tuples] [--no-top-ref] [--no-type-check] [--no-ref-encode] [-o <value>] [--validation-keywords <value>]
-    [--additional-properties]
+  $ tjsg generate [PATH] [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
+    none|basic|extended] [--markdown-description] [--sort-props] [--strict-tuples] [--type-check] [--ref-encode]
+    [--additional-properties] [--functions fail|comment|hide] [--minify] [-o <value>] [--extra-tags <value>]
+    [--discriminator-type json-schema|open-api]
+
+ARGUMENTS
+  PATH  Source file path
 
 FLAGS
-  -e, --expose=<option>                 [default: export] Type exposing
-                                        <options: all|none|export>
-  -f, --tsconfig=<value>                [default: tsconfig.json] Custom tsconfig.json path
-  -i, --id=<value>                      $id for generated schema
-  -j, --jsDoc=<option>                  [default: extended] Read JsDoc annotations
-                                        <options: none|basic|extended>
-  -o, --out=<value>                     Set the output file (default: stdout)
-  -p, --path=<value>                    Source file path
-  -t, --type=<value>                    Type name
-      --additional-properties           Allow additional properties for objects with no index signature
-      --functions=<option>              [default: comment] How to handle functions. `fail` will throw an error.
-                                        `comment` will add a comment. `hide` will treat the function like a NeverType or
-                                        HiddenType.
-                                        <options: fail|comment|hide>
-      --markdown-description            Generate `markdownDescription` in addition to `description`.
-      --minify                          Minify generated schema
-      --no-ref-encode                   Do not encode references
-      --no-top-ref                      Do not create a top-level $ref definition
-      --no-type-check                   Skip type checks to improve performance
-      --strict-tuples                   Do not allow additional items on tuples
-      --unstable                        Do not sort properties
-      --validation-keywords=<value>...  Provide additional validation keywords to include
+  -e, --expose=<option>              [default: export] Type exposing
+                                     <options: all|none|export>
+  -i, --id=<value>                   $id for generated schema
+  -j, --jsdoc=<option>               [default: extended] Read JsDoc annotations
+                                     <options: none|basic|extended>
+  -o, --out=<value>                  Set the output file (default: stdout)
+  -p, --tsconfig=<value>             Your tsconfig.json to load entry files and compilation settings
+  -t, --type=<value>                 Type name
+      --additional-properties        Allow additional properties for objects with no index signature
+      --discriminator-type=<option>  [default: json-schema] Type of discriminator to use
+                                     <options: json-schema|open-api>
+      --extra-tags=<value>...        [default: ] Provide additional validation keywords to include
+      --functions=<option>           [default: comment] How to handle functions. `fail` will throw an error. `comment`
+                                     will add a comment. `hide` will treat the function like a NeverType or HiddenType.
+                                     <options: fail|comment|hide>
+      --markdown-description         Generate `markdownDescription` in addition to `description`. Implies
+                                     --jsdoc=extended
+      --minify                       Minify generated schema
+      --[no-]ref-encode              Encode references
+      --[no-]sort-props              Makes the schema stable by sorting properties
+      --strict-tuples                Do not allow additional items on tuples
+      --[no-]top-ref                 Create a top-level $ref definition
+      --[no-]type-check              Type checks to improve performance
 
 DESCRIPTION
   Generate JSON schema from your Typescript sources
@@ -138,7 +139,7 @@ DESCRIPTION
 EXAMPLES
   Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json.
 
-    $ tjsg generate -p src/types.ts -f tsconfig.json -o schema.json
+    $ tjsg generate -f tsconfig.json -o schema.json src/types.ts
 ```
 
 _See code: [src/commands/generate.ts](https://github.com/vega/ts-json-schema-generator/blob/v2.0.0/src/commands/generate.ts)_
@@ -162,7 +163,6 @@ DESCRIPTION
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.0.22/src/commands/help.ts)_
-
 <!-- commandsstop -->
 
 <br />

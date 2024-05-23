@@ -2,23 +2,21 @@
   "commands": {
     "generate": {
       "aliases": [],
-      "args": {},
+      "args": {
+        "path": {
+          "description": "Source file path",
+          "name": "path",
+          "required": false
+        }
+      },
       "description": "Generate JSON schema from your Typescript sources",
       "examples": [
         {
-          "command": "<%= config.bin %> <%= command.id %> -p src/types.ts -f tsconfig.json -o schema.json",
+          "command": "<%= config.bin %> <%= command.id %> -f tsconfig.json -o schema.json src/types.ts ",
           "description": "Analyzes src/types.ts using tsconfig.json and writes the schema to schema.json."
         }
       ],
       "flags": {
-        "path": {
-          "char": "p",
-          "description": "Source file path",
-          "name": "path",
-          "hasDynamicHelp": false,
-          "multiple": false,
-          "type": "option"
-        },
         "type": {
           "char": "t",
           "description": "Type name",
@@ -27,7 +25,16 @@
           "multiple": false,
           "type": "option"
         },
+        "top-ref": {
+          "description": "Create a top-level $ref definition",
+          "name": "top-ref",
+          "allowNo": true,
+          "type": "boolean"
+        },
         "id": {
+          "aliases": [
+            "schema-id"
+          ],
           "char": "i",
           "description": "$id for generated schema",
           "name": "id",
@@ -36,10 +43,12 @@
           "type": "option"
         },
         "tsconfig": {
-          "char": "f",
-          "description": "Custom tsconfig.json path",
+          "aliases": [
+            "project"
+          ],
+          "char": "p",
+          "description": "Your tsconfig.json to load entry files and compilation settings",
           "name": "tsconfig",
-          "default": "tsconfig.json",
           "hasDynamicHelp": false,
           "multiple": false,
           "type": "option"
@@ -58,10 +67,13 @@
           ],
           "type": "option"
         },
-        "jsDoc": {
+        "jsdoc": {
+          "aliases": [
+            "jsDoc"
+          ],
           "char": "j",
           "description": "Read JsDoc annotations",
-          "name": "jsDoc",
+          "name": "jsdoc",
           "default": "extended",
           "hasDynamicHelp": false,
           "multiple": false,
@@ -73,8 +85,38 @@
           "type": "option"
         },
         "markdown-description": {
-          "description": "Generate `markdownDescription` in addition to `description`.",
+          "description": "Generate `markdownDescription` in addition to `description`. Implies --jsdoc=extended",
           "name": "markdown-description",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "sort-props": {
+          "description": "Makes the schema stable by sorting properties",
+          "name": "sort-props",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "strict-tuples": {
+          "description": "Do not allow additional items on tuples",
+          "name": "strict-tuples",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "type-check": {
+          "description": "Type checks to improve performance",
+          "name": "type-check",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "ref-encode": {
+          "description": "Encode references",
+          "name": "ref-encode",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "additional-properties": {
+          "description": "Allow additional properties for objects with no index signature",
+          "name": "additional-properties",
           "allowNo": false,
           "type": "boolean"
         },
@@ -97,36 +139,6 @@
           "allowNo": false,
           "type": "boolean"
         },
-        "unstable": {
-          "description": "Do not sort properties",
-          "name": "unstable",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "strict-tuples": {
-          "description": "Do not allow additional items on tuples",
-          "name": "strict-tuples",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-top-ref": {
-          "description": "Do not create a top-level $ref definition",
-          "name": "no-top-ref",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-type-check": {
-          "description": "Skip type checks to improve performance",
-          "name": "no-type-check",
-          "allowNo": false,
-          "type": "boolean"
-        },
-        "no-ref-encode": {
-          "description": "Do not encode references",
-          "name": "no-ref-encode",
-          "allowNo": false,
-          "type": "boolean"
-        },
         "out": {
           "char": "o",
           "description": "Set the output file (default: stdout)",
@@ -135,18 +147,28 @@
           "multiple": false,
           "type": "option"
         },
-        "validation-keywords": {
+        "extra-tags": {
+          "aliases": [
+            "validation-keywords"
+          ],
           "description": "Provide additional validation keywords to include",
-          "name": "validation-keywords",
+          "name": "extra-tags",
+          "default": [],
           "hasDynamicHelp": false,
           "multiple": true,
           "type": "option"
         },
-        "additional-properties": {
-          "description": "Allow additional properties for objects with no index signature",
-          "name": "additional-properties",
-          "allowNo": false,
-          "type": "boolean"
+        "discriminator-type": {
+          "description": "Type of discriminator to use",
+          "name": "discriminator-type",
+          "default": "json-schema",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": [
+            "json-schema",
+            "open-api"
+          ],
+          "type": "option"
         }
       },
       "hasDynamicHelp": false,
