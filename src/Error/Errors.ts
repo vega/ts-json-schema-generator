@@ -26,7 +26,7 @@ export class RootlessTJSGError extends TJSGError {
     constructor(readonly fullName: string) {
         super({
             code: 102,
-            messageText: `No root files could be found for: ${fullName}`,
+            messageText: `No root type "${fullName}"`,
         });
     }
 }
