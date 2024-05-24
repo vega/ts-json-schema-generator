@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { FunctionType } from "../Type/FunctionType.js";
-import { FunctionOptions } from "../Config.js";
+import type { FunctionOptions } from "../Config.js";
 import { NeverType } from "../Type/NeverType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
-import { Context, NodeParser } from "../NodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { getKey } from "../Utils/nodeKey.js";
 
@@ -15,14 +15,11 @@ export class FunctionNodeParser implements SubNodeParser {
         protected functions: FunctionOptions,
     ) {}
 
-    public supportsNode(node: ts.TypeNode): boolean {
+    public supportsNode(node: ts.Node): boolean {
         return (
             node.kind === ts.SyntaxKind.FunctionType ||
-            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.FunctionExpression ||
-            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.ArrowFunction ||
-            // @ts-expect-error internals type bug
             node.kind === ts.SyntaxKind.FunctionDeclaration
         );
     }
