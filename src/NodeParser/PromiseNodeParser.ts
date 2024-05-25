@@ -32,6 +32,7 @@ export class PromiseNodeParser implements SubNodeParser {
 
         const type = this.typeChecker.getTypeAtLocation(node);
 
+        //@ts-expect-error - internal typescript API
         const awaitedType = this.typeChecker.getAwaitedType(type);
 
         // ignores non awaitable types
@@ -60,7 +61,8 @@ export class PromiseNodeParser implements SubNodeParser {
         context: Context,
     ): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
-        const awaitedType = this.typeChecker.getAwaitedType(type)!; // supportsNode ensures this
+        //@ts-expect-error - internal typescript API
+        const awaitedType = this.typeChecker.getAwaitedType(type);
         const awaitedNode = this.typeChecker.typeToTypeNode(awaitedType, undefined, ts.NodeBuilderFlags.IgnoreErrors);
 
         if (!awaitedNode) {
