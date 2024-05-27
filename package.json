@@ -2,20 +2,18 @@
   "name": "ts-json-schema-generator",
   "version": "2.0.0",
   "description": "Generate JSON schema from your Typescript sources",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "type": "module",
-  "bin": {
-    "ts-json-schema-generator": "./bin/ts-json-schema-generator.js"
-  },
-  "files": [
-    "dist",
-    "cjs",
-    "src",
-    "factory",
-    "index.*",
-    "ts-json-schema-generator.*"
+  "keywords": [
+    "ts",
+    "typescript",
+    "json",
+    "schema",
+    "jsonschema"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vega/ts-json-schema-generator.git"
+  },
+  "license": "MIT",
   "author": {
     "name": "Alexander Evtushenko",
     "email": "aevtushenko@xiag.ch"
@@ -30,24 +28,32 @@
       "email": "mooyoul@gmail.com"
     }
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vega/ts-json-schema-generator.git"
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "ts-json-schema-generator": "./bin/ts-json-schema-generator.js"
   },
-  "license": "MIT",
-  "keywords": [
-    "ts",
-    "typescript",
-    "json",
-    "schema",
-    "jsonschema"
+  "files": [
+    "dist",
+    "src",
+    "factory",
+    "index.*",
+    "ts-json-schema-generator.*"
   ],
-  "engines": {
-    "node": ">=18.0.0"
-  },
-  "exports": {
-    "import": "./dist/index.js",
-    "require": "./cjs/index.js"
+  "scripts": {
+    "build": "tsc",
+    "debug": "tsx --inspect-brk ts-json-schema-generator.ts",
+    "format": "eslint --fix",
+    "lint": "eslint",
+    "prepublishOnly": "yarn build",
+    "release": "yarn build && auto shipit",
+    "run": "tsx ts-json-schema-generator.ts",
+    "test": "jest test/ --verbose",
+    "test:coverage": "yarn jest test/ --collectCoverage=true",
+    "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
+    "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@types/json-schema": "^7.0.15",
@@ -87,20 +93,7 @@
     "vega": "^5.28.0",
     "vega-lite": "^5.18.0"
   },
-  "scripts": {
-    "prepublishOnly": "yarn build",
-    "build": "npm run build:cjs && npm run build:esm",
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.json",
-    "watch": "tsc -w",
-    "lint": "eslint",
-    "format": "eslint --fix",
-    "test": "jest test/ --verbose",
-    "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
-    "test:coverage": "yarn jest test/ --collectCoverage=true",
-    "test:update": "cross-env UPDATE_SCHEMA=true yarn test:fast",
-    "debug": "tsx --inspect-brk ts-json-schema-generator.ts",
-    "run": "tsx ts-json-schema-generator.ts",
-    "release": "yarn build && auto shipit"
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
