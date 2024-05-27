@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "Node16",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "isolatedModules": false,
     "experimentalDecorators": true,
