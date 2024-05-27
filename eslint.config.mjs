@@ -1,12 +1,12 @@
-const eslint = require("@eslint/js");
-const globals = require("globals");
-const tseslint = require("typescript-eslint");
-const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+import eslint from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 /** @type {import('@types/eslint').Linter.FlatConfig[]} */
-module.exports = tseslint.config(
+export default tseslint.config(
     {
-        ignores: ["dist", "cjs", "build", "eslint.config.js"],
+        ignores: ["dist", "cjs", "build"],
     },
     eslint.configs.recommended,
     {
@@ -24,7 +24,7 @@ module.exports = tseslint.config(
             sourceType: "commonjs",
             parserOptions: {
                 project: "tsconfig.eslint.json",
-                tsconfigRootDir: __dirname,
+                tsconfigRootDir: import.meta.dirname,
             },
         },
         rules: {
