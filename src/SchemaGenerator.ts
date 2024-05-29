@@ -10,6 +10,7 @@ import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -262,6 +263,7 @@ export class SchemaGenerator {
             return false;
         }
 
+        //@ts-expect-error - internal typescript API
         return !!node.localSymbol?.exportSymbol;
     }
 
@@ -270,6 +272,6 @@ export class SchemaGenerator {
     }
 
     protected getFullName(node: ts.Declaration, typeChecker: ts.TypeChecker): string {
-        return typeChecker.getFullyQualifiedName(node.symbol).replace(/".*"\./, "");
+        return typeChecker.getFullyQualifiedName(symbolAtNode(node)!).replace(/".*"\./, "");
     }
 }
