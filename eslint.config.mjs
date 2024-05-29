@@ -6,19 +6,11 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 /** @type {import('@types/eslint').Linter.FlatConfig[]} */
 export default tseslint.config(
     {
-        ignores: ["dist", "cjs", "build", "eslint.config.mjs"],
+        ignores: ["dist", "cjs", "build", "eslint.config.mjs", "bin"],
     },
     eslint.configs.recommended,
     {
-        files: [
-            "ts-json-schema-generator.ts",
-            "index.ts",
-            "src/**/*.ts",
-            "factory/**/*.ts",
-            "bin/**",
-            "test/**/*.test.ts",
-            "test/utils.ts",
-        ],
+        files: ["index.ts", "src/**/*.ts", "factory/**/*.ts", "test/**/*.test.ts", "test/utils.ts"],
         extends: tseslint.configs.recommendedTypeChecked,
         languageOptions: {
             sourceType: "commonjs",

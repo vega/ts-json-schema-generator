@@ -20,9 +20,13 @@ export class SchemaGenerator {
         protected readonly config?: Config,
     ) {}
 
-    public createSchema(fullName?: string): Schema {
+    public createSchema(fullName?: string) {
         const rootNodes = this.getRootNodes(fullName);
-        return this.createSchemaFromNodes(rootNodes);
+
+        return {
+            rootNodes,
+            schema: this.createSchemaFromNodes(rootNodes),
+        };
     }
 
     public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {

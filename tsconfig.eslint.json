@@ -1,4 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts", "factory/**/*.ts", "test/**/*.test.ts", "test/utils.ts", "bin/ts-json-schema-generator.js"]
+  "include": ["src/**/*.ts", "factory/**/*.ts", "test/**/*.test.ts", "test/utils.ts", "bin/**.js"]
 }

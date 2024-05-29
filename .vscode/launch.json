@@ -15,7 +15,7 @@
       "request": "launch",
       "runtimeExecutable": "node",
       "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
-      "args": ["ts-json-schema-generator.ts", "-p", "${file}"],
+      "args": ["bin/run.js", "${file}"],
       "cwd": "${workspaceFolder}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "node_modules/**"]

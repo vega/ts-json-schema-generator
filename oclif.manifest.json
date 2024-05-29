@@ -1,0 +1,177 @@
+{
+  "commands": {
+    "generate": {
+      "aliases": [],
+      "args": {
+        "path": {
+          "description": "Source root filepath",
+          "name": "path",
+          "required": true
+        }
+      },
+      "description": "Generate JSON schema from your Typescript sources",
+      "examples": [
+        {
+          "command": "<%= config.bin %> <%= command.id %> src/types.ts -p tsconfig.json",
+          "description": "Analyzes src/types.ts using tsconfig.json and pipes to stdout"
+        },
+        {
+          "command": "<%= config.bin %> <%= command.id %> src/types.ts -o schema.json",
+          "description": "Analyzes src/types.ts and writes the schema to schema.json"
+        }
+      ],
+      "flags": {
+        "type": {
+          "char": "t",
+          "description": "Type name",
+          "name": "type",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "top-ref": {
+          "description": "Create a top-level $ref definition",
+          "name": "top-ref",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "id": {
+          "aliases": ["schema-id"],
+          "char": "i",
+          "description": "$id for generated schema",
+          "name": "id",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "tsconfig": {
+          "aliases": ["project"],
+          "char": "p",
+          "description": "Your tsconfig.json to load entry files and compilation settings",
+          "name": "tsconfig",
+          "default": "tsconfig.json",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "expose": {
+          "char": "e",
+          "description": "Type exposing",
+          "name": "expose",
+          "default": "export",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": ["all", "none", "export"],
+          "type": "option"
+        },
+        "jsdoc": {
+          "aliases": ["jsDoc"],
+          "char": "j",
+          "description": "Read JsDoc annotations",
+          "name": "jsdoc",
+          "default": "extended",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": ["none", "basic", "extended"],
+          "type": "option"
+        },
+        "markdown-description": {
+          "description": "Generate `markdownDescription` in addition to `description`. Implies --jsdoc=extended",
+          "name": "markdown-description",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "sort-props": {
+          "description": "Makes the schema stable by sorting properties",
+          "name": "sort-props",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "strict-tuples": {
+          "description": "Do not allow additional items on tuples",
+          "name": "strict-tuples",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "type-check": {
+          "description": "Type checks to improve performance",
+          "name": "type-check",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "ref-encode": {
+          "description": "Encode references",
+          "name": "ref-encode",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "additional-properties": {
+          "description": "Allow additional properties for objects with no index signature",
+          "name": "additional-properties",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "functions": {
+          "description": "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.",
+          "name": "functions",
+          "default": "comment",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": ["fail", "comment", "hide"],
+          "type": "option"
+        },
+        "minify": {
+          "description": "Minify generated schema",
+          "exclusive": ["color"],
+          "name": "minify",
+          "allowNo": false,
+          "type": "boolean"
+        },
+        "color": {
+          "description": "Pretty print the json with colors. Only works when outputting to stdout. Defaults to true when TTY",
+          "exclusive": ["minify"],
+          "name": "color",
+          "allowNo": true,
+          "type": "boolean"
+        },
+        "out": {
+          "char": "o",
+          "description": "Set the output file (default: stdout)",
+          "name": "out",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "type": "option"
+        },
+        "extra-tags": {
+          "aliases": ["validation-keywords"],
+          "description": "Provide additional validation keywords to include",
+          "name": "extra-tags",
+          "default": [],
+          "hasDynamicHelp": false,
+          "multiple": true,
+          "type": "option"
+        },
+        "discriminator-type": {
+          "description": "Type of discriminator to use",
+          "name": "discriminator-type",
+          "default": "json-schema",
+          "hasDynamicHelp": false,
+          "multiple": false,
+          "options": ["json-schema", "open-api"],
+          "type": "option"
+        }
+      },
+      "hasDynamicHelp": false,
+      "hiddenAliases": [],
+      "id": "generate",
+      "pluginAlias": "ts-json-schema-generator",
+      "pluginName": "ts-json-schema-generator",
+      "pluginType": "core",
+      "strict": true,
+      "enableJsonFlag": false,
+      "isESM": false,
+      "relativePath": ["dist", "commands", "generate.js"]
+    }
+  },
+  "version": "2.0.0"
+}
