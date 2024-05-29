@@ -1,8 +1,9 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnyType } from "../Type/AnyType.js";
 import { ArrayType } from "../Type/ArrayType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 
 export class ArrayNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -13,6 +14,12 @@ export class ArrayNodeParser implements SubNodeParser {
 
     public createType(node: ts.ArrayTypeNode, context: Context): BaseType {
         const type = this.childNodeParser.createType(node.elementType, context);
+
+        // Generics without `extends` or `defaults` cannot be resolved, so we fallback to `any`
+        if (!type) {
+            return new ArrayType(new AnyType());
+        }
+
         return new ArrayType(type);
     }
 }
