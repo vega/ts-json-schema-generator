@@ -63,7 +63,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
                 throw new LogicError(
                     node,
-                    `Unexpected type "${type?.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
+                    `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
                 );
             }
 
