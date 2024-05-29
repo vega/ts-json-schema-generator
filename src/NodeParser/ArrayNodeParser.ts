@@ -14,12 +14,7 @@ export class ArrayNodeParser implements SubNodeParser {
 
     public createType(node: ts.ArrayTypeNode, context: Context): BaseType {
         const type = this.childNodeParser.createType(node.elementType, context);
-
         // Generics without `extends` or `defaults` cannot be resolved, so we fallback to `any`
-        if (!type) {
-            return new ArrayType(new AnyType());
-        }
-
-        return new ArrayType(type);
+        return new ArrayType(type ?? new AnyType());
     }
 }
