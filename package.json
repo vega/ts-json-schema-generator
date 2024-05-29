@@ -45,7 +45,7 @@
     "index.*"
   ],
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm",
+    "build": "tsc",
     "postbuild": "oclif manifest && oclif readme && prettier --write README.md oclif.manifest.json",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.json",
