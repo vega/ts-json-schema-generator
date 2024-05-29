@@ -66,7 +66,7 @@ $ TSJG_DEV=1 node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
 <!-- commands -->
 
 -   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate [PATH]`](#tjsg-generate-path)
+-   [`tjsg generate PATH`](#tjsg-generate-path)
 -   [`tjsg help [COMMAND]`](#tjsg-help-command)
 
 ## `tjsg autocomplete [SHELL]`
@@ -100,19 +100,19 @@ EXAMPLES
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.0.18/src/commands/autocomplete/index.ts)_
 
-## `tjsg generate [PATH]`
+## `tjsg generate PATH`
 
 Generate JSON schema from your Typescript sources
 
 ```
 USAGE
-  $ tjsg generate [PATH] [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
+  $ tjsg generate PATH [-t <value>] [--top-ref] [-i <value>] [-p <value>] [-e all|none|export] [-j
     none|basic|extended] [--markdown-description] [--sort-props] [--strict-tuples] [--type-check] [--ref-encode]
-    [--additional-properties] [--functions fail|comment|hide] [--minify] [-o <value>] [--extra-tags <value>]
+    [--additional-properties] [--functions fail|comment|hide] [--minify | --color] [-o <value>] [--extra-tags <value>]
     [--discriminator-type json-schema|open-api]
 
 ARGUMENTS
-  PATH  Source file path
+  PATH  Source root filepath
 
 FLAGS
   -e, --expose=<option>              [default: export] Type exposing
@@ -125,6 +125,8 @@ FLAGS
                                      settings
   -t, --type=<value>                 Type name
       --additional-properties        Allow additional properties for objects with no index signature
+      --[no-]color                   Pretty print the json with colors. Only works when outputting to stdout. Defaults
+                                     to true when TTY
       --discriminator-type=<option>  [default: json-schema] Type of discriminator to use
                                      <options: json-schema|open-api>
       --extra-tags=<value>...        [default: ] Provide additional validation keywords to include

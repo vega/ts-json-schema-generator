@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import { execute } from "@oclif/core";
-
-await execute({
-    development: !!process.env.TJSG_DEV,
-    dir: import.meta.url,
+require("@oclif/core").execute({
+    // development mode prints stack traces and more useful information
+    development: !!JSON.parse(process.env.DEBUG || "false"),
+    dir: __dirname,
 });

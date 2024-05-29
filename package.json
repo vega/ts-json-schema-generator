@@ -32,7 +32,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "ts-json-schema-generator": "bin/tjsg.js"
+    "ts-json-schema-generator": "bin/ts-json-schema-generator.js",
+    "tsjg": "bin/tsjg.js"
   },
   "files": [
     "dist",

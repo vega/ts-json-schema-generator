@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import { dirname } from "node:path";
-import { Command, Flags, Args } from "@oclif/core";
+import { Args, Command, Flags } from "@oclif/core";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "../factory/generator.js";
-import type { CompletedConfig, Config } from "../src/Config.js";
+import type { CompletedConfig } from "../src/Config.js";
 import { BaseError } from "../src/Error/BaseError.js";
 
 export default class Generate extends Command {
@@ -22,7 +22,8 @@ export default class Generate extends Command {
 
     static override args = {
         path: Args.file({
-            description: "Source file path",
+            description: "Source root filepath",
+            required: true,
         }),
     };
 
@@ -96,6 +97,14 @@ export default class Generate extends Command {
         minify: Flags.boolean({
             description: "Minify generated schema",
             default: false,
+            exclusive: ["color"],
+        }),
+        color: Flags.boolean({
+            description:
+                "Pretty print the json with colors. Only works when outputting to stdout. Defaults to true when TTY",
+            default: async (c) => !c.flags.minify && (!!process.env.TTY || process.stdout.isTTY),
+            allowNo: true,
+            exclusive: ["minify"],
         }),
         out: Flags.file({
             char: "o",
@@ -164,24 +173,24 @@ export default class Generate extends Command {
 
                 await fs.promises.mkdir(outPath, { recursive: true });
                 await fs.promises.writeFile(flags.out, schemaString, { encoding: "utf-8" });
-            } else {
-                // write to stdout
-                process.stdout.write(`${schemaString}\n`);
+
+                // When printing to stdout, we cannot output anything else than a JSON
+                this.log("Schema generated successfully");
+                return;
             }
 
-            // When printing to stdout, we cannot output anything else than a JSON
-            if (flags.out) {
-                this.log("Schema generated successfully");
+            if (flags.color) {
+                this.logJson(schema);
+            } else {
+                this.log(schemaString);
             }
         } catch (error) {
-            this.error("Could not generate schema", { exit: false });
-
             if (error instanceof BaseError) {
                 process.stderr.write(error.format());
-                process.exit(1);
+                this.exit(1);
             }
 
-            throw error;
+            this.error(error);
         }
     }
 }

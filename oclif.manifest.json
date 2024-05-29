@@ -4,8 +4,9 @@
       "aliases": [],
       "args": {
         "path": {
-          "description": "Source file path",
-          "name": "path"
+          "description": "Source root filepath",
+          "name": "path",
+          "required": true
         }
       },
       "description": "Generate JSON schema from your Typescript sources",
@@ -121,8 +122,16 @@
         },
         "minify": {
           "description": "Minify generated schema",
+          "exclusive": ["color"],
           "name": "minify",
           "allowNo": false,
+          "type": "boolean"
+        },
+        "color": {
+          "description": "Pretty print the json with colors. Only works when outputting to stdout. Defaults to true when TTY",
+          "exclusive": ["minify"],
+          "name": "color",
+          "allowNo": true,
           "type": "boolean"
         },
         "out": {

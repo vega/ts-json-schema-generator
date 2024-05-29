@@ -25,7 +25,7 @@
     "incremental": true,
     "importHelpers": true
   },
-  "files": ["index.ts"],
+  "files": ["index.ts", "ts-json-schema-generator.ts"],
   "include": ["src/**/*.ts", "factory/**/*.ts", "commands/**/*.ts"],
   "exclude": ["node_modules", "dist", "cjs"]
 }
