@@ -160,7 +160,7 @@
       "pluginType": "core",
       "strict": true,
       "enableJsonFlag": false,
-      "isESM": true,
+      "isESM": false,
       "relativePath": ["dist", "commands", "generate.js"]
     }
   },

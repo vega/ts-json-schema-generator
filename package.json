@@ -11,7 +11,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/vega/ts-json-schema-generator.git"
+    "url": "git+https://github.com/vega/ts-json-schema-generator.git"
   },
   "license": "MIT",
   "author": {
@@ -28,21 +28,20 @@
       "email": "mooyoul@gmail.com"
     }
   ],
-  "type": "module",
-  "exports": {
-    "import": "./dist/index.js",
-    "require": "./cjs/index.js"
-  },
-  "module": "dist/index.js",
+  "type": "commonjs",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": "./bin/tjsg.js",
+  "bin": {
+    "ts-json-schema-generator": "bin/tjsg.js"
+  },
   "files": [
     "dist",
     "cjs",
     "src",
     "factory",
     "commands",
-    "index.*"
+    "index.*",
+    "ts-json-schema-generator.*"
   ],
   "scripts": {
     "build": "tsc",
@@ -88,7 +87,6 @@
     "@types/jest": "^29.5.12",
     "@types/node": "^20.12.7",
     "@types/normalize-path": "^3.0.2",
-    "@types/ts-expose-internals": "npm:ts-expose-internals@^5.4.5",
     "ajv": "^8.12.0",
     "ajv-formats": "^3.0.1",
     "auto": "^11.1.6",
