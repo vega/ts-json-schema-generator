@@ -37,17 +37,11 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 ## CLI Usage
 
-Run the schema generator by installing globally:
+Run the schema generator by installing locally:
 
-```console
-$ npx ts-json-schema-generator 'my/project/**/*.ts' -t 'My.Type.Name'
-```
-
-Or install the package locally and then run it
-
-```console
-$ npm install -D ts-json-schema-generator
-$ node_modules/.bin/tjsg generate 'my/project/**/*.ts' -t 'My.Type.Name'
+```sh
+$ npm i -D ts-json-schema-generator
+$ npx tjsg generate 'my/project/**/*.ts' -t 'My.Type.Name'
 ```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
@@ -58,7 +52,7 @@ Also note that you need to quote paths with `*` as otherwise the shell will expa
 
 To help you troubleshoot issues, you can run the `tjsg-dev` command which will run the CLI in development mode. This will give you more verbose output:
 
-```console
+```sh
 $ tjsg-dev 'my/project/**/*.ts' -t 'My.Type.Name'
 ```
 
