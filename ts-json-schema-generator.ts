@@ -1,12 +1,12 @@
 import { Command, Option } from "commander";
-import fs, { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator.js";
 import type { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
 
-const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+import pkg from "./package.json";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
