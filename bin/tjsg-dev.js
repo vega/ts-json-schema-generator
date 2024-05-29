@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-Error.stackTraceLimit = Infinity;
+Error.stackTraceLimit = 100;
 
 require("@oclif/core").execute({
     development: true,

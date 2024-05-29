@@ -32,9 +32,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "ts-json-schema-generator": "bin/ts-json-schema-generator.js",
-    "tsjg": "bin/tsjg.js",
-    "tsjg-dev": "bin/tsjg-dev.js"
+    "tjsg": "bin/tjsg.js",
+    "tjsg-dev": "bin/tjsg-dev.js",
+    "ts-json-schema-generator": "bin/tjsg.js"
   },
   "files": [
     "dist",
@@ -112,6 +112,7 @@
   "oclif": {
     "bin": "tjsg",
     "dirname": "ts-json-schema-generator",
+    "binAliases": ["ts-json-schema-generator"],
     "topicSeparator": " ",
     "additionalHelpFlags": [
       "-h"

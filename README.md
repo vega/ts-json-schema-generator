@@ -8,19 +8,20 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 ---
 
--   [Inspiration](#inspiration)
--   [CLI Usage](#cli-usage)
-    -   [Options](#options)
--   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
--   [`tjsg generate [PATH]`](#tjsg-generate-path)
--   [`tjsg help [COMMAND]`](#tjsg-help-command)
--   [Current state](#current-state)
--   [Contributors](#contributors)
--   [Programmatic Usage](#programmatic-usage)
-    -   [Custom formatting](#custom-formatting)
-    -   [Custom parsing](#custom-parsing)
--   [Run locally](#run-locally)
--   [Publish](#publish)
+- [Inspiration](#inspiration)
+- [CLI Usage](#cli-usage)
+  - [Debugging](#debugging)
+  - [Options](#options)
+- [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+- [`tjsg generate PATH`](#tjsg-generate-path)
+- [`tjsg help [COMMAND]`](#tjsg-help-command)
+- [Current state](#current-state)
+- [Contributors](#contributors)
+- [Programmatic Usage](#programmatic-usage)
+  - [Custom formatting](#custom-formatting)
+  - [Custom parsing](#custom-parsing)
+- [Run locally](#run-locally)
+- [Publish](#publish)
 
 <br />
 
@@ -36,27 +37,29 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 
 ## CLI Usage
 
-Run the schema generator with npx:
+Run the schema generator by installing globally:
 
 ```console
-$ npx ts-json-schema-generator -t 'My.Type.Name' 'my/project/**/*.ts'
+$ npx ts-json-schema-generator 'my/project/**/*.ts' -t 'My.Type.Name'
 ```
 
-Or install the package and then run it
+Or install the package locally and then run it
 
 ```console
 $ npm install -D ts-json-schema-generator
-$ node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
+$ node_modules/.bin/tjsg generate 'my/project/**/*.ts' -t 'My.Type.Name'
 ```
 
 Note that different platforms (e.g. Windows) may use different path separators so you may have to adjust the command above.
 
 Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
 
-You can also run the CLI with `TSJG_DEV=1` to run the CLI in development mode and have more verbose output.
+### Debugging
+
+To help you troubleshoot issues, you can run the `tjsg-dev` command which will run the CLI in development mode. This will give you more verbose output:
 
 ```console
-$ TSJG_DEV=1 node_modules/.bin/tsjg -t 'My.Type.Name' 'my/project/**/*.ts'
+$ tjsg-dev 'my/project/**/*.ts' -t 'My.Type.Name'
 ```
 
 <br />
