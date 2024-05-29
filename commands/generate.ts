@@ -1,6 +1,6 @@
-import fs from "node:fs";
-import { dirname } from "node:path";
 import { Args, Command, Flags } from "@oclif/core";
+import fs from "node:fs";
+import path from "node:path";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "../factory/generator.js";
 import type { CompletedConfig } from "../src/Config.js";
@@ -161,7 +161,9 @@ export default class Generate extends Command {
         };
 
         try {
-            const schema = createGenerator(config).createSchema(config.type);
+            const generator = createGenerator(config);
+
+            const { rootNodes, schema } = generator.createSchema(config.type);
 
             const stringify = config.sortProps ? stableStringify : JSON.stringify;
             // need as string since TS can't figure out that the string | undefined case doesn't happen
@@ -169,13 +171,15 @@ export default class Generate extends Command {
 
             if (flags.out) {
                 // write to file
-                const outPath = dirname(flags.out);
+                const outPath = path.dirname(flags.out);
 
                 await fs.promises.mkdir(outPath, { recursive: true });
                 await fs.promises.writeFile(flags.out, schemaString, { encoding: "utf-8" });
 
-                // When printing to stdout, we cannot output anything else than a JSON
-                this.log("Schema generated successfully");
+                this.log(
+                    `Schema of ${rootNodes.length} root nodes written to .${path.sep}${path.relative(process.cwd(), flags.out)}`,
+                );
+
                 return;
             }
 
@@ -185,8 +189,9 @@ export default class Generate extends Command {
                 this.log(schemaString);
             }
         } catch (error) {
-            if (error instanceof BaseError) {
-                process.stderr.write(error.format());
+            // errors without diagnostic needs stack traces to be useful
+            if (error instanceof BaseError && error.diagnostic.file) {
+                this.log(error.format());
                 this.exit(1);
             }
 
