@@ -8,20 +8,20 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 ---
 
-- [Inspiration](#inspiration)
-- [CLI Usage](#cli-usage)
-  - [Debugging](#debugging)
-  - [Options](#options)
-- [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
-- [`tjsg generate PATH`](#tjsg-generate-path)
-- [`tjsg help [COMMAND]`](#tjsg-help-command)
-- [Current state](#current-state)
-- [Contributors](#contributors)
-- [Programmatic Usage](#programmatic-usage)
-  - [Custom formatting](#custom-formatting)
-  - [Custom parsing](#custom-parsing)
-- [Run locally](#run-locally)
-- [Publish](#publish)
+-   [Inspiration](#inspiration)
+-   [CLI Usage](#cli-usage)
+    -   [Debugging](#debugging)
+    -   [Options](#options)
+-   [`tjsg autocomplete [SHELL]`](#tjsg-autocomplete-shell)
+-   [`tjsg generate PATH`](#tjsg-generate-path)
+-   [`tjsg help [COMMAND]`](#tjsg-help-command)
+-   [Current state](#current-state)
+-   [Contributors](#contributors)
+-   [Programmatic Usage](#programmatic-usage)
+    -   [Custom formatting](#custom-formatting)
+    -   [Custom parsing](#custom-parsing)
+-   [Run locally](#run-locally)
+-   [Publish](#publish)
 
 <br />
 
