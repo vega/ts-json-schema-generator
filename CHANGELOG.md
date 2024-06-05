@@ -1,3 +1,40 @@
+# v2.3.0 (Wed Jun 05 2024)
+
+:tada: This release contains work from a new contributor! :tada:
+
+Thank you, Lajos ([@gallayl](https://github.com/gallayl)), for all your work!
+
+#### 🚀 Enhancement
+
+- feat: get version from package.json [#1979](https://github.com/vega/ts-json-schema-generator/pull/1979) ([@domoritz](https://github.com/domoritz))
+- fix: revert back to commons js [#1975](https://github.com/vega/ts-json-schema-generator/pull/1975) ([@arthurfiorette](https://github.com/arthurfiorette))
+- fix: remove ts-expose-types temporarily [#1968](https://github.com/vega/ts-json-schema-generator/pull/1968) ([@arthurfiorette](https://github.com/arthurfiorette))
+- Added diagnostics to all errors [#1963](https://github.com/vega/ts-json-schema-generator/pull/1963) ([@arthurfiorette](https://github.com/arthurfiorette))
+
+#### 🐛 Bug Fix
+
+- fix(factory): Fix deprecated glob import that prevents using from code after glob upgrade [#1981](https://github.com/vega/ts-json-schema-generator/pull/1981) ([@gallayl](https://github.com/gallayl))
+- fix: Unknown type "undefined" when using generics without base type [#1978](https://github.com/vega/ts-json-schema-generator/pull/1978) ([@arthurfiorette](https://github.com/arthurfiorette))
+
+#### 🔩 Dependency Updates
+
+- chore(deps-dev): bump @babel/preset-env from 7.24.5 to 7.24.6 [#1982](https://github.com/vega/ts-json-schema-generator/pull/1982) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 9.3.0 to 9.4.0 [#1984](https://github.com/vega/ts-json-schema-generator/pull/1984) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @babel/core from 7.24.5 to 7.24.6 [#1983](https://github.com/vega/ts-json-schema-generator/pull/1983) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @eslint/js from 9.3.0 to 9.4.0 [#1985](https://github.com/vega/ts-json-schema-generator/pull/1985) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 9.2.0 to 9.3.0 [#1970](https://github.com/vega/ts-json-schema-generator/pull/1970) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ajv from 8.13.0 to 8.14.0 [#1971](https://github.com/vega/ts-json-schema-generator/pull/1971) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 7.8.0 to 7.10.0 [#1972](https://github.com/vega/ts-json-schema-generator/pull/1972) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 4
+
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Arthur Fiorette ([@arthurfiorette](https://github.com/arthurfiorette))
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Lajos ([@gallayl](https://github.com/gallayl))
+
+---
+
 # v2.2.0 (Thu May 23 2024)
 
 :tada: This release contains work from new contributors! :tada:
