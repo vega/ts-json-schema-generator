@@ -6,6 +6,7 @@ import { AnyType } from "../Type/AnyType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { StringType } from "../Type/StringType.js";
+import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 const invalidTypes: Record<number, boolean> = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
@@ -28,7 +29,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             // When the node doesn't have a valid source file, its position is -1, so we can't
             // search for a symbol based on its location. In that case, the ts.factory defines a symbol
             // property on the node itself.
-            (node.typeName as unknown as ts.Type).symbol;
+            symbolAtNode(node.typeName)!;
 
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);

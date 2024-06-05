@@ -1,4 +1,5 @@
-import { RawType, RawTypeName } from "../Schema/RawType.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
+import type { RawType, RawTypeName } from "../Schema/RawType.js";
 
 export function typeName(value: RawType): RawTypeName {
     if (value === null) {
@@ -6,15 +7,18 @@ export function typeName(value: RawType): RawTypeName {
     }
 
     const type = typeof value;
+
     if (type === "string" || type === "number" || type === "boolean") {
         return type;
     }
 
     if (Array.isArray(value)) {
         return "array";
-    } else if (type === "object") {
-        return "object";
-    } else {
-        throw new Error(`JavaScript type "${type}" can't be converted to JSON type name`);
     }
+
+    if (type === "object") {
+        return "object";
+    }
+
+    throw new ExpectationFailedError(`JavaScript type "typeof " can't be converted to JSON type name`);
 }

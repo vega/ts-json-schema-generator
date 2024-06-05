@@ -1,8 +1,8 @@
-import { UnknownTypeError } from "./Error/UnknownTypeError.js";
-import { MutableTypeFormatter } from "./MutableTypeFormatter.js";
-import { Definition } from "./Schema/Definition.js";
-import { SubTypeFormatter } from "./SubTypeFormatter.js";
-import { BaseType } from "./Type/BaseType.js";
+import { UnknownTypeError } from "./Error/Errors.js";
+import type { MutableTypeFormatter } from "./MutableTypeFormatter.js";
+import type { Definition } from "./Schema/Definition.js";
+import type { SubTypeFormatter } from "./SubTypeFormatter.js";
+import type { BaseType } from "./Type/BaseType.js";
 
 export class ChainTypeFormatter implements SubTypeFormatter, MutableTypeFormatter {
     public constructor(protected typeFormatters: SubTypeFormatter[]) {}

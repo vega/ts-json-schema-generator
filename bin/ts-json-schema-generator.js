@@ -1,2 +1,4 @@
 #!/usr/bin/env node
-import("../dist/ts-json-schema-generator.js");
+
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require("../dist/ts-json-schema-generator.js");

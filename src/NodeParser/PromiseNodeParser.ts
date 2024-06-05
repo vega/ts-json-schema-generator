@@ -1,4 +1,5 @@
 import ts from "typescript";
+import { ExpectationFailedError } from "../Error/Errors.js";
 import { Context, type NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AliasType } from "../Type/AliasType.js";
@@ -31,6 +32,7 @@ export class PromiseNodeParser implements SubNodeParser {
 
         const type = this.typeChecker.getTypeAtLocation(node);
 
+        //@ts-expect-error - internal typescript API
         const awaitedType = this.typeChecker.getAwaitedType(type);
 
         // ignores non awaitable types
@@ -59,13 +61,12 @@ export class PromiseNodeParser implements SubNodeParser {
         context: Context,
     ): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
-        const awaitedType = this.typeChecker.getAwaitedType(type)!; // supportsNode ensures this
+        //@ts-expect-error - internal typescript API
+        const awaitedType = this.typeChecker.getAwaitedType(type);
         const awaitedNode = this.typeChecker.typeToTypeNode(awaitedType, undefined, ts.NodeBuilderFlags.IgnoreErrors);
 
         if (!awaitedNode) {
-            throw new Error(
-                `Could not find awaited node for type ${node.pos === -1 ? "<unresolved>" : node.getText()}`,
-            );
+            throw new ExpectationFailedError("Could not find awaited node", node);
         }
 
         const baseNode = this.childNodeParser.createType(awaitedNode, new Context(node));
@@ -87,7 +88,10 @@ export class PromiseNodeParser implements SubNodeParser {
     ) {
         if (ts.isExpressionWithTypeArguments(node)) {
             if (!ts.isHeritageClause(node.parent)) {
-                throw new Error("Expected ExpressionWithTypeArguments to have a HeritageClause parent");
+                throw new ExpectationFailedError(
+                    "Expected ExpressionWithTypeArguments to have a HeritageClause parent",
+                    node.parent,
+                );
             }
 
             return node.parent.parent.name?.getText();

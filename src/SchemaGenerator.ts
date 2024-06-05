@@ -1,6 +1,6 @@
 import ts from "typescript";
 import type { Config } from "./Config.js";
-import { NoRootTypeError } from "./Error/NoRootTypeError.js";
+import { MultipleDefinitionsError, RootlessError } from "./Error/Errors.js";
 import { Context, type NodeParser } from "./NodeParser.js";
 import type { Definition } from "./Schema/Definition.js";
 import type { Schema } from "./Schema/Schema.js";
@@ -10,6 +10,7 @@ import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
     public constructor(
@@ -76,7 +77,7 @@ export class SchemaGenerator {
             return allTypes.get(fullName)!;
         }
 
-        throw new NoRootTypeError(fullName);
+        throw new RootlessError(fullName);
     }
     protected getRootTypeDefinition(rootType: BaseType): Definition {
         return this.typeFormatter.getDefinition(rootType);
@@ -104,7 +105,11 @@ export class SchemaGenerator {
             const childId = child.getId().replace(/def-/g, "");
 
             if (previousId && childId !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
+                throw new MultipleDefinitionsError(
+                    name,
+                    child,
+                    children.find((c) => c.getId() === previousId),
+                );
             }
             ids.set(name, childId);
         }
@@ -258,6 +263,7 @@ export class SchemaGenerator {
             return false;
         }
 
+        //@ts-expect-error - internal typescript API
         return !!node.localSymbol?.exportSymbol;
     }
 
@@ -266,6 +272,6 @@ export class SchemaGenerator {
     }
 
     protected getFullName(node: ts.Declaration, typeChecker: ts.TypeChecker): string {
-        return typeChecker.getFullyQualifiedName(node.symbol).replace(/".*"\./, "");
+        return typeChecker.getFullyQualifiedName(symbolAtNode(node)!).replace(/".*"\./, "");
     }
 }

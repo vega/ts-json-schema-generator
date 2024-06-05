@@ -1,18 +1,19 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import { ExpectationFailedError } from "../Error/Errors.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { IntersectionType } from "../Type/IntersectionType.js";
-import { PrimitiveType } from "../Type/PrimitiveType.js";
-import { UnionType } from "../Type/UnionType.js";
-import { derefType } from "../Utils/derefType.js";
-import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
-import { UndefinedType } from "../Type/UndefinedType.js";
+import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectType } from "../Type/ObjectType.js";
+import { PrimitiveType } from "../Type/PrimitiveType.js";
 import { StringType } from "../Type/StringType.js";
-import { LiteralType } from "../Type/LiteralType.js";
+import { UndefinedType } from "../Type/UndefinedType.js";
+import { UnionType } from "../Type/UnionType.js";
 import { isLiteralUnion } from "../TypeFormatter/LiteralUnionTypeFormatter.js";
+import { derefType } from "../Utils/derefType.js";
+import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -69,12 +70,13 @@ function derefAndFlattenUnions(type: BaseType): BaseType[] {
 export function translate(types: BaseType[]): BaseType {
     types = uniqueTypeArray(types);
 
-    if (types.length == 1) {
+    if (types.length === 1) {
         return types[0];
     }
 
     const unions = types.map(derefAndFlattenUnions);
     const result: BaseType[] = [];
+
     function process(i: number, t: BaseType[] = []) {
         for (const type of unions[i]) {
             let currentTypes = [...t, type];
@@ -101,13 +103,16 @@ export function translate(types: BaseType[]): BaseType {
             }
         }
     }
+
     process(0);
 
     if (result.length === 1) {
         return result[0];
-    } else if (result.length > 1) {
+    }
+
+    if (result.length > 1) {
         return new UnionType(result);
     }
 
-    throw new Error("Could not translate intersection to union.");
+    throw new ExpectationFailedError("Could not translate intersection to union.");
 }

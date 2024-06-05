@@ -1,8 +1,7 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError.js";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { NumberType } from "../Type/NumberType.js";
@@ -12,6 +11,7 @@ import { TupleType } from "../Type/TupleType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
+import { LogicError } from "../Error/Errors.js";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -62,6 +62,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const propertyTypes = indexTypes.map((type) => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
                 throw new LogicError(
+                    node,
                     `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
                 );
             }
@@ -70,14 +71,17 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             if (!propertyType) {
                 if (type instanceof NumberType && objectType instanceof TupleType) {
                     return new UnionType(objectType.getTypes());
-                } else if (type instanceof LiteralType) {
+                }
+
+                if (type instanceof LiteralType) {
                     if (objectType instanceof ReferenceType) {
                         return objectType;
                     }
-                    throw new LogicError(`Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
-                } else {
-                    throw new LogicError(`No additional properties in type "${objectType.getId()}"`);
+
+                    throw new LogicError(node, `Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
                 }
+
+                throw new LogicError(node, `No additional properties in type "${objectType.getId()}"`);
             }
 
             return propertyType;

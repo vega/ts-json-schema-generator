@@ -1,14 +1,12 @@
+import { Command, Option } from "commander";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { Command, Option } from "commander";
 import stableStringify from "safe-stable-stringify";
 import { createGenerator } from "./factory/generator.js";
 import type { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
-import { formatError } from "./src/Utils/formatError.js";
-import fs from "node:fs";
 
-const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
+import pkg from "./package.json";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
@@ -92,9 +90,9 @@ try {
     }
 } catch (error) {
     if (error instanceof BaseError) {
-        process.stderr.write(formatError(error));
+        process.stderr.write(error.format());
         process.exit(1);
-    } else {
-        throw error;
     }
+
+    throw error;
 }

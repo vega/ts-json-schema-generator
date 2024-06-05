@@ -6,7 +6,7 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 /** @type {import('@types/eslint').Linter.FlatConfig[]} */
 export default tseslint.config(
     {
-        ignores: ["dist", "cjs", "build"],
+        ignores: ["dist", "cjs", "build", "eslint.config.mjs"],
     },
     eslint.configs.recommended,
     {
@@ -21,7 +21,7 @@ export default tseslint.config(
         ],
         extends: tseslint.configs.recommendedTypeChecked,
         languageOptions: {
-            sourceType: "module",
+            sourceType: "commonjs",
             parserOptions: {
                 project: "tsconfig.eslint.json",
                 tsconfigRootDir: import.meta.dirname,
@@ -71,6 +71,7 @@ export default tseslint.config(
         languageOptions: {
             globals: {
                 ...globals.jest,
+                ...globals.commonjs,
             },
         },
     },
