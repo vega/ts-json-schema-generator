@@ -6155,7 +6155,7 @@ tslib@2.1.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
-tslib@^2, tslib@^2.5.0, tslib@^2.6.2, tslib@~2.6.2:
+tslib@^2, tslib@^2.5.0, tslib@^2.6.2, tslib@~2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.6.3.tgz#0438f810ad7a9edcde7a241c3d80db693c8cbfe0"
   integrity sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==
@@ -6500,12 +6500,12 @@ vega-label@~1.2.1:
     vega-util "^1.15.2"
 
 vega-lite@^5.18.0:
-  version "5.18.1"
-  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.18.1.tgz#70670f87091a54853f14184eaba7b61968d06e88"
-  integrity sha512-TcwEUqymDjLC+eWyXJzpOd7OnHvYH1SiVqjj9r22BSq5N0I6f0rodxtgQOoX3NJFpJp84E7V8o/jDVDjeo+zxA==
+  version "5.19.0"
+  resolved "https://registry.yarnpkg.com/vega-lite/-/vega-lite-5.19.0.tgz#5d49ac363585612658e7ca1f242ec9a1ec123d74"
+  integrity sha512-DtSArHnomfYdKnkz7rDCLkXpuh4O6kHVU1YSDoMtQR0ewEwqelb5YY85mvJPCJRT9E7UG84RGdxjDbuwowtHRg==
   dependencies:
     json-stringify-pretty-compact "~3.0.0"
-    tslib "~2.6.2"
+    tslib "~2.6.3"
     vega-event-selector "~3.0.1"
     vega-expression "~5.1.0"
     vega-util "~1.17.2"
