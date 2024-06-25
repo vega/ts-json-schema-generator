@@ -232,6 +232,7 @@ fs.writeFile(outputPath, schemaString, (err) => {
 -   conditional types
 -   functions
 -   `Promise<T>` unwraps to `T`
+-   Overrides (like `@format`)
 
 ## Run locally
 
