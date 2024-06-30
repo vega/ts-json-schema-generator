@@ -4,27 +4,27 @@
   "definitions": {
     "arrayGenerics": {
       "$comment": "(a: T[], b: T[]) => T[]",
-      "type": "object",
       "properties": {
         "namedArgs": {
-          "type": "object",
+          "additionalProperties": false,
           "properties": {
             "a": {
-              "type": "array",
-              "items": {}
+              "items": {},
+              "type": "array"
             },
             "b": {
-              "type": "array",
-              "items": {}
+              "items": {},
+              "type": "array"
             }
           },
           "required": [
             "a",
             "b"
           ],
-          "additionalProperties": false
+          "type": "object"
         }
-      }
+      },
+      "type": "object"
     }
   }
 }
