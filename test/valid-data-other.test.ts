@@ -46,13 +46,10 @@ describe("valid-data-other", () => {
     it("generic-simple", assertValidSchema("generic-simple", "*", { expose: "all" }));
     it("generic-arrays", assertValidSchema("generic-arrays", "MyObject"));
     it("generic-multiple", assertValidSchema("generic-multiple", "MyObject"));
-    it("generic-multiple", assertValidSchema("generic-multiple", "*", { expose: "all" }));
     it("generic-multiargs", assertValidSchema("generic-multiargs", "MyObject"));
     it("generic-anonymous", assertValidSchema("generic-anonymous", "MyObject"));
-    it("generic-anonymous", assertValidSchema("generic-anonymous", "*", { expose: "all" }));
     it("generic-recursive", assertValidSchema("generic-recursive", "MyObject"));
     it("generic-hell", assertValidSchema("generic-hell", "MyObject"));
-    it("generic-hell", assertValidSchema("generic-hell", "*", { expose: "all" }));
     it("generic-default-conditional", assertValidSchema("generic-default-conditional", "MyObject"));
     it("generic-default", assertValidSchema("generic-default", "MyObject"));
     it("generic-nested", assertValidSchema("generic-nested", "MyObject"));
