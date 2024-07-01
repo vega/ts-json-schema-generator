@@ -43,6 +43,7 @@ describe("valid-data-other", () => {
     it("import-anonymous", assertValidSchema("import-anonymous", "MyObject"));
 
     it("generic-simple", assertValidSchema("generic-simple", "MyObject"));
+    it("generic-simple", assertValidSchema("generic-simple", "*", { expose: "all" }));
     it("generic-arrays", assertValidSchema("generic-arrays", "MyObject"));
     it("generic-multiple", assertValidSchema("generic-multiple", "MyObject"));
     it("generic-multiargs", assertValidSchema("generic-multiargs", "MyObject"));
