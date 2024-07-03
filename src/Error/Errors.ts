@@ -17,7 +17,7 @@ export class UnknownTypeError extends BaseError {
     constructor(readonly type: BaseType) {
         super({
             code: 101,
-            messageText: `Unknown type "${type.getId()}"`,
+            messageText: `Unknown type "${type?.getId()}"`,
         });
     }
 }

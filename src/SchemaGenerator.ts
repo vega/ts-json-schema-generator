@@ -166,8 +166,8 @@ export class SchemaGenerator {
             ts.isTypeAliasDeclaration(node)
         ) {
             if (
-                this.config?.expose === "all" ||
-                (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
+                (this.config?.expose === "all" || this.isExportType(node)) &&
+                !this.isGenericType(node as ts.TypeAliasDeclaration)
             ) {
                 allTypes.set(this.getFullName(node, typeChecker), node);
                 return;
