@@ -93,8 +93,10 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         } catch {
             // When propertyName was programmatically created, it doesn't have a source file.
             // Then, getText() will throw an error. But, for programmatically created nodes,`
-            // `escapedText` is available.
-            return (propertyName as ts.Identifier).escapedText as string;
+            // `escapedText` or `text` is available.
+            // Only `text` will be available when propertyName contains strange characters and it cannot be escaped
+            // or if it is a number.
+            return ((propertyName as ts.Identifier).escapedText as string) ?? (propertyName as ts.StringLiteral).text;
         }
     }
 }
