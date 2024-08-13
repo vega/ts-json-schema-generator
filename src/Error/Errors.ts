@@ -93,6 +93,7 @@ export class DefinitionError extends BaseError {
         });
     }
 }
+
 export class BuildError extends BaseError {
     constructor(diag: Omit<PartialDiagnostic, "code">) {
         super({
