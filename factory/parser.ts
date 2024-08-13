@@ -114,7 +114,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
         .addNodeParser(new NullLiteralNodeParser())
-        .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser))
+        .addNodeParser(new ObjectLiteralExpressionNodeParser(chainNodeParser, typeChecker))
         .addNodeParser(new ArrayLiteralExpressionNodeParser(chainNodeParser))
 
         .addNodeParser(new PrefixUnaryExpressionNodeParser(chainNodeParser))
