@@ -88,7 +88,7 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
             return new ObjectProperty(
                 t.name.getText(),
                 this.childNodeParser.createType(type, context),
-                !(t as ts).questionToken,
+                !(t as any).questionToken,
             );
         });
     }
