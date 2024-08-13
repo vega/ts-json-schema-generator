@@ -43,7 +43,7 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
             const referenced = this.checker.typeToTypeNode(
                 this.checker.getTypeAtLocation(spread.expression),
                 undefined,
-                ts.NodeBuilderFlags.NoTypeReduction,
+                ts.NodeBuilderFlags.NoTruncation,
             );
 
             if (!referenced) {
@@ -63,14 +63,32 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
                 return [];
             }
 
-            if (!t.name || !("initializer" in t)) {
+            if (!t.name) {
                 throw new UnknownNodeError(t);
+            }
+
+            let type: ts.Node | undefined;
+
+            if (ts.isShorthandPropertyAssignment(t)) {
+                type = this.checker.typeToTypeNode(
+                    this.checker.getTypeAtLocation(t),
+                    undefined,
+                    ts.NodeBuilderFlags.NoTruncation,
+                );
+            } else if (ts.isPropertyAssignment(t)) {
+                type = t.initializer;
+            } else {
+                type = t;
+            }
+
+            if (!type) {
+                throw new ExpectationFailedError("Could not find type for property", t);
             }
 
             return new ObjectProperty(
                 t.name.getText(),
-                this.childNodeParser.createType(t.initializer, context),
-                !(t as any).questionToken,
+                this.childNodeParser.createType(type, context),
+                !(t as ts).questionToken,
             );
         });
     }
