@@ -144,6 +144,7 @@ describe("valid-data-type", () => {
 
     it("lowercase", assertValidSchema("lowercase", "MyType"));
     it("const-spread", assertValidSchema("const-spread", "MyType"));
+    it("keyof-typeof-x", assertValidSchema("keyof-typeof-x", "MyType"));
 
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
 
