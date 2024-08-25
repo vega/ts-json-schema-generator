@@ -1,11 +1,14 @@
+import { intrinsicMethods } from "../../src/NodeParser/IntrinsicNodeParser.js";
 import { AliasType } from "../../src/Type/AliasType.js";
 import { AnnotatedType } from "../../src/Type/AnnotatedType.js";
 import { AnyType } from "../../src/Type/AnyType.js";
 import { ArrayType } from "../../src/Type/ArrayType.js";
+import type { BaseType } from "../../src/Type/BaseType.js";
 import { BooleanType } from "../../src/Type/BooleanType.js";
 import { DefinitionType } from "../../src/Type/DefinitionType.js";
 import { InferType } from "../../src/Type/InferType.js";
 import { IntersectionType } from "../../src/Type/IntersectionType.js";
+import { IntrinsicType } from "../../src/Type/IntrinsicType.js";
 import { LiteralType } from "../../src/Type/LiteralType.js";
 import { NeverType } from "../../src/Type/NeverType.js";
 import { NullType } from "../../src/Type/NullType.js";
@@ -15,6 +18,7 @@ import { OptionalType } from "../../src/Type/OptionalType.js";
 import { ReferenceType } from "../../src/Type/ReferenceType.js";
 import { RestType } from "../../src/Type/RestType.js";
 import { StringType } from "../../src/Type/StringType.js";
+import { TemplateLiteralType } from "../../src/Type/TemplateLiteralType.js";
 import { TupleType } from "../../src/Type/TupleType.js";
 import { UndefinedType } from "../../src/Type/UndefinedType.js";
 import { UnionType } from "../../src/Type/UnionType.js";
@@ -32,6 +36,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new UndefinedType(), new UndefinedType())).toBe(true);
         expect(isAssignableTo(new VoidType(), new VoidType())).toBe(true);
     });
+
     it("returns false for different types", () => {
         expect(isAssignableTo(new BooleanType(), new NullType())).toBe(false);
         expect(isAssignableTo(new NullType(), new NumberType())).toBe(false);
@@ -41,21 +46,26 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new UndefinedType(), new BooleanType())).toBe(false);
         expect(isAssignableTo(new ArrayType(new StringType()), new StringType())).toBe(false);
     });
+
     it("returns true for arrays with same item type", () => {
         expect(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new StringType()))).toBe(true);
     });
+
     it("returns false when array item types do not match", () => {
         expect(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new NumberType()))).toBe(false);
     });
+
     it("returns true when source type is compatible to target union type", () => {
         const union = new UnionType([new StringType(), new NumberType()]);
         expect(isAssignableTo(union, new StringType())).toBe(true);
         expect(isAssignableTo(union, new NumberType())).toBe(true);
     });
+
     it("returns false when source type is not compatible to target union type", () => {
         const union = new UnionType([new StringType(), new NumberType()]);
         expect(isAssignableTo(union, new BooleanType())).toBe(false);
     });
+
     it("derefs reference types", () => {
         const stringRef = new ReferenceType();
         stringRef.setType(new StringType());
@@ -70,6 +80,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(stringRef, anotherStringRef)).toBe(true);
         expect(isAssignableTo(numberRef, stringRef)).toBe(false);
     });
+
     it("derefs alias types", () => {
         const stringAlias = new AliasType("a", new StringType());
         const anotherStringAlias = new AliasType("b", new StringType());
@@ -81,6 +92,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(stringAlias, anotherStringAlias)).toBe(true);
         expect(isAssignableTo(numberAlias, stringAlias)).toBe(false);
     });
+
     it("derefs annotated types", () => {
         const annotatedString = new AnnotatedType(new StringType(), {}, false);
         const anotherAnnotatedString = new AnnotatedType(new StringType(), {}, false);
@@ -92,6 +104,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(annotatedString, anotherAnnotatedString)).toBe(true);
         expect(isAssignableTo(annotatedNumber, annotatedString)).toBe(false);
     });
+
     it("derefs definition types", () => {
         const stringDefinition = new DefinitionType("a", new StringType());
         const anotherStringDefinition = new DefinitionType("b", new StringType());
@@ -103,6 +116,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(stringDefinition, anotherStringDefinition)).toBe(true);
         expect(isAssignableTo(numberDefinition, stringDefinition)).toBe(false);
     });
+
     it("lets type 'any' to be assigned to anything except 'never'", () => {
         expect(isAssignableTo(new AnyType(), new AnyType())).toBe(true);
         expect(isAssignableTo(new ArrayType(new NumberType()), new AnyType())).toBe(true);
@@ -123,6 +137,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new AnyType())).toBe(true);
         expect(isAssignableTo(new UndefinedType(), new AnyType())).toBe(true);
     });
+
     it("lets type 'never' to be assigned to anything", () => {
         expect(isAssignableTo(new AnyType(), new NeverType())).toBe(true);
         expect(isAssignableTo(new ArrayType(new NumberType()), new NeverType())).toBe(true);
@@ -143,6 +158,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new NeverType())).toBe(true);
         expect(isAssignableTo(new UndefinedType(), new NeverType())).toBe(true);
     });
+
     it("lets anything to be assigned to type 'any'", () => {
         expect(isAssignableTo(new AnyType(), new AnyType())).toBe(true);
         expect(isAssignableTo(new AnyType(), new ArrayType(new NumberType()))).toBe(true);
@@ -163,6 +179,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new AnyType(), new TupleType([new StringType(), new NumberType()]))).toBe(true);
         expect(isAssignableTo(new AnyType(), new UndefinedType())).toBe(true);
     });
+
     it("lets anything to be assigned to type 'unknown'", () => {
         expect(isAssignableTo(new UnknownType(), new AnyType())).toBe(true);
         expect(isAssignableTo(new UnknownType(), new ArrayType(new NumberType()))).toBe(true);
@@ -183,6 +200,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(new UnknownType(), new TupleType([new StringType(), new NumberType()]))).toBe(true);
         expect(isAssignableTo(new UnknownType(), new UndefinedType())).toBe(true);
     });
+
     it("lets 'unknown' only to be assigned to type 'unknown' or 'any'", () => {
         expect(isAssignableTo(new AnyType(), new UnknownType())).toBe(true);
         expect(isAssignableTo(new ArrayType(new NumberType()), new UnknownType())).toBe(false);
@@ -228,6 +246,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(typeAorB, new UnionType([typeA, typeB]))).toBe(true);
         expect(isAssignableTo(typeAorB, new UnionType([typeAB, typeB, typeC]))).toBe(false);
     });
+
     it("lets tuple type to be assigned to array type if item types match", () => {
         expect(
             isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new StringType()])),
@@ -239,6 +258,7 @@ describe("isAssignableTo", () => {
             isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new NumberType()])),
         ).toBe(false);
     });
+
     it("lets array types to be assigned to array-like object", () => {
         const fixedLengthArrayLike = new ObjectType(
             "fixedLengthArrayLike",
@@ -278,6 +298,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(optionalLengthArrayLike, tupleType)).toBe(false);
         expect(isAssignableTo(nonArrayLike, tupleType)).toBe(false);
     });
+
     it("lets only compatible tuple type to be assigned to tuple type", () => {
         expect(
             isAssignableTo(new TupleType([new StringType(), new StringType()]), new ArrayType(new StringType())),
@@ -335,6 +356,7 @@ describe("isAssignableTo", () => {
             ),
         ).toBe(true);
     });
+
     it("lets anything except null and undefined to be assigned to empty object type", () => {
         const empty = new ObjectType("empty", [], [], false);
         expect(isAssignableTo(empty, new AnyType())).toBe(true);
@@ -353,6 +375,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(empty, new TupleType([new StringType(), new NumberType()]))).toBe(true);
         expect(isAssignableTo(empty, new UndefinedType())).toBe(false);
     });
+
     it("lets only compatible object types to be assigned to object type", () => {
         const typeA = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), true)], false);
@@ -365,6 +388,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(typeAB, typeA)).toBe(false);
         expect(isAssignableTo(typeAB, typeB)).toBe(false);
     });
+
     it("does let object to be assigned to object with optional properties and at least one property in common", () => {
         const typeA = new ObjectType(
             "a",
@@ -375,17 +399,20 @@ describe("isAssignableTo", () => {
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), false)], false);
         expect(isAssignableTo(typeB, typeA)).toBe(true);
     });
+
     it("does not let object to be assigned to object with only optional properties and no properties in common", () => {
         const typeA = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), false)], false);
         expect(isAssignableTo(typeB, typeA)).toBe(false);
     });
+
     it("correctly handles primitive source intersection types", () => {
         const numberAndString = new IntersectionType([new StringType(), new NumberType()]);
         expect(isAssignableTo(new StringType(), numberAndString)).toBe(true);
         expect(isAssignableTo(new NumberType(), numberAndString)).toBe(true);
         expect(isAssignableTo(new BooleanType(), numberAndString)).toBe(false);
     });
+
     it("correctly handles intersection types with objects", () => {
         const a = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
         const b = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), true)], false);
@@ -407,6 +434,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(aAndB, ab)).toBe(true);
         expect(isAssignableTo(aAndB, aAndB)).toBe(true);
     });
+
     it("correctly handles circular dependencies", () => {
         const nodeTypeARef = new ReferenceType();
         const nodeTypeA = new ObjectType("a", [], [new ObjectProperty("parent", nodeTypeARef, false)], false);
@@ -428,6 +456,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(nodeTypeA, nodeTypeC)).toBe(false);
         expect(isAssignableTo(nodeTypeB, nodeTypeC)).toBe(false);
     });
+
     it("can handle deep union structures", () => {
         const objectType = new ObjectType(
             "interface-src/test.ts-0-53-src/test.ts-0-317",
@@ -443,6 +472,7 @@ describe("isAssignableTo", () => {
         const def = new DefinitionType("NumericValueRef", objectType);
         expect(isAssignableTo(outerUnion, def)).toBe(true);
     });
+
     it("correctly handles literal types", () => {
         expect(isAssignableTo(new StringType(), new LiteralType("foo"))).toBe(true);
         expect(isAssignableTo(new NumberType(), new LiteralType("foo"))).toBe(false);
@@ -477,5 +507,143 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(obj2, new NumberType())).toBe(false);
         expect(isAssignableTo(obj2, new StringType())).toBe(false);
         expect(isAssignableTo(obj2, new BooleanType())).toBe(false);
+    });
+
+    it("correctly handle intrinsic string check with literal type", () => {
+        const literalType = new IntrinsicType(intrinsicMethods.Capitalize, new StringType());
+
+        expect(isAssignableTo(literalType, new LiteralType("Foo"))).toBe(true);
+        expect(isAssignableTo(literalType, new LiteralType("foo"))).toBe(false);
+        expect(isAssignableTo(literalType, new StringType())).toBe(false);
+    });
+
+    it("correctly handle intrinsic string check with infer type", () => {
+        const inferMap = new Map<string, BaseType>();
+        const inferType = new IntrinsicType(intrinsicMethods.Uppercase, new InferType("A"));
+
+        expect(isAssignableTo(inferType, new LiteralType("FOO"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toBeInstanceOf(StringType);
+
+        expect(isAssignableTo(inferType, new LiteralType("foo"))).toBe(false);
+        expect(isAssignableTo(inferType, new StringType())).toBe(false);
+    });
+
+    it("correctly handle intrinsic string check with union type", () => {
+        const inferMap = new Map<string, BaseType>();
+        const unionType = new IntrinsicType(
+            intrinsicMethods.Lowercase,
+            new UnionType([new LiteralType("FOO"), new LiteralType("BAR"), new InferType("A")]),
+        );
+
+        expect(isAssignableTo(unionType, new LiteralType("foo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toBeInstanceOf(StringType);
+
+        expect(isAssignableTo(unionType, new LiteralType("FOO"))).toBe(false);
+        expect(isAssignableTo(unionType, new StringType())).toBe(false);
+    });
+
+    it("correctly handle template literal", () => {
+        const templateLiteralType = new TemplateLiteralType([new LiteralType("foo")]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("bar"))).toBe(false);
+        expect(isAssignableTo(templateLiteralType, new StringType())).toBe(false);
+    });
+
+    it("correctly handle template literal with string", () => {
+        const templateLiteralType = new TemplateLiteralType([new StringType()]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("bar"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new StringType())).toBe(true);
+    });
+
+    it("correctly handle template literal with number", () => {
+        const templateLiteralType = new TemplateLiteralType([new NumberType()]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("123"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(false);
+    });
+
+    it("correctly handle template literal with number", () => {
+        const templateLiteralType = new TemplateLiteralType([new LiteralType("foo"), new NumberType()]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo123"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo123bar"))).toBe(false);
+    });
+
+    it("correctly handle template literal with infer", () => {
+        const inferMap = new Map<string, BaseType>();
+        const templateLiteralType = new TemplateLiteralType([
+            new LiteralType("f"),
+            new InferType("A"),
+            new LiteralType("o"),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toStrictEqual(new LiteralType("o"));
+    });
+
+    it("correctly handle template literal with multiple infers", () => {
+        const inferMap = new Map<string, BaseType>();
+        const templateLiteralType = new TemplateLiteralType([
+            new LiteralType("f"),
+            new InferType("A"),
+            new StringType(),
+            new StringType(),
+            new InferType("B"),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo bar"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toStrictEqual(new LiteralType("o"));
+        expect(inferMap.get("B")).toStrictEqual(new LiteralType("bar"));
+    });
+
+    it("correctly handle template literal with infer and literal type as last part", () => {
+        const inferMap = new Map<string, BaseType>();
+        const templateLiteralType = new TemplateLiteralType([new InferType("A"), new LiteralType("o")]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toStrictEqual(new LiteralType("fo"));
+
+        inferMap.delete("A");
+        expect(isAssignableTo(templateLiteralType, new LiteralType("fo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toStrictEqual(new LiteralType("f"));
+    });
+
+    it("correctly handle template literal with union", () => {
+        const templateLiteralType = new TemplateLiteralType([
+            new UnionType([new LiteralType("foo"), new LiteralType("bar")]),
+            new LiteralType("123"),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo123"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("bar123"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(false);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo456"))).toBe(false);
+    });
+
+    it("correctly handle template literal with intrinsic string manipulation", () => {
+        const templateLiteralType = new TemplateLiteralType([
+            new IntrinsicType(intrinsicMethods.Uppercase, new LiteralType("f")),
+            new StringType(),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("Foo"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(false);
+    });
+
+    it("correctly handle template literal with intrinsic string manipulation", () => {
+        const inferMap = new Map<string, BaseType>();
+        const templateLiteralType = new TemplateLiteralType([
+            new IntrinsicType(
+                intrinsicMethods.Lowercase,
+                new UnionType([new LiteralType("FOO"), new LiteralType("BAR"), new InferType("A")]),
+            ),
+            new StringType(),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toBeInstanceOf(StringType);
     });
 });
