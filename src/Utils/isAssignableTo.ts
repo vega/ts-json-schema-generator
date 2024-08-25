@@ -177,7 +177,7 @@ export function isAssignableTo(
     // Check literal types
     if (source instanceof LiteralType) {
         if (target instanceof IntrinsicType) {
-            const argument = target.getArgument();
+            const argument = derefType(target.getArgument());
             const method = target.getMethod();
 
             if (argument instanceof LiteralType) {
@@ -242,12 +242,7 @@ export function isAssignableTo(
                         const isLastPart = parts.indexOf(nextPart) === parts.length - 1;
                         const index = isLastPart ? remaining.lastIndexOf(nextValue) : remaining.indexOf(nextValue);
 
-                        // If no matching segment is found, the source is not assignable
-                        if (index === -1) {
-                            return false;
-                        }
-
-                        if (!isPartAssignable(type, index)) {
+                        if (index === -1 || !isPartAssignable(type, index)) {
                             return false;
                         }
                     } else if (!nextPart) {
@@ -280,7 +275,7 @@ export function isAssignableTo(
                         return false;
                     }
                 } else if (type instanceof IntrinsicType) {
-                    const argument = type.getArgument();
+                    const argument = derefType(type.getArgument());
 
                     if (argument instanceof LiteralType) {
                         const targetValue = argument.getValue().toString();
