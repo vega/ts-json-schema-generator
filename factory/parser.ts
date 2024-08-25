@@ -42,7 +42,7 @@ import { PrefixUnaryExpressionNodeParser } from "../src/NodeParser/PrefixUnaryEx
 import { PropertyAccessExpressionParser } from "../src/NodeParser/PropertyAccessExpressionParser.js";
 import { RestTypeNodeParser } from "../src/NodeParser/RestTypeNodeParser.js";
 import { StringLiteralNodeParser } from "../src/NodeParser/StringLiteralNodeParser.js";
-import { StringTemplateLiteralNodeParser } from "../src/NodeParser/StringTemplateLiteralNodeParser.js";
+import { TemplateLiteralNodeParser } from "../src/NodeParser/TemplateLiteralNodeParser.js";
 import { StringTypeNodeParser } from "../src/NodeParser/StringTypeNodeParser.js";
 import { SymbolTypeNodeParser } from "../src/NodeParser/SymbolTypeNodeParser.js";
 import { TupleNodeParser } from "../src/NodeParser/TupleNodeParser.js";
@@ -109,7 +109,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new SatisfiesNodeParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
-        .addNodeParser(new StringTemplateLiteralNodeParser(chainNodeParser))
+        .addNodeParser(new TemplateLiteralNodeParser(chainNodeParser))
         .addNodeParser(new IntrinsicNodeParser())
         .addNodeParser(new NumberLiteralNodeParser())
         .addNodeParser(new BooleanLiteralNodeParser())
