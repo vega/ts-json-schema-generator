@@ -26,12 +26,9 @@ describe("valid-data-other", () => {
     it("string-literals-intrinsic", assertValidSchema("string-literals-intrinsic", "MyObject"));
     it("string-literals-null", assertValidSchema("string-literals-null", "MyObject"));
     it("string-literals-hack", assertValidSchema("string-literals-hack", "MyObject"));
-    it("string-template-literals", assertValidSchema("string-template-literals", "MyObject"));
-    it("string-template-expression-literals", assertValidSchema("string-template-expression-literals", "MyObject"));
-    it(
-        "string-template-expression-literals-import",
-        assertValidSchema("string-template-expression-literals-import", "MyObject"),
-    );
+
+    it("template-literals", assertValidSchema("template-literals", "MyObject"));
+    it("template-literals-never", assertValidSchema("template-literals-never", "MyType"));
 
     it("namespace-deep-1", assertValidSchema("namespace-deep-1", "RootNamespace.Def"));
     it("namespace-deep-2", assertValidSchema("namespace-deep-2", "RootNamespace.SubNamespace.HelperA"));
