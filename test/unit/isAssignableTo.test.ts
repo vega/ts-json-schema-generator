@@ -542,6 +542,12 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(unionType, new StringType())).toBe(false);
     });
 
+    it("correctly handle intrinsic string check with unknown type", () => {
+        const unionType = new IntrinsicType(intrinsicMethods.Lowercase, new UnknownType());
+
+        expect(isAssignableTo(unionType, new UnknownType())).toBe(false);
+    });
+
     it("correctly handle template literal", () => {
         const templateLiteralType = new TemplateLiteralType([new LiteralType("foo")]);
 
@@ -565,11 +571,18 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(false);
     });
 
-    it("correctly handle template literal with number", () => {
+    it("correctly handle template literal with literal and number", () => {
         const templateLiteralType = new TemplateLiteralType([new LiteralType("foo"), new NumberType()]);
 
         expect(isAssignableTo(templateLiteralType, new LiteralType("foo123"))).toBe(true);
         expect(isAssignableTo(templateLiteralType, new LiteralType("foo123bar"))).toBe(false);
+    });
+
+    it("correctly handle template literal with string and literal", () => {
+        const templateLiteralType = new TemplateLiteralType([new StringType(), new LiteralType("foo")]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(true);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("bar"))).toBe(false);
     });
 
     it("correctly handle template literal with infer", () => {
@@ -599,6 +612,19 @@ describe("isAssignableTo", () => {
         expect(inferMap.get("B")).toStrictEqual(new LiteralType("bar"));
     });
 
+    it("correctly handle template literal with consecutive infer types", () => {
+        const inferMap = new Map<string, BaseType>();
+        const templateLiteralType = new TemplateLiteralType([
+            new LiteralType("f"),
+            new InferType("A"),
+            new InferType("B"),
+        ]);
+
+        expect(isAssignableTo(templateLiteralType, new LiteralType("foo"), inferMap)).toBe(true);
+        expect(inferMap.get("A")).toStrictEqual(new LiteralType("o"));
+        expect(inferMap.get("B")).toStrictEqual(new LiteralType("o"));
+    });
+
     it("correctly handle template literal with infer and literal type as last part", () => {
         const inferMap = new Map<string, BaseType>();
         const templateLiteralType = new TemplateLiteralType([new InferType("A"), new LiteralType("o")]);
@@ -621,6 +647,7 @@ describe("isAssignableTo", () => {
         expect(isAssignableTo(templateLiteralType, new LiteralType("bar123"))).toBe(true);
         expect(isAssignableTo(templateLiteralType, new LiteralType("foo"))).toBe(false);
         expect(isAssignableTo(templateLiteralType, new LiteralType("foo456"))).toBe(false);
+        expect(isAssignableTo(templateLiteralType, new LiteralType("baz"))).toBe(false);
     });
 
     it("correctly handle template literal with intrinsic string manipulation", () => {
