@@ -118,6 +118,6 @@ export class UnhandledError extends BaseError {
     static from(message: string, node?: ts.Node, cause?: unknown) {
         // This might be called deeply inside the parser chain
         // this ensures it doesn't end up with error.cause.cause.cause...
-        return cause instanceof UnhandledError ? cause : new UnhandledError(message, node, cause);
+        return cause instanceof BaseError ? cause : new UnhandledError(message, node, cause);
     }
 }
