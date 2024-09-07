@@ -9,8 +9,6 @@ export class BooleanTypeNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.BooleanKeyword;
     }
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
-        let a = undefined;
-        a.toString();
         return new BooleanType();
     }
 }
