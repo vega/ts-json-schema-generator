@@ -1,7 +1,7 @@
-import ts from "typescript";
-import { type PartialDiagnostic, BaseError } from "./BaseError.js";
-import type { BaseType } from "../Type/BaseType.js";
 import type { JSONSchema7 } from "json-schema";
+import ts from "typescript";
+import type { BaseType } from "../Type/BaseType.js";
+import { BaseError, type PartialDiagnostic } from "./BaseError.js";
 
 export class UnknownNodeError extends BaseError {
     constructor(readonly node: ts.Node) {
@@ -100,5 +100,24 @@ export class BuildError extends BaseError {
             code: 108,
             ...diag,
         });
+    }
+}
+
+export class UnhandledError extends BaseError {
+    private constructor(
+        messageText: string,
+        node?: ts.Node,
+        readonly cause?: unknown,
+    ) {
+        super({ code: 109, messageText, node });
+    }
+
+    /**
+     * Creates a new error with a cause and optional node information and ensures it is not wrapped in another UnhandledError
+     */
+    static from(message: string, node?: ts.Node, cause?: unknown) {
+        // This might be called deeply inside the parser chain
+        // this ensures it doesn't end up with error.cause.cause.cause...
+        return cause instanceof BaseError ? cause : new UnhandledError(message, node, cause);
     }
 }
