@@ -1,6 +1,6 @@
 import ts from "typescript";
 import type { Config } from "./Config.js";
-import { FailedTypeCreation, MultipleDefinitionsError, RootlessError, UnhandledError } from "./Error/Errors.js";
+import { MultipleDefinitionsError, RootlessError, UnhandledError } from "./Error/Errors.js";
 import { Context, type NodeParser } from "./NodeParser.js";
 import type { Definition } from "./Schema/Definition.js";
 import type { Schema } from "./Schema/Schema.js";
