@@ -1,7 +1,7 @@
-import ts from "typescript";
-import { type PartialDiagnostic, BaseError } from "./BaseError.js";
-import type { BaseType } from "../Type/BaseType.js";
 import type { JSONSchema7 } from "json-schema";
+import ts from "typescript";
+import type { BaseType } from "../Type/BaseType.js";
+import { BaseError, type PartialDiagnostic } from "./BaseError.js";
 
 export class UnknownNodeError extends BaseError {
     constructor(readonly node: ts.Node) {
