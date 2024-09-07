@@ -86,13 +86,19 @@ try {
         writeFileSync(args.out, schemaString);
     } else {
         // write to stdout
-        process.stdout.write(`${schemaString}\n`);
+        console.log(`${schemaString}\n`);
     }
 } catch (error) {
     if (error instanceof BaseError) {
-        process.stderr.write(error.format());
-        process.exit(1);
-    }
+        console.error(error.format());
 
-    throw error;
+        if (error.cause) {
+            console.error(error.cause);
+        }
+
+        // Maybe we are being imported by another script
+        process.exitCode = 1;
+    } else {
+        throw error;
+    }
 }

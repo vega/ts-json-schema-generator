@@ -102,3 +102,22 @@ export class BuildError extends BaseError {
         });
     }
 }
+
+export class UnhandledError extends BaseError {
+    private constructor(
+        messageText: string,
+        node?: ts.Node,
+        readonly cause?: unknown,
+    ) {
+        super({ code: 109, messageText, node });
+    }
+
+    /**
+     * Creates a new error with a cause and optional node information and ensures it is not wrapped in another UnhandledError
+     */
+    static from(message: string, node?: ts.Node, cause?: unknown) {
+        // This might be called deeply inside the parser chain
+        // this ensures it doesn't end up with error.cause.cause.cause...
+        return cause instanceof UnhandledError ? cause : new UnhandledError(message, node, cause);
+    }
+}

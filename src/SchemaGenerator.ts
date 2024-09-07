@@ -1,6 +1,6 @@
 import ts from "typescript";
 import type { Config } from "./Config.js";
-import { MultipleDefinitionsError, RootlessError } from "./Error/Errors.js";
+import { FailedTypeCreation, MultipleDefinitionsError, RootlessError, UnhandledError } from "./Error/Errors.js";
 import { Context, type NodeParser } from "./NodeParser.js";
 import type { Definition } from "./Schema/Definition.js";
 import type { Schema } from "./Schema/Schema.js";
@@ -26,15 +26,25 @@ export class SchemaGenerator {
     }
 
     public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
-        const rootTypes = rootNodes.map((rootNode) => {
-            return this.nodeParser.createType(rootNode, new Context());
-        });
+        const roots = rootNodes.map((rootNode) => ({
+            rootNode: rootNode,
+            rootType: this.nodeParser.createType(rootNode, new Context()),
+        }));
 
-        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
+        const rootTypeDefinition =
+            roots.length === 1 ? this.getRootTypeDefinition(roots[0].rootType, roots[0].rootNode) : undefined;
         const definitions: StringMap<Definition> = {};
 
-        for (const rootType of rootTypes) {
-            this.appendRootChildDefinitions(rootType, definitions);
+        for (const root of roots) {
+            try {
+                this.appendRootChildDefinitions(root.rootType, definitions);
+            } catch (error) {
+                throw UnhandledError.from(
+                    "Unhandled error while appending Child Type Definition.",
+                    root.rootNode,
+                    error,
+                );
+            }
         }
 
         const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
@@ -60,6 +70,7 @@ export class SchemaGenerator {
         this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
         return [...rootNodes.values()];
     }
+
     protected findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
@@ -79,9 +90,15 @@ export class SchemaGenerator {
 
         throw new RootlessError(fullName);
     }
-    protected getRootTypeDefinition(rootType: BaseType): Definition {
-        return this.typeFormatter.getDefinition(rootType);
+
+    protected getRootTypeDefinition(rootType: BaseType, rootNode: ts.Node): Definition {
+        try {
+            return this.typeFormatter.getDefinition(rootType);
+        } catch (error) {
+            throw UnhandledError.from("Unhandled error while creating Root Type Definition.", rootNode, error);
+        }
     }
+
     protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
 
