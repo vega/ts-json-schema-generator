@@ -160,7 +160,7 @@ const outputPath = "path/to/output/file";
 
 const schemaString = JSON.stringify(schema, null, 2);
 fs.writeFile(outputPath, schemaString, (err) => {
-    if (err) throw err);
+    if (err) throw err;
 });
 ```
 
@@ -213,7 +213,7 @@ const outputPath = "path/to/output/file";
 
 const schemaString = JSON.stringify(schema, null, 2);
 fs.writeFile(outputPath, schemaString, (err) => {
-    if (err) throw err);
+    if (err) throw err;
 });
 ```
 
