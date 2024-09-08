@@ -3,7 +3,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
-/** @type {import('@types/eslint').Linter.FlatConfig[]} */
+/** @type {import('@types/eslint').Linter.Config[]} */
 export default tseslint.config(
     {
         ignores: ["dist", "cjs", "build", "eslint.config.mjs"],
@@ -15,7 +15,6 @@ export default tseslint.config(
             "index.ts",
             "src/**/*.ts",
             "factory/**/*.ts",
-            "bin/**",
             "test/**/*.test.ts",
             "test/utils.ts",
         ],
@@ -70,7 +69,7 @@ export default tseslint.config(
         files: ["test/**/*.test.ts"],
         languageOptions: {
             globals: {
-                ...globals.jest,
+                ...globals.vitest,
                 ...globals.commonjs,
             },
         },

@@ -20,7 +20,7 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
                 case ts.SyntaxKind.PlusToken:
                     return new LiteralType(+operand.getValue());
                 case ts.SyntaxKind.MinusToken:
-                    return new LiteralType(-operand.getValue());
+                    return new LiteralType(-(operand.getValue() as number));
                 case ts.SyntaxKind.TildeToken:
                     return new LiteralType(~operand.getValue());
                 case ts.SyntaxKind.ExclamationToken:
