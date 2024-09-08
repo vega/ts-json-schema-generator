@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import { assertValidSchema } from "./utils";
 import * as objectRequiredSamples from "./valid-data/object-required/samples";
 

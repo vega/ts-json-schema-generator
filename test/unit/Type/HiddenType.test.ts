@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { HiddenType } from "../../../src/Type/HiddenType.js";
 import { NeverType } from "../../../src/Type/NeverType.js";
 

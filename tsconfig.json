@@ -23,8 +23,7 @@
     "typeRoots": ["node_modules/@types"],
     "outDir": "dist",
     "incremental": true,
-    "importHelpers": true,
-    "types": ["vitest/globals"]
+    "importHelpers": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
   "include": ["src/**/*.ts", "factory/**/*.ts"],

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { strip } from "../../src/Utils/String";
 
 describe("strip", () => {

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { intersectionOfArrays } from "../../src/Utils/intersectionOfArrays.js";
 
 describe("intersectionOfArrays", () => {

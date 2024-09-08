@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { AliasType } from "../../src/Type/AliasType.js";
 import { AnnotatedType } from "../../src/Type/AnnotatedType.js";
 import { AnyType } from "../../src/Type/AnyType.js";
