@@ -21,6 +21,7 @@ jobs:
         with:
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
+          node-version: 22
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
