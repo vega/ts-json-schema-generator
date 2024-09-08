@@ -98,7 +98,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             const text = (example.text ?? []).map((part) => part.text).join("");
             try {
                 examples.push(json5.parse(text));
-            } catch (e) {
+            } catch {
                 // ignore examples which don't parse to valid JSON
                 // This could be improved to support a broader range of usages,
                 // such as if the example has a title (as explained in the tsdoc spec).
