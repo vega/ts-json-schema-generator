@@ -114,7 +114,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     private parseJson(value: string): any {
         try {
             return json5.parse(value);
-        } catch (e) {
+        } catch {
             return undefined;
         }
     }

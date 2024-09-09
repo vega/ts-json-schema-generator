@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { assertValidSchema } from "./utils";
 import * as annotationDefaultSamples from "./valid-data/annotation-default/samples";
 

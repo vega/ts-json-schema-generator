@@ -37,7 +37,7 @@ jobs:
         run: yarn build
 
       - name: Test coverage
-        run: yarn jest test/ --collectCoverage=true
+        run: yarn test:coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4

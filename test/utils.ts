@@ -1,3 +1,4 @@
+import { expect } from "vitest";
 import Ajv, { Options as AjvOptions } from "ajv";
 import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";

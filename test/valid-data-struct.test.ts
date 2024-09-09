@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import { assertValidSchema } from "./utils";
 
 describe("valid-data-struct", () => {

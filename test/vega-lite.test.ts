@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config.js";

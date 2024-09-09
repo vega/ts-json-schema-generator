@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { makeNullable } from "../../src/TypeFormatter/AnnotatedTypeFormatter.js";
 
 describe("makeNullable", () => {
