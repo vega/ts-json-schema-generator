@@ -62,7 +62,7 @@ export function createFormatter(config: CompletedConfig, augmentor?: FormatterAu
         .addTypeFormatter(new NeverTypeFormatter())
 
         .addTypeFormatter(new LiteralTypeFormatter())
-        .addTypeFormatter(new EnumTypeFormatter())
+        .addTypeFormatter(new EnumTypeFormatter(config.constAsEnum ?? false))
 
         .addTypeFormatter(new ReferenceTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))
         .addTypeFormatter(new DefinitionTypeFormatter(circularReferenceTypeFormatter, config.encodeRefs ?? true))

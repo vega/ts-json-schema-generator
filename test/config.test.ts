@@ -462,4 +462,19 @@ describe("config", () => {
             functions: "comment",
         }),
     );
+
+    it(
+        "const-as-enum-true",
+        assertSchema("const-as-enum-true", {
+            type: "MyObject",
+            constAsEnum: true,
+        }),
+    );
+
+    it(
+        "const-as-enum-false",
+        assertSchema("const-as-enum-false", {
+            type: "MyObject",
+        }),
+    );
 });
