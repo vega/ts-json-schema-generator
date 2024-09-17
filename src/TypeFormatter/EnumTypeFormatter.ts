@@ -6,6 +6,10 @@ import { typeName } from "../Utils/typeName.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class EnumTypeFormatter implements SubTypeFormatter {
+    public constructor(
+        protected constAsEnum: boolean
+    ) {}
+
     public supportsType(type: BaseType): boolean {
         return type instanceof EnumType;
     }
@@ -17,7 +21,7 @@ export class EnumTypeFormatter implements SubTypeFormatter {
         // However, this formatter is used both for enum members and enum types,
         // so the side effect is that an enum type that contains just a single
         // value is represented as "const" too.
-        return values.length === 1
+        return values.length === 1 && !this.constAsEnum
             ? { type: types[0], const: values[0] }
             : { type: types.length === 1 ? types[0] : types, enum: values };
     }

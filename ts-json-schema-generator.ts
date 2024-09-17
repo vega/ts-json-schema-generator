@@ -49,6 +49,7 @@ const args = new Command()
         [],
     )
     .option("--additional-properties", "Allow additional properties for objects with no index signature", false)
+    .option("--const-as-enum", "Use enums with a single value when declaring constants", false)
     .version(pkg.version)
     .parse(process.argv)
     .opts();
@@ -70,6 +71,7 @@ const config: Config = {
     extraTags: args.validationKeywords,
     additionalProperties: args.additionalProperties,
     functions: args.functions,
+    constAsEnum: args.constAsEnum
 };
 
 try {
