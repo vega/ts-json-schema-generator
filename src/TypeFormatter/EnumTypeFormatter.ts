@@ -6,9 +6,7 @@ import { typeName } from "../Utils/typeName.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class EnumTypeFormatter implements SubTypeFormatter {
-    public constructor(
-        protected constAsEnum: boolean
-    ) {}
+    public constructor(protected constAsEnum: boolean) {}
 
     public supportsType(type: BaseType): boolean {
         return type instanceof EnumType;

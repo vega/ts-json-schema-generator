@@ -37,5 +37,5 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     additionalProperties: false,
     discriminatorType: "json-schema",
     functions: "comment",
-    constAsEnum: false
+    constAsEnum: false,
 };

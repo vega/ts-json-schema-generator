@@ -71,7 +71,7 @@ const config: Config = {
     extraTags: args.validationKeywords,
     additionalProperties: args.additionalProperties,
     functions: args.functions,
-    constAsEnum: args.constAsEnum
+    constAsEnum: args.constAsEnum,
 };
 
 try {
