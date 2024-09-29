@@ -89,7 +89,7 @@
     "jest-junit": "^16.0.0",
     "prettier": "^3.3.2",
     "tsx": "^4.16.0",
-    "typescript-eslint": "^7.14.1",
+    "typescript-eslint": "^8.7.0",
     "vega": "^5.30.0",
     "vega-lite": "^5.19.0"
   },
