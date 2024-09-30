@@ -35,6 +35,8 @@ Note that different platforms (e.g. Windows) may use different path separators s
 
 Also note that you need to quote paths with `*` as otherwise the shell will expand the paths and therefore only pass the first path to the generator.
 
+By default, the command-line generator will use the `tsconfig.json` file in the current working directory, or the first parent directory that contains a `tsconfig.json` file up to the root of the filesystem. If you want to use a different `tsconfig.json` file, you can use the `--tsconfig` option. In particular, if you need to use different compilation options for types, you may want to create a separate `tsconfig.json` file for the schema generation only.
+
 ### Options
 
 ```
