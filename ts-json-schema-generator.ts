@@ -2,6 +2,7 @@ import { Command, Option } from "commander";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import stableStringify from "safe-stable-stringify";
+import { findConfigFile, sys as tsSys } from "typescript";
 import { createGenerator } from "./factory/generator.js";
 import type { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
@@ -56,7 +57,8 @@ const args = new Command()
 const config: Config = {
     minify: args.minify,
     path: args.path,
-    tsconfig: args.tsconfig,
+    tsconfig:
+        typeof args.tsconfig === "string" ? args.tsconfig : findConfigFile(process.cwd(), (f) => tsSys.fileExists(f)),
     type: args.type,
     schemaId: args.id,
     expose: args.expose,
