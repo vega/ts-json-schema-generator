@@ -113,6 +113,7 @@ describe("valid-data-type", () => {
     it("type-mapped-never", assertValidSchema("type-mapped-never", "MyObject"));
     it("type-mapped-empty-exclude", assertValidSchema("type-mapped-empty-exclude", "MyObject"));
     it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "*"));
+    it("type-mapped-conditional", assertValidSchema("type-mapped-conditional", "MyType"));
 
     it("type-conditional-simple", assertValidSchema("type-conditional-simple", "MyObject"));
     it("type-conditional-inheritance", assertValidSchema("type-conditional-inheritance", "MyObject"));
@@ -125,7 +126,8 @@ describe("valid-data-type", () => {
     it("type-conditional-narrowing", assertValidSchema("type-conditional-narrowing", "MyObject"));
     it("type-conditional-omit", assertValidSchema("type-conditional-omit", "MyObject"));
     it("type-conditional-jsdoc", assertValidSchema("type-conditional-jsdoc", "MyObject"));
-
+    it("type-conditional-intrinsic", assertValidSchema("type-conditional-intrinsic", "MyObject"));
+    it("type-conditional-template-literals", assertValidSchema("type-conditional-template-literals", "MyObject"));
     it("type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));
     it("type-conditional-infer-nested", assertValidSchema("type-conditional-infer-nested", "MyType"));
     it("type-conditional-infer-recursive", assertValidSchema("type-conditional-infer-recursive", "MyType"));

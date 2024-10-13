@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "capitalized": {
+          "const": true,
+          "type": "boolean"
+        },
+        "infer": {
+          "type": "string"
+        },
+        "inferNonMatch": {
+          "const": false,
+          "type": "boolean"
+        },
+        "lowercased": {
+          "const": true,
+          "type": "boolean"
+        },
+        "notCapitalized": {
+          "const": false,
+          "type": "boolean"
+        },
+        "notLowercased": {
+          "const": false,
+          "type": "boolean"
+        },
+        "notUncapitalized": {
+          "const": false,
+          "type": "boolean"
+        },
+        "notUppercased": {
+          "const": false,
+          "type": "boolean"
+        },
+        "uncapitalized": {
+          "const": true,
+          "type": "boolean"
+        },
+        "union": {
+          "const": true,
+          "type": "boolean"
+        },
+        "uppercased": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "capitalized",
+        "notCapitalized",
+        "uncapitalized",
+        "notUncapitalized",
+        "uppercased",
+        "notUppercased",
+        "lowercased",
+        "notLowercased",
+        "union",
+        "infer",
+        "inferNonMatch"
+      ],
+      "type": "object"
+    }
+  }
+}

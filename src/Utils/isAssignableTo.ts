@@ -19,6 +19,8 @@ import { BooleanType } from "../Type/BooleanType.js";
 import { InferType } from "../Type/InferType.js";
 import { RestType } from "../Type/RestType.js";
 import { NeverType } from "../Type/NeverType.js";
+import { IntrinsicType } from "../Type/IntrinsicType.js";
+import { TemplateLiteralType } from "../Type/TemplateLiteralType.js";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -49,7 +51,7 @@ function combineIntersectingTypes(intersection: IntersectionType): BaseType[] {
  * Returns all object properties of the given type and all its base types.
  *
  * @param type - The type for which to return the properties. If type is not an object type or object has no properties
- *               Then an empty list ist returned.
+ *               Then an empty list is returned.
  * @return All object properties of the type. Empty if none.
  */
 function getObjectProperties(type: BaseType): ObjectProperty[] {
@@ -109,15 +111,7 @@ export function isAssignableTo(
 
     // Infer type can become anything
     if (target instanceof InferType) {
-        const key = target.getName();
-        const infer = inferMap.get(key);
-
-        if (infer === undefined) {
-            inferMap.set(key, source);
-        } else {
-            inferMap.set(key, new UnionType([infer, source]));
-        }
-
+        setInferredType(target.getName(), source, inferMap);
         return true;
     }
 
@@ -182,11 +176,139 @@ export function isAssignableTo(
 
     // Check literal types
     if (source instanceof LiteralType) {
+        if (target instanceof IntrinsicType) {
+            const argument = derefType(target.getArgument());
+            const method = target.getMethod();
+
+            if (argument instanceof LiteralType) {
+                const value = method(argument.getValue().toString());
+                return isAssignableTo(new LiteralType(value), source, inferMap, insideTypes);
+            }
+
+            if (argument instanceof StringType || argument instanceof InferType) {
+                if (argument instanceof InferType) {
+                    setInferredType(argument.getName(), new StringType(), inferMap);
+                }
+                const value = method(source.getValue().toString());
+                return isAssignableTo(new LiteralType(value), source, inferMap, insideTypes);
+            }
+
+            if (argument instanceof UnionType) {
+                return argument
+                    .getTypes()
+                    .reduce(
+                        (isAssignable, type) =>
+                            isAssignableTo(new IntrinsicType(method, type), source, inferMap, insideTypes) ||
+                            isAssignable,
+                        false,
+                    );
+            }
+
+            return false;
+        }
+
+        if (target instanceof TemplateLiteralType) {
+            if (!source.isString) {
+                return false;
+            }
+
+            let remaining = source.getValue().toString();
+            const parts = target.getParts();
+
+            const isPartAssignable = (part: BaseType, sliceLength: number) => {
+                const value = remaining.slice(0, sliceLength);
+                remaining = remaining.slice(sliceLength);
+                return isAssignableTo(part, new LiteralType(value), inferMap, insideTypes);
+            };
+
+            for (const part of parts) {
+                const type = derefType(part);
+                if (type instanceof LiteralType) {
+                    const targetValue = type.getValue().toString();
+                    if (!isPartAssignable(type, targetValue.length)) {
+                        return false;
+                    }
+                } else if (type instanceof InferType || type instanceof StringType) {
+                    const nextPart = parts[parts.indexOf(type) + 1];
+
+                    if (nextPart instanceof InferType || nextPart instanceof StringType) {
+                        // When the next part is also a non-literal type, we infer one character at a time
+                        if (!isPartAssignable(type, 1)) {
+                            return false;
+                        }
+                    } else if (nextPart instanceof LiteralType) {
+                        // Use remaining value up to the next matching segment, or last match if the next part is the final part
+                        const nextValue = nextPart.getValue().toString();
+                        const isLastPart = parts.indexOf(nextPart) === parts.length - 1;
+                        const index = isLastPart ? remaining.lastIndexOf(nextValue) : remaining.indexOf(nextValue);
+
+                        if (index === -1 || !isPartAssignable(type, index)) {
+                            return false;
+                        }
+                    } else if (!nextPart) {
+                        // Match the remaining value when there are no more parts
+                        if (!isPartAssignable(type, remaining.length)) {
+                            return false;
+                        }
+                    }
+                } else if (type instanceof NumberType) {
+                    const match = remaining.match(/^\d+/);
+                    if (match) {
+                        const value = match[0];
+                        remaining = remaining.slice(value.length);
+                    } else {
+                        return false;
+                    }
+                } else if (type instanceof UnionType) {
+                    const matchFound = type.getTypes().some((unionPart) => {
+                        const matchLength =
+                            unionPart instanceof LiteralType ? unionPart.getValue().toString().length : 0;
+                        const valueToCheck = remaining.slice(0, matchLength);
+                        const result = isAssignableTo(unionPart, new LiteralType(valueToCheck), inferMap, insideTypes);
+                        if (result) {
+                            remaining = remaining.slice(matchLength);
+                        }
+                        return result;
+                    });
+
+                    if (!matchFound) {
+                        return false;
+                    }
+                } else if (type instanceof IntrinsicType) {
+                    const argument = derefType(type.getArgument());
+
+                    if (argument instanceof LiteralType) {
+                        const targetValue = argument.getValue().toString();
+                        if (!isPartAssignable(type, targetValue.length)) {
+                            return false;
+                        }
+                    } else if (argument instanceof InferType || argument instanceof StringType) {
+                        if (!isPartAssignable(type, 1)) {
+                            return false;
+                        }
+                    } else if (argument instanceof UnionType) {
+                        if (!isAssignableTo(type, source, inferMap, insideTypes)) {
+                            return false;
+                        }
+
+                        remaining = "";
+                    }
+                }
+            }
+
+            return remaining.length === 0;
+        }
+
         return isAssignableTo(target, getPrimitiveType(source.getValue()), inferMap);
     }
 
+    if (source instanceof StringType && target instanceof TemplateLiteralType) {
+        // String types are only assignable to template literal types with solely string types
+        return target.getParts().every((part) => part instanceof StringType);
+    }
+
     if (target instanceof ObjectType) {
-        // primitives are not assignable to `object`
+        // Primitives are not assignable to `object`
         if (
             target.getNonPrimitive() &&
             (source instanceof NumberType || source instanceof StringType || source instanceof BooleanType)
@@ -304,4 +426,14 @@ export function isAssignableTo(
     }
 
     return false;
+}
+
+function setInferredType(key: string, source: BaseType, inferMap: Map<string, BaseType>): void {
+    const infer = inferMap.get(key);
+
+    if (infer === undefined) {
+        inferMap.set(key, source);
+    } else {
+        inferMap.set(key, new UnionType([infer, source]));
+    }
 }

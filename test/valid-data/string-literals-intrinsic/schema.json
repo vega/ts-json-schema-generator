@@ -23,6 +23,9 @@
           ],
           "type": "string"
         },
+        "resultCapitalizeString": {
+          "type": "string"
+        },
         "resultLower": {
           "enum": [
             "ok",
@@ -30,6 +33,9 @@
             "abort",
             "success"
           ],
+          "type": "string"
+        },
+        "resultLowerString": {
           "type": "string"
         },
         "resultUncapitalize": {
@@ -41,6 +47,9 @@
           ],
           "type": "string"
         },
+        "resultUncapitalizeString": {
+          "type": "string"
+        },
         "resultUpper": {
           "enum": [
             "OK",
@@ -49,6 +58,9 @@
             "SUCCESS"
           ],
           "type": "string"
+        },
+        "resultUpperString": {
+          "type": "string"
         }
       },
       "required": [
@@ -56,7 +68,11 @@
         "resultUpper",
         "resultLower",
         "resultCapitalize",
-        "resultUncapitalize"
+        "resultUncapitalize",
+        "resultUpperString",
+        "resultLowerString",
+        "resultCapitalizeString",
+        "resultUncapitalizeString"
       ],
       "type": "object"
     }

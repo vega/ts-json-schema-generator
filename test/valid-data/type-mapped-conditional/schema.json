@@ -1,20 +1,23 @@
 {
-  "$ref": "#/definitions/MyObject",
+  "$ref": "#/definitions/MyType",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "MyObject": {
+    "MyType": {
       "additionalProperties": false,
       "properties": {
-        "foo": {
-          "enum": [
-            "ok",
-            "fail",
-            "abort"
-          ],
+        "bar": {
           "type": "string"
+        },
+        "baz": {
+          "type": "number"
+        },
+        "foo": {
+          "type": "boolean"
         }
       },
       "required": [
+        "bar",
+        "baz",
         "foo"
       ],
       "type": "object"

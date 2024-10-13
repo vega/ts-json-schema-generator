@@ -1,0 +1,74 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "capitalized": {
+          "const": "Foo",
+          "type": "string"
+        },
+        "infer": {
+          "const": "foo",
+          "type": "string"
+        },
+        "mixedInfer": {
+          "const": "123",
+          "type": "string"
+        },
+        "mixedInferNonMatch": {
+          "const": false,
+          "type": "boolean"
+        },
+        "mixedNumber": {
+          "const": "foo123",
+          "type": "string"
+        },
+        "mixedNumberNonMatch": {
+          "const": false,
+          "type": "boolean"
+        },
+        "notNumber": {
+          "const": false,
+          "type": "boolean"
+        },
+        "number": {
+          "const": "123",
+          "type": "string"
+        },
+        "string": {
+          "const": "foo",
+          "type": "string"
+        },
+        "union1": {
+          "const": "foo123",
+          "type": "string"
+        },
+        "union2": {
+          "const": "foo456",
+          "type": "string"
+        },
+        "unionNonMatch": {
+          "const": false,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "string",
+        "number",
+        "notNumber",
+        "infer",
+        "mixedInfer",
+        "mixedInferNonMatch",
+        "mixedNumber",
+        "mixedNumberNonMatch",
+        "capitalized",
+        "union1",
+        "union2",
+        "unionNonMatch"
+      ],
+      "type": "object"
+    }
+  }
+}
