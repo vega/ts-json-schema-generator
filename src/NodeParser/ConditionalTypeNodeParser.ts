@@ -29,14 +29,14 @@ export class ConditionalTypeNodeParser implements SubNodeParser {
         const extendsType = this.childNodeParser.createType(node.extendsType, context);
         const checkTypeParameterName = this.getTypeParameterName(node.checkType);
 
-        const inferMap = new Map();
+        const inferMap = new Map<string, BaseType>();
 
         // If check-type is not a type parameter then condition is very simple, no type narrowing needed
         if (checkTypeParameterName == null) {
             const result = isAssignableTo(extendsType, checkType, inferMap);
             return this.childNodeParser.createType(
                 result ? node.trueType : node.falseType,
-                this.createSubContext(node, context, undefined, result ? inferMap : new Map()),
+                this.createSubContext(node, context, undefined, result ? inferMap : new Map<string, BaseType>()),
             );
         }
 
