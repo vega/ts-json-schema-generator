@@ -25,19 +25,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "yarn"
+          cache: "npm"
 
       - name: Install Node dependencies
-        run: yarn --frozen-lockfile
+        run: npm ci
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Test coverage
-        run: yarn jest test/ --collectCoverage=true
+        run: npmx jest test/ --collectCoverage=true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

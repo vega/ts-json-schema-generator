@@ -238,11 +238,11 @@ fs.writeFile(outputPath, schemaString, (err) => {
 
 ## Run locally
 
-`yarn --silent run run --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
+`npm run --silent run -- --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 ## Debug
 
-`yarn --silent run debug --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
+`npm run --silent debug -- --path 'test/valid-data/type-mapped-array/*.ts' --type 'MyObject'`
 
 And connect via the debugger protocol.
 
