@@ -37,7 +37,7 @@ jobs:
         run: npm run build
 
       - name: Test coverage
-        run: npmx jest test/ --collectCoverage=true
+        run: npx jest test/ --collectCoverage=true
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
