@@ -5,6 +5,26 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
+        "enumMemberWithInterface": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "abc": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "abc"
+              ],
+              "type": "object"
+            }
+          ]
+        },
         "enumMemberWithLiteral": {
           "enum": [
             "alpha",
@@ -34,6 +54,31 @@
           "enum": [
             "alpha",
             666
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "twoDifferentEnumMembers": {
+          "enum": [
+            "alpha",
+            2
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "twoDifferentWholeEnums": {
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            0,
+            2,
+            4,
+            6
           ],
           "type": [
             "string",
@@ -82,10 +127,13 @@
         "enumMembers",
         "enumMemberWithLiteral",
         "enumMemberWithLiteralAndNull",
+        "enumMemberWithInterface",
         "enumMembersWithNumber",
         "wholeEnum",
         "wholeEnumWithLiteral",
-        "wholeEnumWithLiteralAndNull"
+        "wholeEnumWithLiteralAndNull",
+        "twoDifferentEnumMembers",
+        "twoDifferentWholeEnums"
       ],
       "type": "object"
     }
