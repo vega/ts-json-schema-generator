@@ -1,0 +1,56 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "enumMemberWithLiteral": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "foo",
+              "type": "string"
+            }
+          ]
+        },
+        "enumMemberWithLiteralAndNull": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "foo",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enumMembers": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "beta",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "required": [
+        "enumMembers",
+        "enumMemberWithLiteral",
+        "enumMemberWithLiteralAndNull"
+      ],
+      "type": "object"
+    }
+  }
+}

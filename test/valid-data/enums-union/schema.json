@@ -1,0 +1,124 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "enumMemberWithLiteral": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "foo",
+              "type": "string"
+            }
+          ]
+        },
+        "enumMemberWithLiteralAndNull": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "foo",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enumMembers": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": "beta",
+              "type": "string"
+            }
+          ]
+        },
+        "enumMembersWithNumber": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "const": 666,
+              "type": "number"
+            }
+          ]
+        },
+        "wholeEnum": {
+          "enum": [
+            "alpha",
+            "beta",
+            666
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "wholeEnumWithLiteral": {
+          "anyOf": [
+            {
+              "enum": [
+                "alpha",
+                "beta",
+                666
+              ],
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "const": "bar",
+              "type": "string"
+            }
+          ]
+        },
+        "wholeEnumWithLiteralAndNull": {
+          "anyOf": [
+            {
+              "enum": [
+                "alpha",
+                "beta",
+                666
+              ],
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            {
+              "const": "bar",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "enumMembers",
+        "enumMemberWithLiteral",
+        "enumMemberWithLiteralAndNull",
+        "enumMembersWithNumber",
+        "wholeEnum",
+        "wholeEnumWithLiteral",
+        "wholeEnumWithLiteralAndNull"
+      ],
+      "type": "object"
+    }
+  }
+}
