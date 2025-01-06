@@ -6,54 +6,38 @@
       "additionalProperties": false,
       "properties": {
         "enumMemberWithLiteral": {
-          "anyOf": [
-            {
-              "const": "alpha",
-              "type": "string"
-            },
-            {
-              "const": "foo",
-              "type": "string"
-            }
-          ]
+          "enum": [
+            "alpha",
+            "foo"
+          ],
+          "type": "string"
         },
         "enumMemberWithLiteralAndNull": {
-          "anyOf": [
-            {
-              "const": "alpha",
-              "type": "string"
-            },
-            {
-              "const": "foo",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
+          "enum": [
+            "alpha",
+            "foo",
+            null
+          ],
+          "type": [
+            "string",
+            "null"
           ]
         },
         "enumMembers": {
-          "anyOf": [
-            {
-              "const": "alpha",
-              "type": "string"
-            },
-            {
-              "const": "beta",
-              "type": "string"
-            }
-          ]
+          "enum": [
+            "alpha",
+            "beta"
+          ],
+          "type": "string"
         },
         "enumMembersWithNumber": {
-          "anyOf": [
-            {
-              "const": "alpha",
-              "type": "string"
-            },
-            {
-              "const": 666,
-              "type": "number"
-            }
+          "enum": [
+            "alpha",
+            666
+          ],
+          "type": [
+            "string",
+            "number"
           ]
         },
         "wholeEnum": {
@@ -68,44 +52,29 @@
           ]
         },
         "wholeEnumWithLiteral": {
-          "anyOf": [
-            {
-              "enum": [
-                "alpha",
-                "beta",
-                666
-              ],
-              "type": [
-                "string",
-                "number"
-              ]
-            },
-            {
-              "const": "bar",
-              "type": "string"
-            }
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            "bar"
+          ],
+          "type": [
+            "string",
+            "number"
           ]
         },
         "wholeEnumWithLiteralAndNull": {
-          "anyOf": [
-            {
-              "enum": [
-                "alpha",
-                "beta",
-                666
-              ],
-              "type": [
-                "string",
-                "number"
-              ]
-            },
-            {
-              "const": "bar",
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            "bar",
+            null
+          ],
+          "type": [
+            "string",
+            "number",
+            "null"
           ]
         }
       },

@@ -12,5 +12,5 @@ export type MyObject = {
     enumMembersWithNumber: Alphabet.Alpha | Alphabet.Omega;
     wholeEnum: Alphabet; // Should output just all of Alphabet
     wholeEnumWithLiteral: Alphabet | "bar"; // Should output all of Alphabet members (2 strings, 1 number) and "bar"
-    wholeEnumWithLiteralAndNull: Alphabet | "bar" | null; // Smae as above, but with null
+    wholeEnumWithLiteralAndNull: Alphabet | "bar" | null;
 };

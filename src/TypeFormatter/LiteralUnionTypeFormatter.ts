@@ -2,6 +2,7 @@ import { Definition } from "../Schema/Definition.js";
 import { RawTypeName } from "../Schema/RawType.js";
 import { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { BaseType } from "../Type/BaseType.js";
+import { EnumType } from "../Type/EnumType.js";
 import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
@@ -43,8 +44,8 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
             };
         }
 
-        const values = uniqueArray(types.map(getLiteralValue));
-        const typeNames = uniqueArray(types.map(getLiteralType));
+        const values = uniqueArray(types.flatMap(getLiteralValues));
+        const typeNames = uniqueArray(types.flatMap(getLiteralTypes));
 
         const ret = {
             type: typeNames.length === 1 ? typeNames[0] : typeNames,
@@ -72,13 +73,23 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
 export function isLiteralUnion(type: UnionType): boolean {
     return type
         .getFlattenedTypes()
-        .every((item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType);
+        .every(
+            (item) =>
+                item instanceof LiteralType ||
+                item instanceof NullType ||
+                item instanceof StringType ||
+                item instanceof EnumType,
+        );
 }
 
-function getLiteralValue(value: LiteralType | NullType): LiteralValue | null {
-    return value instanceof LiteralType ? value.getValue() : null;
+function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (LiteralValue | null)[] {
+    return value instanceof LiteralType ? [value.getValue()] : value instanceof EnumType ? value.getValues() : [null];
 }
 
-function getLiteralType(value: LiteralType | NullType): RawTypeName {
-    return value instanceof LiteralType ? typeName(value.getValue()) : "null";
+function getLiteralTypes(value: LiteralType | EnumType | NullType): RawTypeName[] {
+    return value instanceof LiteralType
+        ? [typeName(value.getValue())]
+        : value instanceof EnumType
+          ? value.getValues().map(typeName)
+          : ["null"];
 }
