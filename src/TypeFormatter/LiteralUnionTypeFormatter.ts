@@ -83,13 +83,19 @@ export function isLiteralUnion(type: UnionType): boolean {
 }
 
 function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (LiteralValue | null)[] {
-    return value instanceof LiteralType ? [value.getValue()] : value instanceof EnumType ? value.getValues() : [null];
+    if (value instanceof EnumType) {
+        return value.getValues();
+    } else if (value instanceof LiteralType) {
+        return [value.getValue()];
+    }
+    return [null];
 }
 
 function getLiteralTypes(value: LiteralType | EnumType | NullType): RawTypeName[] {
-    return value instanceof LiteralType
-        ? [typeName(value.getValue())]
-        : value instanceof EnumType
-          ? value.getValues().map(typeName)
-          : ["null"];
+    if (value instanceof EnumType) {
+        return value.getValues().map(typeName);
+    } else if (value instanceof LiteralType) {
+        return [typeName(value.getValue())];
+    }
+    return ["null"];
 }
