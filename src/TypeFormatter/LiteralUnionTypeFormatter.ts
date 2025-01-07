@@ -8,12 +8,12 @@ import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { typeName } from "../Utils/typeName.js";
-import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
         return type instanceof UnionType && type.getTypes().length > 0 && isLiteralUnion(type);
     }
+
     public getDefinition(type: UnionType): Definition {
         let hasString = false;
         let preserveLiterals = false;
@@ -26,7 +26,7 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         const types = literals.filter((t) => {
             if (t instanceof StringType) {
                 hasString = true;
-                preserveLiterals = preserveLiterals || t.getPreserveLiterals();
+                preserveLiterals ||= t.getPreserveLiterals();
                 return false;
             }
 
@@ -43,33 +43,41 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         });
 
         if (allStrings && hasString && !preserveLiterals) {
-            return {
-                type: hasNull ? ["string", "null"] : "string",
-            };
+            return hasNull ? { type: ["string", "null"] } : { type: "string" };
         }
 
-        const values = uniqueArray(types.flatMap(getLiteralValues));
-        const typeNames = uniqueArray(types.flatMap(getLiteralTypes));
+        const typeValues: Set<LiteralValue | null> = new Set();
+        const typeNames: Set<RawTypeName> = new Set();
 
-        const ret = {
-            type: typeNames.length === 1 ? typeNames[0] : typeNames,
-            enum: values,
+        for (const type of types) {
+            if (type instanceof EnumType) {
+                for (const value of type.getValues()) {
+                    typeValues.add(value);
+                    typeNames.add(typeName(value));
+                }
+
+                continue;
+            }
+
+            if (type instanceof LiteralType) {
+                typeValues.add(type.getValue());
+                typeNames.add(typeName(type.getValue()));
+                continue;
+            }
+
+            typeValues.add(null);
+            typeNames.add("null");
+        }
+
+        const schema = {
+            type: typeNames.size === 1 ? typeNames.values().next().value : Array.from(typeNames),
+            enum: Array.from(typeValues),
         };
 
-        if (preserveLiterals) {
-            return {
-                anyOf: [
-                    {
-                        type: "string",
-                    },
-                    ret,
-                ],
-            };
-        }
-
-        return ret;
+        return preserveLiterals ? { anyOf: [{ type: "string" }, schema] } : schema;
     }
-    public getChildren(type: UnionType): BaseType[] {
+
+    public getChildren(): BaseType[] {
         return [];
     }
 }
@@ -84,26 +92,4 @@ export function isLiteralUnion(type: UnionType): boolean {
                 item instanceof StringType ||
                 item instanceof EnumType,
         );
-}
-
-function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (LiteralValue | null)[] {
-    if (value instanceof EnumType) {
-        return value.getValues();
-    }
-
-    if (value instanceof LiteralType) {
-        return [value.getValue()];
-    }
-    return [null];
-}
-
-function getLiteralTypes(value: LiteralType | EnumType | NullType): RawTypeName[] {
-    if (value instanceof EnumType) {
-        return value.getValues().map(typeName);
-    }
-
-    if (value instanceof LiteralType) {
-        return [typeName(value.getValue())];
-    }
-    return ["null"];
 }
