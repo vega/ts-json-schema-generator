@@ -10,6 +10,7 @@ describe("valid-data-other", () => {
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
     it("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
     it("enums-union", assertValidSchema("enums-union", "MyObject"));
+    it("exported-enums-union", assertValidSchema("exported-enums-union", "MyObject"));
 
     it("function-parameters-default-value", assertValidSchema("function-parameters-default-value", "myFunction"));
     it("function-parameters-declaration", assertValidSchema("function-parameters-declaration", "myFunction"));
