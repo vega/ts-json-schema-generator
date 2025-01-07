@@ -14,28 +14,28 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         return type instanceof UnionType && type.getTypes().length > 0 && isLiteralUnion(type);
     }
 
-    public getDefinition(type: UnionType): Definition {
+    public getDefinition(unionType: UnionType): Definition {
         let hasString = false;
         let preserveLiterals = false;
         let allStrings = true;
         let hasNull = false;
 
-        const literals = type.getFlattenedTypes();
+        const literals = unionType.getFlattenedTypes();
 
         // filter out String types since we need to be more careful about them
-        const types = literals.filter((t) => {
-            if (t instanceof StringType) {
+        const types = literals.filter((literal) => {
+            if (literal instanceof StringType) {
                 hasString = true;
-                preserveLiterals ||= t.getPreserveLiterals();
+                preserveLiterals ||= literal.getPreserveLiterals();
                 return false;
             }
 
-            if (t instanceof NullType) {
+            if (literal instanceof NullType) {
                 hasNull = true;
                 return true;
             }
 
-            if (t instanceof LiteralType && !t.isString()) {
+            if (literal instanceof LiteralType && !literal.isString()) {
                 allStrings = false;
             }
 
