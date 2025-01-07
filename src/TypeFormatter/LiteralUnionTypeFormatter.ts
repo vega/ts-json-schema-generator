@@ -85,7 +85,9 @@ export function isLiteralUnion(type: UnionType): boolean {
 function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (LiteralValue | null)[] {
     if (value instanceof EnumType) {
         return value.getValues();
-    } else if (value instanceof LiteralType) {
+    }
+    
+    if (value instanceof LiteralType) {
         return [value.getValue()];
     }
     return [null];
