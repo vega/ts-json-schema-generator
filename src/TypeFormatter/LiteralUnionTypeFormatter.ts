@@ -1,9 +1,9 @@
-import { Definition } from "../Schema/Definition.js";
-import { RawTypeName } from "../Schema/RawType.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawTypeName } from "../Schema/RawType.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { EnumType } from "../Type/EnumType.js";
-import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
+import { LiteralType, type LiteralValue } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
@@ -28,10 +28,14 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
                 hasString = true;
                 preserveLiterals = preserveLiterals || t.getPreserveLiterals();
                 return false;
-            } else if (t instanceof NullType) {
+            }
+
+            if (t instanceof NullType) {
                 hasNull = true;
                 return true;
-            } else if (t instanceof LiteralType && !t.isString()) {
+            }
+
+            if (t instanceof LiteralType && !t.isString()) {
                 allStrings = false;
             }
 
@@ -86,7 +90,7 @@ function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (L
     if (value instanceof EnumType) {
         return value.getValues();
     }
-    
+
     if (value instanceof LiteralType) {
         return [value.getValue()];
     }
@@ -97,7 +101,7 @@ function getLiteralTypes(value: LiteralType | EnumType | NullType): RawTypeName[
     if (value instanceof EnumType) {
         return value.getValues().map(typeName);
     }
-    
+
     if (value instanceof LiteralType) {
         return [typeName(value.getValue())];
     }
