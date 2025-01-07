@@ -8,6 +8,7 @@ import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { typeName } from "../Utils/typeName.js";
+import { toEnumType } from "./EnumTypeFormatter.js";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
@@ -50,27 +51,12 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         const typeNames: Set<RawTypeName> = new Set();
 
         for (const type of types) {
-            if (type instanceof EnumType) {
-                for (const value of type.getValues()) {
-                    typeValues.add(value);
-                    typeNames.add(typeName(value));
-                }
-
-                continue;
-            }
-
-            if (type instanceof LiteralType) {
-                typeValues.add(type.getValue());
-                typeNames.add(typeName(type.getValue()));
-                continue;
-            }
-
-            typeValues.add(null);
-            typeNames.add("null");
+            appendTypeNames(type, typeNames);
+            appendTypeValues(type, typeValues);
         }
 
         const schema = {
-            type: typeNames.size === 1 ? typeNames.values().next().value : Array.from(typeNames),
+            type: toEnumType(Array.from(typeNames)),
             enum: Array.from(typeValues),
         };
 
@@ -92,4 +78,44 @@ export function isLiteralUnion(type: UnionType): boolean {
                 item instanceof StringType ||
                 item instanceof EnumType,
         );
+}
+
+/**
+ * Appends all possible type names of a type to the given set.
+ */
+function appendTypeNames(type: BaseType, names: Set<RawTypeName>) {
+    if (type instanceof EnumType) {
+        for (const value of type.getValues()) {
+            names.add(typeName(value));
+        }
+
+        return;
+    }
+
+    if (type instanceof LiteralType) {
+        names.add(typeName(type.getValue()));
+        return;
+    }
+
+    names.add(typeName(null));
+}
+
+/**
+ * Appends all possible values of a type to the given set.
+ */
+function appendTypeValues(type: BaseType, values: Set<LiteralValue | null>) {
+    if (type instanceof EnumType) {
+        for (const value of type.getValues()) {
+            values.add(value);
+        }
+
+        return;
+    }
+
+    if (type instanceof LiteralType) {
+        values.add(type.getValue());
+        return;
+    }
+
+    values.add(null);
 }
