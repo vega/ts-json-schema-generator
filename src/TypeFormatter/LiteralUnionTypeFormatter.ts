@@ -94,7 +94,9 @@ function getLiteralValues(value: LiteralType | EnumType | NullType): readonly (L
 function getLiteralTypes(value: LiteralType | EnumType | NullType): RawTypeName[] {
     if (value instanceof EnumType) {
         return value.getValues().map(typeName);
-    } else if (value instanceof LiteralType) {
+    }
+    
+    if (value instanceof LiteralType) {
         return [typeName(value.getValue())];
     }
     return ["null"];
