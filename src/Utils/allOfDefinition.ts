@@ -1,7 +1,7 @@
-import { Definition } from "../Schema/Definition.js";
-import { RawTypeName } from "../Schema/RawType.js";
-import { BaseType } from "../Type/BaseType.js";
-import { TypeFormatter } from "../TypeFormatter.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawTypeName } from "../Schema/RawType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 import { uniqueArray } from "./uniqueArray.js";
 import { deepMerge } from "./deepMerge.js";
 import { derefType } from "./derefType.js";

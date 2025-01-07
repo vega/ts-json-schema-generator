@@ -1,5 +1,5 @@
-import { Definition } from "./Schema/Definition.js";
-import { BaseType } from "./Type/BaseType.js";
+import type { Definition } from "./Schema/Definition.js";
+import type { BaseType } from "./Type/BaseType.js";
 
 export interface TypeFormatter {
     getDefinition(type: BaseType): Definition;

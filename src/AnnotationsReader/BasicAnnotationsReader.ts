@@ -1,7 +1,7 @@
 import json5 from "json5";
-import ts from "typescript";
-import { AnnotationsReader } from "../AnnotationsReader.js";
-import { Annotations } from "../Type/AnnotatedType.js";
+import type ts from "typescript";
+import type { AnnotationsReader } from "../AnnotationsReader.js";
+import type { Annotations } from "../Type/AnnotatedType.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 export class BasicAnnotationsReader implements AnnotationsReader {

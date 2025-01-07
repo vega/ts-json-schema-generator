@@ -1,12 +1,14 @@
 import ts from "typescript";
 import { ExpectationFailedError } from "../Error/Errors.js";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { NodeParser } from "../NodeParser.js";
+import { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
 import { ArrayType } from "../Type/ArrayType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
-import { EnumType, EnumValue } from "../Type/EnumType.js";
+import type { EnumValue } from "../Type/EnumType.js";
+import { EnumType } from "../Type/EnumType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { NumberType } from "../Type/NumberType.js";

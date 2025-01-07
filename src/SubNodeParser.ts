@@ -1,5 +1,5 @@
-import ts from "typescript";
-import { NodeParser } from "./NodeParser.js";
+import type ts from "typescript";
+import type { NodeParser } from "./NodeParser.js";
 
 export interface SubNodeParser extends NodeParser {
     supportsNode(node: ts.Node): boolean;

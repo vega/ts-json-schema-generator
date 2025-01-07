@@ -1,17 +1,17 @@
-import { Definition } from "../Schema/Definition.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { AnyType } from "../Type/AnyType.js";
 import { SymbolType } from "../Type/SymbolType.js";
 import { BaseType } from "../Type/BaseType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { TypeFormatter } from "../TypeFormatter.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition.js";
 import { derefType } from "../Utils/derefType.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
-import { StringMap } from "../Utils/StringMap.js";
+import type { StringMap } from "../Utils/StringMap.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 import { NeverType } from "../Type/NeverType.js";
 

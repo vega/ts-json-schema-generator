@@ -1,4 +1,4 @@
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefAnnotatedType } from "./derefType.js";

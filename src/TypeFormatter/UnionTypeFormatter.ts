@@ -1,11 +1,11 @@
-import { JSONSchema7 } from "json-schema";
-import { Definition } from "../Schema/Definition.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { JSONSchema7 } from "json-schema";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { TypeFormatter } from "../TypeFormatter.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";

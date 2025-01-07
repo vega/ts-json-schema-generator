@@ -1,9 +1,10 @@
 import { resolve } from "path";
-import ts from "typescript";
+import type ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { CompletedConfig, DEFAULT_CONFIG } from "../src/Config.js";
+import type { CompletedConfig } from "../src/Config.js";
+import { DEFAULT_CONFIG } from "../src/Config.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
 
 function assertSchema(name: string, type: string, message: string) {

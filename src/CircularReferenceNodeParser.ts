@@ -1,7 +1,7 @@
-import ts from "typescript";
-import { Context } from "./NodeParser.js";
-import { SubNodeParser } from "./SubNodeParser.js";
-import { BaseType } from "./Type/BaseType.js";
+import type ts from "typescript";
+import type { Context } from "./NodeParser.js";
+import type { SubNodeParser } from "./SubNodeParser.js";
+import type { BaseType } from "./Type/BaseType.js";
 import { ReferenceType } from "./Type/ReferenceType.js";
 import { getKey } from "./Utils/nodeKey.js";
 

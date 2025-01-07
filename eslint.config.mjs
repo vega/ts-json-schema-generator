@@ -30,6 +30,7 @@ export default tseslint.config(
         rules: {
             "@typescript-eslint/explicit-function-return-type": "off",
             "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/consistent-type-imports": "error",
             "@typescript-eslint/prefer-for-of": "error",
             "@typescript-eslint/no-require-imports": "error",
             "@typescript-eslint/no-parameter-properties": "off",

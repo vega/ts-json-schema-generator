@@ -1,6 +1,6 @@
 import { AliasType } from "../Type/AliasType.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { HiddenType } from "../Type/HiddenType.js";
 import { NeverType } from "../Type/NeverType.js";

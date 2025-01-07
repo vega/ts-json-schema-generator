@@ -1,4 +1,4 @@
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
 
 /**
