@@ -7,6 +7,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { SymbolType } from "../Type/SymbolType.js";
+import { UnknownNodeError } from "../Error/Errors.js";
 
 export class CallExpressionParser implements SubNodeParser {
     public constructor(
@@ -33,9 +34,21 @@ export class CallExpressionParser implements SubNodeParser {
         }
 
         const symbol = type.symbol || type.aliasSymbol;
-        const decl = symbol.valueDeclaration || symbol.declarations![0];
-        const subContext = this.createSubContext(node, context);
-        return this.childNodeParser.createType(decl, subContext);
+
+        // For funtions like <T>(type: T) => T, there won't be any reference to the original
+        // type. Using type checker to infer the actual return type without mapping the whole
+        // function and back referencing its generic type based on parameter index is a better
+        // approach.
+        const decl =
+            this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.IgnoreErrors) ||
+            symbol.valueDeclaration ||
+            symbol.declarations?.[0];
+
+        if (!decl) {
+            throw new UnknownNodeError(node);
+        }
+
+        return this.childNodeParser.createType(decl, this.createSubContext(node, context));
     }
 
     protected createSubContext(node: ts.CallExpression, parentContext: Context): Context {

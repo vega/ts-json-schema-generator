@@ -84,6 +84,7 @@ describe("valid-data-other", () => {
     it("array-function-generics", assertValidSchema("array-function-generics", "*"));
     it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
     it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
+    it("function-generic", assertValidSchema("function-generic", "MyType"));
 
     it(
         "object-required",
