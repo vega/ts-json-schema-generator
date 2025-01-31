@@ -97,7 +97,7 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType | N
     }
     if (type instanceof ObjectType) {
         if (index instanceof LiteralType) {
-            const property = type.getProperties().find((it) => it.getName() === index.getValue());
+            const property = type.getProperties().find((it) => it.getName() === index.getName());
             if (property) {
                 const propertyType = property.getType();
                 if (propertyType === undefined) {
