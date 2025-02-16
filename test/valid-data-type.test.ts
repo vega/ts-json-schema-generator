@@ -83,6 +83,8 @@ describe("valid-data-type", () => {
     it("type-indexed-access-object-1", assertValidSchema("type-indexed-access-object-1", "MyType"));
     it("type-indexed-access-object-2", assertValidSchema("type-indexed-access-object-2", "MyType"));
     it("type-indexed-access-keyof", assertValidSchema("type-indexed-access-keyof", "MyType"));
+    it("type-indexed-access-object-key-enum", assertValidSchema("type-indexed-access-object-key-enum", "Value"));
+    it("type-indexed-access-object-key-union", assertValidSchema("type-indexed-access-object-key-union", "Value"));
     it("type-indexed-circular-access", assertValidSchema("type-indexed-circular-access", "*"));
     it("type-indexed-circular", assertValidSchema("type-indexed-circular", "MyType"));
     it("type-keyof-tuple", assertValidSchema("type-keyof-tuple", "MyType"));

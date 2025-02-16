@@ -12,6 +12,7 @@ import { UnionType } from "../Type/UnionType.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
 import { LogicError } from "../Error/Errors.js";
+import { EnumType } from "../Type/EnumType.js";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -58,7 +59,8 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        const indexTypes = indexType instanceof UnionType ? indexType.getTypes() : [indexType];
+        const indexTypes =
+            indexType instanceof UnionType || indexType instanceof EnumType ? indexType.getTypes() : [indexType];
         const propertyTypes = indexTypes.map((type) => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
                 throw new LogicError(
