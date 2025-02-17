@@ -10,7 +10,7 @@ export class UnknownTypeFormatter implements SubTypeFormatter {
 
     public getDefinition(type: UnknownType): Definition {
         if (type.erroredSource) {
-            return { description: "Failed to correctly generate type" };
+            return { description: "Failed to correctly infer type" };
         }
 
         return {};
