@@ -1,4 +1,5 @@
 import ts from "typescript";
+import { LogicError } from "../Error/Errors.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -9,9 +10,9 @@ import { ReferenceType } from "../Type/ReferenceType.js";
 import { StringType } from "../Type/StringType.js";
 import { TupleType } from "../Type/TupleType.js";
 import { UnionType } from "../Type/UnionType.js";
+import { isErroredUnknownType } from "../Type/UnknownType.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
-import { LogicError } from "../Error/Errors.js";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -49,7 +50,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const indexType = derefType(this.childNodeParser.createType(node.indexType, context));
         const indexedType = this.createIndexedType(node.objectType, context, indexType);
 
-        if (indexedType) {
+        if (indexedType && !isErroredUnknownType(indexedType)) {
             return indexedType;
         }
 
