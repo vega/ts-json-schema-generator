@@ -96,6 +96,8 @@ try {
 
         if (error.cause) {
             console.error(error.cause);
+        } else if (error.stack) {
+            console.debug(error.stack);
         }
 
         // Maybe we are being imported by another script
