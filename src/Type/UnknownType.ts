@@ -5,7 +5,7 @@ export class UnknownType extends BaseType {
         /**
          * If the source for this UnknownType was from a failed operation than to an actual `unknown` type present in the source code.
          */
-        readonly erroredSource = false,
+        readonly erroredSource: boolean,
     ) {
         super();
     }
