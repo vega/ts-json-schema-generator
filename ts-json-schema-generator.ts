@@ -9,8 +9,6 @@ import { BaseError } from "./src/Error/BaseError.js";
 
 import pkg from "./package.json";
 
-Error.stackTraceLimit = 100;
-
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
@@ -98,8 +96,6 @@ try {
 
         if (error.cause) {
             console.error(error.cause);
-        } else if (error.stack) {
-            console.debug(error.stack);
         }
 
         // Maybe we are being imported by another script
