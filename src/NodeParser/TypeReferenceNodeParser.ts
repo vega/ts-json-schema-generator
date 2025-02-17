@@ -46,7 +46,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
-            return context.getArgument(typeSymbol.name) || new UnknownType(true);
+            return context.getArgument(typeSymbol.name) ?? new UnknownType(true);
         }
 
         // Wraps promise type to avoid resolving to a empty Object type.
