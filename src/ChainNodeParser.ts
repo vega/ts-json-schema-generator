@@ -31,6 +31,7 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
         }
         const contextCacheKey = context.getCacheKey();
         let type = typeCache.get(contextCacheKey);
+
         if (!type) {
             try {
                 type = this.getNodeParser(node).createType(node, context, reference);
@@ -41,6 +42,11 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
                 typeCache.set(contextCacheKey, type);
             }
         }
+
+        if (!type) {
+            throw new UnknownNodeError(node);
+        }
+
         return type;
     }
 

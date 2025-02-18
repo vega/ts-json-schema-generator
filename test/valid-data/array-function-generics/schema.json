@@ -9,11 +9,15 @@
           "additionalProperties": false,
           "properties": {
             "a": {
-              "items": {},
+              "items": {
+                "description": "Failed to correctly infer type"
+              },
               "type": "array"
             },
             "b": {
-              "items": {},
+              "items": {
+                "description": "Failed to correctly infer type"
+              },
               "type": "array"
             }
           },

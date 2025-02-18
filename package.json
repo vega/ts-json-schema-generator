@@ -93,6 +93,7 @@
     "vega": "^5.31.0",
     "vega-lite": "^5.23.0"
   },
+  "packageManager": "npm@10.8.2",
   "engines": {
     "node": ">=18.0.0"
   }

@@ -7,10 +7,16 @@ export class UnknownTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
         return type instanceof UnknownType;
     }
+
     public getDefinition(type: UnknownType): Definition {
+        if (type.erroredSource) {
+            return { description: "Failed to correctly infer type" };
+        }
+
         return {};
     }
-    public getChildren(type: UnknownType): BaseType[] {
+
+    public getChildren(): BaseType[] {
         return [];
     }
 }
