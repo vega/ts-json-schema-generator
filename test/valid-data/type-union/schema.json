@@ -70,6 +70,27 @@
             ]
           },
           "type": "array"
+        },
+        "var7": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "const": true,
+              "type": "boolean"
+            }
+          ]
+        },
+        "var8": {
+          "enum": [
+            "s",
+            true
+          ],
+          "type": [
+            "string",
+            "boolean"
+          ]
         }
       },
       "required": [
@@ -78,7 +99,9 @@
         "var3",
         "var4",
         "var5",
-        "var6"
+        "var6",
+        "var7",
+        "var8"
       ],
       "type": "object"
     }
