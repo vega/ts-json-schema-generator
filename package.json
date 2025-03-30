@@ -90,7 +90,7 @@
     "prettier": "^3.5.3",
     "tsx": "^4.19.3",
     "typescript-eslint": "^8.26.1",
-    "vega": "^5.32.0",
+    "vega": "^6.1.2",
     "vega-lite": "^5.23.0"
   },
   "packageManager": "npm@11.2.0",
