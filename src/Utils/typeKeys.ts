@@ -6,7 +6,7 @@ import { IntersectionType } from "../Type/IntersectionType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { ObjectType } from "../Type/ObjectType.js";
-import { StringType } from "../Type/StringType.js";
+import type { StringType } from "../Type/StringType.js";
 import { TupleType } from "../Type/TupleType.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { UnionType } from "../Type/UnionType.js";

@@ -3,10 +3,10 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
-/** @type {import('@types/eslint').Linter.FlatConfig[]} */
+/** @type {import('@types/eslint').Linter.Config[]} */
 export default tseslint.config(
     {
-        ignores: ["dist", "cjs", "build", "eslint.config.mjs"],
+        ignores: ["dist", "cjs", "build", "eslint.config.mjs", "bin/ts-json-schema-generator.js"],
     },
     eslint.configs.recommended,
     {
@@ -30,6 +30,7 @@ export default tseslint.config(
         rules: {
             "@typescript-eslint/explicit-function-return-type": "off",
             "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/consistent-type-imports": "error",
             "@typescript-eslint/prefer-for-of": "error",
             "@typescript-eslint/no-require-imports": "error",
             "@typescript-eslint/no-parameter-properties": "off",

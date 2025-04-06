@@ -1,11 +1,12 @@
-import ts, { PropertyName } from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { PropertyName } from "typescript";
+import ts from "typescript";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
 import { ArrayType } from "../Type/ArrayType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
-import { ReferenceType } from "../Type/ReferenceType.js";
+import type { ReferenceType } from "../Type/ReferenceType.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { isPublic, isStatic } from "../Utils/modifiers.js";
 import { getKey } from "../Utils/nodeKey.js";
@@ -113,7 +114,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     if (ts.isConstructorDeclaration(member)) {
                         const params = member.parameters.filter((param) =>
                             ts.isParameterPropertyDeclaration(param, param.parent),
-                        ) as ts.ParameterPropertyDeclaration[];
+                        );
                         members.push(...params);
                     } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
                         members.push(member);

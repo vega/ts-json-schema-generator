@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
 import { UnionType } from "../Type/UnionType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { notNever } from "../Utils/notNever.js";
 import { NeverType } from "../Type/NeverType.js";
 

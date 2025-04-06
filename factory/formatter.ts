@@ -1,8 +1,8 @@
 import { ChainTypeFormatter } from "../src/ChainTypeFormatter.js";
 import { CircularReferenceTypeFormatter } from "../src/CircularReferenceTypeFormatter.js";
-import { CompletedConfig } from "../src/Config.js";
-import { MutableTypeFormatter } from "../src/MutableTypeFormatter.js";
-import { TypeFormatter } from "../src/TypeFormatter.js";
+import type { CompletedConfig } from "../src/Config.js";
+import type { MutableTypeFormatter } from "../src/MutableTypeFormatter.js";
+import type { TypeFormatter } from "../src/TypeFormatter.js";
 import { AliasTypeFormatter } from "../src/TypeFormatter/AliasTypeFormatter.js";
 import { AnnotatedTypeFormatter } from "../src/TypeFormatter/AnnotatedTypeFormatter.js";
 import { AnyTypeFormatter } from "../src/TypeFormatter/AnyTypeFormatter.js";

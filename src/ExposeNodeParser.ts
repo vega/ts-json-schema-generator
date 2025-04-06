@@ -1,9 +1,9 @@
 import ts from "typescript";
-import { Context } from "./NodeParser.js";
-import { SubNodeParser } from "./SubNodeParser.js";
-import { BaseType } from "./Type/BaseType.js";
+import type { Context } from "./NodeParser.js";
+import type { SubNodeParser } from "./SubNodeParser.js";
+import type { BaseType } from "./Type/BaseType.js";
 import { DefinitionType } from "./Type/DefinitionType.js";
-import { ReferenceType } from "./Type/ReferenceType.js";
+import type { ReferenceType } from "./Type/ReferenceType.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { symbolAtNode } from "./Utils/symbolAtNode.js";
 

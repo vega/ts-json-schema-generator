@@ -1,4 +1,4 @@
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 
 export function uniqueTypeArray<T extends BaseType>(types: T[]): T[] {
     const uniqueTypes = new Map<string, T>();

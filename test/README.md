@@ -8,6 +8,6 @@ To add/update a test case for generating a valid schema from a Typescript file:
     -   Create folder `test/valid-data/annotation-default`
     -   Add `main.ts` to that folder with the type sample
 -   Update the corresponding `main.ts` file with your changes.
--   Run `yarn test:update` to compile the JSON schema
+-   Run `npm run test:update` to compile the JSON schema
 -   Add a test to `test/valid-data-annotations.test.ts`, matching a similar pattern to the existing tests.
--   Run tests via `yarn jest test/valid-data-annotations.test.ts` (this only runs the subset of tests related to schema validation)
+-   Run tests via `npx jest test/valid-data-annotations.test.ts` (this only runs the subset of tests related to schema validation)

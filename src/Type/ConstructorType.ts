@@ -1,6 +1,6 @@
-import ts from "typescript";
+import type ts from "typescript";
 import { BaseType } from "./BaseType.js";
-import { ObjectType } from "./ObjectType.js";
+import type { ObjectType } from "./ObjectType.js";
 
 export class ConstructorType extends BaseType {
     private comment: string;

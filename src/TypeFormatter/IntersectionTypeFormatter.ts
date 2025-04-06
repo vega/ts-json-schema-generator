@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { ArrayType } from "../Type/ArrayType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { IntersectionType } from "../Type/IntersectionType.js";
 import { TupleType } from "../Type/TupleType.js";
-import { TypeFormatter } from "../TypeFormatter.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
 

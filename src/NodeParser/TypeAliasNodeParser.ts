@@ -1,10 +1,10 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
 import { AliasType } from "../Type/AliasType.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
-import { ReferenceType } from "../Type/ReferenceType.js";
+import type { ReferenceType } from "../Type/ReferenceType.js";
 import { getKey } from "../Utils/nodeKey.js";
 
 export class TypeAliasNodeParser implements SubNodeParser {

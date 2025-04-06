@@ -1,7 +1,7 @@
 import stringify from "safe-stable-stringify";
-import ts from "typescript";
-import { BaseType } from "./Type/BaseType.js";
-import { ReferenceType } from "./Type/ReferenceType.js";
+import type ts from "typescript";
+import type { BaseType } from "./Type/BaseType.js";
+import type { ReferenceType } from "./Type/ReferenceType.js";
 import { getKey } from "./Utils/nodeKey.js";
 
 export class Context {

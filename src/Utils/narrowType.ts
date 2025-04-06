@@ -1,4 +1,4 @@
-import { BaseType } from "../Type/BaseType.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { EnumType } from "../Type/EnumType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { UnionType } from "../Type/UnionType.js";

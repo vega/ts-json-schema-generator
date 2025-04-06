@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyClass": {
+      "additionalProperties": false,
+      "properties": {
+        "": {
+          "type": "string"
+        },
+        "400": {
+          "type": "string"
+        },
+        "500": {
+          "type": "string"
+        },
+        "CHILD": {
+          "additionalProperties": false,
+          "properties": {
+            "": {
+              "type": "string"
+            },
+            "400": {
+              "type": "string"
+            },
+            "500": {
+              "type": "string"
+            },
+            "PROP.3": {
+              "type": "string"
+            },
+            "PROP_1": {
+              "type": "string"
+            },
+            "PROP_2": {
+              "type": "string"
+            },
+            "{PROP_4}": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "PROP_1",
+            "PROP_2",
+            "PROP.3",
+            "{PROP_4}",
+            "400",
+            "500",
+            ""
+          ],
+          "type": "object"
+        },
+        "PROP.3": {
+          "type": "string"
+        },
+        "PROP_1": {
+          "type": "string"
+        },
+        "PROP_2": {
+          "type": "string"
+        },
+        "{PROP_4}": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "PROP_1",
+        "PROP_2",
+        "PROP.3",
+        "{PROP_4}",
+        "400",
+        "500",
+        "",
+        "CHILD"
+      ],
+      "type": "object"
+    },
+    "MyInterface": {
+      "additionalProperties": false,
+      "properties": {
+        "": {
+          "type": "string"
+        },
+        "400": {
+          "type": "string"
+        },
+        "500": {
+          "type": "string"
+        },
+        "CHILD": {
+          "additionalProperties": false,
+          "properties": {
+            "": {
+              "type": "string"
+            },
+            "400": {
+              "type": "string"
+            },
+            "500": {
+              "type": "string"
+            },
+            "PROP.3": {
+              "type": "string"
+            },
+            "PROP_1": {
+              "type": "string"
+            },
+            "PROP_2": {
+              "type": "string"
+            },
+            "{PROP_4}": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "PROP_1",
+            "PROP_2",
+            "PROP.3",
+            "{PROP_4}",
+            "400",
+            "500",
+            ""
+          ],
+          "type": "object"
+        },
+        "PROP.3": {
+          "type": "string"
+        },
+        "PROP_1": {
+          "type": "string"
+        },
+        "PROP_2": {
+          "type": "string"
+        },
+        "{PROP_4}": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "PROP_1",
+        "PROP_2",
+        "PROP.3",
+        "{PROP_4}",
+        "400",
+        "500",
+        "",
+        "CHILD"
+      ],
+      "type": "object"
+    }
+  }
+}

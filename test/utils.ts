@@ -1,13 +1,15 @@
-import Ajv, { Options as AjvOptions } from "ajv";
+import type { Options as AjvOptions } from "ajv";
+import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import stringify from "safe-stable-stringify";
-import ts from "typescript";
+import type ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
-import { CompletedConfig, Config, DEFAULT_CONFIG } from "../src/Config.js";
+import type { CompletedConfig, Config } from "../src/Config.js";
+import { DEFAULT_CONFIG } from "../src/Config.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
 
 const validator = new Ajv({ discriminator: true });

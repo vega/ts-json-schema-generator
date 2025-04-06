@@ -1,10 +1,11 @@
-import ts, { MethodSignature, PropertySignature } from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { MethodSignature, PropertySignature } from "typescript";
+import ts from "typescript";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
-import { ReferenceType } from "../Type/ReferenceType.js";
+import type { ReferenceType } from "../Type/ReferenceType.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { getKey } from "../Utils/nodeKey.js";
 
@@ -93,8 +94,10 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         } catch {
             // When propertyName was programmatically created, it doesn't have a source file.
             // Then, getText() will throw an error. But, for programmatically created nodes,`
-            // `escapedText` is available.
-            return (propertyName as ts.Identifier).escapedText as string;
+            // `escapedText` or `text` is available.
+            // Only `text` will be available when propertyName contains strange characters and it cannot be escaped
+            // or if it is a number.
+            return ((propertyName as ts.Identifier).escapedText as string) ?? (propertyName as ts.StringLiteral).text;
         }
     }
 }

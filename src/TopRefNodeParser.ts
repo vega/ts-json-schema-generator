@@ -1,6 +1,6 @@
-import ts from "typescript";
-import { Context, NodeParser } from "./NodeParser.js";
-import { BaseType } from "./Type/BaseType.js";
+import type ts from "typescript";
+import type { Context, NodeParser } from "./NodeParser.js";
+import type { BaseType } from "./Type/BaseType.js";
 import { DefinitionType } from "./Type/DefinitionType.js";
 
 export class TopRefNodeParser implements NodeParser {

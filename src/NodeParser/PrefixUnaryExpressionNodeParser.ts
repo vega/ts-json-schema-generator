@@ -20,6 +20,7 @@ export class PrefixUnaryExpressionNodeParser implements SubNodeParser {
                 case ts.SyntaxKind.PlusToken:
                     return new LiteralType(+operand.getValue());
                 case ts.SyntaxKind.MinusToken:
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-unary-minus
                     return new LiteralType(-operand.getValue());
                 case ts.SyntaxKind.TildeToken:
                     return new LiteralType(~operand.getValue());

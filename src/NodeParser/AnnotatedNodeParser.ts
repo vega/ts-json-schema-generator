@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { AnnotationsReader } from "../AnnotationsReader.js";
+import type { AnnotationsReader } from "../AnnotationsReader.js";
 import { ExtendedAnnotationsReader } from "../AnnotationsReader/ExtendedAnnotationsReader.js";
-import { Context } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
-import { BaseType } from "../Type/BaseType.js";
-import { ReferenceType } from "../Type/ReferenceType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import type { ReferenceType } from "../Type/ReferenceType.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { UnionType } from "../Type/UnionType.js";

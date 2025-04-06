@@ -1,8 +1,9 @@
 import ts from "typescript";
-import { Context } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
-import { EnumType, EnumValue } from "../Type/EnumType.js";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import type { EnumValue } from "../Type/EnumType.js";
+import { EnumType } from "../Type/EnumType.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { getKey } from "../Utils/nodeKey.js";
 

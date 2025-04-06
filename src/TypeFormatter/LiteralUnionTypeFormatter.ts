@@ -1,36 +1,42 @@
-import { Definition } from "../Schema/Definition.js";
-import { RawTypeName } from "../Schema/RawType.js";
-import { SubTypeFormatter } from "../SubTypeFormatter.js";
-import { BaseType } from "../Type/BaseType.js";
-import { LiteralType, LiteralValue } from "../Type/LiteralType.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawTypeName } from "../Schema/RawType.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { EnumType } from "../Type/EnumType.js";
+import { LiteralType, type LiteralValue } from "../Type/LiteralType.js";
 import { NullType } from "../Type/NullType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { typeName } from "../Utils/typeName.js";
-import { uniqueArray } from "../Utils/uniqueArray.js";
+import { toEnumType } from "./EnumTypeFormatter.js";
 
 export class LiteralUnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
         return type instanceof UnionType && type.getTypes().length > 0 && isLiteralUnion(type);
     }
-    public getDefinition(type: UnionType): Definition {
+
+    public getDefinition(unionType: UnionType): Definition {
         let hasString = false;
         let preserveLiterals = false;
         let allStrings = true;
         let hasNull = false;
 
-        const literals = type.getFlattenedTypes();
+        const literals = unionType.getFlattenedTypes();
 
         // filter out String types since we need to be more careful about them
-        const types = literals.filter((t) => {
-            if (t instanceof StringType) {
+        const types = literals.filter((literal) => {
+            if (literal instanceof StringType) {
                 hasString = true;
-                preserveLiterals = preserveLiterals || t.getPreserveLiterals();
+                preserveLiterals ||= literal.getPreserveLiterals();
                 return false;
-            } else if (t instanceof NullType) {
+            }
+
+            if (literal instanceof NullType) {
                 hasNull = true;
                 return true;
-            } else if (t instanceof LiteralType && !t.isString()) {
+            }
+
+            if (literal instanceof LiteralType && !literal.isString()) {
                 allStrings = false;
             }
 
@@ -38,33 +44,26 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
         });
 
         if (allStrings && hasString && !preserveLiterals) {
-            return {
-                type: hasNull ? ["string", "null"] : "string",
-            };
+            return hasNull ? { type: ["string", "null"] } : { type: "string" };
         }
 
-        const values = uniqueArray(types.map(getLiteralValue));
-        const typeNames = uniqueArray(types.map(getLiteralType));
+        const typeValues: Set<LiteralValue | null> = new Set();
+        const typeNames: Set<RawTypeName> = new Set();
 
-        const ret = {
-            type: typeNames.length === 1 ? typeNames[0] : typeNames,
-            enum: values,
+        for (const type of types) {
+            appendTypeNames(type, typeNames);
+            appendTypeValues(type, typeValues);
+        }
+
+        const schema = {
+            type: toEnumType(Array.from(typeNames)),
+            enum: Array.from(typeValues),
         };
 
-        if (preserveLiterals) {
-            return {
-                anyOf: [
-                    {
-                        type: "string",
-                    },
-                    ret,
-                ],
-            };
-        }
-
-        return ret;
+        return preserveLiterals ? { anyOf: [{ type: "string" }, schema] } : schema;
     }
-    public getChildren(type: UnionType): BaseType[] {
+
+    public getChildren(): BaseType[] {
         return [];
     }
 }
@@ -72,13 +71,51 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
 export function isLiteralUnion(type: UnionType): boolean {
     return type
         .getFlattenedTypes()
-        .every((item) => item instanceof LiteralType || item instanceof NullType || item instanceof StringType);
+        .every(
+            (item) =>
+                item instanceof LiteralType ||
+                item instanceof NullType ||
+                item instanceof StringType ||
+                item instanceof EnumType,
+        );
 }
 
-function getLiteralValue(value: LiteralType | NullType): LiteralValue | null {
-    return value instanceof LiteralType ? value.getValue() : null;
+/**
+ * Appends all possible type names of a type to the given set.
+ */
+function appendTypeNames(type: BaseType, names: Set<RawTypeName>) {
+    if (type instanceof EnumType) {
+        for (const value of type.getValues()) {
+            names.add(typeName(value));
+        }
+
+        return;
+    }
+
+    if (type instanceof LiteralType) {
+        names.add(typeName(type.getValue()));
+        return;
+    }
+
+    names.add(typeName(null));
 }
 
-function getLiteralType(value: LiteralType | NullType): RawTypeName {
-    return value instanceof LiteralType ? typeName(value.getValue()) : "null";
+/**
+ * Appends all possible values of a type to the given set.
+ */
+function appendTypeValues(type: BaseType, values: Set<LiteralValue | null>) {
+    if (type instanceof EnumType) {
+        for (const value of type.getValues()) {
+            values.add(value);
+        }
+
+        return;
+    }
+
+    if (type instanceof LiteralType) {
+        values.add(type.getValue());
+        return;
+    }
+
+    values.add(null);
 }

@@ -1,7 +1,8 @@
 import ts from "typescript";
-import { Context, NodeParser } from "../NodeParser.js";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { NodeParser } from "../NodeParser.js";
+import { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { isAssignableTo } from "../Utils/isAssignableTo.js";
 import { narrowType } from "../Utils/narrowType.js";
 import { UnionType } from "../Type/UnionType.js";

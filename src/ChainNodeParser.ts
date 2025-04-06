@@ -1,5 +1,5 @@
 import type ts from "typescript";
-import { UnknownNodeError } from "./Error/Errors.js";
+import { UnhandledError, UnknownNodeError } from "./Error/Errors.js";
 import type { MutableParser } from "./MutableParser.js";
 import type { Context } from "./NodeParser.js";
 import type { SubNodeParser } from "./SubNodeParser.js";
@@ -31,12 +31,22 @@ export class ChainNodeParser implements SubNodeParser, MutableParser {
         }
         const contextCacheKey = context.getCacheKey();
         let type = typeCache.get(contextCacheKey);
+
         if (!type) {
-            type = this.getNodeParser(node).createType(node, context, reference);
+            try {
+                type = this.getNodeParser(node).createType(node, context, reference);
+            } catch (error) {
+                throw UnhandledError.from("Unhandled error while creating Base Type.", node, error);
+            }
             if (!(type instanceof ReferenceType)) {
                 typeCache.set(contextCacheKey, type);
             }
         }
+
+        if (!type) {
+            throw new UnknownNodeError(node);
+        }
+
         return type;
     }
 

@@ -1,10 +1,10 @@
 import ts from "typescript";
-import { SubNodeParser } from "../SubNodeParser.js";
-import { BaseType } from "../Type/BaseType.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
 import { ConstructorType } from "../Type/ConstructorType.js";
-import { FunctionOptions } from "../Config.js";
+import type { FunctionOptions } from "../Config.js";
 import { NeverType } from "../Type/NeverType.js";
-import { Context, NodeParser } from "../NodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { getNamedArguments, getTypeName } from "./FunctionNodeParser.js";
 

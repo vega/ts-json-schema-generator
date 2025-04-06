@@ -1,6 +1,6 @@
-import { JSONSchema7Definition } from "json-schema";
-import { Definition } from "../Schema/Definition.js";
-import { RawType } from "../Schema/RawType.js";
+import type { JSONSchema7Definition } from "json-schema";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawType } from "../Schema/RawType.js";
 import { intersectionOfArrays } from "./intersectionOfArrays.js";
 
 /**

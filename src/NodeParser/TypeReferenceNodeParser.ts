@@ -6,6 +6,7 @@ import { AnyType } from "../Type/AnyType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { StringType } from "../Type/StringType.js";
+import { UnknownType } from "../Type/UnknownType.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 const invalidTypes: Record<number, boolean> = {
@@ -45,7 +46,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
-            return context.getArgument(typeSymbol.name);
+            return context.getArgument(typeSymbol.name) ?? new UnknownType(true);
         }
 
         // Wraps promise type to avoid resolving to a empty Object type.

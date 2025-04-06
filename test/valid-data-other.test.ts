@@ -9,6 +9,8 @@ describe("valid-data-other", () => {
     it("enums-mixed", assertValidSchema("enums-mixed", "Enum"));
     it("enums-member", assertValidSchema("enums-member", "MyObject"));
     it("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
+    it("enums-union", assertValidSchema("enums-union", "MyObject"));
+    it("exported-enums-union", assertValidSchema("exported-enums-union", "MyObject"));
 
     it("function-parameters-default-value", assertValidSchema("function-parameters-default-value", "myFunction"));
     it("function-parameters-declaration", assertValidSchema("function-parameters-declaration", "myFunction"));
@@ -43,6 +45,7 @@ describe("valid-data-other", () => {
     it("import-anonymous", assertValidSchema("import-anonymous", "MyObject"));
 
     it("generic-simple", assertValidSchema("generic-simple", "MyObject"));
+    it("generic-simple", assertValidSchema("generic-simple", "*", { expose: "all" }));
     it("generic-arrays", assertValidSchema("generic-arrays", "MyObject"));
     it("generic-multiple", assertValidSchema("generic-multiple", "MyObject"));
     it("generic-multiargs", assertValidSchema("generic-multiargs", "MyObject"));
@@ -81,6 +84,7 @@ describe("valid-data-other", () => {
     it("array-function-generics", assertValidSchema("array-function-generics", "*"));
     it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
     it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
+    it("function-generic", assertValidSchema("function-generic", "MyType"));
 
     it(
         "object-required",

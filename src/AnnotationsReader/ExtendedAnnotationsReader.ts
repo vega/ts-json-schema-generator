@@ -1,6 +1,6 @@
 import json5 from "json5";
-import ts from "typescript";
-import { Annotations } from "../Type/AnnotatedType.js";
+import type ts from "typescript";
+import type { Annotations } from "../Type/AnnotatedType.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader.js";
 
@@ -98,7 +98,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             const text = (example.text ?? []).map((part) => part.text).join("");
             try {
                 examples.push(json5.parse(text));
-            } catch (e) {
+            } catch {
                 // ignore examples which don't parse to valid JSON
                 // This could be improved to support a broader range of usages,
                 // such as if the example has a title (as explained in the tsdoc spec).

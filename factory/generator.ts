@@ -1,4 +1,5 @@
-import { Config, DEFAULT_CONFIG } from "../src/Config.js";
+import type { Config } from "../src/Config.js";
+import { DEFAULT_CONFIG } from "../src/Config.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
 import { createFormatter } from "./formatter.js";
 import { createParser } from "./parser.js";

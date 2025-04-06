@@ -1,7 +1,7 @@
-import { ArrayType } from "./ArrayType.js";
+import type { ArrayType } from "./ArrayType.js";
 import { BaseType } from "./BaseType.js";
-import { InferType } from "./InferType.js";
-import { TupleType } from "./TupleType.js";
+import type { InferType } from "./InferType.js";
+import type { TupleType } from "./TupleType.js";
 
 export class RestType extends BaseType {
     public constructor(

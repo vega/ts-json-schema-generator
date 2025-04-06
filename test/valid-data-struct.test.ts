@@ -36,4 +36,6 @@ describe("valid-data-struct", () => {
     it("structure-anonymous", assertValidSchema("structure-anonymous", "MyObject"));
     it("structure-recursion", assertValidSchema("structure-recursion", "MyObject"));
     it("structure-extra-props", assertValidSchema("structure-extra-props", "MyObject"));
+
+    it("string-literal-property-names", assertValidSchema("string-literal-property-names", "*"));
 });
