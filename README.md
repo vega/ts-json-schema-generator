@@ -47,6 +47,7 @@ By default, the command-line generator will use the `tsconfig.json` file in the 
   -e, --expose <expose>          Type exposing (choices: "all", "none", "export", default: "export")
   -j, --jsDoc <extended>         Read JsDoc annotations (choices: "none", "basic", "extended", default: "extended")
   --markdown-description         Generate `markdownDescription` in addition to `description`.
+  --raw-jsdoc                    Include the full raw JSDoc comment as `rawJsDoc` in the schema.
   --functions <functions>        How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.
                                  (choices: "fail", "comment", "hide", default: "comment")
   --minify                       Minify generated schema (default: false)

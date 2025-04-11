@@ -64,10 +64,14 @@ function assertSchema(
         expect(typeof actual).toBe("object");
         expect(actual).toEqual(expected);
 
+        const keywords: string[] = [];
+        if (config.markdownDescription) keywords.push("markdownDescription");
+        if (config.rawJsDoc) keywords.push("rawJsDoc");
+
         const validator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
-            keywords: config.markdownDescription ? ["markdownDescription"] : undefined,
+            keywords: keywords.length ? keywords : undefined,
         });
 
         addFormats(validator);
@@ -339,6 +343,18 @@ describe("config", () => {
             jsDoc: "extended",
             sortProps: true,
             markdownDescription: true,
+        }),
+    );
+    it(
+        "jsdoc-raw",
+        assertSchema("jsdoc-raw", {
+            type: "MyObject",
+            expose: "export",
+            topRef: false,
+            jsDoc: "extended",
+            sortProps: true,
+            markdownDescription: true,
+            rawJsDoc: true,
         }),
     );
     it(

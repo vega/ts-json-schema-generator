@@ -77,7 +77,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         if (config.jsDoc === "extended") {
             return new AnnotatedNodeParser(
                 nodeParser,
-                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription),
+                new ExtendedAnnotationsReader(typeChecker, extraTags, config.markdownDescription, config.rawJsDoc),
             );
         } else if (config.jsDoc === "basic") {
             return new AnnotatedNodeParser(nodeParser, new BasicAnnotationsReader(extraTags));
