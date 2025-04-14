@@ -5,16 +5,31 @@
     "PickAliasedLiteralUnion": {
       "additionalProperties": false,
       "properties": {
-        "bar": {
+        "a": {
           "type": "number"
         },
-        "foo": {
+        "b": {
           "type": "string"
+        },
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "e": {
+          "type": "null"
         }
       },
       "required": [
-        "foo",
-        "bar"
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
       ],
       "type": "object"
     }

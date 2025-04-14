@@ -3,8 +3,10 @@ import { AnnotatedType } from "../Type/AnnotatedType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { HiddenType } from "../Type/HiddenType.js";
+import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ReferenceType } from "../Type/ReferenceType.js";
+import { UnionType } from "../Type/UnionType.js";
 
 /**
  * Dereference the type as far as possible.
@@ -33,6 +35,23 @@ export function isHiddenType(type: BaseType): boolean {
         return true;
     } else if (type instanceof DefinitionType || type instanceof AliasType || type instanceof AnnotatedType) {
         return isHiddenType(type.getType());
+    }
+
+    return false;
+}
+
+/**
+ * Recursively checks whether the given type is a union composed entirely of literal types.
+ */
+export function isDeepLiteralUnion(type: BaseType): boolean {
+    const resolved = derefType(type);
+
+    if (resolved instanceof LiteralType) {
+        return true;
+    }
+
+    if (resolved instanceof UnionType) {
+        return resolved.getTypes().every((t) => isDeepLiteralUnion(t));
     }
 
     return false;
