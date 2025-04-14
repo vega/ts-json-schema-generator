@@ -158,7 +158,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
         keyListType: UnionType,
         context: Context,
     ): BaseType | boolean {
-        const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
+        const key = keyListType.getTypes().filter((type) => !(derefType(type) instanceof LiteralType))[0];
 
         if (key) {
             return (
