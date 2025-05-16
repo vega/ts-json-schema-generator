@@ -16,7 +16,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
 import { SymbolType } from "../Type/SymbolType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { derefAnnotatedType, derefType } from "../Utils/derefType.js";
+import { derefAnnotatedType, derefType, isDeepLiteralUnion } from "../Utils/derefType.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
@@ -158,6 +158,10 @@ export class MappedTypeNodeParser implements SubNodeParser {
         keyListType: UnionType,
         context: Context,
     ): BaseType | boolean {
+        if (isDeepLiteralUnion(keyListType)) {
+            return this.additionalProperties;
+        }
+
         const key = keyListType.getTypes().filter((type) => !(derefType(type) instanceof LiteralType))[0];
 
         if (key) {

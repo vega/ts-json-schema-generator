@@ -1,9 +1,19 @@
 interface SomeInterface {
-    foo: string;
-    bar: number;
+    a: number;
+    b: string;
+    c: boolean;
+    d: string[];
+    e: null;
 }
 
-type KeyFoo = "foo";
-type KeyBar = "bar";
+type A = "a";
+type B = "b";
+type C = "c";
+type D = "d";
+type E = "e";
 
-export type PickAliasedLiteralUnion = Pick<SomeInterface, KeyFoo | KeyBar>;
+type AB = A | B;
+type ABC = AB | C;
+type ABCD = ABC | D;
+
+export type PickAliasedLiteralUnion = Pick<SomeInterface, ABCD | E>;

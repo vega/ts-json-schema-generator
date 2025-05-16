@@ -89,6 +89,7 @@ describe("valid-data-type", () => {
     it("type-keyof-object", assertValidSchema("type-keyof-object", "MyType"));
     it("type-keyof-object-function", assertValidSchema("type-keyof-object-function", "MyType"));
     it("type-mapped-pick-union-alias", assertValidSchema("type-mapped-pick-union-alias", "PickAliasedLiteralUnion"));
+    it("type-mapped-exported-aliases", assertValidSchema("type-mapped-exported-aliases", "*"));
     it("type-mapped-simple", assertValidSchema("type-mapped-simple", "MyObject"));
     it("type-mapped-index", assertValidSchema("type-mapped-index", "MyObject"));
     it("type-mapped-index-as", assertValidSchema("type-mapped-index-as", "MyObject"));
