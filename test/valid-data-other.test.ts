@@ -83,6 +83,8 @@ describe("valid-data-other", () => {
     it("array-min-max-items-optional", assertValidSchema("array-min-max-items-optional", "MyType"));
     it("array-function-generics", assertValidSchema("array-function-generics", "*"));
     it("array-max-items-optional", assertValidSchema("array-max-items-optional", "MyType"));
+    it("array-literal-spread", assertValidSchema("array-literal-spread", "MyType"));
+    it("array-rest-only", assertValidSchema("array-rest-only", "MyType"));
     it("shorthand-array", assertValidSchema("shorthand-array", "MyType"));
     it("function-generic", assertValidSchema("function-generic", "MyType"));
 
