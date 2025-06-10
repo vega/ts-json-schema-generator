@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/PickAliasedLiteralUnion",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "PickAliasedLiteralUnion": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "number"
+        },
+        "b": {
+          "type": "string"
+        },
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "e": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "type": "object"
+    }
+  }
+}

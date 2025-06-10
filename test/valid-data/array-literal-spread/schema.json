@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "items": [
+        {
+          "const": "foo",
+          "type": "string"
+        },
+        {
+          "const": "bar",
+          "type": "string"
+        },
+        {
+          "const": "baz",
+          "type": "string"
+        }
+      ],
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array"
+    }
+  }
+}
