@@ -1,4 +1,4 @@
-import { getRawJsDoc } from "../../src/Utils/getRawJsDoc";
+import { getFullDescription } from "../../src/Utils/getFullDescription";
 import ts from "typescript";
 
 function dummyNode(jsDocComment: string): ts.Node {
@@ -14,10 +14,10 @@ function dummyNode(jsDocComment: string): ts.Node {
 // All white-space charachters except new-line, starting and ending with simple space
 const ANY_SPACE = " \t\f\v\r\u00A0\u2028\u2029 ";
 
-describe("getRawJsDoc", () => {
+describe("getFullDescription", () => {
     it("Returns undefined if no JSDoc", () => {
         const jsdoc = "// no JSDoc";
-        const result = getRawJsDoc(dummyNode(jsdoc));
+        const result = getFullDescription(dummyNode(jsdoc));
         expect(result).toBeUndefined();
     });
 
@@ -230,7 +230,7 @@ describe("getRawJsDoc", () => {
     ];
 
     it.each(cases)("$desc", ({ jsdoc, expected }) => {
-        const result = getRawJsDoc(dummyNode(jsdoc.trim()));
+        const result = getFullDescription(dummyNode(jsdoc.trim()));
         expect(result).toBe(expected);
     });
 });

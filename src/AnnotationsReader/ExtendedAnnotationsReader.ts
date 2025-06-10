@@ -2,7 +2,7 @@ import json5 from "json5";
 import type ts from "typescript";
 import type { Annotations } from "../Type/AnnotatedType.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
-import { getRawJsDoc } from "../Utils/getRawJsDoc.js";
+import { getFullDescription } from "../Utils/getFullDescription.js";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader.js";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
@@ -10,7 +10,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         private typeChecker: ts.TypeChecker,
         extraTags?: Set<string>,
         private markdownDescription?: boolean,
-        private rawJsDoc?: boolean,
+        private fullDescription?: boolean,
     ) {
         super(extraTags);
     }
@@ -46,7 +46,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
-        const annotations: { description?: string; markdownDescription?: string; rawJsDoc?: string } = {};
+        const annotations: { description?: string; markdownDescription?: string; fullDescription?: string } = {};
 
         const comments: ts.SymbolDisplayPart[] = symbol.getDocumentationComment(this.typeChecker);
 
@@ -64,10 +64,10 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             }
         }
 
-        if (this.rawJsDoc) {
-            const rawJsDoc = getRawJsDoc(node)?.trim();
-            if (rawJsDoc) {
-                annotations.rawJsDoc = rawJsDoc;
+        if (this.fullDescription) {
+            const fullDescription = getFullDescription(node)?.trim();
+            if (fullDescription) {
+                annotations.fullDescription = fullDescription;
             }
         }
 

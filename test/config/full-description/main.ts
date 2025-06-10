@@ -1,6 +1,6 @@
 /**
  * @title Raw Test Schema Interface
- * @description Top-level interface: This interface is used to test the rawJsDoc output.
+ * @description Top-level interface: This interface is used to test the fullDescription output.
  * It includes various formatting quirks, inline tags such as {@link SomeReference}, and multiple JSDoc sections.
  *
  * @markdownDescription **Markdown version:** Markdown description which should be <b>preserved</b>

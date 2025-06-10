@@ -66,7 +66,7 @@ function assertSchema(
 
         const keywords: string[] = [];
         if (config.markdownDescription) keywords.push("markdownDescription");
-        if (config.rawJsDoc) keywords.push("rawJsDoc");
+        if (config.fullDescription) keywords.push("fullDescription");
 
         const validator = new Ajv({
             // skip full check if we are not encoding refs
@@ -346,15 +346,15 @@ describe("config", () => {
         }),
     );
     it(
-        "jsdoc-raw",
-        assertSchema("jsdoc-raw", {
+        "full-description",
+        assertSchema("full-description", {
             type: "MyObject",
             expose: "export",
             topRef: false,
             jsDoc: "extended",
             sortProps: true,
             markdownDescription: true,
-            rawJsDoc: true,
+            fullDescription: true,
         }),
     );
     it(

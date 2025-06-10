@@ -1,6 +1,6 @@
 import ts from "typescript";
 
-export function getRawJsDoc(node: ts.Node): string | undefined {
+export function getFullDescription(node: ts.Node): string | undefined {
     const sourceFile = node.getSourceFile();
     const jsDocNodes = ts.getJSDocCommentsAndTags(node);
 

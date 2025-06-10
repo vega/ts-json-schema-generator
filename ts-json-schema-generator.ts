@@ -29,6 +29,14 @@ const args = new Command()
     )
     .addOption(
         new Option(
+            "--full-description",
+            "Include the full raw JSDoc comment as `fullDescription` in the schema.",
+        ).implies({
+            jsDoc: "extended",
+        }),
+    )
+    .addOption(
+        new Option(
             "--functions <functions>",
 
             "How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.",
@@ -65,6 +73,7 @@ const config: Config = {
     topRef: args.topRef,
     jsDoc: args.jsDoc,
     markdownDescription: args.markdownDescription,
+    fullDescription: args.fullDescription,
     sortProps: !args.unstable,
     strictTuples: args.strictTuples,
     skipTypeCheck: !args.typeCheck,
