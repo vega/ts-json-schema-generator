@@ -8,9 +8,9 @@ Extended version of [https://github.com/xiag-ag/typescript-to-json-schema](https
 
 Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/typescript-json-schema). Here's the differences list:
 
--   this implementation avoids the use of `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
--   processing AST and formatting JSON schema have been split into two independent steps
--   not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
+- this implementation avoids the use of `typeChecker.getTypeAtLocation()` (so probably it keeps correct type aliases)
+- processing AST and formatting JSON schema have been split into two independent steps
+- not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
 
 ## Contributors
 
@@ -47,6 +47,7 @@ By default, the command-line generator will use the `tsconfig.json` file in the 
   -e, --expose <expose>          Type exposing (choices: "all", "none", "export", default: "export")
   -j, --jsDoc <extended>         Read JsDoc annotations (choices: "none", "basic", "extended", default: "extended")
   --markdown-description         Generate `markdownDescription` in addition to `description`.
+  --full-description             Include the full raw JSDoc comment as `fullDescription` in the schema.
   --functions <functions>        How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.
                                  (choices: "fail", "comment", "hide", default: "comment")
   --minify                       Minify generated schema (default: false)
@@ -221,20 +222,20 @@ fs.writeFile(outputPath, schemaString, (err) => {
 
 ## Current state
 
--   `interface` types
--   `enum` types
--   `union`, `tuple`, `type[]` types
--   `Date`, `RegExp`, `URL` types
--   `string`, `boolean`, `number` types
--   `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
--   type aliases
--   generics
--   `typeof`
--   `keyof`
--   conditional types
--   functions
--   `Promise<T>` unwraps to `T`
--   Overrides (like `@format`)
+- `interface` types
+- `enum` types
+- `union`, `tuple`, `type[]` types
+- `Date`, `RegExp`, `URL` types
+- `string`, `boolean`, `number` types
+- `"value"`, `123`, `true`, `false`, `null`, `undefined` literals
+- type aliases
+- generics
+- `typeof`
+- `keyof`
+- conditional types
+- functions
+- `Promise<T>` unwraps to `T`
+- Overrides (like `@format`)
 
 ## Run locally
 
@@ -252,7 +253,7 @@ And connect via the debugger protocol.
 
 Publishing is handled by a 2-branch [pre-release process](https://intuit.github.io/auto/docs/generated/shipit#next-branch-default), configured in `publish-auto.yml`. All changes should be based off the default `next` branch, and are published automatically.
 
--   PRs made into the default branch are auto-deployed to the `next` pre-release tag on NPM. The result can be installed with `npm install ts-json-schema-generator@next`
-    -   When merging into `next`, please use the `squash and merge` strategy.
--   To release a new stable version, open a PR from `next` into `stable` using this [compare link](https://github.com/vega/ts-json-schema-generator/compare/stable...next).
-    -   When merging from `next` into `stable`, please use the `create a merge commit` strategy.
+- PRs made into the default branch are auto-deployed to the `next` pre-release tag on NPM. The result can be installed with `npm install ts-json-schema-generator@next`
+    - When merging into `next`, please use the `squash and merge` strategy.
+- To release a new stable version, open a PR from `next` into `stable` using this [compare link](https://github.com/vega/ts-json-schema-generator/compare/stable...next).
+    - When merging from `next` into `stable`, please use the `create a merge commit` strategy.

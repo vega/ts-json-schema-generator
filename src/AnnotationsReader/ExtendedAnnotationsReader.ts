@@ -2,6 +2,7 @@ import json5 from "json5";
 import type ts from "typescript";
 import type { Annotations } from "../Type/AnnotatedType.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
+import { getFullDescription } from "../Utils/getFullDescription.js";
 import { BasicAnnotationsReader } from "./BasicAnnotationsReader.js";
 
 export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
@@ -9,6 +10,7 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
         private typeChecker: ts.TypeChecker,
         extraTags?: Set<string>,
         private markdownDescription?: boolean,
+        private fullDescription?: boolean,
     ) {
         super(extraTags);
     }
@@ -44,21 +46,34 @@ export class ExtendedAnnotationsReader extends BasicAnnotationsReader {
             return undefined;
         }
 
+        const annotations: { description?: string; markdownDescription?: string; fullDescription?: string } = {};
+
         const comments: ts.SymbolDisplayPart[] = symbol.getDocumentationComment(this.typeChecker);
-        if (!comments || !comments.length) {
-            return undefined;
+
+        if (comments && comments.length) {
+            const markdownDescription = comments
+                .map((comment) => comment.text)
+                .join(" ")
+                .replace(/\r/g, "")
+                .trim();
+
+            annotations.description = markdownDescription.replace(/(?<=[^\n])\n(?=[^\n*-])/g, " ").trim();
+
+            if (this.markdownDescription) {
+                annotations.markdownDescription = markdownDescription;
+            }
         }
 
-        const markdownDescription = comments
-            .map((comment) => comment.text)
-            .join(" ")
-            .replace(/\r/g, "")
-            .trim();
+        if (this.fullDescription) {
+            const fullDescription = getFullDescription(node)?.trim();
+            if (fullDescription) {
+                annotations.fullDescription = fullDescription;
+            }
+        }
 
-        const description = markdownDescription.replace(/(?<=[^\n])\n(?=[^\n*-])/g, " ").trim();
-
-        return this.markdownDescription ? { description, markdownDescription } : { description };
+        return Object.keys(annotations).length ? annotations : undefined;
     }
+
     private getTypeAnnotation(node: ts.Node): Annotations | undefined {
         const symbol = symbolAtNode(node);
         if (!symbol) {
