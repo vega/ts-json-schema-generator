@@ -76,6 +76,7 @@ describe("valid-data-other", () => {
 
     it("symbol", assertValidSchema("symbol", "MyObject"));
     it("unique-symbol", assertValidSchema("unique-symbol", "MyObject"));
+    it("symbol-union", assertValidSchema("symbol-union", "MyType"));
 
     it("array-min-items-1", assertValidSchema("array-min-items-1", "MyType"));
     it("array-min-items-2", assertValidSchema("array-min-items-2", "MyType"));
