@@ -12,7 +12,11 @@ export class FunctionType extends BaseType {
         super();
 
         if (node) {
-            this.comment = `(${node.parameters.map((p) => p.getFullText()).join(",")}) =>${node.type?.getFullText()}`;
+            if (node.parent) {
+                this.comment = `(${node.parameters.map((p) => p.getFullText()).join(",")}) =>${node.type?.getFullText()}`;
+            } else {
+                this.comment = "Function";
+            }
         }
     }
 

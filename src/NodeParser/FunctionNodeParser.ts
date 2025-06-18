@@ -64,10 +64,32 @@ export function getNamedArguments(
             // If it's missing a questionToken but has an initializer we can consider the property as not required
             const required = node.parameters[index].questionToken ? false : !node.parameters[index].initializer;
 
-            return new ObjectProperty(node.parameters[index].name.getText(), parameterType, required);
+            return new ObjectProperty(getParameterName(node.parameters[index].name, index), parameterType, required);
         }),
         false,
     );
+}
+
+function getParameterName(node: ts.BindingName, index: number) {
+    if (node.parent) {
+        return node.getText();
+    }
+
+    // for parameter type in inferred function type
+    if (ts.isIdentifier(node)) {
+        /**
+         * function foo(name: string) {}
+         *              ^^^^
+         */
+        return node.escapedText as string;
+    }
+
+    // otherwise, for BindingPattern
+    /**
+     * function foo([a, b, c]: number[]) {}
+     *              ^^^^^^^^^
+     */
+    return `_${index}`;
 }
 
 export function getTypeName(
@@ -80,7 +102,8 @@ export function getTypeName(
 ): string | undefined {
     if (ts.isArrowFunction(node) || ts.isFunctionExpression(node) || ts.isFunctionTypeNode(node)) {
         const parent = node.parent;
-        if (ts.isVariableDeclaration(parent)) {
+        // there is no parent for inferred function type node.
+        if (parent && ts.isVariableDeclaration(parent)) {
             return parent.name.getText();
         }
     }
