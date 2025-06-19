@@ -1,6 +1,6 @@
 import type { SomeInterface } from "./dep";
 export { DepType } from "./dep";
-export { DepType2 } from "./dep2";
+export * from "./dep2";
 
 export type MyType = string;
 
