@@ -1,14 +1,6 @@
 import { assertValidSchema } from "./utils";
 
 describe("valid-data-type", () => {
-    // TEMP TEST CASES:
-    it("test-1__expected-fail__export-asterisk", assertValidSchema("test-1__expected-fail__export-asterisk", "*"));
-    it("test-1__expected-ok__export-asterisk", assertValidSchema("test-1__expected-ok__export-asterisk", "*"));
-
-    it("test-1__expected-fail__export-one", assertValidSchema("test-1__expected-fail__export-one", "MyObject"));
-    it("test-1__expected-ok__export-one", assertValidSchema("test-1__expected-ok__export-one", "MyObject"));
-    // TEMP TEST CASES ↑
-
     it("type-aliases-primitive", assertValidSchema("type-aliases-primitive", "MyString"));
     it(
         "type-aliases-primitive-with-id",
@@ -159,4 +151,8 @@ describe("valid-data-type", () => {
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
 
     it("export-star", assertValidSchema("export-star", "*", undefined, { mainTsOnly: true }));
+    it(
+        "export-star-prune-unreachable",
+        assertValidSchema("export-star-prune-unreachable", "*", undefined, { mainTsOnly: true }),
+    );
 });

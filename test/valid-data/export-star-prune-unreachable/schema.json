@@ -1,5 +1,4 @@
 {
-  "$ref": "#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyObject": {
@@ -16,6 +15,9 @@
         "foo"
       ],
       "type": "object"
+    },
+    "MyType": {
+      "type": "string"
     }
   }
 }
