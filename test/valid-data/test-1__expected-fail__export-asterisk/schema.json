@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "File3Interface1": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "File3Interface2": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "string"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InterfaceToExtend": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "$ref": "#/definitions/File3Interface2"
+        }
+      },
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "type": "string"
+    }
+  }
+}
