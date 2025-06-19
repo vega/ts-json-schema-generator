@@ -232,15 +232,14 @@ export class SchemaGenerator {
                 return;
             }
 
-            // export { variable } clauses
-            if (!node.moduleSpecifier) {
+            if (node.exportClause) {
+                // export { Foo } from './lib' or export { Foo };
+                // export * as Foo from './lib' should not import all exports
+                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
                 return;
             }
 
-            if (node.exportClause) {
-                // export { Foo } from './lib' is handled by visiting specifiers
-                // export * as Foo from './lib' should not import all exports
-                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+            if (!node.moduleSpecifier) {
                 return;
             }
 
