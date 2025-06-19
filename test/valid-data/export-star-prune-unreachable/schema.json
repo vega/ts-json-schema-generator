@@ -1,6 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "DepType": {
+      "type": "string"
+    },
+    "DepType2": {
+      "type": "string"
+    },
     "MyObject": {
       "additionalProperties": false,
       "properties": {

@@ -237,6 +237,15 @@ export class SchemaGenerator {
                 return;
             }
 
+            if (node.exportClause) {
+                // export { Foo } from './lib' is handled by visiting specifiers
+                // export * as Foo from './lib' should not import all exports
+                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                return;
+            }
+
+            // export * from './lib'
+
             const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
 
             // should never hit this (maybe type error in user's code)
