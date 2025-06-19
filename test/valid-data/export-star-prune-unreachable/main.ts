@@ -1,7 +1,7 @@
-import type { Interface3 } from "./test-file-2";
+import type { SomeInterface } from "./dep";
 
 export type MyType = string;
 
-export interface MyObject extends Interface3 {
-    foo: Record<string, string>;
+export interface MyObject extends SomeInterface {
+    bar?: number;
 }
