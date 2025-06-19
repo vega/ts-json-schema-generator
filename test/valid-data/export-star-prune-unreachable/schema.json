@@ -1,5 +1,4 @@
 {
-  "$ref": "#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyObject": {
@@ -8,6 +7,18 @@
         "bar": {
           "type": "number"
         },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MyType": {
+      "type": "string"
+    },
+    "SomeInterface": {
+      "additionalProperties": false,
+      "properties": {
         "foo": {
           "type": "string"
         }
