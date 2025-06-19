@@ -15,15 +15,6 @@
     },
     "MyType": {
       "type": "string"
-    },
-    "SomeInterface": {
-      "additionalProperties": false,
-      "properties": {
-        "foo": {
-          "type": "string"
-        }
-      },
-      "type": "object"
     }
   }
 }

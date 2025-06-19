@@ -31,8 +31,8 @@ export class SchemaGenerator {
             rootType: this.nodeParser.createType(rootNode, new Context()),
         }));
 
-        const rootTypeDefinition =
-            roots.length === 1 ? this.getRootTypeDefinition(roots[0].rootType, roots[0].rootNode) : undefined;
+        const rootTypeDefinitions = roots.map((root) => this.getRootTypeDefinition(root.rootType, root.rootNode));
+        const rootTypeDefinition = rootTypeDefinitions.length === 1 ? rootTypeDefinitions[0] : undefined;
         const definitions: StringMap<Definition> = {};
 
         for (const root of roots) {
@@ -47,7 +47,10 @@ export class SchemaGenerator {
             }
         }
 
-        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+        const reachableDefinitions = rootTypeDefinitions.reduce<StringMap<Definition>>(
+            (acc, def) => Object.assign(acc, removeUnreachable(def, definitions)),
+            {},
+        );
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
