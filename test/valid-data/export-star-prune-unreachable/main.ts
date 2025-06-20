@@ -6,4 +6,9 @@ export type MyType = string;
 
 export interface MyObject extends SomeInterface {
     bar?: number;
+    baz?: Internal;
+}
+
+interface Internal {
+    nested?: boolean;
 }
