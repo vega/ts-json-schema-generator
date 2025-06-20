@@ -244,7 +244,6 @@ export class SchemaGenerator {
             }
 
             // export * from './lib'
-
             const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
 
             // should never hit this (maybe type error in user's code)
