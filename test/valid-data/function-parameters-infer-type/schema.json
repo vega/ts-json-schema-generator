@@ -110,7 +110,32 @@
               "additionalProperties": false,
               "properties": {
                 "func": {
-                  "$comment": "Function"
+                  "$comment": "Function",
+                  "properties": {
+                    "namedArgs": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "_0": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "a": {
+                              "type": "number"
+                            },
+                            "b": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
                 },
                 "num": {
                   "type": "number"

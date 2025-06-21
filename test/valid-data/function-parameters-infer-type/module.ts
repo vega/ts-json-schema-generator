@@ -9,7 +9,7 @@ export class MyClass {
 export const myObj = {
     str: "str",
     num: 123,
-    func: () => "whatever",
+    func: ({ a, b } = { a: 1, b: "2" }) => "whatever",
 };
 
 export const myArray = ["str", 123, () => "whatever"];
