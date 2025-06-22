@@ -151,4 +151,8 @@ describe("valid-data-type", () => {
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
 
     it("export-star", assertValidSchema("export-star", "*", undefined, { mainTsOnly: true }));
+    it(
+        "export-star-prune-unreachable",
+        assertValidSchema("export-star-prune-unreachable", "*", undefined, { mainTsOnly: true }),
+    );
 });

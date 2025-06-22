@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DepType": {
+      "type": "string"
+    },
+    "DepType2": {
+      "type": "string"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "number"
+        },
+        "baz": {
+          "additionalProperties": false,
+          "properties": {
+            "nested": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MyType": {
+      "type": "string"
+    }
+  }
+}

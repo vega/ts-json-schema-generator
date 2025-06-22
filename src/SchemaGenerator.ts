@@ -31,8 +31,8 @@ export class SchemaGenerator {
             rootType: this.nodeParser.createType(rootNode, new Context()),
         }));
 
-        const rootTypeDefinition =
-            roots.length === 1 ? this.getRootTypeDefinition(roots[0].rootType, roots[0].rootNode) : undefined;
+        const rootTypeDefinitions = roots.map((root) => this.getRootTypeDefinition(root.rootType, root.rootNode));
+        const rootTypeDefinition = rootTypeDefinitions.length === 1 ? rootTypeDefinitions[0] : undefined;
         const definitions: StringMap<Definition> = {};
 
         for (const root of roots) {
@@ -47,7 +47,10 @@ export class SchemaGenerator {
             }
         }
 
-        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+        const reachableDefinitions = rootTypeDefinitions.reduce<StringMap<Definition>>(
+            (acc, def) => Object.assign(acc, removeUnreachable(def, definitions)),
+            {},
+        );
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -229,11 +232,18 @@ export class SchemaGenerator {
                 return;
             }
 
-            // export { variable } clauses
+            if (node.exportClause) {
+                // export { Foo } from './lib' or export { Foo };
+                // export * as Foo from './lib' should not import all exports
+                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                return;
+            }
+
             if (!node.moduleSpecifier) {
                 return;
             }
 
+            // export * from './lib'
             const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
 
             // should never hit this (maybe type error in user's code)
