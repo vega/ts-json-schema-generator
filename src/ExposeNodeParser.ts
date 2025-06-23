@@ -79,7 +79,7 @@ export class ExposeNodeParser implements SubNodeParser {
         const actual = derefAliasedType(type.getType());
         const hasStructuralArg = context
             .getArguments()
-            .some((arg) => /^(structure|object|alias|def-alias)-/.test(arg?.getName() ?? ""));
+            .some((arg) => /(structure|object|alias|def-alias)-/.test(arg?.getName() ?? ""));
 
         if (isExported && !hasStructuralArg) {
             return false;
