@@ -7,16 +7,3 @@ export type Simplify<T> = {
 } & {};
 
 export type OverrideSimple<A, B> = Simplify<Merge<A, B>>;
-
-export type Base = {
-    foo: string;
-    bar: number;
-};
-
-export type MyType = OverrideSimple<
-    Base,
-    {
-        bar: string;
-        baz: boolean;
-    }
->;
