@@ -75,26 +75,27 @@ export class ExposeNodeParser implements SubNodeParser {
 
         const localSymbol: ts.Symbol = (node as any).localSymbol;
         const isExported = localSymbol ? "exportSymbol" in localSymbol : false;
-        if (isExported) {
+
+        const actual = derefAliasedType(type.getType());
+        const hasStructuralArg = context
+            .getArguments()
+            .some((arg) => /^(structure|object|alias|def-alias)-/.test(arg?.getName() ?? ""));
+
+        if (isExported && !hasStructuralArg) {
             return false;
         }
 
-        const actual = derefAliasedType(type.getType());
         if (isDeepLiteralUnion(actual)) {
             return true;
         }
 
-        // Inline non-exported generics producing structural object types to avoid
-        // unwieldy definition names like `Alias<structure-...>` when expose: all
-        if (actual instanceof ObjectType || actual instanceof IntersectionType) {
+        if (!isExported && (actual instanceof ObjectType || actual instanceof IntersectionType)) {
             return true;
         }
 
-        // Inline when any generic argument is structural (e.g. `structure-xyz`)
-        if (context.getArguments().some((arg) => /^structure-/.test(arg?.getName()))) {
+        if (hasStructuralArg) {
             return true;
         }
-
         return false;
     }
 }
