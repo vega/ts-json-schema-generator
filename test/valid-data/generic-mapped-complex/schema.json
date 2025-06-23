@@ -18,12 +18,6 @@
       "type": "object"
     },
     "MyType": {
-      "$ref": "#/definitions/OverrideSimple%3CBase%2Cstructure-303496744-147-202-303496744-121-204-303496744-99-205-303496744-0-206%3E"
-    },
-    "OverrideSimple<Base,structure-303496744-147-202-303496744-121-204-303496744-99-205-303496744-0-206>": {
-      "$ref": "#/definitions/Simplify%3CMerge%3CBase%2Cstructure-303496744-147-202-303496744-121-204-303496744-99-205-303496744-0-206%3E%3E"
-    },
-    "Simplify<Merge<Base,structure-303496744-147-202-303496744-121-204-303496744-99-205-303496744-0-206>>": {
       "additionalProperties": false,
       "properties": {
         "bar": {
