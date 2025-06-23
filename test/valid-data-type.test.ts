@@ -149,6 +149,7 @@ describe("valid-data-type", () => {
     it("keyof-typeof-x", assertValidSchema("keyof-typeof-x", "MyType"));
 
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
+    it("promise-generics", assertValidSchema("promise-generics", "*"));
 
     it("export-star", assertValidSchema("export-star", "*", undefined, { mainTsOnly: true }));
     it(
