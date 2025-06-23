@@ -56,7 +56,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
                 return new AnyType();
             }
 
-            return this.childNodeParser.createType(node.typeArguments[0], this.createSubContext(node, context));
+            return this.childNodeParser.createType(node.typeArguments[0], context);
         }
 
         if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
