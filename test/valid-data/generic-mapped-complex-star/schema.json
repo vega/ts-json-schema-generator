@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Base": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "number"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo",
+        "bar"
+      ],
+      "type": "object"
+    },
+    "MyType": {
+      "$ref": "#/definitions/OverrideSimple<Base,structure-747213873-322-377-747213873-296-379-747213873-274-380-747213873-0-381>"
+    },
+    "OverrideSimple<Base,structure-747213873-322-377-747213873-296-379-747213873-274-380-747213873-0-381>": {
+      "$ref": "#/definitions/Simplify<Merge<Base,structure-747213873-322-377-747213873-296-379-747213873-274-380-747213873-0-381>>"
+    },
+    "Simplify<Merge<Base,structure-747213873-322-377-747213873-296-379-747213873-274-380-747213873-0-381>>": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "string"
+        },
+        "baz": {
+          "type": "boolean"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "bar",
+        "baz",
+        "foo"
+      ],
+      "type": "object"
+    }
+  }
+}

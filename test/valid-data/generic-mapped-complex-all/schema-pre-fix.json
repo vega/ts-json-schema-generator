@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "$ref": "#/definitions/OverrideSimple<Base,structure-2040496812-294-349-2040496812-268-351-2040496812-246-352-2040496812-0-353>"
+    },
+    "OverrideSimple<Base,structure-2040496812-294-349-2040496812-268-351-2040496812-246-352-2040496812-0-353>": {
+      "$ref": "#/definitions/Simplify<Merge<Base,structure-2040496812-294-349-2040496812-268-351-2040496812-246-352-2040496812-0-353>>"
+    },
+    "Simplify<Merge<Base,structure-2040496812-294-349-2040496812-268-351-2040496812-246-352-2040496812-0-353>>": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "string"
+        },
+        "baz": {
+          "type": "boolean"
+        },
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "bar",
+        "baz",
+        "foo"
+      ],
+      "type": "object"
+    }
+  }
+}
