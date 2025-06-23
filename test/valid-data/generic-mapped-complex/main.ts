@@ -1,14 +1,13 @@
-import { OverrideSimple } from "./util";
+import { OverrideProperties } from "./util";
 
 export type Base = {
     foo: string;
     bar: number;
 };
 
-export type MyType = OverrideSimple<
+export type MyType = OverrideProperties<
     Base,
     {
         bar: string;
-        baz: boolean;
     }
 >;
