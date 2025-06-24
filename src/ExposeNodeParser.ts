@@ -69,7 +69,7 @@ export class ExposeNodeParser implements SubNodeParser {
         if (!(type instanceof AliasType)) {
             return false;
         }
-        if (node.typeParameters?.length == 0) {
+        if (!node.typeParameters?.length) {
             return false;
         }
 
