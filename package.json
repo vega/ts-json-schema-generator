@@ -75,7 +75,7 @@
     "@types/eslint": "^9.6.1",
     "@types/glob": "^8.1.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.13.14",
+    "@types/node": "^24.0.7",
     "@types/normalize-path": "^3.0.2",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
