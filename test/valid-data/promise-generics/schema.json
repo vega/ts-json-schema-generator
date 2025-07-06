@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/ConcreteHasPromise",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ConcreteHasPromise": {
+      "$ref": "#/definitions/HasPromise%3Cstring%3E"
+    },
+    "HasPromise<string>": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}
