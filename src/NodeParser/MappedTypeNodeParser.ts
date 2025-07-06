@@ -10,7 +10,6 @@ import { DefinitionType } from "../Type/DefinitionType.js";
 import type { EnumValue } from "../Type/EnumType.js";
 import { EnumType } from "../Type/EnumType.js";
 import { LiteralType } from "../Type/LiteralType.js";
-import { AnyType } from "../Type/AnyType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
@@ -163,20 +162,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return this.additionalProperties;
         }
 
-        const types = keyListType.getTypes();
-        const literalKeys = types.filter((t) => derefType(t) instanceof LiteralType);
-        const nonLiteral = types.filter((type) => !(derefType(type) instanceof LiteralType))[0];
+        const key = keyListType.getTypes().filter((type) => !(derefType(type) instanceof LiteralType))[0];
 
-        if (nonLiteral) {
-            const additional =
-                this.childNodeParser.createType(node.type!, this.createSubContext(node, nonLiteral, context)) ??
-                this.additionalProperties;
-
-            if (literalKeys.length > 0 && additional instanceof AnyType && this.additionalProperties === true) {
-                return false;
-            }
-
-            return additional;
+        if (key) {
+            return (
+                this.childNodeParser.createType(node.type!, this.createSubContext(node, key, context)) ??
+                this.additionalProperties
+            );
         }
 
         return this.additionalProperties;

@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObjectA": {
+      "properties": {
+        "foo": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    },
+    "MyObjectB": {
+      "properties": {
+        "foo": {}
+      },
+      "required": [
+        "foo"
+      ],
+      "type": "object"
+    }
+  }
+}
