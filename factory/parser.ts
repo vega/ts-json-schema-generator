@@ -61,6 +61,7 @@ import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser.js";
 import { PromiseNodeParser } from "../src/NodeParser/PromiseNodeParser.js";
 import { SpreadElementNodeParser } from "../src/NodeParser/SpreadElementNodeParser.js";
 import { IdentifierNodeParser } from "../src/NodeParser/IdentifierNodeParser.js";
+import { ReturnTypeNodeParser } from "../src/NodeParser/ReturnTypeNodeParser.js";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -130,6 +131,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new ParenthesizedNodeParser(chainNodeParser))
 
         .addNodeParser(new PromiseNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new ReturnTypeNodeParser(chainNodeParser, typeChecker))
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
