@@ -12,9 +12,19 @@ export class ReturnTypeNodeParser implements SubNodeParser {
     ) {}
 
     supportsNode(node: ts.Node): boolean {
-        return ts.isTypeReferenceNode(node) && 
-               node.typeName.getText() === 'ReturnType' && 
-               node.typeArguments?.length === 1;
+        if (!ts.isTypeReferenceNode(node)) {
+            return false;
+        }
+        
+        // Check if it's a ReturnType reference
+        try {
+            const typeName = ts.isIdentifier(node.typeName) 
+                ? node.typeName.text 
+                : node.typeName.getText();
+            return typeName === 'ReturnType' && node.typeArguments?.length === 1;
+        } catch {
+            return false;
+        }
     }
 
     createType(node: ts.TypeReferenceNode, context: Context): BaseType {
@@ -25,8 +35,9 @@ export class ReturnTypeNodeParser implements SubNodeParser {
 
             const typeArg = node.typeArguments[0];
             
-            // If the type argument is a typeof expression
+            // Handle different types of type arguments
             if (ts.isTypeQueryNode(typeArg)) {
+                // Case: ReturnType<typeof functionName>
                 // Get the symbol for the identifier
                 const symbol = this.checker.getSymbolAtLocation(typeArg.exprName);
                 if (!symbol) {
@@ -82,18 +93,37 @@ export class ReturnTypeNodeParser implements SubNodeParser {
                         return this.childNodeParser.createType(returnTypeNode, context);
                     }
                 }
-            }
-
-            // If the above methods fail, try to get type directly
-            const type = this.checker.getTypeAtLocation(typeArg);
-            const typeNode = this.checker.typeToTypeNode(
-                type, 
-                undefined, 
-                ts.NodeBuilderFlags.NoTruncation
-            );
-            
-            if (typeNode) {
-                return this.childNodeParser.createType(typeNode, context);
+            } else {
+                // Case: ReturnType<SomeType["methodName"]> or other complex types
+                // Get the type directly from TypeScript's type system
+                const argType = this.checker.getTypeAtLocation(typeArg);
+                
+                // If it's a function type, get its return type
+                const signatures = argType.getCallSignatures();
+                if (signatures.length > 0) {
+                    const returnType = signatures[0].getReturnType();
+                    const returnTypeNode = this.checker.typeToTypeNode(
+                        returnType,
+                        undefined,
+                        ts.NodeBuilderFlags.NoTruncation
+                    );
+                    
+                    if (returnTypeNode) {
+                        return this.childNodeParser.createType(returnTypeNode, context);
+                    }
+                }
+                
+                // Final fallback: try to get type directly
+                const type = this.checker.getTypeAtLocation(typeArg);
+                const typeNode = this.checker.typeToTypeNode(
+                    type, 
+                    undefined, 
+                    ts.NodeBuilderFlags.NoTruncation
+                );
+                
+                if (typeNode) {
+                    return this.childNodeParser.createType(typeNode, context);
+                }
             }
 
             throw new UnknownNodeError(node);

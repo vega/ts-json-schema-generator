@@ -161,4 +161,8 @@ describe("valid-data-type", () => {
         "type-return-type", 
         assertValidSchema("type-return-type", "Greeting")
     );
+    it(
+        "type-return-type-complex", 
+        assertValidSchema("type-return-type-complex", "TestAppState")
+    );
 });

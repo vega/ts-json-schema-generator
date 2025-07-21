@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/TestAppState",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "TestAppState": {
+      "$ref": "#/definitions/TestState"
+    },
+    "TestState": {
+      "additionalProperties": false,
+      "properties": {
+        "counter": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "counter",
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}
