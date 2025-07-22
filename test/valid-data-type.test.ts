@@ -165,4 +165,8 @@ describe("valid-data-type", () => {
         "type-return-type-complex", 
         assertValidSchema("type-return-type-complex", "TestAppState")
     );
+    it(
+        "type-return-type-implicit", 
+        assertValidSchema("type-return-type-implicit", "ImplicitReturnType")
+    );
 });

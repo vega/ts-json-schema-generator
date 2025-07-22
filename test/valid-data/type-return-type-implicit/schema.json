@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/ImplicitReturnType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ImplicitReturnType": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "type": "number"
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "message",
+        "count"
+      ],
+      "type": "object"
+    }
+  }
+}
+
