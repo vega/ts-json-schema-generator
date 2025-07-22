@@ -1,0 +1,94 @@
+{
+  "$ref": "#/definitions/MethodReturnTypes",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MethodReturnTypes": {
+      "additionalProperties": false,
+      "properties": {
+        "arrow": {
+          "additionalProperties": false,
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "message"
+          ],
+          "type": "object"
+        },
+        "complex": {
+          "additionalProperties": false,
+          "properties": {
+            "items": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "meta": {
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "version",
+                "type"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "meta",
+            "items"
+          ],
+          "type": "object"
+        },
+        "explicit": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "type": "object"
+        },
+        "implicit": {
+          "additionalProperties": false,
+          "properties": {
+            "active": {
+              "type": "boolean"
+            },
+            "count": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "active",
+            "count"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "explicit",
+        "implicit",
+        "complex",
+        "arrow"
+      ],
+      "type": "object"
+    }
+  }
+}

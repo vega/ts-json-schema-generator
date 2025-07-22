@@ -72,21 +72,9 @@ export class ReturnTypeNodeParser implements SubNodeParser {
 
             // Fallback to type checking method
             const type = this.checker.getTypeOfSymbolAtLocation(symbol, typeArg);
-            const signatures = type.getCallSignatures();
-
-            if (signatures.length > 0) {
-                // Use getReturnType directly from the signature
-                const returnType = signatures[0].getReturnType();
-
-                const returnTypeNode = this.checker.typeToTypeNode(
-                    returnType,
-                    undefined,
-                    ts.NodeBuilderFlags.NoTruncation,
-                );
-
-                if (returnTypeNode) {
-                    return this.childNodeParser.createType(returnTypeNode, context);
-                }
+            const result = extractReturnTypeFromSignatures(type, this.checker, this.childNodeParser, context);
+            if (result) {
+                return result;
             }
         } else {
             // Case: ReturnType<SomeType["methodName"]> or other complex types
@@ -94,18 +82,9 @@ export class ReturnTypeNodeParser implements SubNodeParser {
             const argType = this.checker.getTypeAtLocation(typeArg);
 
             // If it's a function type, get its return type
-            const signatures = argType.getCallSignatures();
-            if (signatures.length > 0) {
-                const returnType = signatures[0].getReturnType();
-                const returnTypeNode = this.checker.typeToTypeNode(
-                    returnType,
-                    undefined,
-                    ts.NodeBuilderFlags.NoTruncation,
-                );
-
-                if (returnTypeNode) {
-                    return this.childNodeParser.createType(returnTypeNode, context);
-                }
+            const result = extractReturnTypeFromSignatures(argType, this.checker, this.childNodeParser, context);
+            if (result) {
+                return result;
             }
 
             // Final fallback: try to get type directly
@@ -119,4 +98,25 @@ export class ReturnTypeNodeParser implements SubNodeParser {
 
         throw new UnknownNodeError(node);
     }
+}
+
+/**
+ * Helper function to extract return type from call signatures
+ */
+function extractReturnTypeFromSignatures(
+    type: ts.Type,
+    checker: ts.TypeChecker,
+    childNodeParser: NodeParser,
+    context: Context,
+): BaseType | null {
+    const signatures = type.getCallSignatures();
+    if (signatures.length > 0) {
+        const returnType = signatures[0].getReturnType();
+        const returnTypeNode = checker.typeToTypeNode(returnType, undefined, ts.NodeBuilderFlags.NoTruncation);
+
+        if (returnTypeNode) {
+            return childNodeParser.createType(returnTypeNode, context);
+        }
+    }
+    return null;
 }
