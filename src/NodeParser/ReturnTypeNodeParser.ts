@@ -16,13 +16,8 @@ export class ReturnTypeNodeParser implements SubNodeParser {
             return false;
         }
 
-        // Check if it's a ReturnType reference
-        try {
-            const typeName = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
-            return typeName === "ReturnType" && node.typeArguments?.length === 1;
-        } catch {
-            return false;
-        }
+        const typeName = ts.isIdentifier(node.typeName) ? node.typeName.text : node.typeName.getText();
+        return typeName === "ReturnType" && node.typeArguments?.length === 1;
     }
 
     createType(node: ts.TypeReferenceNode, context: Context): BaseType {
