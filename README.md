@@ -236,6 +236,78 @@ fs.writeFile(outputPath, schemaString, (err) => {
 - functions
 - `Promise<T>` unwraps to `T`
 - Overrides (like `@format`)
+- Discriminated unions with `@discriminator`
+
+## Discriminated Unions
+
+The generator supports discriminated unions using the `@discriminator` JSDoc annotation. This generates JSON Schema with conditional validation using `if`/`then` structures.
+
+### Basic Discriminated Union
+
+```typescript
+interface Cat {
+  type: "cat";
+  meow: boolean;
+}
+
+interface Dog {
+  type: "dog";
+  bark: boolean;
+}
+
+/**
+ * @discriminator type
+ */
+type Animal = Cat | Dog;
+```
+
+This generates a schema where objects are validated based on the `type` field value.
+
+### Non-Congruent Discriminated Unions
+
+The generator supports unions where some members lack the discriminator field:
+
+```typescript
+interface WithDiscriminator {
+  kind: "typed";
+  value: string;
+}
+
+interface WithoutDiscriminator {
+  data: number;
+}
+
+/**
+ * @discriminator kind
+ */
+type Mixed = WithDiscriminator | WithoutDiscriminator;
+```
+
+Objects without the discriminator field are validated using conditional logic that checks for the absence of the discriminator.
+
+### Hierarchical Discriminated Unions
+
+For complex cases where multiple types share the same discriminator value, the generator creates hierarchical conditions using secondary fields:
+
+```typescript
+interface RegularClass {
+  kind: "class";
+  name: string;
+}
+
+interface CustomElementClass {
+  kind: "class";
+  name: string;
+  customElement: true;
+}
+
+/**
+ * @discriminator kind
+ */
+type Declaration = RegularClass | CustomElementClass;
+```
+
+This generates conditions that distinguish between types using both the primary discriminator (`kind`) and secondary fields (`customElement`).
 
 ## Run locally
 

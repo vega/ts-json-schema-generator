@@ -35,10 +35,11 @@ describe("invalid-data", () => {
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
-    it(
-        "missing-discriminator",
-        assertSchema("missing-discriminator", "MyType", 'Cannot find discriminator keyword "type" in type B.'),
-    );
+    // Test moved to valid-data as discriminators on non-congruent unions are now supported
+    // it(
+    //     "missing-discriminator",
+    //     assertSchema("missing-discriminator", "MyType", 'Cannot find discriminator keyword "type" in type B.'),
+    // );
     it(
         "non-union-discriminator",
         assertSchema(

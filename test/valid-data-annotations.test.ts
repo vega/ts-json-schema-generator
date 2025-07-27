@@ -88,4 +88,16 @@ describe("valid-data-annotations", () => {
         "discriminator",
         assertValidSchema("discriminator", "Animal", { jsDoc: "basic", discriminatorType: "open-api" }),
     );
+    it(
+        "discriminator-non-congruent",
+        assertValidSchema("discriminator-non-congruent", "Declaration", { jsDoc: "basic" }),
+    );
+    it(
+        "missing-discriminator",
+        assertValidSchema("missing-discriminator", "MyType", { jsDoc: "basic" }),
+    );
+    it(
+        "discriminator-hierarchical",
+        assertValidSchema("discriminator-hierarchical", "Declaration", { jsDoc: "basic" }),
+    );
 });

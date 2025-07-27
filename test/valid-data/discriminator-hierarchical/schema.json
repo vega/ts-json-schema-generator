@@ -1,0 +1,221 @@
+{
+    "$ref": "#/definitions/Declaration",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ClassDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "const": "class",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name"],
+            "type": "object"
+        },
+        "CustomElementDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "customElement": {
+                    "const": true,
+                    "type": "boolean"
+                },
+                "kind": {
+                    "const": "class",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name", "customElement"],
+            "type": "object"
+        },
+        "CustomElementMixinDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "customElement": {
+                    "const": true,
+                    "type": "boolean"
+                },
+                "kind": {
+                    "const": "mixin",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name", "customElement"],
+            "type": "object"
+        },
+        "Declaration": {
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "kind": {
+                                "const": "function",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/FunctionDeclaration"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "kind": {
+                                "const": "variable",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/VariableDeclaration"
+                    }
+                },
+                {
+                    "if": {
+                        "allOf": [
+                            {
+                                "properties": {
+                                    "kind": {
+                                        "const": "mixin",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["kind"]
+                            },
+                            {
+                                "not": {
+                                    "properties": {
+                                        "customElement": {}
+                                    },
+                                    "required": ["customElement"]
+                                }
+                            }
+                        ]
+                    },
+                    "then": {
+                        "$ref": "#/definitions/MixinDeclaration"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "customElement": {
+                                "const": true
+                            },
+                            "kind": {
+                                "const": "mixin",
+                                "type": "string"
+                            }
+                        },
+                        "required": ["kind", "customElement"]
+                    },
+                    "then": {
+                        "$ref": "#/definitions/CustomElementMixinDeclaration"
+                    }
+                },
+                {
+                    "if": {
+                        "allOf": [
+                            {
+                                "properties": {
+                                    "kind": {
+                                        "const": "class",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["kind"]
+                            },
+                            {
+                                "not": {
+                                    "properties": {
+                                        "customElement": {}
+                                    },
+                                    "required": ["customElement"]
+                                }
+                            }
+                        ]
+                    },
+                    "then": {
+                        "$ref": "#/definitions/ClassDeclaration"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "customElement": {
+                                "const": true
+                            },
+                            "kind": {
+                                "const": "class",
+                                "type": "string"
+                            }
+                        },
+                        "required": ["kind", "customElement"]
+                    },
+                    "then": {
+                        "$ref": "#/definitions/CustomElementDeclaration"
+                    }
+                }
+            ],
+            "properties": {
+                "kind": {
+                    "enum": ["function", "variable", "mixin", "class"]
+                }
+            },
+            "required": ["kind"],
+            "type": "object"
+        },
+        "FunctionDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "const": "function",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name"],
+            "type": "object"
+        },
+        "MixinDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "const": "mixin",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name"],
+            "type": "object"
+        },
+        "VariableDeclaration": {
+            "additionalProperties": false,
+            "properties": {
+                "kind": {
+                    "const": "variable",
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "required": ["kind", "name"],
+            "type": "object"
+        }
+    }
+}

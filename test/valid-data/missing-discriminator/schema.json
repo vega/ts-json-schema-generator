@@ -1,0 +1,52 @@
+{
+    "$ref": "#/definitions/MyType",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "A": {
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": ["type"],
+            "type": "object"
+        },
+        "B": {
+            "additionalProperties": false,
+            "type": "object"
+        },
+        "MyType": {
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/A"
+                    }
+                },
+                {
+                    "if": {
+                        "not": {
+                            "properties": {
+                                "type": {}
+                            },
+                            "required": ["type"]
+                        }
+                    },
+                    "then": {
+                        "$ref": "#/definitions/B"
+                    }
+                }
+            ],
+            "properties": {},
+            "required": [],
+            "type": "object"
+        }
+    }
+}
