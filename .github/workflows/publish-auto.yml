@@ -13,7 +13,7 @@ jobs:
 
     name: Make a release and publish to NPM
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
