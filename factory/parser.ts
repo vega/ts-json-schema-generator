@@ -16,6 +16,7 @@ import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodePa
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser.js";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser.js";
 import { ConditionalTypeNodeParser } from "../src/NodeParser/ConditionalTypeNodeParser.js";
+import { NewExpressionParser } from "../src/NodeParser/NewExpressionParser.js";
 import { ConstructorNodeParser } from "../src/NodeParser/ConstructorNodeParser.js";
 import { EnumNodeParser } from "../src/NodeParser/EnumNodeParser.js";
 import { ExpressionWithTypeArgumentsNodeParser } from "../src/NodeParser/ExpressionWithTypeArgumentsNodeParser.js";
@@ -149,6 +150,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new SpreadElementNodeParser(chainNodeParser))
 
         .addNodeParser(new CallExpressionParser(typeChecker, chainNodeParser))
+        .addNodeParser(new NewExpressionParser(typeChecker, chainNodeParser))
         .addNodeParser(new PropertyAccessExpressionParser(typeChecker, chainNodeParser))
 
         .addNodeParser(withCircular(withExpose(withJsDoc(new TypeAliasNodeParser(typeChecker, chainNodeParser)))))

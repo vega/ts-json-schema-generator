@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "additionalProperties": false,
+      "properties": {
+        "propA": {
+          "type": "number"
+        },
+        "propB": {
+          "type": "number"
+        },
+        "propC": {
+          "type": "number"
+        },
+        "propD": {
+          "type": "string"
+        },
+        "readonlyProp": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "propA",
+        "propB",
+        "readonlyProp",
+        "propC"
+      ],
+      "type": "object"
+    }
+  }
+}

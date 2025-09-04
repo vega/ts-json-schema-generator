@@ -31,6 +31,7 @@ describe("valid-data-struct", () => {
     it("class-inheritance", assertValidSchema("class-inheritance", "MyObject"));
     it("class-generics", assertValidSchema("class-generics", "MyObject"));
     it("class-jsdoc", assertValidSchema("class-jsdoc", "MyObject"));
+    it("class-new-expression", assertValidSchema("class-new-expression", "MyType"));
 
     it("structure-private", assertValidSchema("structure-private", "MyObject"));
     it("structure-anonymous", assertValidSchema("structure-anonymous", "MyObject"));
