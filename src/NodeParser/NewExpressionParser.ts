@@ -17,9 +17,9 @@ export class NewExpressionParser implements SubNodeParser {
 
     public createType(node: ts.NewExpression, context: Context): BaseType {
         const type = this.typeChecker.getTypeAtLocation(node);
-        
+
         const symbol = type.symbol || type.aliasSymbol;
-        
+
         const decl =
             this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.IgnoreErrors) ||
             symbol?.valueDeclaration ||
