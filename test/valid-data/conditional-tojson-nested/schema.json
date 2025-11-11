@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "branch": {
+          "additionalProperties": false,
+          "properties": {
+            "leaves": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "id": { "type": "string" },
+                  "upper": { "type": "string" }
+                },
+                "required": ["id", "upper"],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "count": { "type": "number" }
+          },
+          "required": ["leaves", "count"],
+          "type": "object"
+        }
+      },
+      "required": ["branch"],
+      "type": "object"
+    }
+  }
+}

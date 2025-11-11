@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/GenericFromDtoParamInfer",
+  "definitions": {
+    "GenericFromDtoParamInfer": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "age": { "type": "number" }
+      },
+      "required": ["name", "age"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { assertValidSchema } from "./utils";
 import * as objectRequiredSamples from "./valid-data/object-required/samples";
 
 describe("valid-data-other", () => {
+    it("generic-from-dto-param-infer", assertValidSchema("generic-from-dto-param-infer", "GenericFromDtoParamInfer"));
     it("enums-string", assertValidSchema("enums-string", "Enum"));
     it("enums-number", assertValidSchema("enums-number", "Enum"));
     it("enums-initialized", assertValidSchema("enums-initialized", "Enum"));
@@ -56,7 +57,18 @@ describe("valid-data-other", () => {
     it("generic-default", assertValidSchema("generic-default", "MyObject"));
     it("generic-nested", assertValidSchema("generic-nested", "MyObject"));
     it("generic-prefixed-number", assertValidSchema("generic-prefixed-number", "MyObject"));
-    it("generic-void", assertValidSchema("generic-void", "MyObject"));
+    it("generic-this", assertValidSchema("generic-this", "Test2"));
+    it("generic-true-hell", assertValidSchema("generic-true-hell", "MyObject"));
+    it("generic-true-hell-2", assertValidSchema("generic-true-hell-2", "MyObject"));
+    it("conditional-tojson-object", assertValidSchema("conditional-tojson-object", "MyObject"));
+    it("conditional-tojson-primitive", assertValidSchema("conditional-tojson-primitive", "MyObject"));
+    it("conditional-tojson-nested", assertValidSchema("conditional-tojson-nested", "MyObject"));
+    it(
+        "generic-void",
+        assertValidSchema("generic-void", "MyObject", {
+            functions: "comment",
+        }),
+    );
 
     it("nullable-null", assertValidSchema("nullable-null", "MyObject"));
 
