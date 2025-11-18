@@ -44,6 +44,7 @@ const args = new Command()
             .choices(["fail", "comment", "hide"])
             .default("comment"),
     )
+    .option("--definition-titles", "Generate titles from defintion names", false)
     .option("--minify", "Minify generated schema", false)
     .option("--unstable", "Do not sort properties")
     .option("--strict-tuples", "Do not allow additional items on tuples")
@@ -64,6 +65,7 @@ const args = new Command()
 
 const config: Config = {
     minify: args.minify,
+    definitionTitles: args.definitionTitles,
     path: args.path,
     tsconfig:
         typeof args.tsconfig === "string" ? args.tsconfig : findConfigFile(process.cwd(), (f) => tsSys.fileExists(f)),

@@ -17,6 +17,7 @@ export interface Config {
     additionalProperties?: boolean;
     discriminatorType?: "json-schema" | "open-api";
     functions?: FunctionOptions;
+    definitionTitles?: boolean;
 }
 
 export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
@@ -38,4 +39,5 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     additionalProperties: false,
     discriminatorType: "json-schema",
     functions: "comment",
+    definitionTitles: false,
 };

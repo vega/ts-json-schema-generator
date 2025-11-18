@@ -138,6 +138,9 @@ export class SchemaGenerator {
             const name = child.getName();
             if (!(name in definitions)) {
                 definitions[name] = this.typeFormatter.getDefinition(child.getType());
+                if (this.config?.definitionTitles) {
+                    definitions[name].title = name;
+                }
             }
             return definitions;
         }, childDefinitions);

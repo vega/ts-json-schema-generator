@@ -50,6 +50,7 @@ By default, the command-line generator will use the `tsconfig.json` file in the 
   --full-description             Include the full raw JSDoc comment as `fullDescription` in the schema.
   --functions <functions>        How to handle functions. `fail` will throw an error. `comment` will add a comment. `hide` will treat the function like a NeverType or HiddenType.
                                  (choices: "fail", "comment", "hide", default: "comment")
+  --definition-titles            Generates titles from definition names
   --minify                       Minify generated schema (default: false)
   --unstable                     Do not sort properties
   --strict-tuples                Do not allow additional items on tuples

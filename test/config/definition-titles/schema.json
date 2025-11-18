@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "definitions": {
+    "ExportAlias": {
+      "$ref": "#/definitions/ExportInterface",
+      "title": "ExportAlias"
+    },
+    "ExportInterface": {
+      "additionalProperties": false,
+      "properties": {
+        "exportValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exportValue"
+      ],
+      "title": "ExportInterface",
+      "type": "object"
+    },
+    "MixedAlias": {
+      "additionalProperties": false,
+      "properties": {
+        "privateValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "privateValue"
+      ],
+      "title": "MixedAlias",
+      "type": "object"
+    },
+    "PublicAnonymousTypeLiteral": {
+      "additionalProperties": false,
+      "properties": {
+        "publicValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "publicValue"
+      ],
+      "title": "PublicAnonymousTypeLiteral",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "exportAlias": {
+      "$ref": "#/definitions/ExportAlias"
+    },
+    "exportInterface": {
+      "$ref": "#/definitions/ExportInterface"
+    },
+    "mixedAlias": {
+      "$ref": "#/definitions/MixedAlias"
+    },
+    "mixedInterface": {
+      "additionalProperties": false,
+      "properties": {
+        "mixedValue": {
+          "$ref": "#/definitions/ExportAlias"
+        }
+      },
+      "required": [
+        "mixedValue"
+      ],
+      "type": "object"
+    },
+    "privateAlias": {
+      "additionalProperties": false,
+      "properties": {
+        "privateValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "privateValue"
+      ],
+      "type": "object"
+    },
+    "privateAnonymousTypeLiteral": {
+      "additionalProperties": false,
+      "properties": {
+        "privateValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "privateValue"
+      ],
+      "type": "object"
+    },
+    "privateInterface": {
+      "additionalProperties": false,
+      "properties": {
+        "privateValue": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "privateValue"
+      ],
+      "type": "object"
+    },
+    "publicAnonymousTypeLiteral": {
+      "$ref": "#/definitions/PublicAnonymousTypeLiteral"
+    }
+  },
+  "required": [
+    "exportInterface",
+    "exportAlias",
+    "privateInterface",
+    "privateAlias",
+    "mixedInterface",
+    "mixedAlias",
+    "publicAnonymousTypeLiteral",
+    "privateAnonymousTypeLiteral"
+  ],
+  "type": "object"
+}

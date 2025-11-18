@@ -238,6 +238,17 @@ describe("config", () => {
     );
 
     it(
+        "definition-titles",
+        assertSchema("definition-titles", {
+            type: "MyObject",
+            expose: "export",
+            topRef: false,
+            definitionTitles: true,
+            jsDoc: "none",
+        }),
+    );
+
+    it(
         "jsdoc-complex-none",
         assertSchema("jsdoc-complex-none", {
             type: "MyObject",
