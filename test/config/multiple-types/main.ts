@@ -11,7 +11,8 @@ export interface ExportedInterface {
     val: string;
 }
 
-type Object1Prop = {
+// Exported, so we include it as a root node
+export type Object1Prop = {
     name: string;
 };
 

@@ -23,11 +23,20 @@
           "type": "string"
         },
         "baz": {
-          "$ref": "#/definitions/Object2Prop"
+          "properties": {
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "description"
+          ],
+          "type": "object",
+          "additionalProperties": false
         }
       },
       "required": [
-        "id",
+        "idStr",
         "baz"
       ],
       "type": "object",
@@ -37,18 +46,6 @@
       "properties": {
         "name": {
           "type": "string"
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "type": "object",
-      "additionalProperties": false
-    },
-    "Object2Prop": {
-      "properties": {
-        "name": {
-          "description": "string"
         }
       },
       "required": [
