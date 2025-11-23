@@ -14,7 +14,7 @@ export interface Config {
     type?: string;
 
     /**
-     * Array of type names to include in the schema generation.
+     * Array of type names to generate schemas for. Cannot be used with --type.
      */
     types?: string[];
 
