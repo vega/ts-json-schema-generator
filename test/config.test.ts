@@ -398,6 +398,13 @@ describe("config", () => {
     );
 
     it(
+        "multiple-types-all",
+        assertSchema("multiple-types-all", {
+            types: ["MyObject1", "MyObject2", "Object1Prop", "Object2Prop"],
+        }),
+    );
+
+    it(
         "mapped-intersection",
         assertSchema("mapped-intersection", {
             type: "MyObject",
