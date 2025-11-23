@@ -20,7 +20,7 @@ export class SchemaGenerator {
         protected readonly config?: Config,
     ) {}
 
-    public createSchema(fullName?: string): Schema {
+    public createSchema(fullName?: string | string[]): Schema {
         const rootNodes = this.getRootNodes(fullName);
         return this.createSchemaFromNodes(rootNodes);
     }
@@ -60,9 +60,10 @@ export class SchemaGenerator {
         };
     }
 
-    protected getRootNodes(fullName: string | undefined): ts.Node[] {
+    protected getRootNodes(fullName: string | string[] | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
-            return [this.findNamedNode(fullName)];
+            const fullNameArr = Array.isArray(fullName) ? fullName : [fullName];
+            return fullNameArr.map((name) => this.findNamedNode(name));
         }
 
         const rootFileNames = this.program.getRootFileNames();

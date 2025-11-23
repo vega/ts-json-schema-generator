@@ -26,7 +26,7 @@ const basePath = "test/config";
 
 function assertSchema(
     name: string,
-    userConfig: Config & { type: string },
+    userConfig: (Config & { type: string }) | (Config & { types: string[] }),
     tsconfig?: boolean,
     formatterAugmentor?: FormatterAugmentor,
     parserAugmentor?: ParserAugmentor,
@@ -51,7 +51,7 @@ function assertSchema(
             config,
         );
 
-        const schema = generator.createSchema(config.type);
+        const schema = generator.createSchema(config.type ?? config.types);
         const schemaFile = resolve(`${basePath}/${name}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
@@ -387,6 +387,13 @@ describe("config", () => {
         assertSchema("additional-properties", {
             type: "MyObject",
             additionalProperties: true,
+        }),
+    );
+
+    it(
+        "multiple-types",
+        assertSchema("multiple-types", {
+            types: ["MyObject1", "MyObject2"],
         }),
     );
 

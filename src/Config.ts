@@ -14,6 +14,11 @@ export interface Config {
     type?: string;
 
     /**
+     * Array of type names to include in the schema generation.
+     */
+    types?: string[];
+
+    /**
      * Minify the output JSON schema (no whitespace).
      * When false, the schema is pretty-printed with 2-space indentation.
      * @default false
@@ -143,7 +148,10 @@ export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
 
 export type FunctionOptions = "fail" | "comment" | "hide";
 
-export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig" | "tsProgram"> = {
+export const DEFAULT_CONFIG: Omit<
+    Required<Config>,
+    "path" | "type" | "types" | "schemaId" | "tsconfig" | "tsProgram"
+> = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",
