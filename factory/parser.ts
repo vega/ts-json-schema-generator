@@ -62,6 +62,7 @@ import { SatisfiesNodeParser } from "../src/NodeParser/SatisfiesNodeParser.js";
 import { PromiseNodeParser } from "../src/NodeParser/PromiseNodeParser.js";
 import { SpreadElementNodeParser } from "../src/NodeParser/SpreadElementNodeParser.js";
 import { IdentifierNodeParser } from "../src/NodeParser/IdentifierNodeParser.js";
+import { castArray } from "../src/Utils/castArray.js";
 
 export type ParserAugmentor = (parser: MutableParser) => void;
 
@@ -73,7 +74,10 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         return new ExposeNodeParser(typeChecker, nodeParser, config.expose, config.jsDoc);
     }
     function withTopRef(nodeParser: NodeParser): NodeParser {
-        return new TopRefNodeParser(chainNodeParser, config.type, config.topRef);
+        const typeArr = castArray(config.type);
+        // If we have multiple types, don't set a top-level $ref.
+        const topRefFullName = typeArr && typeArr.length === 1 ? typeArr[0] : undefined;
+        return new TopRefNodeParser(chainNodeParser, topRefFullName, config.topRef);
     }
     function withJsDoc(nodeParser: SubNodeParser): SubNodeParser {
         const extraTags = new Set(config.extraTags);

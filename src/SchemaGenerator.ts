@@ -10,6 +10,7 @@ import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { castArray } from "./Utils/castArray.js";
 import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
@@ -20,8 +21,8 @@ export class SchemaGenerator {
         protected readonly config?: Config,
     ) {}
 
-    public createSchema(fullNames?: string[]): Schema {
-        const rootNodes = this.getRootNodes(fullNames);
+    public createSchema(fullNames?: string | string[]): Schema {
+        const rootNodes = this.getRootNodes(castArray(fullNames));
         return this.createSchemaFromNodes(rootNodes);
     }
 
@@ -60,10 +61,11 @@ export class SchemaGenerator {
         };
     }
 
-    protected getRootNodes(fullName: "*" | string[] | undefined): ts.Node[] {
-        if (fullName && fullName !== "*") {
-            const fullNameArr = Array.isArray(fullName) ? fullName : [fullName];
-            return fullNameArr.map((name) => this.findNamedNode(name));
+    protected getRootNodes(fullNames: string[] | undefined): ts.Node[] {
+        // ["*"] means generate everything.
+        const generateAll = !fullNames || (fullNames && fullNames.length === 1 && fullNames[0] === "*");
+        if (!generateAll) {
+            return fullNames.map((name) => this.findNamedNode(name));
         }
 
         const rootFileNames = this.program.getRootFileNames();

@@ -8,11 +8,20 @@ import type { Config } from "./src/Config.js";
 import { BaseError } from "./src/Error/BaseError.js";
 
 import pkg from "./package.json";
+import { castArray } from "./src/Utils/castArray.js";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
-    .option("-t, --type <name>", "Type name")
-    .option("-t, --types <array-of-names>", "Type names")
+    .option(
+        "-t, --type <name>",
+        "Type name (can be passed multiple times)",
+        (value: string, previous: string[] | undefined) => {
+            if (previous) {
+                return previous.concat(value);
+            }
+            return [value];
+        },
+    )
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .addOption(
@@ -69,7 +78,6 @@ const config: Config = {
     tsconfig:
         typeof args.tsconfig === "string" ? args.tsconfig : findConfigFile(process.cwd(), (f) => tsSys.fileExists(f)),
     type: args.type,
-    types: args.types,
     schemaId: args.id,
     expose: args.expose,
     topRef: args.topRef,
@@ -86,13 +94,7 @@ const config: Config = {
 };
 
 try {
-    if (args.type && args.types) {
-        throw new Error(`Cannot use both --type and --types options simultaneously.`);
-    }
-
-    const fullNames: string[] | undefined = args.types ? args.types : args.type ? [args.type] : undefined;
-
-    const schema = createGenerator(config).createSchema(fullNames);
+    const schema = createGenerator(config).createSchema(castArray(args.type));
 
     const stringify = config.sortProps ? stableStringify : JSON.stringify;
     // need as string since TS can't figure out that the string | undefined case doesn't happen

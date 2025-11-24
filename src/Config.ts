@@ -9,14 +9,10 @@ export interface Config {
 
     /**
      * Name of the type/interface to generate schema for.
+     * Can specify more than once to generate multiple schemas.
      * Use "*" to generate schemas for all exported types.
      */
-    type?: string;
-
-    /**
-     * Array of type names to generate schemas for. Cannot be used with --type.
-     */
-    types?: string[];
+    type?: string | string[];
 
     /**
      * Minify the output JSON schema (no whitespace).
@@ -148,10 +144,7 @@ export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
 
 export type FunctionOptions = "fail" | "comment" | "hide";
 
-export const DEFAULT_CONFIG: Omit<
-    Required<Config>,
-    "path" | "type" | "types" | "schemaId" | "tsconfig" | "tsProgram"
-> = {
+export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig" | "tsProgram"> = {
     expose: "export",
     topRef: true,
     jsDoc: "extended",

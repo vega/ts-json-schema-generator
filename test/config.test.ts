@@ -20,13 +20,14 @@ import { EnumType } from "../src/Type/EnumType.js";
 import { FunctionType } from "../src/Type/FunctionType.js";
 import { StringType } from "../src/Type/StringType.js";
 import type { TypeFormatter } from "../src/TypeFormatter.js";
+import { castArray } from "../src/Utils/castArray.js";
 import { uniqueArray } from "../src/Utils/uniqueArray.js";
 
 const basePath = "test/config";
 
 function assertSchema(
     name: string,
-    userConfig: (Config & { type: string }) | (Config & { types: string[] }),
+    userConfig: Config & { type: string | string[] },
     tsconfig?: boolean,
     formatterAugmentor?: FormatterAugmentor,
     parserAugmentor?: ParserAugmentor,
@@ -51,7 +52,7 @@ function assertSchema(
             config,
         );
 
-        const schema = generator.createSchema(config.type ?? config.types);
+        const schema = generator.createSchema(castArray(config.type));
         const schemaFile = resolve(`${basePath}/${name}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
@@ -393,14 +394,14 @@ describe("config", () => {
     it(
         "multiple-types",
         assertSchema("multiple-types", {
-            types: ["MyObject1", "MyObject2"],
+            type: ["MyObject1", "MyObject2"],
         }),
     );
 
     it(
         "multiple-types-all",
         assertSchema("multiple-types-all", {
-            types: ["MyObject1", "MyObject2", "Object1Prop", "Object2Prop"],
+            type: ["MyObject1", "MyObject2", "Object1Prop", "Object2Prop"],
         }),
     );
 
