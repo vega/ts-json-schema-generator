@@ -86,7 +86,13 @@ const config: Config = {
 };
 
 try {
-    const schema = createGenerator(config).createSchema(args.type);
+    if (args.type && args.types) {
+        throw new Error(`Cannot use both --type and --types options simultaneously.`);
+    }
+
+    const fullNames: string[] | undefined = args.types ? args.types : args.type ? [args.type] : undefined;
+
+    const schema = createGenerator(config).createSchema(fullNames);
 
     const stringify = config.sortProps ? stableStringify : JSON.stringify;
     // need as string since TS can't figure out that the string | undefined case doesn't happen
