@@ -12,6 +12,7 @@ import pkg from "./package.json";
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
     .option("-t, --type <name>", "Type name")
+    .option("-t, --types <array-of-names>", "Type names")
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .addOption(
@@ -68,6 +69,7 @@ const config: Config = {
     tsconfig:
         typeof args.tsconfig === "string" ? args.tsconfig : findConfigFile(process.cwd(), (f) => tsSys.fileExists(f)),
     type: args.type,
+    types: args.types,
     schemaId: args.id,
     expose: args.expose,
     topRef: args.topRef,
