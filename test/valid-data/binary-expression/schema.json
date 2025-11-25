@@ -5,10 +5,18 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
-        "foo": { "type": "number" }
+        "numbers": { "type": "number" },
+        "threeNumbers": { "type": "number" },
+        "strings": { "type": "string" },
+        "booleans": { "type": "boolean" },
+        "any": {}
       },
       "required": [
-        "foo"
+        "numbers",
+        "threeNumbers",
+        "strings",
+        "booleans",
+        "any"
       ],
       "type": "object"
     }
