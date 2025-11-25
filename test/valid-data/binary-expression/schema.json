@@ -8,15 +8,17 @@
         "numbers": { "type": "number" },
         "threeNumbers": { "type": "number" },
         "strings": { "type": "string" },
+        "mixedStringAndNumbers": { "type": "string" },
         "booleans": { "type": "boolean" },
         "any": {}
       },
       "required": [
         "numbers",
-        "threeNumbers",
         "strings",
         "booleans",
-        "any"
+        "any",
+        "threeNumbers",
+        "mixedStringAndNumbers"
       ],
       "type": "object"
     }

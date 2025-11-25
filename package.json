@@ -50,6 +50,7 @@
     "release": "npm run build && auto shipit",
     "run": "tsx ts-json-schema-generator.ts",
     "test": "jest test/ --verbose",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest test/ --verbose --runInBand",
     "test:coverage": "npm run jest -- test/ --collectCoverage=true",
     "test:fast": "cross-env FAST_TEST=1 jest test/ --verbose",
     "test:update": "cross-env UPDATE_SCHEMA=true npm run test:fast",

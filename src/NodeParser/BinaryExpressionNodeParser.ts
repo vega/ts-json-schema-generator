@@ -5,6 +5,7 @@ import { AnyType } from "../Type/AnyType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { StringType } from "../Type/StringType.js";
+import { BooleanType } from "../Type/BooleanType.js";
 
 export class BinaryExpressionNodeParser implements SubNodeParser {
     public constructor(protected typeChecker: ts.TypeChecker) {}
@@ -28,10 +29,19 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
             return new StringType();
         }
 
+        debugger;
+
         // 2) If both sides are definitely number-like → 'number'
         if (this.isDefinitelyNumberLike(leftType) && this.isDefinitelyNumberLike(rightType)) {
+            console.log(`XXX in numbertype`);
             return new NumberType();
         }
+
+        if (this.isBoolean(leftType) && this.isBoolean(rightType)) {
+            return new BooleanType();
+        }
+
+        console.log(`XXX at fallthrough`);
 
         // 3) Anything else (objects, any, unknown, weird unions, etc.) →
         // 'string' because at runtime + will usually go through ToPrimitive and end
@@ -53,10 +63,8 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
             return type.types.some((t) => this.isStringLike(t));
         }
 
-        const f = type.flags;
-
         // String primitives + string literals + template literals
-        if (f & ts.TypeFlags.StringLike) {
+        if (type.flags & ts.TypeFlags.StringLike) {
             return true;
         }
 
@@ -69,25 +77,83 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         return false;
     }
 
-    private isDefinitelyNumberLike(inType: ts.Type): boolean {
-        // Again, use apparent type for unions/intersections
+    private isBoolean(inType: ts.Type): boolean {
         const type = this.typeChecker.getApparentType(inType);
 
+        // Union? Any member being string-like is enough.
         if (type.isUnion()) {
-            // Must be number-like for *all* members to be "definitely number-like"
-            return type.types.every((t) => this.isDefinitelyNumberLike(t));
+            return type.types.some((t) => this.isStringLike(t));
         }
 
-        const f = type.flags;
+        // String primitives + string literals + template literals
+        if (type.flags & ts.TypeFlags.BooleanLike) {
+            return true;
+        }
 
-        // Number, number literal, enums, bigint etc.
-        // If you don't want bigint, drop BigIntLike.
-        const numericFlags = ts.TypeFlags.NumberLike | ts.TypeFlags.BigIntLike | ts.TypeFlags.EnumLike;
-
-        if (f & numericFlags) {
+        // Optionally treat String object type as string-like:
+        const symbol = type.getSymbol();
+        if (symbol && symbol.getName() === "Boolean") {
             return true;
         }
 
         return false;
     }
+
+    private isDefinitelyNumberLike(inType: ts.Type): boolean {
+        debugger;
+        // Again, use apparent type for unions/intersections
+        const type = this.typeChecker.getApparentType(inType);
+
+        const typeStr = this.typeChecker.typeToString(type);
+        if (typeStr === "Number") {
+            return true;
+        }
+        // console.log(`XXX type`, type);
+        console.log(
+            `XXX this.typeChecker.typeToString(type),
+        `,
+            this.typeChecker.typeToString(type),
+        );
+
+        if (type.isUnion()) {
+            console.log(`XXX in in union`);
+            // Must be number-like for *all* members to be "definitely number-like"
+            return type.types.every((t) => this.isDefinitelyNumberLike(t));
+        }
+
+        console.log(`XXX getTypeFlagNames(type)`, getTypeFlagNames(type));
+
+        // Number, number literal, enums, bigint etc.
+        const numericFlags =
+            ts.TypeFlags.Number |
+            ts.TypeFlags.NumberLiteral |
+            ts.TypeFlags.NumberLike |
+            ts.TypeFlags.BigIntLike |
+            ts.TypeFlags.EnumLike;
+
+        console.log(`XXX type.flags`, type.flags, numericFlags);
+
+        if (type.flags & numericFlags) {
+            return true;
+        }
+
+        return false;
+    }
+}
+
+function getTypeFlagNames(type: ts.Type): string[] {
+    const flags = type.flags;
+    const names: string[] = [];
+
+    for (const key of Object.keys(ts.TypeFlags)) {
+        // filter out the numeric reverse-mapping entries
+        if (!Number.isNaN(Number(key))) continue;
+
+        const flagValue = (ts.TypeFlags as any)[key] as number;
+        if ((flags & flagValue) !== 0) {
+            names.push(key);
+        }
+    }
+
+    return names;
 }
