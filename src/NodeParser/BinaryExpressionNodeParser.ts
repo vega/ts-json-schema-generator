@@ -9,6 +9,8 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.BinaryExpression;
     }
     public createType(node: ts.BinaryExpression, context: Context): BaseType {
+        // For the purposes of types, assume that binary expressions always
+        // evaluate to a number.
         return new NumberType();
     }
 }
