@@ -4,6 +4,7 @@ import type { NodeParser } from "../NodeParser.js";
 import { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AnyType } from "../Type/AnyType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
@@ -55,7 +56,8 @@ export class MappedTypeNodeParser implements SubNodeParser {
         if (
             keyListType instanceof StringType ||
             keyListType instanceof NumberType ||
-            keyListType instanceof SymbolType
+            keyListType instanceof SymbolType ||
+            keyListType instanceof AnyType
         ) {
             if (constraintType?.getId() === "number") {
                 const type = this.childNodeParser.createType(
