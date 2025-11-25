@@ -4,7 +4,7 @@ import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import stringify from "safe-stable-stringify";
-import type ts from "typescript";
+import ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
@@ -108,4 +108,21 @@ export function assertValidSchema(
             }
         }
     };
+}
+
+export function getTypeFlagNames(type: ts.Type): string[] {
+    const flags = type.flags;
+    const names: string[] = [];
+
+    for (const key of Object.keys(ts.TypeFlags)) {
+        // filter out the numeric reverse-mapping entries
+        if (!Number.isNaN(Number(key))) continue;
+
+        const flagValue = ts.TypeFlags[key as keyof ts.TypeFlags] as number;
+        if ((flags & flagValue) !== 0) {
+            names.push(key);
+        }
+    }
+
+    return names;
 }
