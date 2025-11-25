@@ -12,6 +12,7 @@ import { AnyTypeNodeParser } from "../src/NodeParser/AnyTypeNodeParser.js";
 import { ArrayLiteralExpressionNodeParser } from "../src/NodeParser/ArrayLiteralExpressionNodeParser.js";
 import { ArrayNodeParser } from "../src/NodeParser/ArrayNodeParser.js";
 import { AsExpressionNodeParser } from "../src/NodeParser/AsExpressionNodeParser.js";
+import { BinaryExpressionNodeParser } from "../src/NodeParser/BinaryExpressionNodeParser.js";
 import { BooleanLiteralNodeParser } from "../src/NodeParser/BooleanLiteralNodeParser.js";
 import { BooleanTypeNodeParser } from "../src/NodeParser/BooleanTypeNodeParser.js";
 import { CallExpressionParser } from "../src/NodeParser/CallExpressionParser.js";
@@ -114,6 +115,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
         .addNodeParser(new AsExpressionNodeParser(chainNodeParser))
+        .addNodeParser(new BinaryExpressionNodeParser())
         .addNodeParser(new SatisfiesNodeParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
