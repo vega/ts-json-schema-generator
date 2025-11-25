@@ -148,6 +148,8 @@ describe("valid-data-type", () => {
     it("const-spread", assertValidSchema("const-spread", "MyType"));
     it("keyof-typeof-x", assertValidSchema("keyof-typeof-x", "MyType"));
 
+    it("index-any-type", assertValidSchema("index-any-type", "MyObject"));
+
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
     it("promise-generics", assertValidSchema("promise-generics", "*"));
 
