@@ -15,8 +15,6 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.BinaryExpression, context: Context): BaseType {
-        // For the purposes of types, assume that binary expressions always
-        // evaluate to a number.
         const leftType = this.typeChecker.getTypeAtLocation(node.left);
         const rightType = this.typeChecker.getTypeAtLocation(node.right);
 
@@ -24,12 +22,10 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
             return new AnyType();
         }
 
-        // 1) If either side is string-like → 'string'
         if (this.isStringLike(leftType) || this.isStringLike(rightType)) {
             return new StringType();
         }
 
-        // 2) If both sides are definitely number-like → 'number'
         if (this.isDefinitelyNumberLike(leftType) && this.isDefinitelyNumberLike(rightType)) {
             return new NumberType();
         }
@@ -38,9 +34,9 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
             return new BooleanType();
         }
 
-        // 3) Anything else (objects, any, unknown, weird unions, etc.) →
-        // 'string' because at runtime + will usually go through ToPrimitive and end
-        // up in the "string concatenation" branch when non-numeric stuff is
+        // Anything else (objects, any, unknown, weird unions, etc.) return
+        // 'string' because at runtime + will usually go through ToPrimitive and
+        // end up in the "string concatenation" branch when non-numeric stuff is
         // involved.
         return new StringType();
     }
@@ -53,7 +49,7 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         // Use apparent type to collapse things like literal unions, etc.
         const type = this.typeChecker.getApparentType(inType);
 
-        // Union? Any member being string-like is enough.
+        // Any union member being string-like is enough.
         if (type.isUnion()) {
             return type.types.some((t) => this.isStringLike(t));
         }
@@ -75,17 +71,10 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
     private isBoolean(inType: ts.Type): boolean {
         const type = this.typeChecker.getApparentType(inType);
 
-        // Union? Any member being string-like is enough.
-        if (type.isUnion()) {
-            return type.types.some((t) => this.isStringLike(t));
-        }
-
-        // String primitives + string literals + template literals
         if (type.flags & ts.TypeFlags.BooleanLike) {
             return true;
         }
 
-        // Optionally treat String object type as string-like:
         const symbol = type.getSymbol();
         if (symbol && symbol.getName() === "Boolean") {
             return true;
@@ -98,25 +87,13 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         // Use apparent type for unions/intersections
         const type = this.typeChecker.getApparentType(inType);
 
-        const typeStr = this.typeChecker.typeToString(type);
-        if (typeStr === "Number") {
-            return true;
-        }
-
         if (type.isUnion()) {
             // Must be number-like for *all* members to be "definitely number-like"
             return type.types.every((t) => this.isDefinitelyNumberLike(t));
         }
 
-        // Number, number literal, enums, bigint etc.
-        const numericFlags =
-            ts.TypeFlags.Number |
-            ts.TypeFlags.NumberLiteral |
-            ts.TypeFlags.NumberLike |
-            ts.TypeFlags.BigIntLike |
-            ts.TypeFlags.EnumLike;
-
-        if (type.flags & numericFlags) {
+        const typeStr = this.typeChecker.typeToString(type);
+        if (typeStr === "Number") {
             return true;
         }
 
