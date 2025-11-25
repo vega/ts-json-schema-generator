@@ -10,6 +10,10 @@
         "strings": { "type": "string" },
         "mixedStringAndNumbers": { "type": "string" },
         "booleans": { "type": "boolean" },
+        "bigintType": { "type": "number" },
+        "numberUnion": { "type": "number" },
+        "stringUnion": { "type": "string" },
+        "mixedUnion": { "type": "string" },
         "any": {}
       },
       "required": [
@@ -18,7 +22,11 @@
         "booleans",
         "any",
         "threeNumbers",
-        "mixedStringAndNumbers"
+        "mixedStringAndNumbers",
+        "bigintType",
+        "stringUnion",
+        "numberUnion",
+        "mixedUnion"
       ],
       "type": "object"
     }
