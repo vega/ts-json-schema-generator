@@ -1,0 +1,120 @@
+{
+  "$ref": "#/definitions/FunctionReturnTypes",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "FunctionReturnTypes": {
+      "additionalProperties": false,
+      "properties": {
+        "arrow": {
+          "additionalProperties": false,
+          "properties": {
+            "nested": {
+              "additionalProperties": false,
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "value",
+                "count"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "nested"
+          ],
+          "type": "object"
+        },
+        "complex": {
+          "additionalProperties": false,
+          "properties": {
+            "data": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "meta": {
+              "additionalProperties": false,
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "version",
+                "type"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "meta",
+            "data"
+          ],
+          "type": "object"
+        },
+        "functionExpr": {
+          "additionalProperties": false,
+          "properties": {
+            "dynamic": {
+              "type": "boolean"
+            },
+            "payload": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "name"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "dynamic",
+            "payload"
+          ],
+          "type": "object"
+        },
+        "implicit": {
+          "additionalProperties": false,
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "message",
+            "count"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "implicit",
+        "arrow",
+        "functionExpr",
+        "complex"
+      ],
+      "type": "object"
+    }
+  }
+}

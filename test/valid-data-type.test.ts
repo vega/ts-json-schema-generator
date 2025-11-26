@@ -156,4 +156,9 @@ describe("valid-data-type", () => {
         "export-star-prune-unreachable",
         assertValidSchema("export-star-prune-unreachable", "*", undefined, { mainTsOnly: true }),
     );
+    it("type-return-type", assertValidSchema("type-return-type", "Greeting"));
+    it("type-return-type-complex", assertValidSchema("type-return-type-complex", "TestAppState"));
+    it("type-return-type-implicit", assertValidSchema("type-return-type-implicit", "ImplicitReturnType"));
+    it("type-return-type-function-parser", assertValidSchema("type-return-type-function", "FunctionReturnTypes"));
+    it("type-return-type-method", assertValidSchema("type-return-type-method", "MethodReturnTypes"));
 });
