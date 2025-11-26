@@ -13,7 +13,6 @@ interface MixedInterface {
 }
 export type MixedAlias = PrivateInterface;
 
-
 export type PublicAnonymousTypeLiteral = {
     publicValue: string;
 };
@@ -23,7 +22,7 @@ type PrivateAnonymousTypeLiteral = {
 };
 
 interface ConstructedInterface {
-    isConstructed: boolean
+    isConstructed: boolean;
 }
 
 export interface MyObject {
@@ -39,5 +38,5 @@ export interface MyObject {
     publicAnonymousTypeLiteral: PublicAnonymousTypeLiteral;
     privateAnonymousTypeLiteral: PrivateAnonymousTypeLiteral;
 
-    exportedConstructor: (new () => ConstructedInterface);
+    exportedConstructor: new () => ConstructedInterface;
 }

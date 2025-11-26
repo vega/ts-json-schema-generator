@@ -1,8 +1,8 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { RestType } from "../Type/RestType";
-import { TypeFormatter } from "../TypeFormatter";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { RestType } from "../Type/RestType.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 
 export class RestTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}

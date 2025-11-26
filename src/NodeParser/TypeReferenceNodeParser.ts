@@ -1,12 +1,13 @@
 import ts from "typescript";
-
-import { Context, NodeParser } from "../NodeParser";
-import type { SubNodeParser } from "../SubNodeParser";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { AnyType } from "../Type/AnyType";
-import { ArrayType } from "../Type/ArrayType";
-import type { BaseType } from "../Type/BaseType";
-import { StringType } from "../Type/StringType";
+import { Context, type NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AnyType } from "../Type/AnyType.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { StringType } from "../Type/StringType.js";
+import { UnknownType } from "../Type/UnknownType.js";
+import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 const invalidTypes: Record<number, boolean> = {
     [ts.SyntaxKind.ModuleDeclaration]: true,
@@ -16,7 +17,7 @@ const invalidTypes: Record<number, boolean> = {
 export class TypeReferenceNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeReferenceNode): boolean {
@@ -29,12 +30,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             // When the node doesn't have a valid source file, its position is -1, so we can't
             // search for a symbol based on its location. In that case, the ts.factory defines a symbol
             // property on the node itself.
-            (node.typeName as unknown as ts.Type).symbol;
-
-        // Wraps promise type to avoid resolving to a empty Object type.
-        if (typeSymbol.name === "Promise") {
-            return this.childNodeParser.createType(node.typeArguments![0]!, this.createSubContext(node, context));
-        }
+            symbolAtNode(node.typeName)!;
 
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
@@ -50,7 +46,17 @@ export class TypeReferenceNodeParser implements SubNodeParser {
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
-            return context.getArgument(typeSymbol.name);
+            return context.getArgument(typeSymbol.name) ?? new UnknownType(true);
+        }
+
+        // Wraps promise type to avoid resolving to a empty Object type.
+        if (typeSymbol.name === "Promise" || typeSymbol.name === "PromiseLike") {
+            // Promise without type resolves to Promise<any>
+            if (!node.typeArguments || node.typeArguments.length === 0) {
+                return new AnyType();
+            }
+
+            return this.childNodeParser.createType(node.typeArguments[0], context);
         }
 
         if (typeSymbol.name === "Array" || typeSymbol.name === "ReadonlyArray") {
@@ -73,7 +79,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
 
         return this.childNodeParser.createType(
             typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
-            this.createSubContext(node, context)
+            this.createSubContext(node, context),
         );
     }
 

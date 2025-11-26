@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { SymbolType } from "../Type/SymbolType";
-import { BaseType } from "../Type/BaseType";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { SymbolType } from "../Type/SymbolType.js";
+import type { BaseType } from "../Type/BaseType.js";
 
 export class SymbolTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: SymbolType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof SymbolType;
     }
     public getDefinition(type: SymbolType): Definition {

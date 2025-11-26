@@ -10,7 +10,7 @@ describe("valid-data-struct", () => {
     it("literal-object-type", assertValidSchema("literal-object-type", "MyType"));
     it(
         "literal-object-type-with-computed-props",
-        assertValidSchema("literal-object-type-with-computed-props", "MyType")
+        assertValidSchema("literal-object-type-with-computed-props", "MyType"),
     );
     it("literal-array-type", assertValidSchema("literal-array-type", "MyType"));
     it("literal-index-type", assertValidSchema("literal-index-type", "MyType"));
@@ -31,9 +31,12 @@ describe("valid-data-struct", () => {
     it("class-inheritance", assertValidSchema("class-inheritance", "MyObject"));
     it("class-generics", assertValidSchema("class-generics", "MyObject"));
     it("class-jsdoc", assertValidSchema("class-jsdoc", "MyObject"));
+    it("class-new-expression", assertValidSchema("class-new-expression", "MyType"));
 
     it("structure-private", assertValidSchema("structure-private", "MyObject"));
     it("structure-anonymous", assertValidSchema("structure-anonymous", "MyObject"));
     it("structure-recursion", assertValidSchema("structure-recursion", "MyObject"));
     it("structure-extra-props", assertValidSchema("structure-extra-props", "MyObject"));
+
+    it("string-literal-property-names", assertValidSchema("string-literal-property-names", "*"));
 });

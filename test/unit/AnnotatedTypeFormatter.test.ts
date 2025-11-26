@@ -1,4 +1,4 @@
-import { makeNullable } from "../../src/TypeFormatter/AnnotatedTypeFormatter";
+import { makeNullable } from "../../src/TypeFormatter/AnnotatedTypeFormatter.js";
 
 describe("makeNullable", () => {
     it("makes number nullable", () => {

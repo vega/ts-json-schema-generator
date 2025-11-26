@@ -1,10 +1,11 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AnnotatedType } from "../Type/AnnotatedType";
-import { BaseType } from "../Type/BaseType";
-import { UnionType } from "../Type/UnionType";
-import { TypeFormatter } from "../TypeFormatter";
-import { derefType } from "../Utils/derefType";
+import { JsonTypeError } from "../Error/Errors.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { UnionType } from "../Type/UnionType.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
+import { derefType } from "../Utils/derefType.js";
 
 export function makeNullable(def: Definition): Definition {
     const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
@@ -48,22 +49,21 @@ export function makeNullable(def: Definition): Definition {
 export class AnnotatedTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: AnnotatedType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof AnnotatedType;
     }
     public getDefinition(type: AnnotatedType): Definition {
         const annotations = type.getAnnotations();
 
         if ("discriminator" in annotations) {
-            const derefed = derefType(type.getType());
-            if (derefed instanceof UnionType) {
-                derefed.setDiscriminator(annotations.discriminator);
+            const deref = derefType(type.getType());
+            if (deref instanceof UnionType) {
+                deref.setDiscriminator(annotations.discriminator);
                 delete annotations.discriminator;
             } else {
-                throw new Error(
-                    `Cannot assign discriminator tag to type: ${JSON.stringify(
-                        derefed
-                    )}. This tag can only be assigned to union types.`
+                throw new JsonTypeError(
+                    `Cannot assign discriminator tag to type: ${deref.getName()}. This tag can only be assigned to union types.`,
+                    deref,
                 );
             }
         }

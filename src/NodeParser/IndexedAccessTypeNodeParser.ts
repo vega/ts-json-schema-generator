@@ -1,22 +1,23 @@
 import ts from "typescript";
-import { LogicError } from "../Error/LogicError";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { NeverType } from "../Type/NeverType";
-import { NumberType } from "../Type/NumberType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { StringType } from "../Type/StringType";
-import { TupleType } from "../Type/TupleType";
-import { UnionType } from "../Type/UnionType";
-import { derefType } from "../Utils/derefType";
-import { getTypeByKey } from "../Utils/typeKeys";
+import { LogicError } from "../Error/Errors.js";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { ReferenceType } from "../Type/ReferenceType.js";
+import { StringType } from "../Type/StringType.js";
+import { TupleType } from "../Type/TupleType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { isErroredUnknownType } from "../Type/UnknownType.js";
+import { derefType } from "../Utils/derefType.js";
+import { getTypeByKey } from "../Utils/typeKeys.js";
 
 export class IndexedAccessTypeNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
-        protected childNodeParser: NodeParser
+        protected childNodeParser: NodeParser,
     ) {}
 
     public supportsNode(node: ts.TypeNode): boolean {
@@ -36,7 +37,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                     ts.isPropertySignature(m) &&
                     Boolean(m.type) &&
                     ts.isIdentifier(m.name) &&
-                    m.name.text === indexType.getValue()
+                    m.name.text === indexType.getValue(),
             );
 
             return member && this.childNodeParser.createType(member.type, context);
@@ -49,7 +50,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const indexType = derefType(this.childNodeParser.createType(node.indexType, context));
         const indexedType = this.createIndexedType(node.objectType, context, indexType);
 
-        if (indexedType) {
+        if (indexedType && !isErroredUnknownType(indexedType)) {
             return indexedType;
         }
 
@@ -62,7 +63,8 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         const propertyTypes = indexTypes.map((type) => {
             if (!(type instanceof LiteralType || type instanceof StringType || type instanceof NumberType)) {
                 throw new LogicError(
-                    `Unexpected type "${type.getId()}" (expected "LiteralType" or "StringType" or "NumberType")`
+                    node,
+                    `Unexpected type "${type.getId()}" (expected "LiteralType.js" or "StringType.js" or "NumberType.js")`,
                 );
             }
 
@@ -70,14 +72,17 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             if (!propertyType) {
                 if (type instanceof NumberType && objectType instanceof TupleType) {
                     return new UnionType(objectType.getTypes());
-                } else if (type instanceof LiteralType) {
+                }
+
+                if (type instanceof LiteralType) {
                     if (objectType instanceof ReferenceType) {
                         return objectType;
                     }
-                    throw new LogicError(`Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
-                } else {
-                    throw new LogicError(`No additional properties in type "${objectType.getId()}"`);
+
+                    throw new LogicError(node, `Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
                 }
+
+                throw new LogicError(node, `No additional properties in type "${objectType.getId()}"`);
             }
 
             return propertyType;

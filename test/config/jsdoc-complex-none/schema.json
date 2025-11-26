@@ -1,35 +1,55 @@
 {
+  "$ref": "#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "MyExportString": {
+      "type": "string"
+    },
+    "MyNonEmptyArray<number>": {
+      "items": {
+        "type": "number"
+      },
+      "type": "array"
+    },
     "MyObject": {
-      "type": "object",
+      "additionalProperties": false,
       "properties": {
-        "stringValue": {
-          "type": "string"
-        },
-        "numberValue": {
-          "type": "number"
-        },
-        "requiredValue": {
-          "type": ["number", "string"]
-        },
-        "nullableValue": {
-          "type": ["number", "string", "null"]
-        },
-        "optionalValue": {
-          "type": ["number", "string"]
-        },
-        "privateString": {
-          "type": "string"
-        },
         "exportString": {
           "$ref": "#/definitions/MyExportString"
+        },
+        "nullableValue": {
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "type": "number"
         },
         "numberArray": {
           "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E"
         },
-        "number": {
+        "numberValue": {
           "type": "number"
+        },
+        "optionalValue": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "privateString": {
+          "type": "string"
+        },
+        "requiredValue": {
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "stringValue": {
+          "type": "string"
         }
       },
       "required": [
@@ -42,17 +62,7 @@
         "numberArray",
         "number"
       ],
-      "additionalProperties": false
-    },
-    "MyExportString": {
-      "type": "string"
-    },
-    "MyNonEmptyArray<number>": {
-      "type": "array",
-      "items": {
-        "type": "number"
-      }
+      "type": "object"
     }
-  },
-  "$ref": "#/definitions/MyObject"
+  }
 }

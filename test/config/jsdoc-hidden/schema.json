@@ -3,7 +3,10 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "Enum": {
-      "enum": ["y", "z"],
+      "enum": [
+        "y",
+        "z"
+      ],
       "type": "string"
     },
     "MyObject": {
@@ -23,15 +26,26 @@
           "$ref": "#/definitions/Options2"
         }
       },
-      "required": ["foo", "bar", "options", "options2"],
+      "required": [
+        "foo",
+        "bar",
+        "options",
+        "options2"
+      ],
       "type": "object"
     },
     "Options": {
-      "enum": ["up", "down"],
+      "enum": [
+        "up",
+        "down"
+      ],
       "type": "string"
     },
     "Options2": {
-      "enum": ["up", "down"],
+      "enum": [
+        "up",
+        "down"
+      ],
       "type": "string"
     }
   }

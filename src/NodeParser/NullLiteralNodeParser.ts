@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { NullType } from "../Type/NullType";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { NullType } from "../Type/NullType.js";
 
 export class NullLiteralNodeParser implements SubNodeParser {
     public supportsNode(node: ts.NullLiteral): boolean {

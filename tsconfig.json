@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2019",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
     "esModuleInterop": true,
     "isolatedModules": false,
     "experimentalDecorators": true,
@@ -22,9 +22,10 @@
     "pretty": true,
     "typeRoots": ["node_modules/@types"],
     "outDir": "dist",
-    "incremental": true
+    "incremental": true,
+    "importHelpers": true
   },
   "files": ["ts-json-schema-generator.ts", "index.ts"],
-  "include": ["./src/**/*.ts", "./factory/**/*.ts", "./test/**.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/**/*.ts", "factory/**/*.ts"],
+  "exclude": ["node_modules", "dist", "cjs"]
 }

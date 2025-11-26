@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class IntersectionType extends BaseType {
     public constructor(private types: BaseType[]) {

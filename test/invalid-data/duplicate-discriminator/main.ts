@@ -1,12 +1,12 @@
 export type A = {
-    type: "A",
-    a: string,
-}
+    type: "A";
+    a: string;
+};
 
 export type B = {
-    type: "A",
-    b: string,
-}
+    type: "A";
+    b: string;
+};
 
 /**
  * @discriminator type

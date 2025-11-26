@@ -1,13 +1,15 @@
-import { Config } from "../src/Config";
-import { SchemaGenerator } from "../src/SchemaGenerator";
-import { createFormatter } from "./formatter";
-import { createParser } from "./parser";
-import { createProgram } from "./program";
+import type { Config } from "../src/Config.js";
+import { DEFAULT_CONFIG } from "../src/Config.js";
+import { SchemaGenerator } from "../src/SchemaGenerator.js";
+import { createFormatter } from "./formatter.js";
+import { createParser } from "./parser.js";
+import { createProgram } from "./program.js";
 
 export function createGenerator(config: Config): SchemaGenerator {
-    const program = createProgram(config);
-    const parser = createParser(program, config);
-    const formatter = createFormatter(config);
+    const completedConfig = { ...DEFAULT_CONFIG, ...config };
+    const program = config.tsProgram || createProgram(completedConfig);
+    const parser = createParser(program, completedConfig);
+    const formatter = createFormatter(completedConfig);
 
-    return new SchemaGenerator(program, parser, formatter, config);
+    return new SchemaGenerator(program, parser, formatter, completedConfig);
 }

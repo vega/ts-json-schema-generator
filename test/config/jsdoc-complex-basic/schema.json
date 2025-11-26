@@ -1,53 +1,76 @@
 {
+  "$ref": "#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "MyExportString": {
+      "title": "My export string",
+      "type": "string"
+    },
+    "MyNonEmptyArray<number>": {
+      "items": {
+        "type": "number"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
     "MyObject": {
-      "type": "object",
+      "additionalProperties": false,
+      "description": "Some description here",
       "properties": {
-        "stringValue": {
-          "type": "string",
-          "title": "String field title",
-          "minLength": 10,
-          "format": "date-time",
-          "pattern": "/^\\d+$/"
-        },
-        "numberValue": {
-          "type": "number",
-          "title": "Number field title",
-          "exclusiveMaximum": 10,
-          "multipleOf": 3
-        },
-        "requiredValue": {
-          "type": ["number", "string"],
-          "title": "Required value"
-        },
-        "nullableValue": {
-          "type": ["number", "string", "null"],
-          "title": "Nullable value"
-        },
-        "optionalValue": {
-          "type": ["number", "string"],
-          "title": "Optional value"
-        },
-        "privateString": {
-          "type": "string",
-          "title": "My private string",
-          "description": "Export field description",
-          "default": "private"
-        },
         "exportString": {
           "$ref": "#/definitions/MyExportString",
-          "description": "Export field description",
           "default": {
             "length": 10
-          }
+          },
+          "description": "Export field description"
+        },
+        "nullableValue": {
+          "title": "Nullable value",
+          "type": [
+            "number",
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "type": "number"
         },
         "numberArray": {
           "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E",
           "title": "Non empty array"
         },
-        "number": {
+        "numberValue": {
+          "exclusiveMaximum": 10,
+          "multipleOf": 3,
+          "title": "Number field title",
           "type": "number"
+        },
+        "optionalValue": {
+          "title": "Optional value",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "privateString": {
+          "default": "private",
+          "description": "Export field description",
+          "title": "My private string",
+          "type": "string"
+        },
+        "requiredValue": {
+          "title": "Required value",
+          "type": [
+            "number",
+            "string"
+          ]
+        },
+        "stringValue": {
+          "format": "date-time",
+          "minLength": 10,
+          "pattern": "/^\\d+$/",
+          "title": "String field title",
+          "type": "string"
         }
       },
       "required": [
@@ -60,21 +83,8 @@
         "numberArray",
         "number"
       ],
-      "additionalProperties": false,
-      "description": "Some description here",
-      "title": "Some title here"
-    },
-    "MyExportString": {
-      "type": "string",
-      "title": "My export string"
-    },
-    "MyNonEmptyArray<number>": {
-      "type": "array",
-      "items": {
-        "type": "number"
-      },
-      "minItems": 1
+      "title": "Some title here",
+      "type": "object"
     }
-  },
-  "$ref": "#/definitions/MyObject"
+  }
 }

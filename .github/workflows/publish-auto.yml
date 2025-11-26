@@ -13,19 +13,20 @@ jobs:
 
     name: Make a release and publish to NPM
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           registry-url: "https://registry.npmjs.org"
-          cache: "yarn"
+          cache: "npm"
+          node-version: 22
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install Node dependencies
-        run: yarn --frozen-lockfile
+        run: npm ci
 
       - name: Create release
         run: npm run release

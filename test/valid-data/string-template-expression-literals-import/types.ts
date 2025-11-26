@@ -1,1 +1,1 @@
-export type MyType = 'one' | 'two' | 'three';
+export type MyType = "one" | "two" | "three";

@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class OptionalType extends BaseType {
     public constructor(private item: BaseType) {

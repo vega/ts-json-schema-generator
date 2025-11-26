@@ -3,5 +3,5 @@ interface SomeObject {
     def?: "bar";
 }
 
-const obj: SomeObject = {abc: "foo"};
+const obj: SomeObject = { abc: "foo" };
 export type MyType = typeof obj.abc;

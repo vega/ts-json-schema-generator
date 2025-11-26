@@ -1,13 +1,13 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AliasType } from "../Type/AliasType";
-import { BaseType } from "../Type/BaseType";
-import { TypeFormatter } from "../TypeFormatter";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AliasType } from "../Type/AliasType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 
 export class AliasTypeFormatter implements SubTypeFormatter {
     public constructor(protected childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: AliasType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof AliasType;
     }
     public getDefinition(type: AliasType): Definition {

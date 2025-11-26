@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { AnyType } from "../Type/AnyType";
-import { BaseType } from "../Type/BaseType";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnyType } from "../Type/AnyType.js";
+import type { BaseType } from "../Type/BaseType.js";
 
 export class AnyTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {

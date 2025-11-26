@@ -9,7 +9,9 @@
           "$ref": "#/definitions/Visible"
         }
       },
-      "required": ["visible"],
+      "required": [
+        "visible"
+      ],
       "type": "object"
     },
     "Visible": {

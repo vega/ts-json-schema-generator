@@ -1,7 +1,32 @@
-import { BaseType } from "./BaseType";
+import type ts from "typescript";
+import { BaseType } from "./BaseType.js";
+import type { ObjectType } from "./ObjectType.js";
 
 export class ConstructorType extends BaseType {
+    private comment: string;
+
+    constructor(
+        node?: ts.ConstructorTypeNode,
+        protected namedArguments?: ObjectType,
+    ) {
+        super();
+
+        if (node) {
+            this.comment = `new (${node.parameters
+                .map((p) => p.getFullText())
+                .join(",")}) =>${node.type?.getFullText()}`;
+        }
+    }
+
     public getId(): string {
         return "constructor";
+    }
+
+    public getComment(): string | undefined {
+        return this.comment;
+    }
+
+    public getNamedArguments(): ObjectType | undefined {
+        return this.namedArguments;
     }
 }

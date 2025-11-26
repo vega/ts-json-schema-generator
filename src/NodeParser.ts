@@ -1,8 +1,8 @@
 import stringify from "safe-stable-stringify";
-import ts from "typescript";
-import { BaseType } from "./Type/BaseType";
-import { ReferenceType } from "./Type/ReferenceType";
-import { getKey } from "./Utils/nodeKey";
+import type ts from "typescript";
+import type { BaseType } from "./Type/BaseType.js";
+import type { ReferenceType } from "./Type/ReferenceType.js";
+import { getKey } from "./Utils/nodeKey.js";
 
 export class Context {
     private cacheKey: string | null = null;

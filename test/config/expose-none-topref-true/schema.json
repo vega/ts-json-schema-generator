@@ -1,127 +1,127 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "type": "object",
-            "properties": {
-                "exportInterface": {
-                    "type": "object",
-                    "properties": {
-                        "exportValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "exportValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "exportAlias": {
-                    "type": "object",
-                    "properties": {
-                        "exportValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "exportValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "privateInterface": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "privateAlias": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "mixedInterface": {
-                    "type": "object",
-                    "properties": {
-                        "mixedValue": {
-                            "type": "object",
-                            "properties": {
-                                "exportValue": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "exportValue"
-                            ],
-                            "additionalProperties": false
-                        }
-                    },
-                    "required": [
-                        "mixedValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "mixedAlias": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "publicAnonymousTypeLiteral": {
-                    "type": "object",
-                    "properties": {
-                        "publicValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "publicValue"
-                    ],
-                    "additionalProperties": false
-                },
-                "privateAnonymousTypeLiteral": {
-                    "type": "object",
-                    "properties": {
-                        "privateValue": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "privateValue"
-                    ],
-                    "additionalProperties": false
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "exportAlias": {
+          "additionalProperties": false,
+          "properties": {
+            "exportValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "exportValue"
+          ],
+          "type": "object"
+        },
+        "exportInterface": {
+          "additionalProperties": false,
+          "properties": {
+            "exportValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "exportValue"
+          ],
+          "type": "object"
+        },
+        "mixedAlias": {
+          "additionalProperties": false,
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "mixedInterface": {
+          "additionalProperties": false,
+          "properties": {
+            "mixedValue": {
+              "additionalProperties": false,
+              "properties": {
+                "exportValue": {
+                  "type": "string"
                 }
-            },
-            "required": [
-                "exportInterface",
-                "exportAlias",
-                "privateInterface",
-                "privateAlias",
-                "mixedInterface",
-                "mixedAlias",
-                "publicAnonymousTypeLiteral",
-                "privateAnonymousTypeLiteral"
-            ],
-            "additionalProperties": false
+              },
+              "required": [
+                "exportValue"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "mixedValue"
+          ],
+          "type": "object"
+        },
+        "privateAlias": {
+          "additionalProperties": false,
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "privateAnonymousTypeLiteral": {
+          "additionalProperties": false,
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "privateInterface": {
+          "additionalProperties": false,
+          "properties": {
+            "privateValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "privateValue"
+          ],
+          "type": "object"
+        },
+        "publicAnonymousTypeLiteral": {
+          "additionalProperties": false,
+          "properties": {
+            "publicValue": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "publicValue"
+          ],
+          "type": "object"
         }
-    },
-    "$ref": "#/definitions/MyObject"
+      },
+      "required": [
+        "exportInterface",
+        "exportAlias",
+        "privateInterface",
+        "privateAlias",
+        "mixedInterface",
+        "mixedAlias",
+        "publicAnonymousTypeLiteral",
+        "privateAnonymousTypeLiteral"
+      ],
+      "type": "object"
+    }
+  }
 }

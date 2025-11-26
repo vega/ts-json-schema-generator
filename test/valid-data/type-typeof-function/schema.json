@@ -1,23 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
-    "NamedParameters<typeof checkServerIdentity>": {
-      "additionalProperties": false,
-      "properties": {
-        "hostname": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "hostname"
-      ],
-      "type": "object"
-    },
     "Test": {
       "additionalProperties": false,
       "properties": {
         "checkServerIdentity": {
-          "$comment": "(hostname: string) ->  Error | undefined"
+          "$comment": "(hostname: string) => Error | undefined"
         },
         "otherProp": {
           "type": "string"
@@ -26,6 +14,24 @@
       "required": [
         "otherProp"
       ],
+      "type": "object"
+    },
+    "checkServerIdentity": {
+      "$comment": "(hostname: string) => Error | undefined",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "hostname": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "hostname"
+          ],
+          "type": "object"
+        }
+      },
       "type": "object"
     }
   }

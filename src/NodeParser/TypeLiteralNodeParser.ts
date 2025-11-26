@@ -1,19 +1,19 @@
-import ts, { isPropertySignature, MethodSignature, PropertySignature } from "typescript";
-import { Context, NodeParser } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { FunctionType } from "../Type/FunctionType";
-import { NeverType } from "../Type/NeverType";
-import { ObjectProperty, ObjectType } from "../Type/ObjectType";
-import { ReferenceType } from "../Type/ReferenceType";
-import { isNodeHidden } from "../Utils/isHidden";
-import { getKey } from "../Utils/nodeKey";
+import type { MethodSignature, PropertySignature } from "typescript";
+import ts from "typescript";
+import type { Context, NodeParser } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { NeverType } from "../Type/NeverType.js";
+import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
+import type { ReferenceType } from "../Type/ReferenceType.js";
+import { isNodeHidden } from "../Utils/isHidden.js";
+import { getKey } from "../Utils/nodeKey.js";
 
 export class TypeLiteralNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
         protected childNodeParser: NodeParser,
-        protected readonly additionalProperties: boolean
+        protected readonly additionalProperties: boolean,
     ) {}
 
     public supportsNode(node: ts.TypeLiteralNode): boolean {
@@ -41,24 +41,23 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         const properties = node.members
             .filter(
                 (element): element is PropertySignature | MethodSignature =>
-                    ts.isPropertySignature(element) || ts.isMethodSignature(element)
+                    ts.isPropertySignature(element) || ts.isMethodSignature(element),
             )
             .filter((propertyNode) => !isNodeHidden(propertyNode))
             .map(
                 (propertyNode) =>
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
-                        isPropertySignature(propertyNode)
-                            ? this.childNodeParser.createType(propertyNode.type!, context)
-                            : new FunctionType(),
-                        !propertyNode.questionToken
-                    )
+                        this.childNodeParser.createType(propertyNode.type!, context),
+                        !propertyNode.questionToken,
+                    ),
             )
             .filter((prop) => {
-                if (prop.isRequired() && prop.getType() instanceof NeverType) {
+                const type = prop.getType();
+                if (prop.isRequired() && type instanceof NeverType) {
                     hasRequiredNever = true;
                 }
-                return !(prop.getType() instanceof NeverType);
+                return !(type instanceof NeverType);
             });
 
         if (hasRequiredNever) {
@@ -74,7 +73,7 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return this.additionalProperties;
         }
 
-        return this.childNodeParser.createType(indexSignature.type!, context) ?? this.additionalProperties;
+        return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {
@@ -95,8 +94,10 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         } catch {
             // When propertyName was programmatically created, it doesn't have a source file.
             // Then, getText() will throw an error. But, for programmatically created nodes,`
-            // `escapedText` is available.
-            return (propertyName as ts.Identifier).escapedText as string;
+            // `escapedText` or `text` is available.
+            // Only `text` will be available when propertyName contains strange characters and it cannot be escaped
+            // or if it is a number.
+            return ((propertyName as ts.Identifier).escapedText as string) ?? (propertyName as ts.StringLiteral).text;
         }
     }
 }

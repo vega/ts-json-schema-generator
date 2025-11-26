@@ -4,17 +4,23 @@
     "String": {
       "type": "string"
     },
-    "NamedParameters<typeof myFunction>": {
-      "additionalProperties": false,
+    "myFunction": {
+      "$comment": "(\n    /**\n     * @description Inline parameter description\n     */\n    requiredString: String) =>undefined",
       "properties": {
-        "requiredString": {
-          "$ref": "#/definitions/String",
-          "description": "Inline parameter description"
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "requiredString": {
+              "$ref": "#/definitions/String",
+              "description": "Inline parameter description"
+            }
+          },
+          "required": [
+            "requiredString"
+          ],
+          "type": "object"
         }
       },
-      "required": [
-        "requiredString"
-      ],
       "type": "object"
     }
   }

@@ -1,0 +1,141 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "enumMemberWithInterface": {
+          "anyOf": [
+            {
+              "const": "alpha",
+              "type": "string"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "abc": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "abc"
+              ],
+              "type": "object"
+            }
+          ]
+        },
+        "enumMemberWithLiteral": {
+          "enum": [
+            "alpha",
+            "foo"
+          ],
+          "type": "string"
+        },
+        "enumMemberWithLiteralAndNull": {
+          "enum": [
+            "alpha",
+            "foo",
+            null
+          ],
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "enumMembers": {
+          "enum": [
+            "alpha",
+            "beta"
+          ],
+          "type": "string"
+        },
+        "enumMembersWithNumber": {
+          "enum": [
+            "alpha",
+            666
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "twoDifferentEnumMembers": {
+          "enum": [
+            "alpha",
+            2
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "twoDifferentWholeEnums": {
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            0,
+            2,
+            4,
+            6
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "wholeEnum": {
+          "enum": [
+            "alpha",
+            "beta",
+            666
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "wholeEnumWithLiteral": {
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            "bar"
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "wholeEnumWithLiteralAndNull": {
+          "enum": [
+            "alpha",
+            "beta",
+            666,
+            "bar",
+            null
+          ],
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "enumMembers",
+        "enumMemberWithLiteral",
+        "enumMemberWithLiteralAndNull",
+        "enumMemberWithInterface",
+        "enumMembersWithNumber",
+        "wholeEnum",
+        "wholeEnumWithLiteral",
+        "wholeEnumWithLiteralAndNull",
+        "twoDifferentEnumMembers",
+        "twoDifferentWholeEnums"
+      ],
+      "type": "object"
+    }
+  }
+}

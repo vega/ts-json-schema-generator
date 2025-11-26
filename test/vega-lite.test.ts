@@ -1,12 +1,14 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
-import { Config } from "../src/Config";
+import type { CompletedConfig } from "../src/Config.js";
+import { DEFAULT_CONFIG } from "../src/Config.js";
 import { createGenerator } from "./utils";
 import stringify from "safe-stable-stringify";
 
 describe("vega-lite", () => {
     it("schema", () => {
-        const config: Config = {
+        const config: CompletedConfig = {
+            ...DEFAULT_CONFIG,
             path: `node_modules/vega-lite/src/index.ts`,
             type: "TopLevelSpec",
             encodeRefs: false,

@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "A": {
+      "const": 1,
+      "type": "number"
+    },
+    "B": {
+      "const": "string",
+      "type": "string"
+    },
+    "D": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "const": 1,
+          "type": "number"
+        }
+      },
+      "required": [
+        "a"
+      ],
+      "type": "object"
+    },
+    "E": {
+      "additionalProperties": false,
+      "properties": {
+        "b": {
+          "const": 2,
+          "type": "number"
+        }
+      },
+      "required": [
+        "b"
+      ],
+      "type": "object"
+    },
+    "External": {
+      "const": 1,
+      "type": "number"
+    }
+  }
+}

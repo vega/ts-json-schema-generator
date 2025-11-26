@@ -1,10 +1,10 @@
-export type String = string
+export type String = string;
 
 export const myFunction = (
     /**
      * @description Inline parameter description
      */
-    requiredString: String
+    requiredString: String,
 ) => {
     return "whatever";
 };

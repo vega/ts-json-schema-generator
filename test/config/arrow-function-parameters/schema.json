@@ -1,27 +1,35 @@
 {
+  "$ref": "#/definitions/myFunction",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$ref": "#/definitions/NamedParameters%3Ctypeof%20myFunction%3E",
   "definitions": {
-    "NamedParameters<typeof myFunction>": {
-      "type": "object",
+    "StringValue": {
+      "description": "Type reference description",
+      "type": "string"
+    },
+    "myFunction": {
+      "$comment": "(\n    stringValue: StringValue,\n    /**\n     * @description Inline parameter description\n     */\n    optionalArgument?: string,\n    optionalArgumentWithDefault: number = 42) =>undefined",
       "properties": {
-        "stringValue": {
-          "$ref": "#/definitions/StringValue"
-        },
-        "optionalArgument": {
-          "type": "string",
-          "description": "Inline parameter description"
-        },
-        "optionalArgumentWithDefault": {
-          "type": "number"
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "optionalArgument": {
+              "description": "Inline parameter description",
+              "type": "string"
+            },
+            "optionalArgumentWithDefault": {
+              "type": "number"
+            },
+            "stringValue": {
+              "$ref": "#/definitions/StringValue"
+            }
+          },
+          "required": [
+            "stringValue"
+          ],
+          "type": "object"
         }
       },
-      "required": ["stringValue"],
-      "additionalProperties": false
-    },
-    "StringValue": {
-      "type": "string",
-      "description": "Type reference description"
+      "type": "object"
     }
   }
 }

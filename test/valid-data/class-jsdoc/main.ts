@@ -14,5 +14,8 @@ export class MyObject {
      * @param a Parameter a description
      * @param b Parameter b description
      */
-    public constructor(public a: string, public b: number) {}
+    public constructor(
+        public a: string,
+        public b: number,
+    ) {}
 }

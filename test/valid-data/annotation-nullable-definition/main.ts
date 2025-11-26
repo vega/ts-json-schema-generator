@@ -1,10 +1,10 @@
 export class Definition {
-     name: string
+    name: string;
 }
 
-export class MyObject  {
+export class MyObject {
     /**
      * @nullable
      */
-    optional?: Definition[]
+    optional?: Definition[];
 }

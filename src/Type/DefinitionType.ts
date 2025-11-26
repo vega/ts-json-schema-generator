@@ -1,9 +1,9 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export class DefinitionType extends BaseType {
     public constructor(
         private name: string | undefined,
-        private type: BaseType
+        private type: BaseType,
     ) {
         super();
     }

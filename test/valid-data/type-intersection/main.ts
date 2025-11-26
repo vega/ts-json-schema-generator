@@ -10,7 +10,8 @@ export interface Type3 {
 }
 
 export interface MyObject {
-    value: Type1 & Type2 & {
-        foo: Type3;
-    };
+    value: Type1 &
+        Type2 & {
+            foo: Type3;
+        };
 }

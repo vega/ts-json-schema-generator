@@ -1,18 +1,17 @@
-import { LogicError } from "../Error/LogicError";
-import { Definition } from "../Schema/Definition";
-import { RawTypeName } from "../Schema/RawType";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { BooleanType } from "../Type/BooleanType";
-import { NullType } from "../Type/NullType";
-import { NumberType } from "../Type/NumberType";
-import { PrimitiveType } from "../Type/PrimitiveType";
-import { StringType } from "../Type/StringType";
-import { UnionType } from "../Type/UnionType";
-import { uniqueArray } from "../Utils/uniqueArray";
+import { JsonTypeError } from "../Error/Errors.js";
+import type { Definition } from "../Schema/Definition.js";
+import type { RawTypeName } from "../Schema/RawType.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { BooleanType } from "../Type/BooleanType.js";
+import { NullType } from "../Type/NullType.js";
+import { NumberType } from "../Type/NumberType.js";
+import { StringType } from "../Type/StringType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { uniqueArray } from "../Utils/uniqueArray.js";
 
 export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: UnionType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof UnionType && type.getTypes().length > 0 && this.isPrimitiveUnion(type);
     }
     public getDefinition(type: UnionType): Definition {
@@ -25,19 +24,34 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     }
 
     protected isPrimitiveUnion(type: UnionType): boolean {
-        return type.getTypes().every((item) => item instanceof PrimitiveType);
+        return type
+            .getTypes()
+            .every(
+                (item) =>
+                    item instanceof StringType ||
+                    item instanceof NumberType ||
+                    item instanceof BooleanType ||
+                    item instanceof NullType,
+            );
     }
+
     protected getPrimitiveType(item: BaseType): RawTypeName {
         if (item instanceof StringType) {
             return "string";
-        } else if (item instanceof NumberType) {
+        }
+
+        if (item instanceof NumberType) {
             return "number";
-        } else if (item instanceof BooleanType) {
+        }
+
+        if (item instanceof BooleanType) {
             return "boolean";
-        } else if (item instanceof NullType) {
+        }
+
+        if (item instanceof NullType) {
             return "null";
         }
 
-        throw new LogicError("Unexpected code branch");
+        throw new JsonTypeError("Unexpected code branch", item);
     }
 }

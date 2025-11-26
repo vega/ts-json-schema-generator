@@ -1,8 +1,8 @@
 import json5 from "json5";
-import ts from "typescript";
-import { AnnotationsReader } from "../AnnotationsReader";
-import { Annotations } from "../Type/AnnotatedType";
-import { symbolAtNode } from "../Utils/symbolAtNode";
+import type ts from "typescript";
+import type { AnnotationsReader } from "../AnnotationsReader.js";
+import type { Annotations } from "../Type/AnnotatedType.js";
+import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 export class BasicAnnotationsReader implements AnnotationsReader {
     private static requiresDollar = new Set<string>(["id", "comment", "ref"]);
@@ -114,7 +114,7 @@ export class BasicAnnotationsReader implements AnnotationsReader {
     private parseJson(value: string): any {
         try {
             return json5.parse(value);
-        } catch (e) {
+        } catch {
             return undefined;
         }
     }

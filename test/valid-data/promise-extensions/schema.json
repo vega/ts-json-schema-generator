@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "A": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "items": {
+            "type": "number"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "type": "object"
+    },
+    "AndLikePromise": {
+      "$ref": "#/definitions/A"
+    },
+    "AndPromise": {
+      "$ref": "#/definitions/A"
+    },
+    "LikeAbstractClass": {
+      "$ref": "#/definitions/A"
+    },
+    "LikeClass": {
+      "$ref": "#/definitions/A"
+    },
+    "LikeInterface": {
+      "$ref": "#/definitions/A"
+    },
+    "LikeOrType": {
+      "$ref": "#/definitions/A"
+    },
+    "LikeType": {
+      "$ref": "#/definitions/A"
+    },
+    "PromiseAlias": {
+      "$ref": "#/definitions/A"
+    },
+    "PromiseClass": {
+      "$ref": "#/definitions/A"
+    },
+    "PromiseInterface": {
+      "$ref": "#/definitions/A"
+    },
+    "PromiseOrAlias": {
+      "$ref": "#/definitions/A"
+    },
+    "ThenableClass": {
+      "$ref": "#/definitions/A"
+    },
+    "ThenableInterface": {
+      "$ref": "#/definitions/A"
+    },
+    "WithProperty": {
+      "$ref": "#/definitions/A"
+    }
+  }
+}

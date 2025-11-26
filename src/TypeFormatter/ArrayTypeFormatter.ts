@@ -1,13 +1,13 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { ArrayType } from "../Type/ArrayType";
-import { BaseType } from "../Type/BaseType";
-import { TypeFormatter } from "../TypeFormatter";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { ArrayType } from "../Type/ArrayType.js";
+import type { BaseType } from "../Type/BaseType.js";
+import type { TypeFormatter } from "../TypeFormatter.js";
 
 export class ArrayTypeFormatter implements SubTypeFormatter {
     public constructor(private childTypeFormatter: TypeFormatter) {}
 
-    public supportsType(type: ArrayType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof ArrayType;
     }
     public getDefinition(type: ArrayType): Definition {

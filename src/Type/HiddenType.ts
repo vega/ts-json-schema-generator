@@ -1,4 +1,4 @@
-import { NeverType } from "./NeverType";
+import { NeverType } from "./NeverType.js";
 
 export class HiddenType extends NeverType {
     public getId(): string {

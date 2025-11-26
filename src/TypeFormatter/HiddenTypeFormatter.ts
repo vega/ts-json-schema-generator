@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { BaseType } from "../Type/BaseType";
-import { HiddenType } from "../Type/HiddenType";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { HiddenType } from "../Type/HiddenType.js";
 
 export class HiddenTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: HiddenType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof HiddenType;
     }
     public getDefinition(type: HiddenType): Definition {

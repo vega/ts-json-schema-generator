@@ -1,18 +1,16 @@
 {
-    "compilerOptions": {
-        "noEmit": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "ES5",
-        "module": "CommonJS",
-        "strictNullChecks": false,
-        "allowJs": true,
-        "baseUrl": ".",
-        "paths": {
-            "@src/*": ["src/*"]
-        }
-    },
-    "files": [
-        "src/main.ts"
-    ]
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ES5",
+    "module": "CommonJS",
+    "strictNullChecks": false,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"]
+    }
+  },
+  "files": ["src/main.ts"]
 }

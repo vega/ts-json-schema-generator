@@ -1,23 +1,23 @@
 import ts from "typescript";
-import { NoRootTypeError } from "./Error/NoRootTypeError";
-import { Context, NodeParser } from "./NodeParser";
-import { Definition } from "./Schema/Definition";
-import { Schema } from "./Schema/Schema";
-import { BaseType } from "./Type/BaseType";
-import { DefinitionType } from "./Type/DefinitionType";
-import { TypeFormatter } from "./TypeFormatter";
-import { StringMap } from "./Utils/StringMap";
-import { localSymbolAtNode, symbolAtNode } from "./Utils/symbolAtNode";
-import { removeUnreachable } from "./Utils/removeUnreachable";
-import { Config } from "./Config";
-import { hasJsDocTag } from "./Utils/hasJsDocTag";
+import type { Config } from "./Config.js";
+import { MultipleDefinitionsError, RootlessError, UnhandledError } from "./Error/Errors.js";
+import { Context, type NodeParser } from "./NodeParser.js";
+import type { Definition } from "./Schema/Definition.js";
+import type { Schema } from "./Schema/Schema.js";
+import type { BaseType } from "./Type/BaseType.js";
+import { DefinitionType } from "./Type/DefinitionType.js";
+import type { TypeFormatter } from "./TypeFormatter.js";
+import type { StringMap } from "./Utils/StringMap.js";
+import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
+import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
     public constructor(
         protected readonly program: ts.Program,
         protected readonly nodeParser: NodeParser,
         protected readonly typeFormatter: TypeFormatter,
-        protected readonly config?: Config
+        protected readonly config?: Config,
     ) {}
 
     public createSchema(fullName?: string): Schema {
@@ -26,15 +26,31 @@ export class SchemaGenerator {
     }
 
     public createSchemaFromNodes(rootNodes: ts.Node[]): Schema {
-        const rootTypes = rootNodes.map((rootNode) => {
-            return this.nodeParser.createType(rootNode, new Context());
-        });
+        const roots = rootNodes.map((rootNode) => ({
+            rootNode: rootNode,
+            rootType: this.nodeParser.createType(rootNode, new Context()),
+        }));
 
-        const rootTypeDefinition = rootTypes.length === 1 ? this.getRootTypeDefinition(rootTypes[0]) : undefined;
+        const rootTypeDefinitions = roots.map((root) => this.getRootTypeDefinition(root.rootType, root.rootNode));
+        const rootTypeDefinition = rootTypeDefinitions.length === 1 ? rootTypeDefinitions[0] : undefined;
         const definitions: StringMap<Definition> = {};
-        rootTypes.forEach((rootType) => this.appendRootChildDefinitions(rootType, definitions));
 
-        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+        for (const root of roots) {
+            try {
+                this.appendRootChildDefinitions(root.rootType, definitions);
+            } catch (error) {
+                throw UnhandledError.from(
+                    "Unhandled error while appending Child Type Definition.",
+                    root.rootNode,
+                    error,
+                );
+            }
+        }
+
+        const reachableDefinitions = rootTypeDefinitions.reduce<StringMap<Definition>>(
+            (acc, def) => Object.assign(acc, removeUnreachable(def, definitions)),
+            {},
+        );
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -47,16 +63,17 @@ export class SchemaGenerator {
     protected getRootNodes(fullName: string | undefined): ts.Node[] {
         if (fullName && fullName !== "*") {
             return [this.findNamedNode(fullName)];
-        } else {
-            const rootFileNames = this.program.getRootFileNames();
-            const rootSourceFiles = this.program
-                .getSourceFiles()
-                .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
-            const rootNodes = new Map<string, ts.Node>();
-            this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
-            return [...rootNodes.values()];
         }
+
+        const rootFileNames = this.program.getRootFileNames();
+        const rootSourceFiles = this.program
+            .getSourceFiles()
+            .filter((sourceFile) => rootFileNames.includes(sourceFile.fileName));
+        const rootNodes = new Map<string, ts.Node>();
+        this.appendTypes(rootSourceFiles, this.program.getTypeChecker(), rootNodes);
+        return [...rootNodes.values()];
     }
+
     protected findNamedNode(fullName: string): ts.Node {
         const typeChecker = this.program.getTypeChecker();
         const allTypes = new Map<string, ts.Node>();
@@ -74,11 +91,17 @@ export class SchemaGenerator {
             return allTypes.get(fullName)!;
         }
 
-        throw new NoRootTypeError(fullName);
+        throw new RootlessError(fullName);
     }
-    protected getRootTypeDefinition(rootType: BaseType): Definition {
-        return this.typeFormatter.getDefinition(rootType);
+
+    protected getRootTypeDefinition(rootType: BaseType, rootNode: ts.Node): Definition {
+        try {
+            return this.typeFormatter.getDefinition(rootType);
+        } catch (error) {
+            throw UnhandledError.from("Unhandled error while creating Root Type Definition.", rootNode, error);
+        }
     }
+
     protected appendRootChildDefinitions(rootType: BaseType, childDefinitions: StringMap<Definition>): void {
         const seen = new Set<string>();
 
@@ -102,7 +125,11 @@ export class SchemaGenerator {
             const childId = child.getId().replace(/def-/g, "");
 
             if (previousId && childId !== previousId) {
-                throw new Error(`Type "${name}" has multiple definitions.`);
+                throw new MultipleDefinitionsError(
+                    name,
+                    child,
+                    children.find((c) => c.getId() === previousId),
+                );
             }
             ids.set(name, childId);
         }
@@ -129,61 +156,149 @@ export class SchemaGenerator {
 
         return { projectFiles, externalFiles };
     }
+
     protected appendTypes(
         sourceFiles: readonly ts.SourceFile[],
         typeChecker: ts.TypeChecker,
-        types: Map<string, ts.Node>
+        types: Map<string, ts.Node>,
     ): void {
         for (const sourceFile of sourceFiles) {
             this.inspectNode(sourceFile, typeChecker, types);
         }
     }
+
     protected inspectNode(node: ts.Node, typeChecker: ts.TypeChecker, allTypes: Map<string, ts.Node>): void {
-        switch (node.kind) {
-            case ts.SyntaxKind.VariableDeclaration: {
-                const variableDeclarationNode = node as ts.VariableDeclaration;
-                if (
-                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.ArrowFunction ||
-                    variableDeclarationNode.initializer?.kind === ts.SyntaxKind.FunctionExpression
-                ) {
-                    this.inspectNode(variableDeclarationNode.initializer, typeChecker, allTypes);
-                }
+        if (ts.isVariableDeclaration(node)) {
+            if (
+                node.initializer?.kind === ts.SyntaxKind.ArrowFunction ||
+                node.initializer?.kind === ts.SyntaxKind.FunctionExpression
+            ) {
+                this.inspectNode(node.initializer, typeChecker, allTypes);
+            }
+
+            return;
+        }
+
+        if (
+            ts.isInterfaceDeclaration(node) ||
+            ts.isClassDeclaration(node) ||
+            ts.isEnumDeclaration(node) ||
+            ts.isTypeAliasDeclaration(node)
+        ) {
+            if (
+                (this.config?.expose === "all" || this.isExportType(node)) &&
+                !this.isGenericType(node as ts.TypeAliasDeclaration)
+            ) {
+                allTypes.set(this.getFullName(node, typeChecker), node);
                 return;
             }
-            case ts.SyntaxKind.InterfaceDeclaration:
-            case ts.SyntaxKind.ClassDeclaration:
-            case ts.SyntaxKind.EnumDeclaration:
-            case ts.SyntaxKind.TypeAliasDeclaration:
-                if (
-                    this.config?.expose === "all" ||
-                    (this.isExportType(node) && !this.isGenericType(node as ts.TypeAliasDeclaration))
-                ) {
-                    allTypes.set(this.getFullName(node, typeChecker), node);
+            return;
+        }
+
+        if (
+            ts.isFunctionDeclaration(node) ||
+            ts.isFunctionExpression(node) ||
+            ts.isArrowFunction(node) ||
+            ts.isConstructorTypeNode(node)
+        ) {
+            allTypes.set(this.getFullName(node, typeChecker), node);
+            return;
+        }
+
+        if (ts.isExportSpecifier(node)) {
+            const symbol = typeChecker.getExportSpecifierLocalTargetSymbol(node);
+
+            if (symbol?.declarations?.length === 1) {
+                const declaration = symbol.declarations[0];
+
+                if (ts.isImportSpecifier(declaration)) {
+                    // Handling the `Foo` in `import { Foo } from "./lib"; export { Foo };`
+                    const type = typeChecker.getTypeAtLocation(declaration);
+
+                    if (type.symbol?.declarations?.length === 1) {
+                        this.inspectNode(type.symbol.declarations[0], typeChecker, allTypes);
+                    }
+                } else {
+                    // Handling the `Bar` in `export { Bar } from './lib';`
+                    this.inspectNode(declaration, typeChecker, allTypes);
+                }
+            }
+
+            return;
+        }
+
+        if (ts.isExportDeclaration(node)) {
+            if (!ts.isExportDeclaration(node)) {
+                return;
+            }
+
+            if (node.exportClause) {
+                // export { Foo } from './lib' or export { Foo };
+                // export * as Foo from './lib' should not import all exports
+                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                return;
+            }
+
+            if (!node.moduleSpecifier) {
+                return;
+            }
+
+            // export * from './lib'
+            const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
+
+            // should never hit this (maybe type error in user's code)
+            if (!symbol || !symbol.declarations) {
+                return;
+            }
+
+            // module augmentation can result in more than one source file
+            for (const source of symbol.declarations) {
+                const sourceSymbol = typeChecker.getSymbolAtLocation(source);
+
+                if (!sourceSymbol) {
                     return;
                 }
-                return;
-            case ts.SyntaxKind.FunctionDeclaration:
-            case ts.SyntaxKind.FunctionExpression:
-            case ts.SyntaxKind.ArrowFunction:
-                allTypes.set(`NamedParameters<typeof ${this.getFullName(node, typeChecker)}>`, node);
-                return;
-            default:
-                ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
-                return;
+
+                const moduleExports = typeChecker.getExportsOfModule(sourceSymbol);
+
+                for (const moduleExport of moduleExports) {
+                    const nodes =
+                        moduleExport.declarations ||
+                        (!!moduleExport.valueDeclaration && [moduleExport.valueDeclaration]);
+
+                    // should never hit this (maybe type error in user's code)
+                    if (!nodes) {
+                        return;
+                    }
+
+                    for (const subnodes of nodes) {
+                        this.inspectNode(subnodes, typeChecker, allTypes);
+                    }
+                }
+            }
+
+            return;
         }
+
+        ts.forEachChild(node, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
     }
-    protected isExportType(node: ts.Node): boolean {
+
+    protected isExportType(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration | ts.EnumDeclaration | ts.TypeAliasDeclaration,
+    ): boolean {
         if (this.config?.jsDoc !== "none" && hasJsDocTag(node, "internal")) {
             return false;
         }
-        const localSymbol = localSymbolAtNode(node);
-        return localSymbol ? "exportSymbol" in localSymbol : false;
+
+        //@ts-expect-error - internal typescript API
+        return !!node.localSymbol?.exportSymbol;
     }
+
     protected isGenericType(node: ts.TypeAliasDeclaration): boolean {
         return !!(node.typeParameters && node.typeParameters.length > 0);
     }
-    protected getFullName(node: ts.Node, typeChecker: ts.TypeChecker): string {
-        const symbol = symbolAtNode(node)!;
-        return typeChecker.getFullyQualifiedName(symbol).replace(/".*"\./, "");
+
+    protected getFullName(node: ts.Declaration, typeChecker: ts.TypeChecker): string {
+        return typeChecker.getFullyQualifiedName(symbolAtNode(node)!).replace(/".*"\./, "");
     }
 }

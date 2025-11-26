@@ -1,5 +1,5 @@
-import { BaseType } from "./BaseType";
-import { hash } from "../Utils/nodeKey";
+import { BaseType } from "./BaseType.js";
+import { hash } from "../Utils/nodeKey.js";
 
 export interface Annotations {
     [name: string]: any;
@@ -9,7 +9,7 @@ export class AnnotatedType extends BaseType {
     public constructor(
         private type: BaseType,
         private annotations: Annotations,
-        private nullable: boolean
+        private nullable: boolean,
     ) {
         super();
     }

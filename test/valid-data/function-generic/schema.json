@@ -1,0 +1,190 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyType": {
+      "additionalProperties": false,
+      "properties": {
+        "litBool": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "boolean"
+            },
+            "any": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            },
+            "b": {
+              "type": "number"
+            },
+            "c": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "c",
+            "any"
+          ],
+          "type": "object"
+        },
+        "litNum": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "number"
+            },
+            "any": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            },
+            "b": {
+              "type": "string"
+            },
+            "c": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "c",
+            "any"
+          ],
+          "type": "object"
+        },
+        "litStr": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "any": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            },
+            "b": {
+              "type": "number"
+            },
+            "c": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "c",
+            "any"
+          ],
+          "type": "object"
+        },
+        "obj": {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "additionalProperties": false,
+              "properties": {
+                "a": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "a"
+              ],
+              "type": "object"
+            },
+            "any": {
+              "anyOf": [
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "b": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "b"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "additionalProperties": false,
+                  "properties": {
+                    "c": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "c"
+                  ],
+                  "type": "object"
+                }
+              ]
+            },
+            "b": {
+              "additionalProperties": false,
+              "properties": {
+                "b": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "b"
+              ],
+              "type": "object"
+            },
+            "c": {
+              "additionalProperties": false,
+              "properties": {
+                "c": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "c"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "a",
+            "b",
+            "c",
+            "any"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "litNum",
+        "litStr",
+        "litBool",
+        "obj"
+      ],
+      "type": "object"
+    }
+  }
+}

@@ -3,8 +3,11 @@ type MyType2 = string | number[];
 type MyType3 = (string | number)[];
 
 type MyType4 = "s" | 1;
-type MyType5 = "s" | (1)[];
+type MyType5 = "s" | 1[];
 type MyType6 = ("s" | 1)[];
+
+type MyType7 = string | true;
+type MyType8 = "s" | true;
 
 export interface TypeUnion {
     var1: MyType1;
@@ -14,4 +17,7 @@ export interface TypeUnion {
     var4: MyType4;
     var5: MyType5;
     var6: MyType6;
+
+    var7: MyType7;
+    var8: MyType8;
 }

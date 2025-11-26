@@ -2,10 +2,10 @@ import { Size } from "./Size";
 
 enum Orientation {
     Horizontal,
-    Vertical
+    Vertical,
 }
 
 export type MyObject = {
     sizeName?: keyof typeof Size;
     orientationName?: keyof typeof Orientation;
-}
+};

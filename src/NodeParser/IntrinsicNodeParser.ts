@@ -1,11 +1,11 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { LiteralType } from "../Type/LiteralType";
-import { UnionType } from "../Type/UnionType";
-import assert from "../Utils/assert";
-import { extractLiterals } from "../Utils/extractLiterals";
+import { LogicError } from "../Error/Errors.js";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { LiteralType } from "../Type/LiteralType.js";
+import { UnionType } from "../Type/UnionType.js";
+import { extractLiterals } from "../Utils/extractLiterals.js";
 
 export const intrinsicMethods: Record<string, ((v: string) => string) | undefined> = {
     Uppercase: (v) => v.toUpperCase(),
@@ -21,7 +21,11 @@ export class IntrinsicNodeParser implements SubNodeParser {
     public createType(node: ts.KeywordTypeNode, context: Context): BaseType {
         const methodName = getParentName(node);
         const method = intrinsicMethods[methodName];
-        assert(method, `Unknown intrinsic method: ${methodName}`);
+
+        if (!method) {
+            throw new LogicError(node, `Unknown intrinsic method: ${methodName}`);
+        }
+
         const literals = extractLiterals(context.getArguments()[0])
             .map(method)
             .map((literal) => new LiteralType(literal));
@@ -34,6 +38,10 @@ export class IntrinsicNodeParser implements SubNodeParser {
 
 function getParentName(node: ts.KeywordTypeNode): string {
     const parent = node.parent;
-    assert(ts.isTypeAliasDeclaration(parent), "Only intrinsics part of a TypeAliasDeclaration are supported.");
+
+    if (!ts.isTypeAliasDeclaration(parent)) {
+        throw new LogicError(node, "Only intrinsics part of a TypeAliasDeclaration are supported.");
+    }
+
     return parent.name.text;
 }

@@ -1,5 +1,5 @@
-import { HiddenType } from "../../../src/Type/HiddenType";
-import { NeverType } from "../../../src/Type/NeverType";
+import { HiddenType } from "../../../src/Type/HiddenType.js";
+import { NeverType } from "../../../src/Type/NeverType.js";
 
 describe("HiddenType", () => {
     it("creates a HiddenType", () => {

@@ -1,4 +1,4 @@
-import { BaseType } from "./BaseType";
+import { BaseType } from "./BaseType.js";
 
 export type LiteralValue = string | number | boolean;
 
@@ -13,5 +13,9 @@ export class LiteralType extends BaseType {
 
     public getValue(): LiteralValue {
         return this.value;
+    }
+
+    public isString(): boolean {
+        return typeof this.value === "string";
     }
 }

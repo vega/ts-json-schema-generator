@@ -1,10 +1,10 @@
-import { Definition } from "../Schema/Definition";
-import { SubTypeFormatter } from "../SubTypeFormatter";
-import { AnyType } from "../Type/AnyType";
-import { BaseType } from "../Type/BaseType";
+import type { Definition } from "../Schema/Definition.js";
+import type { SubTypeFormatter } from "../SubTypeFormatter.js";
+import { AnyType } from "../Type/AnyType.js";
+import type { BaseType } from "../Type/BaseType.js";
 
 export class AnyTypeFormatter implements SubTypeFormatter {
-    public supportsType(type: AnyType): boolean {
+    public supportsType(type: BaseType): boolean {
         return type instanceof AnyType;
     }
     public getDefinition(type: AnyType): Definition {

@@ -1,8 +1,8 @@
 import ts from "typescript";
-import { Context } from "../NodeParser";
-import { SubNodeParser } from "../SubNodeParser";
-import { BaseType } from "../Type/BaseType";
-import { NeverType } from "../Type/NeverType";
+import type { Context } from "../NodeParser.js";
+import type { SubNodeParser } from "../SubNodeParser.js";
+import type { BaseType } from "../Type/BaseType.js";
+import { NeverType } from "../Type/NeverType.js";
 
 export class NeverTypeNodeParser implements SubNodeParser {
     public supportsNode(node: ts.KeywordTypeNode): boolean {

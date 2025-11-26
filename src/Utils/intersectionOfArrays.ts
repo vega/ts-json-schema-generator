@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import stringify from "safe-stable-stringify";
 
 export function intersectionOfArrays<T>(a: T[], b: T[]): T[] {
