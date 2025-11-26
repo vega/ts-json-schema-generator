@@ -102,6 +102,7 @@ describe("valid-data-type", () => {
     it("type-mapped-widened", assertValidSchema("type-mapped-widened", "MyObject"));
     it("type-mapped-optional", assertValidSchema("type-mapped-optional", "MyObject"));
     it("type-mapped-additional-props", assertValidSchema("type-mapped-additional-props", "MyObject"));
+    it("type-mapped-any", assertValidSchema("type-mapped-any", "MyObject"));
     it("type-mapped-array", assertValidSchema("type-mapped-array", "MyObject"));
     it("type-mapped-union-intersection", assertValidSchema("type-mapped-union-intersection", "MyObject"));
     it("type-mapped-union-union", assertValidSchema("type-mapped-union-union", "MyType"));
@@ -110,6 +111,7 @@ describe("valid-data-type", () => {
     it("type-mapped-enum-null", assertValidSchema("type-mapped-enum-null", "MyObject"));
     it("type-mapped-enum-number", assertValidSchema("type-mapped-enum-number", "MyObject"));
     it("type-mapped-exclude", assertValidSchema("type-mapped-exclude", "MyObject"));
+    it("type-mapped-template-literal", assertValidSchema("type-mapped-template-literal", "MyObject"));
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
     it("type-mapped-never", assertValidSchema("type-mapped-never", "MyObject"));
@@ -147,8 +149,6 @@ describe("valid-data-type", () => {
     it("lowercase", assertValidSchema("lowercase", "MyType"));
     it("const-spread", assertValidSchema("const-spread", "MyType"));
     it("keyof-typeof-x", assertValidSchema("keyof-typeof-x", "MyType"));
-
-    it("index-any-type", assertValidSchema("index-any-type", "MyObject"));
 
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
     it("promise-generics", assertValidSchema("promise-generics", "*"));
