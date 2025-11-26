@@ -63,7 +63,11 @@ export class SchemaGenerator {
 
     protected getRootNodes(fullNames: string[] | undefined): ts.Node[] {
         // ["*"] means generate everything.
-        const generateAll = !fullNames || (fullNames && fullNames.length === 1 && fullNames[0] === "*");
+        if (fullNames && fullNames.includes("*") && fullNames.length > 1) {
+            throw new Error("Cannot mix '*' with specific type names");
+        }
+
+        const generateAll = !fullNames || fullNames.length === 0 || (fullNames.length === 1 && fullNames[0] === "*");
         if (!generateAll) {
             return fullNames.map((name) => this.findNamedNode(name));
         }

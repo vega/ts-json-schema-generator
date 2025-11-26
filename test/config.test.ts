@@ -20,7 +20,6 @@ import { EnumType } from "../src/Type/EnumType.js";
 import { FunctionType } from "../src/Type/FunctionType.js";
 import { StringType } from "../src/Type/StringType.js";
 import type { TypeFormatter } from "../src/TypeFormatter.js";
-import { castArray } from "../src/Utils/castArray.js";
 import { uniqueArray } from "../src/Utils/uniqueArray.js";
 
 const basePath = "test/config";
@@ -52,7 +51,7 @@ function assertSchema(
             config,
         );
 
-        const schema = generator.createSchema(castArray(config.type));
+        const schema = generator.createSchema(config.type);
         const schemaFile = resolve(`${basePath}/${name}/schema.json`);
 
         if (process.env.UPDATE_SCHEMA) {
