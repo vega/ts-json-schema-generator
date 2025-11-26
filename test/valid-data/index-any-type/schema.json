@@ -5,13 +5,24 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
-        "nodes": {
+        "anyNodes": {
           "additionalProperties": { "type": "number" },
           "type": "object"
+        },
+        "symbolNodes": {
+          "additionalProperties": { "type": "string" },
+          "type": "object"
+        },
+        "numberNodes": {
+          "additionalProperties": { "type": "string" },
+          "type": "object"
         }
+
       },
       "required": [
-        "nodes"
+        "anyNodes",
+        "symbolNodes",
+        "numberNodes"
       ],
       "type": "object"
     }
