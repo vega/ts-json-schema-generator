@@ -1,24 +1,26 @@
 import ts from "typescript";
-import type { Context } from "../NodeParser.js";
+import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnyType } from "../Type/AnyType.js";
 import type { BaseType } from "../Type/BaseType.js";
+import { BooleanType } from "../Type/BooleanType.js";
+import { LiteralType } from "../Type/LiteralType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { StringType } from "../Type/StringType.js";
-import { BooleanType } from "../Type/BooleanType.js";
+import { UnionType } from "../Type/UnionType.js";
 
 export class BinaryExpressionNodeParser implements SubNodeParser {
-    public constructor(protected typeChecker: ts.TypeChecker) {}
+    public constructor(protected childNodeParser: NodeParser) {}
 
     public supportsNode(node: ts.Node): boolean {
         return node.kind === ts.SyntaxKind.BinaryExpression;
     }
 
     public createType(node: ts.BinaryExpression, context: Context): BaseType {
-        const leftType = this.typeChecker.getTypeAtLocation(node.left);
-        const rightType = this.typeChecker.getTypeAtLocation(node.right);
+        const leftType = this.childNodeParser.createType(node.left, context);
+        const rightType = this.childNodeParser.createType(node.right, context);
 
-        if (this.isAny(leftType) || this.isAny(rightType)) {
+        if (leftType instanceof AnyType || rightType instanceof AnyType) {
             return new AnyType();
         }
 
@@ -30,7 +32,7 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
             return new NumberType();
         }
 
-        if (this.isBoolean(leftType) && this.isBoolean(rightType)) {
+        if (this.isBooleanLike(leftType) && this.isBooleanLike(rightType)) {
             return new BooleanType();
         }
 
@@ -41,60 +43,46 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         return new StringType();
     }
 
-    private isAny(type: ts.Type): boolean {
-        return (type.flags & ts.TypeFlags.Any) !== 0;
-    }
+    private isStringLike(type: BaseType): boolean {
+        if (type instanceof StringType) {
+            return true;
+        }
 
-    private isStringLike(inType: ts.Type): boolean {
-        // Use apparent type to collapse things like literal unions, etc.
-        const type = this.typeChecker.getApparentType(inType);
+        if (type instanceof LiteralType && type.isString()) {
+            return true;
+        }
 
         // Any union member being string-like is enough.
-        if (type.isUnion()) {
-            return type.types.some((t) => this.isStringLike(t));
+        if (type instanceof UnionType) {
+            return type.getTypes().some((t) => this.isStringLike(t));
         }
 
-        // String primitives + string literals + template literals
-        if (type.flags & ts.TypeFlags.StringLike) {
+        return false;
+    }
+
+    private isBooleanLike(type: BaseType): boolean {
+        if (type instanceof BooleanType) {
             return true;
         }
 
-        // Optionally treat String object type as string-like:
-        const symbol = type.getSymbol();
-        if (symbol && symbol.getName() === "String") {
+        if (type instanceof LiteralType && typeof type.getValue() === "boolean") {
             return true;
         }
 
         return false;
     }
 
-    private isBoolean(inType: ts.Type): boolean {
-        const type = this.typeChecker.getApparentType(inType);
-
-        if (type.flags & ts.TypeFlags.BooleanLike) {
+    private isDefinitelyNumberLike(type: BaseType): boolean {
+        if (type instanceof NumberType) {
             return true;
         }
 
-        const symbol = type.getSymbol();
-        if (symbol && symbol.getName() === "Boolean") {
+        if (type instanceof LiteralType && typeof type.getValue() === "number") {
             return true;
         }
 
-        return false;
-    }
-
-    private isDefinitelyNumberLike(inType: ts.Type): boolean {
-        // Use apparent type for unions/intersections
-        const type = this.typeChecker.getApparentType(inType);
-
-        if (type.isUnion()) {
-            // Must be number-like for *all* members to be "definitely number-like"
-            return type.types.every((t) => this.isDefinitelyNumberLike(t));
-        }
-
-        const typeStr = this.typeChecker.typeToString(type);
-        if (typeStr === "Number") {
-            return true;
+        if (type instanceof UnionType) {
+            return type.getTypes().every((t) => this.isDefinitelyNumberLike(t));
         }
 
         return false;

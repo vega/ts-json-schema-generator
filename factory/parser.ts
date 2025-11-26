@@ -115,7 +115,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new NeverTypeNodeParser())
         .addNodeParser(new ObjectTypeNodeParser())
         .addNodeParser(new AsExpressionNodeParser(chainNodeParser))
-        .addNodeParser(new BinaryExpressionNodeParser(typeChecker))
+        .addNodeParser(new BinaryExpressionNodeParser(chainNodeParser))
         .addNodeParser(new SatisfiesNodeParser(chainNodeParser))
         .addNodeParser(withJsDoc(new ParameterParser(chainNodeParser)))
         .addNodeParser(new StringLiteralNodeParser())
