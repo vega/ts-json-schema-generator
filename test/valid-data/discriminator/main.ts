@@ -6,7 +6,6 @@ export type Fish = {
 export type Bird = {
     animal_type: "bird";
     can_fly: boolean;
-    likes_to_eat: Animal
 };
 
 /**
