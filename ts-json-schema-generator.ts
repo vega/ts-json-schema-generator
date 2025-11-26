@@ -12,16 +12,12 @@ import { castArray } from "./src/Utils/castArray.js";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
-    .option(
-        "-t, --type <name>",
-        "Type name (can be passed multiple times)",
-        (value: string, previous: string[] | undefined) => {
-            if (previous) {
-                return previous.concat(value);
-            }
-            return [value];
-        },
-    )
+    .option("-t, --type <name>", "Type name (can be passed multiple times)", (value: string, previous: string[]) => {
+        if (previous) {
+            return previous.concat(value);
+        }
+        return [value];
+    })
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .addOption(
