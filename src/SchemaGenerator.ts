@@ -8,6 +8,7 @@ import type { BaseType } from "./Type/BaseType.js";
 import { DefinitionType } from "./Type/DefinitionType.js";
 import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
+import { AnnotatedType } from "./Type/AnnotatedType.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
 import { symbolAtNode } from "./Utils/symbolAtNode.js";
@@ -117,21 +118,35 @@ export class SchemaGenerator {
             });
 
         const ids = new Map<string, string>();
+        const baseIds = new Map<string, string>();
         for (const child of children) {
             const name = child.getName();
             const previousId = ids.get(name);
-            // remove def prefix from ids to avoid false alarms
-            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
+            // Strip def- prefixes from IDs. DefinitionType.getId() returns "def-{innerType.getId()}"
+            // and for generic types, nested DefinitionTypes also add def- prefixes. Stripping all
+            // of them normalizes the comparison for types that may be wrapped differently.
             const childId = child.getId().replace(/def-/g, "");
+            // Also track the base type ID (without AnnotatedType wrapper) to handle cases where
+            // the same type appears with different annotations (e.g., a discriminated union type
+            // referenced directly vs from a property - one has @discriminator annotation, one doesn't)
+            const innerType = child.getType();
+            const baseChildId = (innerType instanceof AnnotatedType ? innerType.getType() : innerType).getId();
+            const previousBaseId = baseIds.get(name);
 
             if (previousId && childId !== previousId) {
+                // Check if the base type (without annotations) matches - if so, it's just
+                // annotation differences, not truly different types
+                if (previousBaseId === baseChildId) {
+                    continue;
+                }
                 throw new MultipleDefinitionsError(
                     name,
                     child,
-                    children.find((c) => c.getId() === previousId),
+                    children.find((c) => c.getId().replace(/def-/g, "") === previousId),
                 );
             }
             ids.set(name, childId);
+            baseIds.set(name, baseChildId);
         }
 
         children.reduce((definitions, child) => {
