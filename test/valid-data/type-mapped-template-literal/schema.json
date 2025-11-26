@@ -3,9 +3,19 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyObject": {
-      "additionalProperties": {
-        "type": "string"
+      "additionalProperties": false,
+      "properties": {
+        "letter-A": {
+          "type": "string"
+        },
+        "letter-B": {
+          "type": "string"
+        }
       },
+      "required": [
+        "letter-A",
+        "letter-B"
+      ],
       "type": "object"
     }
   }
