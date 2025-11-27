@@ -109,20 +109,3 @@ export function assertValidSchema(
         }
     };
 }
-
-export function getTypeFlagNames(type: ts.Type): string[] {
-    const flags = type.flags;
-    const names: string[] = [];
-
-    for (const key of Object.keys(ts.TypeFlags)) {
-        // filter out the numeric reverse-mapping entries
-        if (!Number.isNaN(Number(key))) continue;
-
-        const flagValue = ts.TypeFlags[key as keyof ts.TypeFlags] as number;
-        if ((flags & flagValue) !== 0) {
-            names.push(key);
-        }
-    }
-
-    return names;
-}
