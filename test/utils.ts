@@ -4,7 +4,7 @@ import addFormats from "ajv-formats";
 import { readFileSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import stringify from "safe-stable-stringify";
-import ts from "typescript";
+import type ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
