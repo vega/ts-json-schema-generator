@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -8,9 +8,13 @@ on:
     branches:
       - next
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
-    name: Build and Lint
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +35,7 @@ jobs:
         run: npm run build
 
   test:
-    name: Test (Shard ${{ matrix.shard }}/6)
+    name: Test ${{ matrix.shard }}/6 (${{ matrix.os }})
     needs: build
 
     strategy:
