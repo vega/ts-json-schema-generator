@@ -61,7 +61,9 @@ jobs:
         run: npm run build
 
       - name: Test coverage
-        run: npm run test:coverage -- --test-shard=${{ matrix.shard }}/6
+        run: npm run test:coverage
+        env:
+          NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/6"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
