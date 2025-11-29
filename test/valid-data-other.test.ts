@@ -1,5 +1,8 @@
-import { assertValidSchema } from "./utils";
+// import { assertValidSchema } from "./utils";
 import * as objectRequiredSamples from "./valid-data/object-required/samples";
+
+// import { assertValidSchema } from "./utils";
+import { assertValidSchema } from "./generator";
 
 describe("valid-data-other", () => {
     it("enums-string", assertValidSchema("enums-string", "Enum"));

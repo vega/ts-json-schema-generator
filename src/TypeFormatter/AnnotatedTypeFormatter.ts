@@ -8,7 +8,7 @@ import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 
 export function makeNullable(def: Definition): Definition {
-    const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
+    const union = (def.oneOf || def.anyOf) as Definition[] | undefined;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {

@@ -1,5 +1,7 @@
-import { assertValidSchema } from "./utils";
+// import { assertValidSchema } from "./utils";
 import * as annotationDefaultSamples from "./valid-data/annotation-default/samples";
+// import { assertValidSchema } from "./utils";
+import { assertValidSchema } from "./generator";
 
 describe("valid-data-annotations", () => {
     it(

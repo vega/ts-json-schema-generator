@@ -1,4 +1,5 @@
-import { assertValidSchema } from "./utils";
+// import { assertValidSchema } from "./utils";
+import { assertValidSchema } from "./generator";
 
 describe("valid-data-struct", () => {
     // TODO: generics recursive
