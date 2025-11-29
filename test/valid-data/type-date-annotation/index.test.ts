@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
-import { test } from 'node:test';
+import { test } from "node:test";
 
-test("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", {"jsDoc":"basic"}));
+test("type-date-annotation", assertValidSchema("type-date-annotation", "MyObject", { jsDoc: "basic" }));

@@ -108,7 +108,10 @@ describe("isAssignableTo", () => {
     it("lets type 'any' to be assigned to anything except 'never'", () => {
         assert.strictEqual(isAssignableTo(new AnyType(), new AnyType()), true);
         assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new AnyType()), true);
-        assert.strictEqual(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new AnyType()), true);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new AnyType()),
+            true,
+        );
         assert.strictEqual(isAssignableTo(new LiteralType("literal"), new AnyType()), true);
         assert.strictEqual(isAssignableTo(new NeverType(), new AnyType()), false);
         assert.strictEqual(isAssignableTo(new NullType(), new AnyType()), true);
@@ -129,7 +132,10 @@ describe("isAssignableTo", () => {
     it("lets type 'never' to be assigned to anything", () => {
         assert.strictEqual(isAssignableTo(new AnyType(), new NeverType()), true);
         assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new NeverType()), true);
-        assert.strictEqual(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new NeverType()), true);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new NeverType()),
+            true,
+        );
         assert.strictEqual(isAssignableTo(new LiteralType("literal"), new NeverType()), true);
         assert.strictEqual(isAssignableTo(new NeverType(), new NeverType()), true);
         assert.strictEqual(isAssignableTo(new NullType(), new NeverType()), true);
@@ -150,7 +156,10 @@ describe("isAssignableTo", () => {
     it("lets anything to be assigned to type 'any'", () => {
         assert.strictEqual(isAssignableTo(new AnyType(), new AnyType()), true);
         assert.strictEqual(isAssignableTo(new AnyType(), new ArrayType(new NumberType())), true);
-        assert.strictEqual(isAssignableTo(new AnyType(), new IntersectionType([new StringType(), new NullType()])), true);
+        assert.strictEqual(
+            isAssignableTo(new AnyType(), new IntersectionType([new StringType(), new NullType()])),
+            true,
+        );
         assert.strictEqual(isAssignableTo(new AnyType(), new LiteralType("literal")), true);
         assert.strictEqual(isAssignableTo(new AnyType(), new NeverType()), true);
         assert.strictEqual(isAssignableTo(new AnyType(), new NullType()), true);
@@ -171,7 +180,10 @@ describe("isAssignableTo", () => {
     it("lets anything to be assigned to type 'unknown'", () => {
         assert.strictEqual(isAssignableTo(new UnknownType(), new AnyType()), true);
         assert.strictEqual(isAssignableTo(new UnknownType(), new ArrayType(new NumberType())), true);
-        assert.strictEqual(isAssignableTo(new UnknownType(), new IntersectionType([new StringType(), new NullType()])), true);
+        assert.strictEqual(
+            isAssignableTo(new UnknownType(), new IntersectionType([new StringType(), new NullType()])),
+            true,
+        );
         assert.strictEqual(isAssignableTo(new UnknownType(), new LiteralType("literal")), true);
         assert.strictEqual(isAssignableTo(new UnknownType(), new NeverType()), true);
         assert.strictEqual(isAssignableTo(new UnknownType(), new NullType()), true);
@@ -186,13 +198,19 @@ describe("isAssignableTo", () => {
         assert.strictEqual(isAssignableTo(new UnknownType(), new NumberType()), true);
         assert.strictEqual(isAssignableTo(new UnknownType(), new BooleanType()), true);
         assert.strictEqual(isAssignableTo(new UnknownType(), new StringType()), true);
-        assert.strictEqual(isAssignableTo(new UnknownType(), new TupleType([new StringType(), new NumberType()])), true);
+        assert.strictEqual(
+            isAssignableTo(new UnknownType(), new TupleType([new StringType(), new NumberType()])),
+            true,
+        );
         assert.strictEqual(isAssignableTo(new UnknownType(), new UndefinedType()), true);
     });
     it("lets 'unknown' only to be assigned to type 'unknown' or 'any'", () => {
         assert.strictEqual(isAssignableTo(new AnyType(), new UnknownType()), true);
         assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new UnknownType()), false);
-        assert.strictEqual(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new UnknownType()), false);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new UnknownType()),
+            false,
+        );
         assert.strictEqual(isAssignableTo(new LiteralType("literal"), new UnknownType()), false);
         assert.strictEqual(isAssignableTo(new NeverType(), new UnknownType()), false);
         assert.strictEqual(isAssignableTo(new NullType(), new UnknownType()), false);
@@ -208,7 +226,10 @@ describe("isAssignableTo", () => {
         assert.strictEqual(isAssignableTo(new NumberType(), new UnknownType()), false);
         assert.strictEqual(isAssignableTo(new BooleanType(), new UnknownType()), false);
         assert.strictEqual(isAssignableTo(new StringType(), new UnknownType()), false);
-        assert.strictEqual(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new UnknownType()), false);
+        assert.strictEqual(
+            isAssignableTo(new TupleType([new StringType(), new NumberType()]), new UnknownType()),
+            false,
+        );
         assert.strictEqual(isAssignableTo(new UndefinedType(), new UnknownType()), false);
     });
 

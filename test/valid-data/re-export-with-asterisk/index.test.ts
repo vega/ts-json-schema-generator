@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
-import { test } from 'node:test';
+import { test } from "node:test";
 
-test("re-export-with-asterisk", assertValidSchema("re-export-with-asterisk", "*", undefined, {"mainTsOnly":true}));
+test("re-export-with-asterisk", assertValidSchema("re-export-with-asterisk", "*", undefined, { mainTsOnly: true }));

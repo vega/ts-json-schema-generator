@@ -12,7 +12,7 @@ import assert from "assert";
 import { t } from "try";
 
 function assertSchema(name: string, type: string, message: string): TestFn {
-    return async () => {
+    return () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             path: resolve("test", "invalid-data", name, `*.ts`),

@@ -1,7 +1,8 @@
 import { globSync } from "glob";
 import * as path from "node:path";
 import normalize from "normalize-path";
-import ts, { CompilerOptions } from "typescript";
+import type { CompilerOptions } from "typescript";
+import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
 

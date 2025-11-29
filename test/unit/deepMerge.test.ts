@@ -45,8 +45,11 @@ describe("deepMerge", () => {
         assert.deepStrictEqual(deepMerge({ flag: { type: "number", const: 1 } }, { flag: { type: "number" } }), {
             flag: { type: "number", const: 1 },
         });
-        assert.deepStrictEqual(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } }), {
-            flag: { type: "number", const: 2 },
-        });
+        assert.deepStrictEqual(
+            deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } }),
+            {
+                flag: { type: "number", const: 2 },
+            },
+        );
     });
 });

@@ -1,8 +1,11 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 import fs from "fs";
+import assert from "node:assert";
+import { describe, it, type TestFn } from "node:test";
 import path from "path";
 import stringify from "safe-stable-stringify";
+import { t } from "try";
 import ts from "typescript";
 import type { FormatterAugmentor } from "../factory/formatter";
 import { createFormatter } from "../factory/formatter";
@@ -21,10 +24,6 @@ import { FunctionType } from "../src/Type/FunctionType.js";
 import { StringType } from "../src/Type/StringType.js";
 import type { TypeFormatter } from "../src/TypeFormatter.js";
 import { uniqueArray } from "../src/Utils/uniqueArray.js";
-import { describe, it, type TestFn } from "node:test";
-import assert from "node:assert";
-import { availableParallelism } from "node:os";
-import { t } from "try";
 
 const basePath = "test/config";
 
