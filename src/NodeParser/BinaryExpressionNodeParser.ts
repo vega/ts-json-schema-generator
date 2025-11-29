@@ -8,6 +8,7 @@ import { LiteralType } from "../Type/LiteralType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
+import { AliasType } from "../Type/AliasType.js";
 
 export class BinaryExpressionNodeParser implements SubNodeParser {
     public constructor(protected childNodeParser: NodeParser) {}
@@ -44,6 +45,10 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
     }
 
     private isStringLike(type: BaseType): boolean {
+        if (type instanceof AliasType) {
+            return this.isStringLike(type.getType());
+        }
+
         if (type instanceof StringType) {
             return true;
         }
@@ -73,6 +78,10 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
     }
 
     private isDefinitelyNumberLike(type: BaseType): boolean {
+        if (type instanceof AliasType) {
+            return this.isDefinitelyNumberLike(type.getType());
+        }
+
         if (type instanceof NumberType) {
             return true;
         }
@@ -82,6 +91,7 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         }
 
         if (type instanceof UnionType) {
+            console.log(`XXX thingy here`);
             return type.getTypes().every((t) => this.isDefinitelyNumberLike(t));
         }
 

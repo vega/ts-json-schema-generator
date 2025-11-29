@@ -10,18 +10,36 @@ function getBoolean(): boolean {
     return Math.random() > 0.5;
 }
 
+function getStringUnion(): StringUnion {
+    return Math.random() > 0.5 ? "a" : "b";
+}
+
+function getNumberUnion(): NumberUnion {
+    return Math.random() > 0.5 ? 10 : 20;
+}
+
+function getMixedUnion(): MixedUnion {
+    return Math.random() > 0.5 ? "c" : 30;
+}
+
+function getUnknown(): unknown {
+    return "unknown value";
+}
+
 const anyString: any = getAny();
 
-const aStringUnion: StringUnion = "a";
-const bStringUnion: StringUnion = "b";
+const aStringUnion: StringUnion = getStringUnion();
+const bStringUnion: StringUnion = getStringUnion();
 
-const tenNumberUnion: NumberUnion = 10;
-const twentyNumberUnion: NumberUnion = 20;
+const tenNumberUnion: NumberUnion = getNumberUnion();
+const twentyNumberUnion: NumberUnion = getNumberUnion();
 
-const thirtyMixedUnion: MixedUnion = 30;
+const thirtyMixedUnion: MixedUnion = getMixedUnion();
 
-const a: boolean = true;
+const a: boolean = getBoolean();
 const b: boolean = getBoolean();
+
+const unknownValue: unknown = getUnknown();
 
 const foo = {
     numbers: 60 * 5,
@@ -31,6 +49,8 @@ const foo = {
     threeNumbers: 60 * 5 + 1,
     mixedStringAndNumbers: 60 * 5 + " minutes",
     bigintType: BigInt(123),
+
+    unknowns: unknownValue && unknownValue,
 
     stringUnion: aStringUnion + bStringUnion,
     numberUnion: tenNumberUnion + twentyNumberUnion,

@@ -13,6 +13,7 @@
         "bigintType": { "type": "number" },
         "numberUnion": { "type": "number" },
         "stringUnion": { "type": "string" },
+        "unknowns": { "type": "string" },
         "mixedUnion": { "type": "string" },
         "any": {}
       },
@@ -24,6 +25,7 @@
         "threeNumbers",
         "mixedStringAndNumbers",
         "bigintType",
+        "unknowns",
         "stringUnion",
         "numberUnion",
         "mixedUnion"
