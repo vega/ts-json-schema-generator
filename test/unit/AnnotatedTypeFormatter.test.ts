@@ -1,9 +1,11 @@
+import assert from "node:assert";
 import { makeNullable } from "../../src/TypeFormatter/AnnotatedTypeFormatter.js";
+import { describe, it } from "node:test";
 
 describe("makeNullable", () => {
     it("makes number nullable", () => {
         const n = makeNullable({ type: "number" });
-        expect(n).toEqual({
+        assert.deepStrictEqual(n, {
             type: ["number", "null"],
         });
     });
@@ -13,7 +15,7 @@ describe("makeNullable", () => {
             enum: ["foo"],
             type: "string",
         });
-        expect(n).toEqual({
+        assert.deepStrictEqual(n, {
             enum: ["foo", null],
             type: ["string", "null"],
         });
@@ -23,7 +25,7 @@ describe("makeNullable", () => {
         const n = makeNullable({
             anyOf: [{ type: "number" }, { type: "string" }],
         });
-        expect(n).toEqual({
+        assert.deepStrictEqual(n, {
             anyOf: [{ type: "number" }, { type: "string" }, { type: "null" }],
         });
     });

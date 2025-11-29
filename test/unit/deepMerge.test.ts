@@ -1,45 +1,51 @@
 import { deepMerge } from "../../src/Utils/deepMerge.js";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 describe("deepMerge", () => {
     it("merges booleans with enums", () => {
-        expect(deepMerge({ flag: { type: "boolean", enum: [true] } }, { flag: { type: "boolean" } })).toEqual({
+        assert.deepStrictEqual(deepMerge({ flag: { type: "boolean", enum: [true] } }, { flag: { type: "boolean" } }), {
             flag: { type: "boolean", const: true },
         });
-        expect(
+        assert.deepStrictEqual(
             deepMerge({ flag: { type: "boolean", enum: [true] } }, { flag: { type: "boolean", enum: [true, false] } }),
-        ).toEqual({ flag: { type: "boolean", const: true } });
+            { flag: { type: "boolean", const: true } },
+        );
     });
 
     it("merges booleans with const and enum", () => {
-        expect(deepMerge({ flag: { type: "boolean", const: false } }, { flag: { type: "boolean" } })).toEqual({
+        assert.deepStrictEqual(deepMerge({ flag: { type: "boolean", const: false } }, { flag: { type: "boolean" } }), {
             flag: { type: "boolean", const: false },
         });
-        expect(
+        assert.deepStrictEqual(
             deepMerge({ flag: { type: "boolean", const: false } }, { flag: { type: "boolean", enum: [true, false] } }),
-        ).toEqual({ flag: { type: "boolean", const: false } });
+            { flag: { type: "boolean", const: false } },
+        );
     });
 
     it("merges numbers with enums", () => {
-        expect(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number" } })).toEqual({
+        assert.deepStrictEqual(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number" } }), {
             flag: { type: "number", enum: [1, 2] },
         });
-        expect(
+        assert.deepStrictEqual(
             deepMerge({ flag: { type: "number", enum: [1, 2, 3] } }, { flag: { type: "number", enum: [1, 3] } }),
-        ).toEqual({
-            flag: { type: "number", enum: [1, 3] },
-        });
-        expect(
+            {
+                flag: { type: "number", enum: [1, 3] },
+            },
+        );
+        assert.deepStrictEqual(
             deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", enum: [1, 3] } }),
-        ).toEqual({
-            flag: { type: "number", const: 1 },
-        });
+            {
+                flag: { type: "number", const: 1 },
+            },
+        );
     });
 
     it("merges numbers with const and enum", () => {
-        expect(deepMerge({ flag: { type: "number", const: 1 } }, { flag: { type: "number" } })).toEqual({
+        assert.deepStrictEqual(deepMerge({ flag: { type: "number", const: 1 } }, { flag: { type: "number" } }), {
             flag: { type: "number", const: 1 },
         });
-        expect(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } })).toEqual({
+        assert.deepStrictEqual(deepMerge({ flag: { type: "number", enum: [1, 2] } }, { flag: { type: "number", const: 2 } }), {
             flag: { type: "number", const: 2 },
         });
     });

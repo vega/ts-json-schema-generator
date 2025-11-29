@@ -176,7 +176,7 @@ export class ExampleNullParser implements SubNodeParser {
     }
 }
 
-describe("config", { concurrency: Math.round((availableParallelism() - 1) / 2) }, () => {
+describe("config", () => {
     it(
         "expose-all-topref-true",
         assertSchema("expose-all-topref-true", {

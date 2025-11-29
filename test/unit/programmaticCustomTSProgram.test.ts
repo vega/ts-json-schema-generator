@@ -1,7 +1,9 @@
-import ts from "typescript";
 import { createFSBackedSystem, createVirtualTypeScriptEnvironment } from "@typescript/vfs";
-import type { Config } from "../../src/Config";
+import assert from "node:assert";
+import { it } from "node:test";
+import ts from "typescript";
 import { createGenerator } from "../../factory/generator";
+import type { Config } from "../../src/Config";
 
 it("Can generate a schema from a vfs", () => {
     const tsInterface = `
@@ -27,26 +29,22 @@ it("Can generate a schema from a vfs", () => {
     const generator = createGenerator(schemaConfig);
 
     const result = generator.createSchema();
-    expect(result).toMatchInlineSnapshot(`
-        {
-          "$ref": "#/definitions/SampleInterface",
-          "$schema": "http://json-schema.org/draft-07/schema#",
-          "definitions": {
-            "SampleInterface": {
-              "additionalProperties": false,
-              "description": "This is a sample interface",
-              "properties": {
-                "name": {
-                  "description": "This is a name",
-                  "type": "string",
+    assert.deepStrictEqual(result, {
+        $ref: "#/definitions/SampleInterface",
+        $schema: "http://json-schema.org/draft-07/schema#",
+        definitions: {
+            SampleInterface: {
+                additionalProperties: false,
+                description: "This is a sample interface",
+                properties: {
+                    name: {
+                        description: "This is a name",
+                        type: "string",
+                    },
                 },
-              },
-              "required": [
-                "name",
-              ],
-              "type": "object",
+                required: ["name"],
+                type: "object",
             },
-          },
-        }
-    `);
+        },
+    });
 });
