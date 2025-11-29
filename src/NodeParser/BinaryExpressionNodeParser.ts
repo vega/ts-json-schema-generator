@@ -91,7 +91,6 @@ export class BinaryExpressionNodeParser implements SubNodeParser {
         }
 
         if (type instanceof UnionType) {
-            console.log(`XXX thingy here`);
             return type.getTypes().every((t) => this.isDefinitelyNumberLike(t));
         }
 

@@ -26,6 +26,10 @@ function getUnknown(): unknown {
     return "unknown value";
 }
 
+function getStringType(): string {
+    return Math.random() > 0.5 ? "hello" : "world";
+}
+
 const anyString: any = getAny();
 
 const aStringUnion: StringUnion = getStringUnion();
@@ -43,8 +47,10 @@ const unknownValue: unknown = getUnknown();
 
 const foo = {
     numbers: 60 * 5,
-    strings: "a" + "b",
-    booleans: a || b,
+    stringLiterals: "a" + "b",
+    stringTypes: getStringType() + getStringType(),
+    booleanTypes: a || b,
+    booleanLiterals: true || false,
     any: 1 + anyString,
     threeNumbers: 60 * 5 + 1,
     mixedStringAndNumbers: 60 * 5 + " minutes",
