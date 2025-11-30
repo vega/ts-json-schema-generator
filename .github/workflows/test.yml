@@ -63,8 +63,8 @@ jobs:
 
       - name: Test coverage
         run: npm run test:coverage
-        # env:
-          # NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
+        env:
+          NODE_OPTIONS: "--test-concurrency=$(node -e 'console.log(os.availableParallelism())')"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
