@@ -50,9 +50,9 @@
     "release": "npm run build && auto shipit",
     "run": "tsx ts-json-schema-generator.ts",
     "test": "tsx --test \"test/**/*.test.ts\"",
-    "test:coverage": "c8 --reporter lcov --reporter text npm run test",
-    "test:fast": "cross-env FAST_TEST=1 npm run test",
-    "test:update": "cross-env UPDATE_SCHEMA=true npm run test:fast",
+    "test:fast": "cross-env FAST_TEST=1 tsx --test \"test/**/*.test.ts\"",
+    "test:update": "cross-env FAST_TEST=1 UPDATE_SCHEMA=true tsx --test \"test/**/*.test.ts\"",
+    "test:coverage": "c8 --reporter lcov --reporter text tsx --test \"test/**/*.test.ts\"",
     "watch": "tsc -w"
   },
   "dependencies": {

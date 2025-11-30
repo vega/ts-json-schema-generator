@@ -35,14 +35,14 @@ jobs:
         run: npm run build
 
   test:
-    name: Test ${{ matrix.shard }}/6 (${{ matrix.os }})
+    name: Test ${{ matrix.shard }}/4 (${{ matrix.os }})
     needs: build
 
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        shard: [1, 2, 3]
+        shard: [1, 2, 3, 4]
 
     runs-on: ${{ matrix.os }}
 
@@ -63,7 +63,7 @@ jobs:
       - name: Test coverage
         run: npm run test:coverage
         env:
-          NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/3"
+          NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
