@@ -5,19 +5,43 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
-        "numbers": { "type": "number" },
-        "threeNumbers": { "type": "number" },
-        "stringLiterals": { "type": "string" },
-        "stringTypes": { "type": "string" },
-        "mixedStringAndNumbers": { "type": "string" },
-        "booleanTypes": { "type": "boolean" },
-        "booleanLiterals": { "type": "boolean" },
-        "bigintType": { "type": "number" },
-        "numberUnion": { "type": "number" },
-        "stringUnion": { "type": "string" },
-        "unknowns": { "type": "string" },
-        "mixedUnion": { "type": "string" },
-        "any": {}
+        "any": {},
+        "bigintType": {
+          "type": "number"
+        },
+        "booleanLiterals": {
+          "type": "boolean"
+        },
+        "booleanTypes": {
+          "type": "boolean"
+        },
+        "mixedStringAndNumbers": {
+          "type": "string"
+        },
+        "mixedUnion": {
+          "type": "string"
+        },
+        "numberUnion": {
+          "type": "number"
+        },
+        "numbers": {
+          "type": "number"
+        },
+        "stringLiterals": {
+          "type": "string"
+        },
+        "stringTypes": {
+          "type": "string"
+        },
+        "stringUnion": {
+          "type": "string"
+        },
+        "threeNumbers": {
+          "type": "number"
+        },
+        "unknowns": {
+          "type": "string"
+        }
       },
       "required": [
         "numbers",
