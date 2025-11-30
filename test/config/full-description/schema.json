@@ -8,20 +8,21 @@
       "type": "string"
     },
     "MyNonEmptyArray<number>": {
+      "fullDescription": "@minItems 1",
       "items": {
         "type": "number"
       },
       "minItems": 1,
-      "fullDescription": "@minItems 1",
       "type": "array"
     }
   },
   "description": "Top-level interface: This interface is used to test the fullDescription output.\nIt includes various formatting quirks, inline tags such as {@link SomeReference }, and multiple JSDoc sections.",
+  "fullDescription": "@title Raw Test Schema Interface\n@description Top-level interface: This interface is used to test the fullDescription output.\nIt includes various formatting quirks, inline tags such as {@link SomeReference}, and multiple JSDoc sections.\n\n@markdownDescription **Markdown version:** Markdown description which should be <b>preserved</b>\n\nAdditional info: Top-level details should be completely preserved in raw form.",
   "properties": {
     "description": {
       "description": "Some more examples: ```yaml name: description length: 42 ```",
-      "markdownDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
       "fullDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
+      "markdownDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
       "title": "Inherited Title",
       "type": "string"
     },
@@ -35,8 +36,8 @@
       "anyOf": [
         {
           "$ref": "#/definitions/MyExportString",
-          "markdownDescription": "Some ignored comment description",
-          "fullDescription": "Some ignored comment description\n\n@description Export field description\n@default {\"length\": 10}\n@nullable"
+          "fullDescription": "Some ignored comment description\n\n@description Export field description\n@default {\"length\": 10}\n@nullable",
+          "markdownDescription": "Some ignored comment description"
         },
         {
           "type": "null"
@@ -50,22 +51,22 @@
     "inheritedDescription": {
       "default": "",
       "description": "Inherited description text.\n\nIt contains an inline link: {@link https://example.com} and additional commentary.",
-      "markdownDescription": "This is an inherited description.\n\nIt may include multiple at-tags:",
       "fullDescription": "@default \"\"",
+      "markdownDescription": "This is an inherited description.\n\nIt may include multiple at-tags:",
       "title": "Inherited Title",
       "type": "string"
     },
     "initialText": {
       "default": "42\n\nFurther comments in the same block should be preserved entirely.",
       "description": "Field with initial untagged text followed by a tag.",
-      "markdownDescription": "Some initial descriptive text that is not tagged.",
       "fullDescription": "Some initial descriptive text that is not tagged.\n\n@description Field with initial untagged text followed by a tag.\n@default 42\n\nFurther comments in the same block should be preserved entirely.",
+      "markdownDescription": "Some initial descriptive text that is not tagged.",
       "type": "number"
     },
     "markdownField": {
       "description": "This field tests `inline code` and <b>bold text</b>.\n\nAlso includes an inline link: {@link https://example.com} and additional commentary.",
-      "markdownDescription": "Some *code block*:\n```yaml\nname: description\nlength: 42\n```\n\nSome list:\n- one\n- two\n- and three...",
       "fullDescription": "Some *code block*:\n```yaml\nname: description\nlength: 42\n```\n\nSome list:\n- one\n- two\n- and three...\n\n@description This field tests `inline code` and <b>bold text</b>.\n\nAlso includes an inline link: {@link https://example.com} and additional commentary.",
+      "markdownDescription": "Some *code block*:\n```yaml\nname: description\nlength: 42\n```\n\nSome list:\n- one\n- two\n- and three...",
       "type": "string"
     },
     "multilineField": {
@@ -80,8 +81,8 @@
     },
     "noTagField": {
       "description": "This field has a comment without explicit tags. It includes an inline reference:  {@link  ExampleReference  }  and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
-      "markdownDescription": "This field has a comment without explicit tags.\nIt includes an inline reference:  {@link  ExampleReference  }  and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
       "fullDescription": "This field has a comment without explicit tags.\nIt includes an inline reference: {@link ExampleReference} and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
+      "markdownDescription": "This field has a comment without explicit tags.\nIt includes an inline reference:  {@link  ExampleReference  }  and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
       "type": "boolean"
     },
     "number": {
@@ -95,14 +96,14 @@
     },
     "oneLineJsDoc": {
       "description": "Some text",
-      "markdownDescription": "Some text",
       "fullDescription": "Some text",
+      "markdownDescription": "Some text",
       "type": "string"
     },
     "oneLineJsDocComplex": {
       "description": "Some *text* -  {@link  https://example.com }  -",
-      "markdownDescription": "Some *text* -  {@link  https://example.com }  -",
       "fullDescription": "Some *text* - {@link https://example.com} - @see the `link`",
+      "markdownDescription": "Some *text* -  {@link  https://example.com }  -",
       "type": "string"
     },
     "privateString": {
@@ -120,8 +121,8 @@
     },
     "specialFormat": {
       "description": "Extra spaces and indentation should be preserved.",
-      "pattern": "/^\\w+$/",
       "fullDescription": "@title Field with Special Formatting\n@description   Extra spaces and indentation should be preserved.\n\n@pattern /^\\w+$/",
+      "pattern": "/^\\w+$/",
       "title": "Field with Special Formatting",
       "type": "string"
     },
@@ -137,7 +138,6 @@
       "type": "string"
     }
   },
-  "fullDescription": "@title Raw Test Schema Interface\n@description Top-level interface: This interface is used to test the fullDescription output.\nIt includes various formatting quirks, inline tags such as {@link SomeReference}, and multiple JSDoc sections.\n\n@markdownDescription **Markdown version:** Markdown description which should be <b>preserved</b>\n\nAdditional info: Top-level details should be completely preserved in raw form.",
   "required": [
     "singleLine",
     "multilineField",
