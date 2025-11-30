@@ -9,6 +9,7 @@ describe("valid-data-type", () => {
     it("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
     it("type-aliases-mixed", assertValidSchema("type-aliases-mixed", "MyObject"));
     it("type-aliases-union", assertValidSchema("type-aliases-union", "MyUnion"));
+    it("binary-expression", assertValidSchema("binary-expression", "MyObject"));
     it("type-aliases-anonymous", assertValidSchema("type-aliases-anonymous", "MyObject"));
     it("type-aliases-local-namespace", assertValidSchema("type-aliases-local-namespace", "MyObject"));
     it("type-aliases-recursive-anonymous", assertValidSchema("type-aliases-recursive-anonymous", "MyAlias"));
