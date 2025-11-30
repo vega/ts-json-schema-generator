@@ -1,0 +1,164 @@
+{
+  "$ref": "#/definitions/myFunction",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyClass": {
+      "additionalProperties": false,
+      "properties": {
+        "someField": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "someField"
+      ],
+      "type": "object"
+    },
+    "myFunction": {
+      "$comment": "(\n    str = \"something\",\n    num = 123,\n    bool = true,\n    [a, b, c] = [1, 2, 3],\n    obj = { a: 1, b: 2 },\n    func = (a: number, b: number) => a + b,\n    object = myObj,\n    func1 = mFunction,\n    clas = new MyClass(),\n    arr = myArray) =>undefined",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "[a, b, c]": {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            },
+            "arr": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "$comment": "Function"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "bool": {
+              "type": "boolean"
+            },
+            "clas": {
+              "$ref": "#/definitions/MyClass"
+            },
+            "func": {
+              "$comment": "Function",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "a",
+                    "b"
+                  ],
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "func1": {
+              "$comment": "Function",
+              "properties": {
+                "namedArgs": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "input": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "num": {
+              "type": "number"
+            },
+            "obj": {
+              "additionalProperties": false,
+              "properties": {
+                "a": {
+                  "type": "number"
+                },
+                "b": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "a",
+                "b"
+              ],
+              "type": "object"
+            },
+            "object": {
+              "additionalProperties": false,
+              "properties": {
+                "func": {
+                  "$comment": "Function",
+                  "properties": {
+                    "namedArgs": {
+                      "additionalProperties": false,
+                      "properties": {
+                        "_0": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "a": {
+                              "type": "number"
+                            },
+                            "b": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b"
+                          ],
+                          "type": "object"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "type": "object"
+                },
+                "num": {
+                  "type": "number"
+                },
+                "str": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "str",
+                "num",
+                "func"
+              ],
+              "type": "object"
+            },
+            "str": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}
