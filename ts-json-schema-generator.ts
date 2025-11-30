@@ -11,7 +11,16 @@ import pkg from "./package.json";
 
 const args = new Command()
     .option("-p, --path <path>", "Source file path")
-    .option("-t, --type <name>", "Type name")
+    .option(
+        "-t, --type <name>",
+        "Type name (can be passed multiple times)",
+        (value: string, previous: string[] | undefined) => {
+            if (previous) {
+                return previous.concat(value);
+            }
+            return [value];
+        },
+    )
     .option("-i, --id <name>", "$id for generated schema")
     .option("-f, --tsconfig <path>", "Custom tsconfig.json path")
     .addOption(
@@ -84,7 +93,7 @@ const config: Config = {
 };
 
 try {
-    const schema = createGenerator(config).createSchema(args.type);
+    const schema = createGenerator(config).createSchema(config.type);
 
     const stringify = config.sortProps ? stableStringify : JSON.stringify;
     // need as string since TS can't figure out that the string | undefined case doesn't happen

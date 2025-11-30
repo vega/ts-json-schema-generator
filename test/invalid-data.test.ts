@@ -7,7 +7,7 @@ import type { CompletedConfig } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
 
-function assertSchema(name: string, type: string, message: string) {
+function assertSchema(name: string, type: string | string[], message: string) {
     return () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
@@ -35,6 +35,7 @@ describe("invalid-data", () => {
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
+    it("mixing * and types", assertSchema("duplicates", ["*", "MyType"], `Cannot mix '*' with specific type names`));
     it(
         "missing-discriminator",
         assertSchema("missing-discriminator", "MyType", 'Cannot find discriminator keyword "type" in type B.'),
