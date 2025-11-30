@@ -41,8 +41,8 @@ jobs:
 
     strategy:
       fail-fast: false
-      # matrix:
-      #   os: [ubuntu-latest, windows-latest]
+      matrix:
+        os: [ubuntu-latest, windows-latest]
       #   shard: [1, 2, 3, 4]
 
     runs-on: ${{ matrix.os }}
