@@ -35,15 +35,14 @@ jobs:
         run: npm run build
 
   test:
-    # name: Test ${{ matrix.shard }}/4 (${{ matrix.os }})
-    name: Test (${{ matrix.os }})
+    name: Test ${{ matrix.shard }}/4 (${{ matrix.os }})
     needs: build
 
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-      #   shard: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4]
 
     runs-on: ${{ matrix.os }}
 
@@ -61,10 +60,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test coverage
+      - name: Test coverage # node uses os.availableParallelism()-1 by default
         run: npm run test:coverage -- --test-concurrency=$(node -e 'console.log(os.availableParallelism())')
-        # env:
-          # NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
+        env: # somehow using test shard as params didn't work
+          NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
