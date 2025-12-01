@@ -1,77 +1,83 @@
 import type { Options as AjvOptions } from "ajv";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync, writeFileSync } from "fs";
-import { resolve } from "path";
+import fs from "node:fs";
+import path from "node:path";
+import type { TestFn } from "node:test";
 import stringify from "safe-stable-stringify";
-import type ts from "typescript";
-import { createFormatter } from "../factory/formatter";
-import { createParser } from "../factory/parser";
-import { createProgram } from "../factory/program";
+import { createGenerator } from "../factory/generator.js";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
-import { SchemaGenerator } from "../src/SchemaGenerator.js";
+import { t } from "try";
+import { BaseError } from "../src/Error/BaseError.js";
+import assert from "node:assert";
 
 const validator = new Ajv({ discriminator: true });
 addFormats(validator);
 
 const basePath = "test/valid-data";
 
-export function createGenerator(config: CompletedConfig): SchemaGenerator {
-    const program: ts.Program = createProgram(config);
-    return new SchemaGenerator(program, createParser(program, config), createFormatter(config), config);
+export interface ValidSchemaOptions {
+    /**
+     * Array of sample data
+     * that should
+     * successfully validate.
+     */
+    validSamples?: any[];
+    /**
+     * Array of sample data
+     * that should
+     * fail to validate.
+     */
+    invalidSamples?: any[];
+    /**
+     * Options to pass to Ajv
+     * when creating the Ajv
+     * instance.
+     *
+     * @default {strict:false}
+     */
+    ajvOptions?: AjvOptions;
+    mainTsOnly?: boolean;
 }
 
 export function assertValidSchema(
     relativePath: string,
     type?: Config["type"],
     config_?: Omit<Config, "type">,
-    options?: {
-        /**
-         * Array of sample data
-         * that should
-         * successfully validate.
-         */
-        validSamples?: any[];
-        /**
-         * Array of sample data
-         * that should
-         * fail to validate.
-         */
-        invalidSamples?: any[];
-        /**
-         * Options to pass to Ajv
-         * when creating the Ajv
-         * instance.
-         *
-         * @default {strict:false}
-         */
-        ajvOptions?: AjvOptions;
-        mainTsOnly?: boolean;
-    },
-) {
-    return (): void => {
+    options?: ValidSchemaOptions,
+): TestFn {
+    return async () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
-            path: `${basePath}/${relativePath}/${options?.mainTsOnly ? "main" : "*"}.ts`,
+            path: path.resolve(basePath, relativePath, `${options?.mainTsOnly ? "main" : "*"}.ts`),
             skipTypeCheck: !!process.env.FAST_TEST,
             type,
             ...config_,
         };
 
-        const generator = createGenerator(config);
-        const schema = generator.createSchema(config.type);
-        const schemaFile = resolve(`${basePath}/${relativePath}/schema.json`);
+        const [ok, error, generator] = t(() => createGenerator(config));
 
-        if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+        if (!ok) {
+            if (error instanceof BaseError) {
+                console.error(error.format(true));
+            }
+
+            throw error;
         }
 
-        const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const schema = generator.createSchema(config.type);
+        const schemaFile = path.resolve(basePath, relativePath, "schema.json");
+
+        if (process.env.UPDATE_SCHEMA) {
+            await fs.promises.writeFile(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+        }
+
+        const expected: any = JSON.parse(await fs.promises.readFile(schemaFile, "utf8"));
         const actual: any = JSON.parse(JSON.stringify(schema));
 
-        expect(typeof actual).toBe("object");
-        expect(actual).toStrictEqual(expected);
+        assert.equal(typeof actual, "object");
+        assert.deepStrictEqual(actual, expected);
 
         let localValidator = validator;
         if (config.extraTags) {
@@ -80,7 +86,7 @@ export function assertValidSchema(
         }
 
         localValidator.validateSchema(actual);
-        expect(localValidator.errors).toBeNull();
+        assert.equal(localValidator.errors, null);
 
         // Compile in all cases to detect MissingRef errors
         const validate = localValidator.compile(actual);
@@ -90,21 +96,25 @@ export function assertValidSchema(
         if (options?.invalidSamples) {
             for (const sample of options.invalidSamples) {
                 const isValid = validate(sample);
+
                 if (isValid) {
                     console.log("Unexpectedly Valid:", sample);
                 }
-                expect(isValid).toBe(false);
+
+                assert.equal(isValid, false);
             }
         }
+
         if (options?.validSamples) {
             for (const sample of options.validSamples) {
                 const isValid = validate(sample);
+
                 if (!isValid) {
                     console.log("Unexpectedly Invalid:", sample);
-
                     console.log("AJV Errors:", validate.errors);
                 }
-                expect(isValid).toBe(true);
+
+                assert.equal(isValid, true);
             }
         }
     };

@@ -8,10 +8,10 @@ export interface Config {
     path?: string;
 
     /**
-     * Name of the type/interface to generate schema for.
+     * Name of the type(s)/interface(s) to generate schema for.
      * Use "*" to generate schemas for all exported types.
      */
-    type?: string;
+    type?: string | string[];
 
     /**
      * Minify the output JSON schema (no whitespace).
