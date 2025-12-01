@@ -20,6 +20,7 @@ import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
+import { ArrayType } from "../Type/ArrayType.js";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
@@ -49,6 +50,15 @@ export class MappedTypeNodeParser implements SubNodeParser {
         if (keyListType instanceof LiteralType) {
             // Key type resolves to single known property
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
+        }
+
+        const maybeUnionType = this.childNodeParser.createType(
+            node.type!,
+            this.createSubContext(node, keyListType, context),
+        );
+        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
+            // Then we turn it into an array
+            return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
         }
 
         if (
