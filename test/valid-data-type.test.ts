@@ -114,7 +114,7 @@ describe("valid-data-type", () => {
     it("type-mapped-double-exclude", assertValidSchema("type-mapped-double-exclude", "MyObject"));
     it("type-mapped-symbol", assertValidSchema("type-mapped-symbol", "MyObject"));
     it("type-mapped-never", assertValidSchema("type-mapped-never", "MyObject"));
-    it("type-mapped-number", assertValidSchema("type-mapped-number", "MyObject"));
+    it("type-mapped-number", assertValidSchema("type-mapped-number", "*"));
     it("type-mapped-empty-exclude", assertValidSchema("type-mapped-empty-exclude", "MyObject"));
     it("type-mapped-annotated-string", assertValidSchema("type-mapped-annotated-string", "*"));
 
