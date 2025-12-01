@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("never", assertValidSchema("never", "BasicNever"));
+test("valid-data - never", assertValidSchema("never", "BasicNever"));

@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("undefined-property", assertValidSchema("undefined-property", "MyType"));
+test("valid-data - undefined-property", assertValidSchema("undefined-property", "MyType"));
