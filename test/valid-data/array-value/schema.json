@@ -1,7 +1,22 @@
 {
-  "$ref": "#/definitions/MyType",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
+    "BasicObj": {
+      "additionalProperties": false,
+      "properties": {
+	"age": {
+	  "type": "number"
+	},
+	"name": {
+	  "type": "string"
+	}
+      },
+      "required": [
+	"name",
+	"age"
+      ],
+      "type": "object"
+    },
     "MyType": {
       "additionalProperties": false,
       "properties": {
@@ -13,10 +28,30 @@
               "type": "number"
             }
           }
+        },
+        "numToNumberArr": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "numToObjArr": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/BasicObj"
+            }
+          }
         }
       },
       "required": [
-        "strToNumberArr"
+        "strToNumberArr",
+        "numToNumberArr",
+        "numToObjArr"
       ],
       "type": "object"
     }
