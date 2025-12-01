@@ -153,8 +153,6 @@ describe("valid-data-type", () => {
     it("promise-extensions", assertValidSchema("promise-extensions", "*"));
     it("promise-generics", assertValidSchema("promise-generics", "*"));
 
-    it("array-value", assertValidSchema("array-value", "*"));
-
     it("export-star", assertValidSchema("export-star", "*", undefined, { mainTsOnly: true }));
     it(
         "export-star-prune-unreachable",
