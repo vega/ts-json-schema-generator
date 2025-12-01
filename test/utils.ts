@@ -82,18 +82,18 @@ export function assertConfigSchema(
         if (config.markdownDescription) keywords.push("markdownDescription");
         if (config.fullDescription) keywords.push("fullDescription");
 
-        const validator = new Ajv({
+        const localValidator = new Ajv({
             // skip full check if we are not encoding refs
             validateFormats: config.encodeRefs === false ? undefined : true,
             keywords: keywords.length ? keywords : undefined,
         });
 
-        addFormats(validator);
+        addFormats(localValidator);
 
-        validator.validateSchema(actual);
-        assert.equal(validator.errors, null);
+        localValidator.validateSchema(actual);
+        assert.equal(localValidator.errors, null);
 
-        validator.compile(actual); // Will find MissingRef errors
+        localValidator.compile(actual); // Will find MissingRef errors
     };
 }
 
