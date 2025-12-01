@@ -4,7 +4,7 @@ import type { CompilerOptions } from "typescript";
 import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
-import { globSync } from "node:fs";
+import fs from "node:fs";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -68,7 +68,7 @@ function getTsConfig(config: Config) {
 
 export function createProgram(config: CompletedConfig): ts.Program {
     const rootNamesFromPath = config.path
-        ? globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
+        ? fs.globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
         : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
