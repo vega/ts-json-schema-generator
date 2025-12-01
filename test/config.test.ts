@@ -1,8 +1,11 @@
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
-import { readFileSync, writeFileSync } from "fs";
-import { resolve } from "path";
+import fs from "fs";
+import assert from "node:assert";
+import { describe, it, type TestFn } from "node:test";
+import path from "path";
 import stringify from "safe-stable-stringify";
+import { t } from "try";
 import ts from "typescript";
 import type { FormatterAugmentor } from "../factory/formatter";
 import { createFormatter } from "../factory/formatter";
@@ -10,7 +13,7 @@ import type { ParserAugmentor } from "../factory/parser";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import type { BaseType, Context, ReferenceType, SubNodeParser } from "../index";
-import { DefinitionType } from "../index";
+import { BaseError, DefinitionType } from "../index";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
 import type { Definition } from "../src/Schema/Definition.js";
@@ -30,39 +33,51 @@ function assertSchema(
     tsconfig?: boolean,
     formatterAugmentor?: FormatterAugmentor,
     parserAugmentor?: ParserAugmentor,
-) {
-    return () => {
+): TestFn {
+    return async () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             ...userConfig,
             skipTypeCheck: !!process.env.FAST_TEST,
         };
         if (tsconfig) {
-            config.tsconfig = resolve(`${basePath}/${name}/tsconfig.json`);
+            config.tsconfig = path.resolve(basePath, name, "tsconfig.json");
         } else {
-            config.path = resolve(`${basePath}/${name}/*.ts`);
+            config.path = path.resolve(basePath, name, "*.ts");
         }
 
         const program: ts.Program = createProgram(config);
-        const generator: SchemaGenerator = new SchemaGenerator(
-            program,
-            createParser(program, config, parserAugmentor),
-            createFormatter(config, formatterAugmentor),
-            config,
+
+        const [ok, error, generator] = t(
+            () =>
+                new SchemaGenerator(
+                    program,
+                    createParser(program, config, parserAugmentor),
+                    createFormatter(config, formatterAugmentor),
+                    config,
+                ),
         );
 
-        const schema = generator.createSchema(config.type);
-        const schemaFile = resolve(`${basePath}/${name}/schema.json`);
+        if (!ok) {
+            if (error instanceof BaseError) {
+                console.error(error.format(true));
+            }
 
-        if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+            throw error;
         }
 
-        const expected: any = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const schema = generator.createSchema(config.type);
+        const schemaFile = path.resolve(basePath, name, "schema.json");
+
+        if (process.env.UPDATE_SCHEMA) {
+            await fs.promises.writeFile(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+        }
+
+        const expected: any = JSON.parse(await fs.promises.readFile(schemaFile, "utf8"));
         const actual: any = JSON.parse(JSON.stringify(schema));
 
-        expect(typeof actual).toBe("object");
-        expect(actual).toEqual(expected);
+        assert.equal(typeof actual, "object");
+        assert.deepStrictEqual(actual, expected);
 
         const keywords: string[] = [];
         if (config.markdownDescription) keywords.push("markdownDescription");
@@ -77,7 +92,7 @@ function assertSchema(
         addFormats(validator);
 
         validator.validateSchema(actual);
-        expect(validator.errors).toBeNull();
+        assert.equal(validator.errors, null);
 
         validator.compile(actual); // Will find MissingRef errors
     };

@@ -5,6 +5,8 @@ import { Context } from "../../../src/NodeParser.js";
 import { DefinitionType } from "../../../src/Type/DefinitionType.js";
 import { ObjectType } from "../../../src/Type/ObjectType.js";
 import { DEFAULT_CONFIG } from "../../../src/Config.js";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 const SOURCE = path.resolve(__dirname, "./source.ts");
 
@@ -21,15 +23,15 @@ describe("multiple sourceless nodes shouldn't conflict", () => {
         const inferredReturnType = getReturnType(fn, program.getTypeChecker());
 
         // Checks that the inferred return type does not have any real source file.
-        expect(inferredReturnType.getSourceFile()).toBeUndefined();
+        assert.strictEqual(inferredReturnType.getSourceFile(), undefined);
 
         const createdType = parser.createType(inferredReturnType, new Context(inferredReturnType)) as DefinitionType;
 
-        expect(createdType).toBeInstanceOf(DefinitionType);
+        assert.ok(createdType instanceof DefinitionType);
 
         const returnType = createdType.getType() as ObjectType;
 
-        expect(returnType).toBeInstanceOf(ObjectType);
+        assert.ok(returnType instanceof ObjectType);
 
         const ids = [returnType.getId()];
 
@@ -38,7 +40,7 @@ describe("multiple sourceless nodes shouldn't conflict", () => {
         }
 
         // Ensures all generated ids are unique
-        expect(ids).toStrictEqual(Array(...new Set(ids)));
+        assert.deepStrictEqual(ids, Array(...new Set(ids)));
     });
 });
 

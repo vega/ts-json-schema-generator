@@ -1,12 +1,14 @@
-import { readFileSync, writeFileSync } from "fs";
+import assert from "assert";
+import fs from "fs";
+import { describe, it } from "node:test";
 import { resolve } from "path";
+import stringify from "safe-stable-stringify";
+import { createGenerator } from "../factory/generator.js";
 import type { CompletedConfig } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
-import { createGenerator } from "./utils";
-import stringify from "safe-stable-stringify";
 
 describe("vega-lite", () => {
-    it("schema", () => {
+    it("schema", async () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
             path: `node_modules/vega-lite/src/index.ts`,
@@ -20,11 +22,11 @@ describe("vega-lite", () => {
         const schemaFile = resolve("test/vega-lite/schema.json");
 
         if (process.env.UPDATE_SCHEMA) {
-            writeFileSync(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
+            await fs.promises.writeFile(schemaFile, stringify(schema, null, 2) + "\n", "utf8");
         }
 
-        const vegaLiteSchema = JSON.parse(readFileSync(schemaFile, "utf8"));
+        const vegaLiteSchema = JSON.parse(await fs.promises.readFile(schemaFile, "utf8"));
 
-        expect(schema).toEqual(vegaLiteSchema);
+        assert.deepStrictEqual(schema, vegaLiteSchema);
     });
 });

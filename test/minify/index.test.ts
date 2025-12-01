@@ -1,7 +1,8 @@
 import { execSync } from "child_process";
 import path from "path";
+import { describe, it } from "node:test";
+import assert from "assert";
 
-const BIN = path.resolve(__dirname, "../../dist/ts-json-schema-generator.js");
 const SCHEMA_PATH = path.resolve(__dirname, "./schema.ts");
 
 const EXPECTED = {
@@ -22,28 +23,28 @@ const EXPECTED = {
 
 describe("Tests --minify output", () => {
     it("With minify", () => {
-        const stdout = execSync(`node ${BIN} -p ${SCHEMA_PATH} --minify`).toString().trimEnd();
+        const stdout = execSync(`npm --silent run run -- -p ${SCHEMA_PATH} --minify`).toString("utf8").trimEnd();
 
         // Only a newline at the end
-        expect(stdout.split("\n").length).toBe(1);
+        assert.strictEqual(stdout.split("\n").length, 1);
 
         // There's a newline at the end
-        expect(stdout).toEqual(JSON.stringify(EXPECTED));
+        assert.strictEqual(stdout, JSON.stringify(EXPECTED));
 
         // The same output for both
-        expect(JSON.parse(stdout)).toStrictEqual(EXPECTED);
+        assert.deepStrictEqual(JSON.parse(stdout), EXPECTED);
     });
 
     it("Without minify", () => {
-        const stdout = execSync(`node ${BIN} -p ${SCHEMA_PATH}`).toString().trimEnd();
+        const stdout = execSync(`npm --silent run run -- -p ${SCHEMA_PATH}`).toString().trimEnd();
 
         // There's more than one \n (formatting)
-        expect(stdout.split("\n").length).toBeGreaterThan(2);
+        assert(stdout.split("\n").length > 2);
 
         // There's a newline at the end
-        expect(stdout).toEqual(JSON.stringify(EXPECTED, null, 2));
+        assert.strictEqual(stdout, JSON.stringify(EXPECTED, null, 2));
 
         // The same output for both
-        expect(JSON.parse(stdout)).toStrictEqual(EXPECTED);
+        assert.deepStrictEqual(JSON.parse(stdout), EXPECTED);
     });
 });
