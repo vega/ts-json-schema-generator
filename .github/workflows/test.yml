@@ -67,3 +67,19 @@ jobs:
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+
+  # This job aggregates all test results to have a simpler branch protection check
+  test-complete:
+    name: Tests Complete
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check test matrix status
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            echo "Tests failed or were cancelled"
+            exit 1
+          fi
+          echo "All tests passed successfully"
