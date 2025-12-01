@@ -4,7 +4,6 @@ import type { NodeParser } from "../NodeParser.js";
 import { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
-import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import type { EnumValue } from "../Type/EnumType.js";
@@ -57,13 +56,6 @@ export class MappedTypeNodeParser implements SubNodeParser {
             keyListType instanceof NumberType ||
             keyListType instanceof SymbolType
         ) {
-            if (constraintType?.getId() === "number") {
-                const type = this.childNodeParser.createType(
-                    node.type!,
-                    this.createSubContext(node, keyListType, context),
-                );
-                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
-            }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
