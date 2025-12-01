@@ -52,18 +52,20 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
         }
 
+        const maybeUnionType = this.childNodeParser.createType(
+            node.type!,
+            this.createSubContext(node, keyListType, context),
+        );
+        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
+            // Then we turn it into an array
+            return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
+        }
+
         if (
             keyListType instanceof StringType ||
             keyListType instanceof NumberType ||
             keyListType instanceof SymbolType
         ) {
-            if (constraintType?.getId() === "number") {
-                const type = this.childNodeParser.createType(
-                    node.type!,
-                    this.createSubContext(node, keyListType, context),
-                );
-                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
-            }
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
