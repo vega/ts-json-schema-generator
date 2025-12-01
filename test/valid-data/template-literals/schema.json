@@ -1,0 +1,82 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "any": {
+          "type": "string"
+        },
+        "boolean": {
+          "enum": [
+            "true!",
+            "false!"
+          ],
+          "type": "string"
+        },
+        "definition": {
+          "enum": [
+            "one",
+            "two",
+            "three"
+          ],
+          "type": "string"
+        },
+        "empty": {
+          "const": "",
+          "type": "string"
+        },
+        "generic": {
+          "const": "foo",
+          "type": "string"
+        },
+        "interpolation": {
+          "const": "one_two_three",
+          "type": "string"
+        },
+        "intrinsic": {
+          "const": "Foo",
+          "type": "string"
+        },
+        "nestedUnion": {
+          "enum": [
+            "_one_",
+            "_two_",
+            "_three_"
+          ],
+          "type": "string"
+        },
+        "noSubstitution": {
+          "const": "one_two_three",
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "union": {
+          "enum": [
+            "one",
+            "two",
+            "three"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "empty",
+        "noSubstitution",
+        "interpolation",
+        "union",
+        "nestedUnion",
+        "number",
+        "boolean",
+        "any",
+        "definition",
+        "generic",
+        "intrinsic"
+      ],
+      "type": "object"
+    }
+  }
+}
