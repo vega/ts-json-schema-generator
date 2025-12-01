@@ -1,0 +1,64 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "any": {},
+        "bigintType": {
+          "type": "number"
+        },
+        "booleanLiterals": {
+          "type": "boolean"
+        },
+        "booleanTypes": {
+          "type": "boolean"
+        },
+        "mixedStringAndNumbers": {
+          "type": "string"
+        },
+        "mixedUnion": {
+          "type": "string"
+        },
+        "numberUnion": {
+          "type": "number"
+        },
+        "numbers": {
+          "type": "number"
+        },
+        "stringLiterals": {
+          "type": "string"
+        },
+        "stringTypes": {
+          "type": "string"
+        },
+        "stringUnion": {
+          "type": "string"
+        },
+        "threeNumbers": {
+          "type": "number"
+        },
+        "unknowns": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "numbers",
+        "stringLiterals",
+        "stringTypes",
+        "booleanTypes",
+        "booleanLiterals",
+        "any",
+        "threeNumbers",
+        "mixedStringAndNumbers",
+        "bigintType",
+        "unknowns",
+        "stringUnion",
+        "numberUnion",
+        "mixedUnion"
+      ],
+      "type": "object"
+    }
+  }
+}

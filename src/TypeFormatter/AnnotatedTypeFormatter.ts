@@ -58,7 +58,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         if ("discriminator" in annotations) {
             const deref = derefType(type.getType());
             if (deref instanceof UnionType) {
-                deref.setDiscriminator(annotations.discriminator);
+                deref.setDiscriminator(annotations.discriminator as string);
                 delete annotations.discriminator;
             } else {
                 throw new JsonTypeError(

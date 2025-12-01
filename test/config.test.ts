@@ -29,7 +29,7 @@ const basePath = "test/config";
 
 function assertSchema(
     name: string,
-    userConfig: Config & { type: string },
+    userConfig: Config & { type: string | string[] },
     tsconfig?: boolean,
     formatterAugmentor?: FormatterAugmentor,
     parserAugmentor?: ParserAugmentor,
@@ -402,6 +402,20 @@ describe("config", () => {
         assertSchema("additional-properties", {
             type: "MyObject",
             additionalProperties: true,
+        }),
+    );
+
+    it(
+        "multiple-types",
+        assertSchema("multiple-types", {
+            type: ["MyObject1", "MyObject2"],
+        }),
+    );
+
+    it(
+        "multiple-types-all",
+        assertSchema("multiple-types-all", {
+            type: ["MyObject1", "MyObject2", "Object1Prop", "Object2Prop"],
         }),
     );
 

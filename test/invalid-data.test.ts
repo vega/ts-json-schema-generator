@@ -1,5 +1,7 @@
-import { describe, it, type TestFn } from "node:test";
+import assert from "assert";
+import { describe, it } from "node:test";
 import { resolve } from "path";
+import { t } from "try";
 import type ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
@@ -8,10 +10,8 @@ import type { CompletedConfig } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
 import { BaseError } from "../src/Error/BaseError.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
-import assert from "assert";
-import { t } from "try";
 
-function assertSchema(name: string, type: string, message: string): TestFn {
+function assertSchema(name: string, type: string | string[], message: string) {
     return () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
@@ -46,6 +46,7 @@ describe("invalid-data", () => {
 
     it("script-empty", assertSchema("script-empty", "MyType", `No root type "MyType" found`));
     it("duplicates", assertSchema("duplicates", "MyType", `Type "A" has multiple definitions.`));
+    it("mixing * and types", assertSchema("duplicates", ["*", "MyType"], `Cannot mix '*' with specific type names`));
     it(
         "missing-discriminator",
         assertSchema("missing-discriminator", "MyType", 'Cannot find discriminator keyword "type" in type B.'),

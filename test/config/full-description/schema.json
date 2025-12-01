@@ -87,7 +87,10 @@
     },
     "number": {
       "fullDescription": "@nullable",
-      "type": ["number", "null"]
+      "type": [
+        "number",
+        "null"
+      ]
     },
     "numberArray": {
       "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E",
