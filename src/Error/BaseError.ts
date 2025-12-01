@@ -12,8 +12,6 @@ export type PartialDiagnostic = Omit<ts.Diagnostic, "category" | "file" | "start
     category?: ts.DiagnosticCategory;
 };
 
-const isTTY = process.env.TTY || process.stdout.isTTY;
-
 /**
  * Base error for ts-json-schema-generator
  */
@@ -51,7 +49,7 @@ export abstract class BaseError extends Error {
         );
     }
 
-    format() {
+    format(isTTY = process.env.TTY || process.stdout.isTTY): string {
         const formatter = isTTY ? ts.formatDiagnosticsWithColorAndContext : ts.formatDiagnostics;
 
         return formatter([this.diagnostic], {

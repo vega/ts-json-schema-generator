@@ -1,17 +1,21 @@
+import assert from "assert";
+import { describe, it } from "node:test";
 import { resolve } from "path";
+import { t } from "try";
 import type ts from "typescript";
 import { createFormatter } from "../factory/formatter";
 import { createParser } from "../factory/parser";
 import { createProgram } from "../factory/program";
 import type { CompletedConfig } from "../src/Config.js";
 import { DEFAULT_CONFIG } from "../src/Config.js";
+import { BaseError } from "../src/Error/BaseError.js";
 import { SchemaGenerator } from "../src/SchemaGenerator.js";
 
 function assertSchema(name: string, type: string | string[], message: string) {
     return () => {
         const config: CompletedConfig = {
             ...DEFAULT_CONFIG,
-            path: resolve(`test/invalid-data/${name}/*.ts`),
+            path: resolve("test", "invalid-data", name, `*.ts`),
             type: type,
             expose: "export",
             topRef: true,
@@ -20,13 +24,20 @@ function assertSchema(name: string, type: string | string[], message: string) {
         };
 
         const program: ts.Program = createProgram(config);
-        const generator: SchemaGenerator = new SchemaGenerator(
-            program,
-            createParser(program, config),
-            createFormatter(config),
+
+        const [ok, error, generator] = t(
+            () => new SchemaGenerator(program, createParser(program, config), createFormatter(config)),
         );
 
-        expect(() => generator.createSchema(type)).toThrow(message);
+        if (!ok) {
+            if (error instanceof BaseError) {
+                console.error(error.format(true));
+            }
+
+            throw error;
+        }
+
+        assert.throws(() => generator.createSchema(type), { message });
     };
 }
 

@@ -1,10 +1,12 @@
+import assert from "assert";
 import { HiddenType } from "../../../src/Type/HiddenType.js";
 import { NeverType } from "../../../src/Type/NeverType.js";
+import { describe, it } from "node:test";
 
 describe("HiddenType", () => {
     it("creates a HiddenType", () => {
         const hidden = new HiddenType();
-        expect(hidden instanceof NeverType).toBe(true);
-        expect(hidden.getId()).toBe("hidden");
+        assert.strictEqual(hidden instanceof NeverType, true);
+        assert.strictEqual(hidden.getId(), "hidden");
     });
 });

@@ -21,40 +21,42 @@ import { UnionType } from "../../src/Type/UnionType.js";
 import { UnknownType } from "../../src/Type/UnknownType.js";
 import { VoidType } from "../../src/Type/VoidType.js";
 import { isAssignableTo } from "../../src/Utils/isAssignableTo.js";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 describe("isAssignableTo", () => {
     it("returns true for same types", () => {
-        expect(isAssignableTo(new BooleanType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new NullType(), new NullType())).toBe(true);
-        expect(isAssignableTo(new NumberType(), new NumberType())).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new StringType(), new StringType())).toBe(true);
-        expect(isAssignableTo(new UndefinedType(), new UndefinedType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), new VoidType())).toBe(true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new NullType(), new NullType()), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), new NumberType()), true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new StringType(), new StringType()), true);
+        assert.strictEqual(isAssignableTo(new UndefinedType(), new UndefinedType()), true);
+        assert.strictEqual(isAssignableTo(new VoidType(), new VoidType()), true);
     });
     it("returns false for different types", () => {
-        expect(isAssignableTo(new BooleanType(), new NullType())).toBe(false);
-        expect(isAssignableTo(new NullType(), new NumberType())).toBe(false);
-        expect(isAssignableTo(new NumberType(), new BooleanType())).toBe(false);
-        expect(isAssignableTo(new BooleanType(), new StringType())).toBe(false);
-        expect(isAssignableTo(new StringType(), new UndefinedType())).toBe(false);
-        expect(isAssignableTo(new UndefinedType(), new BooleanType())).toBe(false);
-        expect(isAssignableTo(new ArrayType(new StringType()), new StringType())).toBe(false);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new NullType()), false);
+        assert.strictEqual(isAssignableTo(new NullType(), new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new NumberType(), new BooleanType()), false);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new StringType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), new UndefinedType()), false);
+        assert.strictEqual(isAssignableTo(new UndefinedType(), new BooleanType()), false);
+        assert.strictEqual(isAssignableTo(new ArrayType(new StringType()), new StringType()), false);
     });
     it("returns true for arrays with same item type", () => {
-        expect(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new StringType()))).toBe(true);
+        assert.strictEqual(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new StringType())), true);
     });
     it("returns false when array item types do not match", () => {
-        expect(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new NumberType()))).toBe(false);
+        assert.strictEqual(isAssignableTo(new ArrayType(new StringType()), new ArrayType(new NumberType())), false);
     });
     it("returns true when source type is compatible to target union type", () => {
         const union = new UnionType([new StringType(), new NumberType()]);
-        expect(isAssignableTo(union, new StringType())).toBe(true);
-        expect(isAssignableTo(union, new NumberType())).toBe(true);
+        assert.strictEqual(isAssignableTo(union, new StringType()), true);
+        assert.strictEqual(isAssignableTo(union, new NumberType()), true);
     });
     it("returns false when source type is not compatible to target union type", () => {
         const union = new UnionType([new StringType(), new NumberType()]);
-        expect(isAssignableTo(union, new BooleanType())).toBe(false);
+        assert.strictEqual(isAssignableTo(union, new BooleanType()), false);
     });
     it("derefs reference types", () => {
         const stringRef = new ReferenceType();
@@ -63,154 +65,180 @@ describe("isAssignableTo", () => {
         anotherStringRef.setType(new StringType());
         const numberRef = new ReferenceType();
         numberRef.setType(new NumberType());
-        expect(isAssignableTo(stringRef, new StringType())).toBe(true);
-        expect(isAssignableTo(stringRef, new NumberType())).toBe(false);
-        expect(isAssignableTo(new StringType(), stringRef)).toBe(true);
-        expect(isAssignableTo(new NumberType(), stringRef)).toBe(false);
-        expect(isAssignableTo(stringRef, anotherStringRef)).toBe(true);
-        expect(isAssignableTo(numberRef, stringRef)).toBe(false);
+        assert.strictEqual(isAssignableTo(stringRef, new StringType()), true);
+        assert.strictEqual(isAssignableTo(stringRef, new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), stringRef), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), stringRef), false);
+        assert.strictEqual(isAssignableTo(stringRef, anotherStringRef), true);
+        assert.strictEqual(isAssignableTo(numberRef, stringRef), false);
     });
     it("derefs alias types", () => {
         const stringAlias = new AliasType("a", new StringType());
         const anotherStringAlias = new AliasType("b", new StringType());
         const numberAlias = new AliasType("c", new NumberType());
-        expect(isAssignableTo(stringAlias, new StringType())).toBe(true);
-        expect(isAssignableTo(stringAlias, new NumberType())).toBe(false);
-        expect(isAssignableTo(new StringType(), stringAlias)).toBe(true);
-        expect(isAssignableTo(new NumberType(), stringAlias)).toBe(false);
-        expect(isAssignableTo(stringAlias, anotherStringAlias)).toBe(true);
-        expect(isAssignableTo(numberAlias, stringAlias)).toBe(false);
+        assert.strictEqual(isAssignableTo(stringAlias, new StringType()), true);
+        assert.strictEqual(isAssignableTo(stringAlias, new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), stringAlias), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), stringAlias), false);
+        assert.strictEqual(isAssignableTo(stringAlias, anotherStringAlias), true);
+        assert.strictEqual(isAssignableTo(numberAlias, stringAlias), false);
     });
     it("derefs annotated types", () => {
         const annotatedString = new AnnotatedType(new StringType(), {}, false);
         const anotherAnnotatedString = new AnnotatedType(new StringType(), {}, false);
         const annotatedNumber = new AnnotatedType(new NumberType(), {}, false);
-        expect(isAssignableTo(annotatedString, new StringType())).toBe(true);
-        expect(isAssignableTo(annotatedString, new NumberType())).toBe(false);
-        expect(isAssignableTo(new StringType(), annotatedString)).toBe(true);
-        expect(isAssignableTo(new NumberType(), annotatedString)).toBe(false);
-        expect(isAssignableTo(annotatedString, anotherAnnotatedString)).toBe(true);
-        expect(isAssignableTo(annotatedNumber, annotatedString)).toBe(false);
+        assert.strictEqual(isAssignableTo(annotatedString, new StringType()), true);
+        assert.strictEqual(isAssignableTo(annotatedString, new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), annotatedString), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), annotatedString), false);
+        assert.strictEqual(isAssignableTo(annotatedString, anotherAnnotatedString), true);
+        assert.strictEqual(isAssignableTo(annotatedNumber, annotatedString), false);
     });
     it("derefs definition types", () => {
         const stringDefinition = new DefinitionType("a", new StringType());
         const anotherStringDefinition = new DefinitionType("b", new StringType());
         const numberDefinition = new DefinitionType("c", new NumberType());
-        expect(isAssignableTo(stringDefinition, new StringType())).toBe(true);
-        expect(isAssignableTo(stringDefinition, new NumberType())).toBe(false);
-        expect(isAssignableTo(new StringType(), stringDefinition)).toBe(true);
-        expect(isAssignableTo(new NumberType(), stringDefinition)).toBe(false);
-        expect(isAssignableTo(stringDefinition, anotherStringDefinition)).toBe(true);
-        expect(isAssignableTo(numberDefinition, stringDefinition)).toBe(false);
+        assert.strictEqual(isAssignableTo(stringDefinition, new StringType()), true);
+        assert.strictEqual(isAssignableTo(stringDefinition, new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), stringDefinition), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), stringDefinition), false);
+        assert.strictEqual(isAssignableTo(stringDefinition, anotherStringDefinition), true);
+        assert.strictEqual(isAssignableTo(numberDefinition, stringDefinition), false);
     });
     it("lets type 'any' to be assigned to anything except 'never'", () => {
-        expect(isAssignableTo(new AnyType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new ArrayType(new NumberType()), new AnyType())).toBe(true);
-        expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new AnyType())).toBe(true);
-        expect(isAssignableTo(new LiteralType("literal"), new AnyType())).toBe(true);
-        expect(isAssignableTo(new NeverType(), new AnyType())).toBe(false);
-        expect(isAssignableTo(new NullType(), new AnyType())).toBe(true);
-        expect(
+        assert.strictEqual(isAssignableTo(new AnyType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new AnyType()), true);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new AnyType()),
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new LiteralType("literal"), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new NeverType(), new AnyType()), false);
+        assert.strictEqual(isAssignableTo(new NullType(), new AnyType()), true);
+        assert.strictEqual(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
                 new AnyType(),
             ),
-        ).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new NumberType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new StringType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new AnyType())).toBe(true);
-        expect(isAssignableTo(new UndefinedType(), new AnyType())).toBe(true);
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new BooleanType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new StringType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new UndefinedType(), new AnyType()), true);
     });
     it("lets type 'never' to be assigned to anything", () => {
-        expect(isAssignableTo(new AnyType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new ArrayType(new NumberType()), new NeverType())).toBe(true);
-        expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new NeverType())).toBe(true);
-        expect(isAssignableTo(new LiteralType("literal"), new NeverType())).toBe(true);
-        expect(isAssignableTo(new NeverType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new NullType(), new NeverType())).toBe(true);
-        expect(
+        assert.strictEqual(isAssignableTo(new AnyType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new NeverType()), true);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new NeverType()),
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new LiteralType("literal"), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new NeverType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new NullType(), new NeverType()), true);
+        assert.strictEqual(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
                 new NeverType(),
             ),
-        ).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new NumberType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new StringType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new NeverType())).toBe(true);
-        expect(isAssignableTo(new UndefinedType(), new NeverType())).toBe(true);
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new BooleanType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new StringType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new UndefinedType(), new NeverType()), true);
     });
     it("lets anything to be assigned to type 'any'", () => {
-        expect(isAssignableTo(new AnyType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new ArrayType(new NumberType()))).toBe(true);
-        expect(isAssignableTo(new AnyType(), new IntersectionType([new StringType(), new NullType()]))).toBe(true);
-        expect(isAssignableTo(new AnyType(), new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(new AnyType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new NullType())).toBe(true);
-        expect(
+        assert.strictEqual(isAssignableTo(new AnyType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new ArrayType(new NumberType())), true);
+        assert.strictEqual(
+            isAssignableTo(new AnyType(), new IntersectionType([new StringType(), new NullType()])),
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new AnyType(), new LiteralType("literal")), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new NullType()), true);
+        assert.strictEqual(
             isAssignableTo(
                 new AnyType(),
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
             ),
-        ).toBe(true);
-        expect(isAssignableTo(new AnyType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new NumberType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new StringType())).toBe(true);
-        expect(isAssignableTo(new AnyType(), new TupleType([new StringType(), new NumberType()]))).toBe(true);
-        expect(isAssignableTo(new AnyType(), new UndefinedType())).toBe(true);
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new AnyType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new NumberType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new StringType()), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new TupleType([new StringType(), new NumberType()])), true);
+        assert.strictEqual(isAssignableTo(new AnyType(), new UndefinedType()), true);
     });
     it("lets anything to be assigned to type 'unknown'", () => {
-        expect(isAssignableTo(new UnknownType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new ArrayType(new NumberType()))).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new IntersectionType([new StringType(), new NullType()]))).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new NullType())).toBe(true);
-        expect(
+        assert.strictEqual(isAssignableTo(new UnknownType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new ArrayType(new NumberType())), true);
+        assert.strictEqual(
+            isAssignableTo(new UnknownType(), new IntersectionType([new StringType(), new NullType()])),
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new UnknownType(), new LiteralType("literal")), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new NullType()), true);
+        assert.strictEqual(
             isAssignableTo(
                 new UnknownType(),
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true),
             ),
-        ).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new NumberType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new BooleanType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new StringType())).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new TupleType([new StringType(), new NumberType()]))).toBe(true);
-        expect(isAssignableTo(new UnknownType(), new UndefinedType())).toBe(true);
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new UnknownType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new NumberType()), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new StringType()), true);
+        assert.strictEqual(
+            isAssignableTo(new UnknownType(), new TupleType([new StringType(), new NumberType()])),
+            true,
+        );
+        assert.strictEqual(isAssignableTo(new UnknownType(), new UndefinedType()), true);
     });
     it("lets 'unknown' only to be assigned to type 'unknown' or 'any'", () => {
-        expect(isAssignableTo(new AnyType(), new UnknownType())).toBe(true);
-        expect(isAssignableTo(new ArrayType(new NumberType()), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new LiteralType("literal"), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new NeverType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new NullType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new UnknownType(), new UnknownType())).toBe(true);
-        expect(
+        assert.strictEqual(isAssignableTo(new AnyType(), new UnknownType()), true);
+        assert.strictEqual(isAssignableTo(new ArrayType(new NumberType()), new UnknownType()), false);
+        assert.strictEqual(
+            isAssignableTo(new IntersectionType([new StringType(), new NullType()]), new UnknownType()),
+            false,
+        );
+        assert.strictEqual(isAssignableTo(new LiteralType("literal"), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new NeverType(), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new NullType(), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new UnknownType(), new UnknownType()), true);
+        assert.strictEqual(
             isAssignableTo(
                 new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], false),
                 new UnknownType(),
             ),
-        ).toBe(false);
-        expect(isAssignableTo(new BooleanType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new NumberType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new BooleanType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new StringType(), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new TupleType([new StringType(), new NumberType()]), new UnknownType())).toBe(false);
-        expect(isAssignableTo(new UndefinedType(), new UnknownType())).toBe(false);
+            false,
+        );
+        assert.strictEqual(isAssignableTo(new BooleanType(), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new NumberType(), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new UnknownType()), false);
+        assert.strictEqual(isAssignableTo(new StringType(), new UnknownType()), false);
+        assert.strictEqual(
+            isAssignableTo(new TupleType([new StringType(), new NumberType()]), new UnknownType()),
+            false,
+        );
+        assert.strictEqual(isAssignableTo(new UndefinedType(), new UnknownType()), false);
     });
 
     it("lets 'any', 'never', 'null', and 'undefined' be assigned to type 'void'", () => {
-        expect(isAssignableTo(new VoidType(), new AnyType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), new NeverType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), new NullType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), new UndefinedType())).toBe(true);
-        expect(isAssignableTo(new VoidType(), new UnknownType())).toBe(false);
+        assert.strictEqual(isAssignableTo(new VoidType(), new AnyType()), true);
+        assert.strictEqual(isAssignableTo(new VoidType(), new NeverType()), true);
+        assert.strictEqual(isAssignableTo(new VoidType(), new NullType()), true);
+        assert.strictEqual(isAssignableTo(new VoidType(), new UndefinedType()), true);
+        assert.strictEqual(isAssignableTo(new VoidType(), new UnknownType()), false);
     });
 
     it("lets union type to be assigned if all sub types are compatible to target type", () => {
@@ -219,25 +247,28 @@ describe("isAssignableTo", () => {
         const typeC = new ObjectType("c", [], [new ObjectProperty("c", new StringType(), true)], true);
         const typeAB = new ObjectType("ab", [typeA, typeB], [], true);
         const typeAorB = new UnionType([typeA, typeB]);
-        expect(isAssignableTo(typeAB, new UnionType([typeA, typeA]))).toBe(false);
-        expect(isAssignableTo(typeAB, new UnionType([typeB, typeB]))).toBe(false);
-        expect(isAssignableTo(typeAB, new UnionType([typeA, typeB]))).toBe(false);
-        expect(isAssignableTo(typeAB, new UnionType([typeB, typeA]))).toBe(false);
-        expect(isAssignableTo(typeAB, new UnionType([typeB, typeA, typeC]))).toBe(false);
-        expect(isAssignableTo(typeAorB, new UnionType([typeB, typeA]))).toBe(true);
-        expect(isAssignableTo(typeAorB, new UnionType([typeA, typeB]))).toBe(true);
-        expect(isAssignableTo(typeAorB, new UnionType([typeAB, typeB, typeC]))).toBe(false);
+        assert.strictEqual(isAssignableTo(typeAB, new UnionType([typeA, typeA])), false);
+        assert.strictEqual(isAssignableTo(typeAB, new UnionType([typeB, typeB])), false);
+        assert.strictEqual(isAssignableTo(typeAB, new UnionType([typeA, typeB])), false);
+        assert.strictEqual(isAssignableTo(typeAB, new UnionType([typeB, typeA])), false);
+        assert.strictEqual(isAssignableTo(typeAB, new UnionType([typeB, typeA, typeC])), false);
+        assert.strictEqual(isAssignableTo(typeAorB, new UnionType([typeB, typeA])), true);
+        assert.strictEqual(isAssignableTo(typeAorB, new UnionType([typeA, typeB])), true);
+        assert.strictEqual(isAssignableTo(typeAorB, new UnionType([typeAB, typeB, typeC])), false);
     });
     it("lets tuple type to be assigned to array type if item types match", () => {
-        expect(
+        assert.strictEqual(
             isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new StringType()])),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(new ArrayType(new NumberType()), new TupleType([new StringType(), new StringType()])),
-        ).toBe(false);
-        expect(
+            false,
+        );
+        assert.strictEqual(
             isAssignableTo(new ArrayType(new StringType()), new TupleType([new StringType(), new NumberType()])),
-        ).toBe(false);
+            false,
+        );
     });
     it("lets array types to be assigned to array-like object", () => {
         const fixedLengthArrayLike = new ObjectType(
@@ -268,102 +299,116 @@ describe("isAssignableTo", () => {
         const arrayType = new ArrayType(new StringType());
         const tupleType = new TupleType([new StringType(), new NumberType()]);
 
-        expect(isAssignableTo(fixedLengthArrayLike, arrayType)).toBe(false);
-        expect(isAssignableTo(nonFixedLengthArrayLike, arrayType)).toBe(true);
-        expect(isAssignableTo(optionalLengthArrayLike, arrayType)).toBe(false);
-        expect(isAssignableTo(nonArrayLike, arrayType)).toBe(false);
+        assert.strictEqual(isAssignableTo(fixedLengthArrayLike, arrayType), false);
+        assert.strictEqual(isAssignableTo(nonFixedLengthArrayLike, arrayType), true);
+        assert.strictEqual(isAssignableTo(optionalLengthArrayLike, arrayType), false);
+        assert.strictEqual(isAssignableTo(nonArrayLike, arrayType), false);
 
-        expect(isAssignableTo(fixedLengthArrayLike, tupleType)).toBe(true);
-        expect(isAssignableTo(nonFixedLengthArrayLike, tupleType)).toBe(false);
-        expect(isAssignableTo(optionalLengthArrayLike, tupleType)).toBe(false);
-        expect(isAssignableTo(nonArrayLike, tupleType)).toBe(false);
+        assert.strictEqual(isAssignableTo(fixedLengthArrayLike, tupleType), true);
+        assert.strictEqual(isAssignableTo(nonFixedLengthArrayLike, tupleType), false);
+        assert.strictEqual(isAssignableTo(optionalLengthArrayLike, tupleType), false);
+        assert.strictEqual(isAssignableTo(nonArrayLike, tupleType), false);
     });
     it("lets only compatible tuple type to be assigned to tuple type", () => {
-        expect(
+        assert.strictEqual(
             isAssignableTo(new TupleType([new StringType(), new StringType()]), new ArrayType(new StringType())),
-        ).toBe(false);
-        expect(isAssignableTo(new TupleType([new StringType(), new StringType()]), new StringType())).toBe(false);
-        expect(
+            false,
+        );
+        assert.strictEqual(
+            isAssignableTo(new TupleType([new StringType(), new StringType()]), new StringType()),
+            false,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new StringType()]),
                 new TupleType([new StringType(), new NumberType()]),
             ),
-        ).toBe(false);
-        expect(
+            false,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new StringType()]),
                 new TupleType([new StringType(), new StringType()]),
             ),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new OptionalType(new StringType())]),
                 new TupleType([new StringType()]),
             ),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new OptionalType(new StringType())]),
                 new TupleType([new StringType(), new StringType()]),
             ),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new InferType("T")]),
                 new TupleType([new StringType(), new NumberType(), new StringType()]),
             ),
-        ).toBe(false);
-        expect(
+            false,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new InferType("T")]),
                 new TupleType([new StringType(), new NumberType()]),
             ),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(new TupleType([new StringType(), new InferType("T")]), new TupleType([new StringType()])),
-        ).toBe(false);
-        expect(
+            false,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new RestType(new InferType("T"))]),
                 new TupleType([new StringType()]),
             ),
-        ).toBe(true);
-        expect(
+            true,
+        );
+        assert.strictEqual(
             isAssignableTo(
                 new TupleType([new StringType(), new RestType(new InferType("T"))]),
                 new TupleType([new StringType(), new NumberType(), new StringType()]),
             ),
-        ).toBe(true);
+            true,
+        );
     });
     it("lets anything except null and undefined to be assigned to empty object type", () => {
         const empty = new ObjectType("empty", [], [], false);
-        expect(isAssignableTo(empty, new AnyType())).toBe(true);
-        expect(isAssignableTo(empty, new ArrayType(new NumberType()))).toBe(true);
-        expect(isAssignableTo(empty, new IntersectionType([new StringType(), new NullType()]))).toBe(true);
-        expect(isAssignableTo(empty, new LiteralType("literal"))).toBe(true);
-        expect(isAssignableTo(empty, new NeverType())).toBe(true);
-        expect(isAssignableTo(empty, new NullType())).toBe(false);
-        expect(
+        assert.strictEqual(isAssignableTo(empty, new AnyType()), true);
+        assert.strictEqual(isAssignableTo(empty, new ArrayType(new NumberType())), true);
+        assert.strictEqual(isAssignableTo(empty, new IntersectionType([new StringType(), new NullType()])), true);
+        assert.strictEqual(isAssignableTo(empty, new LiteralType("literal")), true);
+        assert.strictEqual(isAssignableTo(empty, new NeverType()), true);
+        assert.strictEqual(isAssignableTo(empty, new NullType()), false);
+        assert.strictEqual(
             isAssignableTo(empty, new ObjectType("obj", [], [new ObjectProperty("foo", new StringType(), true)], true)),
-        ).toBe(true);
-        expect(isAssignableTo(empty, new BooleanType())).toBe(true);
-        expect(isAssignableTo(empty, new NumberType())).toBe(true);
-        expect(isAssignableTo(empty, new BooleanType())).toBe(true);
-        expect(isAssignableTo(empty, new StringType())).toBe(true);
-        expect(isAssignableTo(empty, new TupleType([new StringType(), new NumberType()]))).toBe(true);
-        expect(isAssignableTo(empty, new UndefinedType())).toBe(false);
+            true,
+        );
+        assert.strictEqual(isAssignableTo(empty, new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(empty, new NumberType()), true);
+        assert.strictEqual(isAssignableTo(empty, new BooleanType()), true);
+        assert.strictEqual(isAssignableTo(empty, new StringType()), true);
+        assert.strictEqual(isAssignableTo(empty, new TupleType([new StringType(), new NumberType()])), true);
+        assert.strictEqual(isAssignableTo(empty, new UndefinedType()), false);
     });
     it("lets only compatible object types to be assigned to object type", () => {
         const typeA = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), true)], false);
         const typeC = new ObjectType("c", [], [new ObjectProperty("c", new StringType(), true)], false);
         const typeAB = new ObjectType("ab", [typeA, typeB], [], false);
-        expect(isAssignableTo(typeA, new StringType())).toBe(false);
-        expect(isAssignableTo(typeA, typeAB)).toBe(true);
-        expect(isAssignableTo(typeB, typeAB)).toBe(true);
-        expect(isAssignableTo(typeC, typeAB)).toBe(false);
-        expect(isAssignableTo(typeAB, typeA)).toBe(false);
-        expect(isAssignableTo(typeAB, typeB)).toBe(false);
+        assert.strictEqual(isAssignableTo(typeA, new StringType()), false);
+        assert.strictEqual(isAssignableTo(typeA, typeAB), true);
+        assert.strictEqual(isAssignableTo(typeB, typeAB), true);
+        assert.strictEqual(isAssignableTo(typeC, typeAB), false);
+        assert.strictEqual(isAssignableTo(typeAB, typeA), false);
+        assert.strictEqual(isAssignableTo(typeAB, typeB), false);
     });
     it("does let object to be assigned to object with optional properties and at least one property in common", () => {
         const typeA = new ObjectType(
@@ -373,18 +418,18 @@ describe("isAssignableTo", () => {
             false,
         );
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), false)], false);
-        expect(isAssignableTo(typeB, typeA)).toBe(true);
+        assert.strictEqual(isAssignableTo(typeB, typeA), true);
     });
     it("does not let object to be assigned to object with only optional properties and no properties in common", () => {
         const typeA = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
         const typeB = new ObjectType("b", [], [new ObjectProperty("b", new StringType(), false)], false);
-        expect(isAssignableTo(typeB, typeA)).toBe(false);
+        assert.strictEqual(isAssignableTo(typeB, typeA), false);
     });
     it("correctly handles primitive source intersection types", () => {
         const numberAndString = new IntersectionType([new StringType(), new NumberType()]);
-        expect(isAssignableTo(new StringType(), numberAndString)).toBe(true);
-        expect(isAssignableTo(new NumberType(), numberAndString)).toBe(true);
-        expect(isAssignableTo(new BooleanType(), numberAndString)).toBe(false);
+        assert.strictEqual(isAssignableTo(new StringType(), numberAndString), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), numberAndString), true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), numberAndString), false);
     });
     it("correctly handles intersection types with objects", () => {
         const a = new ObjectType("a", [], [new ObjectProperty("a", new StringType(), true)], false);
@@ -397,15 +442,15 @@ describe("isAssignableTo", () => {
             false,
         );
         const aAndB = new IntersectionType([a, b]);
-        expect(isAssignableTo(a, aAndB)).toBe(true);
-        expect(isAssignableTo(b, aAndB)).toBe(true);
-        expect(isAssignableTo(c, aAndB)).toBe(false);
-        expect(isAssignableTo(ab, aAndB)).toBe(true);
-        expect(isAssignableTo(aAndB, a)).toBe(false);
-        expect(isAssignableTo(aAndB, b)).toBe(false);
-        expect(isAssignableTo(aAndB, c)).toBe(false);
-        expect(isAssignableTo(aAndB, ab)).toBe(true);
-        expect(isAssignableTo(aAndB, aAndB)).toBe(true);
+        assert.strictEqual(isAssignableTo(a, aAndB), true);
+        assert.strictEqual(isAssignableTo(b, aAndB), true);
+        assert.strictEqual(isAssignableTo(c, aAndB), false);
+        assert.strictEqual(isAssignableTo(ab, aAndB), true);
+        assert.strictEqual(isAssignableTo(aAndB, a), false);
+        assert.strictEqual(isAssignableTo(aAndB, b), false);
+        assert.strictEqual(isAssignableTo(aAndB, c), false);
+        assert.strictEqual(isAssignableTo(aAndB, ab), true);
+        assert.strictEqual(isAssignableTo(aAndB, aAndB), true);
     });
     it("correctly handles circular dependencies", () => {
         const nodeTypeARef = new ReferenceType();
@@ -420,13 +465,13 @@ describe("isAssignableTo", () => {
         const nodeTypeC = new ObjectType("c", [], [new ObjectProperty("child", nodeTypeCRef, false)], false);
         nodeTypeCRef.setType(nodeTypeC);
 
-        expect(isAssignableTo(nodeTypeA, nodeTypeA)).toBe(true);
-        expect(isAssignableTo(nodeTypeA, nodeTypeB)).toBe(true);
-        expect(isAssignableTo(nodeTypeB, nodeTypeA)).toBe(true);
-        expect(isAssignableTo(nodeTypeC, nodeTypeA)).toBe(false);
-        expect(isAssignableTo(nodeTypeC, nodeTypeB)).toBe(false);
-        expect(isAssignableTo(nodeTypeA, nodeTypeC)).toBe(false);
-        expect(isAssignableTo(nodeTypeB, nodeTypeC)).toBe(false);
+        assert.strictEqual(isAssignableTo(nodeTypeA, nodeTypeA), true);
+        assert.strictEqual(isAssignableTo(nodeTypeA, nodeTypeB), true);
+        assert.strictEqual(isAssignableTo(nodeTypeB, nodeTypeA), true);
+        assert.strictEqual(isAssignableTo(nodeTypeC, nodeTypeA), false);
+        assert.strictEqual(isAssignableTo(nodeTypeC, nodeTypeB), false);
+        assert.strictEqual(isAssignableTo(nodeTypeA, nodeTypeC), false);
+        assert.strictEqual(isAssignableTo(nodeTypeB, nodeTypeC), false);
     });
     it("can handle deep union structures", () => {
         const objectType = new ObjectType(
@@ -441,41 +486,41 @@ describe("isAssignableTo", () => {
         const outerDefinition = new DefinitionType("NumberValue", alias);
         const outerUnion = new UnionType([outerDefinition, new UndefinedType()]);
         const def = new DefinitionType("NumericValueRef", objectType);
-        expect(isAssignableTo(outerUnion, def)).toBe(true);
+        assert.strictEqual(isAssignableTo(outerUnion, def), true);
     });
     it("correctly handles literal types", () => {
-        expect(isAssignableTo(new StringType(), new LiteralType("foo"))).toBe(true);
-        expect(isAssignableTo(new NumberType(), new LiteralType("foo"))).toBe(false);
-        expect(isAssignableTo(new BooleanType(), new LiteralType("foo"))).toBe(false);
-        expect(isAssignableTo(new StringType(), new LiteralType(1))).toBe(false);
-        expect(isAssignableTo(new NumberType(), new LiteralType(1))).toBe(true);
-        expect(isAssignableTo(new BooleanType(), new LiteralType(1))).toBe(false);
-        expect(isAssignableTo(new StringType(), new LiteralType(true))).toBe(false);
-        expect(isAssignableTo(new NumberType(), new LiteralType(true))).toBe(false);
-        expect(isAssignableTo(new BooleanType(), new LiteralType(true))).toBe(true);
+        assert.strictEqual(isAssignableTo(new StringType(), new LiteralType("foo")), true);
+        assert.strictEqual(isAssignableTo(new NumberType(), new LiteralType("foo")), false);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new LiteralType("foo")), false);
+        assert.strictEqual(isAssignableTo(new StringType(), new LiteralType(1)), false);
+        assert.strictEqual(isAssignableTo(new NumberType(), new LiteralType(1)), true);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new LiteralType(1)), false);
+        assert.strictEqual(isAssignableTo(new StringType(), new LiteralType(true)), false);
+        assert.strictEqual(isAssignableTo(new NumberType(), new LiteralType(true)), false);
+        assert.strictEqual(isAssignableTo(new BooleanType(), new LiteralType(true)), true);
 
-        expect(isAssignableTo(new LiteralType("foo"), new StringType())).toBe(false);
-        expect(isAssignableTo(new LiteralType(1), new NumberType())).toBe(false);
-        expect(isAssignableTo(new LiteralType(true), new BooleanType())).toBe(false);
+        assert.strictEqual(isAssignableTo(new LiteralType("foo"), new StringType()), false);
+        assert.strictEqual(isAssignableTo(new LiteralType(1), new NumberType()), false);
+        assert.strictEqual(isAssignableTo(new LiteralType(true), new BooleanType()), false);
 
-        expect(isAssignableTo(new LiteralType("foo"), new LiteralType("bar"))).toBe(false);
-        expect(isAssignableTo(new LiteralType(1), new LiteralType(2))).toBe(false);
-        expect(isAssignableTo(new LiteralType(true), new LiteralType(false))).toBe(false);
+        assert.strictEqual(isAssignableTo(new LiteralType("foo"), new LiteralType("bar")), false);
+        assert.strictEqual(isAssignableTo(new LiteralType(1), new LiteralType(2)), false);
+        assert.strictEqual(isAssignableTo(new LiteralType(true), new LiteralType(false)), false);
 
-        expect(isAssignableTo(new LiteralType("foo"), new LiteralType("foo"))).toBe(true);
-        expect(isAssignableTo(new LiteralType(1), new LiteralType(1))).toBe(true);
-        expect(isAssignableTo(new LiteralType(true), new LiteralType(true))).toBe(true);
+        assert.strictEqual(isAssignableTo(new LiteralType("foo"), new LiteralType("foo")), true);
+        assert.strictEqual(isAssignableTo(new LiteralType(1), new LiteralType(1)), true);
+        assert.strictEqual(isAssignableTo(new LiteralType(true), new LiteralType(true)), true);
     });
 
     it("correctly handle object keyword and {}", () => {
         // {}
         const obj1 = new ObjectType("obj", [], [], true);
-        expect(isAssignableTo(obj1, new NumberType())).toBe(true);
+        assert.strictEqual(isAssignableTo(obj1, new NumberType()), true);
 
         // object
         const obj2 = new ObjectType("obj", [], [], true, true);
-        expect(isAssignableTo(obj2, new NumberType())).toBe(false);
-        expect(isAssignableTo(obj2, new StringType())).toBe(false);
-        expect(isAssignableTo(obj2, new BooleanType())).toBe(false);
+        assert.strictEqual(isAssignableTo(obj2, new NumberType()), false);
+        assert.strictEqual(isAssignableTo(obj2, new StringType()), false);
+        assert.strictEqual(isAssignableTo(obj2, new BooleanType()), false);
     });
 });

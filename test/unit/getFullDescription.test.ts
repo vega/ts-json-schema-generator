@@ -1,5 +1,7 @@
 import { getFullDescription } from "../../src/Utils/getFullDescription";
 import ts from "typescript";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 function dummyNode(jsDocComment: string): ts.Node {
     const code = `${jsDocComment}\nfunction dummy() {}`;
@@ -18,7 +20,7 @@ describe("getFullDescription", () => {
     it("Returns undefined if no JSDoc", () => {
         const jsdoc = "// no JSDoc";
         const result = getFullDescription(dummyNode(jsdoc));
-        expect(result).toBeUndefined();
+        assert.strictEqual(result, undefined);
     });
 
     const cases = [
@@ -229,8 +231,10 @@ describe("getFullDescription", () => {
         },
     ];
 
-    it.each(cases)("$desc", ({ jsdoc, expected }) => {
-        const result = getFullDescription(dummyNode(jsdoc.trim()));
-        expect(result).toBe(expected);
-    });
+    for (const { desc, jsdoc, expected } of cases) {
+        it(desc, () => {
+            const result = getFullDescription(dummyNode(jsdoc.trim()));
+            assert.strictEqual(result, expected);
+        });
+    }
 });
