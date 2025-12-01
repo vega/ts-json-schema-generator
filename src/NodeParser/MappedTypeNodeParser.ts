@@ -4,6 +4,7 @@ import type { NodeParser } from "../NodeParser.js";
 import { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import type { EnumValue } from "../Type/EnumType.js";
@@ -20,7 +21,6 @@ import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
-import { ArrayType } from "../Type/ArrayType.js";
 
 export class MappedTypeNodeParser implements SubNodeParser {
     public constructor(
