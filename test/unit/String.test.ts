@@ -1,17 +1,19 @@
+import assert from "node:assert";
 import { strip } from "../../src/Utils/String";
+import { describe, it } from "node:test";
 
 describe("strip", () => {
     it("removes quotes", () => {
-        expect(strip("'quote'")).toBe("quote");
-        expect(strip('"quote"')).toBe("quote");
+        assert.strictEqual(strip("'quote'"), "quote");
+        assert.strictEqual(strip('"quote"'), "quote");
     });
 
     it("ignores individual quotes", () => {
-        expect(strip("quote'")).toBe("quote'");
-        expect(strip('"quote')).toBe('"quote');
+        assert.strictEqual(strip("quote'"), "quote'");
+        assert.strictEqual(strip('"quote'), '"quote');
     });
 
     it("returns original", () => {
-        expect(strip("original")).toBe("original");
+        assert.strictEqual(strip("original"), "original");
     });
 });

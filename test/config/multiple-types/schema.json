@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject1": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "$ref": "#/definitions/Object1Prop"
+        },
+        "id": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "bar"
+      ],
+      "type": "object"
+    },
+    "MyObject2": {
+      "additionalProperties": false,
+      "properties": {
+        "baz": {
+          "additionalProperties": false,
+          "properties": {
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "description"
+          ],
+          "type": "object"
+        },
+        "idStr": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idStr",
+        "baz"
+      ],
+      "type": "object"
+    },
+    "Object1Prop": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}

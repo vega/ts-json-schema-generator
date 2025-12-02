@@ -11,6 +11,7 @@ import type { StringMap } from "./Utils/StringMap.js";
 import { AnnotatedType } from "./Type/AnnotatedType.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { castArray } from "./Utils/castArray.js";
 import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
@@ -21,8 +22,8 @@ export class SchemaGenerator {
         protected readonly config?: Config,
     ) {}
 
-    public createSchema(fullName?: string): Schema {
-        const rootNodes = this.getRootNodes(fullName);
+    public createSchema(fullNames?: string | string[]): Schema {
+        const rootNodes = this.getRootNodes(castArray(fullNames));
         return this.createSchemaFromNodes(rootNodes);
     }
 
@@ -61,9 +62,15 @@ export class SchemaGenerator {
         };
     }
 
-    protected getRootNodes(fullName: string | undefined): ts.Node[] {
-        if (fullName && fullName !== "*") {
-            return [this.findNamedNode(fullName)];
+    protected getRootNodes(fullNames: string[] | undefined): ts.Node[] {
+        // ["*"] means generate everything.
+        if (fullNames && fullNames.includes("*") && fullNames.length > 1) {
+            throw new Error("Cannot mix '*' with specific type names");
+        }
+
+        const generateAll = !fullNames || fullNames.length === 0 || (fullNames.length === 1 && fullNames[0] === "*");
+        if (!generateAll) {
+            return fullNames.map((name) => this.findNamedNode(name));
         }
 
         const rootFileNames = this.program.getRootFileNames();

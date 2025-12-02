@@ -1,28 +1,26 @@
 {
-    "$ref": "#/definitions/MyObject",
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "MyObject": {
-            "additionalProperties": false,
-            "properties": {
-                "string": {
-                    "type": "string"
-                },
-                "booleanOrNumber": {
-                    "type": [
-                        "boolean",
-                        "number"
-                    ]
-                },
-                "unknown": {
-                    "type": "object"
-                }
-            },
-            "required": [
-                "string",
-                "booleanOrNumber"
-            ],
-            "type": "object"
-        }
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "booleanOrNumber": {
+          "type": [
+            "boolean",
+            "number"
+          ]
+        },
+        "string": {
+          "type": "string"
+        },
+        "unknown": {}
+      },
+      "required": [
+        "string",
+        "booleanOrNumber"
+      ],
+      "type": "object"
     }
+  }
 }

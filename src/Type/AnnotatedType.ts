@@ -1,9 +1,7 @@
 import { BaseType } from "./BaseType.js";
 import { hash } from "../Utils/nodeKey.js";
 
-export interface Annotations {
-    [name: string]: any;
-}
+export type Annotations = Record<string, unknown>;
 
 export class AnnotatedType extends BaseType {
     public constructor(

@@ -6,6 +6,8 @@ import { LiteralType } from "../../src/Type/LiteralType.js";
 import { NumberType } from "../../src/Type/NumberType.js";
 import { ObjectType } from "../../src/Type/ObjectType.js";
 import { DEFAULT_CONFIG } from "../../src/Config.js";
+import { describe, it } from "node:test";
+import assert from "node:assert";
 
 const SOURCE = path.resolve(__dirname, "./source.ts");
 
@@ -22,22 +24,22 @@ describe("sourceless-nodes", () => {
         const inferredReturnType = getReturnType(fn, program.getTypeChecker());
 
         // Checks that the inferred return type does not have any real source file.
-        expect(inferredReturnType.getSourceFile()).toBeUndefined();
+        assert.strictEqual(inferredReturnType.getSourceFile(), undefined);
 
         // Generates the json schema of this inferred return type
         const baseType = parser.createType(inferredReturnType, new Context(inferredReturnType));
 
         const objectType = (baseType as any).type as ObjectType;
-        expect(objectType).toBeDefined();
-        expect(objectType).toBeInstanceOf(ObjectType);
+        assert.ok(objectType !== undefined);
+        assert.ok(objectType instanceof ObjectType);
 
         const [propA, propB] = objectType.getProperties();
 
-        expect(propA.getName()).toBe("a");
-        expect(propA.getType()).toBeInstanceOf(NumberType);
+        assert.strictEqual(propA.getName(), "a");
+        assert.ok(propA.getType() instanceof NumberType);
 
-        expect(propB.getName()).toBe("b");
-        expect(propB.getType()).toBeInstanceOf(LiteralType);
+        assert.strictEqual(propB.getName(), "b");
+        assert.ok(propB.getType() instanceof LiteralType);
     });
 });
 

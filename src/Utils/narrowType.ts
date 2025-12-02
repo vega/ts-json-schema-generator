@@ -16,12 +16,7 @@ import { derefType } from "./derefType.js";
  *                    kept, when returning false it is removed.
  * @return The narrowed down type.
  */
-export function narrowType(
-    type: BaseType,
-    // TODO: remove the next line
-    // eslint-disable-next-line no-shadow
-    predicate: (type: BaseType) => boolean,
-): BaseType {
+export function narrowType(type: BaseType, predicate: (type: BaseType) => boolean): BaseType {
     const derefed = derefType(type);
     if (derefed instanceof UnionType || derefed instanceof EnumType) {
         let changed = false;
