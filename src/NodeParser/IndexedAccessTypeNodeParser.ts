@@ -79,7 +79,10 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
                         return objectType;
                     }
 
-                    throw new LogicError(node, `Invalid index "${type.getValue()}" in type "${objectType.getId()}"`);
+                    // When the indexed property does not exist (e.g. constrained generics with
+                    // narrower instantiations), treat it as never so optional properties are dropped
+                    // instead of throwing.
+                    return new NeverType();
                 }
 
                 throw new LogicError(node, `No additional properties in type "${objectType.getId()}"`);
