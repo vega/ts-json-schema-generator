@@ -2,6 +2,6 @@ import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
 test(
-    "function-parameters-variable-assignment",
+    "valid-data - function-parameters-variable-assignment",
     assertValidSchema("function-parameters-variable-assignment", "myFunction"),
 );

@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("type-mapped-literal", assertValidSchema("type-mapped-literal", "MyObject"));
+test("valid-data - type-mapped-literal", assertValidSchema("type-mapped-literal", "MyObject"));

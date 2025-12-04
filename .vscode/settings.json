@@ -13,6 +13,5 @@
     "source.fixAll.eslint": "explicit"
   },
   "eslint.experimental.useFlatConfig": true,
-  "jest.runMode": "on-demand",
   "javascript.preferences.importModuleSpecifierEnding": "js"
 }

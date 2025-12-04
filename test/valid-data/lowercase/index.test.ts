@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("lowercase", assertValidSchema("lowercase", "MyType"));
+test("valid-data - lowercase", assertValidSchema("lowercase", "MyType"));
