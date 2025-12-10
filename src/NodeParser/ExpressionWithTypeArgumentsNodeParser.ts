@@ -3,6 +3,7 @@ import type { NodeParser } from "../NodeParser.js";
 import { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
+import { LogicError } from "../Error/Errors.js";
 
 export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public constructor(
@@ -16,11 +17,9 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression);
         if (!typeSymbol) {
-            const sourceFile = node.getSourceFile();
-            const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
-            throw new Error(
-                `Cannot resolve symbol for expression: ${node.expression.getText()} ` +
-                `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+            throw new LogicError(
+                node,
+                `Cannot resolve symbol for expression: ${node.expression.getText()}`
             );
         }
         
@@ -28,11 +27,9 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             const declaration = aliasedSymbol.declarations?.[0];
             if (!declaration) {
-                const sourceFile = node.getSourceFile();
-                const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
-                throw new Error(
-                    `No declaration found for aliased symbol: ${aliasedSymbol.name} ` +
-                    `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+                throw new LogicError(
+                    node,
+                    `No declaration found for aliased symbol: ${aliasedSymbol.name}`
                 );
             }
             
@@ -45,11 +42,9 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         } else {
             const declaration = typeSymbol.declarations?.[0];
             if (!declaration) {
-                const sourceFile = node.getSourceFile();
-                const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
-                throw new Error(
-                    `No declaration found for symbol: ${typeSymbol.name} ` +
-                    `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+                throw new LogicError(
+                    node,
+                    `No declaration found for symbol: ${typeSymbol.name}`
                 );
             }
             return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
