@@ -103,9 +103,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression);
                     if (typeSymbol && typeSymbol.flags & ts.SymbolFlags.Alias) {
                         const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+                        // Check the first declaration - for lib types, there's typically only one
+                        // canonical declaration in the TypeScript lib files
                         const declaration = aliasedSymbol.declarations?.[0];
                         if (declaration && isTypeScriptLibFile(declaration.getSourceFile())) {
-                            // This is a lib utility type - skip it
+                            // This is a lib utility type (like Omit, Pick, etc.) - skip it
+                            // to prevent following into the utility type's implementation
                             return null;
                         }
                     }

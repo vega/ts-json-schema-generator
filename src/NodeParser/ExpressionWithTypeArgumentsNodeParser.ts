@@ -16,14 +16,24 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
     public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression);
         if (!typeSymbol) {
-            throw new Error(`Cannot resolve symbol for expression: ${node.expression.getText()}`);
+            const sourceFile = node.getSourceFile();
+            const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
+            throw new Error(
+                `Cannot resolve symbol for expression: ${node.expression.getText()} ` +
+                `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+            );
         }
         
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
             const declaration = aliasedSymbol.declarations?.[0];
             if (!declaration) {
-                throw new Error(`No declaration found for aliased symbol: ${aliasedSymbol.name}`);
+                const sourceFile = node.getSourceFile();
+                const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
+                throw new Error(
+                    `No declaration found for aliased symbol: ${aliasedSymbol.name} ` +
+                    `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+                );
             }
             
             return this.childNodeParser.createType(
@@ -35,7 +45,12 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         } else {
             const declaration = typeSymbol.declarations?.[0];
             if (!declaration) {
-                throw new Error(`No declaration found for symbol: ${typeSymbol.name}`);
+                const sourceFile = node.getSourceFile();
+                const position = sourceFile.getLineAndCharacterOfPosition(node.getStart());
+                throw new Error(
+                    `No declaration found for symbol: ${typeSymbol.name} ` +
+                    `at ${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`
+                );
             }
             return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
         }
