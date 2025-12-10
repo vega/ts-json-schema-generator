@@ -17,8 +17,10 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression)!;
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+            const declaration = aliasedSymbol.declarations![0];
+            
             return this.childNodeParser.createType(
-                aliasedSymbol.declarations![0],
+                declaration,
                 this.createSubContext(node, context),
             );
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {

@@ -96,7 +96,23 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.heritageClauses.reduce(
             (result: BaseType[], baseType) => [
                 ...result,
-                ...baseType.types.map((expression) => this.childNodeParser.createType(expression, context)),
+                ...baseType.types.map((expression) => {
+                    // Skip processing of TypeScript lib utility types in heritage clauses
+                    // to avoid infinite recursion with recursive types
+                    const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression)!;
+                    if (typeSymbol?.flags & ts.SymbolFlags.Alias) {
+                        const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+                        const declaration = aliasedSymbol.declarations?.[0];
+                        if (declaration) {
+                            const sourceFile = declaration.getSourceFile();
+                            if (sourceFile?.fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
+                                // This is a lib utility type - skip it
+                                return null;
+                            }
+                        }
+                    }
+                    return this.childNodeParser.createType(expression, context);
+                }).filter((type): type is BaseType => type !== null),
             ],
             [],
         );
