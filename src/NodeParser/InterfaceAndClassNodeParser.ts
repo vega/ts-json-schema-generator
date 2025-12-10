@@ -99,8 +99,8 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 ...baseType.types.map((expression) => {
                     // Skip processing of TypeScript lib utility types in heritage clauses
                     // to avoid infinite recursion with recursive types
-                    const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression)!;
-                    if (typeSymbol?.flags & ts.SymbolFlags.Alias) {
+                    const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression);
+                    if (typeSymbol && typeSymbol.flags & ts.SymbolFlags.Alias) {
                         const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
                         const declaration = aliasedSymbol.declarations?.[0];
                         if (declaration) {

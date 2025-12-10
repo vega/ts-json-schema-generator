@@ -14,10 +14,17 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.ExpressionWithTypeArguments;
     }
     public createType(node: ts.ExpressionWithTypeArguments, context: Context): BaseType {
-        const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression)!;
+        const typeSymbol = this.typeChecker.getSymbolAtLocation(node.expression);
+        if (!typeSymbol) {
+            throw new Error(`Cannot resolve symbol for expression: ${node.expression.getText()}`);
+        }
+        
         if (typeSymbol.flags & ts.SymbolFlags.Alias) {
             const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
-            const declaration = aliasedSymbol.declarations![0];
+            const declaration = aliasedSymbol.declarations?.[0];
+            if (!declaration) {
+                throw new Error(`No declaration found for aliased symbol: ${aliasedSymbol.name}`);
+            }
             
             return this.childNodeParser.createType(
                 declaration,
@@ -26,7 +33,11 @@ export class ExpressionWithTypeArgumentsNodeParser implements SubNodeParser {
         } else if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
             return context.getArgument(typeSymbol.name);
         } else {
-            return this.childNodeParser.createType(typeSymbol.declarations![0], this.createSubContext(node, context));
+            const declaration = typeSymbol.declarations?.[0];
+            if (!declaration) {
+                throw new Error(`No declaration found for symbol: ${typeSymbol.name}`);
+            }
+            return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
         }
     }
 
