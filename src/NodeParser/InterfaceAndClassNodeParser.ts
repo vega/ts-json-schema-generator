@@ -10,6 +10,7 @@ import type { ReferenceType } from "../Type/ReferenceType.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { isPublic, isStatic } from "../Utils/modifiers.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { isTypeScriptLibFile } from "../Utils/isTypeScriptLibFile.js";
 
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
@@ -103,12 +104,9 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                     if (typeSymbol && typeSymbol.flags & ts.SymbolFlags.Alias) {
                         const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
                         const declaration = aliasedSymbol.declarations?.[0];
-                        if (declaration) {
-                            const sourceFile = declaration.getSourceFile();
-                            if (sourceFile?.fileName.match(/[/\\]typescript[/\\]lib[/\\]lib\.[^/\\]+\.d\.ts$/i)) {
-                                // This is a lib utility type - skip it
-                                return null;
-                            }
+                        if (declaration && isTypeScriptLibFile(declaration.getSourceFile())) {
+                            // This is a lib utility type - skip it
+                            return null;
                         }
                     }
                     return this.childNodeParser.createType(expression, context);
