@@ -10,7 +10,7 @@ import { removeUndefined } from "../Utils/removeUndefined.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { AnyType } from "../Type/AnyType.js";
-import { TYPESCRIPT_LIB_FILE_PATTERN } from "../Utils/isTypeScriptLibFile.js";
+import { isTypeScriptLibFile } from "../Utils/isTypeScriptLibFile.js";
 
 export class AnnotatedNodeParser implements SubNodeParser {
     public constructor(
@@ -36,7 +36,7 @@ export class AnnotatedNodeParser implements SubNodeParser {
 
         // Don't return annotations for lib types such as Exclude.
         // Sourceless nodes may not have a fileName, just ignore them.
-        if (TYPESCRIPT_LIB_FILE_PATTERN.test(node.getSourceFile()?.fileName ?? "")) {
+        if (isTypeScriptLibFile(node.getSourceFile())) {
             let specialCase = false;
 
             // Special case for Exclude<T, U>: use the annotation of T.

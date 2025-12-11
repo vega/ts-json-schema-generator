@@ -1,5 +1,4 @@
 {
-  "$ref": "#/definitions/IFormProps",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "IFormProps": {
@@ -11,6 +10,34 @@
       },
       "required": [
         "value"
+      ],
+      "type": "object"
+    },
+    "PickedItem": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "SimpleComplexItem": {
+      "additionalProperties": false,
+      "properties": {
+        "data": {
+          "type": "number"
+        },
+        "id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "data",
+        "id"
       ],
       "type": "object"
     }
