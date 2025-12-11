@@ -10,7 +10,7 @@ export const TYPESCRIPT_LIB_FILE_PATTERN = /[/\\]typescript[/\\]lib[/\\]lib\.[^/
  * Checks if a source file is part of the TypeScript standard library.
  * This is used to identify utility types (like Omit, Pick, Exclude, etc.)
  * that should be treated specially to avoid infinite recursion issues.
- * 
+ *
  * @param sourceFile The source file to check
  * @returns true if the file is a TypeScript lib file, false otherwise
  */
@@ -18,6 +18,6 @@ export function isTypeScriptLibFile(sourceFile: ts.SourceFile | undefined): bool
     if (!sourceFile) {
         return false;
     }
-    
+
     return TYPESCRIPT_LIB_FILE_PATTERN.test(sourceFile.fileName);
 }

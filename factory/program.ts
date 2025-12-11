@@ -5,6 +5,11 @@ import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
 import fs from "node:fs";
+// @ts-expect-error - glob package doesn't have types but works fine
+import { sync as globSyncFallback } from "glob";
+
+// Use native fs.globSync if available (Node >= 22), otherwise use glob package
+const globSync = fs.globSync || globSyncFallback;
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -68,7 +73,7 @@ function getTsConfig(config: Config) {
 
 export function createProgram(config: CompletedConfig): ts.Program {
     const rootNamesFromPath = config.path
-        ? fs.globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
+        ? globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
         : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;

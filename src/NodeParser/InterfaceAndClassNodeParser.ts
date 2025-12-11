@@ -97,25 +97,27 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return node.heritageClauses.reduce(
             (result: BaseType[], baseType) => [
                 ...result,
-                ...baseType.types.map((expression) => {
-                    // Skip processing of TypeScript lib utility types in heritage clauses
-                    // to avoid infinite recursion with recursive types
-                    const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression);
-                    if (typeSymbol && typeSymbol.flags & ts.SymbolFlags.Alias) {
-                        const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
-                        // Check if any declaration is from a TypeScript lib file
-                        // Lib utility types (Omit, Pick, etc.) should be skipped to prevent
-                        // following into their internal mapped type implementations
-                        const isLibType = aliasedSymbol.declarations?.some((decl) => 
-                            isTypeScriptLibFile(decl.getSourceFile())
-                        );
-                        if (isLibType) {
-                            // This is a lib utility type - skip it
-                            return null;
+                ...baseType.types
+                    .map((expression) => {
+                        // Skip processing of TypeScript lib utility types in heritage clauses
+                        // to avoid infinite recursion with recursive types
+                        const typeSymbol = this.typeChecker.getSymbolAtLocation(expression.expression);
+                        if (typeSymbol && typeSymbol.flags & ts.SymbolFlags.Alias) {
+                            const aliasedSymbol = this.typeChecker.getAliasedSymbol(typeSymbol);
+                            // Check if any declaration is from a TypeScript lib file
+                            // Lib utility types (Omit, Pick, etc.) should be skipped to prevent
+                            // following into their internal mapped type implementations
+                            const isLibType = aliasedSymbol.declarations?.some((decl) =>
+                                isTypeScriptLibFile(decl.getSourceFile()),
+                            );
+                            if (isLibType) {
+                                // This is a lib utility type - skip it
+                                return null;
+                            }
                         }
-                    }
-                    return this.childNodeParser.createType(expression, context);
-                }).filter((type): type is BaseType => type !== null),
+                        return this.childNodeParser.createType(expression, context);
+                    })
+                    .filter((type): type is BaseType => type !== null),
             ],
             [],
         );
