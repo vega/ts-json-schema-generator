@@ -81,7 +81,7 @@
     "eslint": "9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "prettier": "^3.7.3",
     "try": "^1.0.1",
     "tsx": "^4.21.0",
