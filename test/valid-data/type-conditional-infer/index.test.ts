@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));
+test("valid-data - type-conditional-infer", assertValidSchema("type-conditional-infer", "MyType"));

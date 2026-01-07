@@ -2,7 +2,7 @@ import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
 test(
-    "object-required",
+    "valid-data - object-required",
     assertValidSchema("object-required", "MyObject", undefined, {
         invalidSamples: [
             { keys: ["a", "b"], definitions: { a: 1, b: 2 } },

@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));
+test("valid-data - enums-template-literal", assertValidSchema("enums-template-literal", "MyObject"));

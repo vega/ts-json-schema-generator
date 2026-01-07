@@ -58,9 +58,7 @@
   },
   "dependencies": {
     "@types/json-schema": "^7.0.15",
-    "@typescript/vfs": "1.6.2",
     "commander": "^14.0.2",
-    "glob": "^13.0.0",
     "json5": "^2.2.3",
     "normalize-path": "^3.0.0",
     "safe-stable-stringify": "^2.5.0",
@@ -70,23 +68,20 @@
   "devDependencies": {
     "@auto-it/conventional-commits": "^11.3.6",
     "@auto-it/first-time-contributor": "^11.3.6",
-    "@babel/core": "^7.28.5",
-    "@babel/preset-env": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
     "@eslint/js": "^9.39.1",
     "@types/eslint": "^9.6.1",
     "@types/node": "^24.10.1",
     "@types/normalize-path": "^3.0.2",
+    "@typescript/vfs": "1.6.2",
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "auto": "^11.3.6",
     "c8": "^10.1.3",
-    "chai": "^6.2.1",
     "cross-env": "^10.1.0",
-    "eslint": "9.39.1",
+    "eslint": "9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
-    "globals": "^16.5.0",
+    "globals": "^17.0.0",
     "prettier": "^3.7.3",
     "try": "^1.0.1",
     "tsx": "^4.21.0",
@@ -96,6 +91,6 @@
   },
   "packageManager": "npm@11.6.4",
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.0.0"
   }
 }

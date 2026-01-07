@@ -1,4 +1,4 @@
 import { assertValidSchema } from "../../utils";
 import { test } from "node:test";
 
-test("type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
+test("valid-data - type-aliases-object", assertValidSchema("type-aliases-object", "MyAlias"));
