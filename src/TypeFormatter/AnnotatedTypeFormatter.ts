@@ -8,7 +8,7 @@ import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 
 export function makeNullable(def: Definition): Definition {
-    const union: Definition[] | undefined = (def.oneOf as Definition[]) || def.anyOf;
+    const union = (def.oneOf || def.anyOf) as Definition[] | undefined;
     if (union && union.filter((d: Definition) => d.type === "null").length === 0) {
         union.push({ type: "null" });
     } else if (def.type && def.type !== "object") {
@@ -58,7 +58,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         if ("discriminator" in annotations) {
             const deref = derefType(type.getType());
             if (deref instanceof UnionType) {
-                deref.setDiscriminator(annotations.discriminator);
+                deref.setDiscriminator(annotations.discriminator as string);
                 delete annotations.discriminator;
             } else {
                 throw new JsonTypeError(

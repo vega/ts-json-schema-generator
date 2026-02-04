@@ -1,23 +1,27 @@
 {
-    "type": "object",
-    "properties": {
+  "$ref": "#/definitions/MyModel",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Cardinal": {
+      "enum": [
+        "north",
+        "south",
+        "east",
+        "west"
+      ],
+      "type": "string"
+    },
+    "MyModel": {
+      "additionalProperties": false,
+      "properties": {
         "direction": {
-            "$ref": "#/definitions/Cardinal"
+          "$ref": "#/definitions/Cardinal"
         }
-    },
-    "required": [
+      },
+      "required": [
         "direction"
-    ],
-    "definitions": {
-        "Cardinal": {
-            "enum": [
-                "east",
-                "north",
-                "south",
-                "west"
-            ],
-            "type": "string"
-        }
-    },
-    "$schema": "http://json-schema.org/draft-07/schema#"
+      ],
+      "type": "object"
+    }
+  }
 }

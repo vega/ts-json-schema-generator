@@ -7,7 +7,7 @@ import { createProgram } from "./program.js";
 
 export function createGenerator(config: Config): SchemaGenerator {
     const completedConfig = { ...DEFAULT_CONFIG, ...config };
-    const program = createProgram(completedConfig);
+    const program = config.tsProgram || createProgram(completedConfig);
     const parser = createParser(program, completedConfig);
     const formatter = createFormatter(completedConfig);
 

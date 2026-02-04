@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AB": {
+      "enum": [
+        "a",
+        "b"
+      ],
+      "type": "string"
+    },
+    "ABC": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AB"
+        },
+        {
+          "const": "c",
+          "type": "string"
+        }
+      ]
+    },
+    "ABCD": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/ABC"
+        },
+        {
+          "const": "d",
+          "type": "string"
+        }
+      ]
+    },
+    "ABCDE": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "number"
+        },
+        "b": {
+          "type": "string"
+        },
+        "c": {
+          "type": "boolean"
+        },
+        "d": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "e": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e"
+      ],
+      "type": "object"
+    }
+  }
+}

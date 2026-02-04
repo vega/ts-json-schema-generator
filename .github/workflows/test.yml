@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -8,21 +8,19 @@ on:
     branches:
       - next
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
-    name: Test
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-
-    runs-on: ${{ matrix.os }}
+  build:
+    name: Build
+    runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: "npm"
@@ -36,8 +34,52 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test coverage
-        run: npx jest test/ --collectCoverage=true
+  test:
+    name: Test ${{ matrix.shard }}/4 (${{ matrix.os }})
+    needs: build
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        shard: [1, 2, 3, 4]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test coverage # node uses os.availableParallelism()-1 by default
+        run: npm run test:coverage -- --test-concurrency=$(node -e 'console.log(os.availableParallelism())')
+        env: # somehow using test shard as params didn't work
+          NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
+
+  # This job aggregates all test results to have a simpler branch protection check
+  test-complete:
+    name: Tests Complete
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Check test matrix status
+        run: |
+          if [ "${{ needs.test.result }}" != "success" ]; then
+            echo "Tests failed or were cancelled"
+            exit 1
+          fi
+          echo "All tests passed successfully"

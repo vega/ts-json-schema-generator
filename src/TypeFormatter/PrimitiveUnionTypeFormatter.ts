@@ -6,7 +6,6 @@ import type { BaseType } from "../Type/BaseType.js";
 import { BooleanType } from "../Type/BooleanType.js";
 import { NullType } from "../Type/NullType.js";
 import { NumberType } from "../Type/NumberType.js";
-import { PrimitiveType } from "../Type/PrimitiveType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
@@ -25,7 +24,15 @@ export class PrimitiveUnionTypeFormatter implements SubTypeFormatter {
     }
 
     protected isPrimitiveUnion(type: UnionType): boolean {
-        return type.getTypes().every((item) => item instanceof PrimitiveType);
+        return type
+            .getTypes()
+            .every(
+                (item) =>
+                    item instanceof StringType ||
+                    item instanceof NumberType ||
+                    item instanceof BooleanType ||
+                    item instanceof NullType,
+            );
     }
 
     protected getPrimitiveType(item: BaseType): RawTypeName {

@@ -2,7 +2,7 @@ import ts from "typescript";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { ArrayType } from "../Type/ArrayType.js";
-import type { BaseType } from "../Type/BaseType.js";
+import { BaseType } from "../Type/BaseType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
@@ -28,7 +28,7 @@ export class TypeOperatorNodeParser implements SubNodeParser {
             return new NumberType();
         }
         const keys = getTypeKeys(type);
-        if (derefed instanceof ObjectType && derefed.getAdditionalProperties()) {
+        if (derefed instanceof ObjectType && derefed.getAdditionalProperties() instanceof BaseType) {
             return new UnionType([...keys, new StringType()]);
         }
 

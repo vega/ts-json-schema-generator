@@ -8,8 +8,10 @@ import type { BaseType } from "./Type/BaseType.js";
 import { DefinitionType } from "./Type/DefinitionType.js";
 import type { TypeFormatter } from "./TypeFormatter.js";
 import type { StringMap } from "./Utils/StringMap.js";
+import { AnnotatedType } from "./Type/AnnotatedType.js";
 import { hasJsDocTag } from "./Utils/hasJsDocTag.js";
 import { removeUnreachable } from "./Utils/removeUnreachable.js";
+import { castArray } from "./Utils/castArray.js";
 import { symbolAtNode } from "./Utils/symbolAtNode.js";
 
 export class SchemaGenerator {
@@ -20,8 +22,8 @@ export class SchemaGenerator {
         protected readonly config?: Config,
     ) {}
 
-    public createSchema(fullName?: string): Schema {
-        const rootNodes = this.getRootNodes(fullName);
+    public createSchema(fullNames?: string | string[]): Schema {
+        const rootNodes = this.getRootNodes(castArray(fullNames));
         return this.createSchemaFromNodes(rootNodes);
     }
 
@@ -31,8 +33,8 @@ export class SchemaGenerator {
             rootType: this.nodeParser.createType(rootNode, new Context()),
         }));
 
-        const rootTypeDefinition =
-            roots.length === 1 ? this.getRootTypeDefinition(roots[0].rootType, roots[0].rootNode) : undefined;
+        const rootTypeDefinitions = roots.map((root) => this.getRootTypeDefinition(root.rootType, root.rootNode));
+        const rootTypeDefinition = rootTypeDefinitions.length === 1 ? rootTypeDefinitions[0] : undefined;
         const definitions: StringMap<Definition> = {};
 
         for (const root of roots) {
@@ -47,7 +49,10 @@ export class SchemaGenerator {
             }
         }
 
-        const reachableDefinitions = removeUnreachable(rootTypeDefinition, definitions);
+        const reachableDefinitions = rootTypeDefinitions.reduce<StringMap<Definition>>(
+            (acc, def) => Object.assign(acc, removeUnreachable(def, definitions)),
+            {},
+        );
 
         return {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
@@ -57,9 +62,15 @@ export class SchemaGenerator {
         };
     }
 
-    protected getRootNodes(fullName: string | undefined): ts.Node[] {
-        if (fullName && fullName !== "*") {
-            return [this.findNamedNode(fullName)];
+    protected getRootNodes(fullNames: string[] | undefined): ts.Node[] {
+        // ["*"] means generate everything.
+        if (fullNames && fullNames.includes("*") && fullNames.length > 1) {
+            throw new Error("Cannot mix '*' with specific type names");
+        }
+
+        const generateAll = !fullNames || fullNames.length === 0 || (fullNames.length === 1 && fullNames[0] === "*");
+        if (!generateAll) {
+            return fullNames.map((name) => this.findNamedNode(name));
         }
 
         const rootFileNames = this.program.getRootFileNames();
@@ -114,21 +125,35 @@ export class SchemaGenerator {
             });
 
         const ids = new Map<string, string>();
+        const baseIds = new Map<string, string>();
         for (const child of children) {
             const name = child.getName();
             const previousId = ids.get(name);
-            // remove def prefix from ids to avoid false alarms
-            // FIXME: we probably shouldn't be doing this as there is probably something wrong with the deduplication
+            // Strip def- prefixes from IDs. DefinitionType.getId() returns "def-{innerType.getId()}"
+            // and for generic types, nested DefinitionTypes also add def- prefixes. Stripping all
+            // of them normalizes the comparison for types that may be wrapped differently.
             const childId = child.getId().replace(/def-/g, "");
+            // Also track the base type ID (without AnnotatedType wrapper) to handle cases where
+            // the same type appears with different annotations (e.g., a discriminated union type
+            // referenced directly vs from a property - one has @discriminator annotation, one doesn't)
+            const innerType = child.getType();
+            const baseChildId = (innerType instanceof AnnotatedType ? innerType.getType() : innerType).getId();
+            const previousBaseId = baseIds.get(name);
 
             if (previousId && childId !== previousId) {
+                // Check if the base type (without annotations) matches - if so, it's just
+                // annotation differences, not truly different types
+                if (previousBaseId === baseChildId) {
+                    continue;
+                }
                 throw new MultipleDefinitionsError(
                     name,
                     child,
-                    children.find((c) => c.getId() === previousId),
+                    children.find((c) => c.getId().replace(/def-/g, "") === previousId),
                 );
             }
             ids.set(name, childId);
+            baseIds.set(name, baseChildId);
         }
 
         children.reduce((definitions, child) => {
@@ -229,11 +254,18 @@ export class SchemaGenerator {
                 return;
             }
 
-            // export { variable } clauses
+            if (node.exportClause) {
+                // export { Foo } from './lib' or export { Foo };
+                // export * as Foo from './lib' should not import all exports
+                ts.forEachChild(node.exportClause, (subnode) => this.inspectNode(subnode, typeChecker, allTypes));
+                return;
+            }
+
             if (!node.moduleSpecifier) {
                 return;
             }
 
+            // export * from './lib'
             const symbol = typeChecker.getSymbolAtLocation(node.moduleSpecifier);
 
             // should never hit this (maybe type error in user's code)

@@ -71,7 +71,6 @@ export default tseslint.config(
         files: ["test/**/*.test.ts"],
         languageOptions: {
             globals: {
-                ...globals.jest,
                 ...globals.commonjs,
             },
         },

@@ -55,12 +55,18 @@ export class LiteralUnionTypeFormatter implements SubTypeFormatter {
             appendTypeValues(type, typeValues);
         }
 
-        const schema = {
-            type: toEnumType(Array.from(typeNames)),
-            enum: Array.from(typeValues),
-        };
+        const schema =
+            typeNames.size === 1 && typeValues.size === 1
+                ? {
+                      type: toEnumType(Array.from(typeNames)),
+                      const: Array.from(typeValues)[0],
+                  }
+                : {
+                      type: toEnumType(Array.from(typeNames)),
+                      enum: Array.from(typeValues),
+                  };
 
-        return preserveLiterals ? { anyOf: [{ type: "string" }, schema] } : schema;
+        return hasString ? { anyOf: [{ type: "string" }, schema] } : schema;
     }
 
     public getChildren(): BaseType[] {

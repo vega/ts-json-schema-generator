@@ -1,0 +1,164 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "definitions": {
+    "MyExportString": {
+      "fullDescription": "@title My export string",
+      "title": "My export string",
+      "type": "string"
+    },
+    "MyNonEmptyArray<number>": {
+      "fullDescription": "@minItems 1",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "description": "Top-level interface: This interface is used to test the fullDescription output.\nIt includes various formatting quirks, inline tags such as {@link SomeReference }, and multiple JSDoc sections.",
+  "fullDescription": "@title Raw Test Schema Interface\n@description Top-level interface: This interface is used to test the fullDescription output.\nIt includes various formatting quirks, inline tags such as {@link SomeReference}, and multiple JSDoc sections.\n\n@markdownDescription **Markdown version:** Markdown description which should be <b>preserved</b>\n\nAdditional info: Top-level details should be completely preserved in raw form.",
+  "properties": {
+    "description": {
+      "description": "Some more examples: ```yaml name: description length: 42 ```",
+      "fullDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
+      "markdownDescription": "Some more examples:\n```yaml\nname: description\nlength: 42\n```",
+      "title": "Inherited Title",
+      "type": "string"
+    },
+    "emptyJsDoc1": {
+      "type": "null"
+    },
+    "emptyJsDoc2": {
+      "type": "null"
+    },
+    "exportString": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/MyExportString",
+          "fullDescription": "Some ignored comment description\n\n@description Export field description\n@default {\"length\": 10}\n@nullable",
+          "markdownDescription": "Some ignored comment description"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": {
+        "length": 10
+      },
+      "description": "Export field description"
+    },
+    "inheritedDescription": {
+      "default": "",
+      "description": "Inherited description text.\n\nIt contains an inline link: {@link https://example.com} and additional commentary.",
+      "fullDescription": "@default \"\"",
+      "markdownDescription": "This is an inherited description.\n\nIt may include multiple at-tags:",
+      "title": "Inherited Title",
+      "type": "string"
+    },
+    "initialText": {
+      "default": "42\n\nFurther comments in the same block should be preserved entirely.",
+      "description": "Field with initial untagged text followed by a tag.",
+      "fullDescription": "Some initial descriptive text that is not tagged.\n\n@description Field with initial untagged text followed by a tag.\n@default 42\n\nFurther comments in the same block should be preserved entirely.",
+      "markdownDescription": "Some initial descriptive text that is not tagged.",
+      "type": "number"
+    },
+    "markdownField": {
+      "description": "This field tests `inline code` and <b>bold text</b>.\n\nAlso includes an inline link: {@link https://example.com} and additional commentary.",
+      "fullDescription": "Some *code block*:\n```yaml\nname: description\nlength: 42\n```\n\nSome list:\n- one\n- two\n- and three...\n\n@description This field tests `inline code` and <b>bold text</b>.\n\nAlso includes an inline link: {@link https://example.com} and additional commentary.",
+      "markdownDescription": "Some *code block*:\n```yaml\nname: description\nlength: 42\n```\n\nSome list:\n- one\n- two\n- and three...",
+      "type": "string"
+    },
+    "multilineField": {
+      "description": "This is a multiline description.\nIt spans multiple lines to test the preservation of newlines.",
+      "format": "date-time",
+      "fullDescription": "@title Multiline Field Title\n@description This is a multiline description.\nIt spans multiple lines to test the preservation of newlines.\n\n@note 123\n@format date-time",
+      "title": "Multiline Field Title",
+      "type": "number"
+    },
+    "noJsDoc": {
+      "type": "null"
+    },
+    "noTagField": {
+      "description": "This field has a comment without explicit tags. It includes an inline reference:  {@link  ExampleReference  }  and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
+      "fullDescription": "This field has a comment without explicit tags.\nIt includes an inline reference: {@link ExampleReference} and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
+      "markdownDescription": "This field has a comment without explicit tags.\nIt includes an inline reference:  {@link  ExampleReference  }  and extra text on several lines.\n\nThe raw output should preserve this whole block as is.",
+      "type": "boolean"
+    },
+    "number": {
+      "fullDescription": "@nullable",
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "numberArray": {
+      "$ref": "#/definitions/MyNonEmptyArray%3Cnumber%3E",
+      "fullDescription": "@title Non empty array",
+      "title": "Non empty array"
+    },
+    "oneLineJsDoc": {
+      "description": "Some text",
+      "fullDescription": "Some text",
+      "markdownDescription": "Some text",
+      "type": "string"
+    },
+    "oneLineJsDocComplex": {
+      "description": "Some *text* -  {@link  https://example.com }  -",
+      "fullDescription": "Some *text* - {@link https://example.com} - @see the `link`",
+      "markdownDescription": "Some *text* -  {@link  https://example.com }  -",
+      "type": "string"
+    },
+    "privateString": {
+      "default": "private",
+      "description": "Export field description",
+      "fullDescription": "@description Export field description\n@default \"private\"",
+      "title": "My private string",
+      "type": "string"
+    },
+    "singleLine": {
+      "description": "Single-line comment for raw extraction.",
+      "fullDescription": "@title Single-line Title and Description\n@description Single-line comment for raw extraction.",
+      "title": "Single-line Title and Description",
+      "type": "string"
+    },
+    "specialFormat": {
+      "description": "Extra spaces and indentation should be preserved.",
+      "fullDescription": "@title Field with Special Formatting\n@description   Extra spaces and indentation should be preserved.\n\n@pattern /^\\w+$/",
+      "pattern": "/^\\w+$/",
+      "title": "Field with Special Formatting",
+      "type": "string"
+    },
+    "tagOnlyField": {
+      "fullDescription": "@title Tag Only Field\n@note Only raw content should be available.\n@customTag Tag only content!",
+      "title": "Tag Only Field",
+      "type": "string"
+    },
+    "tagOnlyFieldWithDescription": {
+      "description": "",
+      "fullDescription": "@title Tag Only Field\n@description\n@note Only raw content should be available.\n@customTag Tag only content!",
+      "title": "Tag Only Field",
+      "type": "string"
+    }
+  },
+  "required": [
+    "singleLine",
+    "multilineField",
+    "noTagField",
+    "specialFormat",
+    "initialText",
+    "markdownField",
+    "tagOnlyField",
+    "tagOnlyFieldWithDescription",
+    "oneLineJsDoc",
+    "oneLineJsDocComplex",
+    "exportString",
+    "privateString",
+    "numberArray",
+    "number",
+    "description",
+    "inheritedDescription"
+  ],
+  "title": "Raw Test Schema Interface",
+  "type": "object"
+}

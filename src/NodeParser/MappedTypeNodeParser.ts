@@ -4,6 +4,7 @@ import type { NodeParser } from "../NodeParser.js";
 import { Context } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AnyType } from "../Type/AnyType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
@@ -16,7 +17,7 @@ import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
 import { SymbolType } from "../Type/SymbolType.js";
 import { UnionType } from "../Type/UnionType.js";
-import { derefAnnotatedType, derefType } from "../Utils/derefType.js";
+import { derefAnnotatedType, derefType, isDeepLiteralUnion } from "../Utils/derefType.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
@@ -52,20 +53,23 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
         }
 
+        const maybeUnionType = this.childNodeParser.createType(
+            node.type!,
+            this.createSubContext(node, keyListType, context),
+        );
+        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
+            // Then we turn it into an array
+            return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
+        }
+
         if (
             keyListType instanceof StringType ||
             keyListType instanceof NumberType ||
-            keyListType instanceof SymbolType
+            keyListType instanceof SymbolType ||
+            keyListType instanceof AnyType
         ) {
-            if (constraintType?.getId() === "number") {
-                const type = this.childNodeParser.createType(
-                    node.type!,
-                    this.createSubContext(node, keyListType, context),
-                );
-                return type instanceof NeverType ? new NeverType() : new ArrayType(type);
-            }
             // Key type widens to `string`
-            const type = this.childNodeParser.createType(node.type!, context);
+            const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
             const resultType = new ObjectType(id, [], [], type);
             if (resultType) {
@@ -158,7 +162,11 @@ export class MappedTypeNodeParser implements SubNodeParser {
         keyListType: UnionType,
         context: Context,
     ): BaseType | boolean {
-        const key = keyListType.getTypes().filter((type) => !(type instanceof LiteralType))[0];
+        if (isDeepLiteralUnion(keyListType)) {
+            return this.additionalProperties;
+        }
+
+        const key = keyListType.getTypes().filter((type) => !(derefType(type) instanceof LiteralType))[0];
 
         if (key) {
             return (

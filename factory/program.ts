@@ -1,9 +1,10 @@
 import * as path from "node:path";
 import normalize from "normalize-path";
+import type { CompilerOptions } from "typescript";
 import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
-import { globSync } from "glob";
+import fs from "node:fs";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -55,16 +56,19 @@ function getTsConfig(config: Config) {
             noEmit: true,
             emitDecoratorMetadata: true,
             experimentalDecorators: true,
-            target: ts.ScriptTarget.ES5,
+            target: ts.ScriptTarget.ES2022,
             module: ts.ModuleKind.CommonJS,
             strictNullChecks: false,
-        },
+            skipLibCheck: true,
+            skipDefaultLibCheck: true,
+            esModuleInterop: true,
+        } satisfies CompilerOptions,
     };
 }
 
 export function createProgram(config: CompletedConfig): ts.Program {
     const rootNamesFromPath = config.path
-        ? globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
+        ? fs.globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
         : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
