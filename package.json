@@ -54,7 +54,8 @@
     "test:fast": "cross-env FAST_TEST=1 tsx --test \"test/**/*.test.ts\"",
     "test:update": "cross-env FAST_TEST=1 UPDATE_SCHEMA=true tsx --test \"test/**/*.test.ts\"",
     "test:coverage": "c8 --reporter lcov --reporter text tsx --test \"test/**/*.test.ts\"",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "prepare": "husky"
   },
   "dependencies": {
     "@types/json-schema": "^7.0.15",
@@ -82,6 +83,8 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^17.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.7.3",
     "try": "^1.0.1",
     "tsx": "^4.21.0",
@@ -92,5 +95,8 @@
   "packageManager": "npm@11.6.4",
   "engines": {
     "node": ">=22.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,mjs,cjs}": "eslint --fix"
   }
 }
