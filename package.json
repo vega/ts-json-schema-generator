@@ -93,8 +93,7 @@
   "packageManager": "npm@11.6.4",
   "publishConfig": {
     "access": "public",
-    "provenance": true,
-    "tag": "latest"
+    "provenance": true
   },
   "engines": {
     "node": ">=22.0.0"
