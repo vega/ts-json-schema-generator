@@ -91,6 +91,10 @@
     "vega-lite": "^6.4.1"
   },
   "packageManager": "npm@11.6.4",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "engines": {
     "node": ">=22.0.0"
   }
