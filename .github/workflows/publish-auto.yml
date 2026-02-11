@@ -30,6 +30,9 @@ jobs:
       - name: Install Node dependencies
         run: npm ci
 
+      - name: Update NPM
+        run: npm i -g npm@latest
+
       - name: Create release
         run: npm run release
         env:
