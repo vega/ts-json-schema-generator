@@ -1,0 +1,133 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/PlainNode"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "Node": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/PlainNode"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "e": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "e"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "children": {
+              "items": {
+                "$ref": "#/definitions/Node"
+              },
+              "type": "array"
+            },
+            "e": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "children",
+            "e"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "r": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "r"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "children": {
+              "items": {
+                "$ref": "#/definitions/Node"
+              },
+              "type": "array"
+            },
+            "r": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "children",
+            "r"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "PlainIntermediaryNode": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "children": {
+          "items": {
+            "$ref": "#/definitions/Node"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "children"
+      ],
+      "type": "object"
+    },
+    "PlainNode": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "a": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        {
+          "$ref": "#/definitions/PlainIntermediaryNode"
+        }
+      ]
+    }
+  }
+}

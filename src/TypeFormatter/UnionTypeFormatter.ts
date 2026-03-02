@@ -5,6 +5,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { UnionType } from "../Type/UnionType.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 import { getTypeByKey } from "../Utils/typeKeys.js";
@@ -22,15 +23,15 @@ export class UnionTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
         return type instanceof UnionType;
     }
-    private getTypeDefinitions(type: UnionType) {
+    private getTypeDefinitions(type: UnionType, options?: GetDefinitionOptions) {
         return type
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
-            .map((item) => this.childTypeFormatter.getDefinition(item));
+            .map((item) => this.childTypeFormatter.getDefinition(item, options));
     }
 
-    private getJsonSchemaDiscriminatorDefinition(type: UnionType): Definition {
-        const definitions = this.getTypeDefinitions(type);
+    private getJsonSchemaDiscriminatorDefinition(type: UnionType, options?: GetDefinitionOptions): Definition {
+        const definitions = this.getTypeDefinitions(type, options);
         const discriminator = type.getDiscriminator();
 
         if (!discriminator) {
@@ -51,7 +52,9 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             );
         }
 
-        const kindDefinitions = kindTypes.map((item) => this.childTypeFormatter.getDefinition(item as BaseType));
+        const kindDefinitions = kindTypes.map((item) =>
+            this.childTypeFormatter.getDefinition(item as BaseType, options),
+        );
 
         const allOf = [];
 
@@ -84,8 +87,8 @@ export class UnionTypeFormatter implements SubTypeFormatter {
 
         return { type: "object", properties, required: [discriminator], allOf };
     }
-    private getOpenApiDiscriminatorDefinition(type: UnionType): Definition {
-        const oneOf = this.getTypeDefinitions(type);
+    private getOpenApiDiscriminatorDefinition(type: UnionType, options?: GetDefinitionOptions): Definition {
+        const oneOf = this.getTypeDefinitions(type, options);
         const discriminator = type.getDiscriminator();
 
         if (!discriminator) {
@@ -99,14 +102,14 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             oneOf,
         } as JSONSchema7;
     }
-    public getDefinition(type: UnionType): Definition {
+    public getDefinition(type: UnionType, options?: GetDefinitionOptions): Definition {
         const discriminator = type.getDiscriminator();
         if (discriminator !== undefined) {
-            if (this.discriminatorType === "open-api") return this.getOpenApiDiscriminatorDefinition(type);
-            return this.getJsonSchemaDiscriminatorDefinition(type);
+            if (this.discriminatorType === "open-api") return this.getOpenApiDiscriminatorDefinition(type, options);
+            return this.getJsonSchemaDiscriminatorDefinition(type, options);
         }
 
-        const definitions = this.getTypeDefinitions(type);
+        const definitions = this.getTypeDefinitions(type, options);
 
         const flattenedDefinitions: JSONSchema7[] = [];
 

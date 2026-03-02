@@ -2,16 +2,37 @@ import type { Definition } from "../Schema/Definition.js";
 import type { RawTypeName } from "../Schema/RawType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import { uniqueArray } from "./uniqueArray.js";
 import { deepMerge } from "./deepMerge.js";
 import { derefType } from "./derefType.js";
 
+export type RefResolver = (ref: string) => Definition | undefined;
+
+export function refResolverFromDefinitions(definitions?: Record<string, Definition>): RefResolver | undefined {
+    if (!definitions) return undefined;
+    return (ref: string) => {
+        const key = ref.replace(/^#\/definitions\//, "");
+        return definitions[decodeURIComponent(key)];
+    };
+}
+
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
-export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
+export function getAllOfDefinitionReducer(
+    childTypeFormatter: TypeFormatter,
+    refResolver?: RefResolver,
+    options?: GetDefinitionOptions,
+) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType): Definition => {
-        const other = childTypeFormatter.getDefinition(derefType(baseType));
+        let other = childTypeFormatter.getDefinition(derefType(baseType), options);
+        if (refResolver && other.$ref && (!other.properties || Object.keys(other.properties).length === 0)) {
+            const resolved = refResolver(other.$ref);
+            if (resolved) {
+                other = resolved;
+            }
+        }
 
         definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 

@@ -2,6 +2,7 @@ import type { Definition } from "../Schema/Definition.js";
 import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { RestType } from "../Type/RestType.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
 
 export class RestTypeFormatter implements SubTypeFormatter {
@@ -11,8 +12,8 @@ export class RestTypeFormatter implements SubTypeFormatter {
         return type instanceof RestType;
     }
 
-    public getDefinition(type: RestType): Definition {
-        const definition = this.childTypeFormatter.getDefinition(type.getType());
+    public getDefinition(type: RestType, options?: GetDefinitionOptions): Definition {
+        const definition = this.childTypeFormatter.getDefinition(type.getType(), options);
         const title = type.getTitle();
 
         if (title !== null && typeof definition.items === "object") {

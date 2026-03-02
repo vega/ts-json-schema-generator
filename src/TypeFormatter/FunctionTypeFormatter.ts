@@ -3,6 +3,7 @@ import type { Definition } from "../Schema/Definition.js";
 import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { FunctionType } from "../Type/FunctionType.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
 
 export class FunctionTypeFormatter implements SubTypeFormatter {
@@ -15,14 +16,14 @@ export class FunctionTypeFormatter implements SubTypeFormatter {
         return type instanceof FunctionType;
     }
 
-    public getDefinition(type: FunctionType): Definition {
+    public getDefinition(type: FunctionType, options?: GetDefinitionOptions): Definition {
         const namedArgs = type.getNamedArguments();
         if (namedArgs) {
             return {
                 $comment: type.getComment(),
                 type: "object",
                 properties: {
-                    namedArgs: this.childTypeFormatter.getDefinition(namedArgs),
+                    namedArgs: this.childTypeFormatter.getDefinition(namedArgs, options),
                 },
             };
         }

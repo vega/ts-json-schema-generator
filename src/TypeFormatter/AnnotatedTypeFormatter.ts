@@ -4,6 +4,7 @@ import type { SubTypeFormatter } from "../SubTypeFormatter.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { UnionType } from "../Type/UnionType.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 
@@ -52,7 +53,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
     public supportsType(type: BaseType): boolean {
         return type instanceof AnnotatedType;
     }
-    public getDefinition(type: AnnotatedType): Definition {
+    public getDefinition(type: AnnotatedType, options?: GetDefinitionOptions): Definition {
         const annotations = type.getAnnotations();
 
         if ("discriminator" in annotations) {
@@ -69,7 +70,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
         }
 
         const def: Definition = {
-            ...this.childTypeFormatter.getDefinition(type.getType()),
+            ...this.childTypeFormatter.getDefinition(type.getType(), options),
             ...type.getAnnotations(),
         };
 

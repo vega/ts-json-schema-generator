@@ -6,8 +6,10 @@ import { BaseType } from "../Type/BaseType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { UnionType } from "../Type/UnionType.js";
+import type { GetDefinitionOptions } from "../TypeFormatter.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
-import { getAllOfDefinitionReducer } from "../Utils/allOfDefinition.js";
+
+import { getAllOfDefinitionReducer, refResolverFromDefinitions } from "../Utils/allOfDefinition.js";
 import { derefType } from "../Utils/derefType.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
@@ -22,13 +24,15 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return type instanceof ObjectType;
     }
 
-    public getDefinition(type: ObjectType): Definition {
+    public getDefinition(type: ObjectType, options?: GetDefinitionOptions): Definition {
         const types = type.getBaseTypes();
         if (types.length === 0) {
-            return this.getObjectDefinition(type);
+            return this.getObjectDefinition(type, options);
         }
 
-        return types.reduce(getAllOfDefinitionReducer(this.childTypeFormatter), this.getObjectDefinition(type));
+        const refResolver = refResolverFromDefinitions(options?.definitions);
+        const reducer = getAllOfDefinitionReducer(this.childTypeFormatter, refResolver, options);
+        return types.reduce(reducer, this.getObjectDefinition(type, options));
     }
 
     public getChildren(type: ObjectType): BaseType[] {
@@ -59,7 +63,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         return uniqueArray(children);
     }
 
-    protected getObjectDefinition(type: ObjectType): Definition {
+    protected getObjectDefinition(type: ObjectType, options?: GetDefinitionOptions): Definition {
         let objectProperties = type.getProperties();
         const additionalProperties: BaseType | boolean = type.getAdditionalProperties();
 
@@ -76,7 +80,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             .map((property) => property.getName());
 
         const properties = preparedProperties.reduce((result: StringMap<Definition>, property) => {
-            result[property.getName()] = this.childTypeFormatter.getDefinition(property.getType());
+            result[property.getName()] = this.childTypeFormatter.getDefinition(property.getType(), options);
             return result;
         }, {});
 
@@ -91,7 +95,7 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
                 : {
                       additionalProperties:
                           additionalProperties instanceof BaseType
-                              ? this.childTypeFormatter.getDefinition(additionalProperties)
+                              ? this.childTypeFormatter.getDefinition(additionalProperties, options)
                               : additionalProperties,
                   }),
         };
