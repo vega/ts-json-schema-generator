@@ -84,10 +84,7 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
             definition.required = uniqueArray((definition.required || []).concat(other.required)).sort();
         }
 
-        if (
-            (other.additionalProperties || other.additionalProperties === undefined) &&
-            definition.additionalProperties == false
-        ) {
+        if (other.additionalProperties === true && definition.additionalProperties === false) {
             delete definition.additionalProperties;
         }
 
