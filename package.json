@@ -1,6 +1,6 @@
 {
   "name": "ts-json-schema-generator",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Generate JSON schema from your Typescript sources",
   "keywords": [
     "ts",
