@@ -1,3 +1,34 @@
+# v2.5.1 (Wed Mar 04 2026)
+
+#### 🐛 Bug Fix
+
+- ci: publishing [#2482](https://github.com/vega/ts-json-schema-generator/pull/2482) ([@domoritz](https://github.com/domoritz))
+- chore: update deps [#2482](https://github.com/vega/ts-json-schema-generator/pull/2482) ([@domoritz](https://github.com/domoritz))
+- Fix NPM publishing with latest npm and publishConfig [#2468](https://github.com/vega/ts-json-schema-generator/pull/2468) ([@Copilot](https://github.com/Copilot))
+- ci: use npm trusted publishing [#2467](https://github.com/vega/ts-json-schema-generator/pull/2467) ([@domoritz](https://github.com/domoritz))
+- Restore glob expansion compatibility with Node 20 [#2466](https://github.com/vega/ts-json-schema-generator/pull/2466) ([@Copilot](https://github.com/Copilot))
+
+#### 🔩 Dependency Updates
+
+- chore(deps): bump glob from 11.1.0 to 13.0.6 [#2474](https://github.com/vega/ts-json-schema-generator/pull/2474) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump globals from 17.3.0 to 17.4.0 [#2479](https://github.com/vega/ts-json-schema-generator/pull/2479) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript/vfs from 1.6.3 to 1.6.4 [#2480](https://github.com/vega/ts-json-schema-generator/pull/2480) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump minimatch [#2476](https://github.com/vega/ts-json-schema-generator/pull/2476) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.55.0 to 8.56.0 [#2473](https://github.com/vega/ts-json-schema-generator/pull/2473) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.10.12 to 24.10.13 [#2475](https://github.com/vega/ts-json-schema-generator/pull/2475) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.54.0 to 8.55.0 [#2469](https://github.com/vega/ts-json-schema-generator/pull/2469) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ajv from 8.17.1 to 8.18.0 [#2470](https://github.com/vega/ts-json-schema-generator/pull/2470) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript/vfs from 1.6.2 to 1.6.3 [#2471](https://github.com/vega/ts-json-schema-generator/pull/2471) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.10.9 to 24.10.12 [#2462](https://github.com/vega/ts-json-schema-generator/pull/2462) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 3
+
+- [@Copilot](https://github.com/Copilot)
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+
+---
+
 # v2.5.0 (Wed Feb 04 2026)
 
 :tada: This release contains work from new contributors! :tada:
