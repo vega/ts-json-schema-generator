@@ -23,12 +23,14 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          registry-url: "https://registry.npmjs.org"
           cache: "npm"
           node-version: 22
 
       - name: Install Node dependencies
         run: npm ci
+
+      - name: Update NPM
+        run: npm i -g npm@latest
 
       - name: Create release
         run: npm run release

@@ -1,10 +1,10 @@
 import * as path from "node:path";
+import { globSync } from "glob";
 import normalize from "normalize-path";
 import type { CompilerOptions } from "typescript";
 import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
-import fs from "node:fs";
 
 function loadTsConfigFile(configFile: string) {
     const raw = ts.sys.readFile(configFile);
@@ -67,8 +67,9 @@ function getTsConfig(config: Config) {
 }
 
 export function createProgram(config: CompletedConfig): ts.Program {
+    // TODO: Switch back to node:fs globSync once Node 20 is EOL (https://github.com/vega/ts-json-schema-generator/issues/2461).
     const rootNamesFromPath = config.path
-        ? fs.globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
+        ? globSync(normalize(path.resolve(config.path))).map((rootName) => normalize(rootName))
         : [];
     const tsconfig = getTsConfig(config);
     const rootNames = rootNamesFromPath.length ? rootNamesFromPath : tsconfig.fileNames;
