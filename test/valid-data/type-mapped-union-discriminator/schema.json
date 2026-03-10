@@ -1,0 +1,76 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "pet": {
+          "discriminator": {
+            "propertyName": "animal_type"
+          },
+          "oneOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "animal_type": {
+                  "const": "fish",
+                  "type": "string"
+                },
+                "found_in": {
+                  "enum": [
+                    "ocean",
+                    "river"
+                  ],
+                  "type": "string"
+                },
+                "map_to_string": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "animal_type",
+                "found_in",
+                "map_to_string"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "animal_type": {
+                  "const": "bird",
+                  "type": "string"
+                },
+                "can_fly": {
+                  "type": "boolean"
+                },
+                "map_to_string": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "animal_type",
+                "can_fly",
+                "map_to_string"
+              ],
+              "type": "object"
+            }
+          ],
+          "required": [
+            "animal_type"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "pet",
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}
