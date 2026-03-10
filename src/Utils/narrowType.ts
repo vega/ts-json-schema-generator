@@ -3,6 +3,7 @@ import { EnumType } from "../Type/EnumType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefType } from "./derefType.js";
+import { preserveAnnotation } from "./preserveAnnotation.js";
 
 /**
  * Narrows the given type by passing all variants to the given predicate function. So when type is a union type then
@@ -46,7 +47,7 @@ export function narrowType(type: BaseType, predicate: (type: BaseType) => boolea
             } else if (types.length === 1) {
                 return types[0];
             } else {
-                return new UnionType(types);
+                return preserveAnnotation(type, new UnionType(types));
             }
         }
         return type;
