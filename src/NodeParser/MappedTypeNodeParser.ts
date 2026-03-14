@@ -106,6 +106,23 @@ export class MappedTypeNodeParser implements SubNodeParser {
         );
     }
 
+    /**
+     * In mapped types, questionToken can be:
+     * - undefined: no optional modifier
+     * - QuestionToken (?): add optional
+     * - PlusToken (+?): add optional
+     * - MinusToken (-?): remove optional (e.g. Required<T>) → property is required
+     */
+    protected isMappedPropertyRequired(node: ts.MappedTypeNode, hasUndefinedInType: boolean): boolean {
+        if (node.questionToken === undefined) {
+            return !hasUndefinedInType;
+        }
+        if (node.questionToken.kind === ts.SyntaxKind.MinusToken) {
+            return true; // -? removes optional → output property is always required
+        }
+        return false;
+    }
+
     protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType {
         if (!node.nameType) {
             return rawKey;
@@ -135,7 +152,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                 const objectProperty = new ObjectProperty(
                     mappedKey.getValue().toString(),
                     preserveAnnotation(propertyType, newType),
-                    !node.questionToken && !hasUndefined,
+                    this.isMappedPropertyRequired(node, hasUndefined),
                 );
 
                 result.push(objectProperty);
@@ -153,7 +170,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
                     this.createSubContext(node, new LiteralType(value!), context),
                 );
 
-                return new ObjectProperty(value!.toString(), type, !node.questionToken);
+                return new ObjectProperty(value!.toString(), type, this.isMappedPropertyRequired(node, false));
             });
     }
 
