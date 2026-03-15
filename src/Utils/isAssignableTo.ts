@@ -125,7 +125,6 @@ export function isAssignableTo(
     }
 
     // Function types may need to add to inferMap
-    // TODO: Add support for comparison of function return type
     if (target instanceof FunctionType) {
         if (source instanceof FunctionType) {
             return isAssignableTo(
