@@ -53,6 +53,12 @@ export function getNamedArguments(
         return undefined;
     }
 
+    // Special case for when function signature is (...args: infer T)
+    if (node.parameters.length === 1) {
+        const parameterType = childNodeParser.createType(node.parameters[0], context);
+        return parameterType as typeof parameterType & ObjectType; // Is this type union ok, or do I need to rework the entire return type?
+    }
+
     const parameterTypes = node.parameters.map((parameter) => {
         return childNodeParser.createType(parameter, context);
     });
