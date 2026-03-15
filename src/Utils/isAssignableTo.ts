@@ -21,6 +21,7 @@ import { BooleanType } from "../Type/BooleanType.js";
 import { InferType } from "../Type/InferType.js";
 import { RestType } from "../Type/RestType.js";
 import { NeverType } from "../Type/NeverType.js";
+import { FunctionType } from "../Type/FunctionType.js";
 
 /**
  * Returns the combined types from the given intersection. Currently only object types are combined. Maybe more
@@ -121,6 +122,21 @@ export function isAssignableTo(
         }
 
         return true;
+    }
+
+    // Function types may need to add to inferMap
+    // TODO: Add support for comparison of function return type
+    if (target instanceof FunctionType) {
+        if (source instanceof FunctionType) {
+            return isAssignableTo(
+                target.getNamedArguments() ?? new NeverType(),
+                source.getNamedArguments() ?? new NeverType(),
+                inferMap,
+                insideTypes,
+            );
+        }
+
+        return false;
     }
 
     // Check for simple type equality
