@@ -1,0 +1,101 @@
+{
+    "name": "ts-json-schema-generator",
+    "version": "2.0.0",
+    "description": "Generate JSON schema from your Typescript sources",
+    "keywords": [
+        "ts",
+        "typescript",
+        "json",
+        "schema",
+        "jsonschema"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vega/ts-json-schema-generator.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Alexander Evtushenko",
+        "email": "aevtushenko@xiag.ch"
+    },
+    "contributors": [
+        {
+            "name": "Dominik Moritz",
+            "email": "domoritz@gmail.com"
+        },
+        {
+            "name": "MooYeol Prescott Lee",
+            "email": "mooyoul@gmail.com"
+        }
+    ],
+    "type": "commonjs",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "bin": {
+        "ts-json-schema-generator": "bin/ts-json-schema-generator.js"
+    },
+    "files": [
+        "dist",
+        "src",
+        "factory",
+        "index.*",
+        "ts-json-schema-generator.*"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "debug": "tsx --inspect-brk ts-json-schema-generator.ts",
+        "format": "eslint --fix",
+        "lint": "eslint",
+        "prepublishOnly": "npm run build",
+        "release": "npm run build && auto shipit",
+        "run": "tsx ts-json-schema-generator.ts",
+        "test": "tsx --test \"test/**/*.test.ts\"",
+        "test:debug": "tsx --inspect-brk --test-concurrency=1 --test",
+        "test:fast": "cross-env FAST_TEST=1 tsx --test \"test/**/*.test.ts\"",
+        "test:update": "cross-env FAST_TEST=1 UPDATE_SCHEMA=true tsx --test \"test/**/*.test.ts\"",
+        "test:coverage": "c8 --reporter lcov --reporter text tsx --test \"test/**/*.test.ts\"",
+        "watch": "tsc -w"
+    },
+    "dependencies": {
+        "@types/json-schema": "^7.0.15",
+        "commander": "^14.0.3",
+        "glob": "^13.0.6",
+        "json5": "^2.2.3",
+        "normalize-path": "^3.0.0",
+        "safe-stable-stringify": "^2.5.0",
+        "tslib": "^2.8.1",
+        "typescript": "^5.9.3"
+    },
+    "devDependencies": {
+        "@auto-it/conventional-commits": "^11.3.6",
+        "@auto-it/first-time-contributor": "^11.3.6",
+        "@eslint/js": "^9.39.1",
+        "@types/eslint": "^9.6.1",
+        "@types/node": "^24.10.1",
+        "@types/normalize-path": "^3.0.2",
+        "@typescript/vfs": "1.6.4",
+        "ajv": "^8.18.0",
+        "ajv-formats": "^3.0.1",
+        "auto": "^11.3.6",
+        "c8": "^11.0.0",
+        "cross-env": "^10.1.0",
+        "eslint": "10.0.3",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.4",
+        "globals": "^17.4.0",
+        "prettier": "^3.8.1",
+        "try": "^1.0.1",
+        "tsx": "^4.21.0",
+        "typescript-eslint": "^8.48.0",
+        "vega": "^6.2.0",
+        "vega-lite": "^6.4.1"
+    },
+    "packageManager": "npm@11.11.0",
+    "publishConfig": {
+        "access": "public",
+        "provenance": true
+    },
+    "engines": {
+        "node": ">=22.0.0"
+    }
+}

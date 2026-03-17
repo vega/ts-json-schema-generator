@@ -1,0 +1,1 @@
+{"version":3,"file":"StringType.js","sourceRoot":"","sources":["../../../src/Type/StringType.ts"],"names":[],"mappings":";;;AAAA,yDAAmD;AAEnD,MAAa,UAAW,SAAQ,gCAAa;IACnB;IAAtB,YAAsB,mBAAmB,KAAK;QAC1C,KAAK,EAAE,CAAC;QADU,qBAAgB,GAAhB,gBAAgB,CAAQ;IAE9C,CAAC;IAEM,KAAK;QACR,OAAO,QAAQ,CAAC;IACpB,CAAC;IAEM,mBAAmB;QACtB,OAAO,IAAI,CAAC,gBAAgB,CAAC;IACjC,CAAC;CACJ;AAZD,gCAYC"}

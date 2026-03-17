@@ -1,0 +1,1 @@
+{"version":3,"file":"VoidTypeNodeParser.js","sourceRoot":"","sources":["../../../src/NodeParser/VoidTypeNodeParser.ts"],"names":[],"mappings":";;;;AAAA,oEAA4B;AAI5B,qDAA+C;AAE/C,MAAa,kBAAkB;IACpB,YAAY,CAAC,IAAwB;QACxC,OAAO,IAAI,CAAC,IAAI,KAAK,oBAAE,CAAC,UAAU,CAAC,WAAW,CAAC;IACnD,CAAC;IACM,UAAU,CAAC,IAAwB,EAAE,OAAgB;QACxD,OAAO,IAAI,sBAAQ,EAAE,CAAC;IAC1B,CAAC;CACJ;AAPD,gDAOC"}

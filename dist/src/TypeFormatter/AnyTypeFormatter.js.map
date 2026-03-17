@@ -1,0 +1,1 @@
+{"version":3,"file":"AnyTypeFormatter.js","sourceRoot":"","sources":["../../../src/TypeFormatter/AnyTypeFormatter.ts"],"names":[],"mappings":";;;AAEA,mDAA6C;AAG7C,MAAa,gBAAgB;IAClB,YAAY,CAAC,IAAc;QAC9B,OAAO,IAAI,YAAY,oBAAO,CAAC;IACnC,CAAC;IACM,aAAa,CAAC,IAAa;QAC9B,OAAO,EAAE,CAAC;IACd,CAAC;IACM,WAAW,CAAC,IAAa;QAC5B,OAAO,EAAE,CAAC;IACd,CAAC;CACJ;AAVD,4CAUC"}

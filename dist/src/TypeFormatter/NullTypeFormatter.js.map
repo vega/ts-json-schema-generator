@@ -1,0 +1,1 @@
+{"version":3,"file":"NullTypeFormatter.js","sourceRoot":"","sources":["../../../src/TypeFormatter/NullTypeFormatter.ts"],"names":[],"mappings":";;;AAGA,qDAA+C;AAE/C,MAAa,iBAAiB;IACnB,YAAY,CAAC,IAAc;QAC9B,OAAO,IAAI,YAAY,sBAAQ,CAAC;IACpC,CAAC;IACM,aAAa,CAAC,IAAc;QAC/B,OAAO,EAAE,IAAI,EAAE,MAAM,EAAE,CAAC;IAC5B,CAAC;IACM,WAAW,CAAC,IAAc;QAC7B,OAAO,EAAE,CAAC;IACd,CAAC;CACJ;AAVD,8CAUC"}
