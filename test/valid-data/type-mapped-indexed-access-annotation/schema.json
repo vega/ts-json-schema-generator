@@ -1,0 +1,26 @@
+{
+  "$ref": "#/definitions/Test",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Test": {
+      "additionalProperties": false,
+      "properties": {
+        "foo": {
+          "additionalProperties": false,
+          "properties": {
+            "field1": {
+              "pattern": "^https:\\/\\/.*$",
+              "type": "string"
+            },
+            "field2": {
+              "pattern": "^https:\\/\\/.*$",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}
