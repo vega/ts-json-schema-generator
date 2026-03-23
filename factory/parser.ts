@@ -139,7 +139,7 @@ export function createParser(program: ts.Program, config: CompletedConfig, augme
         .addNodeParser(new PromiseNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeReferenceNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new ExpressionWithTypeArgumentsNodeParser(typeChecker, chainNodeParser))
-        .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, chainNodeParser))
+        .addNodeParser(new IndexedAccessTypeNodeParser(typeChecker, withJsDoc(chainNodeParser)))
         .addNodeParser(new InferTypeNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new TypeofNodeParser(typeChecker, chainNodeParser))
         .addNodeParser(new MappedTypeNodeParser(chainNodeParser, config.additionalProperties))
