@@ -13,7 +13,7 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') }}
+    if: ${{ github.repository_owner == 'vega' && !contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci') }}
 
     name: Make a release and publish to NPM
     steps:
