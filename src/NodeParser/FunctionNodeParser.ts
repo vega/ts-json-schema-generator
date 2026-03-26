@@ -8,6 +8,7 @@ import { DefinitionType } from "../Type/DefinitionType.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { getKey } from "../Utils/nodeKey.js";
+import { InferType } from "../Type/InferType.js";
 
 export class FunctionNodeParser implements SubNodeParser {
     constructor(
@@ -51,6 +52,12 @@ export function getNamedArguments(
 ) {
     if (node.parameters.length === 0) {
         return undefined;
+    }
+
+    // Special case for when function signature is (...args: infer T)
+    if (node.parameters.length === 1) {
+        const parameterType = childNodeParser.createType(node.parameters[0], context);
+        if (parameterType instanceof InferType) return parameterType as typeof parameterType & ObjectType;
     }
 
     const parameterTypes = node.parameters.map((parameter) => {
