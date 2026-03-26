@@ -124,7 +124,12 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[],
             )
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
-            .reduce((entries, member) => {
+            .reduce<
+                {
+                    member: ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration;
+                    memberType: ts.Node;
+                }[]
+            >((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
 
                 // Use the type checker if the member has no explicit type
