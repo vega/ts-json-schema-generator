@@ -64,7 +64,7 @@
     "normalize-path": "^3.0.0",
     "safe-stable-stringify": "^2.5.0",
     "tslib": "^2.8.1",
-    "typescript": "^6.0.2"
+    "typescript": ">=5.9 <7"
   },
   "devDependencies": {
     "@auto-it/conventional-commits": "^11.3.6",
