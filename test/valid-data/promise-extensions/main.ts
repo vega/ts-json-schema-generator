@@ -22,24 +22,18 @@ export default class extends Promise<A> {}
 export class LikeClass implements PromiseLike<A> {
     then<TResult1 = A, TResult2 = never>(
         onfulfilled?: ((value: A) => TResult1 | PromiseLike<TResult1>) | null | undefined,
-        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
     ): PromiseLike<TResult1 | TResult2> {
         return new Promise(() => {});
     }
 }
 
 export abstract class LikeAbstractClass implements PromiseLike<A> {
-		abstract then<TResult1 = A, TResult2 = never>(
-			onfulfilled?:
-				| ((value: A) => TResult1 | PromiseLike<TResult1>)
-				| null
-				| undefined,
-			onrejected?:
-				| ((reason: unknown) => TResult2 | PromiseLike<TResult2>)
-				| null
-				| undefined,
-		): PromiseLike<TResult1 | TResult2>;
-	}
+    abstract then<TResult1 = A, TResult2 = never>(
+        onfulfilled?: ((value: A) => TResult1 | PromiseLike<TResult1>) | null | undefined,
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
+    ): PromiseLike<TResult1 | TResult2>;
+}
 
 export interface LikeInterface extends PromiseLike<A> {}
 
@@ -51,14 +45,14 @@ export interface WithProperty extends Promise<A> {
 export interface ThenableInterface {
     then<TResult1 = A, TResult2 = never>(
         onfulfilled?: ((value: A) => TResult1 | PromiseLike<TResult1>) | null | undefined,
-        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
     ): PromiseLike<TResult1 | TResult2>;
 }
 
 export class ThenableClass {
     then<TResult1 = A, TResult2 = never>(
         onfulfilled?: ((value: A) => TResult1 | PromiseLike<TResult1>) | null | undefined,
-        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined
+        onrejected?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | null | undefined,
     ): PromiseLike<TResult1 | TResult2> {
         return new Promise(() => {});
     }
