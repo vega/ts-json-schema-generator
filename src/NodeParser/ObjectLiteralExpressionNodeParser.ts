@@ -57,7 +57,7 @@ export class ObjectLiteralExpressionNodeParser implements SubNodeParser {
     }
 
     private parseProperties(properties: ts.ObjectLiteralElementLike[], context: Context): ObjectProperty[] {
-        return properties.flatMap((t) => {
+        return properties.flatMap((t): ObjectProperty[] | ObjectProperty => {
             // parsed previously
             if (ts.isSpreadAssignment(t)) {
                 return [];

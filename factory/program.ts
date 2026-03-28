@@ -45,7 +45,7 @@ function loadTsConfigFile(configFile: string) {
     return parseResult;
 }
 
-function getTsConfig(config: Config) {
+function getTsConfig(config: Config): Pick<ts.ParsedCommandLine, "fileNames" | "options"> {
     if (config.tsconfig) {
         return loadTsConfigFile(config.tsconfig);
     }
@@ -62,7 +62,8 @@ function getTsConfig(config: Config) {
             skipLibCheck: true,
             skipDefaultLibCheck: true,
             esModuleInterop: true,
-        } satisfies CompilerOptions,
+            types: ["node"],
+        },
     };
 }
 
