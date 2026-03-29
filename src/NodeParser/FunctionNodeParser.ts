@@ -34,7 +34,11 @@ export class FunctionNodeParser implements SubNodeParser {
         }
 
         const name = getTypeName(node);
-        const func = new FunctionType(node, getNamedArguments(this.childNodeParser, node, context));
+        const func = new FunctionType(
+            node,
+            getNamedArguments(this.childNodeParser, node, context),
+            getReturnType(this.childNodeParser, node, context),
+        );
 
         return name ? new DefinitionType(name, func) : func;
     }
@@ -75,6 +79,19 @@ export function getNamedArguments(
         }),
         false,
     );
+}
+
+export function getReturnType(
+    childNodeParser: NodeParser,
+    node:
+        | ts.FunctionTypeNode
+        | ts.FunctionExpression
+        | ts.FunctionDeclaration
+        | ts.ArrowFunction
+        | ts.ConstructorTypeNode,
+    context: Context,
+): BaseType | undefined {
+    return node.type ? childNodeParser.createType(node.type, context) : undefined;
 }
 
 export function getTypeName(

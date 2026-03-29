@@ -8,6 +8,7 @@ export class FunctionType extends BaseType {
     constructor(
         node?: ts.FunctionTypeNode | ts.FunctionExpression | ts.FunctionDeclaration | ts.ArrowFunction,
         protected namedArguments?: ObjectType,
+        protected returnType?: BaseType,
     ) {
         super();
 
@@ -26,5 +27,9 @@ export class FunctionType extends BaseType {
 
     public getNamedArguments(): ObjectType | undefined {
         return this.namedArguments;
+    }
+
+    public getReturnType(): BaseType | undefined {
+        return this.returnType;
     }
 }

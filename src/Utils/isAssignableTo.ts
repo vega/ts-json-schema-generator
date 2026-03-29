@@ -124,15 +124,42 @@ export function isAssignableTo(
         return true;
     }
 
-    // Function types may need to add to inferMap
+    // Function types: compare parameters and return types, supporting infer in both positions
+    // (e.g. Parameters<T> uses (...args: infer P) => any, ReturnType<T> uses (...args: any) => infer R)
     if (target instanceof FunctionType) {
         if (source instanceof FunctionType) {
-            return isAssignableTo(
-                target.getNamedArguments() ?? new NeverType(),
-                source.getNamedArguments() ?? new NeverType(),
-                inferMap,
-                insideTypes,
-            );
+            const targetArgs = target.getNamedArguments();
+            const sourceArgs = source.getNamedArguments();
+
+            if (targetArgs instanceof InferType) {
+                // Populates inferMap with the inferred parameter type
+                isAssignableTo(targetArgs, sourceArgs ?? new NeverType(), inferMap, insideTypes);
+            } else {
+                const targetProps = targetArgs ? getObjectProperties(targetArgs) : [];
+                // All-any params (e.g. (...args: any)) match any function signature
+                const targetParamsAcceptAny =
+                    targetProps.length === 0 || targetProps.every((p) => derefType(p.getType()) instanceof AnyType);
+
+                if (!targetParamsAcceptAny) {
+                    const argsAssignable = isAssignableTo(
+                        targetArgs!,
+                        sourceArgs ?? new NeverType(),
+                        inferMap,
+                        insideTypes,
+                    );
+                    if (!argsAssignable) {
+                        return false;
+                    }
+                }
+            }
+
+            const targetReturn = target.getReturnType();
+            const sourceReturn = source.getReturnType();
+            if (targetReturn && sourceReturn) {
+                return isAssignableTo(targetReturn, sourceReturn, inferMap, insideTypes);
+            }
+
+            return true;
         }
 
         return false;

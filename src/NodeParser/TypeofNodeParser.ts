@@ -8,6 +8,7 @@ import { getKey } from "../Utils/nodeKey.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { FunctionType } from "../Type/FunctionType.js";
+import { getNamedArguments, getReturnType } from "./FunctionNodeParser.js";
 import { LogicError } from "../Error/Errors.js";
 
 export class TypeofNodeParser implements SubNodeParser {
@@ -63,8 +64,12 @@ export class TypeofNodeParser implements SubNodeParser {
             return this.childNodeParser.createType(valueDec.initializer, context);
         }
 
-        if (valueDec.kind === ts.SyntaxKind.FunctionDeclaration) {
-            return new FunctionType(<ts.FunctionDeclaration>valueDec);
+        if (ts.isFunctionDeclaration(valueDec)) {
+            return new FunctionType(
+                valueDec,
+                getNamedArguments(this.childNodeParser, valueDec, context),
+                getReturnType(this.childNodeParser, valueDec, context),
+            );
         }
 
         throw new LogicError(valueDec, `Invalid type query for this declaration. (ts.SyntaxKind = ${valueDec.kind})`);
