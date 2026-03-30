@@ -98,7 +98,7 @@
   "engines": {
     "node": ">=22.0.0"
   },
-   "overrides": {
+  "overrides": {
     "@typescript-eslint/eslint-plugin": {
       "typescript": "^6.0.2"
     },
