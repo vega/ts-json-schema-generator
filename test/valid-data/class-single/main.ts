@@ -2,11 +2,12 @@ export class MyObject {
     // Static properties must be ignored
     public static staticProp: number;
 
-    public propA: number;
+    public propA!: number;
     // Test that types can be inferred
     public propB = 42;
 
     // Properties without type must be ignored
+    //@ts-ignore - intentionally no type
     public noType;
 
     // Protected properties must be ignored

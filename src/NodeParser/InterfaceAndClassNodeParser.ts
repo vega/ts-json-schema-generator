@@ -108,23 +108,22 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     ): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
 
+        type Member = ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration;
+
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
-            .reduce(
-                (members, member) => {
-                    if (ts.isConstructorDeclaration(member)) {
-                        const params = member.parameters.filter((param) =>
-                            ts.isParameterPropertyDeclaration(param, param.parent),
-                        );
-                        members.push(...params);
-                    } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                        members.push(member);
-                    }
-                    return members;
-                },
-                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[],
-            )
+            .reduce((members, member) => {
+                if (ts.isConstructorDeclaration(member)) {
+                    const params = member.parameters.filter((param) =>
+                        ts.isParameterPropertyDeclaration(param, param.parent),
+                    );
+                    members.push(...params);
+                } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
+                    members.push(member);
+                }
+                return members;
+            }, [] as Member[])
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
-            .reduce((entries, member) => {
+            .reduce<{ member: Member; memberType: ts.Node }[]>((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
 
                 // Use the type checker if the member has no explicit type
@@ -135,8 +134,9 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 }
 
                 if (memberType !== undefined) {
-                    return [...entries, { member, memberType }];
+                    entries.push({ member, memberType });
                 }
+
                 return entries;
             }, [])
             .map(
