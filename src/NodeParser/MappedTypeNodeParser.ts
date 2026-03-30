@@ -16,6 +16,7 @@ import { NumberType } from "../Type/NumberType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
 import { SymbolType } from "../Type/SymbolType.js";
+import { TupleType } from "../Type/TupleType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefAnnotatedType, derefType, isDeepLiteralUnion } from "../Utils/derefType.js";
 import { getKey } from "../Utils/nodeKey.js";
@@ -37,8 +38,21 @@ export class MappedTypeNodeParser implements SubNodeParser {
         const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
         const keyListType = derefType(constraintType);
         const id = `indexed-type-${getKey(node, context)}`;
+        const isKeyOf = this.isKeyOfConstraint(node);
 
         if (keyListType instanceof UnionType) {
+            // When the constraint is `keyof T` where T is a tuple, the keys are sequential
+            // numeric literals (0, 1, 2, ...). Preserve the tuple structure.
+            if (isKeyOf) {
+                const tupleIndices = this.getNumericLiteralIndices(keyListType);
+                if (tupleIndices) {
+                    const items = tupleIndices.map((idx) =>
+                        this.childNodeParser.createType(node.type!, this.createSubContext(node, idx, context)),
+                    );
+                    return new TupleType(items);
+                }
+            }
+
             // Key type resolves to a set of known properties
             return new ObjectType(
                 id,
@@ -57,9 +71,11 @@ export class MappedTypeNodeParser implements SubNodeParser {
             node.type!,
             this.createSubContext(node, keyListType, context),
         );
-        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
-            // Then we turn it into an array
-            return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
+        if (constraintType?.getId() === "number" && !(maybeUnionType instanceof NeverType)) {
+            // When keyof resolves to number (array) or the value is a union, produce an array.
+            if (maybeUnionType instanceof UnionType || isKeyOf) {
+                return new ArrayType(maybeUnionType);
+            }
         }
 
         if (
@@ -70,22 +86,18 @@ export class MappedTypeNodeParser implements SubNodeParser {
         ) {
             // Key type widens to `string`
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
-            // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
             const resultType = new ObjectType(id, [], [], type);
-            if (resultType) {
-                let annotations;
-
-                if (constraintType instanceof AnnotatedType) {
-                    annotations = constraintType.getAnnotations();
-                } else if (constraintType instanceof DefinitionType) {
-                    const childType = constraintType.getType();
-                    if (childType instanceof AnnotatedType) {
-                        annotations = childType.getAnnotations();
-                    }
+            let annotations;
+            if (constraintType instanceof AnnotatedType) {
+                annotations = constraintType.getAnnotations();
+            } else if (constraintType instanceof DefinitionType) {
+                const childType = constraintType.getType();
+                if (childType instanceof AnnotatedType) {
+                    annotations = childType.getAnnotations();
                 }
-                if (annotations) {
-                    return new AnnotatedType(resultType, { propertyNames: annotations }, false);
-                }
+            }
+            if (annotations) {
+                return new AnnotatedType(resultType, { propertyNames: annotations }, false);
             }
             return resultType;
         }
@@ -193,6 +205,26 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
 
         return this.additionalProperties;
+    }
+
+    protected isKeyOfConstraint(node: ts.MappedTypeNode): boolean {
+        const c = node.typeParameter.constraint;
+        return (
+            c?.kind === ts.SyntaxKind.TypeOperator &&
+            (c as ts.TypeOperatorNode).operator === ts.SyntaxKind.KeyOfKeyword
+        );
+    }
+
+    /** Returns sorted numeric literal indices if all keys are numeric (tuple keys), else undefined. */
+    protected getNumericLiteralIndices(keyListType: UnionType): LiteralType[] | undefined {
+        const types = keyListType.getFlattenedTypes(derefType);
+        if (types.length === 0) return undefined;
+        const indices: LiteralType[] = [];
+        for (const t of types) {
+            if (!(t instanceof LiteralType) || typeof t.getValue() !== "number") return undefined;
+            indices.push(t);
+        }
+        return indices.sort((a, b) => (a.getValue() as number) - (b.getValue() as number));
     }
 
     protected createSubContext(
