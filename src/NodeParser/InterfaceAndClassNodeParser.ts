@@ -61,7 +61,20 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
+        const methodNames: string[] = [];
+        for (const m of node.members) {
+            if ((ts.isMethodSignature(m) || ts.isMethodDeclaration(m)) && m.name) {
+                methodNames.push(this.getPropertyName(m.name));
+            }
+        }
+        return new ObjectType(
+            id,
+            this.getBaseTypes(node, context),
+            properties,
+            additionalProperties,
+            false,
+            methodNames,
+        );
     }
 
     /**

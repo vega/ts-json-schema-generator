@@ -27,6 +27,9 @@ export class ObjectType extends BaseType {
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
         private nonPrimitive: boolean = false,
+        // Method names not included in properties — used by isAssignableTo to
+        // prevent false structural matches against types with methods (e.g. Map).
+        private methodNames: readonly string[] = [],
     ) {
         super();
     }
@@ -46,5 +49,8 @@ export class ObjectType extends BaseType {
     }
     public getNonPrimitive(): boolean {
         return this.nonPrimitive;
+    }
+    public getMethodNames(): readonly string[] {
+        return this.methodNames;
     }
 }
