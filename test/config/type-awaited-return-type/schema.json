@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyArrayType": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "bar": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "bar"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "MyInferredType": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "type": "string"
+        },
+        "qux": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "bar",
+        "qux"
+      ],
+      "type": "object"
+    },
+    "MyNestedRefType": {
+      "additionalProperties": false,
+      "properties": {
+        "bar": {
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "value"
+          ],
+          "type": "object"
+        },
+        "count": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "bar",
+        "count"
+      ],
+      "type": "object"
+    },
+    "MyPrimitiveType": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "not": {}
+        }
+      ]
+    },
+    "MyUnionType": {
+      "anyOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "bar",
+              "type": "string"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "baz",
+              "type": "string"
+            },
+            "value": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "kind",
+            "value"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "MyUnresolvableType": {
+      "description": "Failed to correctly infer type"
+    }
+  }
+}

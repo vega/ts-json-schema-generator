@@ -40,15 +40,15 @@ export class TypeLiteralNodeParser implements SubNodeParser {
 
         const properties = node.members
             .filter(
-                (element): element is PropertySignature | MethodSignature =>
-                    ts.isPropertySignature(element) || ts.isMethodSignature(element),
+                (element): element is (PropertySignature | MethodSignature) & { type: ts.TypeNode } =>
+                    (ts.isPropertySignature(element) || ts.isMethodSignature(element)) && element.type !== undefined,
             )
             .filter((propertyNode) => !isNodeHidden(propertyNode))
             .map(
                 (propertyNode) =>
                     new ObjectProperty(
                         this.getPropertyName(propertyNode.name),
-                        this.childNodeParser.createType(propertyNode.type!, context),
+                        this.childNodeParser.createType(propertyNode.type, context),
                         !propertyNode.questionToken,
                     ),
             )
