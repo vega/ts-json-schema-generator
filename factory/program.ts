@@ -6,6 +6,7 @@ import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
 
 function loadTsConfigFile(configFile: string) {
+    configFile = path.resolve(configFile);
     const raw = ts.sys.readFile(configFile);
 
     if (!raw) {
