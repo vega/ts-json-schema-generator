@@ -118,18 +118,18 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType | N
             }
         }
 
-        const additionalProperty = type.getAdditionalProperties();
-        if (additionalProperty instanceof BaseType) {
-            return additionalProperty;
-        } else if (additionalProperty === true) {
-            return new AnyType();
-        }
-
         for (const subType of type.getBaseTypes()) {
             const subKeyType = getTypeByKey(subType, index);
             if (subKeyType) {
                 return subKeyType;
             }
+        }
+
+        const additionalProperty = type.getAdditionalProperties();
+        if (additionalProperty instanceof BaseType) {
+            return additionalProperty;
+        } else if (additionalProperty === true) {
+            return new AnyType();
         }
 
         return undefined;
