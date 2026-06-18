@@ -3,8 +3,10 @@ import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { FunctionType } from "../Type/FunctionType.js";
 import type { FunctionOptions } from "../Config.js";
+import { BooleanType } from "../Type/BooleanType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
+import { VoidType } from "../Type/VoidType.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import { getKey } from "../Utils/nodeKey.js";
@@ -34,7 +36,11 @@ export class FunctionNodeParser implements SubNodeParser {
         }
 
         const name = getTypeName(node);
-        const func = new FunctionType(node, getNamedArguments(this.childNodeParser, node, context));
+        const func = new FunctionType(
+            node,
+            getNamedArguments(this.childNodeParser, node, context),
+            getReturnType(this.childNodeParser, node, context),
+        );
 
         return name ? new DefinitionType(name, func) : func;
     }
@@ -75,6 +81,28 @@ export function getNamedArguments(
         }),
         false,
     );
+}
+
+export function getReturnType(
+    childNodeParser: NodeParser,
+    node:
+        | ts.FunctionTypeNode
+        | ts.FunctionExpression
+        | ts.FunctionDeclaration
+        | ts.ArrowFunction
+        | ts.ConstructorTypeNode,
+    context: Context,
+): BaseType | undefined {
+    if (!node.type) {
+        return undefined;
+    }
+    // Type predicates (`value is T` / `asserts value is T` / `asserts value`)
+    // are compile-time-only constructs. At runtime, type guards return boolean
+    // and assertion functions return void.
+    if (ts.isTypePredicateNode(node.type)) {
+        return node.type.assertsModifier ? new VoidType() : new BooleanType();
+    }
+    return childNodeParser.createType(node.type, context);
 }
 
 export function getTypeName(

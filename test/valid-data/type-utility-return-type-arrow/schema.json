@@ -1,0 +1,9 @@
+{
+  "$ref": "#/definitions/MyReturnType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyReturnType": {
+      "type": "number"
+    }
+  }
+}
