@@ -64,10 +64,10 @@
     "MyPrimitiveType": {
       "anyOf": [
         {
-          "type": "string"
+          "not": {}
         },
         {
-          "not": {}
+          "type": "string"
         }
       ]
     },
