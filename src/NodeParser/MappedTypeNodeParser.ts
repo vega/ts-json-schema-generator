@@ -210,8 +210,7 @@ export class MappedTypeNodeParser implements SubNodeParser {
     protected isKeyOfConstraint(node: ts.MappedTypeNode): boolean {
         const c = node.typeParameter.constraint;
         return (
-            c?.kind === ts.SyntaxKind.TypeOperator &&
-            (c as ts.TypeOperatorNode).operator === ts.SyntaxKind.KeyOfKeyword
+            c?.kind === ts.SyntaxKind.TypeOperator && (c as ts.TypeOperatorNode).operator === ts.SyntaxKind.KeyOfKeyword
         );
     }
 
