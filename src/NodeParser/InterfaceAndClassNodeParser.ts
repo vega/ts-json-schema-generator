@@ -131,6 +131,15 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 if (memberType === undefined && (member as ts.PropertyDeclaration)?.initializer !== undefined) {
                     const type = this.typeChecker.getTypeAtLocation(member);
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
+
+                    // `typeToTypeNode` returns a node that is detached from the AST, so
+                    // `AnnotatedNodeParser` cannot walk up to the member to read its JSDoc.
+                    // Point the synthesized node at the original declaration so annotations
+                    // such as the property description are preserved. See #1531.
+                    if (memberType) {
+                        //@ts-expect-error - parent is readonly in the public typings
+                        memberType.parent = member;
+                    }
                 }
 
                 if (memberType !== undefined) {
