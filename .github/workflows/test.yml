@@ -66,7 +66,7 @@ jobs:
           NODE_OPTIONS: "--test-shard=${{ matrix.shard }}/4"
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
 
   # This job aggregates all test results to have a simpler branch protection check
   test-complete:
