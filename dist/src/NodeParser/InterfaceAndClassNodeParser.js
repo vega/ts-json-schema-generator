@@ -19,7 +19,9 @@ class InterfaceAndClassNodeParser {
         this.additionalProperties = additionalProperties;
     }
     supportsNode(node) {
-        return node.kind === typescript_1.default.SyntaxKind.InterfaceDeclaration || node.kind === typescript_1.default.SyntaxKind.ClassDeclaration;
+        return (node.kind === typescript_1.default.SyntaxKind.InterfaceDeclaration ||
+            node.kind === typescript_1.default.SyntaxKind.ClassDeclaration ||
+            node.kind === typescript_1.default.SyntaxKind.ClassExpression);
     }
     createType(node, context, reference) {
         if (node.typeParameters?.length) {
@@ -131,7 +133,16 @@ class InterfaceAndClassNodeParser {
         return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
     }
     getTypeId(node, context) {
-        const nodeType = typescript_1.default.isInterfaceDeclaration(node) ? "interface" : "class";
+        let nodeType;
+        if (typescript_1.default.isInterfaceDeclaration(node)) {
+            nodeType = "interface";
+        }
+        else if (typescript_1.default.isClassExpression(node)) {
+            nodeType = "class-expression";
+        }
+        else {
+            nodeType = "class";
+        }
         return `${nodeType}-${(0, nodeKey_js_1.getKey)(node, context)}`;
     }
     getPropertyName(propertyName) {

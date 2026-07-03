@@ -11,6 +11,8 @@ import { isNodeHidden } from "../Utils/isHidden.js";
 import { isPublic, isStatic } from "../Utils/modifiers.js";
 import { getKey } from "../Utils/nodeKey.js";
 
+type ClassLikeNode = ts.InterfaceDeclaration | ts.ClassDeclaration | ts.ClassExpression;
+
 export class InterfaceAndClassNodeParser implements SubNodeParser {
     public constructor(
         protected typeChecker: ts.TypeChecker,
@@ -18,15 +20,15 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         protected readonly additionalProperties: boolean,
     ) {}
 
-    public supportsNode(node: ts.InterfaceDeclaration | ts.ClassDeclaration): boolean {
-        return node.kind === ts.SyntaxKind.InterfaceDeclaration || node.kind === ts.SyntaxKind.ClassDeclaration;
+    public supportsNode(node: ts.Node): boolean {
+        return (
+            node.kind === ts.SyntaxKind.InterfaceDeclaration ||
+            node.kind === ts.SyntaxKind.ClassDeclaration ||
+            node.kind === ts.SyntaxKind.ClassExpression
+        );
     }
 
-    public createType(
-        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context,
-        reference?: ReferenceType,
-    ): BaseType {
+    public createType(node: ClassLikeNode, context: Context, reference?: ReferenceType): BaseType {
         if (node.typeParameters?.length) {
             node.typeParameters.forEach((typeParam) => {
                 const nameSymbol = this.typeChecker.getSymbolAtLocation(typeParam.name)!;
@@ -71,7 +73,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
      * @param node - The interface or class to check.
      * @return The array item type if node is an array, null otherwise.
      */
-    protected getArrayItemType(node: ts.InterfaceDeclaration | ts.ClassDeclaration): ts.TypeNode | null {
+    protected getArrayItemType(node: ClassLikeNode): ts.TypeNode | null {
         if (node.heritageClauses && node.heritageClauses.length === 1) {
             const clause = node.heritageClauses[0];
             if (clause.types.length === 1) {
@@ -88,7 +90,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return null;
     }
 
-    protected getBaseTypes(node: ts.InterfaceDeclaration | ts.ClassDeclaration, context: Context): BaseType[] {
+    protected getBaseTypes(node: ClassLikeNode, context: Context): BaseType[] {
         if (!node.heritageClauses) {
             return [];
         }
@@ -102,10 +104,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         );
     }
 
-    protected getProperties(
-        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context,
-    ): ObjectProperty[] | undefined {
+    protected getProperties(node: ClassLikeNode, context: Context): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
 
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
@@ -162,10 +161,7 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         return properties;
     }
 
-    protected getAdditionalProperties(
-        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context,
-    ): BaseType | boolean {
+    protected getAdditionalProperties(node: ClassLikeNode, context: Context): BaseType | boolean {
         const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
         if (!indexSignature) {
             return this.additionalProperties;
@@ -175,7 +171,14 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {
-        const nodeType = ts.isInterfaceDeclaration(node) ? "interface" : "class";
+        let nodeType: string;
+        if (ts.isInterfaceDeclaration(node)) {
+            nodeType = "interface";
+        } else if (ts.isClassExpression(node)) {
+            nodeType = "class-expression";
+        } else {
+            nodeType = "class";
+        }
         return `${nodeType}-${getKey(node, context)}`;
     }
 

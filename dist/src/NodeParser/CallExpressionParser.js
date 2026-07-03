@@ -20,6 +20,11 @@ class CallExpressionParser {
         return node.kind === typescript_1.default.SyntaxKind.CallExpression;
     }
     createType(node, context) {
+        const subContext = this.createSubContext(node, context);
+        const factoryReturnClass = this.getFactoryReturnClass(node);
+        if (factoryReturnClass) {
+            return this.childNodeParser.createType(factoryReturnClass, subContext);
+        }
         const type = this.typeChecker.getTypeAtLocation(node);
         // FIXME: remove special case
         if (Array.isArray(type?.typeArguments?.[0]?.types)) {
@@ -37,12 +42,59 @@ class CallExpressionParser {
         // function and back referencing its generic type based on parameter index is a better
         // approach.
         const decl = this.typeChecker.typeToTypeNode(type, node, typescript_1.default.NodeBuilderFlags.IgnoreErrors) ||
-            symbol.valueDeclaration ||
-            symbol.declarations?.[0];
+            symbol?.valueDeclaration ||
+            symbol?.declarations?.[0];
         if (!decl) {
             throw new Errors_js_1.UnknownNodeError(node);
         }
-        return this.childNodeParser.createType(decl, this.createSubContext(node, context));
+        return this.childNodeParser.createType(decl, subContext);
+    }
+    getFactoryReturnClass(node) {
+        const callee = node.expression;
+        if (!typescript_1.default.isIdentifier(callee)) {
+            return undefined;
+        }
+        const symbol = this.typeChecker.getSymbolAtLocation(callee);
+        const fn = symbol?.valueDeclaration;
+        if (!fn ||
+            (!typescript_1.default.isFunctionDeclaration(fn) && !typescript_1.default.isFunctionExpression(fn) && !typescript_1.default.isArrowFunction(fn)) ||
+            !fn.body) {
+            return undefined;
+        }
+        return this.findReturnedClass(fn.body);
+    }
+    findReturnedClass(body) {
+        if (typescript_1.default.isClassExpression(body) || typescript_1.default.isClassDeclaration(body)) {
+            return body;
+        }
+        if (!typescript_1.default.isBlock(body)) {
+            return undefined;
+        }
+        let result;
+        const visit = (child) => {
+            if (result) {
+                return;
+            }
+            if (typescript_1.default.isReturnStatement(child) && child.expression) {
+                result = this.resolveReturnedClassNode(child.expression);
+            }
+            typescript_1.default.forEachChild(child, visit);
+        };
+        visit(body);
+        return result;
+    }
+    resolveReturnedClassNode(expression) {
+        if (typescript_1.default.isClassExpression(expression)) {
+            return expression;
+        }
+        if (typescript_1.default.isIdentifier(expression)) {
+            const symbol = this.typeChecker.getSymbolAtLocation(expression);
+            const decl = symbol?.valueDeclaration;
+            if (decl && (typescript_1.default.isClassDeclaration(decl) || typescript_1.default.isClassExpression(decl))) {
+                return decl;
+            }
+        }
+        return undefined;
     }
     createSubContext(node, parentContext) {
         const subContext = new NodeParser_js_1.Context(node);

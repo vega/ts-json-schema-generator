@@ -5,7 +5,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { UnknownNodeError } from "../Error/Errors.js";
 
 /**
- * Resolves identifiers whose value is a compile-time constant
+ * Resolves identifiers whose value is a compile-time constant or a class-like declaration.
  */
 export class IdentifierNodeParser implements SubNodeParser {
     constructor(
@@ -23,7 +23,22 @@ export class IdentifierNodeParser implements SubNodeParser {
             throw new UnknownNodeError(node);
         }
 
-        const decl = symbol.valueDeclaration;
+        if (symbol.flags & ts.SymbolFlags.Alias) {
+            return this.createTypeFromDeclaration(
+                this.checker.getAliasedSymbol(symbol).valueDeclaration,
+                context,
+                node,
+            );
+        }
+
+        return this.createTypeFromDeclaration(symbol.valueDeclaration, context, node);
+    }
+
+    protected createTypeFromDeclaration(
+        decl: ts.Declaration | undefined,
+        context: Context,
+        node: ts.Identifier,
+    ): BaseType {
         if (
             decl &&
             ts.isVariableDeclaration(decl) &&
@@ -33,6 +48,44 @@ export class IdentifierNodeParser implements SubNodeParser {
             return this.childNodeParser.createType(decl.initializer, context);
         }
 
+        if (
+            decl &&
+            (ts.isClassDeclaration(decl) ||
+                ts.isInterfaceDeclaration(decl) ||
+                ts.isTypeAliasDeclaration(decl))
+        ) {
+            return this.childNodeParser.createType(decl, context);
+        }
+
+        if (decl && ts.isParameter(decl)) {
+            const parameterType = this.getConstructorParameterArgumentType(decl, context);
+            if (parameterType) {
+                return parameterType;
+            }
+        }
+
         throw new UnknownNodeError(node);
+    }
+
+    protected getConstructorParameterArgumentType(
+        parameter: ts.ParameterDeclaration,
+        context: Context,
+    ): BaseType | undefined {
+        const args = context.getArguments();
+        if (!args.length) {
+            return undefined;
+        }
+
+        const parent = parameter.parent;
+        if (!ts.isFunctionLike(parent)) {
+            return undefined;
+        }
+
+        const index = parent.parameters.indexOf(parameter);
+        if (index < 0 || index >= args.length) {
+            return undefined;
+        }
+
+        return args[index];
     }
 }

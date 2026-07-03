@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/DirectFactory",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "DirectFactory": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "type": "object"
+    }
+  }
+}

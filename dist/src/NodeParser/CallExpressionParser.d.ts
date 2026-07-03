@@ -9,5 +9,8 @@ export declare class CallExpressionParser implements SubNodeParser {
     constructor(typeChecker: ts.TypeChecker, childNodeParser: NodeParser);
     supportsNode(node: ts.CallExpression): boolean;
     createType(node: ts.CallExpression, context: Context): BaseType;
+    protected getFactoryReturnClass(node: ts.CallExpression): ts.ClassDeclaration | ts.ClassExpression | undefined;
+    protected findReturnedClass(body: ts.ConciseBody): ts.ClassDeclaration | ts.ClassExpression | undefined;
+    protected resolveReturnedClassNode(expression: ts.Expression): ts.ClassDeclaration | ts.ClassExpression | undefined;
     protected createSubContext(node: ts.CallExpression, parentContext: Context): Context;
 }

@@ -19,6 +19,12 @@ export class CallExpressionParser implements SubNodeParser {
         return node.kind === ts.SyntaxKind.CallExpression;
     }
     public createType(node: ts.CallExpression, context: Context): BaseType {
+        const subContext = this.createSubContext(node, context);
+        const factoryReturnClass = this.getFactoryReturnClass(node);
+        if (factoryReturnClass) {
+            return this.childNodeParser.createType(factoryReturnClass, subContext);
+        }
+
         const type = this.typeChecker.getTypeAtLocation(node);
 
         // FIXME: remove special case
@@ -41,14 +47,80 @@ export class CallExpressionParser implements SubNodeParser {
         // approach.
         const decl =
             this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.IgnoreErrors) ||
-            symbol.valueDeclaration ||
-            symbol.declarations?.[0];
+            symbol?.valueDeclaration ||
+            symbol?.declarations?.[0];
 
         if (!decl) {
             throw new UnknownNodeError(node);
         }
 
-        return this.childNodeParser.createType(decl, this.createSubContext(node, context));
+        return this.childNodeParser.createType(decl, subContext);
+    }
+
+    protected getFactoryReturnClass(
+        node: ts.CallExpression,
+    ): ts.ClassDeclaration | ts.ClassExpression | undefined {
+        const callee = node.expression;
+        if (!ts.isIdentifier(callee)) {
+            return undefined;
+        }
+
+        const symbol = this.typeChecker.getSymbolAtLocation(callee);
+        const fn = symbol?.valueDeclaration;
+        if (
+            !fn ||
+            (!ts.isFunctionDeclaration(fn) && !ts.isFunctionExpression(fn) && !ts.isArrowFunction(fn)) ||
+            !fn.body
+        ) {
+            return undefined;
+        }
+
+        return this.findReturnedClass(fn.body);
+    }
+
+    protected findReturnedClass(body: ts.ConciseBody): ts.ClassDeclaration | ts.ClassExpression | undefined {
+        if (ts.isClassExpression(body) || ts.isClassDeclaration(body)) {
+            return body;
+        }
+
+        if (!ts.isBlock(body)) {
+            return undefined;
+        }
+
+        let result: ts.ClassDeclaration | ts.ClassExpression | undefined;
+
+        const visit = (child: ts.Node): void => {
+            if (result) {
+                return;
+            }
+
+            if (ts.isReturnStatement(child) && child.expression) {
+                result = this.resolveReturnedClassNode(child.expression);
+            }
+
+            ts.forEachChild(child, visit);
+        };
+
+        visit(body);
+        return result;
+    }
+
+    protected resolveReturnedClassNode(
+        expression: ts.Expression,
+    ): ts.ClassDeclaration | ts.ClassExpression | undefined {
+        if (ts.isClassExpression(expression)) {
+            return expression;
+        }
+
+        if (ts.isIdentifier(expression)) {
+            const symbol = this.typeChecker.getSymbolAtLocation(expression);
+            const decl = symbol?.valueDeclaration;
+            if (decl && (ts.isClassDeclaration(decl) || ts.isClassExpression(decl))) {
+                return decl;
+            }
+        }
+
+        return undefined;
     }
 
     protected createSubContext(node: ts.CallExpression, parentContext: Context): Context {
