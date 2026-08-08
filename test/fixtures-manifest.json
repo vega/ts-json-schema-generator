@@ -1,0 +1,1616 @@
+[
+  {
+    "name": "annotation-comment",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "annotation-custom",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "customBooleanProperty",
+        "customNumberProperty",
+        "customStringProperty",
+        "customComplexProperty",
+        "customMultilineProperty",
+        "customUnquotedProperty"
+      ],
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-default",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "annotation-deprecated",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "deprecationMessage"
+      ],
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-deprecated",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "deprecationMessage"
+      ]
+    }
+  },
+  {
+    "name": "annotation-description-override",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "markdownDescription"
+      ]
+    }
+  },
+  {
+    "name": "annotation-empty",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "customEmptyAnnotation"
+      ],
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-empty",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "extraTags": [
+        "customEmptyAnnotation"
+      ]
+    }
+  },
+  {
+    "name": "annotation-example",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "annotation-id",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "schemaId": "Test"
+    }
+  },
+  {
+    "name": "annotation-nullable-definition",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "annotation-readOnly",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-ref",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "annotation-union-if-then",
+    "types": [
+      "Animal"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-union-if-then-enum",
+    "types": [
+      "AB"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "annotation-writeOnly",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "any-unknown",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "array-function-generics",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "array-literal-spread",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-max-items-optional",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-min-items-1",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-min-items-2",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-min-max-items",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-min-max-items-optional",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "array-rest-only",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "binary-expression",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-extra-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-generics",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-inheritance",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-jsdoc",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-jsdoc-default",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-multi",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-new-expression",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "class-recursion",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "class-single",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "const-spread",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "discriminator",
+    "types": [
+      "Animal"
+    ],
+    "config": {
+      "discriminatorType": "open-api",
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "discriminator-recursive",
+    "types": [
+      "*"
+    ],
+    "config": {
+      "discriminatorType": "open-api",
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "enums-compute",
+    "types": [
+      "Enum"
+    ]
+  },
+  {
+    "name": "enums-initialized",
+    "types": [
+      "Enum"
+    ]
+  },
+  {
+    "name": "enums-member",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "enums-mixed",
+    "types": [
+      "Enum"
+    ]
+  },
+  {
+    "name": "enums-number",
+    "types": [
+      "Enum"
+    ]
+  },
+  {
+    "name": "enums-string",
+    "types": [
+      "Enum"
+    ]
+  },
+  {
+    "name": "enums-template-literal",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "enums-union",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "export-star",
+    "types": [
+      "*"
+    ],
+    "mainTsOnly": true
+  },
+  {
+    "name": "export-star-prune-unreachable",
+    "types": [
+      "*"
+    ],
+    "mainTsOnly": true
+  },
+  {
+    "name": "exported-enums-union",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "function-function-syntax",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "function-generic",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "function-parameters-declaration",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "function-parameters-default-value",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "function-parameters-jsdoc",
+    "types": [
+      "myFunction"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "function-parameters-optional",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "function-parameters-required",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "function-parameters-variable-assignment",
+    "types": [
+      "myFunction"
+    ]
+  },
+  {
+    "name": "generic-anonymous",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-arrays",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-default",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-default-conditional",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-hell",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-indexed-access-constraint",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-multiargs",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-multiple",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-nested",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-prefixed-number",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-recursive",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-simple",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "generic-simple",
+    "types": [
+      "*"
+    ],
+    "config": {
+      "expose": "all"
+    }
+  },
+  {
+    "name": "generic-void",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "ignore-export",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "import-anonymous",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "import-dynamic",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "import-exposed",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "import-internal",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "import-simple",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-array",
+    "types": [
+      "TagArray"
+    ]
+  },
+  {
+    "name": "interface-computed-property-name",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-extended-extra-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-extra-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-multi",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-property-dash",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-recursion",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "interface-single",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "keyof-typeof-enum",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "keyof-typeof-x",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "literal-array-type",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "literal-index-type",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "literal-object-type",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "literal-object-type-with-computed-props",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "lowercase",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "multiple-roots1"
+  },
+  {
+    "name": "multiple-roots1",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "multiple-roots2",
+    "skip": "no index.test.ts"
+  },
+  {
+    "name": "namespace-deep-1",
+    "types": [
+      "RootNamespace.Def"
+    ]
+  },
+  {
+    "name": "namespace-deep-2",
+    "types": [
+      "RootNamespace.SubNamespace.HelperA"
+    ]
+  },
+  {
+    "name": "namespace-deep-3",
+    "types": [
+      "RootNamespace.SubNamespace.HelperB"
+    ]
+  },
+  {
+    "name": "never",
+    "types": [
+      "BasicNever"
+    ]
+  },
+  {
+    "name": "never-record",
+    "types": [
+      "Mapped"
+    ]
+  },
+  {
+    "name": "nullable-null",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "object-function-expression",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "object-literal-expression",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "object-required",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "promise-extensions",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "promise-generics",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "re-export-with-asterisk",
+    "types": [
+      "*"
+    ],
+    "mainTsOnly": true
+  },
+  {
+    "name": "shorthand-array",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "simple-object",
+    "types": [
+      "SimpleObject"
+    ]
+  },
+  {
+    "name": "string-literal-property-names",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "string-literals",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-literals-hack",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-literals-inline",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-literals-intrinsic",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-literals-null",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-template-expression-literals",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-template-expression-literals-import",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "string-template-literals",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "structure-anonymous",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "structure-extra-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "structure-extra-props-symbol",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "structure-private",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "structure-recursion",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "symbol",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "symbol-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-aliases-anonymous",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-aliases-local-namespace",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-aliases-mixed",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-aliases-object",
+    "types": [
+      "MyAlias"
+    ]
+  },
+  {
+    "name": "type-aliases-primitive",
+    "types": [
+      "MyString"
+    ]
+  },
+  {
+    "name": "type-aliases-primitive-with-id",
+    "types": [
+      "MyString"
+    ],
+    "config": {
+      "jsDoc": "none",
+      "schemaId": "testId"
+    }
+  },
+  {
+    "name": "type-aliases-recursive-anonymous",
+    "types": [
+      "MyAlias"
+    ]
+  },
+  {
+    "name": "type-aliases-recursive-export",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-aliases-recursive-generics-anonymous",
+    "types": [
+      "MyAlias"
+    ]
+  },
+  {
+    "name": "type-aliases-recursive-generics-export",
+    "types": [
+      "MyAlias"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-empty",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-only-rest",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-optional-items",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-rest",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-rest-additional-only",
+    "types": [
+      "MyTuple"
+    ]
+  },
+  {
+    "name": "type-aliases-tuple-rest-array-ref",
+    "types": [
+      "TupleWithRestRef"
+    ]
+  },
+  {
+    "name": "type-aliases-union",
+    "types": [
+      "MyUnion"
+    ]
+  },
+  {
+    "name": "type-aliases-union-namespace",
+    "types": [
+      "MyModel"
+    ]
+  },
+  {
+    "name": "type-conditional-enum",
+    "types": [
+      "IParameter"
+    ]
+  },
+  {
+    "name": "type-conditional-exclude",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-exclude-complex",
+    "types": [
+      "BaseAxisNoSignals"
+    ]
+  },
+  {
+    "name": "type-conditional-exclude-narrowing",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-infer",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-function",
+    "types": [
+      "FuncParams"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-nested",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-recursive",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-rest",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-tail-recursion",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-infer-tuple-xor",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-conditional-inheritance",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-intersection",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-jsdoc",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-narrowing",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-omit",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-simple",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-tuple-narrowing",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-conditional-union",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-date",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-date-annotation",
+    "types": [
+      "MyObject"
+    ],
+    "config": {
+      "jsDoc": "basic"
+    }
+  },
+  {
+    "name": "type-extend",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-extend-circular",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-extends-never",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-keyof",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-object-1",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-object-2",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-tuple-1",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-tuple-2",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-access-tuple-union",
+    "types": [
+      "FormLayout"
+    ]
+  },
+  {
+    "name": "type-indexed-access-type-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-circular",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-indexed-circular-access",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-intersection",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-additional-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-aliased-union",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-conflict",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-partial-conflict",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-intersection-partial-conflict-ref",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-intersection-partial-conflict-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-intersection-partial-conflict-union-alias",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-intersection-recursive-interface",
+    "types": [
+      "Intersection"
+    ]
+  },
+  {
+    "name": "type-intersection-union",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-union-enum",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-intersection-union-primitive",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-intersection-union-recursive-interface",
+    "types": [
+      "Intersection"
+    ]
+  },
+  {
+    "name": "type-intersection-with-arrays",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-keyof-object",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-keyof-object-function",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-keyof-tuple",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-mapped-additional-props",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-annotated-string",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-mapped-any",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-array",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-double-exclude",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-empty-exclude",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-enum",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-enum-null",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-enum-number",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-enum-optional",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-enum-required",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-exclude",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-exported-aliases",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-mapped-generic",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-index",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-index-as",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-index-as-template",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-index-as-with-conditional",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-indexed-access-annotation",
+    "types": [
+      "Test"
+    ]
+  },
+  {
+    "name": "type-mapped-inherit-optional",
+    "types": [
+      "*"
+    ],
+    "config": {
+      "additionalProperties": true
+    }
+  },
+  {
+    "name": "type-mapped-literal",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-native",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-native-single-literal",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-never",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-number",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-mapped-optional",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-pick-union-alias",
+    "types": [
+      "PickAliasedLiteralUnion"
+    ]
+  },
+  {
+    "name": "type-mapped-required",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-simple",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-symbol",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-template-literal",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-union-intersection",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-mapped-union-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-mapped-widened",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-maps",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-named-tuple-member",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-predicate",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-primitives",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-recursive-deep-exclude",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-regexp",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-satisfies",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-tuple-nested-rest",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-tuple-nested-rest-to-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-tuple-nested-rest-uniform",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-typeof",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-typeof-class",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-typeof-class-static-property",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-typeof-enum",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-typeof-function",
+    "types": [
+      "*"
+    ]
+  },
+  {
+    "name": "type-typeof-keys",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-typeof-object-property",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-typeof-value",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "type-union",
+    "types": [
+      "TypeUnion"
+    ]
+  },
+  {
+    "name": "type-union-tagged",
+    "types": [
+      "Shape"
+    ]
+  },
+  {
+    "name": "type-uri",
+    "types": [
+      "MyObject"
+    ]
+  },
+  {
+    "name": "type-utility-parameters",
+    "types": [
+      "MyParameters"
+    ]
+  },
+  {
+    "name": "type-utility-return-type",
+    "types": [
+      "MyReturnType"
+    ]
+  },
+  {
+    "name": "type-utility-return-type-arrow",
+    "types": [
+      "MyReturnType"
+    ]
+  },
+  {
+    "name": "undefined-alias",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "undefined-property",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "undefined-union",
+    "types": [
+      "MyType"
+    ]
+  },
+  {
+    "name": "unique-symbol",
+    "types": [
+      "MyObject"
+    ]
+  }
+]
