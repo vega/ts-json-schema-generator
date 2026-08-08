@@ -4,6 +4,7 @@
   ],
   "ExtraMethods": {
     "Checker": [
+      "getFullyQualifiedName",
       "getBaseConstraintOfType",
       "getDeclaredTypeOfSymbol",
       "getBaseTypes",
@@ -44,11 +45,6 @@
     "Signature": [
       "parameters",
       "declaration"
-    ],
-    "Checker": [
-      "numberType",
-      "booleanType",
-      "globalRegExpType"
     ],
     "InterfaceType": [
       "thisType"
