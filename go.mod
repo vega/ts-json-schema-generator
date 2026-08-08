@@ -36,6 +36,7 @@ require (
 	github.com/microsoft/typescript-go v0.0.0-20260807224926-24fabe95acba // indirect
 	github.com/microsoft/typescript-go/shim/ast v0.0.0-00010101000000-000000000000 // indirect
 	github.com/microsoft/typescript-go/shim/checker v0.0.0-00010101000000-000000000000 // indirect
+	github.com/microsoft/typescript-go/shim/jsnum v0.0.0-00010101000000-000000000000 // indirect
 	github.com/microsoft/typescript-go/shim/scanner v0.0.0-00010101000000-000000000000 // indirect
 	github.com/zeebo/xxh3 v1.1.0 // indirect
 	golang.org/x/mod v0.37.0 // indirect
