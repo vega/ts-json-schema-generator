@@ -369,7 +369,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -521,7 +521,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -847,7 +847,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -860,7 +860,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "anyOf": [
@@ -3235,7 +3235,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -3387,7 +3387,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -3698,7 +3698,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -3711,7 +3711,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "anyOf": [
@@ -4580,7 +4580,7 @@
           ]
         },
         "clip": {
-          "description": "Whether a composite mark be clipped to the enclosing group’s width and height.",
+          "description": "Whether a composite mark be clipped to the enclosing group\u2019s width and height.",
           "type": "boolean"
         },
         "color": {
@@ -4618,7 +4618,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "median": {
           "anyOf": [
@@ -4960,7 +4960,7 @@
         },
         "color": {
           "$ref": "#/definitions/ColorDef<Field>",
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition. By default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`, `\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark-config)'s `color` property.\n\n_Note:_ 1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels. The `fill` or `stroke` encodings have higher precedence than `color`, thus may override the `color` encoding if conflicting encodings are specified. 2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
+          "description": "Color of the marks \u2013 either fill or stroke color based on  the `filled` property of mark definition. By default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`, `\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark-config)'s `color` property.\n\n_Note:_ 1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels. The `fill` or `stroke` encodings have higher precedence than `color`, thus may override the `color` encoding if conflicting encodings are specified. 2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
         },
         "description": {
           "anyOf": [
@@ -5008,7 +5008,7 @@
         },
         "key": {
           "$ref": "#/definitions/FieldDefWithoutScale<Field>",
-          "description": "A data field to use as a unique key for data binding. When a visualization’s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
+          "description": "A data field to use as a unique key for data binding. When a visualization\u2019s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
         },
         "latitude": {
           "$ref": "#/definitions/LatLongDef<Field>",
@@ -5064,7 +5064,7 @@
         },
         "size": {
           "$ref": "#/definitions/NumericMarkPropDef<Field>",
-          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
+          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, \u2013 the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` \u2013 the bar and tick's size.\n- For `\"text\"` \u2013 the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
         },
         "stroke": {
           "$ref": "#/definitions/ColorDef<Field>",
@@ -5088,11 +5088,11 @@
         },
         "theta": {
           "$ref": "#/definitions/PolarDef<Field>",
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians."
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians."
         },
         "theta2": {
           "$ref": "#/definitions/Position2Def<Field>",
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "$ref": "#/definitions/TimeDef<Field>"
@@ -8093,7 +8093,7 @@
           "type": "array"
         },
         "bandwidth": {
-          "description": "The bandwidth (standard deviation) of the Gaussian kernel. If unspecified or set to zero, the bandwidth value is automatically estimated from the input data using Scott’s rule.",
+          "description": "The bandwidth (standard deviation) of the Gaussian kernel. If unspecified or set to zero, the bandwidth value is automatically estimated from the input data using Scott\u2019s rule.",
           "type": "number"
         },
         "counts": {
@@ -8480,7 +8480,7 @@
           ]
         },
         "clip": {
-          "description": "Whether a composite mark be clipped to the enclosing group’s width and height.",
+          "description": "Whether a composite mark be clipped to the enclosing group\u2019s width and height.",
           "type": "boolean"
         },
         "color": {
@@ -8577,7 +8577,7 @@
       "additionalProperties": false,
       "properties": {
         "clip": {
-          "description": "Whether a composite mark be clipped to the enclosing group’s width and height.",
+          "description": "Whether a composite mark be clipped to the enclosing group\u2019s width and height.",
           "type": "boolean"
         },
         "color": {
@@ -9076,7 +9076,7 @@
         },
         "color": {
           "$ref": "#/definitions/ColorDef<Field>",
-          "description": "Color of the marks – either fill or stroke color based on  the `filled` property of mark definition. By default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`, `\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark-config)'s `color` property.\n\n_Note:_ 1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels. The `fill` or `stroke` encodings have higher precedence than `color`, thus may override the `color` encoding if conflicting encodings are specified. 2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
+          "description": "Color of the marks \u2013 either fill or stroke color based on  the `filled` property of mark definition. By default, `color` represents fill color for `\"area\"`, `\"bar\"`, `\"tick\"`, `\"text\"`, `\"trail\"`, `\"circle\"`, and `\"square\"` / stroke color for `\"line\"` and `\"point\"`.\n\n__Default value:__ If undefined, the default color depends on [mark config](https://vega.github.io/vega-lite/docs/config.html#mark-config)'s `color` property.\n\n_Note:_ 1) For fine-grained control over both fill and stroke colors of the marks, please use the `fill` and `stroke` channels. The `fill` or `stroke` encodings have higher precedence than `color`, thus may override the `color` encoding if conflicting encodings are specified. 2) See the scale documentation for more information about customizing [color scheme](https://vega.github.io/vega-lite/docs/scale.html#scheme)."
         },
         "column": {
           "$ref": "#/definitions/RowColumnEncodingFieldDef<Field,ExprRef>",
@@ -9132,7 +9132,7 @@
         },
         "key": {
           "$ref": "#/definitions/FieldDefWithoutScale<Field>",
-          "description": "A data field to use as a unique key for data binding. When a visualization’s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
+          "description": "A data field to use as a unique key for data binding. When a visualization\u2019s data is updated, the key value will be used to match data elements to existing mark instances. Use a key channel to enable object constancy for transitions over dynamic data."
         },
         "latitude": {
           "$ref": "#/definitions/LatLongDef<Field>",
@@ -9192,7 +9192,7 @@
         },
         "size": {
           "$ref": "#/definitions/NumericMarkPropDef<Field>",
-          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, – the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` – the bar and tick's size.\n- For `\"text\"` – the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
+          "description": "Size of the mark.\n- For `\"point\"`, `\"square\"` and `\"circle\"`, \u2013 the symbol size, or pixel area of the mark.\n- For `\"bar\"` and `\"tick\"` \u2013 the bar and tick's size.\n- For `\"text\"` \u2013 the text's font size.\n- Size is unsupported for `\"line\"`, `\"area\"`, and `\"rect\"`. (Use `\"trail\"` instead of line with varying size)"
         },
         "stroke": {
           "$ref": "#/definitions/ColorDef<Field>",
@@ -9216,11 +9216,11 @@
         },
         "theta": {
           "$ref": "#/definitions/PolarDef<Field>",
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians."
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians."
         },
         "theta2": {
           "$ref": "#/definitions/Position2Def<Field>",
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "$ref": "#/definitions/TimeDef<Field>"
@@ -14879,7 +14879,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -15031,7 +15031,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -15346,7 +15346,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -15359,7 +15359,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "anyOf": [
@@ -16044,7 +16044,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -16196,7 +16196,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -16496,7 +16496,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -16509,7 +16509,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "anyOf": [
@@ -16749,7 +16749,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "Whether a mark be clipped to the enclosing group’s width and height."
+          "description": "Whether a mark be clipped to the enclosing group\u2019s width and height."
         },
         "color": {
           "anyOf": [
@@ -16906,7 +16906,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -17050,7 +17050,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -17412,7 +17412,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -17425,7 +17425,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "theta2Offset": {
           "anyOf": [
@@ -18327,7 +18327,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "Whether a mark be clipped to the enclosing group’s width and height."
+          "description": "Whether a mark be clipped to the enclosing group\u2019s width and height."
         },
         "color": {
           "anyOf": [
@@ -18456,7 +18456,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -18608,7 +18608,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -18944,7 +18944,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -18957,7 +18957,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "theta2Offset": {
           "anyOf": [
@@ -19975,7 +19975,7 @@
         "distance": {
           "anyOf": [
             {
-              "description": "For the `satellite` projection, the distance from the center of the sphere to the point of view, as a proportion of the sphere’s radius. The recommended maximum clip angle for a given `distance` is acos(1 / distance) converted to degrees. If tilt is also applied, then more conservative clipping may be necessary.\n\n__Default value:__ `2.0`",
+              "description": "For the `satellite` projection, the distance from the center of the sphere to the point of view, as a proportion of the sphere\u2019s radius. The recommended maximum clip angle for a given `distance` is acos(1 / distance) converted to degrees. If tilt is also applied, then more conservative clipping may be necessary.\n\n__Default value:__ `2.0`",
               "type": "number"
             },
             {
@@ -20012,7 +20012,7 @@
         "fraction": {
           "anyOf": [
             {
-              "description": "The fraction parameter for the `bottomley` projection.\n\n__Default value:__ `0.5`, corresponding to a sin(ψ) where ψ = π/6.",
+              "description": "The fraction parameter for the `bottomley` projection.\n\n__Default value:__ `0.5`, corresponding to a sin(\u03c8) where \u03c8 = \u03c0/6.",
               "type": "number"
             },
             {
@@ -20070,7 +20070,7 @@
         "precision": {
           "anyOf": [
             {
-              "description": "The threshold for the projection's [adaptive resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels. This value corresponds to the [Douglas–Peucker distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If precision is not specified, returns the projection's current resampling precision which defaults to `√0.5 ≅ 0.70710…`.",
+              "description": "The threshold for the projection's [adaptive resampling](http://bl.ocks.org/mbostock/3795544) to the specified value in pixels. This value corresponds to the [Douglas\u2013Peucker distance](http://en.wikipedia.org/wiki/Ramer%E2%80%93Douglas%E2%80%93Peucker_algorithm). If precision is not specified, returns the projection's current resampling precision which defaults to `\u221a0.5 \u2245 0.70710\u2026`.",
               "type": "number"
             },
             {
@@ -20149,7 +20149,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The projection’s scale (zoom) factor, overriding automatic fitting. The default scale is projection-specific. The scale factor corresponds linearly to the distance between projected points; however, scale factor values are not equivalent across projections."
+          "description": "The projection\u2019s scale (zoom) factor, overriding automatic fitting. The default scale is projection-specific. The scale factor corresponds linearly to the distance between projected points; however, scale factor values are not equivalent across projections."
         },
         "size": {
           "anyOf": [
@@ -20193,7 +20193,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The projection’s translation offset as a two-element array `[tx, ty]`."
+          "description": "The projection\u2019s translation offset as a two-element array `[tx, ty]`."
         },
         "type": {
           "anyOf": [
@@ -20742,7 +20742,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -20894,7 +20894,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -21205,7 +21205,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -21218,7 +21218,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "time": {
           "anyOf": [
@@ -21826,7 +21826,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "Extending the domain so that it starts and ends on nice round values. This method typically modifies the scale’s domain, and may only extend the bounds to the nearest round value. Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of _[0.201479…, 0.996679…]_, a nice domain might be _[0.2, 1.0]_.\n\nFor quantitative scales such as linear, `nice` can be either a boolean flag or a number. If `nice` is a number, it will represent a desired tick count. This allows greater control over the step size used to extend the bounds, guaranteeing that the returned ticks will exactly cover the domain.\n\nFor temporal fields with time and utc scales, the `nice` value can be a string indicating the desired time interval. Legal values are `\"millisecond\"`, `\"second\"`, `\"minute\"`, `\"hour\"`, `\"day\"`, `\"week\"`, `\"month\"`, and `\"year\"`. Alternatively, `time` and `utc` scales can accept an object-valued interval specifier of the form `{\"interval\": \"month\", \"step\": 3}`, which includes a desired number of interval steps. Here, the domain would snap to quarter (Jan, Apr, Jul, Oct) boundaries.\n\n__Default value:__ `true` for unbinned _quantitative_ fields without explicit domain bounds; `false` otherwise."
+          "description": "Extending the domain so that it starts and ends on nice round values. This method typically modifies the scale\u2019s domain, and may only extend the bounds to the nearest round value. Nicing is useful if the domain is computed from data and may be irregular. For example, for a domain of _[0.201479\u2026, 0.996679\u2026]_, a nice domain might be _[0.2, 1.0]_.\n\nFor quantitative scales such as linear, `nice` can be either a boolean flag or a number. If `nice` is a number, it will represent a desired tick count. This allows greater control over the step size used to extend the bounds, guaranteeing that the returned ticks will exactly cover the domain.\n\nFor temporal fields with time and utc scales, the `nice` value can be a string indicating the desired time interval. Legal values are `\"millisecond\"`, `\"second\"`, `\"minute\"`, `\"hour\"`, `\"day\"`, `\"week\"`, `\"month\"`, and `\"year\"`. Alternatively, `time` and `utc` scales can accept an object-valued interval specifier of the form `{\"interval\": \"month\", \"step\": 3}`, which includes a desired number of interval steps. Here, the domain would snap to quarter (Jan, Apr, Jul, Oct) boundaries.\n\n__Default value:__ `true` for unbinned _quantitative_ fields without explicit domain bounds; `false` otherwise."
         },
         "padding": {
           "anyOf": [
@@ -21837,7 +21837,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "For _[continuous](https://vega.github.io/vega-lite/docs/scale.html#continuous)_ scales, expands the scale domain to accommodate the specified number of pixels on each of the scale range. The scale range must represent pixels for this parameter to function as intended. Padding adjustment is performed prior to all other adjustments, including the effects of the `zero`, `nice`, `domainMin`, and `domainMax` properties.\n\nFor _[band](https://vega.github.io/vega-lite/docs/scale.html#band)_ scales, shortcut for setting `paddingInner` and `paddingOuter` to the same value.\n\nFor _[point](https://vega.github.io/vega-lite/docs/scale.html#point)_ scales, alias for `paddingOuter`.\n\n__Default value:__ For _continuous_ scales, derived from the [scale config](https://vega.github.io/vega-lite/docs/scale.html#config)'s `continuousPadding`. For _band and point_ scales, see `paddingInner` and `paddingOuter`. By default, Vega-Lite sets padding such that _width/height = number of unique values * step_.",
+          "description": "For _[continuous](https://vega.github.io/vega-lite/docs/scale.html#continuous)_ scales, expands the scale domain to accommodate the specified number of pixels on each of the scale range. The scale range must represent pixels for this parameter to function as intended. Padding adjustment is performed\u00a0prior\u00a0to all other adjustments, including the effects of the\u00a0`zero`,\u00a0`nice`,\u00a0`domainMin`, and\u00a0`domainMax`\u00a0properties.\n\nFor _[band](https://vega.github.io/vega-lite/docs/scale.html#band)_ scales, shortcut for setting `paddingInner` and `paddingOuter` to the same value.\n\nFor _[point](https://vega.github.io/vega-lite/docs/scale.html#point)_ scales, alias for `paddingOuter`.\n\n__Default value:__ For _continuous_ scales, derived from the [scale config](https://vega.github.io/vega-lite/docs/scale.html#config)'s `continuousPadding`. For _band and point_ scales, see `paddingInner` and `paddingOuter`. By default, Vega-Lite sets padding such that _width/height = number of unique values * step_.",
           "minimum": 0
         },
         "paddingInner": {
@@ -22870,7 +22870,7 @@
       "additionalProperties": false,
       "properties": {
         "value": {
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0,
           "type": "number"
@@ -27766,37 +27766,37 @@
     },
     "SingleDefUnitChannel": {
       "enum": [
-        "text",
-        "shape",
-        "x",
-        "y",
-        "xOffset",
-        "yOffset",
-        "x2",
-        "y2",
-        "longitude",
+        "angle",
+        "color",
+        "description",
+        "fill",
+        "fillOpacity",
+        "href",
+        "key",
         "latitude",
-        "longitude2",
         "latitude2",
-        "theta",
-        "theta2",
+        "longitude",
+        "longitude2",
+        "opacity",
         "radius",
         "radius2",
-        "time",
-        "color",
-        "fill",
+        "shape",
+        "size",
         "stroke",
-        "opacity",
-        "fillOpacity",
+        "strokeDash",
         "strokeOpacity",
         "strokeWidth",
-        "strokeDash",
-        "size",
-        "angle",
-        "key",
-        "href",
+        "text",
+        "theta",
+        "theta2",
+        "time",
         "url",
-        "description"
+        "x",
+        "x2",
+        "xOffset",
+        "y",
+        "y2",
+        "yOffset"
       ],
       "type": "string"
     },
@@ -28570,7 +28570,7 @@
         "ellipsis": {
           "anyOf": [
             {
-              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"…\"`",
+              "description": "The ellipsis string for text truncated in response to the limit parameter.\n\n__Default value:__ `\"\u2026\"`",
               "type": "string"
             },
             {
@@ -28722,7 +28722,7 @@
               "type": "null"
             }
           ],
-          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` — *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` — Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` — Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` — Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) — This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
+          "description": "Invalid data mode, which defines how the marks and corresponding scales should represent invalid values (`null` and `NaN` in continuous scales *without* defined output for invalid values).\n\n- `\"filter\"` \u2014 *Exclude* all invalid values from the visualization's *marks* and *scales*. For path marks (for line, area, trail), this option will create paths that connect valid points, as if the data rows with invalid values do not exist.\n\n- `\"break-paths-filter-domains\"` \u2014 Break path marks (for line, area, trail) at invalid values.  For non-path marks, this is equivalent to `\"filter\"`. All *scale* domains will *exclude* these filtered data points.\n\n- `\"break-paths-show-domains\"` \u2014 Break paths (for line, area, trail) at invalid values.  Hide invalid values for non-path marks. All *scale* domains will *include* these filtered data points (for both path and non-path marks).\n\n- `\"show\"` or `null` \u2014 Show all data points in the marks and scale domains. Each scale will use the output for invalid values defined in `config.scale.invalid` or, if unspecified, by default invalid values will produce the same visual values as zero (if the scale includes zero) or the minimum value (if the scale does not include zero).\n\n- `\"break-paths-show-path-domains\"` (default) \u2014 This is equivalent to `\"break-paths-show-domains\"` for path-based marks (line/area/trail) and `\"filter\"` for non-path marks.\n\n__Note__: If any channel's scale has an output for invalid values defined in `config.scale.invalid`, all values for the scales will be considered \"valid\" since they can produce a reasonable output for the scales. Thus, fields for such channels will not be filtered and will not cause path breaks."
         },
         "limit": {
           "anyOf": [
@@ -29033,7 +29033,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or “north”, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
+          "description": "- For arc marks, the arc length in radians if theta2 is not specified, otherwise the start arc angle. (A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise.)\n\n- For text marks, polar coordinate angle in radians.",
           "maximum": 360,
           "minimum": 0
         },
@@ -29046,7 +29046,7 @@
               "$ref": "#/definitions/ExprRef"
             }
           ],
-          "description": "The end angle of arc marks in radians. A value of 0 indicates up or “north”, increasing values proceed clockwise."
+          "description": "The end angle of arc marks in radians. A value of 0 indicates up or \u201cnorth\u201d, increasing values proceed clockwise."
         },
         "thickness": {
           "description": "Thickness of the tick mark.\n\n__Default value:__  `1`",

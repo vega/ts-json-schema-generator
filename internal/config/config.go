@@ -71,12 +71,12 @@ type Config struct {
 // Default returns the default configuration (DEFAULT_CONFIG in src/Config.ts).
 func Default() *Config {
 	return &Config{
-		Expose:               ExposeExport,
-		TopRef:               true,
-		JSDoc:                JSDocExtended,
-		SortProps:            true,
-		EncodeRefs:           true,
-		DiscriminatorType:    DiscriminatorJSONSchema,
-		Functions:            FunctionsComment,
+		Expose:            ExposeExport,
+		TopRef:            true,
+		JSDoc:             JSDocExtended,
+		SortProps:         true,
+		EncodeRefs:        true,
+		DiscriminatorType: DiscriminatorJSONSchema,
+		Functions:         FunctionsComment,
 	}
 }

@@ -19,28 +19,28 @@ import (
 //   - AdditionalProperties / AdditionalItems: bool or *Definition
 //   - Const / Default / Enum members: any JSON value
 type Definition struct {
-	ID        string `json:"$id,omitempty"`
-	Schema    string `json:"$schema,omitempty"`
-	Ref       string `json:"$ref,omitempty"`
-	Comment   string `json:"$comment,omitempty"`
-	Title     string `json:"title,omitempty"`
-	Type      any    `json:"type,omitempty"`
-	Format    string `json:"format,omitempty"`
-	Enum      []any  `json:"enum,omitempty"`
-	Const     *any   `json:"const,omitempty"`
-	Not       *Definition
-	AllOf     []*Definition
-	AnyOf     []*Definition
-	OneOf     []*Definition
-	If        *Definition
-	Then      *Definition
-	Else      *Definition
-	Items     any
-	MinItems  *int
-	MaxItems  *int
-	AdditionalItems any
-	Properties      *Properties
-	Required        []string
+	ID                   string `json:"$id,omitempty"`
+	Schema               string `json:"$schema,omitempty"`
+	Ref                  string `json:"$ref,omitempty"`
+	Comment              string `json:"$comment,omitempty"`
+	Title                string `json:"title,omitempty"`
+	Type                 any    `json:"type,omitempty"`
+	Format               string `json:"format,omitempty"`
+	Enum                 []any  `json:"enum,omitempty"`
+	Const                *any   `json:"const,omitempty"`
+	Not                  *Definition
+	AllOf                []*Definition
+	AnyOf                []*Definition
+	OneOf                []*Definition
+	If                   *Definition
+	Then                 *Definition
+	Else                 *Definition
+	Items                any
+	MinItems             *int
+	MaxItems             *int
+	AdditionalItems      any
+	Properties           *Properties
+	Required             []string
 	AdditionalProperties any
 	PatternProperties    map[string]*Definition
 	PropertyNames        *Definition

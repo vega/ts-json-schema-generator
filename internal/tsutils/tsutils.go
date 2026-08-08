@@ -3,8 +3,11 @@
 package tsutils
 
 import (
+	"strings"
+
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
+	"github.com/microsoft/typescript-go/shim/scanner"
 )
 
 // SymbolAtNode returns the symbol bound to a node (src/Utils/symbolAtNode.ts).
@@ -41,8 +44,37 @@ func HasJSDocTag(node *ast.Node, tagName string) bool {
 				return true
 			}
 		}
+		// The old TypeScript parser turned `@@tag` into an empty tag followed
+		// by a real `tag`; typescript-go drops the construct entirely and
+		// leaves it in the comment text (vega-lite relies on `@@hidden`).
+		for _, doc := range JSDocsOf(declaration) {
+			if jsdocCommentMentionsDoubleAtTag(doc, tagName) {
+				return true
+			}
+		}
 	}
 	return false
+}
+
+func jsdocCommentMentionsDoubleAtTag(doc *ast.Node, tagName string) bool {
+	text := scanner.GetTextOfJSDocComment(doc.AsJSDoc().Comment)
+	needle := "@@" + tagName
+	for idx := strings.Index(text, needle); idx >= 0; {
+		end := idx + len(needle)
+		if end == len(text) || !isJSDocTagNameChar(text[end]) {
+			return true
+		}
+		next := strings.Index(text[end:], needle)
+		if next < 0 {
+			return false
+		}
+		idx = end + next
+	}
+	return false
+}
+
+func isJSDocTagNameChar(c byte) bool {
+	return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9' || c == '_' || c == '-'
 }
 
 // IsNodeHidden reports whether the node carries a @hidden JSDoc tag

@@ -3,6 +3,7 @@ package parser
 import (
 	"slices"
 	"strings"
+	"unicode"
 
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
@@ -72,7 +73,7 @@ func (r *ExtendedAnnotationsReader) descriptionAnnotation(node *ast.Node) types.
 
 	annotations := types.Annotations{}
 
-	if comment := symbolDocumentationComment(symbol); comment != "" {
+	if comment := r.symbolDocumentationCommentWithInheritance(symbol, map[*ast.Symbol]bool{}); comment != "" {
 		markdownDescription := strings.TrimSpace(strings.ReplaceAll(comment, "\r", ""))
 		annotations["description"] = strings.TrimSpace(collapseSingleNewlines(markdownDescription))
 		if r.markdownDescription {
@@ -159,6 +160,60 @@ func symbolDocumentationComment(symbol *ast.Symbol) string {
 	return strings.Join(parts, "\n")
 }
 
+// symbolDocumentationCommentWithInheritance falls back to the documentation
+// of the same-named member on base types when a class or interface member
+// has no documentation of its own, mirroring the inherited-docs behavior of
+// TypeScript's services-layer getDocumentationComment.
+func (r *ExtendedAnnotationsReader) symbolDocumentationCommentWithInheritance(symbol *ast.Symbol, seen map[*ast.Symbol]bool) string {
+	if seen[symbol] {
+		return ""
+	}
+	seen[symbol] = true
+	if comment := symbolDocumentationComment(symbol); comment != "" {
+		return comment
+	}
+	for _, decl := range symbol.Declarations {
+		if decl.Kind != ast.KindPropertySignature && decl.Kind != ast.KindPropertyDeclaration &&
+			decl.Kind != ast.KindMethodSignature && decl.Kind != ast.KindMethodDeclaration {
+			continue
+		}
+		owner := decl.Parent
+		if owner == nil || (owner.Kind != ast.KindInterfaceDeclaration && owner.Kind != ast.KindClassDeclaration) {
+			continue
+		}
+		name := decl.Name()
+		if name == nil {
+			continue
+		}
+		var clauses *ast.NodeList
+		switch owner.Kind {
+		case ast.KindInterfaceDeclaration:
+			clauses = owner.AsInterfaceDeclaration().HeritageClauses
+		case ast.KindClassDeclaration:
+			clauses = owner.AsClassDeclaration().HeritageClauses
+		}
+		if clauses == nil {
+			continue
+		}
+		for _, heritage := range clauses.Nodes {
+			for _, baseExpr := range heritage.AsHeritageClause().Types.Nodes {
+				baseType := r.typeChecker.GetTypeAtLocation(baseExpr)
+				if baseType == nil {
+					continue
+				}
+				baseProp := r.typeChecker.GetPropertyOfType(baseType, name.Text())
+				if baseProp == nil {
+					continue
+				}
+				if comment := r.symbolDocumentationCommentWithInheritance(baseProp, seen); comment != "" {
+					return comment
+				}
+			}
+		}
+	}
+	return ""
+}
+
 // declarationDocumentationComment returns the summary text of the JSDoc
 // comment attached to a declaration, walking the JSDoc comment location
 // chain (e.g. from a variable declaration up to its statement).
@@ -178,9 +233,94 @@ func declarationDocumentationComment(node *ast.Node) string {
 			continue
 		}
 		lastJSDoc := jsdocs[len(jsdocs)-1].AsJSDoc()
-		return scanner.GetTextOfJSDocComment(lastJSDoc.Comment)
+		return renderJSDocComment(lastJSDoc.Comment)
 	}
 	return ""
+}
+
+// renderJSDocComment renders a JSDoc comment node list the way TypeScript's
+// getDocumentationComment display parts render, joined with single spaces
+// (the annotations reader upstream joins part texts with " "). Links are
+// expanded following services buildLinkParts: "{@link " prefix part, the
+// target/text content, and a "}" suffix part.
+func renderJSDocComment(comment *ast.NodeList) string {
+	if comment == nil {
+		return ""
+	}
+	var parts []string
+	for _, n := range comment.Nodes {
+		switch n.Kind {
+		case ast.KindJSDocText:
+			parts = append(parts, n.Text())
+		case ast.KindJSDocLink, ast.KindJSDocLinkCode, ast.KindJSDocLinkPlain:
+			parts = append(parts, linkParts(n)...)
+		}
+	}
+	return strings.TrimRightFunc(strings.Join(parts, " "), unicode.IsSpace)
+}
+
+func linkParts(link *ast.Node) []string {
+	prefix := "link"
+	switch link.Kind {
+	case ast.KindJSDocLinkCode:
+		prefix = "linkcode"
+	case ast.KindJSDocLinkPlain:
+		prefix = "linkplain"
+	}
+	parts := []string{"{@" + prefix + " "}
+	name := link.Name()
+	text := link.Text()
+	if name == nil {
+		if text != "" {
+			parts = append(parts, text)
+		}
+	} else {
+		suffix := findLinkNameEnd(text)
+		fullName := scanner.GetTextOfNode(name) + text[:suffix]
+		rest := skipSeparatorFromLinkText(text[suffix:])
+		separator := ""
+		if suffix == 0 || (suffix < len(text) && text[suffix] == '|' && !strings.HasSuffix(fullName, " ")) {
+			separator = " "
+		}
+		parts = append(parts, fullName+separator+rest)
+	}
+	parts = append(parts, "}")
+	return parts
+}
+
+func skipSeparatorFromLinkText(text string) string {
+	if strings.HasPrefix(text, "|") {
+		return strings.TrimLeft(text[1:], " ")
+	}
+	return text
+}
+
+func findLinkNameEnd(text string) int {
+	if strings.Index(text, "://") == 0 {
+		pos := 0
+		for pos < len(text) && text[pos] != '|' {
+			pos++
+		}
+		return pos
+	}
+	if strings.Index(text, "()") == 0 {
+		return 2
+	}
+	if strings.HasPrefix(text, "<") {
+		brackets := 0
+		for i := 0; i < len(text); i++ {
+			if text[i] == '<' {
+				brackets++
+			}
+			if text[i] == '>' {
+				brackets--
+			}
+			if brackets == 0 {
+				return i + 1
+			}
+		}
+	}
+	return 0
 }
 
 // parameterDocumentationComment returns the comment of the enclosing
@@ -210,7 +350,7 @@ func parameterDocumentationComment(param *ast.Node) string {
 					continue
 				}
 				if tagNameNode.Text() == name.Text() {
-					return scanner.GetTextOfJSDocComment(paramTag.Comment)
+					return renderJSDocComment(paramTag.Comment)
 				}
 			}
 		}
