@@ -46,7 +46,9 @@ func (f *FunctionTypeFormatter) GetChildren(t types.Type) []types.Type {
 
 // functionParts extracts the comment and named arguments from a function or
 // constructor type (ConstructorType subclasses FunctionType in TypeScript).
-func functionParts(t types.Type) (comment string, namedArgs *types.ObjectType) {
+// NamedArguments is typed types.Type to admit InferType (see the parser),
+// so it flows through as the general interface here.
+func functionParts(t types.Type) (comment string, namedArgs types.Type) {
 	switch ft := t.(type) {
 	case *types.FunctionType:
 		return ft.Comment, ft.NamedArguments
