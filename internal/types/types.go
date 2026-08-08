@@ -444,8 +444,13 @@ func (t *ReferenceType) SetType(typ Type) {
 // Function-ish types
 
 type FunctionType struct {
-	Comment        string
-	NamedArguments *ObjectType
+	Comment string
+	// NamedArguments is an *ObjectType, or an *InferType for signatures like
+	// `(...args: infer T)`. The TypeScript implementation types this field as
+	// ObjectType but stores the InferType as-is at runtime (see
+	// getNamedArguments in src/NodeParser/FunctionNodeParser.ts), and
+	// isAssignableTo relies on observing the InferType.
+	NamedArguments Type
 	ReturnType     Type
 }
 
@@ -453,8 +458,9 @@ func (t *FunctionType) ID() string   { return "function" }
 func (t *FunctionType) Name() string { return t.ID() }
 
 type ConstructorType struct {
-	Comment        string
-	NamedArguments *ObjectType
+	Comment string
+	// NamedArguments is an *ObjectType, or an *InferType (see FunctionType).
+	NamedArguments Type
 }
 
 func (t *ConstructorType) ID() string   { return "constructor" }
