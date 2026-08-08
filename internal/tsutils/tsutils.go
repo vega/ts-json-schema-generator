@@ -4,6 +4,7 @@ package tsutils
 
 import (
 	"github.com/microsoft/typescript-go/shim/ast"
+	"github.com/microsoft/typescript-go/shim/checker"
 )
 
 // SymbolAtNode returns the symbol bound to a node (src/Utils/symbolAtNode.ts).
@@ -73,4 +74,19 @@ func IsPublic(node *ast.Node) bool {
 // IsStatic reports whether the node has the static modifier.
 func IsStatic(node *ast.Node) bool {
 	return HasModifier(node, ast.KindStaticKeyword)
+}
+
+// GetSymbolAtLocation is a nil-safe wrapper around the checker's
+// GetSymbolAtLocation. The TypeScript implementation resolves the node
+// through getParseTreeNode first and returns undefined for synthesized
+// nodes; typescript-go's exported method dereferences node.Parent without
+// that guard, so replicate it here.
+func GetSymbolAtLocation(c *checker.Checker, node *ast.Node) *ast.Symbol {
+	if node == nil {
+		return nil
+	}
+	if !ast.IsSourceFile(node) && (node.Parent == nil || ast.GetSourceFileOfNode(node) == nil) {
+		return nil
+	}
+	return c.GetSymbolAtLocation(node)
 }

@@ -166,6 +166,12 @@ func declarationDocumentationComment(node *ast.Node) string {
 	if node.Flags&ast.NodeFlagsJSDoc != 0 {
 		return ""
 	}
+	// Parameter symbols document themselves through the enclosing
+	// signature's @param tags (TypeScript's symbol.getDocumentationComment
+	// does the same through getJSDocParameterTags).
+	if node.Kind == ast.KindParameter {
+		return parameterDocumentationComment(node)
+	}
 	for current := node; current != nil; current = ast.GetNextJSDocCommentLocation(current) {
 		jsdocs := current.JSDoc(nil)
 		if len(jsdocs) == 0 {
@@ -173,6 +179,41 @@ func declarationDocumentationComment(node *ast.Node) string {
 		}
 		lastJSDoc := jsdocs[len(jsdocs)-1].AsJSDoc()
 		return scanner.GetTextOfJSDocComment(lastJSDoc.Comment)
+	}
+	return ""
+}
+
+// parameterDocumentationComment returns the comment of the enclosing
+// signature's @param tag matching the parameter's name, if any.
+func parameterDocumentationComment(param *ast.Node) string {
+	name := param.Name()
+	if name == nil || name.Kind != ast.KindIdentifier {
+		return ""
+	}
+	host := param.Parent
+	if host == nil {
+		return ""
+	}
+	for current := host; current != nil; current = ast.GetNextJSDocCommentLocation(current) {
+		for _, doc := range current.JSDoc(nil) {
+			tags := doc.AsJSDoc().Tags
+			if tags == nil {
+				continue
+			}
+			for _, tag := range tags.Nodes {
+				if tag.Kind != ast.KindJSDocParameterTag {
+					continue
+				}
+				paramTag := tag.AsJSDocParameterOrPropertyTag()
+				tagNameNode := paramTag.Name()
+				if tagNameNode == nil || tagNameNode.Kind != ast.KindIdentifier {
+					continue
+				}
+				if tagNameNode.Text() == name.Text() {
+					return scanner.GetTextOfJSDocComment(paramTag.Comment)
+				}
+			}
+		}
 	}
 	return ""
 }

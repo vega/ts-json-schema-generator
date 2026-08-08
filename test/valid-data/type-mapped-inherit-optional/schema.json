@@ -32,17 +32,6 @@
         }
       },
       "type": "object"
-    },
-    "TestOmit": {
-      "properties": {
-        "layout": {
-          "type": "string"
-        },
-        "transition": {
-          "type": "string"
-        }
-      },
-      "type": "object"
     }
   }
 }

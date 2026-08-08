@@ -94,7 +94,7 @@ func (p *TypeLiteralNodeParser) getTypeId(node *ast.Node, context *Context) stri
 
 func (p *TypeLiteralNodeParser) getPropertyName(propertyName *ast.Node) string {
 	if propertyName.Kind == ast.KindComputedPropertyName {
-		if symbol := p.typeChecker.GetSymbolAtLocation(propertyName); symbol != nil {
+		if symbol := tsutils.GetSymbolAtLocation(p.typeChecker, propertyName); symbol != nil {
 			return symbol.Name
 		}
 	}

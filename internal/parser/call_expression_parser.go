@@ -58,7 +58,7 @@ func (p *CallExpressionParser) CreateType(node *ast.Node, context *Context, _ *t
 	// the original type. Using the type checker to synthesize the actual
 	// return type is a better approach than back-referencing generic types
 	// by parameter index.
-	decl := p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsIgnoreErrors, nil)
+	decl := p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsIgnoreErrors, synthesizedSymbols)
 	if decl == nil && symbol != nil {
 		decl = symbol.ValueDeclaration
 		if decl == nil && len(symbol.Declarations) > 0 {

@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -40,7 +41,7 @@ func (p *IndexedAccessTypeNodeParser) createIndexedType(objectType *ast.Node, ct
 		return nil
 	}
 
-	symbol := p.typeChecker.GetSymbolAtLocation(objectType.AsTypeReferenceNode().TypeName)
+	symbol := tsutils.GetSymbolAtLocation(p.typeChecker, objectType.AsTypeReferenceNode().TypeName)
 	if symbol == nil || len(symbol.Declarations) == 0 {
 		return nil
 	}

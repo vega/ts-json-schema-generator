@@ -81,9 +81,9 @@ func (c *Context) GetArgument(parameterName string) types.Type {
 	return nil
 }
 
-func (c *Context) Parameters() []string   { return c.parameters }
+func (c *Context) Parameters() []string    { return c.parameters }
 func (c *Context) Arguments() []types.Type { return c.arguments }
-func (c *Context) Reference() *ast.Node   { return c.reference }
+func (c *Context) Reference() *ast.Node    { return c.reference }
 
 // NodeParser creates a type from an AST node. reference is non-nil when the
 // node is being parsed to back a circular ReferenceType.

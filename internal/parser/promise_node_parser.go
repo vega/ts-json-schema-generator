@@ -57,7 +57,7 @@ func (p *PromiseNodeParser) SupportsNode(node *ast.Node) bool {
 func (p *PromiseNodeParser) CreateType(node *ast.Node, context *Context, _ *types.ReferenceType) types.Type {
 	t := p.typeChecker.GetTypeAtLocation(node)
 	awaitedType := checker.Checker_getAwaitedType(p.typeChecker, t)
-	awaitedNode := p.typeChecker.TypeToTypeNode(awaitedType, nil, nodeBuilderFlagsIgnoreErrors, nil)
+	awaitedNode := p.typeChecker.TypeToTypeNode(awaitedType, nil, nodeBuilderFlagsIgnoreErrors, synthesizedSymbols)
 
 	if awaitedNode == nil {
 		panic(fmt.Errorf("could not find awaited node %s", DescribeNode(node)))

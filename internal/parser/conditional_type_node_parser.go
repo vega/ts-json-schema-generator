@@ -6,6 +6,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -90,7 +91,7 @@ func (p *ConditionalTypeNodeParser) CreateType(node *ast.Node, context *Context,
 // if any, or "" if the node is not a reference to a type parameter.
 func (p *ConditionalTypeNodeParser) getTypeParameterName(node *ast.Node) string {
 	if ast.IsTypeReferenceNode(node) {
-		typeSymbol := p.typeChecker.GetSymbolAtLocation(node.AsTypeReferenceNode().TypeName)
+		typeSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, node.AsTypeReferenceNode().TypeName)
 		if typeSymbol != nil && typeSymbol.Flags&ast.SymbolFlagsTypeParameter != 0 {
 			return typeSymbol.Name
 		}

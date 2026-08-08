@@ -42,12 +42,19 @@ func (p *TypeReferenceNodeParser) SupportsNode(node *ast.Node) bool {
 func (p *TypeReferenceNodeParser) CreateType(node *ast.Node, ctx *Context, _ *types.ReferenceType) types.Type {
 	typeName := node.AsTypeReferenceNode().TypeName
 
-	typeSymbol := p.typeChecker.GetSymbolAtLocation(typeName)
+	typeSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, typeName)
 	if typeSymbol == nil {
 		// When the node doesn't have a valid source file, its position is -1,
 		// so we can't search for a symbol based on its location. In that case,
-		// the factory defines a symbol property on the node itself.
+		// the nodebuilder records the symbol in the synthesized-symbol
+		// registry (the TypeScript factory sets node.symbol instead).
 		typeSymbol = tsutils.SymbolAtNode(typeName)
+		if typeSymbol == nil {
+			typeSymbol = synthesizedSymbol(typeName)
+		}
+	}
+	if typeSymbol == nil {
+		panic(NewUnknownNodeError(node))
 	}
 
 	if typeSymbol.Flags&ast.SymbolFlagsAlias != 0 {

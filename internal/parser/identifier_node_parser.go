@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -24,7 +25,7 @@ func (p *IdentifierNodeParser) SupportsNode(node *ast.Node) bool {
 }
 
 func (p *IdentifierNodeParser) CreateType(node *ast.Node, ctx *Context, _ *types.ReferenceType) types.Type {
-	symbol := p.checker.GetSymbolAtLocation(node)
+	symbol := tsutils.GetSymbolAtLocation(p.checker, node)
 	if symbol == nil {
 		panic(NewUnknownNodeError(node))
 	}

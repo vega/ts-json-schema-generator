@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -23,7 +24,7 @@ func (p *ExpressionWithTypeArgumentsNodeParser) SupportsNode(node *ast.Node) boo
 }
 
 func (p *ExpressionWithTypeArgumentsNodeParser) CreateType(node *ast.Node, ctx *Context, _ *types.ReferenceType) types.Type {
-	typeSymbol := p.typeChecker.GetSymbolAtLocation(node.AsExpressionWithTypeArguments().Expression)
+	typeSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, node.AsExpressionWithTypeArguments().Expression)
 	if typeSymbol.Flags&ast.SymbolFlagsAlias != 0 {
 		aliasedSymbol := p.typeChecker.GetAliasedSymbol(typeSymbol)
 		return p.childNodeParser.CreateType(aliasedSymbol.Declarations[0], p.createSubContext(node, ctx), nil)

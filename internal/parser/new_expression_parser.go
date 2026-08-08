@@ -30,7 +30,7 @@ func (p *NewExpressionParser) CreateType(node *ast.Node, context *Context, _ *ty
 		symbol = t.Alias().Symbol()
 	}
 
-	decl := p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsIgnoreErrors, nil)
+	decl := p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsIgnoreErrors, synthesizedSymbols)
 	if decl == nil && symbol != nil {
 		decl = symbol.ValueDeclaration
 		if decl == nil && len(symbol.Declarations) > 0 {

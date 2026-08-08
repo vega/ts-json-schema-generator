@@ -32,7 +32,7 @@ func (p *InterfaceAndClassNodeParser) CreateType(node *ast.Node, context *Contex
 	// Note: this mutates the caller's context, zipping parameter names onto
 	// the type arguments already pushed by TypeReferenceNodeParser.
 	for _, typeParam := range node.TypeParameters() {
-		nameSymbol := p.typeChecker.GetSymbolAtLocation(typeParam.Name())
+		nameSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, typeParam.Name())
 		context.PushParameter(nameSymbol.Name)
 
 		if defaultType := typeParam.AsTypeParameterDeclaration().DefaultType; defaultType != nil {
@@ -79,7 +79,7 @@ func (p *InterfaceAndClassNodeParser) getArrayItemType(node *ast.Node) *ast.Node
 		return nil
 	}
 	expr := clauseTypes[0]
-	symbol := p.typeChecker.GetSymbolAtLocation(expr.AsExpressionWithTypeArguments().Expression)
+	symbol := tsutils.GetSymbolAtLocation(p.typeChecker, expr.AsExpressionWithTypeArguments().Expression)
 	if symbol == nil || (symbol.Name != "Array" && symbol.Name != "ReadonlyArray") {
 		return nil
 	}
@@ -130,7 +130,7 @@ func (p *InterfaceAndClassNodeParser) getProperties(node *ast.Node, context *Con
 		// Ignore members without an initializer; they have no useful type.
 		if memberType == nil && member.Initializer() != nil {
 			t := p.typeChecker.GetTypeAtLocation(member)
-			memberType = p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsNoTruncation, nil)
+			memberType = p.typeChecker.TypeToTypeNode(t, node, nodeBuilderFlagsNoTruncation, synthesizedSymbols)
 
 			// TypeToTypeNode returns a node that is detached from the AST, so
 			// AnnotatedNodeParser cannot walk up to the member to read its
@@ -189,7 +189,7 @@ func (p *InterfaceAndClassNodeParser) getTypeId(node *ast.Node, context *Context
 
 func (p *InterfaceAndClassNodeParser) getPropertyName(propertyName *ast.Node) string {
 	if propertyName.Kind == ast.KindComputedPropertyName {
-		if symbol := p.typeChecker.GetSymbolAtLocation(propertyName); symbol != nil {
+		if symbol := tsutils.GetSymbolAtLocation(p.typeChecker, propertyName); symbol != nil {
 			return symbol.Name
 		}
 	}

@@ -49,7 +49,7 @@ func (p *ObjectLiteralExpressionNodeParser) CreateType(node *ast.Node, context *
 			p.checker.GetTypeAtLocation(spread.AsSpreadAssignment().Expression),
 			nil,
 			nodeBuilderFlagsNoTruncation,
-			nil,
+			synthesizedSymbols,
 		)
 		if referenced == nil {
 			panic(fmt.Errorf("could not find reference for spread type %s", DescribeNode(spread)))
@@ -84,7 +84,7 @@ func (p *ObjectLiteralExpressionNodeParser) parseProperties(properties []*ast.No
 				p.checker.GetTypeAtLocation(prop),
 				nil,
 				nodeBuilderFlagsNoTruncation,
-				nil,
+				synthesizedSymbols,
 			)
 		case ast.IsPropertyAssignment(prop):
 			typeNode = prop.AsPropertyAssignment().Initializer

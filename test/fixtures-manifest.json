@@ -1355,7 +1355,7 @@
   {
     "name": "type-mapped-inherit-optional",
     "types": [
-      "*"
+      "Headmatter"
     ],
     "config": {
       "additionalProperties": true

@@ -4,6 +4,7 @@ package generator
 
 import (
 	"fmt"
+	"os"
 	"slices"
 	"strings"
 
@@ -50,15 +51,17 @@ func NewSchemaGenerator(
 // all exported root types). Panics from the parser/formatter pipeline are
 // recovered and returned as errors.
 func (g *SchemaGenerator) CreateSchema(fullNames []string) (result *schema.Definition, err error) {
-	defer func() {
-		if r := recover(); r != nil {
-			if e, ok := r.(error); ok {
-				err = e
-				return
+	if os.Getenv("TSJSG_DEBUG_PANIC") == "" {
+		defer func() {
+			if r := recover(); r != nil {
+				if e, ok := r.(error); ok {
+					err = e
+					return
+				}
+				err = fmt.Errorf("%v", r)
 			}
-			err = fmt.Errorf("%v", r)
-		}
-	}()
+		}()
+	}
 	rootNodes, err := g.rootNodes(fullNames)
 	if err != nil {
 		return nil, err

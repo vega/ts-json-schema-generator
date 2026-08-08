@@ -4,6 +4,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/ast"
 	"github.com/microsoft/typescript-go/shim/checker"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -29,7 +30,7 @@ func (p *ImportTypeNodeParser) CreateType(node *ast.Node, ctx *Context, _ *types
 	if symbolLocation == nil {
 		symbolLocation = node
 	}
-	typeSymbol := p.typeChecker.GetSymbolAtLocation(symbolLocation)
+	typeSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, symbolLocation)
 
 	// Handle transitive re-exports.
 	if typeSymbol.Flags&ast.SymbolFlagsAlias != 0 {

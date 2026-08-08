@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/typescript-go/shim/checker"
 	"github.com/microsoft/typescript-go/shim/scanner"
 
+	"github.com/vega/ts-json-schema-generator/internal/tsutils"
 	"github.com/vega/ts-json-schema-generator/internal/types"
 )
 
@@ -29,7 +30,7 @@ func (p *TypeAliasNodeParser) CreateType(node *ast.Node, ctx *Context, reference
 	// Push parameter names (and defaults) onto the incoming context, zipping
 	// them positionally with the arguments pushed by the caller.
 	for _, typeParam := range node.TypeParameters() {
-		nameSymbol := p.typeChecker.GetSymbolAtLocation(typeParam.Name())
+		nameSymbol := tsutils.GetSymbolAtLocation(p.typeChecker, typeParam.Name())
 		ctx.PushParameter(nameSymbol.Name)
 
 		if defaultType := typeParam.AsTypeParameterDeclaration().DefaultType; defaultType != nil {

@@ -54,6 +54,22 @@ func wiringPending() (pending bool) {
 	return false
 }
 
+// TestMain switches the working directory to the repo root so that node-key
+// hashes (which embed cwd-relative filenames, matching the TypeScript
+// implementation's use of process.cwd()) agree with the golden schemas that
+// upstream generated from the repo root.
+func TestMain(m *testing.M) {
+	_, file, _, ok := runtime.Caller(0)
+	if ok {
+		root := filepath.Dir(filepath.Dir(filepath.Dir(file)))
+		if err := os.Chdir(root); err != nil {
+			fmt.Fprintln(os.Stderr, "cannot chdir to repo root:", err)
+			os.Exit(1)
+		}
+	}
+	os.Exit(m.Run())
+}
+
 func TestValidData(t *testing.T) {
 	root := repoRoot(t)
 
