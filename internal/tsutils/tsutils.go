@@ -43,3 +43,34 @@ func HasJSDocTag(node *ast.Node, tagName string) bool {
 	}
 	return false
 }
+
+// IsNodeHidden reports whether the node carries a @hidden JSDoc tag
+// (src/Utils/isHidden.ts).
+func IsNodeHidden(node *ast.Node) bool {
+	return HasJSDocTag(node, "hidden")
+}
+
+// HasModifier reports whether the node has the given modifier kind
+// (src/Utils/modifiers.ts).
+func HasModifier(node *ast.Node, kind ast.Kind) bool {
+	modifiers := node.Modifiers()
+	if modifiers == nil {
+		return false
+	}
+	for _, m := range modifiers.Nodes {
+		if m.Kind == kind {
+			return true
+		}
+	}
+	return false
+}
+
+// IsPublic reports whether the node is public (no private/protected modifier).
+func IsPublic(node *ast.Node) bool {
+	return !(HasModifier(node, ast.KindPrivateKeyword) || HasModifier(node, ast.KindProtectedKeyword))
+}
+
+// IsStatic reports whether the node has the static modifier.
+func IsStatic(node *ast.Node) bool {
+	return HasModifier(node, ast.KindStaticKeyword)
+}
