@@ -308,8 +308,11 @@ func (g *SchemaGenerator) isExportType(node *ast.Node) bool {
 }
 
 func isGenericType(node *ast.Node) bool {
-	typeParams := node.TypeParameters()
-	return typeParams != nil && len(typeParams) > 0
+	switch node.Kind {
+	case ast.KindInterfaceDeclaration, ast.KindClassDeclaration, ast.KindTypeAliasDeclaration:
+		return len(node.TypeParameters()) > 0
+	}
+	return false
 }
 
 func (g *SchemaGenerator) fullName(node *ast.Node) string {
