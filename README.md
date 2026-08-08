@@ -12,6 +12,30 @@ Inspired by [`YousefED/typescript-json-schema`](https://github.com/YousefED/type
 - processing AST and formatting JSON schema have been split into two independent steps
 - not exported types, interfaces, enums are not exposed in the `definitions` section in the JSON schema
 
+## TypeScript 7 port (this branch)
+
+This branch ports the generator to Go on top of [typescript-go](https://github.com/microsoft/typescript-go), the native compiler that will ship as TypeScript 7. The CLI no longer requires Node.js and runs the full test corpus (251 golden-schema fixtures plus the complete vega-lite schema) in seconds.
+
+Build and test:
+
+```bash
+git submodule update --init   # fetches the pinned typescript-go compiler
+go build -o ts-json-schema-generator ./cmd/ts-json-schema-generator
+go test ./...
+```
+
+Usage mirrors the Node CLI:
+
+```bash
+./ts-json-schema-generator --path 'my/project/**/*.ts' --type 'My.Type.Name'
+```
+
+Notes on the port:
+
+- typescript-go keeps its compiler API internal; this repo consumes it through generated shim modules under `shim/` (see `tools/gen_shims`), the same mechanism used by typescript-eslint's tsgolint.
+- The original TypeScript sources in `src/` are retained as the reference implementation. The Go code mirrors them: `internal/parser` ↔ `src/NodeParser`, `internal/formatter` ↔ `src/TypeFormatter`, `internal/generator` ↔ `src/SchemaGenerator.ts`, `internal/factory` ↔ `factory/`.
+- Output is byte-for-byte JSON-equivalent to the Node implementation on the fixture suite, with two knowingly equivalent differences: the native checker orders `keyof`-derived literal unions differently (same value sets), and JSDoc `{@link}` rendering matches the services-layer display parts.
+
 ## Contributors
 
 This project is made possible by a [community of contributors](https://github.com/vega/ts-json-schema-generator/graphs/contributors). We welcome contributions of any kind (issues, code, documentation, examples, tests,...). Please read our [code of conduct](https://vega.github.io/vega/about/code-of-conduct).
