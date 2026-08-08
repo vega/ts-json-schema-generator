@@ -20,6 +20,7 @@ replace (
 )
 
 require (
+	github.com/bmatcuk/doublestar/v4 v4.10.0
 	github.com/microsoft/typescript-go/shim/ast v0.0.0-00010101000000-000000000000
 	github.com/microsoft/typescript-go/shim/bundled v0.0.0
 	github.com/microsoft/typescript-go/shim/checker v0.0.0-00010101000000-000000000000
@@ -35,7 +36,6 @@ require (
 )
 
 require (
-	github.com/bmatcuk/doublestar/v4 v4.10.0 // indirect
 	github.com/go-json-experiment/json v0.0.0-20260623181947-01eb4420fa68 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect
 	github.com/microsoft/typescript-go v0.0.0-20260807224926-24fabe95acba // indirect
