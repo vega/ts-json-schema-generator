@@ -1,0 +1,58 @@
+{
+  "$ref": "#/definitions/MyType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Immutable<Bar>": {
+      "additionalProperties": false,
+      "properties": {
+        "boost": {
+          "$ref": "#/definitions/Immutable%3Cboolean%3E"
+        },
+        "geo": {
+          "$ref": "#/definitions/Immutable%3C%5Bnumber%2Cnumber%5D%3E"
+        },
+        "id": {
+          "$ref": "#/definitions/Immutable%3Cstring%3E"
+        },
+        "size": {
+          "$ref": "#/definitions/Immutable%3Cnumber%3E"
+        }
+      },
+      "required": [
+        "id",
+        "size",
+        "boost",
+        "geo"
+      ],
+      "type": "object"
+    },
+    "Immutable<[number,number]>": {
+      "additionalProperties": false,
+      "properties": {
+        "0": {
+          "$ref": "#/definitions/Immutable%3Cnumber%3E"
+        },
+        "1": {
+          "$ref": "#/definitions/Immutable%3Cnumber%3E"
+        }
+      },
+      "required": [
+        "0",
+        "1"
+      ],
+      "type": "object"
+    },
+    "Immutable<boolean>": {
+      "type": "boolean"
+    },
+    "Immutable<number>": {
+      "type": "number"
+    },
+    "Immutable<string>": {
+      "type": "string"
+    },
+    "MyType": {
+      "$ref": "#/definitions/Immutable%3CBar%3E"
+    }
+  }
+}
