@@ -1,0 +1,44 @@
+{
+    "$ref": "#/definitions/MyUnion",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "MyUnion": {
+            "anyOf": [
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "kind": {
+                            "const": "kind_a",
+                            "type": "string"
+                        },
+                        "value": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "value"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "additionalProperties": false,
+                    "properties": {
+                        "kind": {
+                            "const": "kind_b",
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "kind",
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            ]
+        }
+    }
+}
