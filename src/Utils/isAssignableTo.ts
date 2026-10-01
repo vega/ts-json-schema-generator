@@ -245,6 +245,17 @@ export function isAssignableTo(
         } else if (source instanceof ObjectType) {
             const sourceMembers = getObjectProperties(source);
 
+            // If the target has methods not represented as properties, source must also
+            // have them as properties or methods. This prevents false positives like
+            // {size: number} being considered assignable to Map<K,V>.
+            const targetMethods = target.getMethodNames();
+            if (targetMethods.length > 0) {
+                const sourceNames = new Set([...sourceMembers.map((m) => m.getName()), ...source.getMethodNames()]);
+                if (targetMethods.some((name) => !sourceNames.has(name))) {
+                    return false;
+                }
+            }
+
             // Check if target has properties in common with source
             const inCommon = targetMembers.some((targetMember) =>
                 sourceMembers.some((sourceMember) => targetMember.getName() === sourceMember.getName()),
