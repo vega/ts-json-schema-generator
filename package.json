@@ -79,7 +79,7 @@
     "auto": "^11.3.6",
     "c8": "^11.0.0",
     "cross-env": "^10.1.0",
-    "eslint": "10.1.0",
+    "eslint": "10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "globals": "^17.4.0",
