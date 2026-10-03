@@ -88,7 +88,8 @@
     "tsx": "^4.21.0",
     "typescript-eslint": "^8.57.2",
     "vega": "^6.2.0",
-    "vega-lite": "^6.4.2"
+    "vega-lite": "^6.4.2",
+    "zod": "^4.4.3"
   },
   "packageManager": "npm@11.12.1",
   "publishConfig": {
