@@ -54,12 +54,16 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: AnnotatedType): Definition {
         const annotations = type.getAnnotations();
+        // Copy annotations to avoid mutating the original object, which may be shared
+        // with other AnnotatedType instances (e.g., via preserveAnnotation).
+        let restAnnotations = annotations;
 
         if ("discriminator" in annotations) {
             const deref = derefType(type.getType());
             if (deref instanceof UnionType) {
                 deref.setDiscriminator(annotations.discriminator as string);
-                delete annotations.discriminator;
+                const { discriminator: _, ...rest } = annotations;
+                restAnnotations = rest;
             } else {
                 throw new JsonTypeError(
                     `Cannot assign discriminator tag to type: ${deref.getName()}. This tag can only be assigned to union types.`,
@@ -70,7 +74,7 @@ export class AnnotatedTypeFormatter implements SubTypeFormatter {
 
         const def: Definition = {
             ...this.childTypeFormatter.getDefinition(type.getType()),
-            ...type.getAnnotations(),
+            ...restAnnotations,
         };
 
         if ("$ref" in def && "type" in def) {

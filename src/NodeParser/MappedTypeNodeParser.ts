@@ -34,23 +34,22 @@ export class MappedTypeNodeParser implements SubNodeParser {
     }
 
     public createType(node: ts.MappedTypeNode, context: Context): BaseType {
-        const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
-        const keyListType = derefType(constraintType);
-        const id = `indexed-type-${getKey(node, context)}`;
-
-        if (keyListType instanceof UnionType) {
-            // Key type resolves to a set of known properties
-            return new ObjectType(
-                id,
-                [],
-                this.getProperties(node, keyListType, context),
-                this.getAdditionalProperties(node, keyListType, context),
-            );
+        // Check if the constraint is `keyof T` where T resolves to a union type.
+        // In TypeScript, mapped types distribute over unions, so `{ [P in keyof (A | B)]: ... }`
+        // is equivalent to `{ [P in keyof A]: ... } | { [P in keyof B]: ... }`.
+        const distributedType = this.tryDistributeUnion(node, context);
+        if (distributedType) {
+            return distributedType;
         }
 
-        if (keyListType instanceof LiteralType) {
-            // Key type resolves to single known property
-            return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
+        const constraintType = this.childNodeParser.createType(node.typeParameter.constraint!, context);
+        const keyListType = derefType(constraintType);
+
+        const id = `indexed-type-${getKey(node, context)}`;
+
+        const objectType = this.createObjectFromKeyList(node, keyListType, id, context);
+        if (objectType) {
+            return objectType;
         }
 
         const maybeUnionType = this.childNodeParser.createType(
@@ -121,6 +120,31 @@ export class MappedTypeNodeParser implements SubNodeParser {
             return true; // -? removes optional → output property is always required
         }
         return false;
+    }
+
+    // Attempts to create an ObjectType from a resolved key list type.
+    // Handles UnionType (set of known property keys) and LiteralType (single known property key).
+    // Returns undefined if the key list type is not one of these.
+    protected createObjectFromKeyList(
+        node: ts.MappedTypeNode,
+        keyListType: BaseType,
+        id: string,
+        context: Context,
+    ): ObjectType | undefined {
+        if (keyListType instanceof UnionType) {
+            return new ObjectType(
+                id,
+                [],
+                this.getProperties(node, keyListType, context),
+                this.getAdditionalProperties(node, keyListType, context),
+            );
+        }
+
+        if (keyListType instanceof LiteralType) {
+            return new ObjectType(id, [], this.getProperties(node, new UnionType([keyListType]), context), false);
+        }
+
+        return undefined;
     }
 
     protected mapKey(node: ts.MappedTypeNode, rawKey: LiteralType, context: Context): BaseType {
@@ -211,5 +235,76 @@ export class MappedTypeNodeParser implements SubNodeParser {
         subContext.pushArgument(key);
 
         return subContext;
+    }
+
+    // Checks if the mapped type's constraint is `keyof T` where `T` is a type parameter
+    // that resolves to a union type in the current context.
+    // If so, distributes the mapped type over each union member (like TypeScript does),
+    // returning a UnionType of the individually mapped types.
+    //
+    // TypeScript distributes mapped types over union type parameters:
+    // `{ [P in keyof T]: X }` where `T = A | B` becomes `{ [P in keyof A]: X } | { [P in keyof B]: X }`
+    protected tryDistributeUnion(node: ts.MappedTypeNode, context: Context): BaseType | undefined {
+        const { constraint } = node.typeParameter;
+        if (!constraint) {
+            return undefined;
+        }
+
+        // Check if constraint is `keyof X`
+        if (!ts.isTypeOperatorNode(constraint) || constraint.operator !== ts.SyntaxKind.KeyOfKeyword) {
+            return undefined;
+        }
+
+        // Resolve the operand type (X in `keyof X`)
+        const operandType = this.childNodeParser.createType(constraint.type, context);
+        const derefedOperand = derefType(operandType);
+
+        if (!(derefedOperand instanceof UnionType)) {
+            return undefined;
+        }
+
+        const unionMembers = derefedOperand.getTypes();
+
+        // Only distribute if the union contains object-like types (not a union of literals/primitives)
+        const hasObjectTypes = unionMembers.some((member) => {
+            const derefed = derefType(member);
+            return derefed instanceof ObjectType;
+        });
+
+        if (!hasObjectTypes) {
+            return undefined;
+        }
+
+        // Distribute the mapping for each union type individually
+        const mappedTypes = unionMembers.map((member) => {
+            // Create a new context where the operand type parameter is bound to this union member
+            const subContext = new Context(node);
+
+            for (const parentParameter of context.getParameters()) {
+                const arg = context.getArgument(parentParameter);
+                // If this argument is the union we're distributing over, replace it with the member
+                if (arg === operandType || derefType(arg) === derefedOperand) {
+                    subContext.pushParameter(parentParameter);
+                    subContext.pushArgument(member);
+                } else {
+                    subContext.pushParameter(parentParameter);
+                    subContext.pushArgument(arg);
+                }
+            }
+
+            // Now resolve the constraint (keyof member) and create the mapped type for this member
+            const memberConstraintType = this.childNodeParser.createType(constraint, subContext);
+            const memberKeyListType = derefType(memberConstraintType);
+            const memberId = `indexed-type-${getKey(node, subContext)}`;
+
+            return this.createObjectFromKeyList(node, memberKeyListType, memberId, subContext)
+                ?? this.createType(node, subContext);
+        });
+
+        const result = new UnionType(mappedTypes).normalize();
+
+        // Preserve annotations (e.g., @discriminator) from the original operand type
+        // onto the resulting union, since the distribution creates a brand new UnionType.
+        return preserveAnnotation(operandType, result);
     }
 }
