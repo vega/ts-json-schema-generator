@@ -6,7 +6,7 @@ import type { TypeFormatter } from "../TypeFormatter.js";
 import { uniqueArray } from "./uniqueArray.js";
 import { deepMerge } from "./deepMerge.js";
 import { derefType } from "./derefType.js";
-import { readSchemaSource } from "./schemaSource.js";
+import { copySchemaSource, readSchemaSource } from "./schemaSource.js";
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
@@ -130,8 +130,8 @@ function mergePatternProperties(
     formatter: TypeFormatter,
 ): { [pattern: string]: JSONSchema7Definition } {
     const merged: { [pattern: string]: JSONSchema7Definition } = {
-        ...structuredClone(incoming),
-        ...structuredClone(current),
+        ...clonePatternProperties(incoming),
+        ...clonePatternProperties(current),
     };
 
     for (const pattern of Object.keys(incoming)) {
@@ -142,6 +142,24 @@ function mergePatternProperties(
     }
 
     return merged;
+}
+
+/**
+ * `structuredClone` drops the WeakMap entry that ties a `$ref` back to its type.
+ * An intermediate interface stores that clone, so the next heritage merge must get the source back.
+ */
+function clonePatternProperties(patterns: { [pattern: string]: JSONSchema7Definition }): {
+    [pattern: string]: JSONSchema7Definition;
+} {
+    const cloned = structuredClone(patterns);
+    for (const pattern of Object.keys(patterns)) {
+        const original = patterns[pattern];
+        const copy = cloned[pattern];
+        if (typeof original === "object" && typeof copy === "object") {
+            copySchemaSource(original, copy);
+        }
+    }
+    return cloned;
 }
 
 function intersectSchemas(
