@@ -6,13 +6,18 @@ import type { TypeFormatter } from "../TypeFormatter.js";
 import { uniqueArray } from "./uniqueArray.js";
 import { deepMerge } from "./deepMerge.js";
 import { derefType } from "./derefType.js";
+import { readSchemaSource } from "./schemaSource.js";
 
 // TODO: Can we do this at parse time? See heritage clause in interfaces.
 // TODO: We really only need this if the children use additionalProperties: false.
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType): Definition => {
-        return mergeObjectDefinitions(definition, childTypeFormatter.getDefinition(derefType(baseType)));
+        return mergeObjectDefinitions(
+            definition,
+            childTypeFormatter.getDefinition(derefType(baseType)),
+            childTypeFormatter,
+        );
     };
 }
 
@@ -20,11 +25,15 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
  * Merge `other` into `definition` the same way interface heritage and intersections merge objects.
  * Mutates and returns `definition`.
  */
-function mergeObjectDefinitions(definition: Definition, other: Definition): Definition {
+function mergeObjectDefinitions(definition: Definition, other: Definition, formatter: TypeFormatter): Definition {
     definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 
     if (other.patternProperties || definition.patternProperties) {
-        const merged = mergePatternProperties(other.patternProperties || {}, definition.patternProperties || {});
+        const merged = mergePatternProperties(
+            other.patternProperties || {},
+            definition.patternProperties || {},
+            formatter,
+        );
         if (Object.keys(merged).length > 0) {
             definition.patternProperties = merged;
         } else {
@@ -118,21 +127,28 @@ function mergeObjectDefinitions(definition: Definition, other: Definition): Defi
 function mergePatternProperties(
     incoming: { [pattern: string]: JSONSchema7Definition },
     current: { [pattern: string]: JSONSchema7Definition },
+    formatter: TypeFormatter,
 ): { [pattern: string]: JSONSchema7Definition } {
-    const incomingPatterns = structuredClone(incoming);
-    const currentPatterns = structuredClone(current);
-    const merged: { [pattern: string]: JSONSchema7Definition } = { ...incomingPatterns, ...currentPatterns };
+    const merged: { [pattern: string]: JSONSchema7Definition } = {
+        ...structuredClone(incoming),
+        ...structuredClone(current),
+    };
 
-    for (const pattern of Object.keys(incomingPatterns)) {
-        if (Object.prototype.hasOwnProperty.call(currentPatterns, pattern)) {
-            merged[pattern] = intersectSchemas(currentPatterns[pattern], incomingPatterns[pattern]);
+    for (const pattern of Object.keys(incoming)) {
+        if (Object.prototype.hasOwnProperty.call(current, pattern)) {
+            // Intersect the original schemas so a `$ref` can still be traced back to its type.
+            merged[pattern] = intersectSchemas(current[pattern], incoming[pattern], formatter);
         }
     }
 
     return merged;
 }
 
-function intersectSchemas(left: JSONSchema7Definition, right: JSONSchema7Definition): JSONSchema7Definition {
+function intersectSchemas(
+    left: JSONSchema7Definition,
+    right: JSONSchema7Definition,
+    formatter: TypeFormatter,
+): JSONSchema7Definition {
     if (left === false || right === false) {
         return false;
     }
@@ -144,12 +160,35 @@ function intersectSchemas(left: JSONSchema7Definition, right: JSONSchema7Definit
     }
 
     // allOf of two closed objects rejects a property that exists on only one side.
-    // Intersect object schemas with the same merge used for heritage and intersections.
-    if (isObjectSchema(left) && isObjectSchema(right)) {
-        return mergeObjectDefinitions(structuredClone(left), right);
+    // Resolve `$ref`s to those objects, then merge them the same way as heritage.
+    const leftObject = resolveObjectSchema(left, formatter);
+    const rightObject = resolveObjectSchema(right, formatter);
+    if (leftObject && rightObject) {
+        return mergeObjectDefinitions(structuredClone(leftObject), structuredClone(rightObject), formatter);
     }
 
     return { allOf: [left, right] };
+}
+
+const resolvingSchemas = new WeakSet<object>();
+
+function resolveObjectSchema(schema: JSONSchema7Definition, formatter: TypeFormatter): Definition | undefined {
+    if (isObjectSchema(schema)) {
+        return schema;
+    }
+
+    const source = readSchemaSource(schema);
+    if (!source || typeof schema !== "object" || resolvingSchemas.has(schema)) {
+        return undefined;
+    }
+
+    resolvingSchemas.add(schema);
+    try {
+        const resolved = formatter.getDefinition(derefType(source));
+        return isObjectSchema(resolved) ? resolved : undefined;
+    } finally {
+        resolvingSchemas.delete(schema);
+    }
 }
 
 function isObjectSchema(schema: JSONSchema7Definition): schema is Definition {

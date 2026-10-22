@@ -1,6 +1,7 @@
 import type { Definition } from "./Schema/Definition.js";
 import type { SubTypeFormatter } from "./SubTypeFormatter.js";
 import type { BaseType } from "./Type/BaseType.js";
+import { copySchemaSource } from "./Utils/schemaSource.js";
 import { uniqueArray } from "./Utils/uniqueArray.js";
 
 export class CircularReferenceTypeFormatter implements SubTypeFormatter {
@@ -19,7 +20,9 @@ export class CircularReferenceTypeFormatter implements SubTypeFormatter {
 
         const definition: Definition = {};
         this.definition.set(type, definition);
-        Object.assign(definition, this.childTypeFormatter.getDefinition(type));
+        const childDefinition = this.childTypeFormatter.getDefinition(type);
+        Object.assign(definition, childDefinition);
+        copySchemaSource(childDefinition, definition);
         return definition;
     }
     public getChildren(type: BaseType): BaseType[] {
