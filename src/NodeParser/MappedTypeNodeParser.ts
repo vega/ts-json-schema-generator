@@ -18,6 +18,7 @@ import { StringType } from "../Type/StringType.js";
 import { SymbolType } from "../Type/SymbolType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefAnnotatedType, derefType, isDeepLiteralUnion } from "../Utils/derefType.js";
+import { NUMERIC_INDEX_PATTERN } from "../Utils/indexSignature.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
@@ -68,10 +69,16 @@ export class MappedTypeNodeParser implements SubNodeParser {
             keyListType instanceof SymbolType ||
             keyListType instanceof AnyType
         ) {
-            // Key type widens to `string`
+            // String, symbol, and any keys widen to additionalProperties.
+            // A numeric key is only the numeric pattern, not an open additional-properties constraint.
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
-            const resultType = new ObjectType(id, [], [], type);
+            const resultType =
+                keyListType instanceof NumberType
+                    ? new ObjectType(id, [], [], this.additionalProperties, false, {
+                          [NUMERIC_INDEX_PATTERN]: type,
+                      })
+                    : new ObjectType(id, [], [], type);
             if (resultType) {
                 let annotations;
 

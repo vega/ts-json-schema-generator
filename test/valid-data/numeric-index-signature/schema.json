@@ -1,0 +1,178 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Column": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "ColumnList": {
+      "$ref": "#/definitions/List%3CColumn%3E"
+    },
+    "CombinedKeys": {
+      "type": [
+        "string"
+      ]
+    },
+    "CombinedNumericElement": {
+      "type": "number"
+    },
+    "CombinedStringElement": {
+      "type": [
+        "string",
+        "number"
+      ]
+    },
+    "List<Column>": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "$ref": "#/definitions/Column"
+        }
+      },
+      "type": "object"
+    },
+    "NumericAliasIndex": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NumericBase": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NumericChild": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "NumericClass": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "NumericElement": {
+      "type": "boolean"
+    },
+    "NumericElementAtZero": {
+      "type": "boolean"
+    },
+    "NumericIndex": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "NumericIntersection": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "NumericKeys": {
+      "type": "number"
+    },
+    "NumericWithProperty": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "string"
+        }
+      },
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "NumericWithPropertyKeys": {
+      "anyOf": [
+        {
+          "const": "name",
+          "type": "string"
+        },
+        {
+          "type": "number"
+        }
+      ]
+    },
+    "StringAndNumberIndex": {
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number"
+        ]
+      },
+      "patternProperties": {
+        "^[0-9]+$": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "StringOrNumberKey": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "type": "object"
+    }
+  }
+}

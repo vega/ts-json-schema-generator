@@ -45,6 +45,13 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
         const childrenOfAdditionalProps =
             additionalProperties instanceof BaseType ? this.childTypeFormatter.getChildren(additionalProperties) : [];
 
+        const patternProperties = type.getPatternProperties();
+        const childrenOfPatternProps = patternProperties
+            ? Object.values(patternProperties).flatMap((patternType) =>
+                  this.childTypeFormatter.getChildren(patternType),
+              )
+            : [];
+
         const childrenOfProps = properties.reduce((result: BaseType[], property) => {
             const propertyType = property.getType();
             if (propertyType instanceof NeverType) {
@@ -54,7 +61,12 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return [...result, ...this.childTypeFormatter.getChildren(propertyType)];
         }, []);
 
-        const children = [...childrenOfBase, ...childrenOfAdditionalProps, ...childrenOfProps];
+        const children = [
+            ...childrenOfBase,
+            ...childrenOfAdditionalProps,
+            ...childrenOfPatternProps,
+            ...childrenOfProps,
+        ];
 
         return uniqueArray(children);
     }
@@ -80,10 +92,21 @@ export class ObjectTypeFormatter implements SubTypeFormatter {
             return result;
         }, {});
 
+        const patternProperties = type.getPatternProperties();
+        const preparedPatternProperties = patternProperties
+            ? Object.entries(patternProperties).reduce((result: StringMap<Definition>, [pattern, patternType]) => {
+                  result[pattern] = this.childTypeFormatter.getDefinition(patternType);
+                  return result;
+              }, {})
+            : undefined;
+
         return {
             type: "object",
             ...(Object.keys(properties).length > 0 ? { properties } : {}),
             ...(required.length > 0 ? { required } : {}),
+            ...(preparedPatternProperties && Object.keys(preparedPatternProperties).length > 0
+                ? { patternProperties: preparedPatternProperties }
+                : {}),
             ...(additionalProperties === true ||
             additionalProperties instanceof AnyType ||
             additionalProperties instanceof SymbolType

@@ -15,6 +15,10 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
 
         definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 
+        if (other.patternProperties || definition.patternProperties) {
+            definition.patternProperties = deepMerge(other.patternProperties || {}, definition.patternProperties || {});
+        }
+
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
             return props !== undefined && props !== true;
         }

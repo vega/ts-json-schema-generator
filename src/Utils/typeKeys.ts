@@ -11,6 +11,7 @@ import { TupleType } from "../Type/TupleType.js";
 import { UndefinedType } from "../Type/UndefinedType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefAnnotatedType, derefType } from "./derefType.js";
+import { NUMERIC_INDEX_PATTERN } from "./indexSignature.js";
 import { preserveAnnotation } from "./preserveAnnotation.js";
 import { uniqueArray } from "./uniqueArray.js";
 import { uniqueTypeArray } from "./uniqueTypeArray.js";
@@ -118,6 +119,13 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType | N
             }
         }
 
+        if (isNumericIndexAccess(index)) {
+            const numericType = type.getPatternProperties()?.[NUMERIC_INDEX_PATTERN];
+            if (numericType) {
+                return numericType;
+            }
+        }
+
         for (const subType of type.getBaseTypes()) {
             const subKeyType = getTypeByKey(subType, index);
             if (subKeyType) {
@@ -136,4 +144,20 @@ export function getTypeByKey(type: BaseType, index: LiteralType | StringType | N
     }
 
     return undefined;
+}
+
+function isNumericIndexAccess(index: LiteralType | StringType | NumberType): boolean {
+    if (index instanceof NumberType) {
+        return true;
+    }
+    if (!(index instanceof LiteralType)) {
+        return false;
+    }
+
+    const value = index.getValue();
+    if (typeof value === "number") {
+        return true;
+    }
+
+    return typeof value === "string" && new RegExp(NUMERIC_INDEX_PATTERN).test(value);
 }
