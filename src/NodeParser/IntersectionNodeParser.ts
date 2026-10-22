@@ -50,7 +50,13 @@ export class IntersectionNodeParser implements SubNodeParser {
 
 function isEmptyObject(x: BaseType) {
     const t = derefType(x);
-    return t instanceof ObjectType && !t.getAdditionalProperties() && !t.getProperties().length;
+    const patternProperties = t instanceof ObjectType ? t.getPatternProperties() : undefined;
+    return (
+        t instanceof ObjectType &&
+        !t.getAdditionalProperties() &&
+        !t.getProperties().length &&
+        (!patternProperties || Object.keys(patternProperties).length === 0)
+    );
 }
 
 function derefAndFlattenUnions(type: BaseType): BaseType[] {

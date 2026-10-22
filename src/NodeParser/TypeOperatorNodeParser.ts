@@ -8,6 +8,7 @@ import { ObjectType } from "../Type/ObjectType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefType } from "../Utils/derefType.js";
+import { NUMERIC_INDEX_PATTERN } from "../Utils/indexSignature.js";
 import { getTypeKeys } from "../Utils/typeKeys.js";
 
 export class TypeOperatorNodeParser implements SubNodeParser {
@@ -30,6 +31,11 @@ export class TypeOperatorNodeParser implements SubNodeParser {
         const keys = getTypeKeys(type);
         if (derefed instanceof ObjectType && derefed.getAdditionalProperties() instanceof BaseType) {
             return new UnionType([...keys, new StringType()]);
+        }
+
+        if (derefed instanceof ObjectType && derefed.getPatternProperties()?.[NUMERIC_INDEX_PATTERN]) {
+            const numericKeys = [...keys, new NumberType()];
+            return numericKeys.length === 1 ? numericKeys[0] : new UnionType(numericKeys);
         }
 
         if (keys.length === 1) {

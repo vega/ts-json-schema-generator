@@ -7,6 +7,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import type { ReferenceType } from "../Type/ReferenceType.js";
+import { resolveIndexSignatures } from "../Utils/indexSignature.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { isPublic, isStatic } from "../Utils/modifiers.js";
 import { getKey } from "../Utils/nodeKey.js";
@@ -51,17 +52,30 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        const additionalProperties = this.getAdditionalProperties(node, context);
+        const { additionalProperties, patternProperties } = resolveIndexSignatures(
+            node.members,
+            this.typeChecker,
+            (typeNode) => this.childNodeParser.createType(typeNode, context),
+            this.additionalProperties,
+        );
 
-        // When type only extends Array or ReadonlyArray then create an array type instead of an object type
-        if (properties.length === 0 && additionalProperties === false) {
+        // When type only extends Array or ReadonlyArray then create an array type instead of an object type.
+        // A numeric index is not an additionalProperties constraint, so it must not be treated as "no index".
+        if (properties.length === 0 && additionalProperties === false && !patternProperties) {
             const arrayItemType = this.getArrayItemType(node);
             if (arrayItemType) {
                 return new ArrayType(this.childNodeParser.createType(arrayItemType, context));
             }
         }
 
-        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
+        return new ObjectType(
+            id,
+            this.getBaseTypes(node, context),
+            properties,
+            additionalProperties,
+            false,
+            patternProperties,
+        );
     }
 
     /**
@@ -169,18 +183,6 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         }
 
         return properties;
-    }
-
-    protected getAdditionalProperties(
-        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
-        context: Context,
-    ): BaseType | boolean {
-        const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
-        if (!indexSignature) {
-            return this.additionalProperties;
-        }
-
-        return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {

@@ -4,6 +4,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { DefinitionType } from "../Type/DefinitionType.js";
 import { ReferenceType } from "../Type/ReferenceType.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
+import { attachSchemaSource } from "../Utils/schemaSource.js";
 
 export class ReferenceTypeFormatter implements SubTypeFormatter {
     public constructor(
@@ -16,7 +17,9 @@ export class ReferenceTypeFormatter implements SubTypeFormatter {
     }
     public getDefinition(type: ReferenceType): Definition {
         const ref = type.getName();
-        return { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
+        const schema: Definition = { $ref: `#/definitions/${this.encodeRefs ? encodeURIComponent(ref) : ref}` };
+        attachSchemaSource(schema, type);
+        return schema;
     }
     public getChildren(type: ReferenceType): BaseType[] {
         const referredType = type.getType();

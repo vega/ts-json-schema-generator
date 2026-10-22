@@ -18,6 +18,7 @@ import { StringType } from "../Type/StringType.js";
 import { SymbolType } from "../Type/SymbolType.js";
 import { UnionType } from "../Type/UnionType.js";
 import { derefAnnotatedType, derefType, isDeepLiteralUnion } from "../Utils/derefType.js";
+import { NUMERIC_INDEX_PATTERN } from "../Utils/indexSignature.js";
 import { getKey } from "../Utils/nodeKey.js";
 import { preserveAnnotation } from "../Utils/preserveAnnotation.js";
 import { removeUndefined } from "../Utils/removeUndefined.js";
@@ -57,8 +58,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
             node.type!,
             this.createSubContext(node, keyListType, context),
         );
-        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
-            // Then we turn it into an array
+        // A direct numeric key (`Record<number, string | number>`, `keyof` an array) is an array.
+        // `keyof` of a numeric index signature is also a number, but mapping over it stays an object.
+        if (
+            maybeUnionType instanceof UnionType &&
+            constraintType?.getId() === "number" &&
+            !this.isMappedNumericIndexKey(node, context)
+        ) {
             return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
         }
 
@@ -68,10 +74,16 @@ export class MappedTypeNodeParser implements SubNodeParser {
             keyListType instanceof SymbolType ||
             keyListType instanceof AnyType
         ) {
-            // Key type widens to `string`
+            // String, symbol, and any keys widen to additionalProperties.
+            // A numeric key is only the numeric pattern, not an open additional-properties constraint.
             const type = this.childNodeParser.createType(node.type!, this.createSubContext(node, keyListType, context));
             // const resultType = type instanceof NeverType ? new NeverType() : new ObjectType(id, [], [], type);
-            const resultType = new ObjectType(id, [], [], type);
+            const resultType =
+                keyListType instanceof NumberType
+                    ? new ObjectType(id, [], [], this.additionalProperties, false, {
+                          [NUMERIC_INDEX_PATTERN]: type,
+                      })
+                    : new ObjectType(id, [], [], type);
             if (resultType) {
                 let annotations;
 
@@ -193,6 +205,24 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
 
         return this.additionalProperties;
+    }
+
+    /**
+     * True when the mapped constraint is `keyof` an object that has a numeric index signature.
+     * That key is a `number`, but the mapped type is still an object with numeric pattern properties.
+     */
+    protected isMappedNumericIndexKey(node: ts.MappedTypeNode, context: Context): boolean {
+        const constraint = node.typeParameter.constraint;
+        if (
+            constraint === undefined ||
+            !ts.isTypeOperatorNode(constraint) ||
+            constraint.operator !== ts.SyntaxKind.KeyOfKeyword
+        ) {
+            return false;
+        }
+
+        const target = derefType(this.childNodeParser.createType(constraint.type, context));
+        return target instanceof ObjectType && target.getPatternProperties()?.[NUMERIC_INDEX_PATTERN] != null;
     }
 
     protected createSubContext(

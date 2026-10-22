@@ -6,6 +6,7 @@ import type { BaseType } from "../Type/BaseType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import type { ReferenceType } from "../Type/ReferenceType.js";
+import { resolveIndexSignatures } from "../Utils/indexSignature.js";
 import { isNodeHidden } from "../Utils/isHidden.js";
 import { getKey } from "../Utils/nodeKey.js";
 
@@ -32,7 +33,14 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
+        const { additionalProperties, patternProperties } = resolveIndexSignatures(
+            node.members,
+            this.typeChecker,
+            (typeNode) => this.childNodeParser.createType(typeNode, context),
+            this.additionalProperties,
+        );
+
+        return new ObjectType(id, [], properties, additionalProperties, false, patternProperties);
     }
 
     protected getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
@@ -65,15 +73,6 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         }
 
         return properties;
-    }
-
-    protected getAdditionalProperties(node: ts.TypeLiteralNode, context: Context): BaseType | boolean {
-        const indexSignature = node.members.find(ts.isIndexSignatureDeclaration);
-        if (!indexSignature) {
-            return this.additionalProperties;
-        }
-
-        return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {

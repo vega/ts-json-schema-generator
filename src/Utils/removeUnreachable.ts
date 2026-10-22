@@ -52,6 +52,13 @@ function addReachable(
         if (additionalProperties) {
             addReachable(additionalProperties, definitions, reachable);
         }
+
+        const patternProperties = definition.patternProperties;
+        if (patternProperties) {
+            for (const pattern in patternProperties) {
+                addReachable(patternProperties[pattern], definitions, reachable);
+            }
+        }
     } else if (definition.type?.includes("array")) {
         const items = definition.items;
         if (Array.isArray(items)) {

@@ -27,6 +27,7 @@ export class ObjectType extends BaseType {
         private additionalProperties: BaseType | boolean,
         // whether the object is `object`
         private nonPrimitive: boolean = false,
+        private patternProperties?: Readonly<Record<string, BaseType>>,
     ) {
         super();
     }
@@ -43,6 +44,9 @@ export class ObjectType extends BaseType {
     }
     public getAdditionalProperties(): BaseType | boolean {
         return this.additionalProperties;
+    }
+    public getPatternProperties(): Readonly<Record<string, BaseType>> | undefined {
+        return this.patternProperties;
     }
     public getNonPrimitive(): boolean {
         return this.nonPrimitive;
