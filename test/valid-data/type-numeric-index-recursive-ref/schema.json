@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/B",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "A": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "$ref": "#/definitions/A"
+        }
+      },
+      "type": "object"
+    },
+    "B": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[0-9]+$": {
+              "$ref": "#/definitions/A"
+            }
+          },
+          "properties": {},
+          "type": "object"
+        }
+      },
+      "properties": {},
+      "type": "object"
+    }
+  }
+}
