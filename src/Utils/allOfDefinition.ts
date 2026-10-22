@@ -1,3 +1,4 @@
+import type { JSONSchema7Definition } from "json-schema";
 import type { Definition } from "../Schema/Definition.js";
 import type { RawTypeName } from "../Schema/RawType.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -16,7 +17,12 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
         definition.properties = deepMerge(other.properties || {}, definition.properties || {});
 
         if (other.patternProperties || definition.patternProperties) {
-            definition.patternProperties = deepMerge(other.patternProperties || {}, definition.patternProperties || {});
+            const merged = mergePatternProperties(other.patternProperties || {}, definition.patternProperties || {});
+            if (Object.keys(merged).length > 0) {
+                definition.patternProperties = merged;
+            } else {
+                delete definition.patternProperties;
+            }
         }
 
         function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
@@ -97,4 +103,39 @@ export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
 
         return definition;
     };
+}
+
+/**
+ * Keep every pattern from either side. A pattern that exists on both sides must satisfy both schemas,
+ * because this reducer flattens intersections rather than emitting `allOf` at the object level.
+ */
+function mergePatternProperties(
+    incoming: { [pattern: string]: JSONSchema7Definition },
+    current: { [pattern: string]: JSONSchema7Definition },
+): { [pattern: string]: JSONSchema7Definition } {
+    const incomingPatterns = structuredClone(incoming);
+    const currentPatterns = structuredClone(current);
+    const merged: { [pattern: string]: JSONSchema7Definition } = { ...incomingPatterns, ...currentPatterns };
+
+    for (const pattern of Object.keys(incomingPatterns)) {
+        if (Object.prototype.hasOwnProperty.call(currentPatterns, pattern)) {
+            merged[pattern] = intersectSchemas(currentPatterns[pattern], incomingPatterns[pattern]);
+        }
+    }
+
+    return merged;
+}
+
+function intersectSchemas(left: JSONSchema7Definition, right: JSONSchema7Definition): JSONSchema7Definition {
+    if (left === false || right === false) {
+        return false;
+    }
+    if (left === true) {
+        return right;
+    }
+    if (right === true) {
+        return left;
+    }
+
+    return { allOf: [left, right] };
 }

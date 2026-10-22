@@ -1,0 +1,23 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "patternProperties": {
+        "^[0-9]+$": {
+          "allOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "properties": {},
+      "type": "object"
+    }
+  }
+}
