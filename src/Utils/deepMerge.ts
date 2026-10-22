@@ -2,6 +2,7 @@ import type { JSONSchema7Definition } from "json-schema";
 import type { Definition } from "../Schema/Definition.js";
 import type { RawType } from "../Schema/RawType.js";
 import { intersectionOfArrays } from "./intersectionOfArrays.js";
+import { cloneSchemaMap } from "./schemaSource.js";
 
 /**
  * Merges nested objects and arrays.
@@ -15,7 +16,7 @@ export function deepMerge(
     a: { [key: string]: JSONSchema7Definition },
     b: { [key: string]: JSONSchema7Definition },
 ): { [x: string]: JSONSchema7Definition } {
-    const output = { ...structuredClone(a), ...structuredClone(b) };
+    const output = { ...cloneSchemaMap(a), ...cloneSchemaMap(b) };
 
     for (const key in a) {
         if (b.hasOwnProperty(key)) {
