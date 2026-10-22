@@ -12,97 +12,103 @@ import { derefType } from "./derefType.js";
 export function getAllOfDefinitionReducer(childTypeFormatter: TypeFormatter) {
     // combine object instead of using allOf because allOf does not work well with additional properties
     return (definition: Definition, baseType: BaseType): Definition => {
-        const other = childTypeFormatter.getDefinition(derefType(baseType));
-
-        definition.properties = deepMerge(other.properties || {}, definition.properties || {});
-
-        if (other.patternProperties || definition.patternProperties) {
-            const merged = mergePatternProperties(other.patternProperties || {}, definition.patternProperties || {});
-            if (Object.keys(merged).length > 0) {
-                definition.patternProperties = merged;
-            } else {
-                delete definition.patternProperties;
-            }
-        }
-
-        function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
-            return props !== undefined && props !== true;
-        }
-
-        if (
-            additionalPropsDefinition(definition.additionalProperties) &&
-            additionalPropsDefinition(other.additionalProperties)
-        ) {
-            // additional properties is false only if all children also set additional properties to false
-            // collect additional properties and merge into a single definition
-            let additionalProps: Definition[] = [];
-            let additionalTypes: RawTypeName[] = [];
-            const addAdditionalProps: (addProps: Definition) => void = (addProps: Definition) => {
-                if (addProps) {
-                    if (addProps.anyOf) {
-                        for (const prop of addProps.anyOf as Definition[]) {
-                            if (prop.type) {
-                                additionalTypes = additionalTypes.concat(
-                                    Array.isArray(prop.type) ? prop.type : [prop.type],
-                                );
-                            } else {
-                                additionalProps.push(prop);
-                            }
-                        }
-                    } else if (addProps.type) {
-                        additionalTypes = additionalTypes.concat(
-                            Array.isArray(addProps.type) ? addProps.type : [addProps.type],
-                        );
-                    } else {
-                        additionalProps.push(addProps);
-                    }
-                }
-            };
-
-            addAdditionalProps(definition.additionalProperties);
-            addAdditionalProps(other.additionalProperties);
-
-            additionalTypes = uniqueArray(additionalTypes);
-            additionalProps = uniqueArray(additionalProps);
-
-            if (additionalTypes.length > 1) {
-                additionalProps.push({
-                    type: additionalTypes,
-                });
-            } else if (additionalTypes.length === 1) {
-                additionalProps.push({
-                    type: additionalTypes[0],
-                });
-            }
-
-            if (additionalProps.length > 1) {
-                definition.additionalProperties = {
-                    anyOf: additionalProps,
-                };
-            } else if (additionalProps.length === 1) {
-                if (Object.keys(additionalProps[0]).length === 0) {
-                    delete definition.additionalProperties;
-                } else {
-                    definition.additionalProperties = additionalProps[0];
-                }
-            } else {
-                definition.additionalProperties = false;
-            }
-        }
-
-        if (other.required) {
-            definition.required = uniqueArray((definition.required || []).concat(other.required)).sort();
-        }
-
-        if (
-            (other.additionalProperties || other.additionalProperties === undefined) &&
-            definition.additionalProperties == false
-        ) {
-            delete definition.additionalProperties;
-        }
-
-        return definition;
+        return mergeObjectDefinitions(definition, childTypeFormatter.getDefinition(derefType(baseType)));
     };
+}
+
+/**
+ * Merge `other` into `definition` the same way interface heritage and intersections merge objects.
+ * Mutates and returns `definition`.
+ */
+function mergeObjectDefinitions(definition: Definition, other: Definition): Definition {
+    definition.properties = deepMerge(other.properties || {}, definition.properties || {});
+
+    if (other.patternProperties || definition.patternProperties) {
+        const merged = mergePatternProperties(other.patternProperties || {}, definition.patternProperties || {});
+        if (Object.keys(merged).length > 0) {
+            definition.patternProperties = merged;
+        } else {
+            delete definition.patternProperties;
+        }
+    }
+
+    function additionalPropsDefinition(props?: boolean | Definition): props is Definition {
+        return props !== undefined && props !== true;
+    }
+
+    if (
+        additionalPropsDefinition(definition.additionalProperties) &&
+        additionalPropsDefinition(other.additionalProperties)
+    ) {
+        // additional properties is false only if all children also set additional properties to false
+        // collect additional properties and merge into a single definition
+        let additionalProps: Definition[] = [];
+        let additionalTypes: RawTypeName[] = [];
+        const addAdditionalProps: (addProps: Definition) => void = (addProps: Definition) => {
+            if (addProps) {
+                if (addProps.anyOf) {
+                    for (const prop of addProps.anyOf as Definition[]) {
+                        if (prop.type) {
+                            additionalTypes = additionalTypes.concat(
+                                Array.isArray(prop.type) ? prop.type : [prop.type],
+                            );
+                        } else {
+                            additionalProps.push(prop);
+                        }
+                    }
+                } else if (addProps.type) {
+                    additionalTypes = additionalTypes.concat(
+                        Array.isArray(addProps.type) ? addProps.type : [addProps.type],
+                    );
+                } else {
+                    additionalProps.push(addProps);
+                }
+            }
+        };
+
+        addAdditionalProps(definition.additionalProperties);
+        addAdditionalProps(other.additionalProperties);
+
+        additionalTypes = uniqueArray(additionalTypes);
+        additionalProps = uniqueArray(additionalProps);
+
+        if (additionalTypes.length > 1) {
+            additionalProps.push({
+                type: additionalTypes,
+            });
+        } else if (additionalTypes.length === 1) {
+            additionalProps.push({
+                type: additionalTypes[0],
+            });
+        }
+
+        if (additionalProps.length > 1) {
+            definition.additionalProperties = {
+                anyOf: additionalProps,
+            };
+        } else if (additionalProps.length === 1) {
+            if (Object.keys(additionalProps[0]).length === 0) {
+                delete definition.additionalProperties;
+            } else {
+                definition.additionalProperties = additionalProps[0];
+            }
+        } else {
+            definition.additionalProperties = false;
+        }
+    }
+
+    if (other.required) {
+        definition.required = uniqueArray((definition.required || []).concat(other.required)).sort();
+    }
+
+    if (
+        (other.additionalProperties || other.additionalProperties === undefined) &&
+        definition.additionalProperties == false
+    ) {
+        delete definition.additionalProperties;
+    }
+
+    return definition;
 }
 
 /**
@@ -137,5 +143,28 @@ function intersectSchemas(left: JSONSchema7Definition, right: JSONSchema7Definit
         return left;
     }
 
+    // allOf of two closed objects rejects a property that exists on only one side.
+    // Intersect object schemas with the same merge used for heritage and intersections.
+    if (isObjectSchema(left) && isObjectSchema(right)) {
+        return mergeObjectDefinitions(structuredClone(left), right);
+    }
+
     return { allOf: [left, right] };
+}
+
+function isObjectSchema(schema: JSONSchema7Definition): schema is Definition {
+    if (typeof schema !== "object") {
+        return false;
+    }
+
+    const { type } = schema;
+    if (type === "object" || (Array.isArray(type) && type.includes("object"))) {
+        return true;
+    }
+
+    return (
+        schema.properties !== undefined ||
+        schema.patternProperties !== undefined ||
+        schema.additionalProperties !== undefined
+    );
 }

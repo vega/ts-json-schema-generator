@@ -58,8 +58,13 @@ export class MappedTypeNodeParser implements SubNodeParser {
             node.type!,
             this.createSubContext(node, keyListType, context),
         );
-        if (maybeUnionType instanceof UnionType && constraintType?.getId() === "number") {
-            // Then we turn it into an array
+        // A direct numeric key (`Record<number, string | number>`, `keyof` an array) is an array.
+        // `keyof` of a numeric index signature is also a number, but mapping over it stays an object.
+        if (
+            maybeUnionType instanceof UnionType &&
+            constraintType?.getId() === "number" &&
+            !this.isMappedNumericIndexKey(node, context)
+        ) {
             return maybeUnionType instanceof NeverType ? new NeverType() : new ArrayType(maybeUnionType);
         }
 
@@ -200,6 +205,24 @@ export class MappedTypeNodeParser implements SubNodeParser {
         }
 
         return this.additionalProperties;
+    }
+
+    /**
+     * True when the mapped constraint is `keyof` an object that has a numeric index signature.
+     * That key is a `number`, but the mapped type is still an object with numeric pattern properties.
+     */
+    protected isMappedNumericIndexKey(node: ts.MappedTypeNode, context: Context): boolean {
+        const constraint = node.typeParameter.constraint;
+        if (
+            constraint === undefined ||
+            !ts.isTypeOperatorNode(constraint) ||
+            constraint.operator !== ts.SyntaxKind.KeyOfKeyword
+        ) {
+            return false;
+        }
+
+        const target = derefType(this.childNodeParser.createType(constraint.type, context));
+        return target instanceof ObjectType && target.getPatternProperties()?.[NUMERIC_INDEX_PATTERN] != null;
     }
 
     protected createSubContext(
