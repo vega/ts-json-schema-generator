@@ -1,0 +1,21 @@
+{
+  "$id": "api",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "ApiSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "N": {
+          "$ref": "api#/definitions/B"
+        }
+      },
+      "required": [
+        "N"
+      ],
+      "type": "object"
+    },
+    "B": {
+      "type": "string"
+    }
+  }
+}

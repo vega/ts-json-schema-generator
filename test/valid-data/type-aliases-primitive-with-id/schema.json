@@ -1,6 +1,6 @@
 {
   "$id": "testId",
-  "$ref": "#/definitions/MyString",
+  "$ref": "testId#/definitions/MyString",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyString": {

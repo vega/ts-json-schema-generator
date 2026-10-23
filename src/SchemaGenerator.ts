@@ -54,12 +54,18 @@ export class SchemaGenerator {
             {},
         );
 
-        return {
+        const schema: Schema = {
             ...(this.config?.schemaId ? { $id: this.config.schemaId } : {}),
             $schema: "http://json-schema.org/draft-07/schema#",
             ...(rootTypeDefinition ?? {}),
             definitions: reachableDefinitions,
         };
+
+        if (this.config?.schemaId) {
+            this.addSchemaIdToReferences(schema, this.config.schemaId);
+        }
+
+        return schema;
     }
 
     protected getRootNodes(fullNames: string[] | undefined): ts.Node[] {
@@ -164,6 +170,23 @@ export class SchemaGenerator {
             return definitions;
         }, childDefinitions);
     }
+
+    protected addSchemaIdToReferences(value: unknown, schemaId: string): void {
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                this.addSchemaIdToReferences(item, schemaId);
+            }
+        } else if (value !== null && typeof value === "object") {
+            const object = value as Record<string, unknown>;
+            if (typeof object.$ref === "string" && object.$ref.startsWith("#")) {
+                object.$ref = `${schemaId}${object.$ref}`;
+            }
+            for (const child of Object.values(object)) {
+                this.addSchemaIdToReferences(child, schemaId);
+            }
+        }
+    }
+
     protected partitionFiles(): {
         projectFiles: ts.SourceFile[];
         externalFiles: ts.SourceFile[];
