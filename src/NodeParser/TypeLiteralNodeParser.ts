@@ -2,7 +2,10 @@ import type { MethodSignature, PropertySignature } from "typescript";
 import ts from "typescript";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AliasType } from "../Type/AliasType.js";
 import type { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import type { ReferenceType } from "../Type/ReferenceType.js";
@@ -32,7 +35,11 @@ export class TypeLiteralNodeParser implements SubNodeParser {
             return new NeverType();
         }
 
-        return new ObjectType(id, [], properties, this.getAdditionalProperties(node, context));
+        return this.withPropertyNamesAnnotation(
+            node,
+            context,
+            new ObjectType(id, [], properties, this.getAdditionalProperties(node, context)),
+        );
     }
 
     protected getProperties(node: ts.TypeLiteralNode, context: Context): ObjectProperty[] | undefined {
@@ -74,6 +81,36 @@ export class TypeLiteralNodeParser implements SubNodeParser {
         }
 
         return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
+    }
+
+    /**
+     * Annotations on the index signature key type (e.g. a `@pattern` tag on a
+     * string type alias) become a `propertyNames` keyword on the object schema,
+     * mirroring how annotated mapped type keys are handled.
+     */
+    protected withPropertyNamesAnnotation(
+        node: ts.TypeLiteralNode,
+        context: Context,
+        objectType: ObjectType,
+    ): BaseType {
+        const indexSignature = node.members.find(ts.isIndexSignatureDeclaration);
+        const keyType = indexSignature?.parameters[0]?.type;
+
+        if (keyType) {
+            let keyResult: BaseType | undefined = this.childNodeParser.createType(keyType, context);
+            // Unwrap alias and definition wrappers while keeping annotated types intact.
+            while (keyResult instanceof AliasType || keyResult instanceof DefinitionType) {
+                keyResult = keyResult.getType();
+            }
+
+            const annotations = keyResult instanceof AnnotatedType ? keyResult.getAnnotations() : undefined;
+
+            if (annotations && Object.keys(annotations).length > 0) {
+                return new AnnotatedType(objectType, { propertyNames: annotations }, false);
+            }
+        }
+
+        return objectType;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {
