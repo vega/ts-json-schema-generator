@@ -96,6 +96,9 @@ export function isAssignableTo(
     inferMap: Map<string, BaseType> = new Map(),
     insideTypes: Set<BaseType> = new Set(),
 ): boolean {
+    // Keep original source for infer map so annotations (e.g. @discriminator) are preserved
+    const originalSource = source;
+
     // Dereference source and target
     source = derefType(source);
     target = derefType(target);
@@ -116,9 +119,9 @@ export function isAssignableTo(
         const infer = inferMap.get(key);
 
         if (infer === undefined) {
-            inferMap.set(key, source);
+            inferMap.set(key, originalSource);
         } else {
-            inferMap.set(key, new UnionType([infer, source]));
+            inferMap.set(key, new UnionType([infer, originalSource]));
         }
 
         return true;

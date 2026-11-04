@@ -46,6 +46,7 @@
     "debug": "tsx --inspect-brk ts-json-schema-generator.ts",
     "format": "eslint --fix",
     "lint": "eslint",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run build",
     "release": "npm run build && auto shipit",
     "run": "tsx ts-json-schema-generator.ts",
