@@ -7,6 +7,7 @@ import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { StringType } from "../Type/StringType.js";
 import { UnknownType } from "../Type/UnknownType.js";
+import { UnhandledError } from "../Error/Errors.js";
 import { symbolAtNode } from "../Utils/symbolAtNode.js";
 
 const invalidTypes: Record<number, boolean> = {
@@ -42,7 +43,7 @@ export class TypeReferenceNodeParser implements SubNodeParser {
                 return new AnyType();
             }
 
-            return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
+            return this.createTypeFromDeclaration(declaration, node, context);
         }
 
         if (typeSymbol.flags & ts.SymbolFlags.TypeParameter) {
@@ -77,10 +78,69 @@ export class TypeReferenceNodeParser implements SubNodeParser {
             return new AnnotatedType(new StringType(), { format: "uri" }, false);
         }
 
-        return this.childNodeParser.createType(
+        return this.createTypeFromDeclaration(
             typeSymbol.declarations!.filter((n: ts.Declaration) => !invalidTypes[n.kind])[0],
-            this.createSubContext(node, context),
+            node,
+            context,
         );
+    }
+
+    /**
+     * Resolves a referenced declaration through the child parser, falling back to the
+     * type checker's already-resolved type when structural re-parsing crashes.
+     *
+     * Re-parsing the AST can drive the parser into type-level machinery of third-party
+     * libraries (e.g. `zod`'s `z.infer<typeof schema>` conditional types, whose return
+     * type is built from deep generics) that cannot be statically re-derived. When that
+     * happens an unexpected (non-controlled) error is thrown; in that case we delegate to
+     * the type checker, which has already resolved such references to a concrete type.
+     */
+    protected createTypeFromDeclaration(
+        declaration: ts.Declaration,
+        node: ts.TypeReferenceNode,
+        context: Context,
+    ): BaseType {
+        try {
+            return this.childNodeParser.createType(declaration, this.createSubContext(node, context));
+        } catch (error) {
+            if (error instanceof UnhandledError) {
+                const resolved = this.createTypeFromChecker(node, context);
+                if (resolved) {
+                    return resolved;
+                }
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Builds a base type from the type checker's fully-resolved type for the given
+     * reference node. Returns undefined when the checker cannot offer a trustworthy
+     * concrete type (e.g. it collapses to `any`/`unknown`), so callers can rethrow the
+     * original error instead of silently substituting a meaningless schema.
+     */
+    protected createTypeFromChecker(node: ts.TypeReferenceNode, context: Context): BaseType | undefined {
+        let resolvedType: ts.Type;
+        try {
+            resolvedType = this.typeChecker.getTypeFromTypeNode(node);
+        } catch {
+            return undefined;
+        }
+
+        const typeNode = this.typeChecker.typeToTypeNode(resolvedType, node, ts.NodeBuilderFlags.IgnoreErrors);
+
+        if (!typeNode || typeNode.kind === ts.SyntaxKind.AnyKeyword || typeNode.kind === ts.SyntaxKind.UnknownKeyword) {
+            return undefined;
+        }
+        try {
+            const result = this.childNodeParser.createType(typeNode, context);
+            if (result instanceof AnyType || result instanceof UnknownType) {
+                return undefined;
+            }
+            return result;
+        } catch {
+            return undefined;
+        }
     }
 
     protected createSubContext(node: ts.TypeReferenceNode, parentContext: Context): Context {

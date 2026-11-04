@@ -1,0 +1,81 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "numberField": {
+          "type": "number"
+        },
+        "objectField": {
+          "additionalProperties": false,
+          "properties": {
+            "age": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "enum": [
+                "admin",
+                "user"
+              ],
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "role"
+          ],
+          "type": "object"
+        },
+        "unionField": {
+          "anyOf": [
+            {
+              "additionalProperties": false,
+              "properties": {
+                "kind": {
+                  "const": "a",
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "value"
+              ],
+              "type": "object"
+            },
+            {
+              "additionalProperties": false,
+              "properties": {
+                "count": {
+                  "type": "number"
+                },
+                "kind": {
+                  "const": "b",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "kind",
+                "count"
+              ],
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "required": [
+        "numberField",
+        "objectField",
+        "unionField"
+      ],
+      "type": "object"
+    }
+  }
+}
