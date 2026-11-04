@@ -5,6 +5,20 @@
     "MyObject": {
       "additionalProperties": false,
       "properties": {
+        "emptyCapitalize": {
+          "enum": [
+            "",
+            "A"
+          ],
+          "type": "string"
+        },
+        "emptyUncapitalize": {
+          "enum": [
+            "",
+            "a"
+          ],
+          "type": "string"
+        },
         "result": {
           "enum": [
             "ok",
@@ -56,7 +70,9 @@
         "resultUpper",
         "resultLower",
         "resultCapitalize",
-        "resultUncapitalize"
+        "resultUncapitalize",
+        "emptyCapitalize",
+        "emptyUncapitalize"
       ],
       "type": "object"
     }

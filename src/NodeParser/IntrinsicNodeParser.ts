@@ -10,8 +10,8 @@ import { extractLiterals } from "../Utils/extractLiterals.js";
 export const intrinsicMethods: Record<string, ((v: string) => string) | undefined> = {
     Uppercase: (v) => v.toUpperCase(),
     Lowercase: (v) => v.toLowerCase(),
-    Capitalize: (v) => v[0].toUpperCase() + v.slice(1),
-    Uncapitalize: (v) => v[0].toLowerCase() + v.slice(1),
+    Capitalize: (v) => v.charAt(0).toUpperCase() + v.slice(1),
+    Uncapitalize: (v) => v.charAt(0).toLowerCase() + v.slice(1),
 };
 
 export class IntrinsicNodeParser implements SubNodeParser {
