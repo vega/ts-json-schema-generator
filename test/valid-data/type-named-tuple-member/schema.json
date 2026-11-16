@@ -59,12 +59,36 @@
       "minItems": 2,
       "type": "array"
     },
+    "MyNamedTupleWithOnlyOptional": {
+      "items": {
+        "title": "a",
+        "type": "string"
+      },
+      "maxItems": 1,
+      "minItems": 0,
+      "type": "array"
+    },
     "MyNamedTupleWithOnlyRest": {
       "items": {
         "title": "first",
         "type": "number"
       },
       "minItems": 0,
+      "type": "array"
+    },
+    "MyNamedTupleWithOptional": {
+      "items": [
+        {
+          "title": "name",
+          "type": "string"
+        },
+        {
+          "title": "age",
+          "type": "number"
+        }
+      ],
+      "maxItems": 2,
+      "minItems": 1,
       "type": "array"
     },
     "MyNamedTupleWithRest": {
