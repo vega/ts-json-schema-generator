@@ -2,11 +2,13 @@ import ts from "typescript";
 import { LogicError } from "../Error/Errors.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
+import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
 import { LiteralType } from "../Type/LiteralType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { NumberType } from "../Type/NumberType.js";
 import { ReferenceType } from "../Type/ReferenceType.js";
+import { RestType } from "../Type/RestType.js";
 import { StringType } from "../Type/StringType.js";
 import { TupleType } from "../Type/TupleType.js";
 import { UnionType } from "../Type/UnionType.js";
@@ -46,6 +48,26 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
         return undefined;
     }
 
+    private getTupleIndexTypes(tupleType: TupleType): BaseType[] {
+        return tupleType.getTypes().flatMap((type) => {
+            const derefed = derefType(type);
+            if (!(derefed instanceof RestType)) {
+                return type;
+            }
+
+            const restType = derefType(derefed.getType());
+            if (restType instanceof ArrayType) {
+                return restType.getItem();
+            }
+
+            if (restType instanceof TupleType) {
+                return this.getTupleIndexTypes(restType);
+            }
+
+            return derefed;
+        });
+    }
+
     public createType(node: ts.IndexedAccessTypeNode, context: Context): BaseType {
         const indexType = derefType(this.childNodeParser.createType(node.indexType, context));
         const indexedType = this.createIndexedType(node.objectType, context, indexType);
@@ -71,7 +93,7 @@ export class IndexedAccessTypeNodeParser implements SubNodeParser {
             const propertyType = getTypeByKey(objectType, type);
             if (!propertyType) {
                 if (type instanceof NumberType && objectType instanceof TupleType) {
-                    return new UnionType(objectType.getTypes());
+                    return new UnionType(this.getTupleIndexTypes(objectType)).normalize();
                 }
 
                 if (type instanceof LiteralType) {
