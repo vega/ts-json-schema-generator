@@ -1,0 +1,123 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "aliased": {
+          "const": "b",
+          "type": "string"
+        },
+        "boolean": {
+          "const": true,
+          "type": "boolean"
+        },
+        "capitalized": {
+          "additionalProperties": false,
+          "properties": {
+            "getAge": {
+              "type": "number"
+            },
+            "getName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "getName",
+            "getAge"
+          ],
+          "type": "object"
+        },
+        "common": {
+          "enum": [
+            "b",
+            "c"
+          ],
+          "type": "string"
+        },
+        "mixed": {
+          "enum": [
+            "a",
+            1
+          ],
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "narrowed": {
+          "enum": [
+            "a",
+            "b"
+          ],
+          "type": "string"
+        },
+        "numeric": {
+          "enum": [
+            1,
+            2
+          ],
+          "type": "number"
+        },
+        "numericCommon": {
+          "const": 2,
+          "type": "number"
+        },
+        "prefixed": {
+          "additionalProperties": false,
+          "properties": {
+            "user_age": {
+              "type": "number"
+            },
+            "user_name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "user_name",
+            "user_age"
+          ],
+          "type": "object"
+        },
+        "reverse": {
+          "enum": [
+            "a",
+            "b"
+          ],
+          "type": "string"
+        },
+        "unprefixed": {
+          "additionalProperties": false,
+          "properties": {
+            "age": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "age"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "common",
+        "narrowed",
+        "reverse",
+        "numeric",
+        "numericCommon",
+        "boolean",
+        "mixed",
+        "aliased",
+        "prefixed",
+        "unprefixed",
+        "capitalized"
+      ],
+      "type": "object"
+    }
+  }
+}
