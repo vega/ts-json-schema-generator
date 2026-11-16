@@ -1,5 +1,4 @@
 import ts from "typescript";
-import { ExpectationFailedError } from "../Error/Errors.js";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
 import type { BaseType } from "../Type/BaseType.js";
@@ -14,6 +13,7 @@ import { UnionType } from "../Type/UnionType.js";
 import { isLiteralUnion } from "../TypeFormatter/LiteralUnionTypeFormatter.js";
 import { derefType } from "../Utils/derefType.js";
 import { uniqueTypeArray } from "../Utils/uniqueTypeArray.js";
+import { isAssignableTo } from "../Utils/isAssignableTo.js";
 
 export class IntersectionNodeParser implements SubNodeParser {
     public constructor(
@@ -89,8 +89,17 @@ export function translate(types: BaseType[]): BaseType {
                     // never
                     result.push(new UndefinedType());
                 } else {
+                    const resolvedTypes = currentTypes.map(derefType);
+                    const literal = resolvedTypes.find((currentType) => currentType instanceof LiteralType);
+                    const allScalar = resolvedTypes.every(
+                        (currentType) => currentType instanceof PrimitiveType || currentType instanceof LiteralType,
+                    );
                     const primitives = currentTypes.filter((c) => c instanceof PrimitiveType);
-                    if (primitives.length === 1) {
+                    if (literal && allScalar) {
+                        if (resolvedTypes.every((currentType) => isAssignableTo(currentType, literal))) {
+                            result.push(literal);
+                        }
+                    } else if (primitives.length === 1) {
                         result.push(primitives[0]);
                     } else if (primitives.length > 1) {
                         // conflict -> ignore
@@ -114,5 +123,5 @@ export function translate(types: BaseType[]): BaseType {
         return new UnionType(result);
     }
 
-    throw new ExpectationFailedError("Could not translate intersection to union.");
+    return new NeverType();
 }
