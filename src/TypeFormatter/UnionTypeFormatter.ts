@@ -40,7 +40,11 @@ export class UnionTypeFormatter implements SubTypeFormatter {
         const kindTypes = type
             .getTypes()
             .filter((item) => !(derefType(item) instanceof NeverType))
-            .map((item) => getTypeByKey(item, new LiteralType(discriminator)));
+            .map((item) => {
+                const propertyType = getTypeByKey(item, new LiteralType(discriminator));
+
+                return propertyType ? derefType(propertyType) : undefined;
+            });
 
         const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
 
