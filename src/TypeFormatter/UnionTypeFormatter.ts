@@ -37,30 +37,57 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             throw new JsonTypeError("discriminator is undefined", type);
         }
 
-        const kindTypes = type
-            .getTypes()
-            .filter((item) => !(derefType(item) instanceof NeverType))
-            .map((item) => getTypeByKey(item, new LiteralType(discriminator)));
+        const unionTypes = type.getTypes().filter((item) => !(derefType(item) instanceof NeverType));
+        const kindTypes = unionTypes.map((item) => getTypeByKey(item, new LiteralType(discriminator)));
 
-        const undefinedIndex = kindTypes.findIndex((item) => item === undefined);
+        // Separate types with and without discriminator field (non-congruent support)
+        const typesWithDiscriminator: { kindType: BaseType; definition: Definition }[] = [];
+        const typesWithoutDiscriminator: { definition: Definition }[] = [];
 
-        if (undefinedIndex !== -1) {
-            throw new JsonTypeError(
-                `Cannot find discriminator keyword "${discriminator}" in type ${type.getTypes()[undefinedIndex].getName()}.`,
-                type,
-            );
+        for (let i = 0; i < kindTypes.length; i++) {
+            if (kindTypes[i] === undefined) {
+                // Type doesn't have discriminator field
+                typesWithoutDiscriminator.push({ definition: definitions[i] });
+            } else {
+                typesWithDiscriminator.push({
+                    kindType: kindTypes[i] as BaseType,
+                    definition: definitions[i],
+                });
+            }
         }
 
-        const kindDefinitions = kindTypes.map((item) => this.childTypeFormatter.getDefinition(item as BaseType));
+        const kindDefinitions = typesWithDiscriminator.map((item) =>
+            this.childTypeFormatter.getDefinition(item.kindType),
+        );
 
         const allOf = [];
 
-        for (let i = 0; i < definitions.length; i++) {
+        // Add conditional schemas for types WITH discriminator field
+        for (let i = 0; i < typesWithDiscriminator.length; i++) {
             allOf.push({
                 if: {
                     properties: { [discriminator]: kindDefinitions[i] },
+                    required: [discriminator],
                 },
-                then: definitions[i],
+                then: typesWithDiscriminator[i].definition,
+            });
+        }
+
+        // Add conditional schemas for types WITHOUT discriminator field (non-congruent)
+        if (typesWithoutDiscriminator.length > 0) {
+            allOf.push({
+                if: {
+                    not: {
+                        properties: { [discriminator]: {} },
+                        required: [discriminator],
+                    },
+                },
+                then:
+                    typesWithoutDiscriminator.length === 1
+                        ? typesWithoutDiscriminator[0].definition
+                        : {
+                              anyOf: typesWithoutDiscriminator.map((item) => item.definition),
+                          },
             });
         }
 
@@ -76,13 +103,20 @@ export class UnionTypeFormatter implements SubTypeFormatter {
             );
         }
 
-        const properties = {
-            [discriminator]: {
-                enum: kindValues,
-            },
-        };
+        // Build properties only if we have types with discriminator
+        const properties =
+            kindValues.length > 0
+                ? {
+                      [discriminator]: {
+                          enum: kindValues,
+                      },
+                  }
+                : {};
 
-        return { type: "object", properties, required: [discriminator], allOf };
+        // Only require discriminator if all types have it
+        const required = typesWithoutDiscriminator.length === 0 ? [discriminator] : [];
+
+        return { type: "object", properties, required, allOf };
     }
     private getOpenApiDiscriminatorDefinition(type: UnionType): Definition {
         const oneOf = this.getTypeDefinitions(type);

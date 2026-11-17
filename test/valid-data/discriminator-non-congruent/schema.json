@@ -1,0 +1,204 @@
+{
+  "$ref": "#/definitions/Declaration",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "AnotherDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    },
+    "ClassDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "class",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "Declaration": {
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "function",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "$ref": "#/definitions/FunctionDeclaration"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "variable",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "$ref": "#/definitions/VariableDeclaration"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "mixin",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "$ref": "#/definitions/MixinDeclaration"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "class",
+                "type": "string"
+              }
+            },
+            "required": [
+              "kind"
+            ]
+          },
+          "then": {
+            "$ref": "#/definitions/ClassDeclaration"
+          }
+        },
+        {
+          "if": {
+            "not": {
+              "properties": {
+                "kind": {}
+              },
+              "required": [
+                "kind"
+              ]
+            }
+          },
+          "then": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/SimpleDeclaration"
+              },
+              {
+                "$ref": "#/definitions/AnotherDeclaration"
+              }
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "function",
+            "variable",
+            "mixin",
+            "class"
+          ]
+        }
+      },
+      "required": [],
+      "type": "object"
+    },
+    "FunctionDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "function",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "MixinDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "mixin",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    },
+    "SimpleDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
+    "VariableDeclaration": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "variable",
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "name"
+      ],
+      "type": "object"
+    }
+  }
+}
