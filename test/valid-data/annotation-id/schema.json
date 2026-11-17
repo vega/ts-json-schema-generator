@@ -1,6 +1,6 @@
 {
   "$id": "Test",
-  "$ref": "#/definitions/MyObject",
+  "$ref": "Test#/definitions/MyObject",
   "$schema": "http://json-schema.org/draft-07/schema#",
   "definitions": {
     "MyNestedObject": {
@@ -13,7 +13,7 @@
       "additionalProperties": false,
       "properties": {
         "nested": {
-          "$ref": "#/definitions/MyNestedObject"
+          "$ref": "Test#/definitions/MyNestedObject"
         }
       },
       "required": [
