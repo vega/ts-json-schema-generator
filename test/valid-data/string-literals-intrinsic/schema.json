@@ -49,6 +49,15 @@
             "SUCCESS"
           ],
           "type": "string"
+        },
+        "resultNoInfer": {
+          "enum": [
+            "ok",
+            "fail",
+            "ABORT",
+            "Success"
+          ],
+          "type": "string"
         }
       },
       "required": [
@@ -56,7 +65,8 @@
         "resultUpper",
         "resultLower",
         "resultCapitalize",
-        "resultUncapitalize"
+        "resultUncapitalize",
+        "resultNoInfer"
       ],
       "type": "object"
     }

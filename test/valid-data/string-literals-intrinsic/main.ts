@@ -4,6 +4,7 @@ type ResultUpper = Uppercase<Result>;
 type ResultLower = Lowercase<ResultUpper>;
 type ResultCapitalize = Capitalize<Result>;
 type ResultUncapitalize = Uncapitalize<ResultCapitalize>;
+type ResultNoInfer = NoInfer<Result>;
 
 export interface MyObject {
     result: Result;
@@ -11,4 +12,5 @@ export interface MyObject {
     resultLower: ResultLower;
     resultCapitalize: ResultCapitalize;
     resultUncapitalize: ResultUncapitalize;
+    resultNoInfer: ResultNoInfer;
 }

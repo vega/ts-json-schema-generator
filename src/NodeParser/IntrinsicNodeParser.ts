@@ -12,6 +12,7 @@ export const intrinsicMethods: Record<string, ((v: string) => string) | undefine
     Lowercase: (v) => v.toLowerCase(),
     Capitalize: (v) => v[0].toUpperCase() + v.slice(1),
     Uncapitalize: (v) => v[0].toLowerCase() + v.slice(1),
+    NoInfer: (v) => v,
 };
 
 export class IntrinsicNodeParser implements SubNodeParser {
