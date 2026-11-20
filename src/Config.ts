@@ -139,10 +139,6 @@ export interface Config {
     tsProgram?: ts.Program;
 }
 
-export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
-
-export type FunctionOptions = "fail" | "comment" | "hide";
-
 export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId" | "tsconfig" | "tsProgram"> = {
     expose: "export",
     topRef: true,
@@ -159,3 +155,7 @@ export const DEFAULT_CONFIG: Omit<Required<Config>, "path" | "type" | "schemaId"
     discriminatorType: "json-schema",
     functions: "comment",
 };
+
+export type CompletedConfig = Config & typeof DEFAULT_CONFIG;
+
+export type FunctionOptions = "fail" | "comment" | "hide";

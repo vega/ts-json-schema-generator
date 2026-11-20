@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "esModuleInterop": true,
     "isolatedModules": false,
     "experimentalDecorators": true,
@@ -20,6 +20,8 @@
     "sourceMap": true,
     "pretty": true,
     "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "rootDir": ".",
     "outDir": "dist",
     "incremental": true,
     "importHelpers": true

@@ -6,8 +6,25 @@ import { OptionalType } from "../Type/OptionalType.js";
 import { RestType } from "../Type/RestType.js";
 import { TupleType } from "../Type/TupleType.js";
 import type { TypeFormatter } from "../TypeFormatter.js";
+import { derefType } from "../Utils/derefType.js";
 import { notNever } from "../Utils/notNever.js";
 import { uniqueArray } from "../Utils/uniqueArray.js";
+
+function getRestAdditionalItems(
+    restType: RestType,
+    childTypeFormatter: TypeFormatter,
+): Definition["items"] | undefined {
+    const items = childTypeFormatter.getDefinition(restType).items;
+    if (items !== undefined) {
+        return items;
+    }
+    const resolvedType = derefType(restType.getType());
+    if (!(resolvedType instanceof ArrayType)) {
+        return undefined;
+    }
+    const resolvedDef = childTypeFormatter.getDefinition(resolvedType);
+    return resolvedDef.items;
+}
 
 function uniformRestType(type: RestType, check_type: BaseType): boolean {
     const inner = type.getType();
@@ -64,7 +81,8 @@ export class TupleTypeFormatter implements SubTypeFormatter {
         const requiredDefinitions = requiredElements.map((item) => this.childTypeFormatter.getDefinition(item));
         const optionalDefinitions = optionalElements.map((item) => this.childTypeFormatter.getDefinition(item));
         const itemsTotal = requiredDefinitions.length + optionalDefinitions.length;
-        const additionalItems = restType ? this.childTypeFormatter.getDefinition(restType).items : undefined;
+        const additionalItems =
+            restType !== undefined ? getRestAdditionalItems(restType, this.childTypeFormatter) : undefined;
 
         return {
             type: "array",

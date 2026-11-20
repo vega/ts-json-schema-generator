@@ -3,7 +3,7 @@ import { BaseType } from "./BaseType.js";
 import type { ObjectType } from "./ObjectType.js";
 
 export class ConstructorType extends BaseType {
-    private comment: string;
+    private comment: string | undefined;
 
     constructor(
         node?: ts.ConstructorTypeNode,

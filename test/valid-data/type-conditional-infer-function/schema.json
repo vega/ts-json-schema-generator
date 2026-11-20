@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/FuncParams",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "FuncParams": {
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "a",
+        "b"
+      ],
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+}

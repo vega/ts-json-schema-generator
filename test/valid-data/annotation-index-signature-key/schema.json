@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "LiteralObject": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "propertyNames": {
+        "maxLength": 256,
+        "minLength": 2,
+        "pattern": "^\\w+$"
+      },
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "propertyNames": {
+        "maxLength": 256,
+        "minLength": 2,
+        "pattern": "^\\w+$"
+      },
+      "type": "object"
+    },
+    "UnannotatedKeyObject": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "type": "object"
+    }
+  }
+}

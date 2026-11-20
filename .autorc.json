@@ -1,5 +1,5 @@
 {
-  "plugins": ["npm", "conventional-commits", "first-time-contributor", "released", ["npm", { "setRcToken": false }]],
+  "plugins": ["conventional-commits", "first-time-contributor", "released", ["npm", { "setRcToken": false }]],
   "baseBranch": "stable",
   "prereleaseBranches": ["next"],
   "author": "GitHub Actions Bot <vega-actions-bot@users.noreply.github.com>"

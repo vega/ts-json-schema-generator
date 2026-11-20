@@ -1,0 +1,1 @@
+export { MySubObject } from "./module";

@@ -3,13 +3,14 @@
     "noEmit": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES5",
+    "target": "esnext",
     "module": "CommonJS",
     "strictNullChecks": false,
     "allowJs": true,
-    "baseUrl": ".",
+    "rootDir": "./src",
+    "types": ["node"],
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["./src/*"]
     }
   },
   "files": ["src/main.ts"]

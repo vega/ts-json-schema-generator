@@ -61,6 +61,11 @@ function addReachable(
         } else if (items) {
             addReachable(items, definitions, reachable);
         }
+
+        const additionalItems = definition.additionalItems;
+        if (additionalItems) {
+            addReachable(additionalItems, definitions, reachable);
+        }
     } else if (definition.then) {
         addReachable(definition.then, definitions, reachable);
     }

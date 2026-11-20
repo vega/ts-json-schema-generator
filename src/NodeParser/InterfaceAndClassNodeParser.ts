@@ -2,8 +2,11 @@ import type { PropertyName } from "typescript";
 import ts from "typescript";
 import type { Context, NodeParser } from "../NodeParser.js";
 import type { SubNodeParser } from "../SubNodeParser.js";
+import { AnnotatedType } from "../Type/AnnotatedType.js";
+import { AliasType } from "../Type/AliasType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
+import { DefinitionType } from "../Type/DefinitionType.js";
 import { NeverType } from "../Type/NeverType.js";
 import { ObjectProperty, ObjectType } from "../Type/ObjectType.js";
 import type { ReferenceType } from "../Type/ReferenceType.js";
@@ -61,7 +64,11 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
             }
         }
 
-        return new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties);
+        return this.withPropertyNamesAnnotation(
+            node,
+            context,
+            new ObjectType(id, this.getBaseTypes(node, context), properties, additionalProperties),
+        );
     }
 
     /**
@@ -108,23 +115,22 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
     ): ObjectProperty[] | undefined {
         let hasRequiredNever = false;
 
+        type Member = ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration;
+
         const properties = (node.members as ts.NodeArray<ts.TypeElement | ts.ClassElement>)
-            .reduce(
-                (members, member) => {
-                    if (ts.isConstructorDeclaration(member)) {
-                        const params = member.parameters.filter((param) =>
-                            ts.isParameterPropertyDeclaration(param, param.parent),
-                        );
-                        members.push(...params);
-                    } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
-                        members.push(member);
-                    }
-                    return members;
-                },
-                [] as (ts.PropertyDeclaration | ts.PropertySignature | ts.ParameterPropertyDeclaration)[],
-            )
+            .reduce((members, member) => {
+                if (ts.isConstructorDeclaration(member)) {
+                    const params = member.parameters.filter((param) =>
+                        ts.isParameterPropertyDeclaration(param, param.parent),
+                    );
+                    members.push(...params);
+                } else if (ts.isPropertySignature(member) || ts.isPropertyDeclaration(member)) {
+                    members.push(member);
+                }
+                return members;
+            }, [] as Member[])
             .filter((member) => isPublic(member) && !isStatic(member) && !isNodeHidden(member))
-            .reduce((entries, member) => {
+            .reduce<{ member: Member; memberType: ts.Node }[]>((entries, member) => {
                 let memberType: ts.Node | undefined = member.type;
 
                 // Use the type checker if the member has no explicit type
@@ -132,11 +138,21 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
                 if (memberType === undefined && (member as ts.PropertyDeclaration)?.initializer !== undefined) {
                     const type = this.typeChecker.getTypeAtLocation(member);
                     memberType = this.typeChecker.typeToTypeNode(type, node, ts.NodeBuilderFlags.NoTruncation);
+
+                    // `typeToTypeNode` returns a node that is detached from the AST, so
+                    // `AnnotatedNodeParser` cannot walk up to the member to read its JSDoc.
+                    // Point the synthesized node at the original declaration so annotations
+                    // such as the property description are preserved. See #1531.
+                    if (memberType) {
+                        //@ts-expect-error - parent is readonly in the public typings
+                        memberType.parent = member;
+                    }
                 }
 
                 if (memberType !== undefined) {
-                    return [...entries, { member, memberType }];
+                    entries.push({ member, memberType });
                 }
+
                 return entries;
             }, [])
             .map(
@@ -172,6 +188,36 @@ export class InterfaceAndClassNodeParser implements SubNodeParser {
         }
 
         return this.childNodeParser.createType(indexSignature.type, context) ?? this.additionalProperties;
+    }
+
+    /**
+     * Annotations on the index signature key type (e.g. a `@pattern` tag on a
+     * string type alias) become a `propertyNames` keyword on the object schema,
+     * mirroring how annotated mapped type keys are handled.
+     */
+    protected withPropertyNamesAnnotation(
+        node: ts.InterfaceDeclaration | ts.ClassDeclaration,
+        context: Context,
+        objectType: ObjectType,
+    ): BaseType {
+        const indexSignature = (node.members as ts.NodeArray<ts.NamedDeclaration>).find(ts.isIndexSignatureDeclaration);
+        const keyType = indexSignature?.parameters[0]?.type;
+
+        if (keyType) {
+            let keyResult: BaseType | undefined = this.childNodeParser.createType(keyType, context);
+            // Unwrap alias and definition wrappers while keeping annotated types intact.
+            while (keyResult instanceof AliasType || keyResult instanceof DefinitionType) {
+                keyResult = keyResult.getType();
+            }
+
+            const annotations = keyResult instanceof AnnotatedType ? keyResult.getAnnotations() : undefined;
+
+            if (annotations && Object.keys(annotations).length > 0) {
+                return new AnnotatedType(objectType, { propertyNames: annotations }, false);
+            }
+        }
+
+        return objectType;
     }
 
     protected getTypeId(node: ts.Node, context: Context): string {

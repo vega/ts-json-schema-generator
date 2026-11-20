@@ -4,6 +4,7 @@ import type { SubNodeParser } from "../SubNodeParser.js";
 import { AnnotatedType } from "../Type/AnnotatedType.js";
 import { ArrayType } from "../Type/ArrayType.js";
 import type { BaseType } from "../Type/BaseType.js";
+import { OptionalType } from "../Type/OptionalType.js";
 import type { ReferenceType } from "../Type/ReferenceType.js";
 import { RestType } from "../Type/RestType.js";
 
@@ -21,6 +22,11 @@ export class NamedTupleMemberNodeParser implements SubNodeParser {
             return new RestType(baseType, node.name.text);
         }
 
-        return baseType && new AnnotatedType(baseType, { title: node.name.text }, false);
+        if (!baseType) {
+            return baseType;
+        }
+
+        const annotated = new AnnotatedType(baseType, { title: node.name.text }, false);
+        return node.questionToken ? new OptionalType(annotated) : annotated;
     }
 }

@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyClass": {
+      "additionalProperties": false,
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "assertIsString": {
+          "$comment": "(value: unknown) => asserts value is string",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "assertTruthy": {
+          "$comment": "(value: unknown) => asserts value",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "isString": {
+          "$comment": "(value: unknown) => value is string",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "isString",
+        "assertIsString",
+        "assertTruthy",
+        "name"
+      ],
+      "type": "object"
+    },
+    "WithInlinePredicates": {
+      "additionalProperties": false,
+      "properties": {
+        "assert": {
+          "$comment": "(value: unknown) => asserts value",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "assertIs": {
+          "$comment": "(value: unknown) => asserts value is number",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "check": {
+          "$comment": "(value: unknown) => value is string",
+          "properties": {
+            "namedArgs": {
+              "additionalProperties": false,
+              "properties": {
+                "value": {}
+              },
+              "required": [
+                "value"
+              ],
+              "type": "object"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "required": [
+        "check",
+        "assert",
+        "assertIs"
+      ],
+      "type": "object"
+    },
+    "assertIsString": {
+      "$comment": "(value: unknown) => asserts value is string",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {}
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "assertTruthy": {
+      "$comment": "(value: unknown) => asserts value",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {}
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "isNumber": {
+      "$comment": "(value: unknown) => value is number",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {}
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "isString": {
+      "$comment": "(value: unknown) => value is string",
+      "properties": {
+        "namedArgs": {
+          "additionalProperties": false,
+          "properties": {
+            "value": {}
+          },
+          "required": [
+            "value"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

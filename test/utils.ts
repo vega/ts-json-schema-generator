@@ -45,17 +45,15 @@ export function assertConfigSchema(
             config.path = path.resolve(baseConfigPath, name, "*.ts");
         }
 
-        const program: ts.Program = createProgram(config);
-
-        const [ok, error, generator] = t(
-            () =>
-                new SchemaGenerator(
-                    program,
-                    createParser(program, config, parserAugmentor),
-                    createFormatter(config, formatterAugmentor),
-                    config,
-                ),
-        );
+        const [ok, error, generator] = t(() => {
+            const program: ts.Program = createProgram(config);
+            return new SchemaGenerator(
+                program,
+                createParser(program, config, parserAugmentor),
+                createFormatter(config, formatterAugmentor),
+                config,
+            );
+        });
 
         if (!ok) {
             if (error instanceof BaseError) {
@@ -109,11 +107,10 @@ export function assertInvalidSchema(name: string, type: string | string[], messa
             skipTypeCheck: !!process.env.FAST_TEST,
         };
 
-        const program: ts.Program = createProgram(config);
-
-        const [ok, error, generator] = t(
-            () => new SchemaGenerator(program, createParser(program, config), createFormatter(config)),
-        );
+        const [ok, error, generator] = t(() => {
+            const program = createProgram(config);
+            return new SchemaGenerator(program, createParser(program, config), createFormatter(config));
+        });
 
         if (!ok) {
             if (error instanceof BaseError) {

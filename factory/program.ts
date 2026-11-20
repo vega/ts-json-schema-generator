@@ -1,12 +1,12 @@
 import * as path from "node:path";
 import { globSync } from "glob";
 import normalize from "normalize-path";
-import type { CompilerOptions } from "typescript";
 import ts from "typescript";
 import type { CompletedConfig, Config } from "../src/Config.js";
 import { BuildError } from "../src/Error/Errors.js";
 
 function loadTsConfigFile(configFile: string) {
+    configFile = path.resolve(configFile);
     const raw = ts.sys.readFile(configFile);
 
     if (!raw) {
@@ -45,7 +45,7 @@ function loadTsConfigFile(configFile: string) {
     return parseResult;
 }
 
-function getTsConfig(config: Config) {
+function getTsConfig(config: Config): Pick<ts.ParsedCommandLine, "fileNames" | "options"> {
     if (config.tsconfig) {
         return loadTsConfigFile(config.tsconfig);
     }
@@ -62,7 +62,8 @@ function getTsConfig(config: Config) {
             skipLibCheck: true,
             skipDefaultLibCheck: true,
             esModuleInterop: true,
-        } satisfies CompilerOptions,
+            types: ["node"],
+        },
     };
 }
 

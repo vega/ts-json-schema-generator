@@ -11,3 +11,7 @@ export type MyNamedNestedArrayWithinTuple = [first: string, second: number, thir
 export type MyNamedNestedArrayWithinTupleWithRest = [first: string, second: number, ...third: string[][]];
 
 export type MyNamedTupleWithOnlyRest = [...first: number[]];
+
+export type MyNamedTupleWithOptional = [name: string, age?: number];
+
+export type MyNamedTupleWithOnlyOptional = [a?: string];

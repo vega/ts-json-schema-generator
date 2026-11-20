@@ -3,11 +3,12 @@ import { BaseType } from "./BaseType.js";
 import type { ObjectType } from "./ObjectType.js";
 
 export class FunctionType extends BaseType {
-    private comment: string;
+    private comment: string | undefined;
 
     constructor(
         node?: ts.FunctionTypeNode | ts.FunctionExpression | ts.FunctionDeclaration | ts.ArrowFunction,
         protected namedArguments?: ObjectType,
+        protected returnType?: BaseType,
     ) {
         super();
 
@@ -26,5 +27,9 @@ export class FunctionType extends BaseType {
 
     public getNamedArguments(): ObjectType | undefined {
         return this.namedArguments;
+    }
+
+    public getReturnType(): BaseType | undefined {
+        return this.returnType;
     }
 }

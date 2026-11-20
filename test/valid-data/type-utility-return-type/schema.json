@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/MyReturnType",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyReturnType": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "name",
+        "value"
+      ],
+      "type": "object"
+    }
+  }
+}

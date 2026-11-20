@@ -1,0 +1,46 @@
+{
+  "$ref": "#/definitions/MyObject",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "aliased": {
+          "$ref": "#/definitions/MySubObject%3Cnumber%3E"
+        },
+        "field": {
+          "$ref": "#/definitions/MySubObject%3Cstring%3E"
+        }
+      },
+      "required": [
+        "field",
+        "aliased"
+      ],
+      "type": "object"
+    },
+    "MySubObject<number>": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    },
+    "MySubObject<string>": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "type": "object"
+    }
+  }
+}
