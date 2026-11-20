@@ -1,3 +1,126 @@
+# v2.6.0 (Fri Nov 20 2026)
+
+:tada: This release contains work from new contributors! :tada:
+
+Thanks for all your work!
+
+:heart: Antonin CELESTIN ([@aciwecloud](https://github.com/aciwecloud))
+
+:heart: Orgad Shaneh ([@orgads](https://github.com/orgads))
+
+:heart: Ninjackson ([@ninjack-dev](https://github.com/ninjack-dev))
+
+:heart: _Kerman ([@kermanx](https://github.com/kermanx))
+
+:heart: Momo Kornher ([@mrgrain](https://github.com/mrgrain))
+
+:heart: Jonathan Puckey ([@puckey](https://github.com/puckey))
+
+:heart: Vismay ([@vismaytiwari](https://github.com/vismaytiwari))
+
+:heart: Boris Serdiuk ([@just-boris](https://github.com/just-boris))
+
+:heart: Liu XingJian ([@tianxingjian2406](https://github.com/tianxingjian2406))
+
+:heart: Anubhav Lal ([@anubhavlal07](https://github.com/anubhavlal07))
+
+#### 🚀 Enhancement
+
+- Release [#2562](https://github.com/vega/ts-json-schema-generator/pull/2562) ([@dependabot[bot]](https://github.com/dependabot[bot]) [@aciwecloud](https://github.com/aciwecloud) [@orgads](https://github.com/orgads) [@ninjack-dev](https://github.com/ninjack-dev) [@Copilot](https://github.com/Copilot) [@arthurfiorette](https://github.com/arthurfiorette) [@domoritz](https://github.com/domoritz) [@kermanx](https://github.com/kermanx) [@mrgrain](https://github.com/mrgrain) [@puckey](https://github.com/puckey) [@vismaytiwari](https://github.com/vismaytiwari) [@just-boris](https://github.com/just-boris) [@tianxingjian2406](https://github.com/tianxingjian2406) [@anubhavlal07](https://github.com/anubhavlal07))
+- feat: emit propertyNames for annotated index signature key types [#2554](https://github.com/vega/ts-json-schema-generator/pull/2554) ([@tianxingjian2406](https://github.com/tianxingjian2406))
+- feat: support dynamic import nodes [#2535](https://github.com/vega/ts-json-schema-generator/pull/2535) ([@just-boris](https://github.com/just-boris))
+- feat: support ReturnType<T>, type predicates, and fix typeof for function declarations [#2512](https://github.com/vega/ts-json-schema-generator/pull/2512) ([@puckey](https://github.com/puckey))
+- feat: Upgrade to TypeScript 6, maintain TS5 compatibility [#2509](https://github.com/vega/ts-json-schema-generator/pull/2509) ([@arthurfiorette](https://github.com/arthurfiorette) [@Copilot](https://github.com/Copilot))
+
+#### 🐛 Bug Fix
+
+- fix: respect optional named tuple members [#2560](https://github.com/vega/ts-json-schema-generator/pull/2560) ([@anubhavlal07](https://github.com/anubhavlal07))
+- fix: preserve JSDoc description on properties with an inferred default value [#2534](https://github.com/vega/ts-json-schema-generator/pull/2534) ([@vismaytiwari](https://github.com/vismaytiwari))
+- fix(ci): remove duplicate npm plugin from auto config [#2525](https://github.com/vega/ts-json-schema-generator/pull/2525) ([@puckey](https://github.com/puckey))
+- fix: relative --tsconfig path breaks @types resolution [#2520](https://github.com/vega/ts-json-schema-generator/pull/2520) ([@mrgrain](https://github.com/mrgrain))
+- fix: getTypeByKey should search baseTypes before additionalProperties [#2521](https://github.com/vega/ts-json-schema-generator/pull/2521) ([@kermanx](https://github.com/kermanx))
+- fix: add `issues` and `pull-requests` write permissions to publish-auto workflow [#2516](https://github.com/vega/ts-json-schema-generator/pull/2516) ([@Copilot](https://github.com/Copilot))
+- Add support for `infer` in conditionals operating on function parameters [#2495](https://github.com/vega/ts-json-schema-generator/pull/2495) ([@ninjack-dev](https://github.com/ninjack-dev))
+- fix: preserve mapped indexed access annotations [#2501](https://github.com/vega/ts-json-schema-generator/pull/2501) ([@orgads](https://github.com/orgads))
+- ci: publish only from main repository [#2502](https://github.com/vega/ts-json-schema-generator/pull/2502) ([@orgads](https://github.com/orgads))
+- fix: array ref used as rest item [#2496](https://github.com/vega/ts-json-schema-generator/pull/2496) ([@aciwecloud](https://github.com/aciwecloud))
+- fix: mapped types required type [#2492](https://github.com/vega/ts-json-schema-generator/pull/2492) ([@aciwecloud](https://github.com/aciwecloud))
+- fix: Include types referenced only in `additionalItems` in schema definitions [#2477](https://github.com/vega/ts-json-schema-generator/pull/2477) ([@aciwecloud](https://github.com/aciwecloud))
+- ci: publishing [#2482](https://github.com/vega/ts-json-schema-generator/pull/2482) ([@domoritz](https://github.com/domoritz))
+- chore: update deps [#2482](https://github.com/vega/ts-json-schema-generator/pull/2482) ([@domoritz](https://github.com/domoritz))
+- Fix NPM publishing with latest npm and publishConfig [#2468](https://github.com/vega/ts-json-schema-generator/pull/2468) ([@Copilot](https://github.com/Copilot))
+- ci: use npm trusted publishing [#2467](https://github.com/vega/ts-json-schema-generator/pull/2467) ([@domoritz](https://github.com/domoritz))
+- Restore glob expansion compatibility with Node 20 [#2466](https://github.com/vega/ts-json-schema-generator/pull/2466) ([@Copilot](https://github.com/Copilot))
+
+#### 🔩 Dependency Updates
+
+- chore(deps): bump glob from 13.0.6 to 14.0.2 [#2556](https://github.com/vega/ts-json-schema-generator/pull/2556) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump fast-uri from 3.1.7 to 3.1.9 [#2555](https://github.com/vega/ts-json-schema-generator/pull/2555) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump handlebars from 4.7.9 to 4.7.10 [#2552](https://github.com/vega/ts-json-schema-generator/pull/2552) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump vega from 6.2.0 to 6.4.0 [#2549](https://github.com/vega/ts-json-schema-generator/pull/2549) ([@dependabot[bot]](https://github.com/dependabot[bot]) [@domoritz](https://github.com/domoritz))
+- chore(deps): bump actions/setup-node from 6 to 7 [#2545](https://github.com/vega/ts-json-schema-generator/pull/2545) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump brace-expansion from 1.1.18 to 1.1.21 [#2551](https://github.com/vega/ts-json-schema-generator/pull/2551) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 10.1.0 to 10.11.0 [#2548](https://github.com/vega/ts-json-schema-generator/pull/2548) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump vega-lite from 6.4.2 to 6.4.3 [#2546](https://github.com/vega/ts-json-schema-generator/pull/2546) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump prettier from 3.8.1 to 3.9.9 [#2547](https://github.com/vega/ts-json-schema-generator/pull/2547) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump fast-uri from 3.1.5 to 3.1.7 [#2543](https://github.com/vega/ts-json-schema-generator/pull/2543) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump fast-uri from 3.1.4 to 3.1.5 [#2540](https://github.com/vega/ts-json-schema-generator/pull/2540) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump brace-expansion [#2539](https://github.com/vega/ts-json-schema-generator/pull/2539) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump fast-uri from 3.1.2 to 3.1.4 [#2537](https://github.com/vega/ts-json-schema-generator/pull/2537) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.12.0 to 26.0.1 [#2531](https://github.com/vega/ts-json-schema-generator/pull/2531) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump actions/checkout from 6 to 7 [#2527](https://github.com/vega/ts-json-schema-generator/pull/2527) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump dependabot/fetch-metadata from 2 to 3 [#2528](https://github.com/vega/ts-json-schema-generator/pull/2528) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump codecov/codecov-action from 6 to 7 [#2529](https://github.com/vega/ts-json-schema-generator/pull/2529) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ajv from 8.18.0 to 8.20.0 [#2533](https://github.com/vega/ts-json-schema-generator/pull/2533) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump globals from 17.4.0 to 17.7.0 [#2532](https://github.com/vega/ts-json-schema-generator/pull/2532) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint-plugin-prettier from 5.5.5 to 5.5.6 [#2530](https://github.com/vega/ts-json-schema-generator/pull/2530) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump esbuild and tsx [#2524](https://github.com/vega/ts-json-schema-generator/pull/2524) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump brace-expansion from 5.0.5 to 5.0.6 [#2523](https://github.com/vega/ts-json-schema-generator/pull/2523) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump fast-uri from 3.1.0 to 3.1.2 [#2522](https://github.com/vega/ts-json-schema-generator/pull/2522) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.57.2 to 8.58.0 [#2517](https://github.com/vega/ts-json-schema-generator/pull/2517) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump lodash from 4.17.23 to 4.18.1 [#2518](https://github.com/vega/ts-json-schema-generator/pull/2518) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.57.1 to 8.57.2 [#2510](https://github.com/vega/ts-json-schema-generator/pull/2510) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump brace-expansion [#2507](https://github.com/vega/ts-json-schema-generator/pull/2507) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump codecov/codecov-action from 5 to 6 [#2506](https://github.com/vega/ts-json-schema-generator/pull/2506) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump handlebars from 4.7.8 to 4.7.9 [#2505](https://github.com/vega/ts-json-schema-generator/pull/2505) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump picomatch [#2503](https://github.com/vega/ts-json-schema-generator/pull/2503) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 10.0.3 to 10.1.0 [#2499](https://github.com/vega/ts-json-schema-generator/pull/2499) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.57.0 to 8.57.1 [#2500](https://github.com/vega/ts-json-schema-generator/pull/2500) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump flatted from 3.3.1 to 3.4.2 [#2498](https://github.com/vega/ts-json-schema-generator/pull/2498) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.56.1 to 8.57.0 [#2494](https://github.com/vega/ts-json-schema-generator/pull/2494) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump eslint from 9.39.2 to 10.0.3 [#2487](https://github.com/vega/ts-json-schema-generator/pull/2487) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.10.13 to 24.12.0 [#2486](https://github.com/vega/ts-json-schema-generator/pull/2486) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.56.0 to 8.56.1 [#2488](https://github.com/vega/ts-json-schema-generator/pull/2488) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump glob from 11.1.0 to 13.0.6 [#2474](https://github.com/vega/ts-json-schema-generator/pull/2474) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump globals from 17.3.0 to 17.4.0 [#2479](https://github.com/vega/ts-json-schema-generator/pull/2479) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript/vfs from 1.6.3 to 1.6.4 [#2480](https://github.com/vega/ts-json-schema-generator/pull/2480) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps): bump minimatch [#2476](https://github.com/vega/ts-json-schema-generator/pull/2476) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.55.0 to 8.56.0 [#2473](https://github.com/vega/ts-json-schema-generator/pull/2473) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.10.12 to 24.10.13 [#2475](https://github.com/vega/ts-json-schema-generator/pull/2475) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump typescript-eslint from 8.54.0 to 8.55.0 [#2469](https://github.com/vega/ts-json-schema-generator/pull/2469) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump ajv from 8.17.1 to 8.18.0 [#2470](https://github.com/vega/ts-json-schema-generator/pull/2470) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @typescript/vfs from 1.6.2 to 1.6.3 [#2471](https://github.com/vega/ts-json-schema-generator/pull/2471) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+- chore(deps-dev): bump @types/node from 24.10.9 to 24.10.12 [#2462](https://github.com/vega/ts-json-schema-generator/pull/2462) ([@dependabot[bot]](https://github.com/dependabot[bot]))
+
+#### Authors: 14
+
+- _Kerman ([@kermanx](https://github.com/kermanx))
+- [@Copilot](https://github.com/Copilot)
+- [@dependabot[bot]](https://github.com/dependabot[bot])
+- Antonin CELESTIN ([@aciwecloud](https://github.com/aciwecloud))
+- Anubhav Lal ([@anubhavlal07](https://github.com/anubhavlal07))
+- Arthur Fiorette ([@arthurfiorette](https://github.com/arthurfiorette))
+- Boris Serdiuk ([@just-boris](https://github.com/just-boris))
+- Dominik Moritz ([@domoritz](https://github.com/domoritz))
+- Jonathan Puckey ([@puckey](https://github.com/puckey))
+- Liu XingJian ([@tianxingjian2406](https://github.com/tianxingjian2406))
+- Momo Kornher ([@mrgrain](https://github.com/mrgrain))
+- Ninjackson ([@ninjack-dev](https://github.com/ninjack-dev))
+- Orgad Shaneh ([@orgads](https://github.com/orgads))
+- Vismay ([@vismaytiwari](https://github.com/vismaytiwari))
+
+---
+
 # v2.6.0 (Wed Mar 04 2026)
 
 #### 🚀 Enhancement
