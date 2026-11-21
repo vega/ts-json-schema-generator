@@ -1,0 +1,22 @@
+{
+  "$ref": "#/definitions/NestedIntersection",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "NestedIntersection": {
+      "additionalProperties": false,
+      "properties": {
+        "a": {
+          "additionalProperties": false,
+          "properties": {
+            "b": {},
+            "c": {}
+          },
+          "required": ["b", "c"],
+          "type": "object"
+        }
+      },
+      "required": ["a"],
+      "type": "object"
+    }
+  }
+}
