@@ -220,6 +220,72 @@ fs.writeFile(outputPath, schemaString, (err) => {
 });
 ```
 
+## Annotations
+
+JSDoc tags on types, interfaces, properties and enum members are read as annotations and copied into the generated schema. Which tags get read depends on the `--jsDoc` option (`jsDoc` in the config):
+
+- `none`: no annotations are read.
+- `basic`: the tags listed under [Keyword tags](#keyword-tags) are read.
+- `extended` (default): everything in `basic`, plus the comment text as `description` and the tags listed under [Extended tags](#extended-tags).
+
+```ts
+export interface User {
+    /**
+     * The user's display name.
+     *
+     * @minLength 1
+     * @maxLength 64
+     */
+    name: string;
+
+    /**
+     * @format email
+     */
+    email: string;
+
+    /**
+     * @minimum 0
+     * @default 0
+     */
+    age?: number;
+}
+```
+
+### Keyword tags
+
+Most JSON Schema keywords can be set with a tag of the same name, e.g. `@title`, `@format`, `@pattern`, `@minimum`, `@maxLength`, `@default` or `@deprecated`. A few are prefixed with `$`: `@id` becomes `$id`, `@comment` becomes `$comment` and `@ref` becomes `$ref` (replacing the type). Text tags such as `@title` use the text as-is; all other tags parse it as JSON5 (falling back to the raw string), and a tag with no text becomes `true`. The full lists are `textTags` and `jsonTags` in [`BasicAnnotationsReader.ts`](src/AnnotationsReader/BasicAnnotationsReader.ts).
+
+Other tags are ignored unless you list them with `--validation-keywords` (`extraTags` in the config). They are parsed as JSON5 and copied into the schema under the tag name.
+
+### Extended tags
+
+With `jsDoc: "extended"`, `@example` adds a JSON5 value to `examples`, `@nullable` allows `null` and `@asType` overrides `type` (e.g. `@asType integer`). See [`ExtendedAnnotationsReader.ts`](src/AnnotationsReader/ExtendedAnnotationsReader.ts).
+
+`@hidden` leaves a property, enum member or union member out of the schema. `@internal` inlines the type instead of adding it to `definitions` and skips it with `--type '*'`.
+
+### Discriminated unions
+
+`@discriminator <property>` on a union type names the property that distinguishes the union members:
+
+```ts
+/**
+ * @discriminator kind
+ */
+export type Shape = Circle | Square;
+
+export interface Circle {
+    kind: "circle";
+    radius: number;
+}
+
+export interface Square {
+    kind: "square";
+    size: number;
+}
+```
+
+Every member must have that property with a literal type, and the values must be unique. By default the output uses `if`/`then` inside `allOf`. Set `discriminatorType: "open-api"` in the config to get an OpenAPI-style `discriminator: { propertyName }` with `oneOf` instead. Putting `@discriminator` on a type that isn't a union is an error.
+
 ## Current state
 
 - `interface` types
