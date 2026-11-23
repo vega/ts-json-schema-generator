@@ -253,67 +253,19 @@ export interface User {
 
 ### Keyword tags
 
-These tags map straight to the JSON Schema keyword of the same name.
+Most JSON Schema keywords can be set with a tag of the same name, e.g. `@title`, `@format`, `@pattern`, `@minimum`, `@maxLength`, `@default` or `@deprecated`. A few are prefixed with `$`: `@id` becomes `$id`, `@comment` becomes `$comment` and `@ref` becomes `$ref` (replacing the type). Text tags such as `@title` use the text as-is; all other tags parse it as JSON5 (falling back to the raw string), and a tag with no text becomes `true`. The full lists are `textTags` and `jsonTags` in [`BasicAnnotationsReader.ts`](src/AnnotationsReader/BasicAnnotationsReader.ts).
 
-Text tags use the text after the tag as-is:
-
-| Tag                                     | Schema output                      |
-| --------------------------------------- | ---------------------------------- |
-| `@title`                                | `title`                            |
-| `@description`                          | `description`                      |
-| `@id`                                   | `$id`                              |
-| `@comment`                              | `$comment`                         |
-| `@ref`                                  | `$ref` (replaces the type)         |
-| `@format`                               | `format`                           |
-| `@pattern`                              | `pattern`                          |
-| `@contentMediaType`, `@contentEncoding` | `contentMediaType`, `contentEncoding` |
-| `@discriminator`                        | see [Discriminated unions](#discriminated-unions) |
-
-Value tags parse the text after the tag as JSON5 (and fall back to the raw string if it isn't valid JSON5). A value tag with no text, such as `@deprecated`, becomes `true`.
-
-| Tag                                                 | Example                              |
-| --------------------------------------------------- | ------------------------------------ |
-| `@minimum`, `@maximum`                              | `@minimum 0`                         |
-| `@exclusiveMinimum`, `@exclusiveMaximum`            | `@exclusiveMaximum 100`              |
-| `@multipleOf`                                       | `@multipleOf 0.5`                    |
-| `@minLength`, `@maxLength`                          | `@maxLength 255`                     |
-| `@minItems`, `@maxItems`                            | `@minItems 1`                        |
-| `@uniqueItems`                                      | `@uniqueItems`                       |
-| `@minProperties`, `@maxProperties`                  | `@minProperties 1`                   |
-| `@propertyNames`                                    | `@propertyNames { "pattern": "^[a-z]+$" }` |
-| `@contains`                                         | `@contains { "type": "string" }`     |
-| `@const`                                            | `@const "fixed"`                     |
-| `@examples`                                         | `@examples ["a", "b"]`               |
-| `@default`                                          | `@default 42`                        |
-| `@required`                                         | `@required ["id"]`                   |
-| `@if`, `@then`, `@else`                             | `@if { "properties": { "kind": { "const": "a" } } }` |
-| `@readOnly`, `@writeOnly`                           | `@readOnly`                          |
-| `@deprecated`                                       | `@deprecated`                        |
-
-Other tags are ignored unless you list them with `--validation-keywords` (`extraTags` in the config). Listed tags are parsed like value tags and copied into the schema under the tag name.
+Other tags are ignored unless you list them with `--validation-keywords` (`extraTags` in the config). They are parsed as JSON5 and copied into the schema under the tag name.
 
 ### Extended tags
 
-These are only read when `jsDoc` is `extended`:
+With `jsDoc: "extended"`, `@example` adds a JSON5 value to `examples`, `@nullable` allows `null` and `@asType` overrides `type` (e.g. `@asType integer`). See [`ExtendedAnnotationsReader.ts`](src/AnnotationsReader/ExtendedAnnotationsReader.ts).
 
-| Tag         | Effect                                                                                                    |
-| ----------- | --------------------------------------------------------------------------------------------------------- |
-| `@example`  | Adds the value (parsed as JSON5) to `examples`. Can be repeated. Examples that aren't valid JSON5 are skipped. |
-| `@nullable` | Allows `null` in addition to the declared type.                                                           |
-| `@asType`   | Sets `type` to the given value, e.g. `@asType integer` on a `number`.                                     |
-
-With `--markdown-description`, the comment text is also written to `markdownDescription` with its line breaks kept. With `--full-description`, the raw JSDoc comment is written to `fullDescription`.
-
-### Tags that change what gets generated
-
-| Tag         | Effect                                                                                                         |
-| ----------- | -------------------------------------------------------------------------------------------------------------- |
-| `@hidden`   | Leaves the property, enum member or union member out of the schema.                                            |
-| `@internal` | Keeps the type out of `definitions` (it is inlined instead) and skips it when generating all types with `--type '*'`. Ignored when `jsDoc` is `none`. |
+`@hidden` leaves a property, enum member or union member out of the schema. `@internal` inlines the type instead of adding it to `definitions` and skips it with `--type '*'`.
 
 ### Discriminated unions
 
-`@discriminator <property>` on a union type tells the generator which property tells the union members apart:
+`@discriminator <property>` on a union type names the property that distinguishes the union members:
 
 ```ts
 /**
