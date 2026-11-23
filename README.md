@@ -220,6 +220,120 @@ fs.writeFile(outputPath, schemaString, (err) => {
 });
 ```
 
+## Annotations
+
+JSDoc tags on types, interfaces, properties and enum members are read as annotations and copied into the generated schema. Which tags get read depends on the `--jsDoc` option (`jsDoc` in the config):
+
+- `none`: no annotations are read.
+- `basic`: the tags listed under [Keyword tags](#keyword-tags) are read.
+- `extended` (default): everything in `basic`, plus the comment text as `description` and the tags listed under [Extended tags](#extended-tags).
+
+```ts
+export interface User {
+    /**
+     * The user's display name.
+     *
+     * @minLength 1
+     * @maxLength 64
+     */
+    name: string;
+
+    /**
+     * @format email
+     */
+    email: string;
+
+    /**
+     * @minimum 0
+     * @default 0
+     */
+    age?: number;
+}
+```
+
+### Keyword tags
+
+These tags map straight to the JSON Schema keyword of the same name.
+
+Text tags use the text after the tag as-is:
+
+| Tag                                     | Schema output                      |
+| --------------------------------------- | ---------------------------------- |
+| `@title`                                | `title`                            |
+| `@description`                          | `description`                      |
+| `@id`                                   | `$id`                              |
+| `@comment`                              | `$comment`                         |
+| `@ref`                                  | `$ref` (replaces the type)         |
+| `@format`                               | `format`                           |
+| `@pattern`                              | `pattern`                          |
+| `@contentMediaType`, `@contentEncoding` | `contentMediaType`, `contentEncoding` |
+| `@discriminator`                        | see [Discriminated unions](#discriminated-unions) |
+
+Value tags parse the text after the tag as JSON5 (and fall back to the raw string if it isn't valid JSON5). A value tag with no text, such as `@deprecated`, becomes `true`.
+
+| Tag                                                 | Example                              |
+| --------------------------------------------------- | ------------------------------------ |
+| `@minimum`, `@maximum`                              | `@minimum 0`                         |
+| `@exclusiveMinimum`, `@exclusiveMaximum`            | `@exclusiveMaximum 100`              |
+| `@multipleOf`                                       | `@multipleOf 0.5`                    |
+| `@minLength`, `@maxLength`                          | `@maxLength 255`                     |
+| `@minItems`, `@maxItems`                            | `@minItems 1`                        |
+| `@uniqueItems`                                      | `@uniqueItems`                       |
+| `@minProperties`, `@maxProperties`                  | `@minProperties 1`                   |
+| `@propertyNames`                                    | `@propertyNames { "pattern": "^[a-z]+$" }` |
+| `@contains`                                         | `@contains { "type": "string" }`     |
+| `@const`                                            | `@const "fixed"`                     |
+| `@examples`                                         | `@examples ["a", "b"]`               |
+| `@default`                                          | `@default 42`                        |
+| `@required`                                         | `@required ["id"]`                   |
+| `@if`, `@then`, `@else`                             | `@if { "properties": { "kind": { "const": "a" } } }` |
+| `@readOnly`, `@writeOnly`                           | `@readOnly`                          |
+| `@deprecated`                                       | `@deprecated`                        |
+
+Other tags are ignored unless you list them with `--validation-keywords` (`extraTags` in the config). Listed tags are parsed like value tags and copied into the schema under the tag name.
+
+### Extended tags
+
+These are only read when `jsDoc` is `extended`:
+
+| Tag         | Effect                                                                                                    |
+| ----------- | --------------------------------------------------------------------------------------------------------- |
+| `@example`  | Adds the value (parsed as JSON5) to `examples`. Can be repeated. Examples that aren't valid JSON5 are skipped. |
+| `@nullable` | Allows `null` in addition to the declared type.                                                           |
+| `@asType`   | Sets `type` to the given value, e.g. `@asType integer` on a `number`.                                     |
+
+With `--markdown-description`, the comment text is also written to `markdownDescription` with its line breaks kept. With `--full-description`, the raw JSDoc comment is written to `fullDescription`.
+
+### Tags that change what gets generated
+
+| Tag         | Effect                                                                                                         |
+| ----------- | -------------------------------------------------------------------------------------------------------------- |
+| `@hidden`   | Leaves the property, enum member or union member out of the schema.                                            |
+| `@internal` | Keeps the type out of `definitions` (it is inlined instead) and skips it when generating all types with `--type '*'`. Ignored when `jsDoc` is `none`. |
+
+### Discriminated unions
+
+`@discriminator <property>` on a union type tells the generator which property tells the union members apart:
+
+```ts
+/**
+ * @discriminator kind
+ */
+export type Shape = Circle | Square;
+
+export interface Circle {
+    kind: "circle";
+    radius: number;
+}
+
+export interface Square {
+    kind: "square";
+    size: number;
+}
+```
+
+Every member must have that property with a literal type, and the values must be unique. By default the output uses `if`/`then` inside `allOf`. Set `discriminatorType: "open-api"` in the config to get an OpenAPI-style `discriminator: { propertyName }` with `oneOf` instead. Putting `@discriminator` on a type that isn't a union is an error.
+
 ## Current state
 
 - `interface` types
