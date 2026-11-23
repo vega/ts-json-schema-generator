@@ -63,6 +63,48 @@ By default, the command-line generator will use the `tsconfig.json` file in the 
   -h, --help                     display help for command
 ```
 
+### Custom JSDoc tags
+
+Some JSON schema features cannot be expressed in TypeScript. As an escape hatch, any JSDoc tag listed with `--validation-keywords` (or `extraTags` in the programmatic config) is copied into the generated schema. The tag value is parsed as JSON (JSON5) and falls back to a plain string if it is not valid JSON.
+
+For example, to require exactly one of several optional properties:
+
+```ts
+/**
+ * @oneOf [
+ *     { "required": ["x"] },
+ *     { "required": ["y"] },
+ *     { "required": ["z"] }
+ * ]
+ */
+export interface MyObject {
+    x?: number;
+    y?: number;
+    z?: number;
+}
+```
+
+```bash
+npx ts-json-schema-generator --path 'my/file.ts' --type 'MyObject' --validation-keywords oneOf
+```
+
+generates
+
+```json
+{
+    "type": "object",
+    "properties": {
+        "x": { "type": "number" },
+        "y": { "type": "number" },
+        "z": { "type": "number" }
+    },
+    "oneOf": [{ "required": ["x"] }, { "required": ["y"] }, { "required": ["z"] }],
+    "additionalProperties": false
+}
+```
+
+The same mechanism can be used for non-standard keywords consumed by other tools (e.g. `--validation-keywords faker`).
+
 ## Programmatic Usage
 
 ```js
