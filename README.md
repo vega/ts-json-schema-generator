@@ -65,7 +65,7 @@ By default, the command-line generator will use the `tsconfig.json` file in the 
 
 ### Custom JSDoc tags
 
-Some JSON schema features cannot be expressed in TypeScript. As an escape hatch, any JSDoc tag listed with `--validation-keywords` (or `extraTags` in the programmatic config) is copied into the generated schema. The tag value is parsed as JSON (JSON5) and falls back to a plain string if it is not valid JSON.
+Any JSDoc tag listed with `--validation-keywords` (or `extraTags` in the programmatic config) is copied into the generated schema. This covers JSON Schema keywords that TypeScript cannot express. The tag value is parsed as JSON5 and falls back to a plain string if it is not valid JSON5.
 
 For example, to require exactly one of several optional properties:
 
@@ -88,7 +88,17 @@ export interface MyObject {
 npx ts-json-schema-generator --path 'my/file.ts' --type 'MyObject' --validation-keywords oneOf
 ```
 
-generates
+or programmatically:
+
+```js
+const config = {
+    path: "my/file.ts",
+    type: "MyObject",
+    extraTags: ["oneOf"],
+};
+```
+
+Output (abridged):
 
 ```json
 {
@@ -103,7 +113,7 @@ generates
 }
 ```
 
-The same mechanism can be used for non-standard keywords consumed by other tools (e.g. `--validation-keywords faker`).
+Non-standard keywords for other tools work the same way, for example `--validation-keywords faker`.
 
 ## Programmatic Usage
 
