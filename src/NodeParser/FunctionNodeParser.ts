@@ -36,9 +36,7 @@ export class FunctionNodeParser implements SubNodeParser {
         }
 
         const name = getTypeName(node);
-        const func = new FunctionType(
-            node,
-            getNamedArguments(this.childNodeParser, node, context),
+        const func = new FunctionType(node, getNamedArguments(this.childNodeParser, node, context), () =>
             getReturnType(this.childNodeParser, node, context),
         );
 

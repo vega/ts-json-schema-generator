@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Box<string>": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "wrap": {
+          "$comment": "() => Box<T[]>"
+        }
+      },
+      "required": [
+        "value",
+        "wrap"
+      ],
+      "type": "object"
+    },
+    "MyObject": {
+      "additionalProperties": false,
+      "properties": {
+        "box": {
+          "$ref": "#/definitions/Box%3Cstring%3E"
+        },
+        "item": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "box",
+        "item"
+      ],
+      "type": "object"
+    },
+    "MyReturnType": {
+      "type": "string"
+    }
+  }
+}
