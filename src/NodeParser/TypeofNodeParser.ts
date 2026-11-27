@@ -65,9 +65,7 @@ export class TypeofNodeParser implements SubNodeParser {
         }
 
         if (ts.isFunctionDeclaration(valueDec)) {
-            return new FunctionType(
-                valueDec,
-                getNamedArguments(this.childNodeParser, valueDec, context),
+            return new FunctionType(valueDec, getNamedArguments(this.childNodeParser, valueDec, context), () =>
                 getReturnType(this.childNodeParser, valueDec, context),
             );
         }
